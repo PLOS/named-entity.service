@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration>
+  <jdbc>
+    <driver>com.mysql.jdbc.Driver</driver>
+    <url>jdbc:mysql://localhost:3306/namedEntities</url>
+    <user>root</user>
+    <password></password>
+  </jdbc>
+
+  <generator>
+    <name>org.jooq.util.DefaultGenerator</name>
+    <database>
+      <name>org.jooq.util.mysql.MySQLDatabase</name>
+      <includes>.*</includes>
+      <excludes></excludes>
+      <dateAsTimestamp>true</dateAsTimestamp>
+      <inputSchema>namedEntities</inputSchema>
+    </database>
+
+    <generate>
+        <deprecated>false</deprecated>
+        <instanceFields>true</instanceFields>
+        <!--<pojos>true</pojos>-->
+        <!--<daos>true</daos>-->
+        <!--<jpaAnnotations>true</jpaAnnotations>-->
+        <!--<validationAnnotations>true</validationAnnotations>-->
+    </generate>
+
+    <target>
+        <packageName>org.plos.namedentity.persist.db.namedentities</packageName>
+        <directory>src/main/java</directory>
+    </target>
+  </generator>
+</configuration>
