@@ -17,7 +17,7 @@ import org.plos.namedentity.api.TypedescriptionsDTO;
 
 public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
-    private static final String TYPE_CLASS_URI = "/namedentity/typeclasses";
+    private static final String TYPE_CLASS_URI = "/ned/typeclasses";
 
     private ObjectMapper mapper;
 

@@ -1,20 +1,15 @@
 package org.plos.namedentity.persist;
 
 import java.util.List;
-import java.io.Serializable;
-
-import org.plos.namedentity.api.*;
-
 import org.springframework.transaction.annotation.Transactional;
 
 public interface NamedEntityDBService {
 
     @Transactional public Integer newNamedEntityId(String typeCode);
-    @Transactional public Integer create(Serializable entity);
-    @Transactional public boolean update(Serializable entity);
-    @Transactional public boolean delete(Serializable entity);
+    @Transactional public <T> Integer create(T t);
+    @Transactional public <T> boolean update(T t);
+    @Transactional public <T> boolean delete(T t);
 
-    // TODO: DAO per table? ugh.
-    public List<TypedescriptionsDTO> findTypedescriptionAll();
-    public TypedescriptionsDTO       findTypedescriptionById(Integer id);
+    public <T> List<T> findAll(Class<T> clazz);
+    public <T> T       findById(Integer id, Class<T> clazz);
 }

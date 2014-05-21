@@ -2,6 +2,9 @@ package org.plos.namedentity.api;
 
 import java.util.Objects;
 
+/**
+ * JOOQ generated class(pojo=true). Added DTO to classname and moved to this pkg.
+ */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TypedescriptionsDTO implements java.io.Serializable {
 

@@ -1,5 +1,8 @@
 package org.plos.namedentity.api;
 
+/**
+ * JOOQ generated class(pojo=true). Added DTO to classname and moved to this pkg.
+ */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DegreesDTO implements java.io.Serializable {
 

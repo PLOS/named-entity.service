@@ -20,7 +20,7 @@ public class NamedEntityServiceTest {
 
     @Autowired NamedEntityService nedSvc;
 
-    @Test
+	@Test
     public void testTypeDescriptionCRUD() {
 
         // CREATE

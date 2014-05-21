@@ -1,20 +1,25 @@
 package org.plos.namedentity.persist;
 
 import static org.jooq.impl.DSL.currentTimestamp;
+import static org.plos.namedentity.persist.db.namedentities.Tables.JOURNALS;
 import static org.plos.namedentity.persist.db.namedentities.Tables.GLOBALTYPES;
 import static org.plos.namedentity.persist.db.namedentities.Tables.NAMEDENTITYIDENTIFIERS;
 import static org.plos.namedentity.persist.db.namedentities.Tables.ROLES;
 import static org.plos.namedentity.persist.db.namedentities.Tables.TYPEDESCRIPTIONS;
 
-import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.jooq.DSLContext;
 import org.jooq.Record;
-import org.jooq.Result;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UpdatableRecord;
 
+import org.plos.namedentity.api.JournalsDTO;
 import org.plos.namedentity.api.TypedescriptionsDTO;
-import org.plos.namedentity.persist.db.namedentities.tables.records.TypedescriptionsRecord;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,67 +29,42 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     @Autowired DSLContext context;
     @Autowired DataSourceTransactionManager txMgr;
 
-    @Override @Transactional
-    public Integer create(Serializable entity) {
-        // TODO: if-else construct screams polymorphism.
+    @Override @Transactional @SuppressWarnings("unchecked")
+    public <T> Integer create(T t) {
+        // load jooq-generated record from pojo. insert (implicitly)
+        UpdatableRecord record = (UpdatableRecord) context.newRecord(table(t.getClass()), t);
+        record.store();
 
-        Integer primaryKey = null;
-
-        if (entity instanceof TypedescriptionsDTO) {
-            // load jooq-generated record from pojo. insert (implicitly)
-            TypedescriptionsRecord record = context.newRecord(TYPEDESCRIPTIONS, (TypedescriptionsDTO)entity);
-            record.store();
-
-            // get db-generated id
-            primaryKey = record.getTypeid();
-        } else {
-            throw new RuntimeException("Unknown entity: " + entity);
-        }
-        return primaryKey;
+        // assume first attribute is always the primary key
+        return record.getValue(0, Integer.class);
     }
 
-    @Override @Transactional
-    public boolean update(Serializable entity) {
-        int result;
-
-        // TODO: optimistic locking
-        if (entity instanceof TypedescriptionsDTO) {
-            // load jooq-generated record from pojo. update (explicitly) 
-            TypedescriptionsRecord record = context.newRecord(TYPEDESCRIPTIONS, (TypedescriptionsDTO)entity);
-            result = context.executeUpdate(record);
-        } else {
-            throw new RuntimeException("Unknown entity: " + entity);
-        }
-        return (result == 1);
+    @Override @Transactional @SuppressWarnings("unchecked")
+    public <T> boolean update(T t) {
+        // load jooq-generated record from pojo. update (explicitly) 
+        UpdatableRecord record = (UpdatableRecord) context.newRecord(table(t.getClass()), t);
+        return (context.executeUpdate(record) == 1);
     }
 
-    @Override @Transactional
-    public boolean delete(Serializable entity) {
-        int result = 0;
-
-        // TODO: REFACTOR! if-else screams polymorphism.
-        // TODO: optimistic locking
-
-        if (entity instanceof TypedescriptionsDTO) {
-            // load jooq-generated record from pojo. delete. 
-            TypedescriptionsRecord record = context.newRecord(TYPEDESCRIPTIONS, (TypedescriptionsDTO)entity);
-            result = record.delete();
-        } else {
-            throw new RuntimeException("Unknown entity: " + entity);
-        }
-        return (result == 1); 
+    @Override @Transactional @SuppressWarnings("unchecked")
+    public <T> boolean delete(T t) {
+        // load jooq-generated record from pojo. delete (explicitly) 
+        UpdatableRecord record = (UpdatableRecord) context.newRecord(table(t.getClass()), t);
+        return (record.delete() == 1);
     }
 
     @Override
-    public List<TypedescriptionsDTO> findTypedescriptionAll() {
-        return context.select().from(TYPEDESCRIPTIONS).fetchInto(TypedescriptionsDTO.class);
+    public <T> List<T> findAll(Class<T> clazz) {
+        return context.select().from(table(clazz)).fetchInto(clazz);
     }
 
     @Override
-    public TypedescriptionsDTO findTypedescriptionById(Integer typeId) {
-        // TODO: will throw a NPE if record not found. handle.
-        return context.select().from(TYPEDESCRIPTIONS).where(TYPEDESCRIPTIONS.TYPEID.equal(typeId))
-                      .fetchOne().into(TypedescriptionsDTO.class);
+    public <T> T findById(Integer id, Class<T> clazz) {
+        Record r = context.select().from(table(clazz))
+                          .where(pkField(clazz).equal(id))
+                          .fetchOne();
+
+        return (r != null ? r.into(clazz) : null);
     }
 
     @Override @Transactional
@@ -121,5 +101,46 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     private boolean isEmptyOrBlank(String s) {
         return s == null || s.trim().isEmpty();
+    }
+
+    /* ---------------------------------------------------------------------- */
+    /*  INTERNAL MAP : DTO POJO -> { JooqTable, JooqPkFieldForTable }         */
+    /* ---------------------------------------------------------------------- */
+
+    static class TablePkPair {
+        private final Table      table;
+        private final TableField pkField;
+
+        public TablePkPair(Table table, TableField pkField) {
+            this.table   = table;
+            this.pkField = pkField;
+        }
+        public Table      table()   { return table;   } 
+        public TableField pkField() { return pkField; } 
+    }
+
+    /*
+     * This map is used internally to associate a DTO with a database table
+     * and primary key for that table. The database references are JOOQ wrappers
+     * (Table and TableField objects).
+     *
+     * If you ADD or DELETE a table in NED's schema, you will need to update
+     * the map populated below. This is done manually and not auto-generated!
+     *
+     * You can get the table name (static) and primary key (instance var) from 
+     * the appropriate class in org.plos.namedentity.persist.db.namedentities.tables
+     */
+
+    private static final Map<Class,TablePkPair> dtoTableMap;
+    static {
+        dtoTableMap = new ConcurrentHashMap<>();
+        dtoTableMap.put(JournalsDTO.class, new TablePkPair(JOURNALS, JOURNALS.JOURNALID));
+        dtoTableMap.put(TypedescriptionsDTO.class, new TablePkPair(TYPEDESCRIPTIONS, TYPEDESCRIPTIONS.TYPEID));
+    }
+    private static Table table(Class key) {
+        return dtoTableMap.get(key).table();
+    }
+    private static TableField pkField(Class key) {
+        return dtoTableMap.get(key).pkField();
     }
 }

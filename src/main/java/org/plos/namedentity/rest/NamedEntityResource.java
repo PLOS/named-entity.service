@@ -15,13 +15,17 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.log4j.Logger;
+
 import org.plos.namedentity.api.TypedescriptionsDTO;
 import org.plos.namedentity.service.NamedEntityService;
 
 import org.springframework.dao.DataAccessException;
 
-@Path("/namedentity")
+@Path("/ned")
 public class NamedEntityResource {
+
+    static Logger logger = Logger.getLogger(NamedEntityResource.class);
 
     @Inject private NamedEntityService namedEntityService; 
 

@@ -5,11 +5,15 @@ MYSQL_CLASSPATH=/home/mbowen/.m2/repository/mysql/mysql-connector-java/5.1.30/my
 
 all: help 
 
+clean:
+	rm *.log; \
+	rm -rf ./target
+
 jooq-codegen:
 	cp ./src/main/resources/jooq-config.mysql.xml ./target; \
 	java -cp $(JOOQ_CLASSPATH):$(MYSQL_CLASSPATH):./target org.jooq.util.GenerationTool /jooq-config.mysql.xml
 
-pkg: jooq-codegen
+pkg:
 	mvn -f pom.mysql.xml -Dmaven.test.skip=true clean package
 
 test:
@@ -27,4 +31,4 @@ help:
 	@echo  "    pkg          : builds war file"
 	@echo  "    tomcat       : run embedded Tomcat"
 
-.PHONY: all help jooq-codegen pkg test tomcat
+.PHONY: all clean help jooq-codegen pkg test tomcat

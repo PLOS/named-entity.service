@@ -12,16 +12,14 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     @Override
     public TypedescriptionsDTO create(TypedescriptionsDTO typeDescription) {
-        // TODO: exception handling
-        return namedEntityDBService.findTypedescriptionById(
-            namedEntityDBService.create(typeDescription));
+		Integer pk = namedEntityDBService.create(typeDescription);
+		return namedEntityDBService.findById(pk, TypedescriptionsDTO.class);
     }
 
     @Override
     public TypedescriptionsDTO update(TypedescriptionsDTO typeDescription) {
-        // TODO: exception handling
         namedEntityDBService.update(typeDescription);
-        return namedEntityDBService.findTypedescriptionById(typeDescription.getTypeid());
+		return namedEntityDBService.findById(typeDescription.getTypeid(), TypedescriptionsDTO.class);
     }
 
     @Override
@@ -31,12 +29,12 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     @Override
     public TypedescriptionsDTO findTypedescriptionById(Integer typeId) {
-        return namedEntityDBService.findTypedescriptionById(typeId);
+		return namedEntityDBService.findById(typeId, TypedescriptionsDTO.class);
     }
 
     @Override
     public Collection<TypedescriptionsDTO> getTypedescriptions() {
-        return namedEntityDBService.findTypedescriptionAll();
+        return namedEntityDBService.findAll(TypedescriptionsDTO.class);
     }
     
     public NamedEntityDBService getNamedEntityDBService() {

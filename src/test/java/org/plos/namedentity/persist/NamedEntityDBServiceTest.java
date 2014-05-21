@@ -2,6 +2,7 @@ package org.plos.namedentity.persist;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.plos.namedentity.persist.db.namedentities.Tables.GLOBALTYPES;
@@ -17,6 +18,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.plos.namedentity.api.JournalsDTO;
 import org.plos.namedentity.api.TypedescriptionsDTO;
 import org.plos.namedentity.persist.db.namedentities.tables.Globaltypes;
 import org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions;
@@ -93,6 +95,13 @@ public class NamedEntityDBServiceTest {
     }
 
     @Test
+    public void testFindAllOnEmptyTable() {
+        List<JournalsDTO> journals = nedDBSvc.findAll(JournalsDTO.class);
+        assertNotNull(journals);
+        assertEquals(0, journals.size());
+    }
+
+	@Test
     public void testTypedescriptionCRUD() {
 
         // CREATE
@@ -100,22 +109,23 @@ public class NamedEntityDBServiceTest {
         assertNotNull(newTypeClassId);
 
         // UPDATE description.
-        TypedescriptionsDTO dto = nedDBSvc.findTypedescriptionById(newTypeClassId);
+        TypedescriptionsDTO dto = nedDBSvc.findById(newTypeClassId, TypedescriptionsDTO.class);
         dto.setDescription( dto.getDescription() + "2");
         assertTrue( nedDBSvc.update(dto) );
 
         // Get another instance of same type class
-        TypedescriptionsDTO dto2 = nedDBSvc.findTypedescriptionById(newTypeClassId);
+        TypedescriptionsDTO dto2 = nedDBSvc.findById(newTypeClassId, TypedescriptionsDTO.class);
         assertEquals(dto, dto2);
 
         // Find all type classes
-        List<TypedescriptionsDTO> typeClasses = nedDBSvc.findTypedescriptionAll();
+        List<TypedescriptionsDTO> typeClasses = nedDBSvc.findAll(TypedescriptionsDTO.class);
         assertTrue(typeClasses.size() >= 20);
         //assertEquals(20, typeClasses.size());
 
         // TODO: fix this!
         // Try to find a type class which doesn't exist
-        //TypedescriptionsDTO dto3 = nedDBSvc.findTypedescriptionById(666);
+        TypedescriptionsDTO dto3 = nedDBSvc.findById(666, TypedescriptionsDTO.class);
+        assertNull(dto3);
 
         // DELETE. we should be able to delete newly added type class because
         // it doesn't have any values associated with it (ie, has no globaltypes).
