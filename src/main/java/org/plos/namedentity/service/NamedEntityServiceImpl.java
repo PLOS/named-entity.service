@@ -3,7 +3,7 @@ package org.plos.namedentity.service;
 import java.util.Collection;
 import javax.inject.Inject;
 
-import org.plos.namedentity.api.TypedescriptionsDTO;
+import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.persist.NamedEntityDBService;
 
 public class NamedEntityServiceImpl implements NamedEntityService {
@@ -11,30 +11,33 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     @Inject private NamedEntityDBService namedEntityDBService; 
 
     @Override
-    public TypedescriptionsDTO create(TypedescriptionsDTO typeDescription) {
-		Integer pk = namedEntityDBService.create(typeDescription);
-		return namedEntityDBService.findById(pk, TypedescriptionsDTO.class);
+    public <T> Integer create(T t) {
+		return namedEntityDBService.create(t);
     }
 
     @Override
-    public TypedescriptionsDTO update(TypedescriptionsDTO typeDescription) {
-        namedEntityDBService.update(typeDescription);
-		return namedEntityDBService.findById(typeDescription.getTypeid(), TypedescriptionsDTO.class);
+    public <T> boolean update(T t) {
+        return namedEntityDBService.update(t);
     }
 
     @Override
-    public boolean delete(TypedescriptionsDTO typeDescription) {
-        return namedEntityDBService.delete(typeDescription);
+    public <T> boolean delete(T t) {
+        return namedEntityDBService.delete(t);
     }
 
     @Override
-    public TypedescriptionsDTO findTypedescriptionById(Integer typeId) {
-		return namedEntityDBService.findById(typeId, TypedescriptionsDTO.class);
+    public <T> T findById(Integer id, Class<T> clazz) {
+        T t = namedEntityDBService.findById(id, clazz);
+        if (t == null) {
+            throw new NedException(String.format(
+                "Record not found searching by id (%s)", t.getClass().getName()));
+        }
+        return t;
     }
 
     @Override
-    public Collection<TypedescriptionsDTO> getTypedescriptions() {
-        return namedEntityDBService.findAll(TypedescriptionsDTO.class);
+    public <T> Collection<T> findAll(Class<T> clazz) {
+        return namedEntityDBService.findAll(clazz);
     }
     
     public NamedEntityDBService getNamedEntityDBService() {

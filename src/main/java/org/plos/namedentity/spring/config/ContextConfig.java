@@ -9,10 +9,5 @@ import org.springframework.context.annotation.ImportResource;
 
 @Configuration
 @ImportResource("classpath:spring-beans.xml")
-//@ComponentScan(basePackages={"org.plos.namedentity.rest", "org.plos.namedentity.service"})
 public class ContextConfig {
-    //@Bean
-    //static public NamedEntityService namedEntityService() {
-        //return new NamedEntityServiceImpl();
-    //}
 }

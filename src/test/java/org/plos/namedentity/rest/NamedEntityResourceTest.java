@@ -1,6 +1,7 @@
 package org.plos.namedentity.rest;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -41,6 +42,8 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
             + "\"howused\":\""     + NEW_TYPE_USAGE + "\""
             + "}";
 
+        // Request #1. Expect success.
+
         Response response = target(TYPE_CLASS_URI).request(MediaType.APPLICATION_JSON_TYPE)
                                 .post(Entity.json(NEW_TYPE_JSON_PAYLOAD));
 
@@ -53,10 +56,30 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
         assertEquals(NEW_TYPE_DESC, newTypeClass.getDescription());
         assertEquals(NEW_TYPE_USAGE, newTypeClass.getHowused());
 
+        // Request #2. Expect a validation exception (client-side error)
+
+        response = target(TYPE_CLASS_URI).request(MediaType.APPLICATION_JSON_TYPE)
+                    .post(Entity.json(NEW_TYPE_JSON_PAYLOAD));
+
+        assertEquals(400, response.getStatus());
+
+        String textPayload = response.readEntity(String.class);
+        assertTrue(textPayload.indexOf("Validation failed") >= 0);
+
+        // Request #3. Expect a data access exception (server-side error)
+
+        response = target(TYPE_CLASS_URI).request(MediaType.APPLICATION_JSON_TYPE)
+                    .post(Entity.json(NEW_TYPE_JSON_PAYLOAD));
+
+        assertEquals(500, response.getStatus());
+
+        textPayload = response.readEntity(String.class);
+        assertTrue(textPayload.indexOf("Internal error") >= 0);
+
         /* ------------------------------------------------------------------ */
-        /*  FIND                                                              */
+        /*  FIND (BY ID)                                                      */
         /* ------------------------------------------------------------------ */
-        
+
         response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
 
         assertEquals(200, response.getStatus());
@@ -67,6 +90,18 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
         assertEquals(Integer.valueOf(1), foundTypeClass.getTypeid());
         assertEquals(NEW_TYPE_DESC, foundTypeClass.getDescription());
         assertEquals(NEW_TYPE_USAGE, foundTypeClass.getHowused());
+
+        /* ------------------------------------------------------------------ */
+        /*  FIND (ALL)                                                        */
+        /* ------------------------------------------------------------------ */
+
+        response = target(TYPE_CLASS_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+        assertEquals(200, response.getStatus());
+        jsonPayload = response.readEntity(String.class);
+
+        TypedescriptionsDTO[] typeClassArray = mapper.readValue(jsonPayload, TypedescriptionsDTO[].class); 
+        assertEquals(3, typeClassArray.length);
 
         /* ------------------------------------------------------------------ */
         /*  UPDATE                                                            */
@@ -80,6 +115,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
         updatedTypeClass.setHowused(UPDATE_TYPE_USAGE);
 
         // marshal Type description DTO object to JSON String.
+
         Writer writer = new StringWriter();
         mapper.writeValue(writer, updatedTypeClass);
 
@@ -88,17 +124,33 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
         assertEquals(200, response.getStatus());
 
-        jsonPayload = response.readEntity(String.class);
+        // we won't bother to inspect payload because it won't be updated (we
+        // didn't mock for this). however, just trying to update and returning
+        // a 200 winds through much of the code we want tested.
 
-        TypedescriptionsDTO updatedTypeClass2 = mapper.readValue(jsonPayload, TypedescriptionsDTO.class);
-        assertEquals(updatedTypeClass, updatedTypeClass2);
+
+        // UPDATE #2 should raise a validation exception
+
+        response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
+                    .put(Entity.json(writer.toString()));
+
+        assertEquals(400, response.getStatus());
+        
+        // UPDATE #3 should raise a server-side exception
+
+        response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
+                    .put(Entity.json(writer.toString()));
+
+        assertEquals(500, response.getStatus());
 
         /* ------------------------------------------------------------------ */
         /*  DELETE                                                           */
         /* ------------------------------------------------------------------ */
 
         response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).delete();
-
         assertEquals(204, response.getStatus());
+
+        response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).delete();
+        assertEquals(500, response.getStatus());
     }
 }

@@ -29,14 +29,18 @@ public class NamedEntityServiceTest {
         newType.setDescription("description");
         newType.setHowused("howused");
 
-        TypedescriptionsDTO savedType = nedSvc.create(newType);
+        Integer pkId = nedSvc.create(newType);
+        assertNotNull( pkId );
+        
+        TypedescriptionsDTO savedType = nedSvc.findById(pkId, TypedescriptionsDTO.class);
         assertNotNull( savedType );
-        assertNotNull( savedType.getTypeid() );
+        assertEquals(pkId, savedType.getTypeid());
 
         // UPDATE
 
         savedType.setDescription("description2");
-        TypedescriptionsDTO savedType2 = nedSvc.update(savedType);
+        assertTrue( nedSvc.update(savedType) );
+        TypedescriptionsDTO savedType2 = nedSvc.findById(pkId, TypedescriptionsDTO.class);
         assertEquals(savedType, savedType2);
 
         // DELETE - delete type class without any children
@@ -55,12 +59,12 @@ public class NamedEntityServiceTest {
         }
 
         // FIND By Id
-        TypedescriptionsDTO typeClass1 = nedSvc.findTypedescriptionById(1);
+        TypedescriptionsDTO typeClass1 = nedSvc.findById(1, TypedescriptionsDTO.class);
         assertNotNull(typeClass1);
         assertEquals(Integer.valueOf(1), typeClass1.getTypeid());
 
         // FIND All
-        Collection<TypedescriptionsDTO> typeClasses = nedSvc.getTypedescriptions();
+        Collection<TypedescriptionsDTO> typeClasses = nedSvc.findAll(TypedescriptionsDTO.class);
         assertNotNull(typeClasses);
         assertTrue(typeClasses.contains(typeClass1));
     }

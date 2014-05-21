@@ -1,6 +1,7 @@
 package org.plos.namedentity.rest;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -12,6 +13,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -19,8 +21,7 @@ import org.apache.log4j.Logger;
 
 import org.plos.namedentity.api.TypedescriptionsDTO;
 import org.plos.namedentity.service.NamedEntityService;
-
-import org.springframework.dao.DataAccessException;
+import org.plos.namedentity.api.NedValidationException;
 
 @Path("/ned")
 public class NamedEntityResource {
@@ -32,57 +33,99 @@ public class NamedEntityResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/typeclasses/{id}")
-    public TypedescriptionsDTO getTypedescription(@PathParam("id") int id) {
-        // TODO: handle exception
-        TypedescriptionsDTO dto = namedEntityService.findTypedescriptionById(id);
-        if (dto == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+    public Response getTypedescription(@PathParam("id") int id) {
+        try {
+            TypedescriptionsDTO dto = namedEntityService.findById(id, TypedescriptionsDTO.class);
+            return Response.status(Response.Status.OK).entity(dto).build();
         }
-        return dto;
+        catch(Exception e) {
+            logger.error("internal error", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
+                .entity("Find type class by id failed. Reason: " + e.getMessage())
+                .type(MediaType.TEXT_PLAIN).build();
+        }
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/typeclasses")
-    public Collection<TypedescriptionsDTO> getTypedescriptions() {
-        // TODO: handle exception
-        Collection<TypedescriptionsDTO> typeClasses = namedEntityService.getTypedescriptions();
-        if (typeClasses == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+    public Response getTypedescriptions() {
+        try {
+            Collection<TypedescriptionsDTO> typeClasses = namedEntityService.findAll(TypedescriptionsDTO.class);
+            return Response.status(Response.Status.OK).entity(
+                new GenericEntity<Collection<TypedescriptionsDTO>>(typeClasses){}).build();
         }
-        return typeClasses;
+        catch(Exception e) {
+            logger.error("internal error", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
+                .entity("Find all type classes failed. Reason: " + e.getMessage())
+                .type(MediaType.TEXT_PLAIN).build();
+        }
     }
 
     @POST
     @Consumes("application/json")
     @Produces("application/json")
     @Path("/typeclasses")
-    public TypedescriptionsDTO createTypedescription(TypedescriptionsDTO typeDescription) {
-        // TODO: handle exception
-        TypedescriptionsDTO dto = namedEntityService.create(typeDescription);
-        return dto;
+    public Response createTypedescription(TypedescriptionsDTO typeDescription) {
+        try {
+            Integer pkId = namedEntityService.create(typeDescription);
+            TypedescriptionsDTO dto = namedEntityService.findById(pkId, TypedescriptionsDTO.class);
+            return Response.status(Response.Status.OK).entity(dto).build();
+        }
+        catch(NedValidationException e) {
+            logger.error("validation exception", e);
+            return Response.status(Response.Status.BAD_REQUEST)             // 4XX (client-side)
+                .entity("Unable to create Type Class. Validation failed. Reason: " + e.getMessage())
+                .type(MediaType.TEXT_PLAIN).build();
+        }
+        catch(Exception e) {
+            logger.error("internal error", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
+                .entity("Unable to create Type Class. Internal error. Reason: " + e.getMessage())
+                .type(MediaType.TEXT_PLAIN).build();
+        }
     }
 
     @PUT
     @Consumes("application/json")
     @Produces("application/json")
     @Path("/typeclasses/{id}")
-    public TypedescriptionsDTO updateTypedescription(TypedescriptionsDTO typeDescription) {
-        // TODO: handle exception
-        TypedescriptionsDTO dto = namedEntityService.update(typeDescription);
-        return dto;
+    public Response updateTypedescription(TypedescriptionsDTO typeDescription) {
+        try {
+            namedEntityService.update(typeDescription);
+            TypedescriptionsDTO dto = namedEntityService.findById(
+                typeDescription.getTypeid(), TypedescriptionsDTO.class);
+            return Response.status(Response.Status.OK).entity(dto).build();
+        }
+        catch(NedValidationException e) {
+            logger.error("validation exception", e);
+            return Response.status(Response.Status.BAD_REQUEST)             // 4XX (client-side)
+                .entity("Unable to update Type Class. Validation failed. Reason: " + e.getMessage())
+                .type(MediaType.TEXT_PLAIN).build();
+        }
+        catch(Exception e) {
+            logger.error("internal error", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
+                .entity("Unable to update Type Class. Internal error. Reason: " + e.getMessage())
+                .type(MediaType.TEXT_PLAIN).build();
+        }
     }
 
     @DELETE
     @Path("/typeclasses/{id}")
-    public void deleteTypedescription(@PathParam("id") int id) {
+    public Response deleteTypedescription(@PathParam("id") int id) {
         try {
             TypedescriptionsDTO dto = new TypedescriptionsDTO();
             dto.setTypeid(id);
             namedEntityService.delete(dto);
+            return Response.status(Response.Status.NO_CONTENT).build();
         }
-        catch (DataAccessException e) {
-            throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
+        catch(Exception e) {
+            logger.error("internal error", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
+                .entity("Unable to delete Type Class. Internal error. Reason: " + e.getMessage())
+                .type(MediaType.TEXT_PLAIN).build();
         }
     }
  

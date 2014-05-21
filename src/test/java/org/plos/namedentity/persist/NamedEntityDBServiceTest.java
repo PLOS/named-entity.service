@@ -120,9 +120,7 @@ public class NamedEntityDBServiceTest {
         // Find all type classes
         List<TypedescriptionsDTO> typeClasses = nedDBSvc.findAll(TypedescriptionsDTO.class);
         assertTrue(typeClasses.size() >= 20);
-        //assertEquals(20, typeClasses.size());
 
-        // TODO: fix this!
         // Try to find a type class which doesn't exist
         TypedescriptionsDTO dto3 = nedDBSvc.findById(666, TypedescriptionsDTO.class);
         assertNull(dto3);

@@ -6,10 +6,10 @@ import org.plos.namedentity.api.TypedescriptionsDTO;
 
 public interface NamedEntityService {
 
-    public TypedescriptionsDTO create(TypedescriptionsDTO typeDescription);
-    public TypedescriptionsDTO update(TypedescriptionsDTO typeDescription);
-    public boolean delete(TypedescriptionsDTO typeDescription);
+    public <T> Integer create(T t);
+    public <T> boolean update(T t);
+    public <T> boolean delete(T t);
 
-    public TypedescriptionsDTO findTypedescriptionById(Integer typeId);
-    public Collection<TypedescriptionsDTO> getTypedescriptions();
+    public <T> T findById(Integer id, Class<T> clazz);
+    public <T> Collection<T> findAll(Class<T> clazz);
 }

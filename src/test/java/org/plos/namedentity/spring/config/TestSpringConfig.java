@@ -1,44 +1,53 @@
 package org.plos.namedentity.spring.config;
 
+import static org.mockito.Mockito.when;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+
+import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.TypedescriptionsDTO;
 import org.plos.namedentity.rest.NamedEntityResource;
 import org.plos.namedentity.service.NamedEntityService;
+
 import org.springframework.context.annotation.Bean;
+import org.springframework.dao.DataAccessException;
 
 public class TestSpringConfig {
 
-    @Bean
+    @Bean @SuppressWarnings("unchecked")
     static public NamedEntityService namedEntityService() {
         NamedEntityService mockNamedEntityService =  Mockito.mock(NamedEntityService.class);
 
-        Mockito.when(mockNamedEntityService.create(any(TypedescriptionsDTO.class)))
-            .thenAnswer(new Answer<TypedescriptionsDTO>() {
-                @Override
-                public TypedescriptionsDTO answer(InvocationOnMock invocation) throws Throwable {
-                    Object[] args = invocation.getArguments();
-                    TypedescriptionsDTO dto = (TypedescriptionsDTO) args[0];
-                    dto.setTypeid(1);
-                    return dto;
-                }
-            });
+        when(mockNamedEntityService.create(any(TypedescriptionsDTO.class)))
+            .thenReturn(Integer.valueOf(1))
+                .thenThrow(NedValidationException.class)
+                    .thenThrow(RuntimeException.class);
 
-        Mockito.when(mockNamedEntityService.update(any(TypedescriptionsDTO.class)))
-            .thenAnswer(new Answer<TypedescriptionsDTO>() {
-                @Override
-                public TypedescriptionsDTO answer(InvocationOnMock invocation) throws Throwable {
-                    Object[] args = invocation.getArguments();
-                    return (TypedescriptionsDTO) args[0];
-                }
-            });
+        when(mockNamedEntityService.update(any()))
+            .thenReturn(true)
+                .thenThrow(NedValidationException.class)
+                    .thenThrow(RuntimeException.class);
 
-        Mockito.when(mockNamedEntityService.findTypedescriptionById(eq(1)))
-               .thenReturn(new TypedescriptionsDTO(1, "New Type Description", "New Type Usage"));
+        when(mockNamedEntityService.delete(any()))
+            .thenReturn(true)
+                .thenThrow(RuntimeException.class);
+
+        when(mockNamedEntityService.findById(eq(1), eq(TypedescriptionsDTO.class)))
+            .thenReturn(new TypedescriptionsDTO(1, "New Type Description", "New Type Usage"));
+
+        List<TypedescriptionsDTO> typeClassList = new ArrayList<>();
+        typeClassList.add(new TypedescriptionsDTO(1, "Type Description1", "Type Usage1"));
+        typeClassList.add(new TypedescriptionsDTO(2, "Type Description2", "Type Usage2"));
+        typeClassList.add(new TypedescriptionsDTO(3, "Type Description3", "Type Usage3"));
+
+        when(mockNamedEntityService.findAll(eq(TypedescriptionsDTO.class))).thenReturn(typeClassList);
         
         return mockNamedEntityService;
     }
