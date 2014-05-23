@@ -224,17 +224,19 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
         assertEquals("TV1", foundTypeVal.getTypecode());
 
         /* ------------------------------------------------------------------ */
-        /*  FIND (ALL)                                                        */
+        /*  FIND VALUES FOR TYPE CLASS (BY ATTRIBUTE)                         */
         /* ------------------------------------------------------------------ */
-/*
-        response = target(TYPE_CLASS_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+        response = target(TYPE_VALUE_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
 
         assertEquals(200, response.getStatus());
         jsonPayload = response.readEntity(String.class);
 
-        TypedescriptionsDTO[] typeClassArray = mapper.readValue(jsonPayload, TypedescriptionsDTO[].class); 
-        assertEquals(3, typeClassArray.length);
-*/
+        GlobaltypesDTO[] typeValuesForTypeClassArray = mapper.readValue(jsonPayload, GlobaltypesDTO[].class); 
+        assertEquals(5, typeValuesForTypeClassArray.length);
+        for (int i = 0; i < 5; i++) {
+            assertEquals(Integer.valueOf(i+1), typeValuesForTypeClassArray[i].getGlobaltypeid());
+        }
 
         /* ------------------------------------------------------------------ */
         /*  UPDATE                                                            */

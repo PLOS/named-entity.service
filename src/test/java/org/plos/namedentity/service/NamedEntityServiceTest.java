@@ -115,5 +115,16 @@ public class NamedEntityServiceTest {
         Collection<GlobaltypesDTO> globalTypes = nedSvc.findAll(GlobaltypesDTO.class);
         assertNotNull(globalTypes);
         assertTrue(globalTypes.contains(typeVal1));
+
+        // FIND BY ATTRIBUTE(S)
+
+        GlobaltypesDTO searchCriteriaDTO = new GlobaltypesDTO();
+        searchCriteriaDTO.setTypeid(1);
+
+        Collection<GlobaltypesDTO> globalTypesForTypeClass = nedSvc.findByAttribute(searchCriteriaDTO);
+        assertNotNull(globalTypesForTypeClass);
+        for (GlobaltypesDTO gtype : globalTypesForTypeClass) {
+            assertTrue(globalTypes.contains(gtype));
+        }
     }
 }

@@ -12,4 +12,5 @@ public interface NamedEntityDBService {
 
     public <T> List<T> findAll(Class<T> clazz);
     public <T> T       findById(Integer id, Class<T> clazz);
+    public <T> List<T> findByAttribute(T t);
 }

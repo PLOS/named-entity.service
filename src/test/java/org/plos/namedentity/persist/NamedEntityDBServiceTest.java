@@ -174,6 +174,12 @@ public class NamedEntityDBServiceTest {
         List<GlobaltypesDTO> globalTypes = nedDBSvc.findAll(GlobaltypesDTO.class);
         assertTrue(globalTypes.size() >= 75);
 
+        // Find global types for a type class
+        GlobaltypesDTO searchCriteriaDTO = new GlobaltypesDTO();
+        searchCriteriaDTO.setTypeid(1);
+        List<GlobaltypesDTO> globalTypesForTypeClass = nedDBSvc.findByAttribute(searchCriteriaDTO);
+        assertEquals(3, globalTypesForTypeClass.size());
+
         // Try to find a global type which doesn't exist
         GlobaltypesDTO dto3 = nedDBSvc.findById(666, GlobaltypesDTO.class);
         assertNull(dto3);

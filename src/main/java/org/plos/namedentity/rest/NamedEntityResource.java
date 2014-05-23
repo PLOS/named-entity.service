@@ -155,22 +155,25 @@ public class NamedEntityResource {
         }
     }
 
-    //@GET
-    //@Produces(MediaType.APPLICATION_JSON)
-    //@Path("/typeclasses/{typeclassid}/typevalues")
-    //public Response getGlobalTypeForTypeClass(@PathParam("typeclassid") int typeClassId) {
-        //try {
-            //Collection<GlobaltypesDTO> typeClasses = namedEntityService.findAll(GlobaltypesDTO.class);
-            //return Response.status(Response.Status.OK).entity(
-                //new GenericEntity<Collection<TypedescriptionsDTO>>(typeClasses){}).build();
-        //}
-        //catch(Exception e) {
-            //logger.error("internal error", e);
-            //return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-                //.entity("Find all type classes failed. Reason: " + e.getMessage())
-                //.type(MediaType.TEXT_PLAIN).build();
-        //}
-    //}
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/typeclasses/{typeclassid}/typevalues")
+    public Response getGlobalTypeForTypeClass(@PathParam("typeclassid") int typeClassId) {
+        try {
+            GlobaltypesDTO searchCriteriaDTO = new GlobaltypesDTO();
+            searchCriteriaDTO.setTypeid(typeClassId);
+
+            Collection<GlobaltypesDTO> typeClasses = namedEntityService.findByAttribute(searchCriteriaDTO);
+            return Response.status(Response.Status.OK).entity(
+                new GenericEntity<Collection<GlobaltypesDTO>>(typeClasses){}).build();
+        }
+        catch(Exception e) {
+            logger.error("internal error", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
+                .entity("Find type classes for a type class failed. Reason: " + e.getMessage())
+                .type(MediaType.TEXT_PLAIN).build();
+        }
+    }
 
     @POST
     @Consumes("application/json")

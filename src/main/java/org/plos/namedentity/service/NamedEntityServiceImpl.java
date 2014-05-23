@@ -39,6 +39,11 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     public <T> Collection<T> findAll(Class<T> clazz) {
         return namedEntityDBService.findAll(clazz);
     }
+
+    @Override
+    public <T> Collection<T> findByAttribute(T t) {
+        return namedEntityDBService.findByAttribute(t);
+    }
     
     public NamedEntityDBService getNamedEntityDBService() {
         return namedEntityDBService;

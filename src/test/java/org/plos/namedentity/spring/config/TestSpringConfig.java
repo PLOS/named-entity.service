@@ -1,8 +1,9 @@
 package org.plos.namedentity.spring.config;
 
-import static org.mockito.Mockito.when;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,14 @@ public class TestSpringConfig {
         typeVal.setTypecode("TV1");
 
         when(mockNamedEntityService.findById(eq(1), eq(GlobaltypesDTO.class))).thenReturn(typeVal);
+
+        List<GlobaltypesDTO> typeValuesForTypeClass = new ArrayList<>();
+        for (int i = 1; i <=5; i++) {
+            typeValuesForTypeClass.add(new GlobaltypesDTO(
+                i, 1, "shortdesc"+i, "longdesc"+i, "typ"+i, null, null, null, null));
+        }
+
+        when(mockNamedEntityService.findByAttribute(isA(GlobaltypesDTO.class))).thenReturn(typeValuesForTypeClass);
         
         return mockNamedEntityService;
     }

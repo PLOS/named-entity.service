@@ -68,6 +68,18 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         return (r != null ? r.into(clazz) : null);
     }
 
+    @Override @SuppressWarnings("unchecked")
+    public <T> List<T> findByAttribute(T t) {
+    
+        if (t instanceof GlobaltypesDTO) {
+            return context
+                .select().from(GLOBALTYPES)
+                .where(GLOBALTYPES.TYPEID.equal( ((GlobaltypesDTO)t).getTypeid()) )
+                .fetchInto((Class<T>)t.getClass());
+        }
+        throw new UnsupportedOperationException("findByAttribute hasn't been implemented for all types");
+    }
+
     @Override @Transactional
     public Integer newNamedEntityId(String typeCode) {
 
