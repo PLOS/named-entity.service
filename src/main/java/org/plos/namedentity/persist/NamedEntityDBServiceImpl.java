@@ -17,6 +17,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
 
+import org.plos.namedentity.api.GlobaltypesDTO;
 import org.plos.namedentity.api.JournalsDTO;
 import org.plos.namedentity.api.TypedescriptionsDTO;
 
@@ -134,6 +135,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     private static final Map<Class,TablePkPair> dtoTableMap;
     static {
         dtoTableMap = new ConcurrentHashMap<>();
+        dtoTableMap.put(GlobaltypesDTO.class, new TablePkPair(GLOBALTYPES, GLOBALTYPES.GLOBALTYPEID));
         dtoTableMap.put(JournalsDTO.class, new TablePkPair(JOURNALS, JOURNALS.JOURNALID));
         dtoTableMap.put(TypedescriptionsDTO.class, new TablePkPair(TYPEDESCRIPTIONS, TYPEDESCRIPTIONS.TYPEID));
     }

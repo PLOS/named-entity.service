@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Individuals extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord> {
 
-	private static final long serialVersionUID = -1945176699;
+	private static final long serialVersionUID = -242217225;
 
 	/**
 	 * The singleton instance of <code>namedEntities.individuals</code>
@@ -85,6 +85,16 @@ public class Individuals extends org.jooq.impl.TableImpl<org.plos.namedentity.pe
 	 * The column <code>namedEntities.individuals.url</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> URL = createField("url", org.jooq.impl.SQLDataType.VARCHAR.length(45), this, "");
+
+	/**
+	 * The column <code>namedEntities.individuals.isActive</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Byte> ISACTIVE = createField("isActive", org.jooq.impl.SQLDataType.TINYINT, this, "");
+
+	/**
+	 * The column <code>namedEntities.individuals.isVisible</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Byte> ISVISIBLE = createField("isVisible", org.jooq.impl.SQLDataType.TINYINT, this, "");
 
 	/**
 	 * Create a <code>namedEntities.individuals</code> table reference

@@ -12,6 +12,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.GlobaltypesDTO;
 import org.plos.namedentity.api.TypedescriptionsDTO;
 import org.plos.namedentity.rest.NamedEntityResource;
 import org.plos.namedentity.service.NamedEntityService;
@@ -25,7 +26,7 @@ public class TestSpringConfig {
     static public NamedEntityService namedEntityService() {
         NamedEntityService mockNamedEntityService =  Mockito.mock(NamedEntityService.class);
 
-        when(mockNamedEntityService.create(any(TypedescriptionsDTO.class)))
+        when(mockNamedEntityService.create(any()))
             .thenReturn(Integer.valueOf(1))
                 .thenThrow(NedValidationException.class)
                     .thenThrow(RuntimeException.class);
@@ -39,6 +40,8 @@ public class TestSpringConfig {
             .thenReturn(true)
                 .thenThrow(RuntimeException.class);
 
+        // TYPE DESCRIPTIONS (TYPE CLASSES)
+
         when(mockNamedEntityService.findById(eq(1), eq(TypedescriptionsDTO.class)))
             .thenReturn(new TypedescriptionsDTO(1, "New Type Description", "New Type Usage"));
 
@@ -48,6 +51,16 @@ public class TestSpringConfig {
         typeClassList.add(new TypedescriptionsDTO(3, "Type Description3", "Type Usage3"));
 
         when(mockNamedEntityService.findAll(eq(TypedescriptionsDTO.class))).thenReturn(typeClassList);
+
+        // TYPE VALUES (GLOBAL TYPES)
+
+        GlobaltypesDTO typeVal = new GlobaltypesDTO();
+        typeVal.setGlobaltypeid(1);
+        typeVal.setTypeid(1);
+        typeVal.setShortdescription("Type Value #1 Short Description");
+        typeVal.setTypecode("TV1");
+
+        when(mockNamedEntityService.findById(eq(1), eq(GlobaltypesDTO.class))).thenReturn(typeVal);
         
         return mockNamedEntityService;
     }

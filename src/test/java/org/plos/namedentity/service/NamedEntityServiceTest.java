@@ -1,7 +1,7 @@
 package org.plos.namedentity.service;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -9,6 +9,7 @@ import java.util.Collection;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.plos.namedentity.api.GlobaltypesDTO;
 import org.plos.namedentity.api.TypedescriptionsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -67,5 +68,52 @@ public class NamedEntityServiceTest {
         Collection<TypedescriptionsDTO> typeClasses = nedSvc.findAll(TypedescriptionsDTO.class);
         assertNotNull(typeClasses);
         assertTrue(typeClasses.contains(typeClass1));
+    }
+
+	@Test
+    public void testGlobalTypesCRUD() {
+
+        // CREATE
+
+        GlobaltypesDTO newTypeVal = new GlobaltypesDTO();
+        newTypeVal.setTypeid(
+            nedSvc.findById(1, TypedescriptionsDTO.class).getTypeid());
+        newTypeVal.setShortdescription("type value abc");
+        newTypeVal.setLongdescription("longdescription");
+        newTypeVal.setTypecode("abc");
+
+        Integer pkId = nedSvc.create(newTypeVal);
+        assertNotNull( pkId );
+        assertNotNull(newTypeVal.getCreated());
+        assertNotNull(newTypeVal.getLastmodified());
+        
+        GlobaltypesDTO savedTypeVal = nedSvc.findById(pkId, GlobaltypesDTO.class);
+        assertNotNull( savedTypeVal );
+        assertEquals(pkId, savedTypeVal.getGlobaltypeid());
+
+        // UPDATE
+
+        savedTypeVal.setShortdescription("abc2");
+        assertTrue( nedSvc.update(savedTypeVal) );
+        GlobaltypesDTO savedTypeVal2 = nedSvc.findById(pkId, GlobaltypesDTO.class);
+        assertEquals(savedTypeVal, savedTypeVal2);
+
+        // DELETE - delete type class without any children
+
+        assertTrue( nedSvc.delete(savedTypeVal) );
+
+        //TODO - try to delete a global type with foreign key references.
+
+        // FIND By Id
+
+        GlobaltypesDTO typeVal1 = nedSvc.findById(1, GlobaltypesDTO.class);
+        assertNotNull(typeVal1);
+        assertEquals(Integer.valueOf(1), typeVal1.getGlobaltypeid());
+
+        // FIND All
+
+        Collection<GlobaltypesDTO> globalTypes = nedSvc.findAll(GlobaltypesDTO.class);
+        assertNotNull(globalTypes);
+        assertTrue(globalTypes.contains(typeVal1));
     }
 }

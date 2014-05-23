@@ -13,16 +13,14 @@ import java.util.List;
 import org.jooq.DSLContext;
 import org.jooq.Record2;
 import org.jooq.Result;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
+import org.plos.namedentity.api.GlobaltypesDTO;
 import org.plos.namedentity.api.JournalsDTO;
 import org.plos.namedentity.api.TypedescriptionsDTO;
 import org.plos.namedentity.persist.db.namedentities.tables.Globaltypes;
 import org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -145,4 +143,56 @@ public class NamedEntityDBServiceTest {
             // declarative transaction will rollback changes on exception
         }
     }
+
+	@Test
+    public void testGlobaltypesCRUD() {
+
+		GlobaltypesDTO newGlobaltype = new GlobaltypesDTO();
+		newGlobaltype.setTypeid( findTypeClassStartWith("Named Party") );
+		newGlobaltype.setShortdescription("Group XYZ");
+		newGlobaltype.setTypecode("GRPX");
+
+		assertNull(newGlobaltype.getGlobaltypeid());
+		assertNotNull(newGlobaltype.getTypeid());
+		assertNotNull(newGlobaltype.getCreated());
+		assertNotNull(newGlobaltype.getLastmodified());
+
+        // CREATE
+        Integer newGlobalTypeId = nedDBSvc.create( newGlobaltype );
+        assertNotNull(newGlobalTypeId);
+
+        // UPDATE short description.
+        GlobaltypesDTO dto = nedDBSvc.findById(newGlobalTypeId, GlobaltypesDTO.class);
+        dto.setShortdescription( dto.getShortdescription() + "2");
+        assertTrue( nedDBSvc.update(dto) );
+
+        // Get another instance of same type class
+        GlobaltypesDTO dto2 = nedDBSvc.findById(newGlobalTypeId, GlobaltypesDTO.class);
+        assertEquals(dto, dto2);
+
+        // Find all global types 
+        List<GlobaltypesDTO> globalTypes = nedDBSvc.findAll(GlobaltypesDTO.class);
+        assertTrue(globalTypes.size() >= 75);
+
+        // Try to find a global type which doesn't exist
+        GlobaltypesDTO dto3 = nedDBSvc.findById(666, GlobaltypesDTO.class);
+        assertNull(dto3);
+
+		// DELETE
+		GlobaltypesDTO typeValueToDelete = new GlobaltypesDTO();
+		typeValueToDelete.setGlobaltypeid(newGlobalTypeId);
+
+        assertTrue( nedDBSvc.delete(typeValueToDelete) );
+
+		// TODO: add foreign key constraint voilation test for globalTypes.
+    }
+
+	private Integer findTypeClassStartWith(String prefix) {
+        for(TypedescriptionsDTO typeClass : nedDBSvc.findAll(TypedescriptionsDTO.class)) {
+			if (typeClass.getDescription().startsWith(prefix)) {
+				return typeClass.getTypeid();
+			}
+		}
+		throw new RuntimeException("No type class found which begins with " + prefix);
+	}
 }

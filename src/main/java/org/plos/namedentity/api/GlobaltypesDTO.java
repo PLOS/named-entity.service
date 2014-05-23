@@ -1,5 +1,9 @@
 package org.plos.namedentity.api;
 
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.Objects;
+
 /**
  * JOOQ generated class(pojo=true). Added DTO to classname and moved to this pkg.
  */
@@ -18,7 +22,9 @@ public class GlobaltypesDTO implements java.io.Serializable {
 	private java.lang.Integer  createdby;
 	private java.lang.Integer  lastmodifiedby;
 
-	public GlobaltypesDTO() {}
+	public GlobaltypesDTO() {
+        this(null,null,null,null,null,null,null,null,null);
+    }
 
 	public GlobaltypesDTO(
 		java.lang.Integer  globaltypeid,
@@ -31,15 +37,17 @@ public class GlobaltypesDTO implements java.io.Serializable {
 		java.lang.Integer  createdby,
 		java.lang.Integer  lastmodifiedby
 	) {
-		this.globaltypeid = globaltypeid;
-		this.typeid = typeid;
+		this.globaltypeid     = globaltypeid;
+		this.typeid           = typeid;
 		this.shortdescription = shortdescription;
-		this.longdescription = longdescription;
-		this.typecode = typecode;
-		this.created = created;
-		this.lastmodified = lastmodified;
-		this.createdby = createdby;
-		this.lastmodifiedby = lastmodifiedby;
+		this.longdescription  = longdescription;
+		this.typecode         = typecode;
+
+		this.created          = (created != null ? created : new Timestamp(new Date().getTime()));
+		this.lastmodified     = (lastmodified != null ? lastmodified : new Timestamp(new Date().getTime()));
+
+		this.createdby        = createdby;
+		this.lastmodifiedby   = lastmodifiedby;
 	}
 
 	public java.lang.Integer getGlobaltypeid() {
@@ -113,4 +121,28 @@ public class GlobaltypesDTO implements java.io.Serializable {
 	public void setLastmodifiedby(java.lang.Integer lastmodifiedby) {
 		this.lastmodifiedby = lastmodifiedby;
 	}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+
+        if (o == null || this.getClass() != o.getClass()) { return false; }
+
+        GlobaltypesDTO dto = (GlobaltypesDTO) o;
+        return Objects.equals(this.globaltypeid, dto.globaltypeid)
+            && Objects.equals(this.typeid, dto.typeid)
+            && Objects.equals(this.shortdescription, dto.shortdescription)
+            && Objects.equals(this.longdescription, dto.longdescription)
+            && Objects.equals(this.typecode, dto.typecode)
+            && Objects.equals(this.created, dto.created)
+            && Objects.equals(this.lastmodified, dto.lastmodified)
+            && Objects.equals(this.createdby, dto.createdby)
+            && Objects.equals(this.lastmodifiedby, dto.lastmodifiedby);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(globaltypeid, typeid, shortdescription, longdescription, 
+            typecode, created, lastmodified, createdby, lastmodifiedby);
+    }
 }
