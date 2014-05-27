@@ -1,17 +1,17 @@
-package org.plos.namedentity.api;
+package org.plos.namedentity.api.entity;
 
 /**
- * JOOQ generated class(pojo=true). Added DTO to classname and moved to this pkg.
+ * Modified JOOQ generated class(pojo=true).
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class RolesDTO implements java.io.Serializable {
+public class RelationshipEntity implements java.io.Serializable {
 
-	private static final long serialVersionUID = 315701916;
+	private static final long serialVersionUID = 1494801838;
 
-	private java.lang.Integer  roleid;
-	private java.lang.Integer  namedentityid;
-	private java.lang.Integer  sourceapplicationtypeid;
-	private java.lang.Integer  roletypeid;
+	private java.lang.Integer  relationshipid;
+	private java.lang.Integer  masternamedentityid;
+	private java.lang.Integer  childnamedentityid;
+	private java.lang.Integer  relationshiptypeid;
 	private java.sql.Timestamp startdate;
 	private java.sql.Timestamp enddate;
 	private java.sql.Timestamp created;
@@ -19,13 +19,13 @@ public class RolesDTO implements java.io.Serializable {
 	private java.lang.Integer  createdby;
 	private java.lang.Integer  lastmodifiedby;
 
-	public RolesDTO() {}
+	public RelationshipEntity() {}
 
-	public RolesDTO(
-		java.lang.Integer  roleid,
-		java.lang.Integer  namedentityid,
-		java.lang.Integer  sourceapplicationtypeid,
-		java.lang.Integer  roletypeid,
+	public RelationshipEntity(
+		java.lang.Integer  relationshipid,
+		java.lang.Integer  masternamedentityid,
+		java.lang.Integer  childnamedentityid,
+		java.lang.Integer  relationshiptypeid,
 		java.sql.Timestamp startdate,
 		java.sql.Timestamp enddate,
 		java.sql.Timestamp created,
@@ -33,10 +33,10 @@ public class RolesDTO implements java.io.Serializable {
 		java.lang.Integer  createdby,
 		java.lang.Integer  lastmodifiedby
 	) {
-		this.roleid = roleid;
-		this.namedentityid = namedentityid;
-		this.sourceapplicationtypeid = sourceapplicationtypeid;
-		this.roletypeid = roletypeid;
+		this.relationshipid = relationshipid;
+		this.masternamedentityid = masternamedentityid;
+		this.childnamedentityid = childnamedentityid;
+		this.relationshiptypeid = relationshiptypeid;
 		this.startdate = startdate;
 		this.enddate = enddate;
 		this.created = created;
@@ -45,36 +45,36 @@ public class RolesDTO implements java.io.Serializable {
 		this.lastmodifiedby = lastmodifiedby;
 	}
 
-	public java.lang.Integer getRoleid() {
-		return this.roleid;
+	public java.lang.Integer getRelationshipid() {
+		return this.relationshipid;
 	}
 
-	public void setRoleid(java.lang.Integer roleid) {
-		this.roleid = roleid;
+	public void setRelationshipid(java.lang.Integer relationshipid) {
+		this.relationshipid = relationshipid;
 	}
 
-	public java.lang.Integer getNamedentityid() {
-		return this.namedentityid;
+	public java.lang.Integer getMasternamedentityid() {
+		return this.masternamedentityid;
 	}
 
-	public void setNamedentityid(java.lang.Integer namedentityid) {
-		this.namedentityid = namedentityid;
+	public void setMasternamedentityid(java.lang.Integer masternamedentityid) {
+		this.masternamedentityid = masternamedentityid;
 	}
 
-	public java.lang.Integer getSourceapplicationtypeid() {
-		return this.sourceapplicationtypeid;
+	public java.lang.Integer getChildnamedentityid() {
+		return this.childnamedentityid;
 	}
 
-	public void setSourceapplicationtypeid(java.lang.Integer sourceapplicationtypeid) {
-		this.sourceapplicationtypeid = sourceapplicationtypeid;
+	public void setChildnamedentityid(java.lang.Integer childnamedentityid) {
+		this.childnamedentityid = childnamedentityid;
 	}
 
-	public java.lang.Integer getRoletypeid() {
-		return this.roletypeid;
+	public java.lang.Integer getRelationshiptypeid() {
+		return this.relationshiptypeid;
 	}
 
-	public void setRoletypeid(java.lang.Integer roletypeid) {
-		this.roletypeid = roletypeid;
+	public void setRelationshiptypeid(java.lang.Integer relationshiptypeid) {
+		this.relationshiptypeid = relationshiptypeid;
 	}
 
 	public java.sql.Timestamp getStartdate() {

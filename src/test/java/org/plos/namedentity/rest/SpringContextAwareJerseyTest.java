@@ -1,13 +1,10 @@
 package org.plos.namedentity.rest;
 
-import org.plos.namedentity.spring.config.TestSpringConfig;
-
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.AfterClass;
+import org.plos.namedentity.spring.config.TestSpringConfig;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import java.util.List;
 
 public abstract class SpringContextAwareJerseyTest extends JerseyTest {
 

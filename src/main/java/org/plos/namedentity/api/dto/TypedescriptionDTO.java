@@ -1,22 +1,16 @@
-package org.plos.namedentity.api;
+package org.plos.namedentity.api.dto;
 
 import java.util.Objects;
 
-/**
- * JOOQ generated class(pojo=true). Added DTO to classname and moved to this pkg.
- */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TypedescriptionsDTO implements java.io.Serializable {
+public class TypedescriptionDTO {
 
-	private static final long serialVersionUID = -356395330;
+	private Integer typeid;
+	private String  description;
+	private String  howused;
 
-	private java.lang.Integer typeid;
-	private java.lang.String  description;
-	private java.lang.String  howused;
+	public TypedescriptionDTO() {}
 
-	public TypedescriptionsDTO() {}
-
-	public TypedescriptionsDTO(
+	public TypedescriptionDTO(
 		java.lang.Integer typeid,
 		java.lang.String  description,
 		java.lang.String  howused
@@ -56,7 +50,7 @@ public class TypedescriptionsDTO implements java.io.Serializable {
 
         if (o == null || this.getClass() != o.getClass()) { return false; }
 
-        TypedescriptionsDTO dto = (TypedescriptionsDTO) o;
+        TypedescriptionDTO dto = (TypedescriptionDTO) o;
         return    Objects.equals(this.typeid, dto.typeid)
                && Objects.equals(this.description, dto.description)
                && Objects.equals(this.howused, dto.howused);

@@ -1,10 +1,12 @@
-package org.plos.namedentity.api;
+package org.plos.namedentity.api.entity;
+
+import java.util.Objects;
 
 /**
- * JOOQ generated class(pojo=true). Added DTO to classname and moved to this pkg.
+ * Modified JOOQ generated class(pojo=true).
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class PhonenumbersDTO implements java.io.Serializable {
+public class PhonenumberEntity implements java.io.Serializable {
 
 	private static final long serialVersionUID = -1728456967;
 
@@ -17,9 +19,11 @@ public class PhonenumbersDTO implements java.io.Serializable {
 	private java.lang.Byte    isprimary;
 	private java.lang.Byte    isactive;
 
-	public PhonenumbersDTO() {}
+	public PhonenumberEntity() {
+		this(null,null,null,null,null,null,null,null);
+	}
 
-	public PhonenumbersDTO(
+	public PhonenumberEntity(
 		java.lang.Integer phonenumberid,
 		java.lang.Integer namedentityid,
 		java.lang.Integer phonenumbertypeid,
@@ -29,14 +33,14 @@ public class PhonenumbersDTO implements java.io.Serializable {
 		java.lang.Byte    isprimary,
 		java.lang.Byte    isactive
 	) {
-		this.phonenumberid = phonenumberid;
-		this.namedentityid = namedentityid;
+		this.phonenumberid     = phonenumberid;
+		this.namedentityid     = namedentityid;
 		this.phonenumbertypeid = phonenumbertypeid;
 		this.countrycodetypeid = countrycodetypeid;
-		this.phonenumber = phonenumber;
-		this.extension = extension;
-		this.isprimary = isprimary;
-		this.isactive = isactive;
+		this.phonenumber       = phonenumber;
+		this.extension         = extension;
+		this.isprimary         = (isprimary != null ? isprimary : (byte)1);
+		this.isactive          = (isactive != null ? isactive : (byte)1);
 	}
 
 	public java.lang.Integer getPhonenumberid() {
@@ -102,4 +106,21 @@ public class PhonenumbersDTO implements java.io.Serializable {
 	public void setIsactive(java.lang.Byte isactive) {
 		this.isactive = isactive;
 	}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+
+        if (o == null || this.getClass() != o.getClass()) { return false; }
+
+        PhonenumberEntity entity = (PhonenumberEntity) o;
+        return    Objects.equals(this.phonenumberid, entity.phonenumberid)
+               && Objects.equals(this.namedentityid, entity.namedentityid)
+               && Objects.equals(this.phonenumber, entity.phonenumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(phonenumberid, namedentityid, phonenumber);
+    }
 }

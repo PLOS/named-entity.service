@@ -1,6 +1,7 @@
 package org.plos.namedentity.rest;
 
-import java.util.Collection;
+import static org.plos.namedentity.utils.EntityPojoTransformer.*;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -19,9 +20,15 @@ import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 
-import org.plos.namedentity.api.GlobaltypesDTO;
-import org.plos.namedentity.api.TypedescriptionsDTO;
+import org.plos.namedentity.api.IndividualComposite;
+import org.plos.namedentity.api.dto.EmailDTO;
+import org.plos.namedentity.api.dto.GlobaltypeDTO;
+import org.plos.namedentity.api.dto.TypedescriptionDTO;
+import org.plos.namedentity.api.entity.IndividualEntity;
+import org.plos.namedentity.api.entity.TypedescriptionEntity;
+import org.plos.namedentity.api.entity.GlobaltypeEntity;
 import org.plos.namedentity.service.NamedEntityService;
+import org.plos.namedentity.service.NamedEntityServiceHighApi;
 import org.plos.namedentity.api.NedValidationException;
 
 @Path("/ned")
@@ -29,7 +36,38 @@ public class NamedEntityResource {
 
     static Logger logger = Logger.getLogger(NamedEntityResource.class);
 
-    @Inject private NamedEntityService namedEntityService; 
+    @Inject private NamedEntityService        nedSvcLowApi; 
+    @Inject private NamedEntityServiceHighApi nedSvcHighApi;
+
+    /* ------------------ CONVENIENCE API (HIGH-LEVEL) ---------------------- */
+
+    @POST
+    @Consumes("application/json")
+    @Produces("application/json")
+    @Path("/individuals")
+    public Response createIndividualComposite(IndividualComposite object) {
+        try {
+            IndividualEntity individual = nedSvcHighApi.createIndividual(object);
+            return null;
+            //Integer pkId = nedSvcLowApi.create(typeDescription);
+            //TypedescriptionDTO dto = nedSvcLowApi.findById(pkId, TypedescriptionDTO.class);
+            //return Response.status(Response.Status.OK).entity(dto).build();
+        }
+        catch(NedValidationException e) {
+            logger.error("validation exception", e);
+            return Response.status(Response.Status.BAD_REQUEST)             // 4XX (client-side)
+                .entity("Unable to create Type Class. Validation failed. Reason: " + e.getMessage())
+                .type(MediaType.TEXT_PLAIN).build();
+        }
+        catch(Exception e) {
+            logger.error("internal error", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
+                .entity("Unable to create Type Class. Internal error. Reason: " + e.getMessage())
+                .type(MediaType.TEXT_PLAIN).build();
+        }
+    }
+
+    /* ---------------------- CORE API (LOW-EVEL)  -------------------------- */
 
     /* ---------------------------------------------------------------------- */
     /*  TYPE DESCRIPTIONS (TYPE CLASSES)                                      */
@@ -40,8 +78,9 @@ public class NamedEntityResource {
     @Path("/typeclasses/{id}")
     public Response getTypedescription(@PathParam("id") int id) {
         try {
-            TypedescriptionsDTO dto = namedEntityService.findById(id, TypedescriptionsDTO.class);
-            return Response.status(Response.Status.OK).entity(dto).build();
+            TypedescriptionEntity entity = nedSvcLowApi.findById(id, TypedescriptionEntity.class);
+            return Response.status(Response.Status.OK).entity( entity ).build();
+            //return Response.status(Response.Status.OK).entity( toPojo(entity) ).build();
         }
         catch(Exception e) {
             logger.error("internal error", e);
@@ -56,9 +95,10 @@ public class NamedEntityResource {
     @Path("/typeclasses")
     public Response getTypedescriptions() {
         try {
-            Collection<TypedescriptionsDTO> typeClasses = namedEntityService.findAll(TypedescriptionsDTO.class);
+            List<TypedescriptionEntity> typeClasses = nedSvcLowApi.findAll(TypedescriptionEntity.class);
+            //List<TypedescriptionDTO> typeClasses = toPojo(nedSvcLowApi.findAll(TypedescriptionEntity.class));
             return Response.status(Response.Status.OK).entity(
-                new GenericEntity<Collection<TypedescriptionsDTO>>(typeClasses){}).build();
+                new GenericEntity<List<TypedescriptionEntity>>(typeClasses){}).build();
         }
         catch(Exception e) {
             logger.error("internal error", e);
@@ -72,11 +112,11 @@ public class NamedEntityResource {
     @Consumes("application/json")
     @Produces("application/json")
     @Path("/typeclasses")
-    public Response createTypedescription(TypedescriptionsDTO typeDescription) {
+    public Response createTypedescription(TypedescriptionDTO typeDescription) {
         try {
-            Integer pkId = namedEntityService.create(typeDescription);
-            TypedescriptionsDTO dto = namedEntityService.findById(pkId, TypedescriptionsDTO.class);
-            return Response.status(Response.Status.OK).entity(dto).build();
+            Integer pkId = nedSvcLowApi.create( toEntity(typeDescription) );
+            TypedescriptionEntity entity = nedSvcLowApi.findById(pkId, TypedescriptionEntity.class);
+            return Response.status(Response.Status.OK).entity( entity ).build();
         }
         catch(NedValidationException e) {
             logger.error("validation exception", e);
@@ -96,12 +136,12 @@ public class NamedEntityResource {
     @Consumes("application/json")
     @Produces("application/json")
     @Path("/typeclasses/{id}")
-    public Response updateTypedescription(TypedescriptionsDTO typeDescription) {
+    public Response updateTypedescription(TypedescriptionDTO typeDescription) {
         try {
-            namedEntityService.update(typeDescription);
-            TypedescriptionsDTO dto = namedEntityService.findById(
-                typeDescription.getTypeid(), TypedescriptionsDTO.class);
-            return Response.status(Response.Status.OK).entity(dto).build();
+            nedSvcLowApi.update( toEntity(typeDescription) );
+            TypedescriptionEntity entity = nedSvcLowApi.findById(
+                typeDescription.getTypeid(), TypedescriptionEntity.class);
+            return Response.status(Response.Status.OK).entity( entity ).build();
         }
         catch(NedValidationException e) {
             logger.error("validation exception", e);
@@ -121,9 +161,9 @@ public class NamedEntityResource {
     @Path("/typeclasses/{id}")
     public Response deleteTypedescription(@PathParam("id") int id) {
         try {
-            TypedescriptionsDTO dto = new TypedescriptionsDTO();
-            dto.setTypeid(id);
-            namedEntityService.delete(dto);
+            TypedescriptionEntity entity = new TypedescriptionEntity();
+            entity.setTypeid(id);
+            nedSvcLowApi.delete(entity);
             return Response.status(Response.Status.NO_CONTENT).build();
         }
         catch(Exception e) {
@@ -144,8 +184,8 @@ public class NamedEntityResource {
     public Response getGlobalType(@PathParam("typeclassid") int typeClassId, 
                                   @PathParam("typevalueid") int typeValueId) {
         try {
-            GlobaltypesDTO dto = namedEntityService.findById(typeValueId, GlobaltypesDTO.class);
-            return Response.status(Response.Status.OK).entity(dto).build();
+            GlobaltypeEntity entity = nedSvcLowApi.findById(typeValueId, GlobaltypeEntity.class);
+            return Response.status(Response.Status.OK).entity( entity ).build();
         }
         catch(Exception e) {
             logger.error("internal error", e);
@@ -160,12 +200,12 @@ public class NamedEntityResource {
     @Path("/typeclasses/{typeclassid}/typevalues")
     public Response getGlobalTypeForTypeClass(@PathParam("typeclassid") int typeClassId) {
         try {
-            GlobaltypesDTO searchCriteriaDTO = new GlobaltypesDTO();
-            searchCriteriaDTO.setTypeid(typeClassId);
+            GlobaltypeEntity searchCriteria = new GlobaltypeEntity();
+            searchCriteria.setTypeid(typeClassId);
 
-            Collection<GlobaltypesDTO> typeClasses = namedEntityService.findByAttribute(searchCriteriaDTO);
+            List<GlobaltypeEntity> typeClasses = nedSvcLowApi.findByAttribute(searchCriteria);
             return Response.status(Response.Status.OK).entity(
-                new GenericEntity<Collection<GlobaltypesDTO>>(typeClasses){}).build();
+                new GenericEntity<List<GlobaltypeEntity>>(typeClasses){}).build();
         }
         catch(Exception e) {
             logger.error("internal error", e);
@@ -179,12 +219,14 @@ public class NamedEntityResource {
     @Consumes("application/json")
     @Produces("application/json")
     @Path("/typeclasses/{typeclassid}/typevalues")
-    public Response createGlobalType(@PathParam("typeclassid") int typeClassId, GlobaltypesDTO globalType) {
+    public Response createGlobalType(@PathParam("typeclassid") int typeClassId, GlobaltypeDTO globalType) {
         try {
-            globalType.setTypeid(typeClassId);
-            Integer pkId = namedEntityService.create(globalType);
-            GlobaltypesDTO dto = namedEntityService.findById(pkId, GlobaltypesDTO.class);
-            return Response.status(Response.Status.OK).entity(dto).build();
+            GlobaltypeEntity entity = toEntity(globalType);
+            entity.setTypeid(typeClassId);
+            Integer pkId = nedSvcLowApi.create(entity);
+
+            GlobaltypeEntity foundEntity = nedSvcLowApi.findById(pkId, GlobaltypeEntity.class);
+            return Response.status(Response.Status.OK).entity( foundEntity ).build();
         }
         catch(NedValidationException e) {
             logger.error("validation exception", e);
@@ -206,12 +248,12 @@ public class NamedEntityResource {
     @Path("/typeclasses/{typeclassid}/typevalues/{typevalueid}")
     public Response updateGlobalType(@PathParam("typeclassid") int typeClassId, 
                                      @PathParam("typevalueid") int typeValueId, 
-                                     GlobaltypesDTO globalType) {
+                                     GlobaltypeDTO globalType) {
         try {
-            namedEntityService.update(globalType);
-            GlobaltypesDTO dto = namedEntityService.findById(
-                globalType.getGlobaltypeid(), GlobaltypesDTO.class);
-            return Response.status(Response.Status.OK).entity(dto).build();
+            nedSvcLowApi.update( toEntity(globalType) );
+            GlobaltypeEntity entity = nedSvcLowApi.findById(
+                globalType.getGlobaltypeid(), GlobaltypeEntity.class);
+            return Response.status(Response.Status.OK).entity( entity ).build();
         }
         catch(NedValidationException e) {
             logger.error("validation exception", e);
@@ -232,9 +274,9 @@ public class NamedEntityResource {
     public Response deleteGlobalType(@PathParam("typeclassid") int typeClassId, 
                                      @PathParam("typevalueid") int typeValueId) {
         try {
-            GlobaltypesDTO dto = new GlobaltypesDTO();
-            dto.setGlobaltypeid(typeValueId);
-            namedEntityService.delete(dto);
+            GlobaltypeEntity entity = new GlobaltypeEntity();
+            entity.setGlobaltypeid(typeValueId);
+            nedSvcLowApi.delete(entity);
             return Response.status(Response.Status.NO_CONTENT).build();
         }
         catch(Exception e) {
@@ -244,12 +286,18 @@ public class NamedEntityResource {
                 .type(MediaType.TEXT_PLAIN).build();
         }
     }
- 
+
     public NamedEntityService getNamedEntityService() {
-        return namedEntityService;
+        return nedSvcLowApi;
+    }
+    public void setNamedEntityService(NamedEntityService nedSvcLowApi) {
+        this.nedSvcLowApi = nedSvcLowApi;
     }
 
-    public void setNamedEntityService(NamedEntityService namedEntityService) {
-        this.namedEntityService = namedEntityService;
+    public NamedEntityServiceHighApi getNamedEntityServiceHighApi() {
+        return nedSvcHighApi;
+    }
+    public void setNamedEntityServiceHighApi(NamedEntityServiceHighApi nedSvcHighApi) {
+        this.nedSvcHighApi = nedSvcHighApi;
     }
 }

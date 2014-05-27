@@ -1,14 +1,14 @@
-package org.plos.namedentity.api;
+package org.plos.namedentity.api.entity;
 
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
 
 /**
- * JOOQ generated class(pojo=true). Added DTO to classname and moved to this pkg.
+ * Modified JOOQ generated class(pojo=true).
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class GlobaltypesDTO implements java.io.Serializable {
+public class GlobaltypeEntity implements java.io.Serializable {
 
 	private static final long serialVersionUID = 541426103;
 
@@ -22,11 +22,11 @@ public class GlobaltypesDTO implements java.io.Serializable {
 	private java.lang.Integer  createdby;
 	private java.lang.Integer  lastmodifiedby;
 
-	public GlobaltypesDTO() {
+	public GlobaltypeEntity() {
         this(null,null,null,null,null,null,null,null,null);
     }
 
-	public GlobaltypesDTO(
+	public GlobaltypeEntity(
 		java.lang.Integer  globaltypeid,
 		java.lang.Integer  typeid,
 		java.lang.String   shortdescription,
@@ -128,16 +128,16 @@ public class GlobaltypesDTO implements java.io.Serializable {
 
         if (o == null || this.getClass() != o.getClass()) { return false; }
 
-        GlobaltypesDTO dto = (GlobaltypesDTO) o;
-        return Objects.equals(this.globaltypeid, dto.globaltypeid)
-            && Objects.equals(this.typeid, dto.typeid)
-            && Objects.equals(this.shortdescription, dto.shortdescription)
-            && Objects.equals(this.longdescription, dto.longdescription)
-            && Objects.equals(this.typecode, dto.typecode)
-            && Objects.equals(this.created, dto.created)
-            && Objects.equals(this.lastmodified, dto.lastmodified)
-            && Objects.equals(this.createdby, dto.createdby)
-            && Objects.equals(this.lastmodifiedby, dto.lastmodifiedby);
+        GlobaltypeEntity entity = (GlobaltypeEntity) o;
+        return Objects.equals(this.globaltypeid, entity.globaltypeid)
+            && Objects.equals(this.typeid, entity.typeid)
+            && Objects.equals(this.shortdescription, entity.shortdescription)
+            && Objects.equals(this.longdescription, entity.longdescription)
+            && Objects.equals(this.typecode, entity.typecode)
+            && Objects.equals(this.created, entity.created)
+            && Objects.equals(this.lastmodified, entity.lastmodified)
+            && Objects.equals(this.createdby, entity.createdby)
+            && Objects.equals(this.lastmodifiedby, entity.lastmodifiedby);
     }
 
     @Override

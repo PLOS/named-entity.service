@@ -1,9 +1,15 @@
 package org.plos.namedentity.persist;
 
+// to reduce verbosity, static import generated tables and jooq functions
 import static org.jooq.impl.DSL.currentTimestamp;
-import static org.plos.namedentity.persist.db.namedentities.Tables.JOURNALS;
+
+import static org.plos.namedentity.persist.db.namedentities.Tables.ADDRESSES;
+import static org.plos.namedentity.persist.db.namedentities.Tables.EMAILS;
 import static org.plos.namedentity.persist.db.namedentities.Tables.GLOBALTYPES;
+import static org.plos.namedentity.persist.db.namedentities.Tables.INDIVIDUALS;
+import static org.plos.namedentity.persist.db.namedentities.Tables.JOURNALS;
 import static org.plos.namedentity.persist.db.namedentities.Tables.NAMEDENTITYIDENTIFIERS;
+import static org.plos.namedentity.persist.db.namedentities.Tables.PHONENUMBERS;
 import static org.plos.namedentity.persist.db.namedentities.Tables.ROLES;
 import static org.plos.namedentity.persist.db.namedentities.Tables.TYPEDESCRIPTIONS;
 
@@ -17,20 +23,24 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
 
-import org.plos.namedentity.api.GlobaltypesDTO;
-import org.plos.namedentity.api.JournalsDTO;
-import org.plos.namedentity.api.TypedescriptionsDTO;
+import org.plos.namedentity.api.entity.AddressEntity;
+import org.plos.namedentity.api.entity.EmailEntity;
+import org.plos.namedentity.api.entity.GlobaltypeEntity;
+import org.plos.namedentity.api.entity.IndividualEntity;
+import org.plos.namedentity.api.entity.JournalEntity;
+import org.plos.namedentity.api.entity.PhonenumberEntity;
+import org.plos.namedentity.api.entity.RoleEntity;
+import org.plos.namedentity.api.entity.TypedescriptionEntity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.transaction.annotation.Transactional;
 
 public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     @Autowired DSLContext context;
     @Autowired DataSourceTransactionManager txMgr;
 
-    @Override @Transactional @SuppressWarnings("unchecked")
+    @Override @SuppressWarnings("unchecked")
     public <T> Integer create(T t) {
         // load jooq-generated record from pojo. insert (implicitly)
         UpdatableRecord record = (UpdatableRecord) context.newRecord(table(t.getClass()), t);
@@ -40,14 +50,14 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         return record.getValue(0, Integer.class);
     }
 
-    @Override @Transactional @SuppressWarnings("unchecked")
+    @Override @SuppressWarnings("unchecked")
     public <T> boolean update(T t) {
         // load jooq-generated record from pojo. update (explicitly) 
         UpdatableRecord record = (UpdatableRecord) context.newRecord(table(t.getClass()), t);
         return (context.executeUpdate(record) == 1);
     }
 
-    @Override @Transactional @SuppressWarnings("unchecked")
+    @Override @SuppressWarnings("unchecked")
     public <T> boolean delete(T t) {
         // load jooq-generated record from pojo. delete (explicitly) 
         UpdatableRecord record = (UpdatableRecord) context.newRecord(table(t.getClass()), t);
@@ -71,16 +81,62 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     @Override @SuppressWarnings("unchecked")
     public <T> List<T> findByAttribute(T t) {
     
-        if (t instanceof GlobaltypesDTO) {
-            return context
-                .select().from(GLOBALTYPES)
-                .where(GLOBALTYPES.TYPEID.equal( ((GlobaltypesDTO)t).getTypeid()) )
-                .fetchInto((Class<T>)t.getClass());
+        if (t instanceof GlobaltypeEntity) {
+			GlobaltypeEntity gt = (GlobaltypeEntity)t;
+			if (gt.getTypeid() != null) {
+
+				// lookup a specific type value
+				if (gt.getShortdescription() != null) {
+					return context
+						.select().from(GLOBALTYPES)
+						.where(GLOBALTYPES.TYPEID.equal( gt.getTypeid()) )
+						.and(GLOBALTYPES.SHORTDESCRIPTION.equal(gt.getShortdescription()))
+						.fetchInto((Class<T>)t.getClass());
+
+				// lookup type values for a type class
+				} else {
+					return context
+						.select().from(GLOBALTYPES)
+						.where(GLOBALTYPES.TYPEID.equal( gt.getTypeid()) )
+						.fetchInto((Class<T>)t.getClass());
+				}
+			}
         }
+        else if (t instanceof EmailEntity) {
+			EmailEntity et = (EmailEntity)t;
+
+            // lookup emails for an individual
+			if (et.getNamedentityid() != null) {
+                return context
+                    .select().from(EMAILS)
+                    .where(EMAILS.NAMEDENTITYID.equal( et.getNamedentityid()) )
+                    .fetchInto((Class<T>)t.getClass());
+            }
+            // lookup email by address
+            if (et.getEmailaddress() != null) {
+                return context
+                    .select().from(EMAILS)
+                    .where(EMAILS.EMAILADDRESS.equal( et.getEmailaddress()) )
+                    .fetchInto((Class<T>)t.getClass());
+            }
+        }
+        else if (t instanceof PhonenumberEntity) {
+			PhonenumberEntity pt = (PhonenumberEntity)t;
+
+            // lookup phone numbers for an individual
+			if (pt.getNamedentityid() != null) {
+                return context
+                    .select().from(PHONENUMBERS)
+                    .where(PHONENUMBERS.NAMEDENTITYID.equal( pt.getNamedentityid()) )
+                    .fetchInto((Class<T>)t.getClass());
+            }
+            //TODO - lookup by phone number
+        }
+
         throw new UnsupportedOperationException("findByAttribute hasn't been implemented for all types");
     }
 
-    @Override @Transactional
+    @Override
     public Integer newNamedEntityId(String typeCode) {
 
         return this.context.insertInto(NAMEDENTITYIDENTIFIERS) 
@@ -147,9 +203,14 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     private static final Map<Class,TablePkPair> dtoTableMap;
     static {
         dtoTableMap = new ConcurrentHashMap<>();
-        dtoTableMap.put(GlobaltypesDTO.class, new TablePkPair(GLOBALTYPES, GLOBALTYPES.GLOBALTYPEID));
-        dtoTableMap.put(JournalsDTO.class, new TablePkPair(JOURNALS, JOURNALS.JOURNALID));
-        dtoTableMap.put(TypedescriptionsDTO.class, new TablePkPair(TYPEDESCRIPTIONS, TYPEDESCRIPTIONS.TYPEID));
+        dtoTableMap.put(AddressEntity.class, new TablePkPair(ADDRESSES, ADDRESSES.ADDRESSID));
+        dtoTableMap.put(EmailEntity.class, new TablePkPair(EMAILS, EMAILS.EMAILID));
+        dtoTableMap.put(GlobaltypeEntity.class, new TablePkPair(GLOBALTYPES, GLOBALTYPES.GLOBALTYPEID));
+        dtoTableMap.put(IndividualEntity.class, new TablePkPair(INDIVIDUALS, INDIVIDUALS.NAMEDENTITYID));
+        dtoTableMap.put(JournalEntity.class, new TablePkPair(JOURNALS, JOURNALS.JOURNALID));
+        dtoTableMap.put(PhonenumberEntity.class, new TablePkPair(PHONENUMBERS, PHONENUMBERS.PHONENUMBERID));
+        dtoTableMap.put(RoleEntity.class, new TablePkPair(ROLES, ROLES.ROLEID));
+        dtoTableMap.put(TypedescriptionEntity.class, new TablePkPair(TYPEDESCRIPTIONS, TYPEDESCRIPTIONS.TYPEID));
     }
     private static Table table(Class key) {
         return dtoTableMap.get(key).table();

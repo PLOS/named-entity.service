@@ -1,8 +1,10 @@
 package org.plos.namedentity.service;
 
-import java.util.Collection;
+import java.util.List;
 
-import org.plos.namedentity.api.TypedescriptionsDTO;
+/* -------------------------------------------------------------------------- */
+/*   Named Entity Service Low-Level Core API                                  */
+/* -------------------------------------------------------------------------- */
 
 public interface NamedEntityService {
 
@@ -10,7 +12,7 @@ public interface NamedEntityService {
     public <T> boolean update(T t);
     public <T> boolean delete(T t);
 
-    public <T> T             findById(Integer id, Class<T> clazz);
-    public <T> Collection<T> findAll        (Class<T> clazz);
-    public <T> Collection<T> findByAttribute(T t);
+    public <T> T       findById(Integer id, Class<T> clazz);
+    public <T> List<T> findAll        (Class<T> clazz);
+    public <T> List<T> findByAttribute(T t);
 }

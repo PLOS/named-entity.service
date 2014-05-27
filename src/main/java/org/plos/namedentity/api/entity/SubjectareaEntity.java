@@ -1,10 +1,10 @@
-package org.plos.namedentity.api;
+package org.plos.namedentity.api.entity;
 
 /**
- * JOOQ generated class(pojo=true). Added DTO to classname and moved to this pkg.
+ * Modified JOOQ generated class(pojo=true).
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class SubjectareasDTO implements java.io.Serializable {
+public class SubjectareaEntity implements java.io.Serializable {
 
 	private static final long serialVersionUID = 169794521;
 
@@ -12,9 +12,9 @@ public class SubjectareasDTO implements java.io.Serializable {
 	private java.lang.Integer namedentityid;
 	private java.lang.Integer subjectareatypeid;
 
-	public SubjectareasDTO() {}
+	public SubjectareaEntity() {}
 
-	public SubjectareasDTO(
+	public SubjectareaEntity(
 		java.lang.Integer subjectareaid,
 		java.lang.Integer namedentityid,
 		java.lang.Integer subjectareatypeid

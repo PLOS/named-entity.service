@@ -1,11 +1,14 @@
 package org.plos.namedentity.service;
 
-import java.util.Collection;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.persist.NamedEntityDBService;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public class NamedEntityServiceImpl implements NamedEntityService {
 
     @Inject private NamedEntityDBService namedEntityDBService; 
@@ -36,12 +39,12 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     }
 
     @Override
-    public <T> Collection<T> findAll(Class<T> clazz) {
+    public <T> List<T> findAll(Class<T> clazz) {
         return namedEntityDBService.findAll(clazz);
     }
 
     @Override
-    public <T> Collection<T> findByAttribute(T t) {
+    public <T> List<T> findByAttribute(T t) {
         return namedEntityDBService.findByAttribute(t);
     }
     

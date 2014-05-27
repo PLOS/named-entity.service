@@ -1,12 +1,6 @@
-package org.plos.namedentity.api;
+package org.plos.namedentity.api.dto;
 
-/**
- * JOOQ generated class(pojo=true). Added DTO to classname and moved to this pkg.
- */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class DegreesDTO implements java.io.Serializable {
-
-	private static final long serialVersionUID = -1999999966;
+public class DegreesDTO {
 
 	private java.lang.Integer degreeid;
 	private java.lang.Integer namedentityid;

@@ -1,10 +1,12 @@
-package org.plos.namedentity.api;
+package org.plos.namedentity.api.entity;
+
+import java.util.Objects;
 
 /**
- * JOOQ generated class(pojo=true). Added DTO to classname and moved to this pkg.
+ * Modified JOOQ generated class(pojo=true).
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class EmailsDTO implements java.io.Serializable {
+public class EmailEntity implements java.io.Serializable {
 
 	private static final long serialVersionUID = -945009318;
 
@@ -15,9 +17,11 @@ public class EmailsDTO implements java.io.Serializable {
 	private java.lang.Byte    isprimary;
 	private java.lang.Byte    isactive;
 
-	public EmailsDTO() {}
+	public EmailEntity() {
+        this(null,null,null,null,null,null); 
+    }
 
-	public EmailsDTO(
+	public EmailEntity(
 		java.lang.Integer emailid,
 		java.lang.Integer namedentityid,
 		java.lang.Integer emailtypeid,
@@ -25,12 +29,12 @@ public class EmailsDTO implements java.io.Serializable {
 		java.lang.Byte    isprimary,
 		java.lang.Byte    isactive
 	) {
-		this.emailid = emailid;
+		this.emailid       = emailid;
 		this.namedentityid = namedentityid;
-		this.emailtypeid = emailtypeid;
-		this.emailaddress = emailaddress;
-		this.isprimary = isprimary;
-		this.isactive = isactive;
+		this.emailtypeid   = emailtypeid;
+		this.emailaddress  = emailaddress;
+		this.isprimary     = (isprimary != null ? isprimary : 1);
+		this.isactive      = (isactive != null ? isactive : 1);
 	}
 
 	public java.lang.Integer getEmailid() {
@@ -80,4 +84,25 @@ public class EmailsDTO implements java.io.Serializable {
 	public void setIsactive(java.lang.Byte isactive) {
 		this.isactive = isactive;
 	}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+
+        if (o == null || this.getClass() != o.getClass()) { return false; }
+
+        EmailEntity entity = (EmailEntity) o;
+        return Objects.equals(this.emailid, entity.emailid)
+            && Objects.equals(this.namedentityid, entity.namedentityid)
+            && Objects.equals(this.emailtypeid, entity.emailtypeid)
+            && Objects.equals(this.emailaddress, entity.emailaddress)
+            && Objects.equals(this.isprimary, entity.isprimary)
+            && Objects.equals(this.isactive, entity.isactive);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+            emailid, namedentityid, emailtypeid, emailaddress, isprimary, isactive);
+    }
 }

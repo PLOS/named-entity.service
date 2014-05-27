@@ -13,10 +13,11 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.GlobaltypesDTO;
-import org.plos.namedentity.api.TypedescriptionsDTO;
+import org.plos.namedentity.api.entity.GlobaltypeEntity;
+import org.plos.namedentity.api.entity.TypedescriptionEntity;
 import org.plos.namedentity.rest.NamedEntityResource;
 import org.plos.namedentity.service.NamedEntityService;
+import org.plos.namedentity.service.NamedEntityServiceHighApi;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.dao.DataAccessException;
@@ -43,35 +44,42 @@ public class TestSpringConfig {
 
         // TYPE DESCRIPTIONS (TYPE CLASSES)
 
-        when(mockNamedEntityService.findById(eq(1), eq(TypedescriptionsDTO.class)))
-            .thenReturn(new TypedescriptionsDTO(1, "New Type Description", "New Type Usage"));
+        when(mockNamedEntityService.findById(eq(1), eq(TypedescriptionEntity.class)))
+            .thenReturn(new TypedescriptionEntity(1, "New Type Description", "New Type Usage"));
 
-        List<TypedescriptionsDTO> typeClassList = new ArrayList<>();
-        typeClassList.add(new TypedescriptionsDTO(1, "Type Description1", "Type Usage1"));
-        typeClassList.add(new TypedescriptionsDTO(2, "Type Description2", "Type Usage2"));
-        typeClassList.add(new TypedescriptionsDTO(3, "Type Description3", "Type Usage3"));
+        List<TypedescriptionEntity> typeClassList = new ArrayList<>();
+        typeClassList.add(new TypedescriptionEntity(1, "Type Description1", "Type Usage1"));
+        typeClassList.add(new TypedescriptionEntity(2, "Type Description2", "Type Usage2"));
+        typeClassList.add(new TypedescriptionEntity(3, "Type Description3", "Type Usage3"));
 
-        when(mockNamedEntityService.findAll(eq(TypedescriptionsDTO.class))).thenReturn(typeClassList);
+        when(mockNamedEntityService.findAll(eq(TypedescriptionEntity.class))).thenReturn(typeClassList);
 
         // TYPE VALUES (GLOBAL TYPES)
 
-        GlobaltypesDTO typeVal = new GlobaltypesDTO();
+        GlobaltypeEntity typeVal = new GlobaltypeEntity();
         typeVal.setGlobaltypeid(1);
         typeVal.setTypeid(1);
         typeVal.setShortdescription("Type Value #1 Short Description");
         typeVal.setTypecode("TV1");
 
-        when(mockNamedEntityService.findById(eq(1), eq(GlobaltypesDTO.class))).thenReturn(typeVal);
+        when(mockNamedEntityService.findById(eq(1), eq(GlobaltypeEntity.class))).thenReturn(typeVal);
 
-        List<GlobaltypesDTO> typeValuesForTypeClass = new ArrayList<>();
+        List<GlobaltypeEntity> typeValuesForTypeClass = new ArrayList<>();
         for (int i = 1; i <=5; i++) {
-            typeValuesForTypeClass.add(new GlobaltypesDTO(
+            typeValuesForTypeClass.add(new GlobaltypeEntity(
                 i, 1, "shortdesc"+i, "longdesc"+i, "typ"+i, null, null, null, null));
         }
 
-        when(mockNamedEntityService.findByAttribute(isA(GlobaltypesDTO.class))).thenReturn(typeValuesForTypeClass);
-        
+        when(mockNamedEntityService.findByAttribute(isA(GlobaltypeEntity.class))).thenReturn(typeValuesForTypeClass);
+
         return mockNamedEntityService;
+    }
+
+    @Bean @SuppressWarnings("unchecked")
+    static public NamedEntityServiceHighApi namedEntityServiceHighApi() {
+        NamedEntityServiceHighApi mockNamedEntityServiceHighApi =  Mockito.mock(NamedEntityServiceHighApi.class);
+        //TODO
+        return mockNamedEntityServiceHighApi;
     }
 
     @Bean

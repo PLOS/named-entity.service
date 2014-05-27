@@ -1,10 +1,6 @@
-package org.plos.namedentity.api;
+package org.plos.namedentity.api.dto;
 
-/**
- * JOOQ generated class(pojo=true). Added DTO to classname and moved to this pkg.
- */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class SourcefieldsDTO implements java.io.Serializable {
+public class SourcefieldsDTO {
 
 	private static final long serialVersionUID = -2013224879;
 

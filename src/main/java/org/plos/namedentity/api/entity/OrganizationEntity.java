@@ -1,10 +1,10 @@
-package org.plos.namedentity.api;
+package org.plos.namedentity.api.entity;
 
 /**
- * JOOQ generated class(pojo=true). Added DTO to classname and moved to this pkg.
+ * Modified JOOQ generated class(pojo=true).
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class OrganizationsDTO implements java.io.Serializable {
+public class OrganizationEntity implements java.io.Serializable {
 
 	private static final long serialVersionUID = 276513267;
 
@@ -17,9 +17,9 @@ public class OrganizationsDTO implements java.io.Serializable {
 	private java.lang.Byte    isvisible;
 	private java.lang.String  url;
 
-	public OrganizationsDTO() {}
+	public OrganizationEntity() {}
 
-	public OrganizationsDTO(
+	public OrganizationEntity(
 		java.lang.Integer namedentityid,
 		java.lang.Integer organizationtypeid,
 		java.lang.String  organizationfamiliarname,

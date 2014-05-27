@@ -234,8 +234,6 @@ CREATE TABLE IF NOT EXISTS namedEntities.uniqueIdentifiers (
     FOREIGN KEY (uniqueIdentifierTypeId) REFERENCES globalTypes(globalTypeId)
 )   ENGINE=INNODB;
 
-INSERT INTO namedEntities.individuals (namedEntityId, firstName) VALUES (1, 'NED');
-
 /* ------------------------------------------------------------------------- */
 /*  TYPE DESCRIPTIONS                                                        */
 /* ------------------------------------------------------------------------- */
@@ -340,3 +338,6 @@ INSERT INTO namedEntities.globalTypes VALUES (73,16,'Australia',NULL,'AU','2014-
 INSERT INTO namedEntities.globalTypes VALUES (74,16,'China',NULL,'CN','2014-03-23 21:40:27','2014-03-23 21:40:27',1,1);
 INSERT INTO namedEntities.globalTypes VALUES (75,17,'Editorial Manager',NULL,'EM','2014-03-23 20:34:40','2014-03-23 20:34:40',1,1);
 INSERT INTO namedEntities.globalTypes VALUES (76,17,'CAS',NULL,'CAS','2014-03-23 20:34:40','2014-03-23 20:34:40',1,1);
+
+INSERT INTO namedEntities.namedEntityIdentifiers (namedEntityId, typeId, created, lastModified) VALUES (1, 1, null, null);
+INSERT INTO namedEntities.individuals (namedEntityId, firstName) VALUES (1, 'NED');

@@ -2,11 +2,14 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">     
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
 
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <!-- Enable configuration of transactional behavior based on annotations -->
+    <tx:annotation-driven transaction-manager="transactionManager" order="1"/>
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" >
        <property name="url" value="${db.url}" />
@@ -57,8 +60,21 @@
         <constructor-arg index="7"><null /></constructor-arg>
     </bean>
 
-    <bean id="namedEntityDBService" class="org.plos.namedentity.persist.NamedEntityDBServiceImpl"/>
-    <bean id="namedEntityService"   class="org.plos.namedentity.service.NamedEntityServiceImpl"/>
-    <bean id="namedEntityResource"  class="org.plos.namedentity.rest.NamedEntityResource"/>
+    <bean id="namedEntityDBService"      class="org.plos.namedentity.persist.NamedEntityDBServiceImpl"/>
+    <bean id="namedEntityService"        class="org.plos.namedentity.service.NamedEntityServiceImpl"/>
+    <bean id="namedEntityServiceHighApi" class="org.plos.namedentity.service.NamedEntityServiceHighApiImpl"/>
+    <bean id="namedEntityResource"       class="org.plos.namedentity.rest.NamedEntityResource"/>
 
+    <bean id="validator" class="org.plos.namedentity.validate.NamedEntityValidator">
+        <!-- execute after the Transactional advice (hence higher order number) -->
+        <property name="order" value="200"/>
+    </bean>
+
+    <aop:config>
+        <aop:aspect id="validatingAspect" ref="validator">
+            <aop:pointcut id="createMethod"
+                    expression="execution(* org.plos.namedentity.service.NamedEntityServiceHighApiImpl.create*(..))"/>
+            <aop:around method="validate" pointcut-ref="createMethod"/>
+        </aop:aspect>
+    </aop:config>
 </beans>

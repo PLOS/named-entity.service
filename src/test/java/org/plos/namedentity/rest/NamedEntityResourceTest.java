@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
@@ -14,19 +16,35 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
-import org.plos.namedentity.api.GlobaltypesDTO;
-import org.plos.namedentity.api.TypedescriptionsDTO;
+import org.plos.namedentity.api.dto.GlobaltypeDTO;
+import org.plos.namedentity.api.dto.TypedescriptionDTO;
 
 public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
+    private static final String TEST_RESOURCE_PATH = "src/test/resources/";
+
     private static final String TYPE_CLASS_URI = "/ned/typeclasses";
     private static final String TYPE_VALUE_URI = TYPE_CLASS_URI + "/1/typevalues"; 
+    private static final String INDIVIDUAL_URI = "/ned/individuals";
+    private static final String EMAIL_URI      = INDIVIDUAL_URI + "/1/emails";
 
     private ObjectMapper mapper;
 
     @Before
     public void setup() {
         this.mapper = new ObjectMapper();
+    }
+
+    @Test
+    public void testZZZ() throws Exception {
+
+        String compositeIndividualJson = new String(Files.readAllBytes(
+            Paths.get(TEST_RESOURCE_PATH + "composite-individual.json")));
+      
+        // Request #1. Expect success.
+
+        Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+                                .post(Entity.json(compositeIndividualJson));
     }
 
     @Test
@@ -53,7 +71,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
         String jsonPayload = response.readEntity(String.class);
 
-        TypedescriptionsDTO newTypeClass = mapper.readValue(jsonPayload, TypedescriptionsDTO.class);
+        TypedescriptionDTO newTypeClass = mapper.readValue(jsonPayload, TypedescriptionDTO.class);
         assertEquals(Integer.valueOf(1), newTypeClass.getTypeid());
         assertEquals(NEW_TYPE_DESC, newTypeClass.getDescription());
         assertEquals(NEW_TYPE_USAGE, newTypeClass.getHowused());
@@ -88,7 +106,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
         jsonPayload = response.readEntity(String.class);
 
-        TypedescriptionsDTO foundTypeClass = mapper.readValue(jsonPayload, TypedescriptionsDTO.class);
+        TypedescriptionDTO foundTypeClass = mapper.readValue(jsonPayload, TypedescriptionDTO.class);
         assertEquals(Integer.valueOf(1), foundTypeClass.getTypeid());
         assertEquals(NEW_TYPE_DESC, foundTypeClass.getDescription());
         assertEquals(NEW_TYPE_USAGE, foundTypeClass.getHowused());
@@ -102,7 +120,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
         assertEquals(200, response.getStatus());
         jsonPayload = response.readEntity(String.class);
 
-        TypedescriptionsDTO[] typeClassArray = mapper.readValue(jsonPayload, TypedescriptionsDTO[].class); 
+        TypedescriptionDTO[] typeClassArray = mapper.readValue(jsonPayload, TypedescriptionDTO[].class); 
         assertEquals(3, typeClassArray.length);
 
         /* ------------------------------------------------------------------ */
@@ -112,7 +130,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
         final String UPDATE_TYPE_DESC  = "Update Type Description";
         final String UPDATE_TYPE_USAGE = "Update Type Usage";
 
-        TypedescriptionsDTO updatedTypeClass = foundTypeClass;
+        TypedescriptionDTO updatedTypeClass = foundTypeClass;
         updatedTypeClass.setDescription(UPDATE_TYPE_DESC);
         updatedTypeClass.setHowused(UPDATE_TYPE_USAGE);
 
@@ -182,7 +200,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
         String jsonPayload = response.readEntity(String.class);
 
-        GlobaltypesDTO newTypeVal = mapper.readValue(jsonPayload, GlobaltypesDTO.class);
+        GlobaltypeDTO newTypeVal = mapper.readValue(jsonPayload, GlobaltypeDTO.class);
         assertEquals(Integer.valueOf(1), newTypeVal.getGlobaltypeid());
         assertEquals("Type Value #1 Short Description", newTypeVal.getShortdescription());
         assertEquals("TV1", newTypeVal.getTypecode());
@@ -217,7 +235,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
         jsonPayload = response.readEntity(String.class);
 
-        GlobaltypesDTO foundTypeVal = mapper.readValue(jsonPayload, GlobaltypesDTO.class);
+        GlobaltypeDTO foundTypeVal = mapper.readValue(jsonPayload, GlobaltypeDTO.class);
         assertEquals(Integer.valueOf(1), foundTypeVal.getGlobaltypeid());
         assertEquals(Integer.valueOf(1), foundTypeVal.getTypeid());
         assertEquals("Type Value #1 Short Description", foundTypeVal.getShortdescription());
@@ -232,7 +250,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
         assertEquals(200, response.getStatus());
         jsonPayload = response.readEntity(String.class);
 
-        GlobaltypesDTO[] typeValuesForTypeClassArray = mapper.readValue(jsonPayload, GlobaltypesDTO[].class); 
+        GlobaltypeDTO[] typeValuesForTypeClassArray = mapper.readValue(jsonPayload, GlobaltypeDTO[].class); 
         assertEquals(5, typeValuesForTypeClassArray.length);
         for (int i = 0; i < 5; i++) {
             assertEquals(Integer.valueOf(i+1), typeValuesForTypeClassArray[i].getGlobaltypeid());
@@ -242,7 +260,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
         /*  UPDATE                                                            */
         /* ------------------------------------------------------------------ */
 
-        GlobaltypesDTO updatedTypeVal = foundTypeVal;
+        GlobaltypeDTO updatedTypeVal = foundTypeVal;
         updatedTypeVal.setShortdescription("Update Type Value #1 Short Description");
 
         // marshal Type value DTO object to JSON String.

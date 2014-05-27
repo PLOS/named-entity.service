@@ -1,0 +1,51 @@
+{
+   "firstname" : "Jane",
+   "middlename" : "Q",
+   "namesuffix" : "III",
+   "lastname" : "Doe",
+   "phonenumbers" : [
+      {
+         "extension" : "x012",
+         "isprimary" : "true",
+         "phonenumber" : "650-123-4567",
+         "phonenumbertype" : "Office",
+         "countrycodetype" : "01"
+      },
+      {
+         "isprimary" : "false",
+         "phonenumber" : "650-111-2222",
+         "phonenumbertype" : "Mobile",
+         "countrycodetype" : "01"
+      }
+   ],
+   "preferredlanguage" : "English",
+   "preferredcommunication" : "Email",
+   "addresses" : [
+      {
+         "statecodetype" : "CA",
+         "isprimary" : "true",
+         "city" : "San Francisco",
+         "addressline1" : "123 Maple Street",
+         "addresstype" : "Office",
+         "postalcode" : "94501",
+         "countrycodetype" : "United States"
+      }
+   ],
+   "emails" : [
+      {
+         "isprimary" : "false",
+         "emailtype" : "Personal",
+         "emailaddress" : "jane.q.doe.personal@foo.com"
+      },
+      {
+         "isprimary" : "true",
+         "emailtype" : "Work",
+         "emailaddress" : "jane.q.doe.work@foo.com"
+      }
+   ],
+   "nameprefix" : "Mrs.",
+   "role" : {
+      "startdate" : "2014-06-02",
+      "roletype" : "Author"
+   }
+}

@@ -1,10 +1,10 @@
-package org.plos.namedentity.api;
+package org.plos.namedentity.api.entity;
 
 /**
  * JOOQ generated class(pojo=true). Added DTO to classname and moved to this pkg.
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class CasDTO implements java.io.Serializable {
+public class CasEntity implements java.io.Serializable {
 
 	private static final long serialVersionUID = -108875444;
 
@@ -12,9 +12,9 @@ public class CasDTO implements java.io.Serializable {
 	private java.lang.Integer namedentityid;
 	private java.lang.Integer sourceapplicationtypeid;
 
-	public CasDTO() {}
+	public CasEntity() {}
 
-	public CasDTO(
+	public CasEntity(
 		java.lang.Integer casid,
 		java.lang.Integer namedentityid,
 		java.lang.Integer sourceapplicationtypeid

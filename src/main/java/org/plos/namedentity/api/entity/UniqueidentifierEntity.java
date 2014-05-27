@@ -1,10 +1,10 @@
-package org.plos.namedentity.api;
+package org.plos.namedentity.api.entity;
 
 /**
- * JOOQ generated class(pojo=true). Added DTO to classname and moved to this pkg.
+ * Modified JOOQ generated class(pojo=true).
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class UniqueidentifiersDTO implements java.io.Serializable {
+public class UniqueidentifierEntity implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1900442676;
 
@@ -13,9 +13,9 @@ public class UniqueidentifiersDTO implements java.io.Serializable {
 	private java.lang.Integer uniqueidentifiertypeid;
 	private java.lang.String  uniqueidentifier;
 
-	public UniqueidentifiersDTO() {}
+	public UniqueidentifierEntity() {}
 
-	public UniqueidentifiersDTO(
+	public UniqueidentifierEntity(
 		java.lang.Integer uniqueidentifiersid,
 		java.lang.Integer namedentityid,
 		java.lang.Integer uniqueidentifiertypeid,
