@@ -83,6 +83,11 @@
         <version>${org.springframework.version}</version>
         <scope>compile</scope>
       </dependency>
+      <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjtools</artifactId>
+        <version>1.6.2</version>
+      </dependency>
 
       <dependency>
         <groupId>org.glassfish.jersey.containers</groupId>
