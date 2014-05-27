@@ -1,7 +1,5 @@
 package org.plos.namedentity.rest;
 
-import static org.plos.namedentity.utils.EntityPojoTransformer.*;
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -21,15 +19,16 @@ import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 
 import org.plos.namedentity.api.IndividualComposite;
+import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.GlobaltypeDTO;
 import org.plos.namedentity.api.dto.TypedescriptionDTO;
+import org.plos.namedentity.api.entity.GlobaltypeEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
-import org.plos.namedentity.api.entity.GlobaltypeEntity;
 import org.plos.namedentity.service.NamedEntityService;
 import org.plos.namedentity.service.NamedEntityServiceHighApi;
-import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.utils.Transformer;
 
 @Path("/ned")
 public class NamedEntityResource {
@@ -38,6 +37,7 @@ public class NamedEntityResource {
 
     @Inject private NamedEntityService        nedSvcLowApi; 
     @Inject private NamedEntityServiceHighApi nedSvcHighApi;
+    @Inject private Transformer               transformer;
 
     /* ------------------ CONVENIENCE API (HIGH-LEVEL) ---------------------- */
 
@@ -114,7 +114,7 @@ public class NamedEntityResource {
     @Path("/typeclasses")
     public Response createTypedescription(TypedescriptionDTO typeDescription) {
         try {
-            Integer pkId = nedSvcLowApi.create( toEntity(typeDescription) );
+            Integer pkId = nedSvcLowApi.create( transformer.toEntity(typeDescription) );
             TypedescriptionEntity entity = nedSvcLowApi.findById(pkId, TypedescriptionEntity.class);
             return Response.status(Response.Status.OK).entity( entity ).build();
         }
@@ -138,7 +138,7 @@ public class NamedEntityResource {
     @Path("/typeclasses/{id}")
     public Response updateTypedescription(TypedescriptionDTO typeDescription) {
         try {
-            nedSvcLowApi.update( toEntity(typeDescription) );
+            nedSvcLowApi.update( transformer.toEntity(typeDescription) );
             TypedescriptionEntity entity = nedSvcLowApi.findById(
                 typeDescription.getTypeid(), TypedescriptionEntity.class);
             return Response.status(Response.Status.OK).entity( entity ).build();
@@ -221,7 +221,7 @@ public class NamedEntityResource {
     @Path("/typeclasses/{typeclassid}/typevalues")
     public Response createGlobalType(@PathParam("typeclassid") int typeClassId, GlobaltypeDTO globalType) {
         try {
-            GlobaltypeEntity entity = toEntity(globalType);
+            GlobaltypeEntity entity = transformer.toEntity(globalType);
             entity.setTypeid(typeClassId);
             Integer pkId = nedSvcLowApi.create(entity);
 
@@ -250,7 +250,7 @@ public class NamedEntityResource {
                                      @PathParam("typevalueid") int typeValueId, 
                                      GlobaltypeDTO globalType) {
         try {
-            nedSvcLowApi.update( toEntity(globalType) );
+            nedSvcLowApi.update( transformer.toEntity(globalType) );
             GlobaltypeEntity entity = nedSvcLowApi.findById(
                 globalType.getGlobaltypeid(), GlobaltypeEntity.class);
             return Response.status(Response.Status.OK).entity( entity ).build();

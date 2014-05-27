@@ -8,17 +8,17 @@ import org.plos.namedentity.api.dto.TypedescriptionDTO;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
 
-public class EntityPojoTransformer { 
+public class EntityPojoTransformer implements Transformer { 
 
-    public static TypedescriptionEntity toEntity(TypedescriptionDTO dto) {
+    public TypedescriptionEntity toEntity(TypedescriptionDTO dto) {
         return new TypedescriptionEntity(dto.getTypeid(), dto.getDescription(), dto.getHowused());
     }
 
-    public static TypedescriptionDTO toPojo(TypedescriptionEntity entity) {
+    public TypedescriptionDTO toPojo(TypedescriptionEntity entity) {
         return new TypedescriptionDTO(entity.getTypeid(), entity.getDescription(), entity.getHowused());
     }
 
-    public static List<TypedescriptionDTO> toPojo(List<TypedescriptionEntity> entities) {
+    public List<TypedescriptionDTO> toPojo(List<TypedescriptionEntity> entities) {
         List<TypedescriptionDTO> dtos = new ArrayList<>(entities.size());
         for(TypedescriptionEntity entity : entities) {
             dtos.add( toPojo(entity) ); 
@@ -26,7 +26,7 @@ public class EntityPojoTransformer {
         return dtos;
     }
 
-    public static GlobaltypeEntity toEntity(GlobaltypeDTO dto) {
+    public GlobaltypeEntity toEntity(GlobaltypeDTO dto) {
         return new GlobaltypeEntity(
             dto.getGlobaltypeid(),
             dto.getTypeid(),

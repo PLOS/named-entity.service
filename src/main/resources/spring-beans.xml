@@ -63,6 +63,7 @@
     <bean id="namedEntityDBService"      class="org.plos.namedentity.persist.NamedEntityDBServiceImpl"/>
     <bean id="namedEntityService"        class="org.plos.namedentity.service.NamedEntityServiceImpl"/>
     <bean id="namedEntityServiceHighApi" class="org.plos.namedentity.service.NamedEntityServiceHighApiImpl"/>
+    <bean id="transformer"               class="org.plos.namedentity.utils.EntityPojoTransformer"/>
     <bean id="namedEntityResource"       class="org.plos.namedentity.rest.NamedEntityResource"/>
 
     <bean id="validator" class="org.plos.namedentity.validate.NamedEntityValidator">
