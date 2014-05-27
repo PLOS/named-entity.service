@@ -15,6 +15,7 @@ import java.util.List;
 import org.jooq.DSLContext;
 import org.jooq.Record2;
 import org.jooq.Result;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.plos.namedentity.api.entity.AddressEntity;
@@ -32,6 +33,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring-beans.xml"})
@@ -53,6 +56,29 @@ public class NamedEntityDBServiceTest {
             .fetch();
 
         assertTrue(result.size() >= 76);
+    }
+
+    @Test
+    public void testExplicitTransactions() {
+        boolean rollback = false;
+
+        TransactionStatus tx = txMgr.getTransaction(new DefaultTransactionDefinition());
+        try {
+            // This should raise a unique constraint violation exception 
+            context.insertInto(TYPEDESCRIPTIONS)
+                   .set(TYPEDESCRIPTIONS.TYPEID, 1)
+                   .set(TYPEDESCRIPTIONS.DESCRIPTION, "Type Class (dupe)")
+                   .execute();
+
+            Assert.fail();
+        }
+        // catch constraint and roll back transaction
+        catch (DataAccessException e) {
+            txMgr.rollback(tx);
+            rollback = true;
+        }
+
+        assertTrue(rollback);
     }
 
     @Test

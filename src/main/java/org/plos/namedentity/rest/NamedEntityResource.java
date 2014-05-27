@@ -48,10 +48,7 @@ public class NamedEntityResource {
     public Response createIndividualComposite(IndividualComposite object) {
         try {
             IndividualEntity individual = nedSvcHighApi.createIndividual(object);
-            return null;
-            //Integer pkId = nedSvcLowApi.create(typeDescription);
-            //TypedescriptionDTO dto = nedSvcLowApi.findById(pkId, TypedescriptionDTO.class);
-            //return Response.status(Response.Status.OK).entity(dto).build();
+            return Response.status(Response.Status.OK).entity(individual).build();
         }
         catch(NedValidationException e) {
             logger.error("validation exception", e);
@@ -96,7 +93,6 @@ public class NamedEntityResource {
     public Response getTypedescriptions() {
         try {
             List<TypedescriptionEntity> typeClasses = nedSvcLowApi.findAll(TypedescriptionEntity.class);
-            //List<TypedescriptionDTO> typeClasses = toPojo(nedSvcLowApi.findAll(TypedescriptionEntity.class));
             return Response.status(Response.Status.OK).entity(
                 new GenericEntity<List<TypedescriptionEntity>>(typeClasses){}).build();
         }

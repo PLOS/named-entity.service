@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.plos.namedentity.api.dto.GlobaltypeDTO;
 import org.plos.namedentity.api.dto.TypedescriptionDTO;
+import org.plos.namedentity.api.entity.IndividualEntity;
 
 public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
@@ -36,7 +37,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     }
 
     @Test
-    public void testZZZ() throws Exception {
+    public void testCreateIndividualComposite() throws Exception {
 
         String compositeIndividualJson = new String(Files.readAllBytes(
             Paths.get(TEST_RESOURCE_PATH + "composite-individual.json")));
@@ -45,6 +46,37 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
         Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
                                 .post(Entity.json(compositeIndividualJson));
+
+        assertEquals(200, response.getStatus());
+
+        String jsonPayload = response.readEntity(String.class);
+
+        IndividualEntity entity = mapper.readValue(jsonPayload, IndividualEntity.class);
+        assertEquals(Integer.valueOf(1), entity.getNamedentityid());
+        assertEquals("firstname", entity.getFirstname());
+        assertEquals("middlename", entity.getMiddlename());
+        assertEquals("lastname", entity.getLastname());
+        assertEquals(Integer.valueOf(5), entity.getPreferredcommunicationmethodtypeid());
+
+        // Request #2. Expect a validation exception (client-side error)
+
+        response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+                    .post(Entity.json(compositeIndividualJson));
+
+        assertEquals(400, response.getStatus());
+
+        String textPayload = response.readEntity(String.class);
+        assertTrue(textPayload.indexOf("Validation failed") >= 0);
+
+        // Request #3. Expect a data access exception (server-side error)
+
+        response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+                    .post(Entity.json(compositeIndividualJson));
+
+        assertEquals(500, response.getStatus());
+
+        textPayload = response.readEntity(String.class);
+        assertTrue(textPayload.indexOf("Internal error") >= 0);
     }
 
     @Test

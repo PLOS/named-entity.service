@@ -21,30 +21,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class NamedEntityServiceTest {
 
     @Autowired NamedEntityService nedSvc;
-/*
-    @Test
-    public void testExplicitTransactions() {
-        boolean rollback = false;
 
-        TransactionStatus tx = txMgr.getTransaction(new DefaultTransactionDefinition());
-        try {
-            // This should raise a unique constraint violation exception 
-            context.insertInto(TYPEDESCRIPTIONS)
-                   .set(TYPEDESCRIPTIONS.TYPEID, 1)
-                   .set(TYPEDESCRIPTIONS.DESCRIPTION, "Type Class (dupe)")
-                   .execute();
-
-            Assert.fail();
-        }
-        // catch constraint and roll back transaction
-        catch (DataAccessException e) {
-            txMgr.rollback(tx);
-            rollback = true;
-        }
-
-        assertTrue(rollback);
-    }
-*/
 	@Test
     public void testTypeDescriptionCRUD() {
 
@@ -151,7 +128,7 @@ public class NamedEntityServiceTest {
         }
     }
 
-	//@Test
+	@Test
     public void testEmailsCRUD() {
 
         /* ------------------------------------------------------------------ */

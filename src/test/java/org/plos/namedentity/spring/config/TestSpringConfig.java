@@ -9,20 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-
+import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
+import org.plos.namedentity.api.entity.IndividualEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
 import org.plos.namedentity.rest.NamedEntityResource;
 import org.plos.namedentity.service.NamedEntityService;
 import org.plos.namedentity.service.NamedEntityServiceHighApi;
 import org.plos.namedentity.utils.EntityPojoTransformer;
 import org.plos.namedentity.utils.Transformer;
-
 import org.springframework.context.annotation.Bean;
-import org.springframework.dao.DataAccessException;
 
 public class TestSpringConfig {
 
@@ -80,7 +77,22 @@ public class TestSpringConfig {
     @Bean @SuppressWarnings("unchecked")
     static public NamedEntityServiceHighApi namedEntityServiceHighApi() {
         NamedEntityServiceHighApi mockNamedEntityServiceHighApi =  Mockito.mock(NamedEntityServiceHighApi.class);
-        //TODO
+
+        IndividualEntity entity = new IndividualEntity();
+        entity.setNamedentityid(1);
+        entity.setFirstname("firstname");
+        entity.setMiddlename("middlename");
+        entity.setLastname("lastname");
+        entity.setNameprefixtypeid(2);
+        entity.setNamesuffixtypeid(3);
+        entity.setPreferredlanguagetypeid(4);
+        entity.setPreferredcommunicationmethodtypeid(5);
+
+        when(mockNamedEntityServiceHighApi.createIndividual(isA(IndividualComposite.class)))
+            .thenReturn(entity)
+                .thenThrow(NedValidationException.class)
+                    .thenThrow(RuntimeException.class);
+
         return mockNamedEntityServiceHighApi;
     }
 

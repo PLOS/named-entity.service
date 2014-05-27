@@ -33,12 +33,10 @@ import org.plos.namedentity.api.entity.RoleEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     @Autowired DSLContext context;
-    @Autowired DataSourceTransactionManager txMgr;
 
     @Override @SuppressWarnings("unchecked")
     public <T> Integer create(T t) {
