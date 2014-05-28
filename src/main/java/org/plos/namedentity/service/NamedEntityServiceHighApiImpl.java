@@ -100,8 +100,8 @@ public class NamedEntityServiceHighApiImpl implements NamedEntityServiceHighApi 
 
         if (composite.getPhonenumbers() != null) {
             for (PhonenumberDTO phonenumber : composite.getPhonenumbers()) {
-                Integer phoneTypeId       = findTypeValueByName(phoneTypeClassId, "Office");
-                Integer countryCodeTypeId = findTypeValueByName(countryCodeTypeClassId, "01");
+                Integer phoneTypeId       = findTypeValueByName(phoneTypeClassId, phonenumber.getPhonenumbertype());
+                Integer countryCodeTypeId = findTypeValueByName(countryCodeTypeClassId, phonenumber.getCountrycodetype());
 
                 PhonenumberEntity phoneEntity = new PhonenumberEntity();
                 phoneEntity.setNamedentityid(nedId);
