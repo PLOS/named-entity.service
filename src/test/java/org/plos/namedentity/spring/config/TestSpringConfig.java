@@ -11,8 +11,8 @@ import java.util.List;
 import org.mockito.Mockito;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.dto.IndividualDTO;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
-import org.plos.namedentity.api.entity.IndividualEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
 import org.plos.namedentity.rest.NamedEntityResource;
 import org.plos.namedentity.service.NamedEntityService;
@@ -78,18 +78,18 @@ public class TestSpringConfig {
     static public NamedEntityServiceHighApi namedEntityServiceHighApi() {
         NamedEntityServiceHighApi mockNamedEntityServiceHighApi =  Mockito.mock(NamedEntityServiceHighApi.class);
 
-        IndividualEntity entity = new IndividualEntity();
-        entity.setNamedentityid(1);
-        entity.setFirstname("firstname");
-        entity.setMiddlename("middlename");
-        entity.setLastname("lastname");
-        entity.setNameprefixtypeid(2);
-        entity.setNamesuffixtypeid(3);
-        entity.setPreferredlanguagetypeid(4);
-        entity.setPreferredcommunicationmethodtypeid(5);
+        IndividualDTO dto = new IndividualDTO();
+        dto.setNamedentityid(1);
+        dto.setFirstname("firstname");
+        dto.setMiddlename("middlename");
+        dto.setLastname("lastname");
+        dto.setNameprefix("Mr.");
+        dto.setNamesuffix("II");
+        dto.setPreferredlanguage("Mandarin");
+        dto.setPreferredcommunication("Phone");
 
         when(mockNamedEntityServiceHighApi.createIndividual(isA(IndividualComposite.class)))
-            .thenReturn(entity)
+            .thenReturn(dto)
                 .thenThrow(NedValidationException.class)
                     .thenThrow(RuntimeException.class);
 

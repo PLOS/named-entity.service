@@ -2,16 +2,7 @@ package org.plos.namedentity.persist;
 
 // to reduce verbosity, static import generated tables and jooq functions
 import static org.jooq.impl.DSL.currentTimestamp;
-
-import static org.plos.namedentity.persist.db.namedentities.Tables.ADDRESSES;
-import static org.plos.namedentity.persist.db.namedentities.Tables.EMAILS;
-import static org.plos.namedentity.persist.db.namedentities.Tables.GLOBALTYPES;
-import static org.plos.namedentity.persist.db.namedentities.Tables.INDIVIDUALS;
-import static org.plos.namedentity.persist.db.namedentities.Tables.JOURNALS;
-import static org.plos.namedentity.persist.db.namedentities.Tables.NAMEDENTITYIDENTIFIERS;
-import static org.plos.namedentity.persist.db.namedentities.Tables.PHONENUMBERS;
-import static org.plos.namedentity.persist.db.namedentities.Tables.ROLES;
-import static org.plos.namedentity.persist.db.namedentities.Tables.TYPEDESCRIPTIONS;
+import static org.plos.namedentity.persist.db.namedentities.Tables.*;
 
 import java.util.List;
 import java.util.Map;
@@ -23,6 +14,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
 
+import org.plos.namedentity.api.dto.IndividualDTO;
 import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
@@ -31,10 +23,11 @@ import org.plos.namedentity.api.entity.JournalEntity;
 import org.plos.namedentity.api.entity.PhonenumberEntity;
 import org.plos.namedentity.api.entity.RoleEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
+import org.plos.namedentity.persist.db.namedentities.tables.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
+public final class NamedEntityDBServiceImpl implements NamedEntityDBService, NamedEntityQueries {
 
     @Autowired DSLContext context;
 
@@ -168,6 +161,41 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     private boolean isEmptyOrBlank(String s) {
         return s == null || s.trim().isEmpty();
+    }
+
+    /* ---------------------------------------------------------------------- */
+    /*  NAMED ENTITY QUERIES                                                  */
+    /* ---------------------------------------------------------------------- */
+
+    @Override
+    public IndividualDTO findIndividualById(Integer individualId) {
+
+        Globaltypes  gt1 = GLOBALTYPES.as("gt1");
+        Globaltypes  gt2 = GLOBALTYPES.as("gt2");
+        Globaltypes  gt3 = GLOBALTYPES.as("gt3");
+        Globaltypes  gt4 = GLOBALTYPES.as("gt4");
+        Globaltypes  gt5 = GLOBALTYPES.as("gt5");
+        Globaltypes  gt6 = GLOBALTYPES.as("gt6");
+        Individuals  i   = INDIVIDUALS.as("i");
+
+        List<IndividualDTO> individuals = this.context
+            .select(
+                i.NAMEDENTITYID, i.FIRSTNAME, i.MIDDLENAME, i.LASTNAME, i.URL,
+                gt1.SHORTDESCRIPTION.as("nameprefix"),                 
+                gt2.SHORTDESCRIPTION.as("namesuffix"),
+                gt3.SHORTDESCRIPTION.as("preferredlanguage"), 
+                gt4.SHORTDESCRIPTION.as("preferredcommunication"))
+            .from(i)
+            .leftOuterJoin(gt1).on(i.NAMEPREFIXTYPEID.equal(gt1.GLOBALTYPEID))
+            .leftOuterJoin(gt2).on(i.NAMESUFFIXTYPEID.equal(gt2.GLOBALTYPEID))
+            .leftOuterJoin(gt3).on(i.PREFERREDLANGUAGETYPEID.equal(gt3.GLOBALTYPEID))
+            .leftOuterJoin(gt4).on(i.PREFERREDCOMMUNICATIONMETHODTYPEID.equal(gt4.GLOBALTYPEID))
+            .where(i.NAMEDENTITYID.equal(individualId))
+            .fetch()
+            .into(IndividualDTO.class);
+
+        assert( individuals.size() == 1 );
+        return individuals.get(0);
     }
 
     /* ---------------------------------------------------------------------- */

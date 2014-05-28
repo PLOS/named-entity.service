@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.dto.EmailDTO;
+import org.plos.namedentity.api.dto.IndividualDTO;
 import org.plos.namedentity.api.dto.GlobaltypeDTO;
 import org.plos.namedentity.api.dto.TypedescriptionDTO;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
@@ -47,8 +48,8 @@ public class NamedEntityResource {
     @Path("/individuals")
     public Response createIndividualComposite(IndividualComposite object) {
         try {
-            IndividualEntity individual = nedSvcHighApi.createIndividual(object);
-            return Response.status(Response.Status.OK).entity(individual).build();
+            IndividualDTO dto = nedSvcHighApi.createIndividual(object);
+            return Response.status(Response.Status.OK).entity(dto).build();
         }
         catch(NedValidationException e) {
             logger.error("validation exception", e);

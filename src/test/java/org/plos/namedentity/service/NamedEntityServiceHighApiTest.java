@@ -1,7 +1,7 @@
 package org.plos.namedentity.service;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -13,9 +13,9 @@ import org.junit.runner.RunWith;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.dto.EmailDTO;
+import org.plos.namedentity.api.dto.IndividualDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.entity.EmailEntity;
-import org.plos.namedentity.api.entity.IndividualEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -31,7 +31,7 @@ public class NamedEntityServiceHighApiTest {
     public void testCreateIndividualWithoutRole() {
 		// triggers phase 1 validation failure
         try {
-            IndividualEntity entity = nedSvcHighApi.createIndividual(new IndividualComposite());
+            IndividualDTO dto = nedSvcHighApi.createIndividual(new IndividualComposite());
             fail();
         }
         catch (NedValidationException expected) {
@@ -61,9 +61,9 @@ public class NamedEntityServiceHighApiTest {
         composite.setEmails( emails );
 
 		try {
-			IndividualEntity entity = nedSvcHighApi.createIndividual(composite);
-			assertNotNull(entity);
-			assertNotNull(entity.getNamedentityid());
+			IndividualDTO dto = nedSvcHighApi.createIndividual(composite);
+			assertNotNull(dto);
+			assertNotNull(dto.getNamedentityid());
 		}
 		catch (NedValidationException e) {
 			fail();
@@ -92,7 +92,7 @@ public class NamedEntityServiceHighApiTest {
         composite.setEmails( emails );
 
 		try {
-			IndividualEntity entity = nedSvcHighApi.createIndividual(composite);
+			IndividualDTO dto = nedSvcHighApi.createIndividual(composite);
 			fail();
 		}
 		catch (NedValidationException expected) {

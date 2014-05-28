@@ -9,6 +9,7 @@ import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.dto.AddressDTO;
 import org.plos.namedentity.api.dto.EmailDTO;
+import org.plos.namedentity.api.dto.IndividualDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.entity.AddressEntity;
@@ -19,6 +20,7 @@ import org.plos.namedentity.api.entity.PhonenumberEntity;
 import org.plos.namedentity.api.entity.RoleEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
 import org.plos.namedentity.persist.NamedEntityDBService;
+import org.plos.namedentity.persist.NamedEntityQueries;
 import org.springframework.transaction.annotation.Transactional;
 
 public class NamedEntityServiceHighApiImpl implements NamedEntityServiceHighApi {
@@ -26,7 +28,7 @@ public class NamedEntityServiceHighApiImpl implements NamedEntityServiceHighApi 
     @Inject private NamedEntityDBService nedDBSvc; 
 
     @Override @Transactional
-    public IndividualEntity createIndividual(IndividualComposite composite) {
+    public IndividualDTO createIndividual(IndividualComposite composite) {
         //TODO - better validation. handle null fields!
 
         Integer nedId = nedDBSvc.newNamedEntityId("Individual");
@@ -154,7 +156,8 @@ public class NamedEntityServiceHighApiImpl implements NamedEntityServiceHighApi 
             nedDBSvc.create( roleEntity );
         }
 
-        return nedDBSvc.findById(nedId, IndividualEntity.class);
+        return ((NamedEntityQueries)nedDBSvc).findIndividualById(nedId);
+        //return nedDBSvc.findById(nedId, IndividualEntity.class);
     }
     
     public NamedEntityDBService getNamedEntityDBService() {

@@ -18,6 +18,7 @@ import org.jooq.Result;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.plos.namedentity.api.dto.IndividualDTO;
 import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
@@ -330,8 +331,17 @@ public class NamedEntityDBServiceTest {
 
         List<IndividualEntity> allIndividualsInDB = nedDBSvc.findAll(IndividualEntity.class);
         assertTrue(allIndividualsInDB.size() > 0);
-                
-        //TODO : FIND BY ATTRIBUTE (Lookup by name)
+
+        // FIND "Resolved" Individual Record By ID (ie, type ids -> type values)
+
+        NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
+        IndividualDTO dto = nedQuery.findIndividualById(individualId);
+        assertNotNull( dto );
+        assertEquals("firstname", dto.getFirstname());
+        assertEquals("Mr.", dto.getNameprefix());
+        assertEquals("II", dto.getNamesuffix());
+        assertEquals("Italian", dto.getPreferredlanguage());
+        assertEquals("Email", dto.getPreferredcommunication());
 
 		// DELETE
 

@@ -17,8 +17,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.plos.namedentity.api.dto.GlobaltypeDTO;
+import org.plos.namedentity.api.dto.IndividualDTO;
 import org.plos.namedentity.api.dto.TypedescriptionDTO;
-import org.plos.namedentity.api.entity.IndividualEntity;
 
 public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
@@ -51,12 +51,12 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
         String jsonPayload = response.readEntity(String.class);
 
-        IndividualEntity entity = mapper.readValue(jsonPayload, IndividualEntity.class);
-        assertEquals(Integer.valueOf(1), entity.getNamedentityid());
-        assertEquals("firstname", entity.getFirstname());
-        assertEquals("middlename", entity.getMiddlename());
-        assertEquals("lastname", entity.getLastname());
-        assertEquals(Integer.valueOf(5), entity.getPreferredcommunicationmethodtypeid());
+        IndividualDTO dto = mapper.readValue(jsonPayload, IndividualDTO.class);
+        assertEquals(Integer.valueOf(1), dto.getNamedentityid());
+        assertEquals("firstname", dto.getFirstname());
+        assertEquals("middlename", dto.getMiddlename());
+        assertEquals("lastname", dto.getLastname());
+        assertEquals("Mr.", dto.getNameprefix());
 
         // Request #2. Expect a validation exception (client-side error)
 

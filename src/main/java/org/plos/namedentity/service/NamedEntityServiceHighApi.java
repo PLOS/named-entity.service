@@ -1,7 +1,7 @@
 package org.plos.namedentity.service;
 
 import org.plos.namedentity.api.IndividualComposite;
-import org.plos.namedentity.api.entity.IndividualEntity;
+import org.plos.namedentity.api.dto.IndividualDTO;
 
 /* -------------------------------------------------------------------------- */
 /*   Named Entity Service High-Level Convenience API                          */
@@ -9,5 +9,5 @@ import org.plos.namedentity.api.entity.IndividualEntity;
 
 public interface NamedEntityServiceHighApi {
 
-    public IndividualEntity createIndividual(IndividualComposite composite);
+    public IndividualDTO createIndividual(IndividualComposite composite);
 }
