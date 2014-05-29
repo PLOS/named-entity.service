@@ -18,7 +18,11 @@ import org.jooq.Result;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.plos.namedentity.api.dto.AddressDTO;
+import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.IndividualDTO;
+import org.plos.namedentity.api.dto.PhonenumberDTO;
+import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
@@ -274,6 +278,12 @@ public class NamedEntityDBServiceTest {
             assertTrue( allEmailsInDB.contains(email) );
         }
 
+        // FIND BY JOIN-QUERY 
+
+        NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
+        List<EmailDTO> emails = nedQuery.findEmailsByNedId(foundEmails2.get(0).getNamedentityid());
+        assertTrue( emails.size() > 0 );
+
         // Try to find an email which doesn't exist
 
         EmailEntity entity3 = nedDBSvc.findById(666, EmailEntity.class);
@@ -332,10 +342,10 @@ public class NamedEntityDBServiceTest {
         List<IndividualEntity> allIndividualsInDB = nedDBSvc.findAll(IndividualEntity.class);
         assertTrue(allIndividualsInDB.size() > 0);
 
-        // FIND "Resolved" Individual Record By ID (ie, type ids -> type values)
+        // FIND BY JOIN-QUERY 
 
         NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-        IndividualDTO dto = nedQuery.findIndividualById(individualId);
+        IndividualDTO dto = nedQuery.findIndividualByNedId(individualId);
         assertNotNull( dto );
         assertEquals("firstname", dto.getFirstname());
         assertEquals("Mr.", dto.getNameprefix());
@@ -424,6 +434,12 @@ public class NamedEntityDBServiceTest {
             assertTrue( allPhonenumbersInDb.contains(phone) );
         }
 
+        // FIND BY JOIN-QUERY 
+
+        NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
+        List<PhonenumberDTO> phonenumbers = nedQuery.findPhoneNumbersByNedId(foundPhones.get(0).getNamedentityid());
+        assertTrue( phonenumbers.size() > 0 );
+
 		// DELETE
 
 		PhonenumberEntity phoneToDelete = new PhonenumberEntity();
@@ -482,6 +498,12 @@ public class NamedEntityDBServiceTest {
 
         List<AddressEntity> allAddressesInDb = nedDBSvc.findAll(AddressEntity.class);
         assertTrue( allAddressesInDb.size() > 0 );
+
+        // FIND BY JOIN-QUERY 
+
+        NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
+        List<AddressDTO> addresses = nedQuery.findAddressesByNedId(savedAddress.getNamedentityid());
+        assertTrue( addresses.size() > 0 );
                 
         //TODO : FIND BY ATTRIBUTE
 
@@ -527,10 +549,16 @@ public class NamedEntityDBServiceTest {
         RoleEntity savedRole2 = nedDBSvc.findById(authorId, RoleEntity.class);
         assertEquals(savedRole, savedRole2);
 
-        // FIND ALL Phone Numbers 
+        // FIND ALL Roles 
 
         List<RoleEntity> allRolesInDb = nedDBSvc.findAll(RoleEntity.class);
         assertTrue( allRolesInDb.size() > 0 );
+
+        // FIND BY JOIN-QUERY 
+
+        NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
+        List<RoleDTO> roleDto = nedQuery.findRolesByNedId(savedRole.getNamedentityid());
+        assertNotNull( roleDto );
                 
 		// DELETE
 

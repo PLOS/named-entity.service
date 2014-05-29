@@ -2,7 +2,15 @@ package org.plos.namedentity.persist;
 
 // to reduce verbosity, static import generated tables and jooq functions
 import static org.jooq.impl.DSL.currentTimestamp;
-import static org.plos.namedentity.persist.db.namedentities.Tables.*;
+import static org.plos.namedentity.persist.db.namedentities.Tables.ADDRESSES;
+import static org.plos.namedentity.persist.db.namedentities.Tables.EMAILS;
+import static org.plos.namedentity.persist.db.namedentities.Tables.GLOBALTYPES;
+import static org.plos.namedentity.persist.db.namedentities.Tables.INDIVIDUALS;
+import static org.plos.namedentity.persist.db.namedentities.Tables.JOURNALS;
+import static org.plos.namedentity.persist.db.namedentities.Tables.NAMEDENTITYIDENTIFIERS;
+import static org.plos.namedentity.persist.db.namedentities.Tables.PHONENUMBERS;
+import static org.plos.namedentity.persist.db.namedentities.Tables.ROLES;
+import static org.plos.namedentity.persist.db.namedentities.Tables.TYPEDESCRIPTIONS;
 
 import java.util.List;
 import java.util.Map;
@@ -13,8 +21,11 @@ import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
-
+import org.plos.namedentity.api.dto.AddressDTO;
+import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.IndividualDTO;
+import org.plos.namedentity.api.dto.PhonenumberDTO;
+import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
@@ -23,8 +34,12 @@ import org.plos.namedentity.api.entity.JournalEntity;
 import org.plos.namedentity.api.entity.PhonenumberEntity;
 import org.plos.namedentity.api.entity.RoleEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
-import org.plos.namedentity.persist.db.namedentities.tables.*;
-
+import org.plos.namedentity.persist.db.namedentities.tables.Addresses;
+import org.plos.namedentity.persist.db.namedentities.tables.Emails;
+import org.plos.namedentity.persist.db.namedentities.tables.Globaltypes;
+import org.plos.namedentity.persist.db.namedentities.tables.Individuals;
+import org.plos.namedentity.persist.db.namedentities.tables.Phonenumbers;
+import org.plos.namedentity.persist.db.namedentities.tables.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public final class NamedEntityDBServiceImpl implements NamedEntityDBService, NamedEntityQueries {
@@ -168,17 +183,27 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
     /* ---------------------------------------------------------------------- */
 
     @Override
-    public IndividualDTO findIndividualById(Integer individualId) {
+    public IndividualDTO findIndividualByNedId(Integer nedId) {
+/*
+        SELECT gt1.shortDescription nameprefix, i.firstName firstname, 
+               i.middleName middlename, i.lastName lastname, 
+               gt2.shortDescription namesuffix, i.url, 
+               gt3.shortDescription preferredlanguage, 
+               gt4.shortDescription preferredcommunication
+          FROM individuals i
+     LEFT JOIN globalTypes gt1 ON i.namePrefixTypeId        = gt1.globalTypeId
+     LEFT JOIN globalTypes gt2 ON i.nameSuffixTypeId        = gt2.globalTypeId
+     LEFT JOIN globalTypes gt3 ON i.preferredLanguageTypeId = gt3.globalTypeId
+     LEFT JOIN globalTypes gt4 ON i.preferredCommunicationMethodTypeId = gt4.globalTypeId
+         WHERE i.namedEntityId = 37
+*/
+        Globaltypes gt1 = GLOBALTYPES.as("gt1");
+        Globaltypes gt2 = GLOBALTYPES.as("gt2");
+        Globaltypes gt3 = GLOBALTYPES.as("gt3");
+        Globaltypes gt4 = GLOBALTYPES.as("gt4");
+        Individuals i   = INDIVIDUALS.as("i");
 
-        Globaltypes  gt1 = GLOBALTYPES.as("gt1");
-        Globaltypes  gt2 = GLOBALTYPES.as("gt2");
-        Globaltypes  gt3 = GLOBALTYPES.as("gt3");
-        Globaltypes  gt4 = GLOBALTYPES.as("gt4");
-        Globaltypes  gt5 = GLOBALTYPES.as("gt5");
-        Globaltypes  gt6 = GLOBALTYPES.as("gt6");
-        Individuals  i   = INDIVIDUALS.as("i");
-
-        List<IndividualDTO> individuals = this.context
+        return this.context
             .select(
                 i.NAMEDENTITYID, i.FIRSTNAME, i.MIDDLENAME, i.LASTNAME, i.URL,
                 gt1.SHORTDESCRIPTION.as("nameprefix"),                 
@@ -190,12 +215,121 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
             .leftOuterJoin(gt2).on(i.NAMESUFFIXTYPEID.equal(gt2.GLOBALTYPEID))
             .leftOuterJoin(gt3).on(i.PREFERREDLANGUAGETYPEID.equal(gt3.GLOBALTYPEID))
             .leftOuterJoin(gt4).on(i.PREFERREDCOMMUNICATIONMETHODTYPEID.equal(gt4.GLOBALTYPEID))
-            .where(i.NAMEDENTITYID.equal(individualId))
-            .fetch()
+            .where(i.NAMEDENTITYID.equal(nedId))
+            .fetchOne()
             .into(IndividualDTO.class);
+    }
 
-        assert( individuals.size() == 1 );
-        return individuals.get(0);
+    @Override
+    public List<AddressDTO> findAddressesByNedId(Integer nedId) {
+/*
+        SELECT gt1.shortDescription addresstype, a.addressline1, a.addressline2, 
+               a.addressline3, a.city, a.postalCode, a.isprimary,
+               gt2.shortDescription statecodetype,
+               gt3.shortDescription countrycodetype
+          FROM addresses a
+     LEFT JOIN globalTypes gt1 ON a.addressTypeId     = gt1.globalTypeId
+     LEFT JOIN globalTypes gt2 ON a.stateCodeTypeId   = gt2.globalTypeId
+     LEFT JOIN globalTypes gt3 ON a.countryCodeTypeId = gt3.globalTypeId
+         WHERE a.namedEntityId = 59
+*/
+        Globaltypes gt1 = GLOBALTYPES.as("gt1");
+        Globaltypes gt2 = GLOBALTYPES.as("gt2");
+        Globaltypes gt3 = GLOBALTYPES.as("gt3");
+        Addresses   a   = ADDRESSES.as("a");
+
+        return this.context
+            .select(
+                a.ADDRESSLINE1, a.ADDRESSLINE2, a.ADDRESSLINE3, a.CITY, 
+                a.POSTALCODE, a.ISPRIMARY,
+                gt1.SHORTDESCRIPTION.as("addresstype"),                 
+                gt2.SHORTDESCRIPTION.as("statecodetype"),
+                gt3.SHORTDESCRIPTION.as("countrycodetype"))
+            .from(a)
+            .leftOuterJoin(gt1).on(a.ADDRESSTYPEID.equal(gt1.GLOBALTYPEID))
+            .leftOuterJoin(gt2).on(a.STATECODETYPEID.equal(gt2.GLOBALTYPEID))
+            .leftOuterJoin(gt3).on(a.COUNTRYCODETYPEID.equal(gt3.GLOBALTYPEID))
+            .where(a.NAMEDENTITYID.equal(nedId))
+            .fetch()
+            .into(AddressDTO.class);
+    }
+
+    @Override
+    public List<EmailDTO> findEmailsByNedId(Integer nedId) {
+/*
+        SELECT gt1.shortDescription emailtype, e.emailaddress, e.isprimary
+          FROM emails e
+     LEFT JOIN globalTypes gt1 ON e.emailTypeId = gt1.globalTypeId
+         WHERE e.namedentityid = 59
+*/
+        Globaltypes  gt1 = GLOBALTYPES.as("gt1");
+        Emails       e   = EMAILS.as("e");
+
+        return this.context
+            .select(
+                e.EMAILADDRESS, e.ISPRIMARY, 
+                gt1.SHORTDESCRIPTION.as("emailtype"))
+            .from(e)
+            .leftOuterJoin(gt1).on(e.EMAILTYPEID.equal(gt1.GLOBALTYPEID))
+            .where(e.NAMEDENTITYID.equal(nedId))
+            .fetch()
+            .into(EmailDTO.class);
+    }
+
+    @Override
+    public List<PhonenumberDTO> findPhoneNumbersByNedId(Integer nedId) {
+/*
+        SELECT gt1.shortDescription phonenumbertype,
+               gt2.shortDescription countrycodetype,
+               p.phoneNumber phonenumber, p.extension, p.isPrimary
+          FROM phoneNumbers p
+     LEFT JOIN globalTypes gt1 ON p.phoneNumberTypeId = gt1.globalTypeId
+     LEFT JOIN globalTypes gt2 ON p.countryCodeTypeId = gt2.globalTypeId
+         WHERE p.namedentityid = 59
+*/
+        Globaltypes  gt1 = GLOBALTYPES.as("gt1");
+        Globaltypes  gt2 = GLOBALTYPES.as("gt2");
+        Phonenumbers p   = PHONENUMBERS.as("p");
+
+        return this.context
+            .select(
+                p.PHONENUMBER, p.EXTENSION, p.ISPRIMARY,
+                gt1.SHORTDESCRIPTION.as("phonenumbertype"),                 
+                gt2.SHORTDESCRIPTION.as("countrycodetype"))
+            .from(p)
+            .leftOuterJoin(gt1).on(p.PHONENUMBERTYPEID.equal(gt1.GLOBALTYPEID))
+            .leftOuterJoin(gt2).on(p.COUNTRYCODETYPEID.equal(gt2.GLOBALTYPEID))
+            .where(p.NAMEDENTITYID.equal(nedId))
+            .fetch()
+            .into(PhonenumberDTO.class);
+    }
+
+    @Override
+    public List<RoleDTO> findRolesByNedId(Integer nedId) {
+/*
+        SELECT gt1.shortDescription sourceapplicationtypeid,
+               gt2.shortDescription roletypeid,
+               r.startDate, r.endDate
+          FROM roles r
+     LEFT JOIN globalTypes gt1 ON r.sourceApplicationTypeId = gt1.globalTypeId
+     LEFT JOIN globalTypes gt2 ON r.roleTypeID = gt2.globalTypeId
+         WHERE r.namedentityid = 59
+*/
+        Globaltypes gt1 = GLOBALTYPES.as("gt1");
+        Globaltypes gt2 = GLOBALTYPES.as("gt2");
+        Roles       r   = ROLES.as("r");
+
+        return this.context
+            .select(
+                r.STARTDATE, r.ENDDATE,
+                gt1.SHORTDESCRIPTION.as("sourceapplicationtypeid"),                 
+                gt2.SHORTDESCRIPTION.as("roletypeid"))
+            .from(r)
+            .leftOuterJoin(gt1).on(r.SOURCEAPPLICATIONTYPEID.equal(gt1.GLOBALTYPEID))
+            .leftOuterJoin(gt2).on(r.ROLETYPEID.equal(gt2.GLOBALTYPEID))
+            .where(r.NAMEDENTITYID.equal(nedId))
+            .fetch()
+            .into(RoleDTO.class);
     }
 
     /* ---------------------------------------------------------------------- */

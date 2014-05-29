@@ -2,6 +2,7 @@ package org.plos.namedentity.service;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -156,8 +157,33 @@ public class NamedEntityServiceHighApiImpl implements NamedEntityServiceHighApi 
             nedDBSvc.create( roleEntity );
         }
 
-        return ((NamedEntityQueries)nedDBSvc).findIndividualById(nedId);
+        return ((NamedEntityQueries)nedDBSvc).findIndividualByNedId(nedId);
         //return nedDBSvc.findById(nedId, IndividualEntity.class);
+    }
+
+    @Override
+    public IndividualDTO findIndividualByNedId(Integer nedId) {
+        return ((NamedEntityQueries)nedDBSvc).findIndividualByNedId(nedId);
+    }
+
+    @Override
+    public List<AddressDTO> findAddressesByNedId(Integer nedId) {
+        return ((NamedEntityQueries)nedDBSvc).findAddressesByNedId(nedId);
+    }
+
+    @Override
+    public List<EmailDTO> findEmailsByNedId(Integer nedId) {
+        return ((NamedEntityQueries)nedDBSvc).findEmailsByNedId(nedId);
+    }
+
+    @Override
+    public List<PhonenumberDTO> findPhoneNumbersByNedId(Integer nedId) {
+        return ((NamedEntityQueries)nedDBSvc).findPhoneNumbersByNedId(nedId);
+    }
+
+    @Override
+    public List<RoleDTO> findRolesByNedId(Integer nedId) {
+        return ((NamedEntityQueries)nedDBSvc).findRolesByNedId(nedId);
     }
     
     public NamedEntityDBService getNamedEntityDBService() {

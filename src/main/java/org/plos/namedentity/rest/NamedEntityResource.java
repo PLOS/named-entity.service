@@ -284,6 +284,27 @@ public class NamedEntityResource {
         }
     }
 
+    /* ---------------------------------------------------------------------- */
+    /*  INDIVIDUALS                                                           */
+    /* ---------------------------------------------------------------------- */
+
+    //@GET
+    //@Produces(MediaType.APPLICATION_JSON)
+    //@Path("/individuals/{id}")
+    //public Response getIndividual(@PathParam("id") int id) {
+        //try {
+            //TypedescriptionEntity entity = nedSvcLowApi.findById(id, TypedescriptionEntity.class);
+            //return Response.status(Response.Status.OK).entity( entity ).build();
+            ////return Response.status(Response.Status.OK).entity( toPojo(entity) ).build();
+        //}
+        //catch(Exception e) {
+            //logger.error("internal error", e);
+            //return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
+                //.entity("Find type class by id failed. Reason: " + e.getMessage())
+                //.type(MediaType.TEXT_PLAIN).build();
+        //}
+    //}
+
     public NamedEntityService getNamedEntityService() {
         return nedSvcLowApi;
     }
