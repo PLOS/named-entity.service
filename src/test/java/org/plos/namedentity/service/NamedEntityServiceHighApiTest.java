@@ -61,7 +61,7 @@ public class NamedEntityServiceHighApiTest {
 		EmailDTO personalEmail = new EmailDTO();
 		personalEmail.setEmailtype("Personal");
 		personalEmail.setEmailaddress("fu.manchu.home@foo.com");
-		personalEmail.setIsprimary(true);
+		personalEmail.setIsprimary(false);
 		emails.add( personalEmail );
 
         composite.setEmails( emails );

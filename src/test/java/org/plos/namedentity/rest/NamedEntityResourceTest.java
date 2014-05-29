@@ -16,18 +16,25 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
+import org.plos.namedentity.api.dto.AddressDTO;
+import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.GlobaltypeDTO;
 import org.plos.namedentity.api.dto.IndividualDTO;
+import org.plos.namedentity.api.dto.PhonenumberDTO;
+import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.TypedescriptionDTO;
 
 public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     private static final String TEST_RESOURCE_PATH = "src/test/resources/";
 
-    private static final String TYPE_CLASS_URI = "/ned/typeclasses";
-    private static final String TYPE_VALUE_URI = TYPE_CLASS_URI + "/1/typevalues"; 
-    private static final String INDIVIDUAL_URI = "/ned/individuals";
-    private static final String EMAIL_URI      = INDIVIDUAL_URI + "/1/emails";
+    private static final String TYPE_CLASS_URI  = "/ned/typeclasses";
+    private static final String TYPE_VALUE_URI  = TYPE_CLASS_URI + "/1/typevalues";
+    private static final String INDIVIDUAL_URI  = "/ned/individuals";
+    private static final String INDIV_ADDR_URI  = INDIVIDUAL_URI + "/1/addresses";
+    private static final String INDIV_EMAIL_URI = INDIVIDUAL_URI + "/1/emails";
+    private static final String INDIV_PHONE_URI = INDIVIDUAL_URI + "/1/phonenumbers";
+    private static final String INDIV_ROLE_URI  = INDIVIDUAL_URI + "/1/roles";
 
     private ObjectMapper mapper;
 
@@ -77,6 +84,123 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
         textPayload = response.readEntity(String.class);
         assertTrue(textPayload.indexOf("Internal error") >= 0);
+    }
+
+    @Test
+    public void testIndividualCrud() throws IOException {
+
+        /* ------------------------------------------------------------------ */
+        /*  FIND (BY ID)                                                      */
+        /* ------------------------------------------------------------------ */
+
+        Response response = target(INDIVIDUAL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
+
+        assertEquals(200, response.getStatus());
+
+        String jsonPayload = response.readEntity(String.class);
+
+        IndividualDTO dto = mapper.readValue(jsonPayload, IndividualDTO.class);
+        assertEquals(Integer.valueOf(1), dto.getNamedentityid());
+        assertEquals("firstname", dto.getFirstname());
+        assertEquals("middlename", dto.getMiddlename());
+        assertEquals("lastname", dto.getLastname());
+        assertEquals("Mr.", dto.getNameprefix());
+
+        //TODO - CREATE, UPDATE, DELETE
+    }
+
+    @Test
+    public void testAddressCrud() throws IOException {
+
+        /* ------------------------------------------------------------------ */
+        /*  FIND (BY ID)                                                      */
+        /* ------------------------------------------------------------------ */
+
+        Response response = target(INDIV_ADDR_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+        assertEquals(200, response.getStatus());
+
+        String jsonPayload = response.readEntity(String.class);
+
+        AddressDTO[] addresses = mapper.readValue(jsonPayload, AddressDTO[].class);
+        assertEquals(1, addresses.length);
+
+        AddressDTO address = addresses[0];
+        assertEquals("Office", address.getAddresstype());
+        assertEquals("city", address.getCity());
+        assertEquals("1234567", address.getPostalcode());
+        assertTrue( address.getIsprimary() );
+
+        //TODO - CREATE, UPDATE, DELETE
+    }
+
+    @Test
+    public void testEmailCrud() throws IOException {
+
+        /* ------------------------------------------------------------------ */
+        /*  FIND (BY ID)                                                      */
+        /* ------------------------------------------------------------------ */
+
+        Response response = target(INDIV_EMAIL_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+        assertEquals(200, response.getStatus());
+
+        String jsonPayload = response.readEntity(String.class);
+
+        EmailDTO[] emails = mapper.readValue(jsonPayload, EmailDTO[].class);
+        assertEquals(2, emails.length);
+
+        EmailDTO email = emails[0];
+        assertEquals("Work", email.getEmailtype());
+        assertEquals("fu.manchu.work@foo.com", email.getEmailaddress());
+        assertTrue( email.getIsprimary() );
+
+        //TODO - CREATE, UPDATE, DELETE
+    }
+
+    @Test
+    public void testPhonenumberCrud() throws IOException {
+
+        /* ------------------------------------------------------------------ */
+        /*  FIND (BY ID)                                                      */
+        /* ------------------------------------------------------------------ */
+
+        Response response = target(INDIV_PHONE_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+        assertEquals(200, response.getStatus());
+
+        String jsonPayload = response.readEntity(String.class);
+
+        PhonenumberDTO[] phonenumbers = mapper.readValue(jsonPayload, PhonenumberDTO[].class);
+        assertEquals(3, phonenumbers.length);
+
+        PhonenumberDTO officePhone = phonenumbers[0];
+        assertEquals("Office", officePhone.getPhonenumbertype());
+        assertEquals("123-456-7890", officePhone.getPhonenumber());
+
+        //TODO - CREATE, UPDATE, DELETE
+    }
+
+    @Test
+    public void testRoleCrud() throws IOException {
+
+        /* ------------------------------------------------------------------ */
+        /*  FIND (BY ID)                                                      */
+        /* ------------------------------------------------------------------ */
+
+        Response response = target(INDIV_ROLE_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+        assertEquals(200, response.getStatus());
+
+        String jsonPayload = response.readEntity(String.class);
+
+        RoleDTO[] roles = mapper.readValue(jsonPayload, RoleDTO[].class);
+        assertEquals(1, roles.length);
+
+        RoleDTO role = roles[0];
+        assertEquals("Author", role.getRoletype());
+
+        //TODO - CREATE, UPDATE, DELETE
     }
 
     @Test

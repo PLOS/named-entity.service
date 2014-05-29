@@ -1,6 +1,7 @@
 package org.plos.namedentity.spring.config;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.when;
@@ -11,7 +12,11 @@ import java.util.List;
 import org.mockito.Mockito;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.dto.AddressDTO;
+import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.IndividualDTO;
+import org.plos.namedentity.api.dto.PhonenumberDTO;
+import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
 import org.plos.namedentity.rest.NamedEntityResource;
@@ -78,20 +83,27 @@ public class TestSpringConfig {
     static public NamedEntityServiceHighApi namedEntityServiceHighApi() {
         NamedEntityServiceHighApi mockNamedEntityServiceHighApi =  Mockito.mock(NamedEntityServiceHighApi.class);
 
-        IndividualDTO dto = new IndividualDTO();
-        dto.setNamedentityid(1);
-        dto.setFirstname("firstname");
-        dto.setMiddlename("middlename");
-        dto.setLastname("lastname");
-        dto.setNameprefix("Mr.");
-        dto.setNamesuffix("II");
-        dto.setPreferredlanguage("Mandarin");
-        dto.setPreferredcommunication("Phone");
+        IndividualDTO individualDto = newIndividualDto();
 
         when(mockNamedEntityServiceHighApi.createIndividual(isA(IndividualComposite.class)))
-            .thenReturn(dto)
+            .thenReturn(individualDto)
                 .thenThrow(NedValidationException.class)
                     .thenThrow(RuntimeException.class);
+
+        when(mockNamedEntityServiceHighApi.findIndividualByNedId(anyInt()))
+            .thenReturn( individualDto );
+
+        when(mockNamedEntityServiceHighApi.findAddressesByNedId(anyInt()))
+            .thenReturn( newAddressesDto() );
+
+        when(mockNamedEntityServiceHighApi.findEmailsByNedId(anyInt()))
+            .thenReturn( newEmailsDto() );
+
+        when(mockNamedEntityServiceHighApi.findPhoneNumbersByNedId(anyInt()))
+            .thenReturn( newPhonenumbersDto() );
+
+        when(mockNamedEntityServiceHighApi.findRolesByNedId(anyInt()))
+            .thenReturn( newRolesDto() );
 
         return mockNamedEntityServiceHighApi;
     }
@@ -106,5 +118,91 @@ public class TestSpringConfig {
         NamedEntityResource nedResource = new NamedEntityResource();
         nedResource.setNamedEntityService(namedEntityService());
         return nedResource;
+    }
+
+    static private IndividualDTO newIndividualDto() {
+        IndividualDTO dto = new IndividualDTO();
+        dto.setNamedentityid(1);
+        dto.setFirstname("firstname");
+        dto.setMiddlename("middlename");
+        dto.setLastname("lastname");
+        dto.setNameprefix("Mr.");
+        dto.setNamesuffix("II");
+        dto.setPreferredlanguage("Mandarin");
+        dto.setPreferredcommunication("Phone");
+        return dto;
+    }
+
+    static private List<AddressDTO> newAddressesDto() {
+        List<AddressDTO> addresses = new ArrayList<>();
+
+        AddressDTO address = new AddressDTO();
+        address.setAddresstype("Office");
+        address.setAddressline1("addressline1");
+        address.setAddressline2("addressline2");
+        address.setCity("city");
+        address.setStatecodetype("CA");
+        address.setCountrycodetype("United States");
+        address.setPostalcode("1234567");
+        address.setIsprimary(true);
+        addresses.add( address );
+
+        return addresses;
+    }
+
+    static private List<EmailDTO> newEmailsDto() {
+        List<EmailDTO> emails = new ArrayList<>();
+
+		EmailDTO workEmail = new EmailDTO();
+		workEmail.setEmailtype("Work");
+		workEmail.setEmailaddress("fu.manchu.work@foo.com");
+		workEmail.setIsprimary(true);
+		emails.add( workEmail );
+
+		EmailDTO personalEmail = new EmailDTO();
+		personalEmail.setEmailtype("Personal");
+		personalEmail.setEmailaddress("fu.manchu.home@foo.com");
+		personalEmail.setIsprimary(false);
+		emails.add( personalEmail );
+
+        return emails;
+    }
+
+    static private List<PhonenumberDTO> newPhonenumbersDto() {
+        List<PhonenumberDTO> phonenumbers = new ArrayList<>();
+
+        PhonenumberDTO officePhone = new PhonenumberDTO();
+        officePhone.setPhonenumbertype("Office");
+        officePhone.setCountrycodetype("01");
+        officePhone.setPhonenumber("123-456-7890");
+        officePhone.setIsprimary(true);
+        phonenumbers.add( officePhone );
+
+        PhonenumberDTO mobilePhone = new PhonenumberDTO();
+        mobilePhone.setPhonenumbertype("Mobile");
+        mobilePhone.setCountrycodetype("01");
+        mobilePhone.setPhonenumber("123-444-0011");
+        mobilePhone.setIsprimary(false);
+        phonenumbers.add( mobilePhone );
+
+        PhonenumberDTO homePhone = new PhonenumberDTO();
+        homePhone.setPhonenumbertype("Home");
+        homePhone.setCountrycodetype("01");
+        homePhone.setPhonenumber("123-555-6666");
+        homePhone.setIsprimary(false);
+        phonenumbers.add( homePhone );
+
+        return phonenumbers;
+    }
+
+    static private List<RoleDTO> newRolesDto() {
+        List<RoleDTO> roles = new ArrayList<>();
+
+        RoleDTO author = new RoleDTO();
+        author.setRoletype("Author");
+        author.setStartdate("2014-05-30");
+        roles.add( author );
+
+        return roles;
     }
 }

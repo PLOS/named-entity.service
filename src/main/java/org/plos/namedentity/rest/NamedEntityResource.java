@@ -11,21 +11,21 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
-
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.dto.AddressDTO;
 import org.plos.namedentity.api.dto.EmailDTO;
-import org.plos.namedentity.api.dto.IndividualDTO;
 import org.plos.namedentity.api.dto.GlobaltypeDTO;
+import org.plos.namedentity.api.dto.IndividualDTO;
+import org.plos.namedentity.api.dto.PhonenumberDTO;
+import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.TypedescriptionDTO;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
-import org.plos.namedentity.api.entity.IndividualEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
 import org.plos.namedentity.service.NamedEntityService;
 import org.plos.namedentity.service.NamedEntityServiceHighApi;
@@ -40,8 +40,10 @@ public class NamedEntityResource {
     @Inject private NamedEntityServiceHighApi nedSvcHighApi;
     @Inject private Transformer               transformer;
 
-    /* ------------------ CONVENIENCE API (HIGH-LEVEL) ---------------------- */
-
+    /* ---------------------------------------------------------------------- */
+    /*  INDIVIDUALS                                                           */
+    /* ---------------------------------------------------------------------- */
+    
     @POST
     @Consumes("application/json")
     @Produces("application/json")
@@ -54,18 +56,100 @@ public class NamedEntityResource {
         catch(NedValidationException e) {
             logger.error("validation exception", e);
             return Response.status(Response.Status.BAD_REQUEST)             // 4XX (client-side)
-                .entity("Unable to create Type Class. Validation failed. Reason: " + e.getMessage())
+                .entity("Unable to create individual. Validation failed. Reason: " + e.getMessage())
                 .type(MediaType.TEXT_PLAIN).build();
         }
         catch(Exception e) {
             logger.error("internal error", e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-                .entity("Unable to create Type Class. Internal error. Reason: " + e.getMessage())
+                .entity("Unable to create individual. Internal error. Reason: " + e.getMessage())
                 .type(MediaType.TEXT_PLAIN).build();
         }
     }
 
-    /* ---------------------- CORE API (LOW-EVEL)  -------------------------- */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/individuals/{id}")
+    public Response getIndividual(@PathParam("id") int id) {
+        try {
+            IndividualDTO dto = nedSvcHighApi.findIndividualByNedId(id);
+            return Response.status(Response.Status.OK).entity(dto).build();
+        }
+        catch(Exception e) {
+            logger.error("internal error", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
+                .entity("Find individual by id failed. Reason: " + e.getMessage())
+                .type(MediaType.TEXT_PLAIN).build();
+        }
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/individuals/{id}/emails")
+    public Response getEmailsForIndividual(@PathParam("id") int nedId) {
+        try {
+            List<EmailDTO> emails = nedSvcHighApi.findEmailsByNedId(nedId);
+            return Response.status(Response.Status.OK).entity(
+                new GenericEntity<List<EmailDTO>>(emails){}).build();
+        }
+        catch(Exception e) {
+            logger.error("internal error", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
+                .entity("Find emails by nedId failed. Reason: " + e.getMessage())
+                .type(MediaType.TEXT_PLAIN).build();
+        }
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/individuals/{id}/addresses")
+    public Response getAddressesForIndividual(@PathParam("id") int nedId) {
+        try {
+            List<AddressDTO> addresses = nedSvcHighApi.findAddressesByNedId(nedId);
+            return Response.status(Response.Status.OK).entity(
+                new GenericEntity<List<AddressDTO>>(addresses){}).build();
+        }
+        catch(Exception e) {
+            logger.error("internal error", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
+                .entity("Find addresses by nedId failed. Reason: " + e.getMessage())
+                .type(MediaType.TEXT_PLAIN).build();
+        }
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/individuals/{id}/phonenumbers")
+    public Response getPhonenumbersForIndividual(@PathParam("id") int nedId) {
+        try {
+            List<PhonenumberDTO> phonenumbers = nedSvcHighApi.findPhoneNumbersByNedId(nedId);
+            return Response.status(Response.Status.OK).entity(
+                new GenericEntity<List<PhonenumberDTO>>(phonenumbers){}).build();
+        }
+        catch(Exception e) {
+            logger.error("internal error", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
+                .entity("Find phone numberse by nedId failed. Reason: " + e.getMessage())
+                .type(MediaType.TEXT_PLAIN).build();
+        }
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/individuals/{id}/roles")
+    public Response getRolesForIndividual(@PathParam("id") int nedId) {
+        try {
+            List<RoleDTO> roles = nedSvcHighApi.findRolesByNedId(nedId);
+            return Response.status(Response.Status.OK).entity(
+                new GenericEntity<List<RoleDTO>>(roles){}).build();
+        }
+        catch(Exception e) {
+            logger.error("internal error", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
+                .entity("Find roles by nedId failed. Reason: " + e.getMessage())
+                .type(MediaType.TEXT_PLAIN).build();
+        }
+    }
 
     /* ---------------------------------------------------------------------- */
     /*  TYPE DESCRIPTIONS (TYPE CLASSES)                                      */
@@ -283,27 +367,6 @@ public class NamedEntityResource {
                 .type(MediaType.TEXT_PLAIN).build();
         }
     }
-
-    /* ---------------------------------------------------------------------- */
-    /*  INDIVIDUALS                                                           */
-    /* ---------------------------------------------------------------------- */
-
-    //@GET
-    //@Produces(MediaType.APPLICATION_JSON)
-    //@Path("/individuals/{id}")
-    //public Response getIndividual(@PathParam("id") int id) {
-        //try {
-            //TypedescriptionEntity entity = nedSvcLowApi.findById(id, TypedescriptionEntity.class);
-            //return Response.status(Response.Status.OK).entity( entity ).build();
-            ////return Response.status(Response.Status.OK).entity( toPojo(entity) ).build();
-        //}
-        //catch(Exception e) {
-            //logger.error("internal error", e);
-            //return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-                //.entity("Find type class by id failed. Reason: " + e.getMessage())
-                //.type(MediaType.TEXT_PLAIN).build();
-        //}
-    //}
 
     public NamedEntityService getNamedEntityService() {
         return nedSvcLowApi;
