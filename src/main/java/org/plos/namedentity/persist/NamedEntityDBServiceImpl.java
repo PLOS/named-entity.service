@@ -307,8 +307,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
     @Override
     public List<RoleDTO> findRolesByNedId(Integer nedId) {
 /*
-        SELECT gt1.shortDescription sourceapplicationtypeid,
-               gt2.shortDescription roletypeid,
+        SELECT gt1.shortDescription sourceapplicationtype,
+               gt2.shortDescription roletype,
                r.startDate, r.endDate
           FROM roles r
      LEFT JOIN globalTypes gt1 ON r.sourceApplicationTypeId = gt1.globalTypeId
@@ -322,8 +322,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
         return this.context
             .select(
                 r.STARTDATE, r.ENDDATE,
-                gt1.SHORTDESCRIPTION.as("sourceapplicationtypeid"),                 
-                gt2.SHORTDESCRIPTION.as("roletypeid"))
+                gt1.SHORTDESCRIPTION.as("sourceapplicationtype"),                 
+                gt2.SHORTDESCRIPTION.as("roletype"))
             .from(r)
             .leftOuterJoin(gt1).on(r.SOURCEAPPLICATIONTYPEID.equal(gt1.GLOBALTYPEID))
             .leftOuterJoin(gt2).on(r.ROLETYPEID.equal(gt2.GLOBALTYPEID))

@@ -557,8 +557,9 @@ public class NamedEntityDBServiceTest {
         // FIND BY JOIN-QUERY 
 
         NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-        List<RoleDTO> roleDto = nedQuery.findRolesByNedId(savedRole.getNamedentityid());
-        assertNotNull( roleDto );
+        List<RoleDTO> roles = nedQuery.findRolesByNedId(savedRole.getNamedentityid());
+        RoleDTO role = roles.get(0);
+        assertEquals("Author", role.getRoletype());
                 
 		// DELETE
 
