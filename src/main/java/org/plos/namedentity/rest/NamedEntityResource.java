@@ -26,6 +26,7 @@ import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.TypedescriptionDTO;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
+import org.plos.namedentity.api.entity.IndividualEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
 import org.plos.namedentity.service.NamedEntityService;
 import org.plos.namedentity.service.NamedEntityServiceHighApi;
@@ -63,6 +64,23 @@ public class NamedEntityResource {
             logger.error("internal error", e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
                 .entity("Unable to create individual. Internal error. Reason: " + e.getMessage())
+                .type(MediaType.TEXT_PLAIN).build();
+        }
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/individuals")
+    public Response getAllIndividuals() {
+        try {
+            List<IndividualEntity> individuals = nedSvcLowApi.findAll(IndividualEntity.class);
+            return Response.status(Response.Status.OK).entity(
+                new GenericEntity<List<IndividualEntity>>(individuals){}).build();
+        }
+        catch(Exception e) {
+            logger.error("internal error", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
+                .entity("Find all individuals failed. Reason: " + e.getMessage())
                 .type(MediaType.TEXT_PLAIN).build();
         }
     }

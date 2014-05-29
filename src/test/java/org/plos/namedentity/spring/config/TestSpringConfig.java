@@ -18,6 +18,7 @@ import org.plos.namedentity.api.dto.IndividualDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
+import org.plos.namedentity.api.entity.IndividualEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
 import org.plos.namedentity.rest.NamedEntityResource;
 import org.plos.namedentity.service.NamedEntityService;
@@ -75,6 +76,10 @@ public class TestSpringConfig {
         }
 
         when(mockNamedEntityService.findByAttribute(isA(GlobaltypeEntity.class))).thenReturn(typeValuesForTypeClass);
+
+        // INDIVIDUALS 
+
+        when(mockNamedEntityService.findAll(eq(IndividualEntity.class))).thenReturn( newIndividualEntities() );
 
         return mockNamedEntityService;
     }
@@ -204,5 +209,23 @@ public class TestSpringConfig {
         roles.add( author );
 
         return roles;
+    }
+
+    static private List<IndividualEntity> newIndividualEntities() {
+        List<IndividualEntity> individualEntities = new ArrayList<>();
+
+        for (int i = 1; i <=3; i++) {
+            IndividualEntity individual = new IndividualEntity();
+            individual.setNamedentityid(1);
+            individual.setFirstname("firstname"+i);
+            individual.setMiddlename("middlename"+i);
+            individual.setLastname("lastname"+i);
+            individual.setNameprefixtypeid(i);
+            individual.setNamesuffixtypeid(i);
+            individual.setPreferredlanguagetypeid(i);
+            individual.setPreferredcommunicationmethodtypeid(i);
+            individualEntities.add( individual );
+        }
+        return individualEntities;
     }
 }

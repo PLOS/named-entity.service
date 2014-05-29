@@ -23,6 +23,7 @@ import org.plos.namedentity.api.dto.IndividualDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.TypedescriptionDTO;
+import org.plos.namedentity.api.entity.IndividualEntity;
 
 public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
@@ -105,6 +106,18 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
         assertEquals("middlename", dto.getMiddlename());
         assertEquals("lastname", dto.getLastname());
         assertEquals("Mr.", dto.getNameprefix());
+
+        /* ------------------------------------------------------------------ */
+        /*  FIND (ALL)                                                        */
+        /* ------------------------------------------------------------------ */
+
+        response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+        assertEquals(200, response.getStatus());
+        jsonPayload = response.readEntity(String.class);
+
+        IndividualEntity[] individualEntityArray = mapper.readValue(jsonPayload, IndividualEntity[].class); 
+        assertEquals(3, individualEntityArray.length);
 
         //TODO - CREATE, UPDATE, DELETE
     }
