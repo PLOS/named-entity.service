@@ -8,22 +8,21 @@ import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.persist.NamedEntityDBService;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
 public class NamedEntityServiceImpl implements NamedEntityService {
 
     @Inject private NamedEntityDBService namedEntityDBService; 
 
-    @Override
+    @Override @Transactional
     public <T> Integer create(T t) {
 		return namedEntityDBService.create(t);
     }
 
-    @Override
+    @Override @Transactional
     public <T> boolean update(T t) {
         return namedEntityDBService.update(t);
     }
 
-    @Override
+    @Override @Transactional
     public <T> boolean delete(T t) {
         return namedEntityDBService.delete(t);
     }

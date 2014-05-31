@@ -228,7 +228,7 @@ CREATE TABLE IF NOT EXISTS namedEntities.uniqueIdentifiers (
     uniqueIdentifiersId INT NOT NULL AUTO_INCREMENT,
     namedEntityId INT NOT NULL,
     uniqueIdentifierTypeId INT NULL,
-    uniqueIdentifier VARCHAR(45) NULL,
+    uniqueIdentifier VARCHAR(45) NOT NULL,
     PRIMARY KEY (uniqueIdentifiersId),
     FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId),
     FOREIGN KEY (uniqueIdentifierTypeId) REFERENCES globalTypes(globalTypeId)

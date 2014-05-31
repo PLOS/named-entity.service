@@ -176,26 +176,20 @@ public class NamedEntityServiceTest {
         /*  FINDERS                                                           */
         /* ------------------------------------------------------------------ */
 
-        // FIND By Id
-
-        EmailEntity email1 = nedSvc.findById(1, EmailEntity.class);
-        assertNotNull(email1);
-        assertEquals(Integer.valueOf(1), email1.getEmailid());
-
         // FIND All
 
         List<EmailEntity> allEmails = nedSvc.findAll(EmailEntity.class);
         assertNotNull(allEmails);
-        assertTrue(allEmails.contains(email1));
+        assertTrue(allEmails.contains(savedEmail2));
 
         // FIND BY ATTRIBUTE(S)
 
         EmailEntity emailSearchCriteria = new EmailEntity();
-        emailSearchCriteria.setEmailaddress(email1.getEmailaddress());
+        emailSearchCriteria.setEmailaddress(savedEmail2.getEmailaddress());
 
         List<EmailEntity> foundEmails = nedSvc.findByAttribute(emailSearchCriteria);
         assertNotNull(foundEmails);
-        assertEquals(email1.getEmailaddress(), foundEmails.get(0).getEmailaddress());
+        assertEquals(savedEmail2.getEmailaddress(), foundEmails.get(0).getEmailaddress());
 
         /* ------------------------------------------------------------------ */
         /*  DELETE                                                            */
