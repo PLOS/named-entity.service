@@ -23,6 +23,7 @@ import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.IndividualDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
+import org.plos.namedentity.api.dto.UniqueidentifierDTO;
 import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
@@ -31,6 +32,7 @@ import org.plos.namedentity.api.entity.JournalEntity;
 import org.plos.namedentity.api.entity.PhonenumberEntity;
 import org.plos.namedentity.api.entity.RoleEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
+import org.plos.namedentity.api.entity.UniqueidentifierEntity;
 import org.plos.namedentity.persist.db.namedentities.tables.Globaltypes;
 import org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -566,6 +568,92 @@ public class NamedEntityDBServiceTest {
 		RoleEntity roleToDelete = new RoleEntity();
 		roleToDelete.setRoleid(authorId);
         assertTrue( nedDBSvc.delete(roleToDelete) );
+    }
+
+	@Test
+    public void testUniqueIdentifiersCRUD() {
+
+		final String ORCID_ID1 = "0000-0001-9430-319X";
+		final String ORCID_ID2 = "0000-0002-9430-319X";
+
+		Integer uidTypeClassId = findTypeClassStartWith("Unique Identifier Types");
+		Integer orcidTypeId    = findTypeValueByName(uidTypeClassId, "ORCID"); assertNotNull(orcidTypeId);
+
+        // FIND Individuals with an ORCID id. There should be none. 
+
+        NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
+        List<IndividualDTO> peopleWithOrcidId = nedQuery.findIndividualsByUid(orcidTypeId, "0000-");
+        assertEquals(0, peopleWithOrcidId.size());
+
+        // CREATE External Reference ORCID (assumed defined in EM)
+
+		UniqueidentifierEntity uidEntity1 = new UniqueidentifierEntity();
+		uidEntity1.setNamedentityid(1);
+		uidEntity1.setUniqueidentifiertypeid(orcidTypeId);
+		uidEntity1.setUniqueidentifier(ORCID_ID1);
+
+		assertNull(uidEntity1.getUniqueidentifiersid());
+		assertNotNull(uidEntity1.getNamedentityid());
+
+        Integer uidId1 = nedDBSvc.create( uidEntity1 );
+        assertNotNull(uidId1);
+
+        // FIND By UID (ORCID) #2
+
+        assertEquals(1, nedQuery.findIndividualsByUid(orcidTypeId, "0000-").size());
+
+        // CREATE 2nd External Reference To ORCID (assumed defined @register.plos.org)
+
+		UniqueidentifierEntity uidEntity2 = new UniqueidentifierEntity();
+		uidEntity2.setNamedentityid(1);
+		uidEntity2.setUniqueidentifiertypeid(orcidTypeId);
+		uidEntity2.setUniqueidentifier(ORCID_ID2);
+
+		assertNull(uidEntity2.getUniqueidentifiersid());
+		assertNotNull(uidEntity2.getNamedentityid());
+
+        Integer uidId2 = nedDBSvc.create( uidEntity2 );
+        assertNotNull(uidId2);
+
+        // FIND By UID (ORCID) #3
+
+        assertEquals(1, nedQuery.findIndividualsByUid(orcidTypeId, "0000-0001").size());
+        assertEquals(1, nedQuery.findIndividualsByUid(orcidTypeId, "0000-0002").size());
+        assertEquals(0, nedQuery.findIndividualsByUid(orcidTypeId, "6666-").size());
+
+        peopleWithOrcidId = nedQuery.findIndividualsByUid(orcidTypeId, "0000-");
+        assertEquals(2, peopleWithOrcidId.size());
+
+        // UPDATE
+
+        UniqueidentifierEntity savedUid = nedDBSvc.findById(uidId1, UniqueidentifierEntity.class);
+        savedUid.setUniqueidentifier( savedUid.getUniqueidentifier() + "Z" );
+        assertTrue( nedDBSvc.update(savedUid) );
+
+        // Get another instance of same role record 
+
+		UniqueidentifierEntity savedUid2 = nedDBSvc.findById(uidId1, UniqueidentifierEntity.class);
+		assertEquals(savedUid, savedUid2);
+
+        // FIND ALL Roles 
+
+		List<UniqueidentifierEntity> allUidsInDb = nedDBSvc.findAll(UniqueidentifierEntity.class);
+		assertTrue( allUidsInDb.size() > 1 );
+
+        // FIND BY JOIN-QUERY 
+
+        List<UniqueidentifierDTO> uids = nedQuery.findUniqueIdsByNedId(savedUid.getNamedentityid());
+        UniqueidentifierDTO uid = uids.get(0);
+        assertEquals(ORCID_ID1 + "Z", uid.getUniqueidentifier());
+                
+		// DELETE
+
+		UniqueidentifierEntity uidToDelete = new UniqueidentifierEntity();
+		uidToDelete.setUniqueidentifiersid(uidId1);
+        assertTrue( nedDBSvc.delete(uidToDelete) );
+
+		uidToDelete.setUniqueidentifiersid(uidId2);
+        assertTrue( nedDBSvc.delete(uidToDelete) );
     }
 
 	private Integer findTypeClassStartWith(String prefix) {

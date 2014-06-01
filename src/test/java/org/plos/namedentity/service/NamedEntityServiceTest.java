@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
+import org.plos.namedentity.api.entity.UniqueidentifierEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -196,5 +197,69 @@ public class NamedEntityServiceTest {
         /* ------------------------------------------------------------------ */
 
         assertTrue( nedSvc.delete(savedEmail) );
+    }
+
+	@Test
+    public void testExternalReferencesCRUD() {
+
+		final String ORCID_ID1 = "0000-0001-9430-319X";
+
+        // lookup id for orcid (using hardcoded type class 17 :))
+
+        GlobaltypeEntity globalTypesearchCriteria = new GlobaltypeEntity();
+        globalTypesearchCriteria.setTypeid(17);
+        globalTypesearchCriteria.setShortdescription("ORCID");
+		List<GlobaltypeEntity> globalTypesResult = nedSvc.findByAttribute(globalTypesearchCriteria);
+		assertEquals(1, globalTypesResult.size());
+
+		Integer orcidTypeId = globalTypesResult.get(0).getGlobaltypeid(); 
+		assertNotNull( orcidTypeId );
+		
+        /* ------------------------------------------------------------------ */
+        /*  CREATE                                                            */
+        /* ------------------------------------------------------------------ */
+
+		UniqueidentifierEntity uidEntity = new UniqueidentifierEntity();
+		uidEntity.setNamedentityid(1);
+		uidEntity.setUniqueidentifiertypeid(orcidTypeId);
+		uidEntity.setUniqueidentifier(ORCID_ID1);
+
+        // save record
+
+		Integer pkId = nedSvc.create(uidEntity);
+		assertNotNull( pkId );
+
+		UniqueidentifierEntity savedUid = nedSvc.findById(pkId, UniqueidentifierEntity.class);
+		assertNotNull( savedUid );
+		assertEquals(pkId, savedUid.getUniqueidentifiersid());
+		assertEquals(orcidTypeId, savedUid.getUniqueidentifiertypeid());
+
+        /* ------------------------------------------------------------------ */
+        /*  UPDATE                                                            */
+        /* ------------------------------------------------------------------ */
+
+        savedUid.setUniqueidentifier( savedUid.getUniqueidentifier() + "Z" );
+        assertTrue( nedSvc.update(savedUid) );
+
+		UniqueidentifierEntity savedUid2 = nedSvc.findById(pkId, UniqueidentifierEntity.class);
+		assertEquals(savedUid, savedUid2);
+
+        /* ------------------------------------------------------------------ */
+        /*  FINDERS                                                           */
+        /* ------------------------------------------------------------------ */
+
+        // FIND All
+
+        List<UniqueidentifierEntity> allUids = nedSvc.findAll(UniqueidentifierEntity.class);
+        assertNotNull(allUids);
+        assertTrue(allUids.contains(savedUid2));
+
+        // TODO - FIND BY ATTRIBUTE(S)
+
+        /* ------------------------------------------------------------------ */
+        /*  DELETE                                                            */
+        /* ------------------------------------------------------------------ */
+
+        assertTrue( nedSvc.delete(savedUid) );
     }
 }

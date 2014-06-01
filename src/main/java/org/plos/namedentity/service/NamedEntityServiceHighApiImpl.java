@@ -13,6 +13,7 @@ import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.IndividualDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
+import org.plos.namedentity.api.dto.UniqueidentifierDTO;
 import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
@@ -166,6 +167,11 @@ public class NamedEntityServiceHighApiImpl implements NamedEntityServiceHighApi 
         return ((NamedEntityQueries)nedDBSvc).findIndividualByNedId(nedId);
     }
 
+	@Override
+    public List<IndividualDTO> findIndividualsByUid(Integer srcTypeId, String uid) {
+        return ((NamedEntityQueries)nedDBSvc).findIndividualsByUid(srcTypeId, uid);
+	}
+
     @Override
     public List<AddressDTO> findAddressesByNedId(Integer nedId) {
         return ((NamedEntityQueries)nedDBSvc).findAddressesByNedId(nedId);
@@ -185,6 +191,11 @@ public class NamedEntityServiceHighApiImpl implements NamedEntityServiceHighApi 
     public List<RoleDTO> findRolesByNedId(Integer nedId) {
         return ((NamedEntityQueries)nedDBSvc).findRolesByNedId(nedId);
     }
+
+	@Override
+    public List<UniqueidentifierDTO> findUniqueIdsByNedId(Integer nedId) {
+        return ((NamedEntityQueries)nedDBSvc).findUniqueIdsByNedId(nedId);
+	}
     
     public NamedEntityDBService getNamedEntityDBService() {
         return nedDBSvc;

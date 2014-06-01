@@ -17,6 +17,7 @@ import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.IndividualDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
+import org.plos.namedentity.api.dto.UniqueidentifierDTO;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
@@ -109,6 +110,9 @@ public class TestSpringConfig {
 
         when(mockNamedEntityServiceHighApi.findRolesByNedId(anyInt()))
             .thenReturn( newRolesDto() );
+
+        when(mockNamedEntityServiceHighApi.findUniqueIdsByNedId(anyInt()))
+            .thenReturn( newUidsDto() );
 
         return mockNamedEntityServiceHighApi;
     }
@@ -228,4 +232,12 @@ public class TestSpringConfig {
         }
         return individualEntities;
     }
+
+	static private List<UniqueidentifierDTO> newUidsDto() {
+		List<UniqueidentifierDTO> uids = new ArrayList<>();
+		for (int i = 1; i <=2; i++) {
+			uids.add(new UniqueidentifierDTO(null, 1, "ORCID", "0000-0002-9430-319"+i));
+		}
+		return uids;
+	}
 }

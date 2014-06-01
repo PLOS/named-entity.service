@@ -11,6 +11,7 @@ import static org.plos.namedentity.persist.db.namedentities.Tables.NAMEDENTITYID
 import static org.plos.namedentity.persist.db.namedentities.Tables.PHONENUMBERS;
 import static org.plos.namedentity.persist.db.namedentities.Tables.ROLES;
 import static org.plos.namedentity.persist.db.namedentities.Tables.TYPEDESCRIPTIONS;
+import static org.plos.namedentity.persist.db.namedentities.Tables.UNIQUEIDENTIFIERS;
 
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.IndividualDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
+import org.plos.namedentity.api.dto.UniqueidentifierDTO;
 import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
@@ -34,12 +36,14 @@ import org.plos.namedentity.api.entity.JournalEntity;
 import org.plos.namedentity.api.entity.PhonenumberEntity;
 import org.plos.namedentity.api.entity.RoleEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
+import org.plos.namedentity.api.entity.UniqueidentifierEntity;
 import org.plos.namedentity.persist.db.namedentities.tables.Addresses;
 import org.plos.namedentity.persist.db.namedentities.tables.Emails;
 import org.plos.namedentity.persist.db.namedentities.tables.Globaltypes;
 import org.plos.namedentity.persist.db.namedentities.tables.Individuals;
 import org.plos.namedentity.persist.db.namedentities.tables.Phonenumbers;
 import org.plos.namedentity.persist.db.namedentities.tables.Roles;
+import org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public final class NamedEntityDBServiceImpl implements NamedEntityDBService, NamedEntityQueries {
@@ -221,6 +225,57 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
     }
 
     @Override
+    public List<IndividualDTO> findIndividualsByUid(Integer srcTypeId, String uid) {
+/*
+   EXPLAIN
+        SELECT gt1.shortDescription nameprefix, i.firstName firstname, 
+               i.middleName middlename, i.lastName lastname, 
+               gt2.shortDescription namesuffix, i.url, 
+               gt3.shortDescription preferredlanguage, 
+               gt4.shortDescription preferredcommunication,
+               gt4.shortDescription preferredcommunication,
+			   gt5.shortDescription uniqueidentifiertype, uid.uniqueIdentifier 
+          FROM individuals i
+     LEFT JOIN globalTypes gt1 ON i.namePrefixTypeId                   = gt1.globalTypeId
+     LEFT JOIN globalTypes gt2 ON i.nameSuffixTypeId                   = gt2.globalTypeId
+     LEFT JOIN globalTypes gt3 ON i.preferredLanguageTypeId            = gt3.globalTypeId
+     LEFT JOIN globalTypes gt4 ON i.preferredCommunicationMethodTypeId = gt4.globalTypeId
+	      JOIN uniqueIdentifiers uid ON i.namedEntityId = uid.namedEntityId AND uid.uniqueIdentifierTypeId = 50
+     LEFT JOIN globalTypes gt5 ON uid.uniqueIdentifierTypeId           = gt5.globalTypeId
+         WHERE uid.uniqueIdentifier LIKE '%0000-%'
+
+	TODO: wilcard(%) on both sides uid value?
+*/
+        Globaltypes gt1 = GLOBALTYPES.as("gt1");
+        Globaltypes gt2 = GLOBALTYPES.as("gt2");
+        Globaltypes gt3 = GLOBALTYPES.as("gt3");
+        Globaltypes gt4 = GLOBALTYPES.as("gt4");
+        Globaltypes gt5 = GLOBALTYPES.as("gt5");
+        Individuals i   = INDIVIDUALS.as("i");
+		Uniqueidentifiers u = UNIQUEIDENTIFIERS.as("u");
+
+        return this.context
+            .select(
+                i.NAMEDENTITYID, i.FIRSTNAME, i.MIDDLENAME, i.LASTNAME, i.URL,
+                gt1.SHORTDESCRIPTION.as("nameprefix"),                 
+                gt2.SHORTDESCRIPTION.as("namesuffix"),
+                gt3.SHORTDESCRIPTION.as("preferredlanguage"), 
+                gt4.SHORTDESCRIPTION.as("preferredcommunication"),
+                gt5.SHORTDESCRIPTION.as("uniqueidentifiertype"),
+				u.UNIQUEIDENTIFIER)
+            .from(i)
+            .leftOuterJoin(gt1).on(i.NAMEPREFIXTYPEID.equal(gt1.GLOBALTYPEID))
+            .leftOuterJoin(gt2).on(i.NAMESUFFIXTYPEID.equal(gt2.GLOBALTYPEID))
+            .leftOuterJoin(gt3).on(i.PREFERREDLANGUAGETYPEID.equal(gt3.GLOBALTYPEID))
+            .leftOuterJoin(gt4).on(i.PREFERREDCOMMUNICATIONMETHODTYPEID.equal(gt4.GLOBALTYPEID))
+			.join(u).on(i.NAMEDENTITYID.equal(u.NAMEDENTITYID)).and(u.UNIQUEIDENTIFIERTYPEID.equal(srcTypeId))
+            .leftOuterJoin(gt5).on(u.UNIQUEIDENTIFIERTYPEID.equal(gt5.GLOBALTYPEID))
+			.where(u.UNIQUEIDENTIFIER.like(uid + "%"))
+            .fetch()
+            .into(IndividualDTO.class);
+    }
+
+    @Override
     public List<AddressDTO> findAddressesByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription addresstype, a.addressline1, a.addressline2, 
@@ -332,6 +387,28 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
             .into(RoleDTO.class);
     }
 
+	@Override
+    public List<UniqueidentifierDTO> findUniqueIdsByNedId(Integer nedId) {
+/*
+   EXPLAIN
+        SELECT gt.shortDescription uniqueidentifiertype, uid.uniqueIdentifier 
+          FROM uniqueIdentifiers uid
+     LEFT JOIN globalTypes gt ON uid.uniqueIdentifierTypeId = gt.globalTypeId
+         WHERE uid.namedentityid = 59
+*/
+        Globaltypes       gt  = GLOBALTYPES.as("gt");
+        Uniqueidentifiers uid = UNIQUEIDENTIFIERS.as("uid");
+
+        return this.context
+            .select(
+                uid.UNIQUEIDENTIFIER, gt.SHORTDESCRIPTION.as("uniqueidentifiertype"))
+            .from(uid)
+            .leftOuterJoin(gt).on(uid.UNIQUEIDENTIFIERTYPEID.equal(gt.GLOBALTYPEID))
+            .where(uid.NAMEDENTITYID.equal(nedId))
+            .fetch()
+            .into(UniqueidentifierDTO.class);
+	}
+
     /* ---------------------------------------------------------------------- */
     /*  INTERNAL MAP : DTO POJO -> { JooqTable, JooqPkFieldForTable }         */
     /* ---------------------------------------------------------------------- */
@@ -371,6 +448,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
         dtoTableMap.put(PhonenumberEntity.class, new TablePkPair(PHONENUMBERS, PHONENUMBERS.PHONENUMBERID));
         dtoTableMap.put(RoleEntity.class, new TablePkPair(ROLES, ROLES.ROLEID));
         dtoTableMap.put(TypedescriptionEntity.class, new TablePkPair(TYPEDESCRIPTIONS, TYPEDESCRIPTIONS.TYPEID));
+        dtoTableMap.put(UniqueidentifierEntity.class, new TablePkPair(UNIQUEIDENTIFIERS, UNIQUEIDENTIFIERS.UNIQUEIDENTIFIERSID));
     }
     private static Table table(Class key) {
         return dtoTableMap.get(key).table();

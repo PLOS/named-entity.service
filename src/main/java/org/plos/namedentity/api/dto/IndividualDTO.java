@@ -15,6 +15,9 @@ public class IndividualDTO {
 	//private byte[]  photoimage;
 	private String  url;
 
+	private String  uniqueidentifiertype;
+	private String  uniqueidentifier;
+
 	public IndividualDTO() {}
 
 	public IndividualDTO(
@@ -118,5 +121,19 @@ public class IndividualDTO {
 	}
 	public void setUrl(String url) {
 	    this.url = url;
+	}
+	
+	public String getUniqueidentifiertype() {
+	    return uniqueidentifiertype;
+	}
+	public void setUniqueidentifiertype(String uniqueidentifiertype) {
+	    this.uniqueidentifiertype = uniqueidentifiertype;
+	}
+	
+	public String getUniqueidentifier() {
+	    return uniqueidentifier;
+	}
+	public void setUniqueidentifier(String uniqueidentifier) {
+	    this.uniqueidentifier = uniqueidentifier;
 	}
 }

@@ -25,6 +25,7 @@ import org.plos.namedentity.api.dto.IndividualDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.TypedescriptionDTO;
+import org.plos.namedentity.api.dto.UniqueidentifierDTO;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
@@ -165,6 +166,23 @@ public class NamedEntityResource {
             logger.error("internal error", e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
                 .entity("Find roles by nedId failed. Reason: " + e.getMessage())
+                .type(MediaType.TEXT_PLAIN).build();
+        }
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/individuals/{id}/xref")
+    public Response getExternalReferencesForIndividual(@PathParam("id") int nedId) {
+        try {
+            List<UniqueidentifierDTO> uids = nedSvcHighApi.findUniqueIdsByNedId(nedId);
+            return Response.status(Response.Status.OK).entity(
+                new GenericEntity<List<UniqueidentifierDTO>>(uids){}).build();
+        }
+        catch(Exception e) {
+            logger.error("internal error", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
+                .entity("Find external references by nedId failed. Reason: " + e.getMessage())
                 .type(MediaType.TEXT_PLAIN).build();
         }
     }

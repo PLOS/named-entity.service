@@ -1,5 +1,7 @@
 package org.plos.namedentity.api.entity;
 
+import java.util.Objects;
+
 /**
  * Modified JOOQ generated class(pojo=true).
  */
@@ -21,10 +23,10 @@ public class UniqueidentifierEntity implements java.io.Serializable {
 		java.lang.Integer uniqueidentifiertypeid,
 		java.lang.String  uniqueidentifier
 	) {
-		this.uniqueidentifiersid = uniqueidentifiersid;
-		this.namedentityid = namedentityid;
+		this.uniqueidentifiersid    = uniqueidentifiersid;
+		this.namedentityid          = namedentityid;
 		this.uniqueidentifiertypeid = uniqueidentifiertypeid;
-		this.uniqueidentifier = uniqueidentifier;
+		this.uniqueidentifier       = uniqueidentifier;
 	}
 
 	public java.lang.Integer getUniqueidentifiersid() {
@@ -58,4 +60,23 @@ public class UniqueidentifierEntity implements java.io.Serializable {
 	public void setUniqueidentifier(java.lang.String uniqueidentifier) {
 		this.uniqueidentifier = uniqueidentifier;
 	}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+
+        if (o == null || this.getClass() != o.getClass()) { return false; }
+
+        UniqueidentifierEntity entity = (UniqueidentifierEntity) o;
+        return    Objects.equals(this.uniqueidentifiersid, entity.uniqueidentifiersid)
+               && Objects.equals(this.namedentityid, entity.namedentityid)
+               && Objects.equals(this.uniqueidentifiertypeid, entity.uniqueidentifiertypeid)
+               && Objects.equals(this.uniqueidentifier, entity.uniqueidentifier);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.uniqueidentifiersid, this.namedentityid, 
+            this.uniqueidentifiertypeid, this.uniqueidentifier);
+    }
 }
