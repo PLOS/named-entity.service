@@ -21,6 +21,7 @@ import org.plos.namedentity.api.entity.IndividualEntity;
 import org.plos.namedentity.api.entity.PhonenumberEntity;
 import org.plos.namedentity.api.entity.RoleEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
+import org.plos.namedentity.api.entity.UniqueidentifierEntity;
 import org.plos.namedentity.persist.NamedEntityDBService;
 import org.plos.namedentity.persist.NamedEntityQueries;
 import org.springframework.transaction.annotation.Transactional;
@@ -156,6 +157,25 @@ public class NamedEntityServiceHighApiImpl implements NamedEntityServiceHighApi 
             roleEntity.setStartdate(new Timestamp(new Date().getTime()));
 
             nedDBSvc.create( roleEntity );
+        }
+
+        /* ------------------------------------------------------------------ */
+        /*  EXTERNAL REFERENCES                                               */
+        /* ------------------------------------------------------------------ */
+
+		Integer uidTypeClassId = findTypeClassStartWith("Unique Identifier Types");
+
+        if (composite.getUniqueIdentifiers() != null) {
+            for (UniqueidentifierDTO uidDto : composite.getUniqueIdentifiers()) {
+                Integer uidTypeId = findTypeValueByName(uidTypeClassId, uidDto.getUniqueidentifiertype());
+
+                UniqueidentifierEntity uidEntity = new UniqueidentifierEntity();
+                uidEntity.setNamedentityid(nedId);
+                uidEntity.setUniqueidentifiertypeid(uidTypeId);
+                uidEntity.setUniqueidentifier(uidDto.getUniqueidentifier());
+
+		        nedDBSvc.create( uidEntity );
+            }
         }
 
         return ((NamedEntityQueries)nedDBSvc).findIndividualByNedId(nedId);

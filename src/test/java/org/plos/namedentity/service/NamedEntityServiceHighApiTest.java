@@ -17,7 +17,9 @@ import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.IndividualDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
+import org.plos.namedentity.api.dto.UniqueidentifierDTO;
 import org.plos.namedentity.api.entity.EmailEntity;
+import org.plos.namedentity.api.entity.GlobaltypeEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -44,7 +46,7 @@ public class NamedEntityServiceHighApiTest {
 	@Test
     public void testCreateIndividualWithRole() {
 
-		IndividualComposite composite = getIndividualWithRole();
+		IndividualComposite composite = newCompositeIndividualWithRole();
 
         /* ------------------------------------------------------------------ */
         /*  EMAILS                                                            */
@@ -114,6 +116,19 @@ public class NamedEntityServiceHighApiTest {
 
         composite.setAddresses( addresses );
 
+        /* ------------------------------------------------------------------ */
+        /*  UNIQUE IDENTIFIERS                                                */
+        /* ------------------------------------------------------------------ */
+
+        List<UniqueidentifierDTO> uids = new ArrayList<>();
+
+        UniqueidentifierDTO uidDto = new UniqueidentifierDTO();
+        uidDto.setUniqueidentifiertype("ORCID");
+        uidDto.setUniqueidentifier("0000-0001-9430-319X");
+        uids.add( uidDto );
+
+        composite.setUniqueIdentifiers( uids );
+
         Integer nedId = null;
 		try {
 			IndividualDTO dto = nedSvcHighApi.createIndividual(composite);
@@ -149,12 +164,36 @@ public class NamedEntityServiceHighApiTest {
 
         List<RoleDTO> rolesDto = nedSvcHighApi.findRolesByNedId(nedId);
         assertEquals(1, rolesDto.size());
+
+        List<UniqueidentifierDTO> uidsDto = nedSvcHighApi.findUniqueIdsByNedId(nedId);
+        assertEquals(1, uidsDto.size());
+
+        Integer uidTypeId = findUidTypeIdByName("ORCID");
+        assertNotNull( uidTypeId );
+
+        List<IndividualDTO> individuals = nedSvcHighApi.findIndividualsByUid(uidTypeId, "0000-0001-9430-319X");
+        assertEquals(1, individuals.size());
+
+        IndividualDTO individual = individuals.get(0);
+        assertEquals("firstname", individual.getFirstname());
+        assertEquals("lastname", individual.getLastname());
+    }
+
+    private Integer findUidTypeIdByName(String typeName) {
+
+        GlobaltypeEntity globalTypesearchCriteria = new GlobaltypeEntity();
+        globalTypesearchCriteria.setTypeid(17);
+        globalTypesearchCriteria.setShortdescription(typeName);
+		List<GlobaltypeEntity> globalTypesResult = nedSvcLowApi.findByAttribute(globalTypesearchCriteria);
+		assertEquals(1, globalTypesResult.size());
+
+		return globalTypesResult.get(0).getGlobaltypeid(); 
     }
 
 	@Test
     public void testCreateIndividualWithPhaseTwoValidationException() {
 
-		IndividualComposite composite = getIndividualWithRole();
+		IndividualComposite composite = newCompositeIndividualWithRole();
 
         List<EmailDTO> emails = new ArrayList<>();
 
@@ -181,7 +220,7 @@ public class NamedEntityServiceHighApiTest {
 		}
     }
 
-	private IndividualComposite getIndividualWithRole() {
+	private IndividualComposite newCompositeIndividualWithRole() {
 
         IndividualComposite composite = new IndividualComposite();
         composite.setFirstname("firstname");

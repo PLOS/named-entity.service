@@ -6,6 +6,7 @@ import org.plos.namedentity.api.dto.AddressDTO;
 import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
+import org.plos.namedentity.api.dto.UniqueidentifierDTO;
 
 public class IndividualComposite {
 
@@ -18,10 +19,11 @@ public class IndividualComposite {
 	private String preferredlanguage;
 	private String preferredcommunication;
 
-    private RoleDTO              role;
-    private List<AddressDTO>     addresses;
-    private List<EmailDTO>       emails;
-    private List<PhonenumberDTO> phonenumbers;
+    private RoleDTO                   role;
+    private List<AddressDTO>          addresses;
+    private List<EmailDTO>            emails;
+    private List<PhonenumberDTO>      phonenumbers;
+    private List<UniqueidentifierDTO> uniqueidentifiers;
 
 	public String getNamedentityid() {
 	    return namedentityid;
@@ -105,5 +107,12 @@ public class IndividualComposite {
     }
     public void setPhonenumbers(List<PhonenumberDTO> phonenumbers) {
         this.phonenumbers = phonenumbers;
+    }
+    
+    public List<UniqueidentifierDTO> getUniqueIdentifiers() {
+        return uniqueidentifiers;
+    }
+    public void setUniqueIdentifiers(List<UniqueidentifierDTO> uniqueidentifiers) {
+        this.uniqueidentifiers = uniqueidentifiers;
     }
 }

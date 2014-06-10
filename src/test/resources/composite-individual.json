@@ -47,5 +47,15 @@
    "role" : {
       "startdate" : "2014-06-02",
       "roletype" : "Author"
-   }
+   },
+   "uniqueidentifiers" : [
+      {
+         "uniqueidentifiertype" : "ORCID",
+         "uniqueidentifier" : "0000-0002-9430-319X"
+      },
+      {
+         "uniqueidentifiertype" : "Editorial Manager",
+         "uniqueidentifier" : "PONE-579386"
+      }
+   ]
 }
