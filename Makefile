@@ -1,7 +1,6 @@
 
 # mvn dependency:build-classpath 2>&1 | tee cp.mmddyy.txt
-JOOQ_CLASSPATH=/home/mbowen/.m2/repository/org/jooq/jooq/3.3.2/jooq-3.3.2.jar:/home/mbowen/.m2/repository/org/jooq/jooq-codegen/3.3.2/jooq-codegen-3.3.2.jar:/home/mbowen/.m2/repository/org/jooq/jooq-meta/3.3.2/jooq-meta-3.3.2.jar
-MYSQL_CLASSPATH=/home/mbowen/.m2/repository/mysql/mysql-connector-java/5.1.30/mysql-connector-java-5.1.30.jar
+JOOQ_MYSQL_CLASSPATH=./lib/jooq-3.3.2.jar:./lib/jooq-codegen-3.3.2.jar:./lib/jooq-meta-3.3.2.jar:./lib/mysql-connector-java-5.1.30.jar
 
 all: help 
 
@@ -11,9 +10,12 @@ clean:
 
 jooq-codegen:
 	cp ./src/main/resources/jooq-config.mysql.xml ./target; \
-	java -cp $(JOOQ_CLASSPATH):$(MYSQL_CLASSPATH):./target org.jooq.util.GenerationTool /jooq-config.mysql.xml
+	java -cp $(JOOQ_MYSQL_CLASSPATH):./target org.jooq.util.GenerationTool /jooq-config.mysql.xml
 
-pkg:
+codegen-war: jooq-codegen
+	mvn -f pom.mysql.xml -Dmaven.test.skip=true clean package
+
+war:
 	mvn -f pom.mysql.xml -Dmaven.test.skip=true clean package
 
 test:
@@ -30,5 +32,13 @@ help:
 	@echo  "    jooq-codegen : run jOOQ Code Generator (MySQL)"
 	@echo  "    pkg          : builds war file"
 	@echo  "    tomcat       : run embedded Tomcat"
+	@echo  ""
+	@echo  "  RECIPES:"
+	@echo  "    Run unit tests                  : make test"
+	@echo  "    Regenerate schema and build war : make codegen-war"
+	@echo  "    Build war only for deployment   : make war"
+	@echo  "    Run embedded Tomcat             : make tomcat"
+	@echo  "      (http://localhost:8080/api/ned/typeclasses/1)"
+	@echo  ""
 
-.PHONY: all clean help jooq-codegen pkg test tomcat
+.PHONY: all clean help jooq-codegen codegen-war pkg test tomcat war
