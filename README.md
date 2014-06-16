@@ -46,8 +46,7 @@ Deployment
 
     * deploy war to a standalone container (glassfish)
 
-        make jooq-codegen
-        make pkg
+        make codegen-war 
 
         http://localhost:8080/api/ned/typeclasses/1
 
