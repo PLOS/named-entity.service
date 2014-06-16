@@ -11,11 +11,16 @@
     <!-- Enable configuration of transactional behavior based on annotations -->
     <tx:annotation-driven transaction-manager="transactionManager" order="1"/>
 
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" >
+    <!-- use tomcat's 7.x jdbc connection pool -->
+    <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close" >
        <property name="url" value="${db.url}" />
        <property name="driverClassName" value="${db.driver}" />
        <property name="username" value="${db.username}" />
        <property name="password" value="${db.password}" />
+       <property name="initialSize" value="5" />
+       <property name="maxActive" value="10" />
+       <property name="maxIdle" value="5" />
+       <property name="minIdle" value="2" />
     </bean>
 
     <!-- Configure Spring's transaction manager to use a DataSource -->

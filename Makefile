@@ -21,7 +21,7 @@ war:
 test:
 	mvn -f pom.h2.xml clean test
 
-tomcat: pkg
+tomcat: codegen-war 
 	mvn -f pom.mysql.xml tomcat:run 
 
 help:
@@ -45,4 +45,4 @@ help:
 	@echo  "      (http://localhost:8080/api/ned/typeclasses/1)"
 	@echo  ""
 
-.PHONY: all clean help jooq-codegen codegen-war pkg test tomcat war
+.PHONY: all clean help jooq-codegen codegen-war test tomcat war
