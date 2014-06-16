@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2006-2014 by Public Library of Science
+ * http://plos.org
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.plos.namedentity.service;
 
 import static org.junit.Assert.assertEquals;
@@ -21,245 +37,245 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations = {"/spring-beans.xml"})
 public class NamedEntityServiceTest {
 
-    @Autowired NamedEntityService nedSvc;
+  @Autowired NamedEntityService nedSvc;
 
-	@Test
-    public void testTypeDescriptionCRUD() {
+  @Test
+  public void testTypeDescriptionCRUD() {
 
-        // CREATE
+    // CREATE
 
-        TypedescriptionEntity newType = new TypedescriptionEntity();
-        newType.setDescription("description");
-        newType.setHowused("howused");
+    TypedescriptionEntity newType = new TypedescriptionEntity();
+    newType.setDescription("description");
+    newType.setHowused("howused");
 
-        Integer pkId = nedSvc.create(newType);
-        assertNotNull( pkId );
-        
-        TypedescriptionEntity savedType = nedSvc.findById(pkId, TypedescriptionEntity.class);
-        assertNotNull( savedType );
-        assertEquals(pkId, savedType.getTypeid());
+    Integer pkId = nedSvc.create(newType);
+    assertNotNull( pkId );
+    
+    TypedescriptionEntity savedType = nedSvc.findById(pkId, TypedescriptionEntity.class);
+    assertNotNull( savedType );
+    assertEquals(pkId, savedType.getTypeid());
 
-        // UPDATE
+    // UPDATE
 
-        savedType.setDescription("description2");
-        assertTrue( nedSvc.update(savedType) );
-        TypedescriptionEntity savedType2 = nedSvc.findById(pkId, TypedescriptionEntity.class);
-        assertEquals(savedType, savedType2);
+    savedType.setDescription("description2");
+    assertTrue( nedSvc.update(savedType) );
+    TypedescriptionEntity savedType2 = nedSvc.findById(pkId, TypedescriptionEntity.class);
+    assertEquals(savedType, savedType2);
 
-        // DELETE - delete type class without any children
+    // DELETE - delete type class without any children
 
-        assertTrue( nedSvc.delete(savedType) );
+    assertTrue( nedSvc.delete(savedType) );
 
-        // DELETE - deleting type class with children will raise a fk constraint
-        //          exception.
+    // DELETE - deleting type class with children will raise a fk constraint
+    //          exception.
 
-        try {
-            TypedescriptionEntity typeClassWithKids = new TypedescriptionEntity();
-            typeClassWithKids.setTypeid(1);
-            nedSvc.delete(typeClassWithKids);
-            fail();
-        } catch (org.springframework.dao.DataAccessException expected) {
-        }
-
-        // FIND By Id
-        TypedescriptionEntity typeClass1 = nedSvc.findById(1, TypedescriptionEntity.class);
-        assertNotNull(typeClass1);
-        assertEquals(Integer.valueOf(1), typeClass1.getTypeid());
-
-        // FIND All
-        List<TypedescriptionEntity> typeClasses = nedSvc.findAll(TypedescriptionEntity.class);
-        assertNotNull(typeClasses);
-        assertTrue(typeClasses.contains(typeClass1));
+    try {
+      TypedescriptionEntity typeClassWithKids = new TypedescriptionEntity();
+      typeClassWithKids.setTypeid(1);
+      nedSvc.delete(typeClassWithKids);
+      fail();
+    } catch (org.springframework.dao.DataAccessException expected) {
     }
 
-	@Test
-    public void testGlobalTypesCRUD() {
+    // FIND By Id
+    TypedescriptionEntity typeClass1 = nedSvc.findById(1, TypedescriptionEntity.class);
+    assertNotNull(typeClass1);
+    assertEquals(Integer.valueOf(1), typeClass1.getTypeid());
 
-        // CREATE
+    // FIND All
+    List<TypedescriptionEntity> typeClasses = nedSvc.findAll(TypedescriptionEntity.class);
+    assertNotNull(typeClasses);
+    assertTrue(typeClasses.contains(typeClass1));
+  }
 
-        GlobaltypeEntity newTypeVal = new GlobaltypeEntity();
-        newTypeVal.setTypeid(1);
-        newTypeVal.setShortdescription("type value abc");
-        newTypeVal.setLongdescription("longdescription");
-        newTypeVal.setTypecode("abc");
+  @Test
+  public void testGlobalTypesCRUD() {
 
-        Integer pkId = nedSvc.create(newTypeVal);
-        assertNotNull( pkId );
-        assertNotNull(newTypeVal.getCreated());
-        assertNotNull(newTypeVal.getLastmodified());
-        
-        GlobaltypeEntity savedTypeVal = nedSvc.findById(pkId, GlobaltypeEntity.class);
-        assertNotNull( savedTypeVal );
-        assertEquals(pkId, savedTypeVal.getGlobaltypeid());
+    // CREATE
 
-        // UPDATE
+    GlobaltypeEntity newTypeVal = new GlobaltypeEntity();
+    newTypeVal.setTypeid(1);
+    newTypeVal.setShortdescription("type value abc");
+    newTypeVal.setLongdescription("longdescription");
+    newTypeVal.setTypecode("abc");
 
-        savedTypeVal.setShortdescription("abc2");
-        assertTrue( nedSvc.update(savedTypeVal) );
-        GlobaltypeEntity savedTypeVal2 = nedSvc.findById(pkId, GlobaltypeEntity.class);
-        assertEquals(savedTypeVal, savedTypeVal2);
+    Integer pkId = nedSvc.create(newTypeVal);
+    assertNotNull( pkId );
+    assertNotNull(newTypeVal.getCreated());
+    assertNotNull(newTypeVal.getLastmodified());
+    
+    GlobaltypeEntity savedTypeVal = nedSvc.findById(pkId, GlobaltypeEntity.class);
+    assertNotNull( savedTypeVal );
+    assertEquals(pkId, savedTypeVal.getGlobaltypeid());
 
-        // DELETE - delete type class without any children
+    // UPDATE
 
-        assertTrue( nedSvc.delete(savedTypeVal) );
+    savedTypeVal.setShortdescription("abc2");
+    assertTrue( nedSvc.update(savedTypeVal) );
+    GlobaltypeEntity savedTypeVal2 = nedSvc.findById(pkId, GlobaltypeEntity.class);
+    assertEquals(savedTypeVal, savedTypeVal2);
 
-        //TODO - try to delete a global type with foreign key references.
+    // DELETE - delete type class without any children
 
-        // FIND By Id
+    assertTrue( nedSvc.delete(savedTypeVal) );
 
-        GlobaltypeEntity typeVal1 = nedSvc.findById(1, GlobaltypeEntity.class);
-        assertNotNull(typeVal1);
-        assertEquals(Integer.valueOf(1), typeVal1.getGlobaltypeid());
+    //TODO - try to delete a global type with foreign key references.
 
-        // FIND All
+    // FIND By Id
 
-        List<GlobaltypeEntity> globalTypes = nedSvc.findAll(GlobaltypeEntity.class);
-        assertNotNull(globalTypes);
-        assertTrue(globalTypes.contains(typeVal1));
+    GlobaltypeEntity typeVal1 = nedSvc.findById(1, GlobaltypeEntity.class);
+    assertNotNull(typeVal1);
+    assertEquals(Integer.valueOf(1), typeVal1.getGlobaltypeid());
 
-        // FIND BY ATTRIBUTE(S)
+    // FIND All
 
-        GlobaltypeEntity globalTypesearchCriteria = new GlobaltypeEntity();
-        globalTypesearchCriteria.setTypeid(1);
+    List<GlobaltypeEntity> globalTypes = nedSvc.findAll(GlobaltypeEntity.class);
+    assertNotNull(globalTypes);
+    assertTrue(globalTypes.contains(typeVal1));
 
-        List<GlobaltypeEntity> globalTypesForTypeClass = nedSvc.findByAttribute(globalTypesearchCriteria);
-        assertNotNull(globalTypesForTypeClass);
-        for (GlobaltypeEntity gtype : globalTypesForTypeClass) {
-            assertTrue(globalTypes.contains(gtype));
-        }
+    // FIND BY ATTRIBUTE(S)
+
+    GlobaltypeEntity globalTypesearchCriteria = new GlobaltypeEntity();
+    globalTypesearchCriteria.setTypeid(1);
+
+    List<GlobaltypeEntity> globalTypesForTypeClass = nedSvc.findByAttribute(globalTypesearchCriteria);
+    assertNotNull(globalTypesForTypeClass);
+    for (GlobaltypeEntity gtype : globalTypesForTypeClass) {
+      assertTrue(globalTypes.contains(gtype));
     }
+  }
 
-	@Test
-    public void testEmailsCRUD() {
+  @Test
+  public void testEmailsCRUD() {
 
-        /* ------------------------------------------------------------------ */
-        /*  CREATE                                                            */
-        /* ------------------------------------------------------------------ */
+    /* ------------------------------------------------------------------ */
+    /*  CREATE                                                            */
+    /* ------------------------------------------------------------------ */
 
-        // lookup id for "work" email type
+    // lookup id for "work" email type
 
-        GlobaltypeEntity globalTypesearchCriteria = new GlobaltypeEntity();
-        globalTypesearchCriteria.setTypeid(10);
-        globalTypesearchCriteria.setShortdescription("Work");
-		List<GlobaltypeEntity> globalTypesResult = nedSvc.findByAttribute(globalTypesearchCriteria);
-		assertEquals(1, globalTypesResult.size());
+    GlobaltypeEntity globalTypesearchCriteria = new GlobaltypeEntity();
+    globalTypesearchCriteria.setTypeid(10);
+    globalTypesearchCriteria.setShortdescription("Work");
+    List<GlobaltypeEntity> globalTypesResult = nedSvc.findByAttribute(globalTypesearchCriteria);
+    assertEquals(1, globalTypesResult.size());
 
-		Integer emailTypeId = globalTypesResult.get(0).getGlobaltypeid(); 
-		assertNotNull( emailTypeId );
+    Integer emailTypeId = globalTypesResult.get(0).getGlobaltypeid(); 
+    assertNotNull( emailTypeId );
 
-        // create pojo
+    // create pojo
 
-		EmailEntity newEmail = new EmailEntity();
-		newEmail.setNamedentityid(1);
-		newEmail.setEmailtypeid(emailTypeId);
-		newEmail.setEmailaddress("walter@foo.com");
+    EmailEntity newEmail = new EmailEntity();
+    newEmail.setNamedentityid(1);
+    newEmail.setEmailtypeid(emailTypeId);
+    newEmail.setEmailaddress("walter@foo.com");
 
-        // save record
+    // save record
 
-		Integer pkId = nedSvc.create(newEmail);
-		assertNotNull( pkId );
+    Integer pkId = nedSvc.create(newEmail);
+    assertNotNull( pkId );
 
-		EmailEntity savedEmail = nedSvc.findById(pkId, EmailEntity.class);
-		assertNotNull( savedEmail );
-		assertEquals(pkId, savedEmail.getEmailid());
-		assertEquals(emailTypeId, savedEmail.getEmailtypeid());
+    EmailEntity savedEmail = nedSvc.findById(pkId, EmailEntity.class);
+    assertNotNull( savedEmail );
+    assertEquals(pkId, savedEmail.getEmailid());
+    assertEquals(emailTypeId, savedEmail.getEmailtypeid());
 
-        /* ------------------------------------------------------------------ */
-        /*  UPDATE                                                            */
-        /* ------------------------------------------------------------------ */
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
 
-        savedEmail.setEmailaddress("super" + savedEmail.getEmailaddress());
-        assertTrue( nedSvc.update(savedEmail) );
-        EmailEntity savedEmail2 = nedSvc.findById(pkId, EmailEntity.class);
-        assertEquals(savedEmail, savedEmail2);
+    savedEmail.setEmailaddress("super" + savedEmail.getEmailaddress());
+    assertTrue( nedSvc.update(savedEmail) );
+    EmailEntity savedEmail2 = nedSvc.findById(pkId, EmailEntity.class);
+    assertEquals(savedEmail, savedEmail2);
 
-        /* ------------------------------------------------------------------ */
-        /*  FINDERS                                                           */
-        /* ------------------------------------------------------------------ */
+    /* ------------------------------------------------------------------ */
+    /*  FINDERS                                                           */
+    /* ------------------------------------------------------------------ */
 
-        // FIND All
+    // FIND All
 
-        List<EmailEntity> allEmails = nedSvc.findAll(EmailEntity.class);
-        assertNotNull(allEmails);
-        assertTrue(allEmails.contains(savedEmail2));
+    List<EmailEntity> allEmails = nedSvc.findAll(EmailEntity.class);
+    assertNotNull(allEmails);
+    assertTrue(allEmails.contains(savedEmail2));
 
-        // FIND BY ATTRIBUTE(S)
+    // FIND BY ATTRIBUTE(S)
 
-        EmailEntity emailSearchCriteria = new EmailEntity();
-        emailSearchCriteria.setEmailaddress(savedEmail2.getEmailaddress());
+    EmailEntity emailSearchCriteria = new EmailEntity();
+    emailSearchCriteria.setEmailaddress(savedEmail2.getEmailaddress());
 
-        List<EmailEntity> foundEmails = nedSvc.findByAttribute(emailSearchCriteria);
-        assertNotNull(foundEmails);
-        assertEquals(savedEmail2.getEmailaddress(), foundEmails.get(0).getEmailaddress());
+    List<EmailEntity> foundEmails = nedSvc.findByAttribute(emailSearchCriteria);
+    assertNotNull(foundEmails);
+    assertEquals(savedEmail2.getEmailaddress(), foundEmails.get(0).getEmailaddress());
 
-        /* ------------------------------------------------------------------ */
-        /*  DELETE                                                            */
-        /* ------------------------------------------------------------------ */
+    /* ------------------------------------------------------------------ */
+    /*  DELETE                                                            */
+    /* ------------------------------------------------------------------ */
 
-        assertTrue( nedSvc.delete(savedEmail) );
-    }
+    assertTrue( nedSvc.delete(savedEmail) );
+  }
 
-	@Test
-    public void testExternalReferencesCRUD() {
+  @Test
+  public void testExternalReferencesCRUD() {
 
-		final String ORCID_ID1 = "0000-0001-9430-319X";
+    final String ORCID_ID1 = "0000-0001-9430-319X";
 
-        // lookup id for orcid (using hardcoded type class 17 :))
+    // lookup id for orcid (using hardcoded type class 17 :))
 
-        GlobaltypeEntity globalTypesearchCriteria = new GlobaltypeEntity();
-        globalTypesearchCriteria.setTypeid(17);
-        globalTypesearchCriteria.setShortdescription("ORCID");
-		List<GlobaltypeEntity> globalTypesResult = nedSvc.findByAttribute(globalTypesearchCriteria);
-		assertEquals(1, globalTypesResult.size());
+    GlobaltypeEntity globalTypesearchCriteria = new GlobaltypeEntity();
+    globalTypesearchCriteria.setTypeid(17);
+    globalTypesearchCriteria.setShortdescription("ORCID");
+    List<GlobaltypeEntity> globalTypesResult = nedSvc.findByAttribute(globalTypesearchCriteria);
+    assertEquals(1, globalTypesResult.size());
 
-		Integer orcidTypeId = globalTypesResult.get(0).getGlobaltypeid(); 
-		assertNotNull( orcidTypeId );
-		
-        /* ------------------------------------------------------------------ */
-        /*  CREATE                                                            */
-        /* ------------------------------------------------------------------ */
+    Integer orcidTypeId = globalTypesResult.get(0).getGlobaltypeid(); 
+    assertNotNull( orcidTypeId );
+    
+    /* ------------------------------------------------------------------ */
+    /*  CREATE                                                            */
+    /* ------------------------------------------------------------------ */
 
-		UniqueidentifierEntity uidEntity = new UniqueidentifierEntity();
-		uidEntity.setNamedentityid(1);
-		uidEntity.setUniqueidentifiertypeid(orcidTypeId);
-		uidEntity.setUniqueidentifier(ORCID_ID1);
+    UniqueidentifierEntity uidEntity = new UniqueidentifierEntity();
+    uidEntity.setNamedentityid(1);
+    uidEntity.setUniqueidentifiertypeid(orcidTypeId);
+    uidEntity.setUniqueidentifier(ORCID_ID1);
 
-        // save record
+    // save record
 
-		Integer pkId = nedSvc.create(uidEntity);
-		assertNotNull( pkId );
+    Integer pkId = nedSvc.create(uidEntity);
+    assertNotNull( pkId );
 
-		UniqueidentifierEntity savedUid = nedSvc.findById(pkId, UniqueidentifierEntity.class);
-		assertNotNull( savedUid );
-		assertEquals(pkId, savedUid.getUniqueidentifiersid());
-		assertEquals(orcidTypeId, savedUid.getUniqueidentifiertypeid());
+    UniqueidentifierEntity savedUid = nedSvc.findById(pkId, UniqueidentifierEntity.class);
+    assertNotNull( savedUid );
+    assertEquals(pkId, savedUid.getUniqueidentifiersid());
+    assertEquals(orcidTypeId, savedUid.getUniqueidentifiertypeid());
 
-        /* ------------------------------------------------------------------ */
-        /*  UPDATE                                                            */
-        /* ------------------------------------------------------------------ */
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
 
-        savedUid.setUniqueidentifier( savedUid.getUniqueidentifier() + "Z" );
-        assertTrue( nedSvc.update(savedUid) );
+    savedUid.setUniqueidentifier( savedUid.getUniqueidentifier() + "Z" );
+    assertTrue( nedSvc.update(savedUid) );
 
-		UniqueidentifierEntity savedUid2 = nedSvc.findById(pkId, UniqueidentifierEntity.class);
-		assertEquals(savedUid, savedUid2);
+    UniqueidentifierEntity savedUid2 = nedSvc.findById(pkId, UniqueidentifierEntity.class);
+    assertEquals(savedUid, savedUid2);
 
-        /* ------------------------------------------------------------------ */
-        /*  FINDERS                                                           */
-        /* ------------------------------------------------------------------ */
+    /* ------------------------------------------------------------------ */
+    /*  FINDERS                                                           */
+    /* ------------------------------------------------------------------ */
 
-        // FIND All
+    // FIND All
 
-        List<UniqueidentifierEntity> allUids = nedSvc.findAll(UniqueidentifierEntity.class);
-        assertNotNull(allUids);
-        assertTrue(allUids.contains(savedUid2));
+    List<UniqueidentifierEntity> allUids = nedSvc.findAll(UniqueidentifierEntity.class);
+    assertNotNull(allUids);
+    assertTrue(allUids.contains(savedUid2));
 
-        // TODO - FIND BY ATTRIBUTE(S)
+    // TODO - FIND BY ATTRIBUTE(S)
 
-        /* ------------------------------------------------------------------ */
-        /*  DELETE                                                            */
-        /* ------------------------------------------------------------------ */
+    /* ------------------------------------------------------------------ */
+    /*  DELETE                                                            */
+    /* ------------------------------------------------------------------ */
 
-        assertTrue( nedSvc.delete(savedUid) );
-    }
+    assertTrue( nedSvc.delete(savedUid) );
+  }
 }

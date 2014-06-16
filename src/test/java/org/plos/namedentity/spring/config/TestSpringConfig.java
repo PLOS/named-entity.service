@@ -89,7 +89,7 @@ public class TestSpringConfig {
     List<GlobaltypeEntity> typeValuesForTypeClass = new ArrayList<>();
     for (int i = 1; i <=5; i++) {
       typeValuesForTypeClass.add(new GlobaltypeEntity(
-          i, 1, "shortdesc"+i, "longdesc"+i, "typ"+i, null, null, null, null));
+        i, 1, "shortdesc"+i, "longdesc"+i, "typ"+i, null, null, null, null));
     }
 
     when(mockNamedEntityService.findByAttribute(isA(GlobaltypeEntity.class))).thenReturn(typeValuesForTypeClass);
@@ -251,11 +251,11 @@ public class TestSpringConfig {
     return individualEntities;
   }
 
-	static private List<UniqueidentifierDTO> newUidsDto() {
-		List<UniqueidentifierDTO> uids = new ArrayList<>();
-		for (int i = 1; i <=2; i++) {
-			uids.add(new UniqueidentifierDTO(null, 1, "ORCID", "0000-0002-9430-319"+i));
-		}
-		return uids;
-	}
+  static private List<UniqueidentifierDTO> newUidsDto() {
+    List<UniqueidentifierDTO> uids = new ArrayList<>();
+    for (int i = 1; i <=2; i++) {
+      uids.add(new UniqueidentifierDTO(null, 1, "ORCID", "0000-0002-9430-319"+i));
+    }
+    return uids;
+  }
 }

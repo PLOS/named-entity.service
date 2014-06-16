@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2006-2014 by Public Library of Science
+ * http://plos.org
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.plos.namedentity.rest;
 
 import static org.junit.Assert.assertEquals;
@@ -50,12 +66,12 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   public void testCreateIndividualComposite() throws Exception {
 
     String compositeIndividualJson = new String(Files.readAllBytes(
-        Paths.get(TEST_RESOURCE_PATH + "composite-individual.json")));
+                                      Paths.get(TEST_RESOURCE_PATH + "composite-individual.json")));
   
     // Request #1. Expect success.
 
     Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
-                            .post(Entity.json(compositeIndividualJson));
+                          .post(Entity.json(compositeIndividualJson));
 
     assertEquals(200, response.getStatus());
 
@@ -255,14 +271,14 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     final String NEW_TYPE_USAGE = "New Type Usage";
 
     final String NEW_TYPE_JSON_PAYLOAD = "{"
-        + "\"description\":\"" + NEW_TYPE_DESC  + "\","
-        + "\"howused\":\""     + NEW_TYPE_USAGE + "\""
-        + "}";
+            + "\"description\":\"" + NEW_TYPE_DESC  + "\","
+            + "\"howused\":\""     + NEW_TYPE_USAGE + "\""
+            + "}";
 
     // Request #1. Expect success.
 
     Response response = target(TYPE_CLASS_URI).request(MediaType.APPLICATION_JSON_TYPE)
-                            .post(Entity.json(NEW_TYPE_JSON_PAYLOAD));
+                          .post(Entity.json(NEW_TYPE_JSON_PAYLOAD));
 
     assertEquals(200, response.getStatus());
 
@@ -391,7 +407,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     // Request #1. Expect success.
 
     Response response = target(TYPE_VALUE_URI).request(MediaType.APPLICATION_JSON_TYPE)
-                            .post(Entity.json(NEW_TYPEVAL_JSON_PAYLOAD));
+                          .post(Entity.json(NEW_TYPEVAL_JSON_PAYLOAD));
 
     assertEquals(200, response.getStatus());
 
