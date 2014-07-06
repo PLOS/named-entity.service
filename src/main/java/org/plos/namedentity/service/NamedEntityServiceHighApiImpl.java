@@ -56,26 +56,35 @@ public class NamedEntityServiceHighApiImpl implements NamedEntityServiceHighApi 
     /*  INDIVIDUAL                                                        */
     /* ------------------------------------------------------------------ */
 
-    Integer prefixTypeClassId      = findTypeClassStartWith("Named Party Prefixes");
-    Integer suffixTypeClassId      = findTypeClassStartWith("Named Party Suffixes");
-    Integer langTypeClassId        = findTypeClassStartWith("Languages");
-    Integer commMethodsTypeClassId = findTypeClassStartWith("Communication Methods");
-
-    Integer prefixTypeId     = findTypeValueByName(prefixTypeClassId, composite.getNameprefix());
-    Integer suffixTypeId     = findTypeValueByName(suffixTypeClassId, composite.getNamesuffix());
-    Integer langTypeId       = findTypeValueByName(langTypeClassId, composite.getPreferredlanguage());
-    Integer commMethodTypeId = findTypeValueByName(commMethodsTypeClassId, composite.getPreferredcommunication());
-
     IndividualEntity individual = new IndividualEntity();
     individual.setNamedentityid(nedId);
     individual.setFirstname(composite.getFirstname());
     individual.setMiddlename(composite.getMiddlename());
     individual.setLastname(composite.getLastname());
 
-    individual.setNameprefixtypeid(prefixTypeId);
-    individual.setNamesuffixtypeid(suffixTypeId);
-    individual.setPreferredlanguagetypeid(langTypeId);
-    individual.setPreferredcommunicationmethodtypeid(commMethodTypeId);
+    if (composite.getNameprefix() != null) {
+      Integer prefixTypeClassId = findTypeClassStartWith("Named Party Prefixes");
+      Integer prefixTypeId      = findTypeValueByName(prefixTypeClassId, composite.getNameprefix());
+      individual.setNameprefixtypeid(prefixTypeId);
+    }
+
+    if (composite.getNamesuffix() != null) {
+      Integer suffixTypeClassId = findTypeClassStartWith("Named Party Suffixes");
+      Integer suffixTypeId      = findTypeValueByName(suffixTypeClassId, composite.getNamesuffix());
+      individual.setNamesuffixtypeid(suffixTypeId);
+    }
+
+    if (composite.getPreferredlanguage() != null) {
+      Integer langTypeClassId = findTypeClassStartWith("Languages");
+      Integer langTypeId      = findTypeValueByName(langTypeClassId, composite.getPreferredlanguage());
+      individual.setPreferredlanguagetypeid(langTypeId);
+    }
+
+    if (composite.getPreferredcommunication() != null) {
+      Integer commMethodsTypeClassId = findTypeClassStartWith("Communication Methods");
+      Integer commMethodTypeId = findTypeValueByName(commMethodsTypeClassId, composite.getPreferredcommunication());
+      individual.setPreferredcommunicationmethodtypeid(commMethodTypeId);
+    }
 
     nedDBSvc.create( individual );
 
