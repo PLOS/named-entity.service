@@ -190,8 +190,8 @@ public class NamedEntityServiceHighApiImpl implements NamedEntityServiceHighApi 
 
     Integer uidTypeClassId = findTypeClassStartWith("Unique Identifier Types");
 
-    if (composite.getUniqueIdentifiers() != null) {
-      for (UniqueidentifierDTO uidDto : composite.getUniqueIdentifiers()) {
+    if (composite.getUniqueidentifiers() != null) {
+      for (UniqueidentifierDTO uidDto : composite.getUniqueidentifiers()) {
         Integer uidTypeId = findTypeValueByName(uidTypeClassId, uidDto.getUniqueidentifiertype());
 
         UniqueidentifierEntity uidEntity = new UniqueidentifierEntity();

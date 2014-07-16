@@ -125,10 +125,10 @@ public class IndividualComposite {
     this.phonenumbers = phonenumbers;
   }
   
-  public List<UniqueidentifierDTO> getUniqueIdentifiers() {
+  public List<UniqueidentifierDTO> getUniqueidentifiers() {
     return uniqueidentifiers;
   }
-  public void setUniqueIdentifiers(List<UniqueidentifierDTO> uniqueidentifiers) {
+  public void setUniqueidentifiers(List<UniqueidentifierDTO> uniqueidentifiers) {
     this.uniqueidentifiers = uniqueidentifiers;
   }
 }
