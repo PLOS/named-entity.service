@@ -22,14 +22,14 @@ import org.junit.runners.Suite.SuiteClasses;
 
 import org.plos.namedentity.persist.NamedEntityDBServiceTest;
 import org.plos.namedentity.rest.NamedEntityResourceTest;
-import org.plos.namedentity.service.CrudServiceHighApiTest;
+import org.plos.namedentity.service.NamedEntityServiceTest;
 import org.plos.namedentity.service.CrudServiceTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({
   NamedEntityDBServiceTest.class, 
   CrudServiceTest.class,
-  CrudServiceHighApiTest.class,
+  NamedEntityServiceTest.class,
   NamedEntityResourceTest.class
 })
 public class TestSuite {

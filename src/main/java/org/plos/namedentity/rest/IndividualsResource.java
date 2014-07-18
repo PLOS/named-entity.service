@@ -24,7 +24,7 @@ public class IndividualsResource extends BaseController {
   @POST
   public Response createIndividualComposite(IndividualComposite object) {
     try {
-      IndividualDTO dto = nedSvcHighApi.createIndividual(object);
+      IndividualDTO dto = namedEntityService.createIndividual(object);
       return Response.status(Response.Status.OK).entity(dto).build();
     }
     catch(NedValidationException e) {
@@ -38,7 +38,7 @@ public class IndividualsResource extends BaseController {
   @GET
   public Response getAllIndividuals() {
     try {
-      List<IndividualEntity> individuals = nedSvcLowApi.findAll(IndividualEntity.class);
+      List<IndividualEntity> individuals = crudService.findAll(IndividualEntity.class);
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<IndividualEntity>>(individuals){}).build();
     }
@@ -52,7 +52,7 @@ public class IndividualsResource extends BaseController {
   @Path("/{id}")
   public Response getIndividual(@PathParam("id") int id) {
     try {
-      IndividualDTO dto = nedSvcHighApi.findIndividualByNedId(id);
+      IndividualDTO dto = namedEntityService.findIndividualByNedId(id);
       return Response.status(Response.Status.OK).entity(dto).build();
     }
     catch(Exception e) {
@@ -64,7 +64,7 @@ public class IndividualsResource extends BaseController {
   @Path("/{id}/emails")
   public Response getEmailsForIndividual(@PathParam("id") int nedId) {
     try {
-      List<EmailDTO> emails = nedSvcHighApi.findEmailsByNedId(nedId);
+      List<EmailDTO> emails = namedEntityService.findEmailsByNedId(nedId);
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<EmailDTO>>(emails){}).build();
     }
@@ -77,7 +77,7 @@ public class IndividualsResource extends BaseController {
   @Path("/{id}/addresses")
   public Response getAddressesForIndividual(@PathParam("id") int nedId) {
     try {
-      List<AddressDTO> addresses = nedSvcHighApi.findAddressesByNedId(nedId);
+      List<AddressDTO> addresses = namedEntityService.findAddressesByNedId(nedId);
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<AddressDTO>>(addresses){}).build();
     }
@@ -90,7 +90,7 @@ public class IndividualsResource extends BaseController {
   @Path("/{id}/phonenumbers")
   public Response getPhonenumbersForIndividual(@PathParam("id") int nedId) {
     try {
-      List<PhonenumberDTO> phonenumbers = nedSvcHighApi.findPhoneNumbersByNedId(nedId);
+      List<PhonenumberDTO> phonenumbers = namedEntityService.findPhoneNumbersByNedId(nedId);
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<PhonenumberDTO>>(phonenumbers){}).build();
     }
@@ -103,7 +103,7 @@ public class IndividualsResource extends BaseController {
   @Path("/{id}/roles")
   public Response getRolesForIndividual(@PathParam("id") int nedId) {
     try {
-      List<RoleDTO> roles = nedSvcHighApi.findRolesByNedId(nedId);
+      List<RoleDTO> roles = namedEntityService.findRolesByNedId(nedId);
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<RoleDTO>>(roles){}).build();
     }
@@ -116,7 +116,7 @@ public class IndividualsResource extends BaseController {
   @Path("/{id}/xref")
   public Response getExternalReferencesForIndividual(@PathParam("id") int nedId) {
     try {
-      List<UniqueidentifierDTO> uids = nedSvcHighApi.findUniqueIdsByNedId(nedId);
+      List<UniqueidentifierDTO> uids = namedEntityService.findUniqueIdsByNedId(nedId);
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<UniqueidentifierDTO>>(uids){}).build();
     }
