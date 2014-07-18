@@ -16,6 +16,9 @@
  */
 package org.plos.namedentity.api.dto;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class RoleDTO {
 
   private Integer roleid;

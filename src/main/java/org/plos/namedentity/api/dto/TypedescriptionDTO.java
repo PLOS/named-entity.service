@@ -16,8 +16,10 @@
  */
 package org.plos.namedentity.api.dto;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
+@XmlRootElement
 public class TypedescriptionDTO {
 
   private Integer typeid;

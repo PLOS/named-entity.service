@@ -46,9 +46,9 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
   private static final String TEST_RESOURCE_PATH = "src/test/resources/";
 
-  private static final String TYPE_CLASS_URI  = "/ned/typeclasses";
+  private static final String TYPE_CLASS_URI  = "/typeclasses";
   private static final String TYPE_VALUE_URI  = TYPE_CLASS_URI + "/1/typevalues";
-  private static final String INDIVIDUAL_URI  = "/ned/individuals";
+  private static final String INDIVIDUAL_URI  = "/individuals";
   private static final String INDIV_ADDR_URI  = INDIVIDUAL_URI + "/1/addresses";
   private static final String INDIV_EMAIL_URI = INDIVIDUAL_URI + "/1/emails";
   private static final String INDIV_PHONE_URI = INDIVIDUAL_URI + "/1/phonenumbers";

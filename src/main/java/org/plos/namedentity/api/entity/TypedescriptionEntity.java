@@ -16,12 +16,14 @@
  */
 package org.plos.namedentity.api.entity;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 /**
  * Modified JOOQ generated class(pojo=true).
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@XmlRootElement
 public class TypedescriptionEntity implements java.io.Serializable {
 
   private static final long serialVersionUID = -356395330;

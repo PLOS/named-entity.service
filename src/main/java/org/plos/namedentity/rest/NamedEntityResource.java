@@ -16,21 +16,6 @@
  */
 package org.plos.namedentity.rest;
 
-import java.util.List;
-
-import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import org.apache.log4j.Logger;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
@@ -49,7 +34,19 @@ import org.plos.namedentity.service.NamedEntityService;
 import org.plos.namedentity.service.NamedEntityServiceHighApi;
 import org.plos.namedentity.utils.Transformer;
 
-@Path("/ned")
+import javax.inject.Inject;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.List;
+
+@Path("/")
 public class NamedEntityResource {
 
   static Logger logger = Logger.getLogger(NamedEntityResource.class);
@@ -58,13 +55,26 @@ public class NamedEntityResource {
   @Inject private NamedEntityServiceHighApi nedSvcHighApi;
   @Inject private Transformer               transformer;
 
+  private Response serverError(Exception e, String message) {
+    logger.error("internal error", e);
+    return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
+        .entity(message + ". Internal error. Reason: " + e.getMessage())
+        .type(MediaType.TEXT_PLAIN).build();
+  }
+
+  private Response validationError(NedValidationException e, String message) {
+    logger.error("validation exception", e);
+    return Response.status(Response.Status.BAD_REQUEST)             // 4XX (client-side)
+        .entity(message + ". Validation failed. Reason: " + e.getMessage())
+        .type(MediaType.TEXT_PLAIN).build();
+  }
+
+
   /* ---------------------------------------------------------------------- */
   /*  INDIVIDUALS                                                           */
   /* ---------------------------------------------------------------------- */
   
   @POST
-  @Consumes("application/json")
-  @Produces("application/json")
   @Path("/individuals")
   public Response createIndividualComposite(IndividualComposite object) {
     try {
@@ -72,21 +82,14 @@ public class NamedEntityResource {
       return Response.status(Response.Status.OK).entity(dto).build();
     }
     catch(NedValidationException e) {
-      logger.error("validation exception", e);
-      return Response.status(Response.Status.BAD_REQUEST)             // 4XX (client-side)
-        .entity("Unable to create individual. Validation failed. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return validationError(e, "Unable to create individual");
     }
     catch(Exception e) {
-      logger.error("internal error", e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-        .entity("Unable to create individual. Internal error. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return serverError(e, "Unable to create individual");
     }
   }
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
   @Path("/individuals")
   public Response getAllIndividuals() {
     try {
@@ -95,15 +98,11 @@ public class NamedEntityResource {
         new GenericEntity<List<IndividualEntity>>(individuals){}).build();
     }
     catch(Exception e) {
-      logger.error("internal error", e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-        .entity("Find all individuals failed. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return serverError(e, "Find all individuals failed");
     }
   }
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
   @Path("/individuals/{id}")
   public Response getIndividual(@PathParam("id") int id) {
     try {
@@ -111,15 +110,11 @@ public class NamedEntityResource {
       return Response.status(Response.Status.OK).entity(dto).build();
     }
     catch(Exception e) {
-      logger.error("internal error", e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-        .entity("Find individual by id failed. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return serverError(e, "Find individual by id failed");
     }
   }
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
   @Path("/individuals/{id}/emails")
   public Response getEmailsForIndividual(@PathParam("id") int nedId) {
     try {
@@ -128,15 +123,11 @@ public class NamedEntityResource {
         new GenericEntity<List<EmailDTO>>(emails){}).build();
     }
     catch(Exception e) {
-      logger.error("internal error", e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-        .entity("Find emails by nedId failed. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return serverError(e, "Find emails by nedId failed");
     }
   }
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
   @Path("/individuals/{id}/addresses")
   public Response getAddressesForIndividual(@PathParam("id") int nedId) {
     try {
@@ -145,15 +136,11 @@ public class NamedEntityResource {
         new GenericEntity<List<AddressDTO>>(addresses){}).build();
     }
     catch(Exception e) {
-      logger.error("internal error", e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-        .entity("Find addresses by nedId failed. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return serverError(e, "Find addresses by nedId failed");
     }
   }
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
   @Path("/individuals/{id}/phonenumbers")
   public Response getPhonenumbersForIndividual(@PathParam("id") int nedId) {
     try {
@@ -162,15 +149,11 @@ public class NamedEntityResource {
         new GenericEntity<List<PhonenumberDTO>>(phonenumbers){}).build();
     }
     catch(Exception e) {
-      logger.error("internal error", e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-        .entity("Find phone numberse by nedId failed. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return serverError(e, "Find phone numberse by nedId failed");
     }
   }
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
   @Path("/individuals/{id}/roles")
   public Response getRolesForIndividual(@PathParam("id") int nedId) {
     try {
@@ -179,15 +162,11 @@ public class NamedEntityResource {
         new GenericEntity<List<RoleDTO>>(roles){}).build();
     }
     catch(Exception e) {
-      logger.error("internal error", e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-        .entity("Find roles by nedId failed. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return serverError(e, "Find roles by nedId failed");
     }
   }
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
   @Path("/individuals/{id}/xref")
   public Response getExternalReferencesForIndividual(@PathParam("id") int nedId) {
     try {
@@ -196,10 +175,7 @@ public class NamedEntityResource {
         new GenericEntity<List<UniqueidentifierDTO>>(uids){}).build();
     }
     catch(Exception e) {
-      logger.error("internal error", e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-        .entity("Find external references by nedId failed. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return serverError(e, "Find external references by nedId failed");
     }
   }
 
@@ -208,7 +184,6 @@ public class NamedEntityResource {
   /* ---------------------------------------------------------------------- */
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
   @Path("/typeclasses/{id}")
   public Response getTypedescription(@PathParam("id") int id) {
     try {
@@ -217,15 +192,11 @@ public class NamedEntityResource {
       //return Response.status(Response.Status.OK).entity( toPojo(entity) ).build();
     }
     catch(Exception e) {
-      logger.error("internal error", e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-        .entity("Find type class by id failed. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return serverError(e, "Find type class by id failed");
     }
   }
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
   @Path("/typeclasses")
   public Response getTypedescriptions() {
     try {
@@ -234,16 +205,11 @@ public class NamedEntityResource {
         new GenericEntity<List<TypedescriptionEntity>>(typeClasses){}).build();
     }
     catch(Exception e) {
-      logger.error("internal error", e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-        .entity("Find all type classes failed. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return serverError(e, "Find all type classes failed");
     }
   }
 
   @POST
-  @Consumes("application/json")
-  @Produces("application/json")
   @Path("/typeclasses")
   public Response createTypedescription(TypedescriptionDTO typeDescription) {
     try {
@@ -252,22 +218,14 @@ public class NamedEntityResource {
       return Response.status(Response.Status.OK).entity( entity ).build();
     }
     catch(NedValidationException e) {
-      logger.error("validation exception", e);
-      return Response.status(Response.Status.BAD_REQUEST)             // 4XX (client-side)
-        .entity("Unable to create Type Class. Validation failed. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return validationError(e, "Unable to create Type Class");
     }
     catch(Exception e) {
-      logger.error("internal error", e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-        .entity("Unable to create Type Class. Internal error. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return serverError(e, "Unable to create Type Class");
     }
   }
 
   @PUT
-  @Consumes("application/json")
-  @Produces("application/json")
   @Path("/typeclasses/{id}")
   public Response updateTypedescription(TypedescriptionDTO typeDescription) {
     try {
@@ -277,16 +235,10 @@ public class NamedEntityResource {
       return Response.status(Response.Status.OK).entity( entity ).build();
     }
     catch(NedValidationException e) {
-      logger.error("validation exception", e);
-      return Response.status(Response.Status.BAD_REQUEST)             // 4XX (client-side)
-        .entity("Unable to update Type Class. Validation failed. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return validationError(e, "Unable to update Type Class");
     }
     catch(Exception e) {
-      logger.error("internal error", e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-        .entity("Unable to update Type Class. Internal error. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return serverError(e, "Unable to update Type Class");
     }
   }
 
@@ -300,10 +252,7 @@ public class NamedEntityResource {
       return Response.status(Response.Status.NO_CONTENT).build();
     }
     catch(Exception e) {
-      logger.error("internal error", e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-        .entity("Unable to delete Type Class. Internal error. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return serverError(e, "Unable to delete Type Class");
     }
   }
 
@@ -312,7 +261,6 @@ public class NamedEntityResource {
   /* ---------------------------------------------------------------------- */
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
   @Path("/typeclasses/{typeclassid}/typevalues/{typevalueid}")
   public Response getGlobalType(@PathParam("typeclassid") int typeClassId, 
                                 @PathParam("typevalueid") int typeValueId) {
@@ -321,15 +269,11 @@ public class NamedEntityResource {
       return Response.status(Response.Status.OK).entity( entity ).build();
     }
     catch(Exception e) {
-      logger.error("internal error", e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-        .entity("Find type value by id failed. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return serverError(e, "Find type value by id failed");
     }
   }
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
   @Path("/typeclasses/{typeclassid}/typevalues")
   public Response getGlobalTypeForTypeClass(@PathParam("typeclassid") int typeClassId) {
     try {
@@ -341,16 +285,11 @@ public class NamedEntityResource {
         new GenericEntity<List<GlobaltypeEntity>>(typeClasses){}).build();
     }
     catch(Exception e) {
-      logger.error("internal error", e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-        .entity("Find type classes for a type class failed. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return serverError(e, "Find type classes for a type class failed");
     }
   }
 
   @POST
-  @Consumes("application/json")
-  @Produces("application/json")
   @Path("/typeclasses/{typeclassid}/typevalues")
   public Response createGlobalType(@PathParam("typeclassid") int typeClassId, GlobaltypeDTO globalType) {
     try {
@@ -362,22 +301,14 @@ public class NamedEntityResource {
       return Response.status(Response.Status.OK).entity( foundEntity ).build();
     }
     catch(NedValidationException e) {
-      logger.error("validation exception", e);
-      return Response.status(Response.Status.BAD_REQUEST)             // 4XX (client-side)
-        .entity("Unable to create Type Value. Validation failed. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return validationError(e, "Unable to create Type Value");
     }
     catch(Exception e) {
-      logger.error("internal error", e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-        .entity("Unable to create Type Value. Internal error. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return serverError(e, "Unable to create Type Value");
     }
   }
 
   @PUT
-  @Consumes("application/json")
-  @Produces("application/json")
   @Path("/typeclasses/{typeclassid}/typevalues/{typevalueid}")
   public Response updateGlobalType(@PathParam("typeclassid") int typeClassId, 
                                    @PathParam("typevalueid") int typeValueId, 
@@ -389,16 +320,10 @@ public class NamedEntityResource {
       return Response.status(Response.Status.OK).entity( entity ).build();
     }
     catch(NedValidationException e) {
-      logger.error("validation exception", e);
-      return Response.status(Response.Status.BAD_REQUEST)             // 4XX (client-side)
-        .entity("Unable to update Type Value. Validation failed. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return validationError(e, "Unable to update Type Value");
     }
     catch(Exception e) {
-      logger.error("internal error", e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-        .entity("Unable to update Type Value. Internal error. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return serverError(e, "Unable to update Type Value");
     }
   }
 
@@ -413,10 +338,7 @@ public class NamedEntityResource {
       return Response.status(Response.Status.NO_CONTENT).build();
     }
     catch(Exception e) {
-      logger.error("internal error", e);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-        .entity("Unable to delete Type Value. Internal error. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+      return serverError(e, "Unable to delete Type Value");
     }
   }
 

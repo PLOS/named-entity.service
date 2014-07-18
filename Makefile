@@ -13,16 +13,16 @@ jooq-codegen:
 	java -cp $(JOOQ_MYSQL_CLASSPATH):./target org.jooq.util.GenerationTool /jooq-config.mysql.xml
 
 codegen-war: jooq-codegen
-	mvn -f pom.mysql.xml -Dmaven.test.skip=true clean package
+	mvn -f pom.xml -Dmaven.test.skip=true clean package
 
 war:
-	mvn -f pom.mysql.xml -Dmaven.test.skip=true clean package
+	mvn -f pom.xml -Dmaven.test.skip=true clean package
 
 test:
 	mvn -f pom.h2.xml clean test
 
 tomcat: codegen-war 
-	mvn -f pom.mysql.xml tomcat:run 
+	mvn -f pom.xml tomcat:run
 
 help:
 	@echo  ""
@@ -42,7 +42,7 @@ help:
 	@echo  "    Build war only for deployment   : make war"
 	@echo  ""
 	@echo  "    Run embedded Tomcat             : make tomcat"
-	@echo  "      (http://localhost:8080/api/ned/typeclasses/1)"
+	@echo  "      (http://localhost:8080/typeclasses/1)"
 	@echo  ""
 
 .PHONY: all clean help jooq-codegen codegen-war test tomcat war
