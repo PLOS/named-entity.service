@@ -35,9 +35,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring-beans.xml"})
-public class NamedEntityServiceTest {
+public class CrudServiceTest {
 
-  @Autowired NamedEntityService nedSvc;
+  @Autowired
+  CrudService nedSvc;
 
   @Test
   public void testTypeDescriptionCRUD() {

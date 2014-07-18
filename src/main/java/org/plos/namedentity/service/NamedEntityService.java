@@ -16,19 +16,29 @@
  */
 package org.plos.namedentity.service;
 
+import org.plos.namedentity.api.IndividualComposite;
+import org.plos.namedentity.api.dto.AddressDTO;
+import org.plos.namedentity.api.dto.EmailDTO;
+import org.plos.namedentity.api.dto.IndividualDTO;
+import org.plos.namedentity.api.dto.PhonenumberDTO;
+import org.plos.namedentity.api.dto.RoleDTO;
+import org.plos.namedentity.api.dto.UniqueidentifierDTO;
+
 import java.util.List;
 
 /* -------------------------------------------------------------------------- */
-/*   Named Entity Service Low-Level Core API                                  */
+/*   Named Entity Service High-Level Convenience API                          */
 /* -------------------------------------------------------------------------- */
 
 public interface NamedEntityService {
 
-  public <T> Integer create(T t);
-  public <T> boolean update(T t);
-  public <T> boolean delete(T t);
+  public IndividualDTO             createIndividual       (IndividualComposite composite);
 
-  public <T> T       findById(Integer id, Class<T> clazz);
-  public <T> List<T> findAll        (Class<T> clazz);
-  public <T> List<T> findByAttribute(T t);
+  public IndividualDTO             findIndividualByNedId  (Integer nedId);
+  public List<IndividualDTO>       findIndividualsByUid   (Integer srcTypeId, String uid);
+  public List<AddressDTO>          findAddressesByNedId   (Integer nedId);
+  public List<EmailDTO>            findEmailsByNedId      (Integer nedId);
+  public List<PhonenumberDTO>      findPhoneNumbersByNedId(Integer nedId);
+  public List<RoleDTO>             findRolesByNedId       (Integer nedId);
+  public List<UniqueidentifierDTO> findUniqueIdsByNedId   (Integer nedId);
 }

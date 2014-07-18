@@ -16,58 +16,258 @@
  */
 package org.plos.namedentity.service;
 
-import java.util.List;
+import org.plos.namedentity.api.IndividualComposite;
+import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.dto.AddressDTO;
+import org.plos.namedentity.api.dto.EmailDTO;
+import org.plos.namedentity.api.dto.IndividualDTO;
+import org.plos.namedentity.api.dto.PhonenumberDTO;
+import org.plos.namedentity.api.dto.RoleDTO;
+import org.plos.namedentity.api.dto.UniqueidentifierDTO;
+import org.plos.namedentity.api.entity.AddressEntity;
+import org.plos.namedentity.api.entity.EmailEntity;
+import org.plos.namedentity.api.entity.GlobaltypeEntity;
+import org.plos.namedentity.api.entity.IndividualEntity;
+import org.plos.namedentity.api.entity.PhonenumberEntity;
+import org.plos.namedentity.api.entity.RoleEntity;
+import org.plos.namedentity.api.entity.TypedescriptionEntity;
+import org.plos.namedentity.api.entity.UniqueidentifierEntity;
+import org.plos.namedentity.persist.NamedEntityDBService;
+import org.plos.namedentity.persist.NamedEntityQueries;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-
-import org.plos.namedentity.api.NedException;
-import org.plos.namedentity.persist.NamedEntityDBService;
-import org.springframework.transaction.annotation.Transactional;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 
 public class NamedEntityServiceImpl implements NamedEntityService {
 
-  @Inject private NamedEntityDBService namedEntityDBService; 
+  @Inject private NamedEntityDBService nedDBSvc; 
 
   @Override @Transactional
-  public <T> Integer create(T t) {
-    return namedEntityDBService.create(t);
-  }
+  public IndividualDTO createIndividual(IndividualComposite composite) {
+    //TODO - better validation. handle null fields!
 
-  @Override @Transactional
-  public <T> boolean update(T t) {
-    return namedEntityDBService.update(t);
-  }
+    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
-  @Override @Transactional
-  public <T> boolean delete(T t) {
-    return namedEntityDBService.delete(t);
-  }
+    /* ------------------------------------------------------------------ */
+    /*  INDIVIDUAL                                                        */
+    /* ------------------------------------------------------------------ */
 
-  @Override
-  public <T> T findById(Integer id, Class<T> clazz) {
-    T t = namedEntityDBService.findById(id, clazz);
-    if (t == null) {
-      throw new NedException(String.format(
-        "Record not found searching by id (%s)", t.getClass().getName()));
+    IndividualEntity individual = new IndividualEntity();
+    individual.setNamedentityid(nedId);
+    individual.setFirstname(composite.getFirstname());
+    individual.setMiddlename(composite.getMiddlename());
+    individual.setLastname(composite.getLastname());
+
+    if (composite.getNameprefix() != null) {
+      Integer prefixTypeClassId = findTypeClassStartWith("Named Party Prefixes");
+      Integer prefixTypeId      = findTypeValueByName(prefixTypeClassId, composite.getNameprefix());
+      individual.setNameprefixtypeid(prefixTypeId);
     }
-    return t;
+
+    if (composite.getNamesuffix() != null) {
+      Integer suffixTypeClassId = findTypeClassStartWith("Named Party Suffixes");
+      Integer suffixTypeId      = findTypeValueByName(suffixTypeClassId, composite.getNamesuffix());
+      individual.setNamesuffixtypeid(suffixTypeId);
+    }
+
+    if (composite.getPreferredlanguage() != null) {
+      Integer langTypeClassId = findTypeClassStartWith("Languages");
+      Integer langTypeId      = findTypeValueByName(langTypeClassId, composite.getPreferredlanguage());
+      individual.setPreferredlanguagetypeid(langTypeId);
+    }
+
+    if (composite.getPreferredcommunication() != null) {
+      Integer commMethodsTypeClassId = findTypeClassStartWith("Communication Methods");
+      Integer commMethodTypeId = findTypeValueByName(commMethodsTypeClassId, composite.getPreferredcommunication());
+      individual.setPreferredcommunicationmethodtypeid(commMethodTypeId);
+    }
+
+    nedDBSvc.create( individual );
+
+    /* ------------------------------------------------------------------ */
+    /*  ADDRESSES                                                         */
+    /* ------------------------------------------------------------------ */
+
+    Integer addressTypeClassId   = findTypeClassStartWith("Physical Address Types");
+    Integer countryTypeClassId   = findTypeClassStartWith("Country Types");
+    Integer stateCodeTypeClassId = findTypeClassStartWith("State and Province Codes");
+
+    //TODO - move to transformer
+    if (composite.getAddresses() != null) {
+      for (AddressDTO address : composite.getAddresses()) {
+        Integer addressTypeId   = findTypeValueByName(addressTypeClassId, address.getAddresstype());
+        Integer countryTypeId   = findTypeValueByName(countryTypeClassId, address.getCountrycodetype());
+        Integer stateCodeTypeId = findTypeValueByName(stateCodeTypeClassId, address.getStatecodetype());
+
+        AddressEntity addressEntity = new AddressEntity();
+        addressEntity.setNamedentityid(nedId);
+        addressEntity.setAddresstypeid(addressTypeId);
+        addressEntity.setAddressline1(address.getAddressline1());
+        addressEntity.setAddressline2(address.getAddressline2());
+        addressEntity.setAddressline3(address.getAddressline3());
+        addressEntity.setCity(address.getCity());
+        addressEntity.setStatecodetypeid(stateCodeTypeId);
+        addressEntity.setCountrycodetypeid(countryTypeId);
+        addressEntity.setPostalcode(address.getPostalcode());
+        addressEntity.setIsprimary(address.getIsprimary()? (byte)1 : (byte)0);
+
+        nedDBSvc.create( addressEntity );
+      }
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  PHONE NUMBERS                                                     */
+    /* ------------------------------------------------------------------ */
+
+    Integer phoneTypeClassId       = findTypeClassStartWith("Telephone Number Types");
+    Integer countryCodeTypeClassId = findTypeClassStartWith("Country Codes for Phone Numbers");
+
+    if (composite.getPhonenumbers() != null) {
+      for (PhonenumberDTO phonenumber : composite.getPhonenumbers()) {
+        Integer phoneTypeId       = findTypeValueByName(phoneTypeClassId, phonenumber.getPhonenumbertype());
+        Integer countryCodeTypeId = findTypeValueByName(countryCodeTypeClassId, phonenumber.getCountrycodetype());
+
+        PhonenumberEntity phoneEntity = new PhonenumberEntity();
+        phoneEntity.setNamedentityid(nedId);
+        phoneEntity.setPhonenumbertypeid(phoneTypeId);
+        phoneEntity.setCountrycodetypeid(countryCodeTypeId);
+        phoneEntity.setPhonenumber(phonenumber.getPhonenumber());
+        phoneEntity.setExtension(phonenumber.getExtension());
+        phoneEntity.setIsprimary(phonenumber.getIsprimary()? (byte)1 : (byte)0);
+
+        nedDBSvc.create( phoneEntity );
+      }
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  EMAILS                                                            */
+    /* ------------------------------------------------------------------ */
+
+    Integer emailTypeClassId = findTypeClassStartWith("Email Address Types");
+
+    if (composite.getEmails() != null) {
+      for (EmailDTO email : composite.getEmails()) {
+        Integer emailTypeId = findTypeValueByName(emailTypeClassId, email.getEmailtype());
+
+        EmailEntity emailEntity = new EmailEntity();
+        emailEntity.setNamedentityid(nedId);
+        emailEntity.setEmailtypeid(emailTypeId);
+        emailEntity.setEmailaddress(email.getEmailaddress());
+        emailEntity.setIsprimary(email.getIsprimary()? (byte)1 : (byte)0);
+
+        nedDBSvc.create( emailEntity );
+      }
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  ROLE                                                              */
+    /* ------------------------------------------------------------------ */
+
+    Integer srcAppTypeClassId = findTypeClassStartWith("Source Applications");
+    Integer roleTypeClassId   = findTypeClassStartWith("Roles");
+
+    RoleDTO role = composite.getRole();
+    if (role != null) {
+      Integer srcAppTypeId = findTypeValueByName(srcAppTypeClassId, "Editorial Manager");
+      Integer roleTypeId   = findTypeValueByName(roleTypeClassId, role.getRoletype());
+
+      RoleEntity roleEntity = new RoleEntity();
+      roleEntity.setNamedentityid(nedId);
+      roleEntity.setSourceapplicationtypeid(srcAppTypeId);
+      roleEntity.setRoletypeid(roleTypeId);
+      roleEntity.setStartdate(new Timestamp(new Date().getTime()));
+
+      nedDBSvc.create( roleEntity );
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  EXTERNAL REFERENCES                                               */
+    /* ------------------------------------------------------------------ */
+
+    Integer uidTypeClassId = findTypeClassStartWith("Unique Identifier Types");
+
+    if (composite.getUniqueIdentifiers() != null) {
+      for (UniqueidentifierDTO uidDto : composite.getUniqueIdentifiers()) {
+        Integer uidTypeId = findTypeValueByName(uidTypeClassId, uidDto.getUniqueidentifiertype());
+
+        UniqueidentifierEntity uidEntity = new UniqueidentifierEntity();
+        uidEntity.setNamedentityid(nedId);
+        uidEntity.setUniqueidentifiertypeid(uidTypeId);
+        uidEntity.setUniqueidentifier(uidDto.getUniqueidentifier());
+
+        nedDBSvc.create( uidEntity );
+      }
+    }
+
+    return ((NamedEntityQueries)nedDBSvc).findIndividualByNedId(nedId);
+    //return nedDBSvc.findById(nedId, IndividualEntity.class);
   }
 
   @Override
-  public <T> List<T> findAll(Class<T> clazz) {
-    return namedEntityDBService.findAll(clazz);
+  public IndividualDTO findIndividualByNedId(Integer nedId) {
+    return ((NamedEntityQueries)nedDBSvc).findIndividualByNedId(nedId);
   }
 
   @Override
-  public <T> List<T> findByAttribute(T t) {
-    return namedEntityDBService.findByAttribute(t);
+  public List<IndividualDTO> findIndividualsByUid(Integer srcTypeId, String uid) {
+    return ((NamedEntityQueries)nedDBSvc).findIndividualsByUid(srcTypeId, uid);
   }
-  
+
+  @Override
+  public List<AddressDTO> findAddressesByNedId(Integer nedId) {
+    return ((NamedEntityQueries)nedDBSvc).findAddressesByNedId(nedId);
+  }
+
+  @Override
+  public List<EmailDTO> findEmailsByNedId(Integer nedId) {
+    return ((NamedEntityQueries)nedDBSvc).findEmailsByNedId(nedId);
+  }
+
+  @Override
+  public List<PhonenumberDTO> findPhoneNumbersByNedId(Integer nedId) {
+    return ((NamedEntityQueries)nedDBSvc).findPhoneNumbersByNedId(nedId);
+  }
+
+  @Override
+  public List<RoleDTO> findRolesByNedId(Integer nedId) {
+    return ((NamedEntityQueries)nedDBSvc).findRolesByNedId(nedId);
+  }
+
+  @Override
+  public List<UniqueidentifierDTO> findUniqueIdsByNedId(Integer nedId) {
+    return ((NamedEntityQueries)nedDBSvc).findUniqueIdsByNedId(nedId);
+  }
+    
   public NamedEntityDBService getNamedEntityDBService() {
-    return namedEntityDBService;
+    return nedDBSvc;
   }
-  
-  public void setNamedEntityDBService(NamedEntityDBService namedEntityDBService) {
-    this.namedEntityDBService = namedEntityDBService;
+    
+  public void setNamedEntityDBService(NamedEntityDBService nedDBSvc) {
+    this.nedDBSvc = nedDBSvc;
+  }
+
+  //TODO - cache type classes and values.
+   
+  private Integer findTypeClassStartWith(String prefix) {
+    for(TypedescriptionEntity typeClass : nedDBSvc.findAll(TypedescriptionEntity.class)) {
+      if (typeClass.getDescription().startsWith(prefix)) {
+        return typeClass.getTypeid();
+      }
+    }
+    throw new NedValidationException("No type class found which begins with " + prefix);
+  }
+
+  private Integer findTypeValueByName(Integer typeClassId, String name) {
+    for(GlobaltypeEntity typeValue : nedDBSvc.findAll(GlobaltypeEntity.class)) {
+      if (typeClassId.equals(typeValue.getTypeid()) &&
+          typeValue.getShortdescription().equalsIgnoreCase(name))
+      {
+        return typeValue.getGlobaltypeid();
+      }
+    }
+    throw new NedValidationException("No type value found with short description =  " + name);
   }
 }

@@ -1,0 +1,128 @@
+package org.plos.namedentity.rest;
+
+import org.plos.namedentity.api.IndividualComposite;
+import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.dto.AddressDTO;
+import org.plos.namedentity.api.dto.EmailDTO;
+import org.plos.namedentity.api.dto.IndividualDTO;
+import org.plos.namedentity.api.dto.PhonenumberDTO;
+import org.plos.namedentity.api.dto.RoleDTO;
+import org.plos.namedentity.api.dto.UniqueidentifierDTO;
+import org.plos.namedentity.api.entity.IndividualEntity;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.Response;
+import java.util.List;
+
+@Path("/individuals")
+public class IndividualsResource extends BaseController {
+
+  @POST
+  public Response createIndividualComposite(IndividualComposite object) {
+    try {
+      IndividualDTO dto = nedSvcHighApi.createIndividual(object);
+      return Response.status(Response.Status.OK).entity(dto).build();
+    }
+    catch(NedValidationException e) {
+      return validationError(e, "Unable to create individual");
+    }
+    catch(Exception e) {
+      return serverError(e, "Unable to create individual");
+    }
+  }
+
+  @GET
+  public Response getAllIndividuals() {
+    try {
+      List<IndividualEntity> individuals = nedSvcLowApi.findAll(IndividualEntity.class);
+      return Response.status(Response.Status.OK).entity(
+          new GenericEntity<List<IndividualEntity>>(individuals){}).build();
+    }
+    catch(Exception e) {
+      return serverError(e, "Find all individuals failed");
+    }
+  }
+
+
+  @GET
+  @Path("/{id}")
+  public Response getIndividual(@PathParam("id") int id) {
+    try {
+      IndividualDTO dto = nedSvcHighApi.findIndividualByNedId(id);
+      return Response.status(Response.Status.OK).entity(dto).build();
+    }
+    catch(Exception e) {
+      return serverError(e, "Find individual by id failed");
+    }
+  }
+
+  @GET
+  @Path("/{id}/emails")
+  public Response getEmailsForIndividual(@PathParam("id") int nedId) {
+    try {
+      List<EmailDTO> emails = nedSvcHighApi.findEmailsByNedId(nedId);
+      return Response.status(Response.Status.OK).entity(
+          new GenericEntity<List<EmailDTO>>(emails){}).build();
+    }
+    catch(Exception e) {
+      return serverError(e, "Find emails by nedId failed");
+    }
+  }
+
+  @GET
+  @Path("/{id}/addresses")
+  public Response getAddressesForIndividual(@PathParam("id") int nedId) {
+    try {
+      List<AddressDTO> addresses = nedSvcHighApi.findAddressesByNedId(nedId);
+      return Response.status(Response.Status.OK).entity(
+          new GenericEntity<List<AddressDTO>>(addresses){}).build();
+    }
+    catch(Exception e) {
+      return serverError(e, "Find addresses by nedId failed");
+    }
+  }
+
+  @GET
+  @Path("/{id}/phonenumbers")
+  public Response getPhonenumbersForIndividual(@PathParam("id") int nedId) {
+    try {
+      List<PhonenumberDTO> phonenumbers = nedSvcHighApi.findPhoneNumbersByNedId(nedId);
+      return Response.status(Response.Status.OK).entity(
+          new GenericEntity<List<PhonenumberDTO>>(phonenumbers){}).build();
+    }
+    catch(Exception e) {
+      return serverError(e, "Find phone numberse by nedId failed");
+    }
+  }
+
+  @GET
+  @Path("/{id}/roles")
+  public Response getRolesForIndividual(@PathParam("id") int nedId) {
+    try {
+      List<RoleDTO> roles = nedSvcHighApi.findRolesByNedId(nedId);
+      return Response.status(Response.Status.OK).entity(
+          new GenericEntity<List<RoleDTO>>(roles){}).build();
+    }
+    catch(Exception e) {
+      return serverError(e, "Find roles by nedId failed");
+    }
+  }
+
+  @GET
+  @Path("/{id}/xref")
+  public Response getExternalReferencesForIndividual(@PathParam("id") int nedId) {
+    try {
+      List<UniqueidentifierDTO> uids = nedSvcHighApi.findUniqueIdsByNedId(nedId);
+      return Response.status(Response.Status.OK).entity(
+          new GenericEntity<List<UniqueidentifierDTO>>(uids){}).build();
+    }
+    catch(Exception e) {
+      return serverError(e, "Find external references by nedId failed");
+    }
+  }
+
+}

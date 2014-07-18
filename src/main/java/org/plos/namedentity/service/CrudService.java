@@ -14,23 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.plos.namedentity.suite;
- 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
+package org.plos.namedentity.service;
 
-import org.plos.namedentity.persist.NamedEntityDBServiceTest;
-import org.plos.namedentity.rest.NamedEntityResourceTest;
-import org.plos.namedentity.service.CrudServiceHighApiTest;
-import org.plos.namedentity.service.CrudServiceTest;
+import java.util.List;
 
-@RunWith(Suite.class)
-@SuiteClasses({
-  NamedEntityDBServiceTest.class, 
-  CrudServiceTest.class,
-  CrudServiceHighApiTest.class,
-  NamedEntityResourceTest.class
-})
-public class TestSuite {
+/* -------------------------------------------------------------------------- */
+/*   Named Entity Service Low-Level Core API                                  */
+/* -------------------------------------------------------------------------- */
+
+public interface CrudService {
+
+  public <T> Integer create(T t);
+  public <T> boolean update(T t);
+  public <T> boolean delete(T t);
+
+  public <T> T       findById(Integer id, Class<T> clazz);
+  public <T> List<T> findAll        (Class<T> clazz);
+  public <T> List<T> findByAttribute(T t);
 }

@@ -66,10 +66,9 @@
     </bean>
 
     <bean id="namedEntityDBService"      class="org.plos.namedentity.persist.NamedEntityDBServiceImpl"/>
-    <bean id="namedEntityService"        class="org.plos.namedentity.service.NamedEntityServiceImpl"/>
-    <bean id="namedEntityServiceHighApi" class="org.plos.namedentity.service.NamedEntityServiceHighApiImpl"/>
+    <bean id="nedSvcLowApi"              class="org.plos.namedentity.service.CrudServiceImpl"/>
+    <bean id="nedSvcHighApi"             class="org.plos.namedentity.service.NamedEntityServiceImpl"/>
     <bean id="transformer"               class="org.plos.namedentity.utils.EntityPojoTransformer"/>
-    <bean id="namedEntityResource"       class="org.plos.namedentity.rest.NamedEntityResource"/>
 
     <bean id="validator" class="org.plos.namedentity.validate.NamedEntityValidator">
         <!-- execute after the Transactional advice (hence higher order number) -->
@@ -79,7 +78,7 @@
     <aop:config>
         <aop:aspect id="validatingAspect" ref="validator">
             <aop:pointcut id="createMethod"
-                    expression="execution(* org.plos.namedentity.service.NamedEntityServiceHighApiImpl.create*(..))"/>
+                    expression="execution(* org.plos.namedentity.service.NamedEntityServiceImpl.create*(..))"/>
             <aop:around method="validate" pointcut-ref="createMethod"/>
         </aop:aspect>
     </aop:config>
