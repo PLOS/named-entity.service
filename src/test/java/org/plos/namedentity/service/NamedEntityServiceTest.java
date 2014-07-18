@@ -146,7 +146,7 @@ public class NamedEntityServiceTest {
     uidDto.setUniqueidentifier("0000-0001-9430-319X");
     uids.add( uidDto );
 
-    composite.setUniqueIdentifiers( uids );
+    composite.setUniqueidentifiers( uids );
 
     Integer nedId = null;
     try {
