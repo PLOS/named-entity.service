@@ -16,10 +16,10 @@
  */
 package org.plos.namedentity.api.dto;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
+@XmlRootElement
 public class GlobaltypeDTO {
 
   private java.lang.Integer  globaltypeid;

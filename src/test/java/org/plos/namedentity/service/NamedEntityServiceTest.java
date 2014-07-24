@@ -16,266 +16,247 @@
  */
 package org.plos.namedentity.service;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.plos.namedentity.api.IndividualComposite;
+import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.dto.AddressDTO;
+import org.plos.namedentity.api.dto.EmailDTO;
+import org.plos.namedentity.api.dto.IndividualDTO;
+import org.plos.namedentity.api.dto.PhonenumberDTO;
+import org.plos.namedentity.api.dto.RoleDTO;
+import org.plos.namedentity.api.dto.UniqueidentifierDTO;
+import org.plos.namedentity.api.entity.EmailEntity;
+import org.plos.namedentity.api.entity.GlobaltypeEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.List;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.plos.namedentity.api.entity.EmailEntity;
-import org.plos.namedentity.api.entity.GlobaltypeEntity;
-import org.plos.namedentity.api.entity.TypedescriptionEntity;
-import org.plos.namedentity.api.entity.UniqueidentifierEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring-beans.xml"})
 public class NamedEntityServiceTest {
 
-  @Autowired NamedEntityService nedSvc;
+  @Autowired
+  NamedEntityService namedEntityService;
+
+  @Autowired
+  CrudService crudService;
 
   @Test
-  public void testTypeDescriptionCRUD() {
-
-    // CREATE
-
-    TypedescriptionEntity newType = new TypedescriptionEntity();
-    newType.setDescription("description");
-    newType.setHowused("howused");
-
-    Integer pkId = nedSvc.create(newType);
-    assertNotNull( pkId );
-    
-    TypedescriptionEntity savedType = nedSvc.findById(pkId, TypedescriptionEntity.class);
-    assertNotNull( savedType );
-    assertEquals(pkId, savedType.getTypeid());
-
-    // UPDATE
-
-    savedType.setDescription("description2");
-    assertTrue( nedSvc.update(savedType) );
-    TypedescriptionEntity savedType2 = nedSvc.findById(pkId, TypedescriptionEntity.class);
-    assertEquals(savedType, savedType2);
-
-    // DELETE - delete type class without any children
-
-    assertTrue( nedSvc.delete(savedType) );
-
-    // DELETE - deleting type class with children will raise a fk constraint
-    //          exception.
-
+  public void testCreateIndividualWithoutRole() {
+    // triggers phase 1 validation failure
     try {
-      TypedescriptionEntity typeClassWithKids = new TypedescriptionEntity();
-      typeClassWithKids.setTypeid(1);
-      nedSvc.delete(typeClassWithKids);
+      IndividualDTO dto = namedEntityService.createIndividual(new IndividualComposite());
       fail();
-    } catch (org.springframework.dao.DataAccessException expected) {
     }
-
-    // FIND By Id
-    TypedescriptionEntity typeClass1 = nedSvc.findById(1, TypedescriptionEntity.class);
-    assertNotNull(typeClass1);
-    assertEquals(Integer.valueOf(1), typeClass1.getTypeid());
-
-    // FIND All
-    List<TypedescriptionEntity> typeClasses = nedSvc.findAll(TypedescriptionEntity.class);
-    assertNotNull(typeClasses);
-    assertTrue(typeClasses.contains(typeClass1));
-  }
-
-  @Test
-  public void testGlobalTypesCRUD() {
-
-    // CREATE
-
-    GlobaltypeEntity newTypeVal = new GlobaltypeEntity();
-    newTypeVal.setTypeid(1);
-    newTypeVal.setShortdescription("type value abc");
-    newTypeVal.setLongdescription("longdescription");
-    newTypeVal.setTypecode("abc");
-
-    Integer pkId = nedSvc.create(newTypeVal);
-    assertNotNull( pkId );
-    assertNotNull(newTypeVal.getCreated());
-    assertNotNull(newTypeVal.getLastmodified());
-    
-    GlobaltypeEntity savedTypeVal = nedSvc.findById(pkId, GlobaltypeEntity.class);
-    assertNotNull( savedTypeVal );
-    assertEquals(pkId, savedTypeVal.getGlobaltypeid());
-
-    // UPDATE
-
-    savedTypeVal.setShortdescription("abc2");
-    assertTrue( nedSvc.update(savedTypeVal) );
-    GlobaltypeEntity savedTypeVal2 = nedSvc.findById(pkId, GlobaltypeEntity.class);
-    assertEquals(savedTypeVal, savedTypeVal2);
-
-    // DELETE - delete type class without any children
-
-    assertTrue( nedSvc.delete(savedTypeVal) );
-
-    //TODO - try to delete a global type with foreign key references.
-
-    // FIND By Id
-
-    GlobaltypeEntity typeVal1 = nedSvc.findById(1, GlobaltypeEntity.class);
-    assertNotNull(typeVal1);
-    assertEquals(Integer.valueOf(1), typeVal1.getGlobaltypeid());
-
-    // FIND All
-
-    List<GlobaltypeEntity> globalTypes = nedSvc.findAll(GlobaltypeEntity.class);
-    assertNotNull(globalTypes);
-    assertTrue(globalTypes.contains(typeVal1));
-
-    // FIND BY ATTRIBUTE(S)
-
-    GlobaltypeEntity globalTypesearchCriteria = new GlobaltypeEntity();
-    globalTypesearchCriteria.setTypeid(1);
-
-    List<GlobaltypeEntity> globalTypesForTypeClass = nedSvc.findByAttribute(globalTypesearchCriteria);
-    assertNotNull(globalTypesForTypeClass);
-    for (GlobaltypeEntity gtype : globalTypesForTypeClass) {
-      assertTrue(globalTypes.contains(gtype));
+    catch (NedValidationException expected) {
+      assertTrue(expected.getMessage().indexOf("No ROLE defined") != -1);
     }
   }
 
   @Test
-  public void testEmailsCRUD() {
+  public void testCreateIndividualWithRole() {
+
+    IndividualComposite composite = newCompositeIndividualWithRole();
 
     /* ------------------------------------------------------------------ */
-    /*  CREATE                                                            */
+    /*  EMAILS                                                            */
     /* ------------------------------------------------------------------ */
 
-    // lookup id for "work" email type
+    List<EmailDTO> emails = new ArrayList<>();
 
-    GlobaltypeEntity globalTypesearchCriteria = new GlobaltypeEntity();
-    globalTypesearchCriteria.setTypeid(10);
-    globalTypesearchCriteria.setShortdescription("Work");
-    List<GlobaltypeEntity> globalTypesResult = nedSvc.findByAttribute(globalTypesearchCriteria);
-    assertEquals(1, globalTypesResult.size());
+    EmailDTO workEmail = new EmailDTO();
+    workEmail.setEmailtype("Work");
+    workEmail.setEmailaddress("fu.manchu.work@foo.com");
+    workEmail.setIsprimary(true);
+    emails.add( workEmail );
 
-    Integer emailTypeId = globalTypesResult.get(0).getGlobaltypeid(); 
-    assertNotNull( emailTypeId );
+    EmailDTO personalEmail = new EmailDTO();
+    personalEmail.setEmailtype("Personal");
+    personalEmail.setEmailaddress("fu.manchu.home@foo.com");
+    personalEmail.setIsprimary(false);
+    emails.add( personalEmail );
 
-    // create pojo
-
-    EmailEntity newEmail = new EmailEntity();
-    newEmail.setNamedentityid(1);
-    newEmail.setEmailtypeid(emailTypeId);
-    newEmail.setEmailaddress("walter@foo.com");
-
-    // save record
-
-    Integer pkId = nedSvc.create(newEmail);
-    assertNotNull( pkId );
-
-    EmailEntity savedEmail = nedSvc.findById(pkId, EmailEntity.class);
-    assertNotNull( savedEmail );
-    assertEquals(pkId, savedEmail.getEmailid());
-    assertEquals(emailTypeId, savedEmail.getEmailtypeid());
+    composite.setEmails( emails );
 
     /* ------------------------------------------------------------------ */
-    /*  UPDATE                                                            */
+    /*  PHONE NUMBERS                                                     */
     /* ------------------------------------------------------------------ */
 
-    savedEmail.setEmailaddress("super" + savedEmail.getEmailaddress());
-    assertTrue( nedSvc.update(savedEmail) );
-    EmailEntity savedEmail2 = nedSvc.findById(pkId, EmailEntity.class);
-    assertEquals(savedEmail, savedEmail2);
+    List<PhonenumberDTO> phonenumbers = new ArrayList<>();
+
+    PhonenumberDTO officePhone = new PhonenumberDTO();
+    officePhone.setPhonenumbertype("Office");
+    officePhone.setCountrycodetype("01");
+    officePhone.setPhonenumber("123-456-7890");
+    officePhone.setIsprimary(true);
+    phonenumbers.add( officePhone );
+
+    PhonenumberDTO mobilePhone = new PhonenumberDTO();
+    mobilePhone.setPhonenumbertype("Mobile");
+    mobilePhone.setCountrycodetype("01");
+    mobilePhone.setPhonenumber("123-444-0011");
+    mobilePhone.setIsprimary(false);
+    phonenumbers.add( mobilePhone );
+
+    PhonenumberDTO homePhone = new PhonenumberDTO();
+    homePhone.setPhonenumbertype("Home");
+    homePhone.setCountrycodetype("01");
+    homePhone.setPhonenumber("123-555-6666");
+    homePhone.setIsprimary(false);
+    phonenumbers.add( homePhone );
+
+    composite.setPhonenumbers( phonenumbers );
 
     /* ------------------------------------------------------------------ */
-    /*  FINDERS                                                           */
+    /*  ADDRESSES                                                         */
     /* ------------------------------------------------------------------ */
 
-    // FIND All
+    List<AddressDTO> addresses = new ArrayList<>();
 
-    List<EmailEntity> allEmails = nedSvc.findAll(EmailEntity.class);
-    assertNotNull(allEmails);
-    assertTrue(allEmails.contains(savedEmail2));
+    AddressDTO officeAddress = new AddressDTO();
+    officeAddress.setAddresstype("Office");
+    officeAddress.setAddressline1("addressline1");
+    officeAddress.setAddressline2("addressline2");
+    officeAddress.setCity("city");
+    officeAddress.setStatecodetype("CA");
+    officeAddress.setCountrycodetype("United States");
+    officeAddress.setPostalcode("1234567");
+    officeAddress.setIsprimary(true);
+    addresses.add( officeAddress );
 
-    // FIND BY ATTRIBUTE(S)
-
-    EmailEntity emailSearchCriteria = new EmailEntity();
-    emailSearchCriteria.setEmailaddress(savedEmail2.getEmailaddress());
-
-    List<EmailEntity> foundEmails = nedSvc.findByAttribute(emailSearchCriteria);
-    assertNotNull(foundEmails);
-    assertEquals(savedEmail2.getEmailaddress(), foundEmails.get(0).getEmailaddress());
+    composite.setAddresses( addresses );
 
     /* ------------------------------------------------------------------ */
-    /*  DELETE                                                            */
+    /*  UNIQUE IDENTIFIERS                                                */
     /* ------------------------------------------------------------------ */
 
-    assertTrue( nedSvc.delete(savedEmail) );
+    List<UniqueidentifierDTO> uids = new ArrayList<>();
+
+    UniqueidentifierDTO uidDto = new UniqueidentifierDTO();
+    uidDto.setUniqueidentifiertype("ORCID");
+    uidDto.setUniqueidentifier("0000-0001-9430-319X");
+    uids.add( uidDto );
+
+    composite.setUniqueidentifiers( uids );
+
+    Integer nedId = null;
+    try {
+      IndividualDTO dto = namedEntityService.createIndividual(composite);
+      assertNotNull(dto);
+      assertNotNull(dto.getNamedentityid());
+    }
+    catch (NedValidationException e) {
+      fail();
+    }
+    finally {
+      EmailEntity emailSearchCriteria = new EmailEntity();
+      emailSearchCriteria.setEmailaddress("fu.manchu.work@foo.com");
+      List<EmailEntity> emailSearchResult = crudService.findByAttribute(emailSearchCriteria);
+      assertEquals(1, emailSearchResult.size());
+
+      nedId = emailSearchResult.get(0).getNamedentityid();
+      assertNotNull( nedId );
+    }
+
+    // Test "By NedId" Finders
+
+    IndividualDTO individualDto = namedEntityService.findIndividualByNedId(nedId);
+    assertNotNull( individualDto );
+
+    List<AddressDTO> addressesDto = namedEntityService.findAddressesByNedId(nedId);
+    assertEquals(1, addressesDto.size());
+
+    List<EmailDTO> emailsDto = namedEntityService.findEmailsByNedId(nedId);
+    assertEquals(2, emailsDto.size());
+
+    List<PhonenumberDTO> phonenumbersDto = namedEntityService.findPhoneNumbersByNedId(nedId);
+    assertEquals(3, phonenumbersDto.size());
+
+    List<RoleDTO> rolesDto = namedEntityService.findRolesByNedId(nedId);
+    assertEquals(1, rolesDto.size());
+
+    List<UniqueidentifierDTO> uidsDto = namedEntityService.findUniqueIdsByNedId(nedId);
+    assertEquals(1, uidsDto.size());
+
+    Integer uidTypeId = findUidTypeIdByName("ORCID");
+    assertNotNull( uidTypeId );
+
+    List<IndividualDTO> individuals = namedEntityService.findIndividualsByUid(uidTypeId, "0000-0001-9430-319X");
+    assertEquals(1, individuals.size());
+
+    IndividualDTO individual = individuals.get(0);
+    assertEquals("firstname", individual.getFirstname());
+    assertEquals("lastname", individual.getLastname());
   }
 
-  @Test
-  public void testExternalReferencesCRUD() {
-
-    final String ORCID_ID1 = "0000-0001-9430-319X";
-
-    // lookup id for orcid (using hardcoded type class 17 :))
+  private Integer findUidTypeIdByName(String typeName) {
 
     GlobaltypeEntity globalTypesearchCriteria = new GlobaltypeEntity();
     globalTypesearchCriteria.setTypeid(17);
-    globalTypesearchCriteria.setShortdescription("ORCID");
-    List<GlobaltypeEntity> globalTypesResult = nedSvc.findByAttribute(globalTypesearchCriteria);
+    globalTypesearchCriteria.setShortdescription(typeName);
+    List<GlobaltypeEntity> globalTypesResult = crudService.findByAttribute(globalTypesearchCriteria);
     assertEquals(1, globalTypesResult.size());
 
-    Integer orcidTypeId = globalTypesResult.get(0).getGlobaltypeid(); 
-    assertNotNull( orcidTypeId );
-    
-    /* ------------------------------------------------------------------ */
-    /*  CREATE                                                            */
-    /* ------------------------------------------------------------------ */
-
-    UniqueidentifierEntity uidEntity = new UniqueidentifierEntity();
-    uidEntity.setNamedentityid(1);
-    uidEntity.setUniqueidentifiertypeid(orcidTypeId);
-    uidEntity.setUniqueidentifier(ORCID_ID1);
-
-    // save record
-
-    Integer pkId = nedSvc.create(uidEntity);
-    assertNotNull( pkId );
-
-    UniqueidentifierEntity savedUid = nedSvc.findById(pkId, UniqueidentifierEntity.class);
-    assertNotNull( savedUid );
-    assertEquals(pkId, savedUid.getUniqueidentifiersid());
-    assertEquals(orcidTypeId, savedUid.getUniqueidentifiertypeid());
-
-    /* ------------------------------------------------------------------ */
-    /*  UPDATE                                                            */
-    /* ------------------------------------------------------------------ */
-
-    savedUid.setUniqueidentifier( savedUid.getUniqueidentifier() + "Z" );
-    assertTrue( nedSvc.update(savedUid) );
-
-    UniqueidentifierEntity savedUid2 = nedSvc.findById(pkId, UniqueidentifierEntity.class);
-    assertEquals(savedUid, savedUid2);
-
-    /* ------------------------------------------------------------------ */
-    /*  FINDERS                                                           */
-    /* ------------------------------------------------------------------ */
-
-    // FIND All
-
-    List<UniqueidentifierEntity> allUids = nedSvc.findAll(UniqueidentifierEntity.class);
-    assertNotNull(allUids);
-    assertTrue(allUids.contains(savedUid2));
-
-    // TODO - FIND BY ATTRIBUTE(S)
-
-    /* ------------------------------------------------------------------ */
-    /*  DELETE                                                            */
-    /* ------------------------------------------------------------------ */
-
-    assertTrue( nedSvc.delete(savedUid) );
+    return globalTypesResult.get(0).getGlobaltypeid(); 
   }
+
+  @Test
+  public void testCreateIndividualWithPhaseTwoValidationException() {
+
+    IndividualComposite composite = newCompositeIndividualWithRole();
+
+    List<EmailDTO> emails = new ArrayList<>();
+
+    EmailDTO workEmail = new EmailDTO();
+    workEmail.setEmailtype("Work");
+    workEmail.setEmailaddress("foo@bar.com");
+    workEmail.setIsprimary(true);
+    emails.add( workEmail );
+
+    composite.setEmails( emails );
+
+    try {
+      IndividualDTO dto = namedEntityService.createIndividual(composite);
+      fail();
+    }
+    catch (NedValidationException expected) {
+    }
+    // verify entities not committed to db. we'll just check email.
+    finally {
+      EmailEntity emailSearchCriteria = new EmailEntity();
+      emailSearchCriteria.setEmailaddress("foo@bar.com");
+      List<EmailEntity> emailSearchResult = crudService.findByAttribute(emailSearchCriteria);
+      assertEquals(0, emailSearchResult.size());
+    }
+  }
+
+  private IndividualComposite newCompositeIndividualWithRole() {
+
+    IndividualComposite composite = new IndividualComposite();
+    composite.setFirstname("firstname");
+    composite.setMiddlename("middlename");
+    composite.setLastname("lastname");
+    composite.setNameprefix("Mr.");
+    composite.setNamesuffix("III");
+    composite.setPreferredlanguage("English");
+    composite.setPreferredcommunication("Email");
+
+    RoleDTO author = new RoleDTO();
+    author.setRoletype("Author");
+    author.setStartdate("2014-05-30");
+    composite.setRole(author);
+
+    return composite;
+  }
+
+  //TODO - add tests with address, email, and phone combinations
 }

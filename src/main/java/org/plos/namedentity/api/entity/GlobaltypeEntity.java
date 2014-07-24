@@ -16,6 +16,7 @@
  */
 package org.plos.namedentity.api.entity;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
@@ -24,6 +25,7 @@ import java.util.Objects;
  * Modified JOOQ generated class(pojo=true).
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@XmlRootElement
 public class GlobaltypeEntity implements java.io.Serializable {
 
   private static final long serialVersionUID = 541426103;

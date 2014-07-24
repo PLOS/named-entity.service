@@ -16,15 +16,6 @@
  */
 package org.plos.namedentity.spring.config;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.mockito.Mockito;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
@@ -37,18 +28,28 @@ import org.plos.namedentity.api.dto.UniqueidentifierDTO;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
-import org.plos.namedentity.rest.NamedEntityResource;
+import org.plos.namedentity.rest.IndividualsResource;
+import org.plos.namedentity.rest.TypeclassesResource;
+import org.plos.namedentity.service.CrudService;
 import org.plos.namedentity.service.NamedEntityService;
-import org.plos.namedentity.service.NamedEntityServiceHighApi;
 import org.plos.namedentity.utils.EntityPojoTransformer;
 import org.plos.namedentity.utils.Transformer;
 import org.springframework.context.annotation.Bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.when;
+
 public class TestSpringConfig {
 
   @Bean @SuppressWarnings("unchecked")
-  static public NamedEntityService namedEntityService() {
-    NamedEntityService mockNamedEntityService =  Mockito.mock(NamedEntityService.class);
+  static public CrudService namedEntityService() {
+    CrudService mockNamedEntityService =  Mockito.mock(CrudService.class);
 
     when(mockNamedEntityService.create(any()))
       .thenReturn(Integer.valueOf(1))
@@ -102,37 +103,35 @@ public class TestSpringConfig {
   }
 
   @Bean @SuppressWarnings("unchecked")
-  static public NamedEntityServiceHighApi namedEntityServiceHighApi() {
-    NamedEntityServiceHighApi mockNamedEntityServiceHighApi =  Mockito.mock(NamedEntityServiceHighApi.class);
+  static public NamedEntityService namedEntityServiceHighApi() {
+    NamedEntityService mockNamedEntityService =  Mockito.mock(NamedEntityService.class);
 
     IndividualDTO individualDto = newIndividualDto();
 
-    when(mockNamedEntityServiceHighApi.createIndividual(isA(IndividualComposite.class)))
+    when(mockNamedEntityService.createIndividual(isA(IndividualComposite.class)))
       .thenReturn(individualDto)
         .thenThrow(NedValidationException.class)
           .thenThrow(RuntimeException.class);
 
-    when(mockNamedEntityServiceHighApi.findIndividualByNedId(anyInt()))
+    when(mockNamedEntityService.findIndividualByNedId(anyInt()))
       .thenReturn( individualDto );
 
-  //public List<IndividualDTO>       findIndividualsByUid   (Integer srcTypeId, String uid);
-
-    when(mockNamedEntityServiceHighApi.findAddressesByNedId(anyInt()))
+    when(mockNamedEntityService.findAddressesByNedId(anyInt()))
       .thenReturn( newAddressesDto() );
 
-    when(mockNamedEntityServiceHighApi.findEmailsByNedId(anyInt()))
+    when(mockNamedEntityService.findEmailsByNedId(anyInt()))
       .thenReturn( newEmailsDto() );
 
-    when(mockNamedEntityServiceHighApi.findPhoneNumbersByNedId(anyInt()))
+    when(mockNamedEntityService.findPhoneNumbersByNedId(anyInt()))
       .thenReturn( newPhonenumbersDto() );
 
-    when(mockNamedEntityServiceHighApi.findRolesByNedId(anyInt()))
+    when(mockNamedEntityService.findRolesByNedId(anyInt()))
       .thenReturn( newRolesDto() );
 
-    when(mockNamedEntityServiceHighApi.findUniqueIdsByNedId(anyInt()))
+    when(mockNamedEntityService.findUniqueIdsByNedId(anyInt()))
       .thenReturn( newUidsDto() );
 
-    return mockNamedEntityServiceHighApi;
+    return mockNamedEntityService;
   }
 
   @Bean 
@@ -140,11 +139,21 @@ public class TestSpringConfig {
     return new EntityPojoTransformer();
   }
 
+//  @Bean
+//  static public NamedEntityResource namedEntityResource() {
+//    NamedEntityResource nedResource = new NamedEntityResource();
+//    //nedResource.setNamedEntityService(namedEntityService());
+//    return nedResource;
+//  }
+
   @Bean
-  static public NamedEntityResource namedEntityResource() {
-    NamedEntityResource nedResource = new NamedEntityResource();
-    nedResource.setNamedEntityService(namedEntityService());
-    return nedResource;
+  static public IndividualsResource individualsController() {
+    return new IndividualsResource();
+  }
+
+  @Bean
+  static public TypeclassesResource typeclassesController() {
+    return new TypeclassesResource();
   }
 
   static private IndividualDTO newIndividualDto() {

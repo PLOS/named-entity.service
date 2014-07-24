@@ -16,13 +16,13 @@
  */
 package org.plos.namedentity.api;
 
-import java.util.List;
-
 import org.plos.namedentity.api.dto.AddressDTO;
 import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.UniqueidentifierDTO;
+
+import java.util.List;
 
 public class IndividualComposite {
 

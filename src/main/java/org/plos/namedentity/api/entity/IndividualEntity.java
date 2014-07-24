@@ -16,11 +16,13 @@
  */
 package org.plos.namedentity.api.entity;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 /**
  * Modified JOOQ generated class(pojo=true).
  */
+@XmlRootElement
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class IndividualEntity implements java.io.Serializable {
 

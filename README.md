@@ -32,7 +32,7 @@ Debugging
     * here's how to run Maven Tomcat plugin in DEBUG mode (port:8000).
 
         export MAVEN_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n"
-        mvn -f pom.mysql.xml tomcat:run
+        mvn -f pom.xml tomcat:run
 
     * in separate window, attach with debug client
 
@@ -48,7 +48,7 @@ Deployment
 
         make codegen-war 
 
-        http://localhost:8080/api/ned/typeclasses/1
+        http://localhost:8080/typeclasses/1
 
     * deploy and start embedded Tomcat instance
 
