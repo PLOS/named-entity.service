@@ -37,4 +37,5 @@ tomcat)
 esac
 
 echo "mvn -P ${MVN_PROFILE} ${MVN_TARGETS}"
+# tip: add -X to debug 
 mvn -P ${MVN_PROFILE} ${MVN_TARGETS}

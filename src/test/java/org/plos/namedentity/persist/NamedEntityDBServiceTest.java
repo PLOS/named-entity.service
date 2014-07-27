@@ -60,7 +60,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/spring-beans.xml"})
+@ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
 public class NamedEntityDBServiceTest {
 
   @Autowired NamedEntityDBService         nedDBSvc;

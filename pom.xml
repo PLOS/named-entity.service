@@ -182,17 +182,6 @@
   <build>
     <finalName>${project.artifactId}</finalName>
 
-    <!-- The resources element will replace available properties in all matching resources -->
-    <resources>
-      <resource>
-        <filtering>true</filtering>
-        <directory>src/main/resources</directory>
-        <includes>
-          <include>**/*.xml</include>
-        </includes>
-      </resource>
-    </resources>
-
     <plugins>
       <plugin>
         <artifactId>maven-eclipse-plugin</artifactId>
@@ -258,6 +247,24 @@
         </dependency>
       </dependencies>
       <build>
+        <!-- The resources element will replace available properties in all matching resources -->
+        <resources>
+          <resource>
+            <filtering>true</filtering>
+            <directory>src/main/resources</directory>
+            <includes>
+            <include>**/*.xml</include>
+            </includes>
+          </resource>
+          <resource>
+            <filtering>true</filtering>
+            <directory>config/tomcat</directory>
+            <includes>
+            <include>**/*.xml</include>
+            </includes>
+          </resource>
+        </resources>
+
         <plugins>
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
@@ -276,22 +283,22 @@
             </executions>
           </plugin>
           <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>properties-maven-plugin</artifactId>
-          <version>1.0-alpha-2</version>
-          <executions>
-            <execution>
-              <phase>initialize</phase>
-              <goals>
-                <goal>read-project-properties</goal>
-              </goals>
-              <configuration>
-                <files>
-                  <file>src/main/resources/config.mysql.properties</file>
-                </files>
-              </configuration>
-            </execution>
-          </executions>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>properties-maven-plugin</artifactId>
+            <version>1.0-alpha-2</version>
+            <executions>
+              <execution>
+                <phase>initialize</phase>
+                <goals>
+                  <goal>read-project-properties</goal>
+                </goals>
+                <configuration>
+                  <files>
+                    <file>src/main/resources/config.mysql.properties</file>
+                  </files>
+                </configuration>
+              </execution>
+            </executions>
           </plugin>
           <plugin>
             <groupId>org.jooq</groupId>
@@ -351,6 +358,7 @@
             <artifactId>tomcat-maven-plugin</artifactId>
             <version>1.1</version>
             <configuration>
+              <contextFile>${basedir}/target/classes/context.xml</contextFile>
               <path>/</path>
             </configuration>
             <dependencies>
@@ -376,6 +384,26 @@
         </dependency>
       </dependencies>
       <build>
+        <!-- The resources element will replace available properties in all matching resources -->
+        <resources>
+          <resource>
+            <filtering>true</filtering>
+            <directory>src/main/resources</directory>
+            <includes>
+              <include>**/*.xml</include>
+            </includes>
+          </resource>
+        </resources>
+        <testResources>
+          <testResource>
+            <filtering>true</filtering>
+            <directory>src/test/resources</directory>
+            <includes>
+              <include>**/*.xml</include>
+            </includes>
+          </testResource>
+        </testResources>
+
         <plugins>
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
