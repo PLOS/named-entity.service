@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Context>
+  <Resource name="jdbc/ned" 
+            auth="Container" 
+            type="javax.sql.DataSource" 
+            factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" 
+            validationQuery="SELECT 1" 
+            testOnBorrow="true" 
+            driverClassName="${db.driver}" 
+            username="${db.username}" 
+            password="${db.password}" 
+            url="${db.url}" />
+</Context>

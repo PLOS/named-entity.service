@@ -34,7 +34,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/spring-beans.xml"})
+@ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
 public class CrudServiceTest {
 
   @Autowired
