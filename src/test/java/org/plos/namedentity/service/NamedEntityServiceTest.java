@@ -22,12 +22,12 @@ import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.dto.AddressDTO;
 import org.plos.namedentity.api.dto.EmailDTO;
-import org.plos.namedentity.api.dto.IndividualDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.UniqueidentifierDTO;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
+import org.plos.namedentity.api.entity.IndividualEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -54,7 +54,7 @@ public class NamedEntityServiceTest {
   public void testCreateIndividualWithoutRole() {
     // triggers phase 1 validation failure
     try {
-      IndividualDTO dto = namedEntityService.createIndividual(new IndividualComposite());
+      namedEntityService.createIndividual(new IndividualComposite());
       fail();
     }
     catch (NedValidationException expected) {
@@ -150,9 +150,9 @@ public class NamedEntityServiceTest {
 
     Integer nedId = null;
     try {
-      IndividualDTO dto = namedEntityService.createIndividual(composite);
-      assertNotNull(dto);
-      assertNotNull(dto.getNamedentityid());
+      IndividualEntity entity = namedEntityService.createIndividual(composite);
+      assertNotNull(entity);
+      assertNotNull(entity.getNamedentityid());
     }
     catch (NedValidationException e) {
       fail();
@@ -169,8 +169,8 @@ public class NamedEntityServiceTest {
 
     // Test "By NedId" Finders
 
-    IndividualDTO individualDto = namedEntityService.findIndividualByNedId(nedId);
-    assertNotNull( individualDto );
+    IndividualEntity entity = namedEntityService.findIndividualByNedId(nedId);
+    assertNotNull( entity );
 
     List<AddressDTO> addressesDto = namedEntityService.findAddressesByNedId(nedId);
     assertEquals(1, addressesDto.size());
@@ -190,10 +190,10 @@ public class NamedEntityServiceTest {
     Integer uidTypeId = findUidTypeIdByName("ORCID");
     assertNotNull( uidTypeId );
 
-    List<IndividualDTO> individuals = namedEntityService.findIndividualsByUid(uidTypeId, "0000-0001-9430-319X");
+    List<IndividualEntity> individuals = namedEntityService.findIndividualsByUid(uidTypeId, "0000-0001-9430-319X");
     assertEquals(1, individuals.size());
 
-    IndividualDTO individual = individuals.get(0);
+    IndividualEntity individual = individuals.get(0);
     assertEquals("firstname", individual.getFirstname());
     assertEquals("lastname", individual.getLastname());
   }
@@ -225,7 +225,7 @@ public class NamedEntityServiceTest {
     composite.setEmails( emails );
 
     try {
-      IndividualDTO dto = namedEntityService.createIndividual(composite);
+      namedEntityService.createIndividual(composite);
       fail();
     }
     catch (NedValidationException expected) {

@@ -21,7 +21,6 @@ import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.dto.AddressDTO;
 import org.plos.namedentity.api.dto.EmailDTO;
-import org.plos.namedentity.api.dto.IndividualDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.UniqueidentifierDTO;
@@ -106,7 +105,7 @@ public class TestSpringConfig {
   static public NamedEntityService namedEntityServiceHighApi() {
     NamedEntityService mockNamedEntityService =  Mockito.mock(NamedEntityService.class);
 
-    IndividualDTO individualDto = newIndividualDto();
+    IndividualEntity individualDto = newIndividualEntity();
 
     when(mockNamedEntityService.createIndividual(isA(IndividualComposite.class)))
       .thenReturn(individualDto)
@@ -156,17 +155,17 @@ public class TestSpringConfig {
     return new TypeclassesResource();
   }
 
-  static private IndividualDTO newIndividualDto() {
-    IndividualDTO dto = new IndividualDTO();
-    dto.setNamedentityid(1);
-    dto.setFirstname("firstname");
-    dto.setMiddlename("middlename");
-    dto.setLastname("lastname");
-    dto.setNameprefix("Mr.");
-    dto.setNamesuffix("II");
-    dto.setPreferredlanguage("Mandarin");
-    dto.setPreferredcommunication("Phone");
-    return dto;
+  static private IndividualEntity newIndividualEntity() {
+    IndividualEntity entity = new IndividualEntity();
+    entity.setNamedentityid(1);
+    entity.setFirstname("firstname");
+    entity.setMiddlename("middlename");
+    entity.setLastname("lastname");
+    entity.setNameprefix("Mr.");
+    entity.setNamesuffix("II");
+    entity.setPreferredlanguage("Mandarin");
+    entity.setPreferredcommunication("Phone");
+    return entity;
   }
 
   static private List<AddressDTO> newAddressesDto() {

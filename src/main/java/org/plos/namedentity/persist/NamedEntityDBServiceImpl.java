@@ -17,22 +17,6 @@
 package org.plos.namedentity.persist;
 
 // to reduce verbosity, static import generated tables and jooq functions
-import static org.jooq.impl.DSL.currentTimestamp;
-import static org.plos.namedentity.persist.db.namedentities.Tables.ADDRESSES;
-import static org.plos.namedentity.persist.db.namedentities.Tables.EMAILS;
-import static org.plos.namedentity.persist.db.namedentities.Tables.GLOBALTYPES;
-import static org.plos.namedentity.persist.db.namedentities.Tables.INDIVIDUALS;
-import static org.plos.namedentity.persist.db.namedentities.Tables.JOURNALS;
-import static org.plos.namedentity.persist.db.namedentities.Tables.NAMEDENTITYIDENTIFIERS;
-import static org.plos.namedentity.persist.db.namedentities.Tables.PHONENUMBERS;
-import static org.plos.namedentity.persist.db.namedentities.Tables.ROLES;
-import static org.plos.namedentity.persist.db.namedentities.Tables.TYPEDESCRIPTIONS;
-import static org.plos.namedentity.persist.db.namedentities.Tables.UNIQUEIDENTIFIERS;
-
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Table;
@@ -40,7 +24,6 @@ import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
 import org.plos.namedentity.api.dto.AddressDTO;
 import org.plos.namedentity.api.dto.EmailDTO;
-import org.plos.namedentity.api.dto.IndividualDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.UniqueidentifierDTO;
@@ -61,6 +44,13 @@ import org.plos.namedentity.persist.db.namedentities.tables.Phonenumbers;
 import org.plos.namedentity.persist.db.namedentities.tables.Roles;
 import org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static org.jooq.impl.DSL.currentTimestamp;
+import static org.plos.namedentity.persist.db.namedentities.Tables.*;
 
 public final class NamedEntityDBServiceImpl implements NamedEntityDBService, NamedEntityQueries {
 
@@ -203,7 +193,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
   /* ---------------------------------------------------------------------- */
 
   @Override
-  public IndividualDTO findIndividualByNedId(Integer nedId) {
+  public IndividualEntity findIndividualByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription nameprefix, i.firstName firstname, 
                i.middleName middlename, i.lastName lastname, 
@@ -237,11 +227,11 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt4).on(i.PREFERREDCOMMUNICATIONMETHODTYPEID.equal(gt4.GLOBALTYPEID))
       .where(i.NAMEDENTITYID.equal(nedId))
       .fetchOne()
-      .into(IndividualDTO.class);
+      .into(IndividualEntity.class);
   }
 
   @Override
-  public List<IndividualDTO> findIndividualsByUid(Integer srcTypeId, String uid) {
+  public List<IndividualEntity> findIndividualsByUid(Integer srcTypeId, String uid) {
 /*
    EXPLAIN
         SELECT gt1.shortDescription nameprefix, i.firstName firstname, 
@@ -288,7 +278,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt5).on(u.UNIQUEIDENTIFIERTYPEID.equal(gt5.GLOBALTYPEID))
       .where(u.UNIQUEIDENTIFIER.like(uid + "%"))
       .fetch()
-      .into(IndividualDTO.class);
+      .into(IndividualEntity.class);
   }
 
   @Override

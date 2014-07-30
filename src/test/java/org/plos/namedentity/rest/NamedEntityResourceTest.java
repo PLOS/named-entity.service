@@ -16,31 +16,29 @@
  */
 package org.plos.namedentity.rest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.plos.namedentity.api.dto.AddressDTO;
 import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.GlobaltypeDTO;
-import org.plos.namedentity.api.dto.IndividualDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.TypedescriptionDTO;
 import org.plos.namedentity.api.dto.UniqueidentifierDTO;
 import org.plos.namedentity.api.entity.IndividualEntity;
+
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
@@ -77,12 +75,12 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    IndividualDTO dto = mapper.readValue(jsonPayload, IndividualDTO.class);
-    assertEquals(Integer.valueOf(1), dto.getNamedentityid());
-    assertEquals("firstname", dto.getFirstname());
-    assertEquals("middlename", dto.getMiddlename());
-    assertEquals("lastname", dto.getLastname());
-    assertEquals("Mr.", dto.getNameprefix());
+    IndividualEntity entity = mapper.readValue(jsonPayload, IndividualEntity.class);
+    assertEquals(Integer.valueOf(1), entity.getNamedentityid());
+    assertEquals("firstname", entity.getFirstname());
+    assertEquals("middlename", entity.getMiddlename());
+    assertEquals("lastname", entity.getLastname());
+    assertEquals("Mr.", entity.getNameprefix());
 
     // Request #2. Expect a validation exception (client-side error)
 
@@ -118,12 +116,12 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    IndividualDTO dto = mapper.readValue(jsonPayload, IndividualDTO.class);
-    assertEquals(Integer.valueOf(1), dto.getNamedentityid());
-    assertEquals("firstname", dto.getFirstname());
-    assertEquals("middlename", dto.getMiddlename());
-    assertEquals("lastname", dto.getLastname());
-    assertEquals("Mr.", dto.getNameprefix());
+    IndividualEntity entity = mapper.readValue(jsonPayload, IndividualEntity.class);
+    assertEquals(Integer.valueOf(1), entity.getNamedentityid());
+    assertEquals("firstname", entity.getFirstname());
+    assertEquals("middlename", entity.getMiddlename());
+    assertEquals("lastname", entity.getLastname());
+    assertEquals("Mr.", entity.getNameprefix());
 
     /* ------------------------------------------------------------------ */
     /*  FIND (ALL)                                                        */

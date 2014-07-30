@@ -4,7 +4,6 @@ import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.dto.AddressDTO;
 import org.plos.namedentity.api.dto.EmailDTO;
-import org.plos.namedentity.api.dto.IndividualDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.UniqueidentifierDTO;
@@ -24,7 +23,7 @@ public class IndividualsResource extends BaseController {
   @POST
   public Response createIndividualComposite(IndividualComposite object) {
     try {
-      IndividualDTO dto = namedEntityService.createIndividual(object);
+      IndividualEntity dto = namedEntityService.createIndividual(object);
       return Response.status(Response.Status.OK).entity(dto).build();
     }
     catch(NedValidationException e) {
@@ -52,7 +51,7 @@ public class IndividualsResource extends BaseController {
   @Path("/{id}")
   public Response getIndividual(@PathParam("id") int id) {
     try {
-      IndividualDTO dto = namedEntityService.findIndividualByNedId(id);
+      IndividualEntity dto = namedEntityService.findIndividualByNedId(id);
       return Response.status(Response.Status.OK).entity(dto).build();
     }
     catch(Exception e) {

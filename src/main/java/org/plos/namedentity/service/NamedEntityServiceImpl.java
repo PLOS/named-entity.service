@@ -20,7 +20,6 @@ import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.dto.AddressDTO;
 import org.plos.namedentity.api.dto.EmailDTO;
-import org.plos.namedentity.api.dto.IndividualDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.UniqueidentifierDTO;
@@ -46,7 +45,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   @Inject private NamedEntityDBService nedDBSvc; 
 
   @Override @Transactional
-  public IndividualDTO createIndividual(IndividualComposite composite) {
+  public IndividualEntity createIndividual(IndividualComposite composite) {
     //TODO - better validation. handle null fields!
 
     Integer nedId = nedDBSvc.newNamedEntityId("Individual");
@@ -207,12 +206,12 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   }
 
   @Override
-  public IndividualDTO findIndividualByNedId(Integer nedId) {
+  public IndividualEntity findIndividualByNedId(Integer nedId) {
     return ((NamedEntityQueries)nedDBSvc).findIndividualByNedId(nedId);
   }
 
   @Override
-  public List<IndividualDTO> findIndividualsByUid(Integer srcTypeId, String uid) {
+  public List<IndividualEntity> findIndividualsByUid(Integer srcTypeId, String uid) {
     return ((NamedEntityQueries)nedDBSvc).findIndividualsByUid(srcTypeId, uid);
   }
 
