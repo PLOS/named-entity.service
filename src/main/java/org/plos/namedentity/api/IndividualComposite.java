@@ -36,8 +36,7 @@ public class IndividualComposite {
 //  private String preferredlanguage;
 //  private String preferredcommunication;
 //
-  private IndividualEntity entity;
-
+  private IndividualEntity          individual;
   private RoleDTO                   role;
   private List<AddressDTO>          addresses;
   private List<EmailDTO>            emails;
@@ -45,63 +44,63 @@ public class IndividualComposite {
   private List<UniqueidentifierDTO> uniqueidentifiers;
 
   public IndividualComposite() {
-    this.entity = new IndividualEntity();
+    this.individual = new IndividualEntity();
   }
 
   public Integer getNamedentityid() {
-    return this.entity.getNamedentityid();
+    return this.individual.getNamedentityid();
   }
   public void setNamedentityid(Integer namedentityid) {
-    this.entity.setNamedentityid(namedentityid);
+    this.individual.setNamedentityid(namedentityid);
   }
 
   public String getFirstname() {
-    return this.entity.getFirstname();
+    return this.individual.getFirstname();
   }
   public void setFirstname(String firstname) {
-    this.entity.setFirstname(firstname);
+    this.individual.setFirstname(firstname);
   }
 
   public String getMiddlename() {
-    return this.entity.getMiddlename();
+    return this.individual.getMiddlename();
   }
   public void setMiddlename(String middlename) {
-    this.entity.setMiddlename(middlename);
+    this.individual.setMiddlename(middlename);
   }
 
   public String getLastname() {
-    return this.entity.getLastname();
+    return this.individual.getLastname();
   }
   public void setLastname(String lastname) {
-    this.entity.setLastname(lastname);
+    this.individual.setLastname(lastname);
   }
 
   public String getNameprefix() {
-    return this.entity.getNameprefix();
+    return this.individual.getNameprefix();
   }
   public void setNameprefix(String nameprefix) {
-    this.entity.setNameprefix(nameprefix);
+    this.individual.setNameprefix(nameprefix);
   }
 
   public String getNamesuffix() {
-    return this.entity.getNamesuffix();
+    return this.individual.getNamesuffix();
   }
   public void setNamesuffix(String namesuffix) {
-    this.entity.setNameprefix(namesuffix);
+    this.individual.setNamesuffix(namesuffix);
   }
 
   public String getPreferredlanguage() {
-    return this.entity.getPreferredlanguage();
+    return this.individual.getPreferredlanguage();
   }
   public void setPreferredlanguage(String preferredlanguage) {
-    this.entity.setPreferredlanguage(preferredlanguage);
+    this.individual.setPreferredlanguage(preferredlanguage);
   }
 
   public String getPreferredcommunication() {
-    return this.entity.getPreferredcommunication();
+    return this.individual.getPreferredcommunication();
   }
   public void setPreferredcommunication(String preferredcommunication) {
-    this.entity.setPreferredcommunication(preferredcommunication);
+    this.individual.setPreferredcommunication(preferredcommunication);
   }
 
   public RoleDTO getRole() {
