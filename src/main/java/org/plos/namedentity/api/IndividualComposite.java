@@ -21,19 +21,22 @@ import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.UniqueidentifierDTO;
+import org.plos.namedentity.api.entity.IndividualEntity;
 
 import java.util.List;
 
 public class IndividualComposite {
-
-  private String namedentityid;
-  private String firstname;
-  private String middlename;
-  private String lastname;
-  private String nameprefix;
-  private String namesuffix;
-  private String preferredlanguage;
-  private String preferredcommunication;
+//
+//  private String namedentityid;
+//  private String firstname;
+//  private String middlename;
+//  private String lastname;
+//  private String nameprefix;
+//  private String namesuffix;
+//  private String preferredlanguage;
+//  private String preferredcommunication;
+//
+  private IndividualEntity entity;
 
   private RoleDTO                   role;
   private List<AddressDTO>          addresses;
@@ -41,60 +44,64 @@ public class IndividualComposite {
   private List<PhonenumberDTO>      phonenumbers;
   private List<UniqueidentifierDTO> uniqueidentifiers;
 
-  public String getNamedentityid() {
-    return namedentityid;
+  public IndividualComposite() {
+    this.entity = new IndividualEntity();
   }
-  public void setNamedentityid(String namedentityid) {
-    this.namedentityid = namedentityid;
+
+  public Integer getNamedentityid() {
+    return this.entity.getNamedentityid();
+  }
+  public void setNamedentityid(Integer namedentityid) {
+    this.entity.setNamedentityid(namedentityid);
   }
 
   public String getFirstname() {
-    return firstname;
+    return this.entity.getFirstname();
   }
   public void setFirstname(String firstname) {
-    this.firstname = firstname;
+    this.entity.setFirstname(firstname);
   }
 
   public String getMiddlename() {
-    return middlename;
+    return this.entity.getMiddlename();
   }
   public void setMiddlename(String middlename) {
-    this.middlename = middlename;
+    this.entity.setMiddlename(middlename);
   }
 
   public String getLastname() {
-    return lastname;
+    return this.entity.getLastname();
   }
   public void setLastname(String lastname) {
-    this.lastname = lastname;
+    this.entity.setLastname(lastname);
   }
 
   public String getNameprefix() {
-    return nameprefix;
+    return this.entity.getNameprefix();
   }
   public void setNameprefix(String nameprefix) {
-    this.nameprefix = nameprefix;
+    this.entity.setNameprefix(nameprefix);
   }
 
   public String getNamesuffix() {
-    return namesuffix;
+    return this.entity.getNamesuffix();
   }
   public void setNamesuffix(String namesuffix) {
-    this.namesuffix = namesuffix;
+    this.entity.setNameprefix(namesuffix);
   }
 
   public String getPreferredlanguage() {
-    return preferredlanguage;
+    return this.entity.getPreferredlanguage();
   }
   public void setPreferredlanguage(String preferredlanguage) {
-    this.preferredlanguage = preferredlanguage;
+    this.entity.setPreferredlanguage(preferredlanguage);
   }
 
   public String getPreferredcommunication() {
-    return preferredcommunication;
+    return this.entity.getPreferredcommunication();
   }
   public void setPreferredcommunication(String preferredcommunication) {
-    this.preferredcommunication = preferredcommunication;
+    this.entity.setPreferredcommunication(preferredcommunication);
   }
 
   public RoleDTO getRole() {
