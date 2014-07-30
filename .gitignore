@@ -6,4 +6,6 @@
 .settings
 *.log
 cp.mmddyy.txt
+debug.sh
+mdb.ini
 target
