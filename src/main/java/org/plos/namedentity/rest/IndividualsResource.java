@@ -18,7 +18,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/individuals")
-public class IndividualsResource extends BaseController {
+public class IndividualsResource extends BaseResource {
 
   @POST
   public Response createIndividualComposite(IndividualComposite object) {

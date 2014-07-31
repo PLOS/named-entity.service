@@ -19,7 +19,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/typeclasses")
-public class TypeclassesResource extends BaseController{
+public class TypeclassesResource extends BaseResource {
 
   @GET
   @Path("/{id}")

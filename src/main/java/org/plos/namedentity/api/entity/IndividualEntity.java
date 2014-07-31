@@ -33,21 +33,26 @@ public class IndividualEntity implements java.io.Serializable {
   private String  middlename;
   private String  lastname;
   private String  nickname;
+
   private String  nameprefix;
   private Integer nameprefixtypeid;
+
   private String  namesuffix;
   private Integer namesuffixtypeid;
+
   private String  displayname;
+
   private String  preferredlanguage;
   private Integer preferredlanguagetypeid;
+
   private String  preferredcommunication;
   private Integer preferredcommunicationmethodtypeid;
+
   private byte[]  photoimage;
   private String  url;
 
   public IndividualEntity() {}
 
-  
   public IndividualEntity(
       Integer namedentityid,
       String  firstname,
@@ -63,7 +68,7 @@ public class IndividualEntity implements java.io.Serializable {
       Integer preferredlanguagetypeid,
       String  preferredcommunication,
       Integer preferredcommunicationmethodtypeid,
-      byte[] photoimage,
+      byte[]  photoimage,
       String  url
   ) {
     this(namedentityid,
@@ -96,7 +101,7 @@ public class IndividualEntity implements java.io.Serializable {
     String  displayname,
     Integer preferredlanguagetypeid,
     Integer preferredcommunicationmethodtypeid,
-    byte[]            photoimage,
+    byte[]  photoimage,
     String  url
   ) {
     this.namedentityid = namedentityid;
