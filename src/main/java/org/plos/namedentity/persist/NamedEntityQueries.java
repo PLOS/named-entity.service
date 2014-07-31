@@ -27,8 +27,8 @@ import java.util.List;
 
 public interface NamedEntityQueries {
 
-  IndividualEntity findIndividualByNedId  (Integer nedId);
-  List<IndividualEntity>       findIndividualsByUid   (Integer srcTypeId, String uid);
+  IndividualEntity          findIndividualByNedId  (Integer nedId);
+  List<IndividualEntity>    findIndividualsByUid   (Integer srcTypeId, String uid);
   List<AddressDTO>          findAddressesByNedId   (Integer nedId);
   List<EmailDTO>            findEmailsByNedId      (Integer nedId);
   List<PhonenumberDTO>      findPhoneNumbersByNedId(Integer nedId);
