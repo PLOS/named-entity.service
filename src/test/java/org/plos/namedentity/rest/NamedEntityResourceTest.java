@@ -19,13 +19,13 @@ package org.plos.namedentity.rest;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
-import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.GlobaltypeDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.TypedescriptionDTO;
 import org.plos.namedentity.api.dto.UniqueidentifierDTO;
 import org.plos.namedentity.api.entity.AddressEntity;
+import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
 
 import javax.ws.rs.client.Entity;
@@ -176,13 +176,13 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    EmailDTO[] emails = mapper.readValue(jsonPayload, EmailDTO[].class);
+    EmailEntity[] emails = mapper.readValue(jsonPayload, EmailEntity[].class);
     assertEquals(2, emails.length);
 
-    EmailDTO email = emails[0];
+    EmailEntity email = emails[0];
     assertEquals("Work", email.getEmailtype());
     assertEquals("fu.manchu.work@foo.com", email.getEmailaddress());
-    assertTrue( email.getIsprimary() );
+    assertTrue(email.getIsprimary() == 1);
 
     //TODO - CREATE, UPDATE, DELETE
   }

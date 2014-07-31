@@ -16,11 +16,11 @@
  */
 package org.plos.namedentity.persist;
 
-import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.UniqueidentifierDTO;
 import org.plos.namedentity.api.entity.AddressEntity;
+import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public interface NamedEntityQueries {
   IndividualEntity          findIndividualByNedId  (Integer nedId);
   List<IndividualEntity>    findIndividualsByUid   (Integer srcTypeId, String uid);
   List<AddressEntity>       findAddressesByNedId   (Integer nedId);
-  List<EmailDTO>            findEmailsByNedId      (Integer nedId);
+  List<EmailEntity>         findEmailsByNedId      (Integer nedId);
   List<PhonenumberDTO>      findPhoneNumbersByNedId(Integer nedId);
   List<RoleDTO>             findRolesByNedId       (Integer nedId);
   List<UniqueidentifierDTO> findUniqueIdsByNedId   (Integer nedId);

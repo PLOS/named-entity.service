@@ -22,7 +22,6 @@ import org.jooq.Result;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.UniqueidentifierDTO;
@@ -297,7 +296,7 @@ public class NamedEntityDBServiceTest {
     // FIND BY JOIN-QUERY 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<EmailDTO> emails = nedQuery.findEmailsByNedId(foundEmails2.get(0).getNamedentityid());
+    List<EmailEntity> emails = nedQuery.findEmailsByNedId(foundEmails2.get(0).getNamedentityid());
     assertTrue( emails.size() > 0 );
 
     // Try to find an email which doesn't exist

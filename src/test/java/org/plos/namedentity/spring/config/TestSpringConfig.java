@@ -19,11 +19,11 @@ package org.plos.namedentity.spring.config;
 import org.mockito.Mockito;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.UniqueidentifierDTO;
 import org.plos.namedentity.api.entity.AddressEntity;
+import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
@@ -119,7 +119,7 @@ public class TestSpringConfig {
       .thenReturn( newAddressEntities() );
 
     when(mockNamedEntityService.findEmailsByNedId(anyInt()))
-      .thenReturn( newEmailsDto() );
+      .thenReturn( newEmailEntities() );
 
     when(mockNamedEntityService.findPhoneNumbersByNedId(anyInt()))
       .thenReturn( newPhonenumbersDto() );
@@ -185,19 +185,19 @@ public class TestSpringConfig {
     return addresses;
   }
 
-  static private List<EmailDTO> newEmailsDto() {
-    List<EmailDTO> emails = new ArrayList<>();
+  static private List<EmailEntity> newEmailEntities() {
+    List<EmailEntity> emails = new ArrayList<>();
 
-    EmailDTO workEmail = new EmailDTO();
+    EmailEntity workEmail = new EmailEntity();
     workEmail.setEmailtype("Work");
     workEmail.setEmailaddress("fu.manchu.work@foo.com");
-    workEmail.setIsprimary(true);
+    workEmail.setIsprimary((byte)1);
     emails.add( workEmail );
 
-    EmailDTO personalEmail = new EmailDTO();
+    EmailEntity personalEmail = new EmailEntity();
     personalEmail.setEmailtype("Personal");
     personalEmail.setEmailaddress("fu.manchu.home@foo.com");
-    personalEmail.setIsprimary(false);
+    personalEmail.setIsprimary((byte)0);
     emails.add( personalEmail );
 
     return emails;

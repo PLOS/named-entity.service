@@ -18,7 +18,6 @@ package org.plos.namedentity.service;
 
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.UniqueidentifierDTO;
@@ -147,14 +146,14 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     Integer emailTypeClassId = findTypeClassStartWith("Email Address Types");
 
     if (composite.getEmails() != null) {
-      for (EmailDTO email : composite.getEmails()) {
+      for (EmailEntity email : composite.getEmails()) {
         Integer emailTypeId = findTypeValueByName(emailTypeClassId, email.getEmailtype());
 
         EmailEntity emailEntity = new EmailEntity();
         emailEntity.setNamedentityid(nedId);
         emailEntity.setEmailtypeid(emailTypeId);
         emailEntity.setEmailaddress(email.getEmailaddress());
-        emailEntity.setIsprimary(email.getIsprimary()? (byte)1 : (byte)0);
+        emailEntity.setIsprimary(1 == email.getIsprimary() ? (byte)1 : (byte)0);
 
         nedDBSvc.create( emailEntity );
       }
@@ -220,7 +219,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   }
 
   @Override
-  public List<EmailDTO> findEmailsByNedId(Integer nedId) {
+  public List<EmailEntity> findEmailsByNedId(Integer nedId) {
     return ((NamedEntityQueries)nedDBSvc).findEmailsByNedId(nedId);
   }
 

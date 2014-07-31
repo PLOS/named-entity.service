@@ -2,12 +2,12 @@ package org.plos.namedentity.rest;
 
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.UniqueidentifierDTO;
-import org.plos.namedentity.api.entity.IndividualEntity;
 import org.plos.namedentity.api.entity.AddressEntity;
+import org.plos.namedentity.api.entity.EmailEntity;
+import org.plos.namedentity.api.entity.IndividualEntity;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -63,9 +63,9 @@ public class IndividualsResource extends BaseResource {
   @Path("/{id}/emails")
   public Response getEmailsForIndividual(@PathParam("id") int nedId) {
     try {
-      List<EmailDTO> emails = namedEntityService.findEmailsByNedId(nedId);
+      List<EmailEntity> emails = namedEntityService.findEmailsByNedId(nedId);
       return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<EmailDTO>>(emails){}).build();
+          new GenericEntity<List<EmailEntity>>(emails){}).build();
     }
     catch(Exception e) {
       return serverError(e, "Find emails by nedId failed");

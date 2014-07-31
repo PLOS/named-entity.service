@@ -22,7 +22,6 @@ import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
-import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.UniqueidentifierDTO;
@@ -315,7 +314,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
   }
 
   @Override
-  public List<EmailDTO> findEmailsByNedId(Integer nedId) {
+  public List<EmailEntity> findEmailsByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription emailtype, e.emailaddress, e.isprimary
           FROM emails e
@@ -333,7 +332,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt1).on(e.EMAILTYPEID.equal(gt1.GLOBALTYPEID))
       .where(e.NAMEDENTITYID.equal(nedId))
       .fetch()
-      .into(EmailDTO.class);
+      .into(EmailEntity.class);
   }
 
   @Override

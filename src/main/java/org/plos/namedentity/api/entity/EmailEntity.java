@@ -18,36 +18,55 @@ package org.plos.namedentity.api.entity;
 
 import java.util.Objects;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Modified JOOQ generated class(pojo=true).
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@XmlRootElement
 public class EmailEntity implements java.io.Serializable {
 
   private static final long serialVersionUID = -945009318;
 
-  private java.lang.Integer emailid;
-  private java.lang.Integer namedentityid;
-  private java.lang.Integer emailtypeid;
-  private java.lang.String  emailaddress;
-  private java.lang.Byte    isprimary;
-  private java.lang.Byte    isactive;
+  private Integer emailid;
+  private Integer namedentityid;
+
+  private Integer emailtypeid;
+  private String  emailtype;
+
+  private String  emailaddress;
+  private Byte    isprimary;
+  private Byte    isactive;
 
   public EmailEntity() {
-        this(null,null,null,null,null,null); 
-    }
+    this(null,null,null,null,null,null,null); 
+  }
 
   public EmailEntity(
-    java.lang.Integer emailid,
-    java.lang.Integer namedentityid,
-    java.lang.Integer emailtypeid,
-    java.lang.String  emailaddress,
-    java.lang.Byte    isprimary,
-    java.lang.Byte    isactive
+    Integer emailid,
+    Integer namedentityid,
+    Integer emailtypeid,
+    String  emailaddress,
+    Byte    isprimary,
+    Byte    isactive
+  ) {
+    this(emailid, namedentityid, emailtypeid, null, emailaddress, isprimary, isactive);
+  }
+
+  public EmailEntity(
+    Integer emailid,
+    Integer namedentityid,
+    Integer emailtypeid,
+    String  emailtype,
+    String  emailaddress,
+    Byte    isprimary,
+    Byte    isactive
   ) {
     this.emailid       = emailid;
     this.namedentityid = namedentityid;
     this.emailtypeid   = emailtypeid;
+    this.emailtype     = emailtype;
     this.emailaddress  = emailaddress;
     this.isprimary     = (isprimary != null ? isprimary : 1);
     this.isactive      = (isactive != null ? isactive : 1);
@@ -101,6 +120,14 @@ public class EmailEntity implements java.io.Serializable {
     this.isactive = isactive;
   }
 
+  public String getEmailtype() {
+      return emailtype;
+  }
+  
+  public void setEmailtype(String emailtype) {
+      this.emailtype = emailtype;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) { return true; }
@@ -111,6 +138,7 @@ public class EmailEntity implements java.io.Serializable {
     return Objects.equals(this.emailid, entity.emailid)
         && Objects.equals(this.namedentityid, entity.namedentityid)
         && Objects.equals(this.emailtypeid, entity.emailtypeid)
+        && Objects.equals(this.emailtype, entity.emailtype)
         && Objects.equals(this.emailaddress, entity.emailaddress)
         && Objects.equals(this.isprimary, entity.isprimary)
         && Objects.equals(this.isactive, entity.isactive);
@@ -119,6 +147,6 @@ public class EmailEntity implements java.io.Serializable {
   @Override
   public int hashCode() {
     return Objects.hash(
-      emailid, namedentityid, emailtypeid, emailaddress, isprimary, isactive);
+      emailid, namedentityid, emailtypeid, emailtype, emailaddress, isprimary, isactive);
   }
 }

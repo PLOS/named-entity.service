@@ -20,7 +20,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.UniqueidentifierDTO;
@@ -71,18 +70,18 @@ public class NamedEntityServiceTest {
     /*  EMAILS                                                            */
     /* ------------------------------------------------------------------ */
 
-    List<EmailDTO> emails = new ArrayList<>();
+    List<EmailEntity> emails = new ArrayList<>();
 
-    EmailDTO workEmail = new EmailDTO();
+    EmailEntity workEmail = new EmailEntity();
     workEmail.setEmailtype("Work");
     workEmail.setEmailaddress("fu.manchu.work@foo.com");
-    workEmail.setIsprimary(true);
+    workEmail.setIsprimary((byte)1);
     emails.add( workEmail );
 
-    EmailDTO personalEmail = new EmailDTO();
+    EmailEntity personalEmail = new EmailEntity();
     personalEmail.setEmailtype("Personal");
     personalEmail.setEmailaddress("fu.manchu.home@foo.com");
-    personalEmail.setIsprimary(false);
+    personalEmail.setIsprimary((byte)0);
     emails.add( personalEmail );
 
     composite.setEmails( emails );
@@ -175,7 +174,7 @@ public class NamedEntityServiceTest {
     List<AddressEntity> addressesEntities = namedEntityService.findAddressesByNedId(nedId);
     assertEquals(1, addressesEntities.size());
 
-    List<EmailDTO> emailsDto = namedEntityService.findEmailsByNedId(nedId);
+    List<EmailEntity> emailsDto = namedEntityService.findEmailsByNedId(nedId);
     assertEquals(2, emailsDto.size());
 
     List<PhonenumberDTO> phonenumbersDto = namedEntityService.findPhoneNumbersByNedId(nedId);
@@ -214,12 +213,12 @@ public class NamedEntityServiceTest {
 
     IndividualComposite composite = newCompositeIndividualWithRole();
 
-    List<EmailDTO> emails = new ArrayList<>();
+    List<EmailEntity> emails = new ArrayList<>();
 
-    EmailDTO workEmail = new EmailDTO();
+    EmailEntity workEmail = new EmailEntity();
     workEmail.setEmailtype("Work");
     workEmail.setEmailaddress("foo@bar.com");
-    workEmail.setIsprimary(true);
+    workEmail.setIsprimary((byte)1);
     emails.add( workEmail );
 
     composite.setEmails( emails );

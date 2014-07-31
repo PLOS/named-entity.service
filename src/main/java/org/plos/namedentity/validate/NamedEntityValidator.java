@@ -23,8 +23,8 @@ import org.springframework.core.Ordered;
 
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
+import org.plos.namedentity.api.entity.EmailEntity;
 
 public class NamedEntityValidator implements Ordered {
 
@@ -64,7 +64,7 @@ public class NamedEntityValidator implements Ordered {
     //TODO - *** REMOVE DEMO HACK *** 
 
     if (args != null && args.length > 0 && args[0] instanceof IndividualComposite) {
-      for (EmailDTO email : ((IndividualComposite) args[0]).getEmails()) {
+      for (EmailEntity email : ((IndividualComposite) args[0]).getEmails()) {
         if ("foo@bar.com".equals(email.getEmailaddress())) {
           throw new NedValidationException("Validation Phase 2 Failure. foo@bar.com backdoor detected !!!");
         }
