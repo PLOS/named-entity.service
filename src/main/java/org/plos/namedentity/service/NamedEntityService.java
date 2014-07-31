@@ -17,11 +17,11 @@
 package org.plos.namedentity.service;
 
 import org.plos.namedentity.api.IndividualComposite;
-import org.plos.namedentity.api.dto.AddressDTO;
 import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.UniqueidentifierDTO;
+import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
 
 import java.util.List;
@@ -36,7 +36,7 @@ public interface NamedEntityService {
 
   public IndividualEntity          findIndividualByNedId  (Integer nedId);
   public List<IndividualEntity>    findIndividualsByUid   (Integer srcTypeId, String uid);
-  public List<AddressDTO>          findAddressesByNedId   (Integer nedId);
+  public List<AddressEntity>       findAddressesByNedId   (Integer nedId);
   public List<EmailDTO>            findEmailsByNedId      (Integer nedId);
   public List<PhonenumberDTO>      findPhoneNumbersByNedId(Integer nedId);
   public List<RoleDTO>             findRolesByNedId       (Integer nedId);

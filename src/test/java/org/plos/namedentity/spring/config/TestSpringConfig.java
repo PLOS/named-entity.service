@@ -19,11 +19,11 @@ package org.plos.namedentity.spring.config;
 import org.mockito.Mockito;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.dto.AddressDTO;
 import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.UniqueidentifierDTO;
+import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
@@ -116,7 +116,7 @@ public class TestSpringConfig {
       .thenReturn( individualDto );
 
     when(mockNamedEntityService.findAddressesByNedId(anyInt()))
-      .thenReturn( newAddressesDto() );
+      .thenReturn( newAddressEntities() );
 
     when(mockNamedEntityService.findEmailsByNedId(anyInt()))
       .thenReturn( newEmailsDto() );
@@ -168,10 +168,10 @@ public class TestSpringConfig {
     return entity;
   }
 
-  static private List<AddressDTO> newAddressesDto() {
-    List<AddressDTO> addresses = new ArrayList<>();
+  static private List<AddressEntity> newAddressEntities() {
+    List<AddressEntity> addresses = new ArrayList<>();
 
-    AddressDTO address = new AddressDTO();
+    AddressEntity address = new AddressEntity();
     address.setAddresstype("Office");
     address.setAddressline1("addressline1");
     address.setAddressline2("addressline2");
@@ -179,7 +179,7 @@ public class TestSpringConfig {
     address.setStatecodetype("CA");
     address.setCountrycodetype("United States");
     address.setPostalcode("1234567");
-    address.setIsprimary(true);
+    address.setIsprimary((byte)1);
     addresses.add( address );
 
     return addresses;

@@ -22,7 +22,6 @@ import org.jooq.Result;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.plos.namedentity.api.dto.AddressDTO;
 import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
@@ -519,7 +518,7 @@ public class NamedEntityDBServiceTest {
     // FIND BY JOIN-QUERY 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<AddressDTO> addresses = nedQuery.findAddressesByNedId(savedAddress.getNamedentityid());
+    List<AddressEntity> addresses = nedQuery.findAddressesByNedId(savedAddress.getNamedentityid());
     assertTrue( addresses.size() > 0 );
             
     //TODO : FIND BY ATTRIBUTE

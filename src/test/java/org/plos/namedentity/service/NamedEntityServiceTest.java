@@ -20,11 +20,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.dto.AddressDTO;
 import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.UniqueidentifierDTO;
+import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
@@ -120,9 +120,9 @@ public class NamedEntityServiceTest {
     /*  ADDRESSES                                                         */
     /* ------------------------------------------------------------------ */
 
-    List<AddressDTO> addresses = new ArrayList<>();
+    List<AddressEntity> addresses = new ArrayList<>();
 
-    AddressDTO officeAddress = new AddressDTO();
+    AddressEntity officeAddress = new AddressEntity();
     officeAddress.setAddresstype("Office");
     officeAddress.setAddressline1("addressline1");
     officeAddress.setAddressline2("addressline2");
@@ -130,7 +130,7 @@ public class NamedEntityServiceTest {
     officeAddress.setStatecodetype("CA");
     officeAddress.setCountrycodetype("United States");
     officeAddress.setPostalcode("1234567");
-    officeAddress.setIsprimary(true);
+    officeAddress.setIsprimary((byte)1);
     addresses.add( officeAddress );
 
     composite.setAddresses( addresses );
@@ -172,8 +172,8 @@ public class NamedEntityServiceTest {
     IndividualEntity entity = namedEntityService.findIndividualByNedId(nedId);
     assertNotNull( entity );
 
-    List<AddressDTO> addressesDto = namedEntityService.findAddressesByNedId(nedId);
-    assertEquals(1, addressesDto.size());
+    List<AddressEntity> addressesEntities = namedEntityService.findAddressesByNedId(nedId);
+    assertEquals(1, addressesEntities.size());
 
     List<EmailDTO> emailsDto = namedEntityService.findEmailsByNedId(nedId);
     assertEquals(2, emailsDto.size());

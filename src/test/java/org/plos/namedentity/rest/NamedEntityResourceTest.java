@@ -19,13 +19,13 @@ package org.plos.namedentity.rest;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
-import org.plos.namedentity.api.dto.AddressDTO;
 import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.GlobaltypeDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.TypedescriptionDTO;
 import org.plos.namedentity.api.dto.UniqueidentifierDTO;
+import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
 
 import javax.ws.rs.client.Entity;
@@ -151,14 +151,14 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    AddressDTO[] addresses = mapper.readValue(jsonPayload, AddressDTO[].class);
+    AddressEntity[] addresses = mapper.readValue(jsonPayload, AddressEntity[].class);
     assertEquals(1, addresses.length);
 
-    AddressDTO address = addresses[0];
+    AddressEntity address = addresses[0];
     assertEquals("Office", address.getAddresstype());
     assertEquals("city", address.getCity());
     assertEquals("1234567", address.getPostalcode());
-    assertTrue( address.getIsprimary() );
+    assertTrue(address.getIsprimary() == 1);
 
     //TODO - CREATE, UPDATE, DELETE
   }

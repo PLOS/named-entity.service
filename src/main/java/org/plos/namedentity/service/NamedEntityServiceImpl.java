@@ -18,7 +18,6 @@ package org.plos.namedentity.service;
 
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.dto.AddressDTO;
 import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
@@ -96,7 +95,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     //TODO - move to transformer
     if (composite.getAddresses() != null) {
-      for (AddressDTO address : composite.getAddresses()) {
+      for (AddressEntity address : composite.getAddresses()) {
         Integer addressTypeId   = findTypeValueByName(addressTypeClassId, address.getAddresstype());
         Integer countryTypeId   = findTypeValueByName(countryTypeClassId, address.getCountrycodetype());
         Integer stateCodeTypeId = findTypeValueByName(stateCodeTypeClassId, address.getStatecodetype());
@@ -111,7 +110,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
         addressEntity.setStatecodetypeid(stateCodeTypeId);
         addressEntity.setCountrycodetypeid(countryTypeId);
         addressEntity.setPostalcode(address.getPostalcode());
-        addressEntity.setIsprimary(address.getIsprimary()? (byte)1 : (byte)0);
+        addressEntity.setIsprimary(1 == address.getIsprimary() ? (byte)1 : (byte)0);
 
         nedDBSvc.create( addressEntity );
       }
@@ -216,7 +215,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   }
 
   @Override
-  public List<AddressDTO> findAddressesByNedId(Integer nedId) {
+  public List<AddressEntity> findAddressesByNedId(Integer nedId) {
     return ((NamedEntityQueries)nedDBSvc).findAddressesByNedId(nedId);
   }
 

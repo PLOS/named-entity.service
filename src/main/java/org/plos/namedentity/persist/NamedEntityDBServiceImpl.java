@@ -22,7 +22,6 @@ import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
-import org.plos.namedentity.api.dto.AddressDTO;
 import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
@@ -282,7 +281,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
   }
 
   @Override
-  public List<AddressDTO> findAddressesByNedId(Integer nedId) {
+  public List<AddressEntity> findAddressesByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription addresstype, a.addressline1, a.addressline2, 
                a.addressline3, a.city, a.postalCode, a.isprimary,
@@ -312,7 +311,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt3).on(a.COUNTRYCODETYPEID.equal(gt3.GLOBALTYPEID))
       .where(a.NAMEDENTITYID.equal(nedId))
       .fetch()
-      .into(AddressDTO.class);
+      .into(AddressEntity.class);
   }
 
   @Override

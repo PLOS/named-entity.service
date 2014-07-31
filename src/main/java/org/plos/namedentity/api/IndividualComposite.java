@@ -16,29 +16,20 @@
  */
 package org.plos.namedentity.api;
 
-import org.plos.namedentity.api.dto.AddressDTO;
 import org.plos.namedentity.api.dto.EmailDTO;
 import org.plos.namedentity.api.dto.PhonenumberDTO;
 import org.plos.namedentity.api.dto.RoleDTO;
 import org.plos.namedentity.api.dto.UniqueidentifierDTO;
+import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
 
 import java.util.List;
 
 public class IndividualComposite {
-//
-//  private String namedentityid;
-//  private String firstname;
-//  private String middlename;
-//  private String lastname;
-//  private String nameprefix;
-//  private String namesuffix;
-//  private String preferredlanguage;
-//  private String preferredcommunication;
-//
+
   private IndividualEntity          individual;
   private RoleDTO                   role;
-  private List<AddressDTO>          addresses;
+  private List<AddressEntity>       addresses;
   private List<EmailDTO>            emails;
   private List<PhonenumberDTO>      phonenumbers;
   private List<UniqueidentifierDTO> uniqueidentifiers;
@@ -110,10 +101,10 @@ public class IndividualComposite {
     this.role = role;
   }
   
-  public List<AddressDTO> getAddresses() {
+  public List<AddressEntity> getAddresses() {
     return addresses;
   }
-  public void setAddresses(List<AddressDTO> addresses) {
+  public void setAddresses(List<AddressEntity> addresses) {
     this.addresses = addresses;
   }
   
