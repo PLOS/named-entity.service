@@ -24,29 +24,32 @@ public class OrganizationEntity implements java.io.Serializable {
 
   private static final long serialVersionUID = 276513267;
 
-  private java.lang.Integer namedentityid;
-  private java.lang.Integer organizationtypeid;
-  private java.lang.String  organizationfamiliarname;
-  private java.lang.String  organizationlegalname;
-  private java.lang.Integer organizationmaincontactid;
-  private java.lang.Byte    isactive;
-  private java.lang.Byte    isvisible;
-  private java.lang.String  url;
+  private Integer namedentityid;
+  private Integer organizationtypeid;
+  private String  organizationtype;
+  private String  organizationfamiliarname;
+  private String  organizationlegalname;
+  private Integer organizationmaincontactid;
+  private Byte    isactive;
+  private Byte    isvisible;
+  private String  url;
 
   public OrganizationEntity() {}
 
   public OrganizationEntity(
-    java.lang.Integer namedentityid,
-    java.lang.Integer organizationtypeid,
-    java.lang.String  organizationfamiliarname,
-    java.lang.String  organizationlegalname,
-    java.lang.Integer organizationmaincontactid,
-    java.lang.Byte    isactive,
-    java.lang.Byte    isvisible,
-    java.lang.String  url
+    Integer namedentityid,
+    Integer organizationtypeid,
+    String  organizationtype,
+    String  organizationfamiliarname,
+    String  organizationlegalname,
+    Integer organizationmaincontactid,
+    Byte    isactive,
+    Byte    isvisible,
+    String  url
   ) {
     this.namedentityid             = namedentityid;
     this.organizationtypeid        = organizationtypeid;
+    this.organizationtype          = organizationtype;
     this.organizationfamiliarname  = organizationfamiliarname;
     this.organizationlegalname     = organizationlegalname;
     this.organizationmaincontactid = organizationmaincontactid;
@@ -117,5 +120,13 @@ public class OrganizationEntity implements java.io.Serializable {
 
   public void setUrl(java.lang.String url) {
     this.url = url;
+  }
+  
+  public String getOrganizationtype() {
+      return organizationtype;
+  }
+  
+  public void setOrganizationtype(String organizationtype) {
+      this.organizationtype = organizationtype;
   }
 }
