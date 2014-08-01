@@ -410,7 +410,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
   }
 
   /* ---------------------------------------------------------------------- */
-  /*  INTERNAL MAP : DTO POJO -> { JooqTable, JooqPkFieldForTable }         */
+  /*  INTERNAL MAP : ENTITY POJO -> { JooqTable, JooqPkFieldForTable }      */
   /* ---------------------------------------------------------------------- */
 
   static class TablePkPair {
@@ -426,7 +426,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
   }
 
   /*
-   * This map is used internally to associate a DTO with a database table
+   * This map is used internally to associate an entity pojo with a database table
    * and primary key for that table. The database references are JOOQ wrappers
    * (Table and TableField objects).
    *
@@ -437,23 +437,23 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
    * the appropriate class in org.plos.namedentity.persist.db.namedentities.tables
    */
 
-  private static final Map<Class,TablePkPair> dtoTableMap;
+  private static final Map<Class,TablePkPair> entityTableMap;
   static {
-    dtoTableMap = new ConcurrentHashMap<>();
-    dtoTableMap.put(AddressEntity.class, new TablePkPair(ADDRESSES, ADDRESSES.ADDRESSID));
-    dtoTableMap.put(EmailEntity.class, new TablePkPair(EMAILS, EMAILS.EMAILID));
-    dtoTableMap.put(GlobaltypeEntity.class, new TablePkPair(GLOBALTYPES, GLOBALTYPES.GLOBALTYPEID));
-    dtoTableMap.put(IndividualEntity.class, new TablePkPair(INDIVIDUALS, INDIVIDUALS.NAMEDENTITYID));
-    dtoTableMap.put(JournalEntity.class, new TablePkPair(JOURNALS, JOURNALS.JOURNALID));
-    dtoTableMap.put(PhonenumberEntity.class, new TablePkPair(PHONENUMBERS, PHONENUMBERS.PHONENUMBERID));
-    dtoTableMap.put(RoleEntity.class, new TablePkPair(ROLES, ROLES.ROLEID));
-    dtoTableMap.put(TypedescriptionEntity.class, new TablePkPair(TYPEDESCRIPTIONS, TYPEDESCRIPTIONS.TYPEID));
-    dtoTableMap.put(UniqueidentifierEntity.class, new TablePkPair(UNIQUEIDENTIFIERS, UNIQUEIDENTIFIERS.UNIQUEIDENTIFIERSID));
+    entityTableMap = new ConcurrentHashMap<>();
+    entityTableMap.put(AddressEntity.class, new TablePkPair(ADDRESSES, ADDRESSES.ADDRESSID));
+    entityTableMap.put(EmailEntity.class, new TablePkPair(EMAILS, EMAILS.EMAILID));
+    entityTableMap.put(GlobaltypeEntity.class, new TablePkPair(GLOBALTYPES, GLOBALTYPES.GLOBALTYPEID));
+    entityTableMap.put(IndividualEntity.class, new TablePkPair(INDIVIDUALS, INDIVIDUALS.NAMEDENTITYID));
+    entityTableMap.put(JournalEntity.class, new TablePkPair(JOURNALS, JOURNALS.JOURNALID));
+    entityTableMap.put(PhonenumberEntity.class, new TablePkPair(PHONENUMBERS, PHONENUMBERS.PHONENUMBERID));
+    entityTableMap.put(RoleEntity.class, new TablePkPair(ROLES, ROLES.ROLEID));
+    entityTableMap.put(TypedescriptionEntity.class, new TablePkPair(TYPEDESCRIPTIONS, TYPEDESCRIPTIONS.TYPEID));
+    entityTableMap.put(UniqueidentifierEntity.class, new TablePkPair(UNIQUEIDENTIFIERS, UNIQUEIDENTIFIERS.UNIQUEIDENTIFIERSID));
   }
   private static Table table(Class key) {
-    return dtoTableMap.get(key).table();
+    return entityTableMap.get(key).table();
   }
   private static TableField pkField(Class key) {
-    return dtoTableMap.get(key).pkField();
+    return entityTableMap.get(key).pkField();
   }
 }

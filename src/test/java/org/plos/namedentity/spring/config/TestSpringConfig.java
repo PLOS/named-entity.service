@@ -124,10 +124,10 @@ public class TestSpringConfig {
       .thenReturn( newPhonenumberEntities() );
 
     when(mockNamedEntityService.findRolesByNedId(anyInt()))
-      .thenReturn( newRolesDto() );
+      .thenReturn( newRoleEntities() );
 
     when(mockNamedEntityService.findUniqueIdsByNedId(anyInt()))
-      .thenReturn( newUidsDto() );
+      .thenReturn( newUidEntities() );
 
     return mockNamedEntityService;
   }
@@ -224,7 +224,7 @@ public class TestSpringConfig {
     return phonenumbers;
   }
 
-  static private List<RoleEntity> newRolesDto() {
+  static private List<RoleEntity> newRoleEntities() {
     List<RoleEntity> roles = new ArrayList<>();
 
     RoleEntity author = new RoleEntity();
@@ -253,7 +253,7 @@ public class TestSpringConfig {
     return individualEntities;
   }
 
-  static private List<UniqueidentifierEntity> newUidsDto() {
+  static private List<UniqueidentifierEntity> newUidEntities() {
     List<UniqueidentifierEntity> uids = new ArrayList<>();
     for (int i = 1; i <=2; i++) {
       uids.add(new UniqueidentifierEntity(null, 1, null, "0000-0002-9430-319"+i, "ORCID"));

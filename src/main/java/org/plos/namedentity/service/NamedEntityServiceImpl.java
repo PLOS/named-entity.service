@@ -184,15 +184,15 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     Integer uidTypeClassId = findTypeClassStartWith("Unique Identifier Types");
 
     if (composite.getUniqueidentifiers() != null) {
-      for (UniqueidentifierEntity uidDto : composite.getUniqueidentifiers()) {
-        Integer uidTypeId = findTypeValueByName(uidTypeClassId, uidDto.getUniqueidentifiertype());
+      for (UniqueidentifierEntity uidEntity : composite.getUniqueidentifiers()) {
+        Integer uidTypeId = findTypeValueByName(uidTypeClassId, uidEntity.getUniqueidentifiertype());
 
-        UniqueidentifierEntity uidEntity = new UniqueidentifierEntity();
-        uidEntity.setNamedentityid(nedId);
-        uidEntity.setUniqueidentifiertypeid(uidTypeId);
-        uidEntity.setUniqueidentifier(uidDto.getUniqueidentifier());
+        UniqueidentifierEntity uid = new UniqueidentifierEntity();
+        uid.setNamedentityid(nedId);
+        uid.setUniqueidentifiertypeid(uidTypeId);
+        uid.setUniqueidentifier(uid.getUniqueidentifier());
 
-        nedDBSvc.create( uidEntity );
+        nedDBSvc.create( uid );
       }
     }
 

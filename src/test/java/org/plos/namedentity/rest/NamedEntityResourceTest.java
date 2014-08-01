@@ -345,7 +345,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     updatedTypeClass.setDescription(UPDATE_TYPE_DESC);
     updatedTypeClass.setHowused(UPDATE_TYPE_USAGE);
 
-    // marshal Type description DTO object to JSON String.
+    // marshal Type description pojo object to JSON String.
 
     Writer writer = new StringWriter();
     mapper.writeValue(writer, updatedTypeClass);
@@ -474,7 +474,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     GlobaltypeEntity updatedTypeVal = foundTypeVal;
     updatedTypeVal.setShortdescription("Update Type Value #1 Short Description");
 
-    // marshal Type value DTO object to JSON String.
+    // marshal Type value pojo object to JSON String.
 
     Writer writer = new StringWriter();
     mapper.writeValue(writer, updatedTypeVal);

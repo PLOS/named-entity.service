@@ -141,10 +141,10 @@ public class NamedEntityServiceTest {
 
     List<UniqueidentifierEntity> uids = new ArrayList<>();
 
-    UniqueidentifierEntity uidDto = new UniqueidentifierEntity();
-    uidDto.setUniqueidentifiertype("ORCID");
-    uidDto.setUniqueidentifier("0000-0001-9430-319X");
-    uids.add( uidDto );
+    UniqueidentifierEntity uidEntity = new UniqueidentifierEntity();
+    uidEntity.setUniqueidentifiertype("ORCID");
+    uidEntity.setUniqueidentifier("0000-0001-9430-319X");
+    uids.add( uidEntity );
 
     composite.setUniqueidentifiers( uids );
 
@@ -175,14 +175,14 @@ public class NamedEntityServiceTest {
     List<AddressEntity> addressesEntities = namedEntityService.findAddressesByNedId(nedId);
     assertEquals(1, addressesEntities.size());
 
-    List<EmailEntity> emailsDto = namedEntityService.findEmailsByNedId(nedId);
-    assertEquals(2, emailsDto.size());
+    List<EmailEntity> emailEntities = namedEntityService.findEmailsByNedId(nedId);
+    assertEquals(2, emailEntities.size());
 
-    List<PhonenumberEntity> phonenumbersDto = namedEntityService.findPhoneNumbersByNedId(nedId);
-    assertEquals(3, phonenumbersDto.size());
+    List<PhonenumberEntity> phonenumberEntities = namedEntityService.findPhoneNumbersByNedId(nedId);
+    assertEquals(3, phonenumberEntities.size());
 
-    List<RoleEntity> rolesDto = namedEntityService.findRolesByNedId(nedId);
-    assertEquals(1, rolesDto.size());
+    List<RoleEntity> roleEntities = namedEntityService.findRolesByNedId(nedId);
+    assertEquals(1, roleEntities.size());
 
     List<UniqueidentifierEntity> uidEntities = namedEntityService.findUniqueIdsByNedId(nedId);
     assertEquals(1, uidEntities.size());

@@ -41,12 +41,8 @@ public class UniqueidentifierEntity implements java.io.Serializable {
       Integer uniqueidentifiertypeid,
       String  uniqueidentifier,
       String  uniqueidentifiertype) {
-    this(uniqueidentifiersid,
-        namedentityid,
-        uniqueidentifiertypeid,
-        uniqueidentifier
 
-        );
+    this(uniqueidentifiersid, namedentityid, uniqueidentifiertypeid, uniqueidentifier);
     this.uniqueidentifiertype = uniqueidentifiertype;
   }
 
