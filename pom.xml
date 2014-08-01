@@ -13,7 +13,8 @@
   <name>Named Entity JAX-RS Service</name>
 
   <properties>
-    <h2db.version>1.4.178</h2db.version>
+    <!--<h2db.version>1.4.178</h2db.version>-->
+    <h2db.version>1.4.180</h2db.version>
     <jackson.version>1.9.12</jackson.version>
     <jersey.version>1.17.1</jersey.version>
     <mysql.connector.version>5.1.30</mysql.connector.version> 
