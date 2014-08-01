@@ -21,105 +21,126 @@ import java.util.Objects;
 /**
  * Modified JOOQ generated class(pojo=true).
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PhonenumberEntity implements java.io.Serializable {
 
   private static final long serialVersionUID = -1728456967;
 
-  private java.lang.Integer phonenumberid;
-  private java.lang.Integer namedentityid;
-  private java.lang.Integer phonenumbertypeid;
-  private java.lang.Integer countrycodetypeid;
-  private java.lang.String  phonenumber;
-  private java.lang.String  extension;
-  private java.lang.Byte    isprimary;
-  private java.lang.Byte    isactive;
+  private Integer phonenumberid;
+  private Integer namedentityid;
+  private Integer phonenumbertypeid;
+  private Integer countrycodetypeid;
+  private String  phonenumber;
+  private String  extension;
+  private Boolean isprimary;
+  private Boolean isactive;
+
+  private String  phonenumbertype;
+  private String  countrycodetype;
 
   public PhonenumberEntity() {
-    this(null,null,null,null,null,null,null,null);
+    isactive = true;
+    isprimary = true;
+//    this(null,null,null,null,null,null,null,null);
   }
 
-  public PhonenumberEntity(
-    java.lang.Integer phonenumberid,
-    java.lang.Integer namedentityid,
-    java.lang.Integer phonenumbertypeid,
-    java.lang.Integer countrycodetypeid,
-    java.lang.String  phonenumber,
-    java.lang.String  extension,
-    java.lang.Byte    isprimary,
-    java.lang.Byte    isactive
-  ) {
-    this.phonenumberid     = phonenumberid;
-    this.namedentityid     = namedentityid;
-    this.phonenumbertypeid = phonenumbertypeid;
-    this.countrycodetypeid = countrycodetypeid;
-    this.phonenumber       = phonenumber;
-    this.extension         = extension;
-    this.isprimary         = (isprimary != null ? isprimary : (byte)1);
-    this.isactive          = (isactive != null ? isactive : (byte)1);
+//  public PhonenumberEntity(
+//    Integer phonenumberid,
+//    Integer namedentityid,
+//    Integer phonenumbertypeid,
+//    Integer countrycodetypeid,
+//    String  phonenumber,
+//    String  extension,
+//    Byte    isprimary,
+//    Byte    isactive
+//  ) {
+//    this.phonenumberid     = phonenumberid;
+//    this.namedentityid     = namedentityid;
+//    this.phonenumbertypeid = phonenumbertypeid;
+//    this.countrycodetypeid = countrycodetypeid;
+//    this.phonenumber       = phonenumber;
+//    this.extension         = extension;
+//    this.isprimary         = (isprimary != null ? isprimary : (byte)1);
+//    this.isactive          = (isactive != null ? isactive : (byte)1);
+//  }
+
+  public String getPhonenumbertype() {
+    return phonenumbertype;
   }
 
-  public java.lang.Integer getPhonenumberid() {
+  public void setPhonenumbertype(String phonenumbertype) {
+    this.phonenumbertype = phonenumbertype;
+  }
+
+  public String getCountrycodetype() {
+    return countrycodetype;
+  }
+
+  public void setCountrycodetype(String countrycodetype) {
+    this.countrycodetype = countrycodetype;
+  }
+
+  public Integer getPhonenumberid() {
     return this.phonenumberid;
   }
 
-  public void setPhonenumberid(java.lang.Integer phonenumberid) {
+  public void setPhonenumberid(Integer phonenumberid) {
     this.phonenumberid = phonenumberid;
   }
 
-  public java.lang.Integer getNamedentityid() {
+  public Integer getNamedentityid() {
     return this.namedentityid;
   }
 
-  public void setNamedentityid(java.lang.Integer namedentityid) {
+  public void setNamedentityid(Integer namedentityid) {
     this.namedentityid = namedentityid;
   }
 
-  public java.lang.Integer getPhonenumbertypeid() {
+  public Integer getPhonenumbertypeid() {
     return this.phonenumbertypeid;
   }
 
-  public void setPhonenumbertypeid(java.lang.Integer phonenumbertypeid) {
+  public void setPhonenumbertypeid(Integer phonenumbertypeid) {
     this.phonenumbertypeid = phonenumbertypeid;
   }
 
-  public java.lang.Integer getCountrycodetypeid() {
+  public Integer getCountrycodetypeid() {
     return this.countrycodetypeid;
   }
 
-  public void setCountrycodetypeid(java.lang.Integer countrycodetypeid) {
+  public void setCountrycodetypeid(Integer countrycodetypeid) {
     this.countrycodetypeid = countrycodetypeid;
   }
 
-  public java.lang.String getPhonenumber() {
+  public String getPhonenumber() {
     return this.phonenumber;
   }
 
-  public void setPhonenumber(java.lang.String phonenumber) {
+  public void setPhonenumber(String phonenumber) {
     this.phonenumber = phonenumber;
   }
 
-  public java.lang.String getExtension() {
+  public String getExtension() {
     return this.extension;
   }
 
-  public void setExtension(java.lang.String extension) {
+  public void setExtension(String extension) {
     this.extension = extension;
   }
 
-  public java.lang.Byte getIsprimary() {
+  public Boolean getIsprimary() {
     return this.isprimary;
   }
 
-  public void setIsprimary(java.lang.Byte isprimary) {
+  public void setIsprimary(Boolean isprimary) {
     this.isprimary = isprimary;
   }
 
-  public java.lang.Byte getIsactive() {
+  public Boolean getIsactive() {
     return this.isactive;
   }
 
-  public void setIsactive(java.lang.Byte isactive) {
+  public void setIsactive(Boolean isactive) {
     this.isactive = isactive;
   }
 

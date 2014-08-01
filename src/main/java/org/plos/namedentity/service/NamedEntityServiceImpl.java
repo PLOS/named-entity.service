@@ -18,9 +18,6 @@ package org.plos.namedentity.service;
 
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.dto.PhonenumberDTO;
-import org.plos.namedentity.api.dto.RoleDTO;
-import org.plos.namedentity.api.dto.UniqueidentifierDTO;
 import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
@@ -123,7 +120,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     Integer countryCodeTypeClassId = findTypeClassStartWith("Country Codes for Phone Numbers");
 
     if (composite.getPhonenumbers() != null) {
-      for (PhonenumberDTO phonenumber : composite.getPhonenumbers()) {
+      for (PhonenumberEntity phonenumber : composite.getPhonenumbers()) {
         Integer phoneTypeId       = findTypeValueByName(phoneTypeClassId, phonenumber.getPhonenumbertype());
         Integer countryCodeTypeId = findTypeValueByName(countryCodeTypeClassId, phonenumber.getCountrycodetype());
 
@@ -133,7 +130,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
         phoneEntity.setCountrycodetypeid(countryCodeTypeId);
         phoneEntity.setPhonenumber(phonenumber.getPhonenumber());
         phoneEntity.setExtension(phonenumber.getExtension());
-        phoneEntity.setIsprimary(phonenumber.getIsprimary()? (byte)1 : (byte)0);
+        phoneEntity.setIsprimary(phonenumber.getIsprimary());
 
         nedDBSvc.create( phoneEntity );
       }
@@ -166,7 +163,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     Integer srcAppTypeClassId = findTypeClassStartWith("Source Applications");
     Integer roleTypeClassId   = findTypeClassStartWith("Roles");
 
-    RoleDTO role = composite.getRole();
+    RoleEntity role = composite.getRole();
     if (role != null) {
       Integer srcAppTypeId = findTypeValueByName(srcAppTypeClassId, "Editorial Manager");
       Integer roleTypeId   = findTypeValueByName(roleTypeClassId, role.getRoletype());
@@ -187,7 +184,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     Integer uidTypeClassId = findTypeClassStartWith("Unique Identifier Types");
 
     if (composite.getUniqueidentifiers() != null) {
-      for (UniqueidentifierDTO uidDto : composite.getUniqueidentifiers()) {
+      for (UniqueidentifierEntity uidDto : composite.getUniqueidentifiers()) {
         Integer uidTypeId = findTypeValueByName(uidTypeClassId, uidDto.getUniqueidentifiertype());
 
         UniqueidentifierEntity uidEntity = new UniqueidentifierEntity();
@@ -224,17 +221,17 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   }
 
   @Override
-  public List<PhonenumberDTO> findPhoneNumbersByNedId(Integer nedId) {
+  public List<PhonenumberEntity> findPhoneNumbersByNedId(Integer nedId) {
     return ((NamedEntityQueries)nedDBSvc).findPhoneNumbersByNedId(nedId);
   }
 
   @Override
-  public List<RoleDTO> findRolesByNedId(Integer nedId) {
+  public List<RoleEntity> findRolesByNedId(Integer nedId) {
     return ((NamedEntityQueries)nedDBSvc).findRolesByNedId(nedId);
   }
 
   @Override
-  public List<UniqueidentifierDTO> findUniqueIdsByNedId(Integer nedId) {
+  public List<UniqueidentifierEntity> findUniqueIdsByNedId(Integer nedId) {
     return ((NamedEntityQueries)nedDBSvc).findUniqueIdsByNedId(nedId);
   }
     

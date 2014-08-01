@@ -19,22 +19,21 @@ package org.plos.namedentity.spring.config;
 import org.mockito.Mockito;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.dto.PhonenumberDTO;
-import org.plos.namedentity.api.dto.RoleDTO;
-import org.plos.namedentity.api.dto.UniqueidentifierDTO;
 import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
+import org.plos.namedentity.api.entity.PhonenumberEntity;
+import org.plos.namedentity.api.entity.RoleEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
+import org.plos.namedentity.api.entity.UniqueidentifierEntity;
 import org.plos.namedentity.rest.IndividualsResource;
 import org.plos.namedentity.rest.TypeclassesResource;
 import org.plos.namedentity.service.CrudService;
 import org.plos.namedentity.service.NamedEntityService;
-import org.plos.namedentity.utils.EntityPojoTransformer;
-import org.plos.namedentity.utils.Transformer;
 import org.springframework.context.annotation.Bean;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,15 +104,15 @@ public class TestSpringConfig {
   static public NamedEntityService namedEntityServiceHighApi() {
     NamedEntityService mockNamedEntityService =  Mockito.mock(NamedEntityService.class);
 
-    IndividualEntity individualDto = newIndividualEntity();
+    IndividualEntity individualEntity = newIndividualEntity();
 
     when(mockNamedEntityService.createIndividual(isA(IndividualComposite.class)))
-      .thenReturn(individualDto)
+      .thenReturn(individualEntity)
         .thenThrow(NedValidationException.class)
           .thenThrow(RuntimeException.class);
 
     when(mockNamedEntityService.findIndividualByNedId(anyInt()))
-      .thenReturn( individualDto );
+      .thenReturn( individualEntity );
 
     when(mockNamedEntityService.findAddressesByNedId(anyInt()))
       .thenReturn( newAddressEntities() );
@@ -122,7 +121,7 @@ public class TestSpringConfig {
       .thenReturn( newEmailEntities() );
 
     when(mockNamedEntityService.findPhoneNumbersByNedId(anyInt()))
-      .thenReturn( newPhonenumbersDto() );
+      .thenReturn( newPhonenumberEntities() );
 
     when(mockNamedEntityService.findRolesByNedId(anyInt()))
       .thenReturn( newRolesDto() );
@@ -131,11 +130,6 @@ public class TestSpringConfig {
       .thenReturn( newUidsDto() );
 
     return mockNamedEntityService;
-  }
-
-  @Bean 
-  static public Transformer transformer() {
-    return new EntityPojoTransformer();
   }
 
 //  @Bean
@@ -203,24 +197,24 @@ public class TestSpringConfig {
     return emails;
   }
 
-  static private List<PhonenumberDTO> newPhonenumbersDto() {
-    List<PhonenumberDTO> phonenumbers = new ArrayList<>();
+  static private List<PhonenumberEntity> newPhonenumberEntities() {
+    List<PhonenumberEntity> phonenumbers = new ArrayList<>();
 
-    PhonenumberDTO officePhone = new PhonenumberDTO();
+    PhonenumberEntity officePhone = new PhonenumberEntity();
     officePhone.setPhonenumbertype("Office");
     officePhone.setCountrycodetype("01");
     officePhone.setPhonenumber("123-456-7890");
     officePhone.setIsprimary(true);
     phonenumbers.add( officePhone );
 
-    PhonenumberDTO mobilePhone = new PhonenumberDTO();
+    PhonenumberEntity mobilePhone = new PhonenumberEntity();
     mobilePhone.setPhonenumbertype("Mobile");
     mobilePhone.setCountrycodetype("01");
     mobilePhone.setPhonenumber("123-444-0011");
     mobilePhone.setIsprimary(false);
     phonenumbers.add( mobilePhone );
 
-    PhonenumberDTO homePhone = new PhonenumberDTO();
+    PhonenumberEntity homePhone = new PhonenumberEntity();
     homePhone.setPhonenumbertype("Home");
     homePhone.setCountrycodetype("01");
     homePhone.setPhonenumber("123-555-6666");
@@ -230,12 +224,12 @@ public class TestSpringConfig {
     return phonenumbers;
   }
 
-  static private List<RoleDTO> newRolesDto() {
-    List<RoleDTO> roles = new ArrayList<>();
+  static private List<RoleEntity> newRolesDto() {
+    List<RoleEntity> roles = new ArrayList<>();
 
-    RoleDTO author = new RoleDTO();
+    RoleEntity author = new RoleEntity();
     author.setRoletype("Author");
-    author.setStartdate("2014-05-30");
+    author.setStartdate(new Timestamp(1401408000)); // "2014-05-30"
     roles.add( author );
 
     return roles;
@@ -259,10 +253,10 @@ public class TestSpringConfig {
     return individualEntities;
   }
 
-  static private List<UniqueidentifierDTO> newUidsDto() {
-    List<UniqueidentifierDTO> uids = new ArrayList<>();
+  static private List<UniqueidentifierEntity> newUidsDto() {
+    List<UniqueidentifierEntity> uids = new ArrayList<>();
     for (int i = 1; i <=2; i++) {
-      uids.add(new UniqueidentifierDTO(null, 1, "ORCID", "0000-0002-9430-319"+i));
+      uids.add(new UniqueidentifierEntity(null, 1, null, "0000-0002-9430-319"+i, "ORCID"));
     }
     return uids;
   }

@@ -24,36 +24,36 @@ import java.util.Objects;
 /**
  * Modified JOOQ generated class(pojo=true).
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @XmlRootElement
 public class GlobaltypeEntity implements java.io.Serializable {
 
   private static final long serialVersionUID = 541426103;
 
-  private java.lang.Integer  globaltypeid;
-  private java.lang.Integer  typeid;
-  private java.lang.String   shortdescription;
-  private java.lang.String   longdescription;
-  private java.lang.String   typecode;
-  private java.sql.Timestamp created;
-  private java.sql.Timestamp lastmodified;
-  private java.lang.Integer  createdby;
-  private java.lang.Integer  lastmodifiedby;
+  private Integer  globaltypeid;
+  private Integer  typeid;
+  private String   shortdescription;
+  private String   longdescription;
+  private String   typecode;
+  private Timestamp created;
+  private Timestamp lastmodified;
+  private Integer  createdby;
+  private Integer  lastmodifiedby;
 
   public GlobaltypeEntity() {
     this(null,null,null,null,null,null,null,null,null);
   }
 
   public GlobaltypeEntity(
-    java.lang.Integer  globaltypeid,
-    java.lang.Integer  typeid,
-    java.lang.String   shortdescription,
-    java.lang.String   longdescription,
-    java.lang.String   typecode,
-    java.sql.Timestamp created,
-    java.sql.Timestamp lastmodified,
-    java.lang.Integer  createdby,
-    java.lang.Integer  lastmodifiedby
+    Integer  globaltypeid,
+    Integer  typeid,
+    String   shortdescription,
+    String   longdescription,
+    String   typecode,
+    Timestamp created,
+    Timestamp lastmodified,
+    Integer  createdby,
+    Integer  lastmodifiedby
   ) {
     this.globaltypeid     = globaltypeid;
     this.typeid           = typeid;
@@ -68,43 +68,43 @@ public class GlobaltypeEntity implements java.io.Serializable {
     this.lastmodifiedby   = lastmodifiedby;
   }
 
-  public java.lang.Integer getGlobaltypeid() {
+  public Integer getGlobaltypeid() {
     return this.globaltypeid;
   }
 
-  public void setGlobaltypeid(java.lang.Integer globaltypeid) {
+  public void setGlobaltypeid(Integer globaltypeid) {
     this.globaltypeid = globaltypeid;
   }
 
-  public java.lang.Integer getTypeid() {
+  public Integer getTypeid() {
     return this.typeid;
   }
 
-  public void setTypeid(java.lang.Integer typeid) {
+  public void setTypeid(Integer typeid) {
     this.typeid = typeid;
   }
 
-  public java.lang.String getShortdescription() {
+  public String getShortdescription() {
     return this.shortdescription;
   }
 
-  public void setShortdescription(java.lang.String shortdescription) {
+  public void setShortdescription(String shortdescription) {
     this.shortdescription = shortdescription;
   }
 
-  public java.lang.String getLongdescription() {
+  public String getLongdescription() {
     return this.longdescription;
   }
 
-  public void setLongdescription(java.lang.String longdescription) {
+  public void setLongdescription(String longdescription) {
     this.longdescription = longdescription;
   }
 
-  public java.lang.String getTypecode() {
+  public String getTypecode() {
     return this.typecode;
   }
 
-  public void setTypecode(java.lang.String typecode) {
+  public void setTypecode(String typecode) {
     this.typecode = typecode;
   }
 
@@ -124,19 +124,19 @@ public class GlobaltypeEntity implements java.io.Serializable {
     this.lastmodified = lastmodified;
   }
 
-  public java.lang.Integer getCreatedby() {
+  public Integer getCreatedby() {
     return this.createdby;
   }
 
-  public void setCreatedby(java.lang.Integer createdby) {
+  public void setCreatedby(Integer createdby) {
     this.createdby = createdby;
   }
 
-  public java.lang.Integer getLastmodifiedby() {
+  public Integer getLastmodifiedby() {
     return this.lastmodifiedby;
   }
 
-  public void setLastmodifiedby(java.lang.Integer lastmodifiedby) {
+  public void setLastmodifiedby(Integer lastmodifiedby) {
     this.lastmodifiedby = lastmodifiedby;
   }
 

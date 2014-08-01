@@ -1,8 +1,6 @@
 package org.plos.namedentity.rest;
 
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.dto.GlobaltypeDTO;
-import org.plos.namedentity.api.dto.TypedescriptionDTO;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
 import org.plos.namedentity.service.CrudService;
@@ -47,9 +45,9 @@ public class TypeclassesResource extends BaseResource {
   }
 
   @POST
-  public Response createTypedescription(TypedescriptionDTO typeDescription) {
+  public Response createTypedescription(TypedescriptionEntity typeDescription) {
     try {
-      Integer pkId = crudService.create( transformer.toEntity(typeDescription) );
+      Integer pkId = crudService.create( typeDescription );
       TypedescriptionEntity entity = crudService.findById(pkId, TypedescriptionEntity.class);
       return Response.status(Response.Status.OK).entity( entity ).build();
     }
@@ -63,9 +61,9 @@ public class TypeclassesResource extends BaseResource {
 
   @PUT
   @Path("/{id}")
-  public Response updateTypedescription(TypedescriptionDTO typeDescription) {
+  public Response updateTypedescription(TypedescriptionEntity typeDescription) {
     try {
-      crudService.update( transformer.toEntity(typeDescription) );
+      crudService.update( typeDescription );
       TypedescriptionEntity entity = crudService.findById(
           typeDescription.getTypeid(), TypedescriptionEntity.class);
       return Response.status(Response.Status.OK).entity( entity ).build();
@@ -127,11 +125,10 @@ public class TypeclassesResource extends BaseResource {
 
   @POST
   @Path("/{typeclassid}/typevalues")
-  public Response createGlobalType(@PathParam("typeclassid") int typeClassId, GlobaltypeDTO globalType) {
+  public Response createGlobalType(@PathParam("typeclassid") int typeClassId, GlobaltypeEntity globalType) {
     try {
-      GlobaltypeEntity entity = transformer.toEntity(globalType);
-      entity.setTypeid(typeClassId);
-      Integer pkId = crudService.create(entity);
+      globalType.setTypeid(typeClassId);
+      Integer pkId = crudService.create(globalType);
 
       GlobaltypeEntity foundEntity = crudService.findById(pkId, GlobaltypeEntity.class);
       return Response.status(Response.Status.OK).entity( foundEntity ).build();
@@ -148,9 +145,9 @@ public class TypeclassesResource extends BaseResource {
   @Path("/{typeclassid}/typevalues/{typevalueid}")
   public Response updateGlobalType(@PathParam("typeclassid") int typeClassId,
                                    @PathParam("typevalueid") int typeValueId,
-                                   GlobaltypeDTO globalType) {
+                                   GlobaltypeEntity globalType) {
     try {
-      crudService.update( transformer.toEntity(globalType) );
+      crudService.update( globalType );
       GlobaltypeEntity entity = crudService.findById(
           globalType.getGlobaltypeid(), GlobaltypeEntity.class);
       return Response.status(Response.Status.OK).entity( entity ).build();

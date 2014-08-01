@@ -21,23 +21,40 @@ import java.util.Objects;
 /**
  * Modified JOOQ generated class(pojo=true).
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UniqueidentifierEntity implements java.io.Serializable {
 
   private static final long serialVersionUID = 1900442676;
 
-  private java.lang.Integer uniqueidentifiersid;
-  private java.lang.Integer namedentityid;
-  private java.lang.Integer uniqueidentifiertypeid;
-  private java.lang.String  uniqueidentifier;
+  private Integer uniqueidentifiersid;
+  private Integer namedentityid;
+  private String  uniqueidentifiertype;
+  private Integer uniqueidentifiertypeid;
+  private String  uniqueidentifier;
 
   public UniqueidentifierEntity() {}
 
+
   public UniqueidentifierEntity(
-    java.lang.Integer uniqueidentifiersid,
-    java.lang.Integer namedentityid,
-    java.lang.Integer uniqueidentifiertypeid,
-    java.lang.String  uniqueidentifier
+      Integer uniqueidentifiersid,
+      Integer namedentityid,
+      Integer uniqueidentifiertypeid,
+      String  uniqueidentifier,
+      String  uniqueidentifiertype) {
+    this(uniqueidentifiersid,
+        namedentityid,
+        uniqueidentifiertypeid,
+        uniqueidentifier
+
+        );
+    this.uniqueidentifiertype = uniqueidentifiertype;
+  }
+
+  public UniqueidentifierEntity(
+    Integer uniqueidentifiersid,
+    Integer namedentityid,
+    Integer uniqueidentifiertypeid,
+    String  uniqueidentifier
   ) {
     this.uniqueidentifiersid    = uniqueidentifiersid;
     this.namedentityid          = namedentityid;
@@ -45,35 +62,43 @@ public class UniqueidentifierEntity implements java.io.Serializable {
     this.uniqueidentifier       = uniqueidentifier;
   }
 
-  public java.lang.Integer getUniqueidentifiersid() {
+  public String getUniqueidentifiertype() {
+    return uniqueidentifiertype;
+  }
+
+  public void setUniqueidentifiertype(String uniqueidentifiertype) {
+    this.uniqueidentifiertype = uniqueidentifiertype;
+  }
+
+  public Integer getUniqueidentifiersid() {
     return this.uniqueidentifiersid;
   }
 
-  public void setUniqueidentifiersid(java.lang.Integer uniqueidentifiersid) {
+  public void setUniqueidentifiersid(Integer uniqueidentifiersid) {
     this.uniqueidentifiersid = uniqueidentifiersid;
   }
 
-  public java.lang.Integer getNamedentityid() {
+  public Integer getNamedentityid() {
     return this.namedentityid;
   }
 
-  public void setNamedentityid(java.lang.Integer namedentityid) {
+  public void setNamedentityid(Integer namedentityid) {
     this.namedentityid = namedentityid;
   }
 
-  public java.lang.Integer getUniqueidentifiertypeid() {
+  public Integer getUniqueidentifiertypeid() {
     return this.uniqueidentifiertypeid;
   }
 
-  public void setUniqueidentifiertypeid(java.lang.Integer uniqueidentifiertypeid) {
+  public void setUniqueidentifiertypeid(Integer uniqueidentifiertypeid) {
     this.uniqueidentifiertypeid = uniqueidentifiertypeid;
   }
 
-  public java.lang.String getUniqueidentifier() {
+  public String getUniqueidentifier() {
     return this.uniqueidentifier;
   }
 
-  public void setUniqueidentifier(java.lang.String uniqueidentifier) {
+  public void setUniqueidentifier(String uniqueidentifier) {
     this.uniqueidentifier = uniqueidentifier;
   }
 
