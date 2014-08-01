@@ -19,48 +19,48 @@ package org.plos.namedentity.api.entity;
 /**
  * Modified JOOQ generated class(pojo=true).
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SubjectareaEntity implements java.io.Serializable {
 
   private static final long serialVersionUID = 169794521;
 
-  private java.lang.Integer subjectareaid;
-  private java.lang.Integer namedentityid;
-  private java.lang.Integer subjectareatypeid;
+  private Integer subjectareaid;
+  private Integer namedentityid;
+  private Integer subjectareatypeid;
 
   public SubjectareaEntity() {}
 
   public SubjectareaEntity(
-    java.lang.Integer subjectareaid,
-    java.lang.Integer namedentityid,
-    java.lang.Integer subjectareatypeid
+    Integer subjectareaid,
+    Integer namedentityid,
+    Integer subjectareatypeid
   ) {
     this.subjectareaid     = subjectareaid;
     this.namedentityid     = namedentityid;
     this.subjectareatypeid = subjectareatypeid;
   }
 
-  public java.lang.Integer getSubjectareaid() {
+  public Integer getSubjectareaid() {
     return this.subjectareaid;
   }
 
-  public void setSubjectareaid(java.lang.Integer subjectareaid) {
+  public void setSubjectareaid(Integer subjectareaid) {
     this.subjectareaid = subjectareaid;
   }
 
-  public java.lang.Integer getNamedentityid() {
+  public Integer getNamedentityid() {
     return this.namedentityid;
   }
 
-  public void setNamedentityid(java.lang.Integer namedentityid) {
+  public void setNamedentityid(Integer namedentityid) {
     this.namedentityid = namedentityid;
   }
 
-  public java.lang.Integer getSubjectareatypeid() {
+  public Integer getSubjectareatypeid() {
     return this.subjectareatypeid;
   }
 
-  public void setSubjectareatypeid(java.lang.Integer subjectareatypeid) {
+  public void setSubjectareatypeid(Integer subjectareatypeid) {
     this.subjectareatypeid = subjectareatypeid;
   }
 }

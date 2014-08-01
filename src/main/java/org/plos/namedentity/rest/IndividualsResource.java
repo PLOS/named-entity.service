@@ -4,10 +4,10 @@ import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.dto.AddressDTO;
 import org.plos.namedentity.api.dto.EmailDTO;
-import org.plos.namedentity.api.dto.PhonenumberDTO;
-import org.plos.namedentity.api.dto.RoleDTO;
-import org.plos.namedentity.api.dto.UniqueidentifierDTO;
 import org.plos.namedentity.api.entity.IndividualEntity;
+import org.plos.namedentity.api.entity.PhonenumberEntity;
+import org.plos.namedentity.api.entity.RoleEntity;
+import org.plos.namedentity.api.entity.UniqueidentifierEntity;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -89,9 +89,9 @@ public class IndividualsResource extends BaseResource {
   @Path("/{id}/phonenumbers")
   public Response getPhonenumbersForIndividual(@PathParam("id") int nedId) {
     try {
-      List<PhonenumberDTO> phonenumbers = namedEntityService.findPhoneNumbersByNedId(nedId);
+      List<PhonenumberEntity> phonenumbers = namedEntityService.findPhoneNumbersByNedId(nedId);
       return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<PhonenumberDTO>>(phonenumbers){}).build();
+          new GenericEntity<List<PhonenumberEntity>>(phonenumbers){}).build();
     }
     catch(Exception e) {
       return serverError(e, "Find phone numberse by nedId failed");
@@ -102,9 +102,9 @@ public class IndividualsResource extends BaseResource {
   @Path("/{id}/roles")
   public Response getRolesForIndividual(@PathParam("id") int nedId) {
     try {
-      List<RoleDTO> roles = namedEntityService.findRolesByNedId(nedId);
+      List<RoleEntity> roles = namedEntityService.findRolesByNedId(nedId);
       return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<RoleDTO>>(roles){}).build();
+          new GenericEntity<List<RoleEntity>>(roles){}).build();
     }
     catch(Exception e) {
       return serverError(e, "Find roles by nedId failed");
@@ -115,9 +115,9 @@ public class IndividualsResource extends BaseResource {
   @Path("/{id}/xref")
   public Response getExternalReferencesForIndividual(@PathParam("id") int nedId) {
     try {
-      List<UniqueidentifierDTO> uids = namedEntityService.findUniqueIdsByNedId(nedId);
+      List<UniqueidentifierEntity> uids = namedEntityService.findUniqueIdsByNedId(nedId);
       return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<UniqueidentifierDTO>>(uids){}).build();
+          new GenericEntity<List<UniqueidentifierEntity>>(uids){}).build();
     }
     catch(Exception e) {
       return serverError(e, "Find external references by nedId failed");

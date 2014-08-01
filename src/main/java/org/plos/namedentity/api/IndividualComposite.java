@@ -18,30 +18,21 @@ package org.plos.namedentity.api;
 
 import org.plos.namedentity.api.dto.AddressDTO;
 import org.plos.namedentity.api.dto.EmailDTO;
-import org.plos.namedentity.api.dto.PhonenumberDTO;
-import org.plos.namedentity.api.dto.RoleDTO;
-import org.plos.namedentity.api.dto.UniqueidentifierDTO;
 import org.plos.namedentity.api.entity.IndividualEntity;
+import org.plos.namedentity.api.entity.PhonenumberEntity;
+import org.plos.namedentity.api.entity.RoleEntity;
+import org.plos.namedentity.api.entity.UniqueidentifierEntity;
 
 import java.util.List;
 
 public class IndividualComposite {
-//
-//  private String namedentityid;
-//  private String firstname;
-//  private String middlename;
-//  private String lastname;
-//  private String nameprefix;
-//  private String namesuffix;
-//  private String preferredlanguage;
-//  private String preferredcommunication;
-//
-  private IndividualEntity          individual;
-  private RoleDTO                   role;
-  private List<AddressDTO>          addresses;
-  private List<EmailDTO>            emails;
-  private List<PhonenumberDTO>      phonenumbers;
-  private List<UniqueidentifierDTO> uniqueidentifiers;
+
+  private IndividualEntity             individual;
+  private RoleEntity                   role;
+  private List<AddressDTO>             addresses;
+  private List<EmailDTO>               emails;
+  private List<PhonenumberEntity>         phonenumbers;
+  private List<UniqueidentifierEntity> uniqueidentifiers;
 
   public IndividualComposite() {
     this.individual = new IndividualEntity();
@@ -50,6 +41,7 @@ public class IndividualComposite {
   public Integer getNamedentityid() {
     return this.individual.getNamedentityid();
   }
+
   public void setNamedentityid(Integer namedentityid) {
     this.individual.setNamedentityid(namedentityid);
   }
@@ -57,6 +49,7 @@ public class IndividualComposite {
   public String getFirstname() {
     return this.individual.getFirstname();
   }
+
   public void setFirstname(String firstname) {
     this.individual.setFirstname(firstname);
   }
@@ -64,6 +57,7 @@ public class IndividualComposite {
   public String getMiddlename() {
     return this.individual.getMiddlename();
   }
+
   public void setMiddlename(String middlename) {
     this.individual.setMiddlename(middlename);
   }
@@ -71,6 +65,7 @@ public class IndividualComposite {
   public String getLastname() {
     return this.individual.getLastname();
   }
+
   public void setLastname(String lastname) {
     this.individual.setLastname(lastname);
   }
@@ -78,6 +73,7 @@ public class IndividualComposite {
   public String getNameprefix() {
     return this.individual.getNameprefix();
   }
+
   public void setNameprefix(String nameprefix) {
     this.individual.setNameprefix(nameprefix);
   }
@@ -85,6 +81,7 @@ public class IndividualComposite {
   public String getNamesuffix() {
     return this.individual.getNamesuffix();
   }
+
   public void setNamesuffix(String namesuffix) {
     this.individual.setNamesuffix(namesuffix);
   }
@@ -103,10 +100,10 @@ public class IndividualComposite {
     this.individual.setPreferredcommunication(preferredcommunication);
   }
 
-  public RoleDTO getRole() {
+  public RoleEntity getRole() {
     return role;
   }
-  public void setRole(RoleDTO role) {
+  public void setRole(RoleEntity role) {
     this.role = role;
   }
   
@@ -124,17 +121,17 @@ public class IndividualComposite {
     this.emails = emails;
   }
   
-  public List<PhonenumberDTO> getPhonenumbers() {
+  public List<PhonenumberEntity> getPhonenumbers() {
     return phonenumbers;
   }
-  public void setPhonenumbers(List<PhonenumberDTO> phonenumbers) {
+  public void setPhonenumbers(List<PhonenumberEntity> phonenumbers) {
     this.phonenumbers = phonenumbers;
   }
   
-  public List<UniqueidentifierDTO> getUniqueidentifiers() {
+  public List<UniqueidentifierEntity> getUniqueidentifiers() {
     return uniqueidentifiers;
   }
-  public void setUniqueidentifiers(List<UniqueidentifierDTO> uniqueidentifiers) {
+  public void setUniqueidentifiers(List<UniqueidentifierEntity> uniqueidentifiers) {
     this.uniqueidentifiers = uniqueidentifiers;
   }
 }

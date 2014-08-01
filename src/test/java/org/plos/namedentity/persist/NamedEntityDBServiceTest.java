@@ -24,9 +24,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.plos.namedentity.api.dto.AddressDTO;
 import org.plos.namedentity.api.dto.EmailDTO;
-import org.plos.namedentity.api.dto.PhonenumberDTO;
-import org.plos.namedentity.api.dto.RoleDTO;
-import org.plos.namedentity.api.dto.UniqueidentifierDTO;
 import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
@@ -400,8 +397,8 @@ public class NamedEntityDBServiceTest {
 
     assertNull(mobilePhone.getPhonenumberid());
     assertNotNull(mobilePhone.getNamedentityid());
-    assertEquals(Byte.valueOf((byte)1), mobilePhone.getIsprimary());
-    assertEquals(Byte.valueOf((byte)1), mobilePhone.getIsactive());
+    assertTrue(mobilePhone.getIsprimary());
+    assertTrue(mobilePhone.getIsactive());
 
     Integer mobilePhoneId = nedDBSvc.create( mobilePhone );
     assertNotNull(mobilePhoneId);
@@ -427,8 +424,8 @@ public class NamedEntityDBServiceTest {
 
     assertNull(officePhone.getPhonenumberid());
     assertNotNull(officePhone.getNamedentityid());
-    assertEquals(Byte.valueOf((byte)1), officePhone.getIsprimary());
-    assertEquals(Byte.valueOf((byte)1), officePhone.getIsactive());
+    assertTrue(officePhone.getIsprimary());
+    assertTrue(officePhone.getIsactive());
 
     Integer officePhoneId = nedDBSvc.create( officePhone );
     assertNotNull(officePhoneId);
@@ -454,7 +451,7 @@ public class NamedEntityDBServiceTest {
     // FIND BY JOIN-QUERY 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<PhonenumberDTO> phonenumbers = nedQuery.findPhoneNumbersByNedId(foundPhones.get(0).getNamedentityid());
+    List<PhonenumberEntity> phonenumbers = nedQuery.findPhoneNumbersByNedId(foundPhones.get(0).getNamedentityid());
     assertTrue( phonenumbers.size() > 0 );
 
     // DELETE
@@ -574,8 +571,8 @@ public class NamedEntityDBServiceTest {
     // FIND BY JOIN-QUERY 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<RoleDTO> roles = nedQuery.findRolesByNedId(savedRole.getNamedentityid());
-    RoleDTO role = roles.get(0);
+    List<RoleEntity> roles = nedQuery.findRolesByNedId(savedRole.getNamedentityid());
+    RoleEntity role = roles.get(0);
     assertEquals("Author", role.getRoletype());
               
     // DELETE
@@ -657,8 +654,8 @@ public class NamedEntityDBServiceTest {
 
     // FIND BY JOIN-QUERY 
 
-    List<UniqueidentifierDTO> uids = nedQuery.findUniqueIdsByNedId(savedUid.getNamedentityid());
-    UniqueidentifierDTO uid = uids.get(0);
+    List<UniqueidentifierEntity> uids = nedQuery.findUniqueIdsByNedId(savedUid.getNamedentityid());
+    UniqueidentifierEntity uid = uids.get(0);
     assertEquals(ORCID_ID1 + "Z", uid.getUniqueidentifier());
               
     // DELETE

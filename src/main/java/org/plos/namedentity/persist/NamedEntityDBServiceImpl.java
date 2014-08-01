@@ -24,9 +24,6 @@ import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
 import org.plos.namedentity.api.dto.AddressDTO;
 import org.plos.namedentity.api.dto.EmailDTO;
-import org.plos.namedentity.api.dto.PhonenumberDTO;
-import org.plos.namedentity.api.dto.RoleDTO;
-import org.plos.namedentity.api.dto.UniqueidentifierDTO;
 import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
@@ -338,7 +335,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
   }
 
   @Override
-  public List<PhonenumberDTO> findPhoneNumbersByNedId(Integer nedId) {
+  public List<PhonenumberEntity> findPhoneNumbersByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription phonenumbertype,
                gt2.shortDescription countrycodetype,
@@ -362,11 +359,11 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt2).on(p.COUNTRYCODETYPEID.equal(gt2.GLOBALTYPEID))
       .where(p.NAMEDENTITYID.equal(nedId))
       .fetch()
-      .into(PhonenumberDTO.class);
+      .into(PhonenumberEntity.class);
   }
 
   @Override
-  public List<RoleDTO> findRolesByNedId(Integer nedId) {
+  public List<RoleEntity> findRolesByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription sourceapplicationtype,
                gt2.shortDescription roletype,
@@ -390,10 +387,10 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt2).on(r.ROLETYPEID.equal(gt2.GLOBALTYPEID))
       .where(r.NAMEDENTITYID.equal(nedId))
       .fetch()
-      .into(RoleDTO.class);
+      .into(RoleEntity.class);
   }
 
-  @Override public List<UniqueidentifierDTO> findUniqueIdsByNedId(Integer nedId) {
+  @Override public List<UniqueidentifierEntity> findUniqueIdsByNedId(Integer nedId) {
 /*
    EXPLAIN
         SELECT gt.shortDescription uniqueidentifiertype, uid.uniqueIdentifier 
@@ -411,7 +408,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt).on(uid.UNIQUEIDENTIFIERTYPEID.equal(gt.GLOBALTYPEID))
       .where(uid.NAMEDENTITYID.equal(nedId))
       .fetch()
-      .into(UniqueidentifierDTO.class);
+      .into(UniqueidentifierEntity.class);
   }
 
   /* ---------------------------------------------------------------------- */

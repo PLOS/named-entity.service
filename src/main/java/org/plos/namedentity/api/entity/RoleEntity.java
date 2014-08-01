@@ -17,85 +17,104 @@
 package org.plos.namedentity.api.entity;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Objects;
 
 /**
  * Modified JOOQ generated class(pojo=true).
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RoleEntity implements java.io.Serializable {
 
   private static final long serialVersionUID = 315701916;
 
-  private java.lang.Integer  roleid;
-  private java.lang.Integer  namedentityid;
-  private java.lang.Integer  sourceapplicationtypeid;
-  private java.lang.Integer  roletypeid;
-  private java.sql.Timestamp startdate;
-  private java.sql.Timestamp enddate;
-  private java.sql.Timestamp created;
-  private java.sql.Timestamp lastmodified;
-  private java.lang.Integer  createdby;
-  private java.lang.Integer  lastmodifiedby;
+  private Integer  roleid;
+  private Integer  namedentityid;
+  private Integer  sourceapplicationtypeid;
+  private Integer  roletypeid;
+  private Timestamp startdate;
+  private Timestamp enddate;
+  private Timestamp created;
+  private Timestamp lastmodified;
+  private Integer  createdby;
+  private Integer  lastmodifiedby;
+
+  private String  sourceapplication;
+  private String  roletype;
+
 
   public RoleEntity() {
-    this(null,null,null,null,null,null,null,null,null,null);
+    //this(null,null,null,null,null,null,null,null,null,null);
   }
 
-  public RoleEntity(
-    java.lang.Integer  roleid,
-    java.lang.Integer  namedentityid,
-    java.lang.Integer  sourceapplicationtypeid,
-    java.lang.Integer  roletypeid,
-    java.sql.Timestamp startdate,
-    java.sql.Timestamp enddate,
-    java.sql.Timestamp created,
-    java.sql.Timestamp lastmodified,
-    java.lang.Integer  createdby,
-    java.lang.Integer  lastmodifiedby
-  ) {
-    this.roleid         = roleid;
-    this.namedentityid  = namedentityid;
-    this.sourceapplicationtypeid = sourceapplicationtypeid;
-    this.roletypeid     = roletypeid;
-    this.startdate      = startdate;
-    this.enddate        = enddate;
-    this.created        = (created != null ? created : new Timestamp(new Date().getTime()));
-    this.lastmodified   = (lastmodified != null ? lastmodified : new Timestamp(new Date().getTime()));
-    this.createdby      = createdby;
-    this.lastmodifiedby = lastmodifiedby;
+//  public RoleEntity(
+//    Integer  roleid,
+//    Integer  namedentityid,
+//    Integer  sourceapplicationtypeid,
+//    Integer  roletypeid,
+//    Timestamp startdate,
+//    Timestamp enddate,
+//    Timestamp created,
+//    Timestamp lastmodified,
+//    Integer  createdby,
+//    Integer  lastmodifiedby
+//  ) {
+//    this.roleid         = roleid;
+//    this.namedentityid  = namedentityid;
+//    this.sourceapplicationtypeid = sourceapplicationtypeid;
+//    this.roletypeid     = roletypeid;
+//    this.startdate      = startdate;
+//    this.enddate        = enddate;
+//    this.created        = (created != null ? created : new Timestamp(new Date().getTime()));
+//    this.lastmodified   = (lastmodified != null ? lastmodified : new Timestamp(new Date().getTime()));
+//    this.createdby      = createdby;
+//    this.lastmodifiedby = lastmodifiedby;
+//  }
+
+  public String getSourceapplication() {
+    return sourceapplication;
   }
 
-  public java.lang.Integer getRoleid() {
+  public void setSourceapplication(String sourceapplication) {
+    this.sourceapplication = sourceapplication;
+  }
+
+  public String getRoletype() {
+    return roletype;
+  }
+
+  public void setRoletype(String roletype) {
+    this.roletype = roletype;
+  }
+
+  public Integer getRoleid() {
     return this.roleid;
   }
 
-  public void setRoleid(java.lang.Integer roleid) {
+  public void setRoleid(Integer roleid) {
     this.roleid = roleid;
   }
 
-  public java.lang.Integer getNamedentityid() {
+  public Integer getNamedentityid() {
     return this.namedentityid;
   }
 
-  public void setNamedentityid(java.lang.Integer namedentityid) {
+  public void setNamedentityid(Integer namedentityid) {
     this.namedentityid = namedentityid;
   }
 
-  public java.lang.Integer getSourceapplicationtypeid() {
+  public Integer getSourceapplicationtypeid() {
     return this.sourceapplicationtypeid;
   }
 
-  public void setSourceapplicationtypeid(java.lang.Integer sourceapplicationtypeid) {
+  public void setSourceapplicationtypeid(Integer sourceapplicationtypeid) {
     this.sourceapplicationtypeid = sourceapplicationtypeid;
   }
 
-  public java.lang.Integer getRoletypeid() {
+  public Integer getRoletypeid() {
     return this.roletypeid;
   }
 
-  public void setRoletypeid(java.lang.Integer roletypeid) {
+  public void setRoletypeid(Integer roletypeid) {
     this.roletypeid = roletypeid;
   }
 
@@ -131,19 +150,19 @@ public class RoleEntity implements java.io.Serializable {
     this.lastmodified = lastmodified;
   }
 
-  public java.lang.Integer getCreatedby() {
+  public Integer getCreatedby() {
     return this.createdby;
   }
 
-  public void setCreatedby(java.lang.Integer createdby) {
+  public void setCreatedby(Integer createdby) {
     this.createdby = createdby;
   }
 
-  public java.lang.Integer getLastmodifiedby() {
+  public Integer getLastmodifiedby() {
     return this.lastmodifiedby;
   }
 
-  public void setLastmodifiedby(java.lang.Integer lastmodifiedby) {
+  public void setLastmodifiedby(Integer lastmodifiedby) {
     this.lastmodifiedby = lastmodifiedby;
   }
 
