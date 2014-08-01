@@ -19,6 +19,7 @@ codegen-mysql)
 
 test)
     MVN_PROFILE=h2
+    MVN_TARGETS="clean test"
     ;;
 
 package)
