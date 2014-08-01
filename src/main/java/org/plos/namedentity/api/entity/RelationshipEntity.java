@@ -16,6 +16,8 @@
  */
 package org.plos.namedentity.api.entity;
 
+import java.sql.Timestamp;
+
 /**
  * Modified JOOQ generated class(pojo=true).
  */
@@ -24,35 +26,38 @@ public class RelationshipEntity implements java.io.Serializable {
 
   private static final long serialVersionUID = 1494801838;
 
-  private java.lang.Integer  relationshipid;
-  private java.lang.Integer  masternamedentityid;
-  private java.lang.Integer  childnamedentityid;
-  private java.lang.Integer  relationshiptypeid;
-  private java.sql.Timestamp startdate;
-  private java.sql.Timestamp enddate;
-  private java.sql.Timestamp created;
-  private java.sql.Timestamp lastmodified;
-  private java.lang.Integer  createdby;
-  private java.lang.Integer  lastmodifiedby;
+  private Integer   relationshipid;
+  private Integer   masternamedentityid;
+  private Integer   childnamedentityid;
+  private Integer   relationshiptypeid;
+  private String    relationshiptype;
+  private Timestamp startdate;
+  private Timestamp enddate;
+  private Timestamp created;
+  private Timestamp lastmodified;
+  private Integer   createdby;
+  private Integer   lastmodifiedby;
 
   public RelationshipEntity() {}
 
   public RelationshipEntity(
-    java.lang.Integer  relationshipid,
-    java.lang.Integer  masternamedentityid,
-    java.lang.Integer  childnamedentityid,
-    java.lang.Integer  relationshiptypeid,
-    java.sql.Timestamp startdate,
-    java.sql.Timestamp enddate,
-    java.sql.Timestamp created,
-    java.sql.Timestamp lastmodified,
-    java.lang.Integer  createdby,
-    java.lang.Integer  lastmodifiedby
+    Integer   relationshipid,
+    Integer   masternamedentityid,
+    Integer   childnamedentityid,
+    Integer   relationshiptypeid,
+    String    relationshiptype,
+    Timestamp startdate,
+    Timestamp enddate,
+    Timestamp created,
+    Timestamp lastmodified,
+    Integer   createdby,
+    Integer   lastmodifiedby
   ) {
     this.relationshipid      = relationshipid;
     this.masternamedentityid = masternamedentityid;
     this.childnamedentityid  = childnamedentityid;
     this.relationshiptypeid  = relationshiptypeid;
+    this.relationshiptype    = relationshiptype;
     this.startdate           = startdate;
     this.enddate             = enddate;
     this.created             = created;
@@ -139,5 +144,13 @@ public class RelationshipEntity implements java.io.Serializable {
 
   public void setLastmodifiedby(java.lang.Integer lastmodifiedby) {
     this.lastmodifiedby = lastmodifiedby;
+  }
+  
+  public String getRelationshiptype() {
+      return relationshiptype;
+  }
+  
+  public void setRelationshiptype(String relationshiptype) {
+      this.relationshiptype = relationshiptype;
   }
 }
