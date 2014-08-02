@@ -190,7 +190,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
         UniqueidentifierEntity uid = new UniqueidentifierEntity();
         uid.setNamedentityid(nedId);
         uid.setUniqueidentifiertypeid(uidTypeId);
-        uid.setUniqueidentifier(uid.getUniqueidentifier());
+        uid.setUniqueidentifier(uidEntity.getUniqueidentifier());
 
         nedDBSvc.create( uid );
       }
