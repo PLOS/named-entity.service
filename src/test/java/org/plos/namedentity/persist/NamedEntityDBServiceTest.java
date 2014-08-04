@@ -16,30 +16,12 @@
  */
 package org.plos.namedentity.persist;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.plos.namedentity.persist.db.namedentities.Tables.GLOBALTYPES;
-import static org.plos.namedentity.persist.db.namedentities.Tables.TYPEDESCRIPTIONS;
-
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
-
 import org.jooq.DSLContext;
 import org.jooq.Record2;
 import org.jooq.Result;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.plos.namedentity.api.dto.AddressDTO;
-import org.plos.namedentity.api.dto.EmailDTO;
-import org.plos.namedentity.api.dto.IndividualDTO;
-import org.plos.namedentity.api.dto.PhonenumberDTO;
-import org.plos.namedentity.api.dto.RoleDTO;
-import org.plos.namedentity.api.dto.UniqueidentifierDTO;
 import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
@@ -58,6 +40,18 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.plos.namedentity.persist.db.namedentities.Tables.GLOBALTYPES;
+import static org.plos.namedentity.persist.db.namedentities.Tables.TYPEDESCRIPTIONS;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
@@ -299,7 +293,7 @@ public class NamedEntityDBServiceTest {
     // FIND BY JOIN-QUERY 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<EmailDTO> emails = nedQuery.findEmailsByNedId(foundEmails2.get(0).getNamedentityid());
+    List<EmailEntity> emails = nedQuery.findEmailsByNedId(foundEmails2.get(0).getNamedentityid());
     assertTrue( emails.size() > 0 );
 
     // Try to find an email which doesn't exist
@@ -363,13 +357,13 @@ public class NamedEntityDBServiceTest {
     // FIND BY JOIN-QUERY 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    IndividualDTO dto = nedQuery.findIndividualByNedId(individualId);
-    assertNotNull( dto );
-    assertEquals("firstname", dto.getFirstname());
-    assertEquals("Mr.", dto.getNameprefix());
-    assertEquals("II", dto.getNamesuffix());
-    assertEquals("Italian", dto.getPreferredlanguage());
-    assertEquals("Email", dto.getPreferredcommunication());
+    IndividualEntity entity = nedQuery.findIndividualByNedId(individualId);
+    assertNotNull( entity );
+    assertEquals("firstname", entity.getFirstname());
+    assertEquals("Mr.", entity.getNameprefix());
+    assertEquals("II", entity.getNamesuffix());
+    assertEquals("Italian", entity.getPreferredlanguage());
+    assertEquals("Email", entity.getPreferredcommunication());
 
     // DELETE
 
@@ -401,8 +395,8 @@ public class NamedEntityDBServiceTest {
 
     assertNull(mobilePhone.getPhonenumberid());
     assertNotNull(mobilePhone.getNamedentityid());
-    assertEquals(Byte.valueOf((byte)1), mobilePhone.getIsprimary());
-    assertEquals(Byte.valueOf((byte)1), mobilePhone.getIsactive());
+    assertTrue(mobilePhone.getIsprimary());
+    assertTrue(mobilePhone.getIsactive());
 
     Integer mobilePhoneId = nedDBSvc.create( mobilePhone );
     assertNotNull(mobilePhoneId);
@@ -428,8 +422,8 @@ public class NamedEntityDBServiceTest {
 
     assertNull(officePhone.getPhonenumberid());
     assertNotNull(officePhone.getNamedentityid());
-    assertEquals(Byte.valueOf((byte)1), officePhone.getIsprimary());
-    assertEquals(Byte.valueOf((byte)1), officePhone.getIsactive());
+    assertTrue(officePhone.getIsprimary());
+    assertTrue(officePhone.getIsactive());
 
     Integer officePhoneId = nedDBSvc.create( officePhone );
     assertNotNull(officePhoneId);
@@ -455,7 +449,7 @@ public class NamedEntityDBServiceTest {
     // FIND BY JOIN-QUERY 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<PhonenumberDTO> phonenumbers = nedQuery.findPhoneNumbersByNedId(foundPhones.get(0).getNamedentityid());
+    List<PhonenumberEntity> phonenumbers = nedQuery.findPhoneNumbersByNedId(foundPhones.get(0).getNamedentityid());
     assertTrue( phonenumbers.size() > 0 );
 
     // DELETE
@@ -520,7 +514,7 @@ public class NamedEntityDBServiceTest {
     // FIND BY JOIN-QUERY 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<AddressDTO> addresses = nedQuery.findAddressesByNedId(savedAddress.getNamedentityid());
+    List<AddressEntity> addresses = nedQuery.findAddressesByNedId(savedAddress.getNamedentityid());
     assertTrue( addresses.size() > 0 );
             
     //TODO : FIND BY ATTRIBUTE
@@ -575,8 +569,8 @@ public class NamedEntityDBServiceTest {
     // FIND BY JOIN-QUERY 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<RoleDTO> roles = nedQuery.findRolesByNedId(savedRole.getNamedentityid());
-    RoleDTO role = roles.get(0);
+    List<RoleEntity> roles = nedQuery.findRolesByNedId(savedRole.getNamedentityid());
+    RoleEntity role = roles.get(0);
     assertEquals("Author", role.getRoletype());
               
     // DELETE
@@ -598,7 +592,7 @@ public class NamedEntityDBServiceTest {
     // FIND Individuals with an ORCID id. There should be none. 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<IndividualDTO> peopleWithOrcidId = nedQuery.findIndividualsByUid(orcidTypeId, "0000-");
+    List<IndividualEntity> peopleWithOrcidId = nedQuery.findIndividualsByUid(orcidTypeId, "0000-");
     assertEquals(0, peopleWithOrcidId.size());
 
     // CREATE External Reference ORCID (assumed defined in EM)
@@ -658,8 +652,8 @@ public class NamedEntityDBServiceTest {
 
     // FIND BY JOIN-QUERY 
 
-    List<UniqueidentifierDTO> uids = nedQuery.findUniqueIdsByNedId(savedUid.getNamedentityid());
-    UniqueidentifierDTO uid = uids.get(0);
+    List<UniqueidentifierEntity> uids = nedQuery.findUniqueIdsByNedId(savedUid.getNamedentityid());
+    UniqueidentifierEntity uid = uids.get(0);
     assertEquals(ORCID_ID1 + "Z", uid.getUniqueidentifier());
               
     // DELETE

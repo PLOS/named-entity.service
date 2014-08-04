@@ -2,13 +2,12 @@ package org.plos.namedentity.rest;
 
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.dto.AddressDTO;
-import org.plos.namedentity.api.dto.EmailDTO;
-import org.plos.namedentity.api.dto.IndividualDTO;
-import org.plos.namedentity.api.dto.PhonenumberDTO;
-import org.plos.namedentity.api.dto.RoleDTO;
-import org.plos.namedentity.api.dto.UniqueidentifierDTO;
+import org.plos.namedentity.api.entity.AddressEntity;
+import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
+import org.plos.namedentity.api.entity.PhonenumberEntity;
+import org.plos.namedentity.api.entity.RoleEntity;
+import org.plos.namedentity.api.entity.UniqueidentifierEntity;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -19,13 +18,13 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/individuals")
-public class IndividualsResource extends BaseController {
+public class IndividualsResource extends BaseResource {
 
   @POST
   public Response createIndividualComposite(IndividualComposite object) {
     try {
-      IndividualDTO dto = namedEntityService.createIndividual(object);
-      return Response.status(Response.Status.OK).entity(dto).build();
+      IndividualEntity individual = namedEntityService.createIndividual(object);
+      return Response.status(Response.Status.OK).entity(individual).build();
     }
     catch(NedValidationException e) {
       return validationError(e, "Unable to create individual");
@@ -52,8 +51,8 @@ public class IndividualsResource extends BaseController {
   @Path("/{id}")
   public Response getIndividual(@PathParam("id") int id) {
     try {
-      IndividualDTO dto = namedEntityService.findIndividualByNedId(id);
-      return Response.status(Response.Status.OK).entity(dto).build();
+      IndividualEntity individual = namedEntityService.findIndividualByNedId(id);
+      return Response.status(Response.Status.OK).entity(individual).build();
     }
     catch(Exception e) {
       return serverError(e, "Find individual by id failed");
@@ -64,9 +63,9 @@ public class IndividualsResource extends BaseController {
   @Path("/{id}/emails")
   public Response getEmailsForIndividual(@PathParam("id") int nedId) {
     try {
-      List<EmailDTO> emails = namedEntityService.findEmailsByNedId(nedId);
+      List<EmailEntity> emails = namedEntityService.findEmailsByNedId(nedId);
       return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<EmailDTO>>(emails){}).build();
+          new GenericEntity<List<EmailEntity>>(emails){}).build();
     }
     catch(Exception e) {
       return serverError(e, "Find emails by nedId failed");
@@ -77,9 +76,9 @@ public class IndividualsResource extends BaseController {
   @Path("/{id}/addresses")
   public Response getAddressesForIndividual(@PathParam("id") int nedId) {
     try {
-      List<AddressDTO> addresses = namedEntityService.findAddressesByNedId(nedId);
+      List<AddressEntity> addresses = namedEntityService.findAddressesByNedId(nedId);
       return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<AddressDTO>>(addresses){}).build();
+          new GenericEntity<List<AddressEntity>>(addresses){}).build();
     }
     catch(Exception e) {
       return serverError(e, "Find addresses by nedId failed");
@@ -90,9 +89,9 @@ public class IndividualsResource extends BaseController {
   @Path("/{id}/phonenumbers")
   public Response getPhonenumbersForIndividual(@PathParam("id") int nedId) {
     try {
-      List<PhonenumberDTO> phonenumbers = namedEntityService.findPhoneNumbersByNedId(nedId);
+      List<PhonenumberEntity> phonenumbers = namedEntityService.findPhoneNumbersByNedId(nedId);
       return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<PhonenumberDTO>>(phonenumbers){}).build();
+          new GenericEntity<List<PhonenumberEntity>>(phonenumbers){}).build();
     }
     catch(Exception e) {
       return serverError(e, "Find phone numberse by nedId failed");
@@ -103,9 +102,9 @@ public class IndividualsResource extends BaseController {
   @Path("/{id}/roles")
   public Response getRolesForIndividual(@PathParam("id") int nedId) {
     try {
-      List<RoleDTO> roles = namedEntityService.findRolesByNedId(nedId);
+      List<RoleEntity> roles = namedEntityService.findRolesByNedId(nedId);
       return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<RoleDTO>>(roles){}).build();
+          new GenericEntity<List<RoleEntity>>(roles){}).build();
     }
     catch(Exception e) {
       return serverError(e, "Find roles by nedId failed");
@@ -116,9 +115,9 @@ public class IndividualsResource extends BaseController {
   @Path("/{id}/xref")
   public Response getExternalReferencesForIndividual(@PathParam("id") int nedId) {
     try {
-      List<UniqueidentifierDTO> uids = namedEntityService.findUniqueIdsByNedId(nedId);
+      List<UniqueidentifierEntity> uids = namedEntityService.findUniqueIdsByNedId(nedId);
       return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<UniqueidentifierDTO>>(uids){}).build();
+          new GenericEntity<List<UniqueidentifierEntity>>(uids){}).build();
     }
     catch(Exception e) {
       return serverError(e, "Find external references by nedId failed");

@@ -23,39 +23,86 @@ import java.util.Objects;
  * Modified JOOQ generated class(pojo=true).
  */
 @XmlRootElement
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class IndividualEntity implements java.io.Serializable {
 
   private static final long serialVersionUID = 2026965529;
 
-  private java.lang.Integer namedentityid;
-  private java.lang.String  firstname;
-  private java.lang.String  middlename;
-  private java.lang.String  lastname;
-  private java.lang.String  nickname;
-  private java.lang.Integer nameprefixtypeid;
-  private java.lang.Integer namesuffixtypeid;
-  private java.lang.String  displayname;
-  private java.lang.Integer preferredlanguagetypeid;
-  private java.lang.Integer preferredcommunicationmethodtypeid;
-  private byte[]            photoimage;
-  private java.lang.String  url;
+  private Integer namedentityid;
+  private String  firstname;
+  private String  middlename;
+  private String  lastname;
+  private String  nickname;
+
+  private String  nameprefix;
+  private Integer nameprefixtypeid;
+
+  private String  namesuffix;
+  private Integer namesuffixtypeid;
+
+  private String  displayname;
+
+  private String  preferredlanguage;
+  private Integer preferredlanguagetypeid;
+
+  private String  preferredcommunication;
+  private Integer preferredcommunicationmethodtypeid;
+
+  private byte[]  photoimage;
+  private String  url;
 
   public IndividualEntity() {}
 
   public IndividualEntity(
-    java.lang.Integer namedentityid,
-    java.lang.String  firstname,
-    java.lang.String  middlename,
-    java.lang.String  lastname,
-    java.lang.String  nickname,
-    java.lang.Integer nameprefixtypeid,
-    java.lang.Integer namesuffixtypeid,
-    java.lang.String  displayname,
-    java.lang.Integer preferredlanguagetypeid,
-    java.lang.Integer preferredcommunicationmethodtypeid,
-    byte[]            photoimage,
-    java.lang.String  url
+      Integer namedentityid,
+      String  firstname,
+      String  middlename,
+      String  lastname,
+      String  nickname,
+      String  nameprefix,
+      Integer nameprefixtypeid,
+      String  namesuffix,
+      Integer namesuffixtypeid,
+      String  displayname,
+      String  preferredlanguage,
+      Integer preferredlanguagetypeid,
+      String  preferredcommunication,
+      Integer preferredcommunicationmethodtypeid,
+      byte[]  photoimage,
+      String  url
+  ) {
+    this(namedentityid,
+        firstname,
+        middlename,
+        lastname,
+        nickname,
+        nameprefixtypeid,
+        namesuffixtypeid,
+        displayname,
+        preferredlanguagetypeid,
+        preferredcommunicationmethodtypeid,
+        photoimage,
+        url);
+
+    this.namesuffix = namesuffix;
+    this.nameprefix = nameprefix;
+    this.preferredlanguage = preferredlanguage;
+    this.preferredcommunication = preferredcommunication;
+  }
+  
+  public IndividualEntity(
+    Integer namedentityid,
+    String  firstname,
+    String  middlename,
+    String  lastname,
+    String  nickname,
+    Integer nameprefixtypeid,
+    Integer namesuffixtypeid,
+    String  displayname,
+    Integer preferredlanguagetypeid,
+    Integer preferredcommunicationmethodtypeid,
+    byte[]  photoimage,
+    String  url
   ) {
     this.namedentityid = namedentityid;
     this.firstname = firstname;
@@ -71,83 +118,115 @@ public class IndividualEntity implements java.io.Serializable {
     this.url = url;
   }
 
-  public java.lang.Integer getNamedentityid() {
+  public String getNameprefix() {
+    return nameprefix;
+  }
+
+  public void setNameprefix(String nameprefix) {
+    this.nameprefix = nameprefix;
+  }
+
+  public String getNamesuffix() {
+    return namesuffix;
+  }
+
+  public void setNamesuffix(String namesuffix) {
+    this.namesuffix = namesuffix;
+  }
+
+  public String getPreferredlanguage() {
+    return preferredlanguage;
+  }
+
+  public void setPreferredlanguage(String preferredlanguage) {
+    this.preferredlanguage = preferredlanguage;
+  }
+
+  public String getPreferredcommunication() {
+    return preferredcommunication;
+  }
+
+  public void setPreferredcommunication(String preferredcommunication) {
+    this.preferredcommunication = preferredcommunication;
+  }
+
+  public Integer getNamedentityid() {
     return this.namedentityid;
   }
 
-  public void setNamedentityid(java.lang.Integer namedentityid) {
+  public void setNamedentityid(Integer namedentityid) {
     this.namedentityid = namedentityid;
   }
 
-  public java.lang.String getFirstname() {
+  public String getFirstname() {
     return this.firstname;
   }
 
-  public void setFirstname(java.lang.String firstname) {
+  public void setFirstname(String firstname) {
     this.firstname = firstname;
   }
 
-  public java.lang.String getMiddlename() {
+  public String getMiddlename() {
     return this.middlename;
   }
 
-  public void setMiddlename(java.lang.String middlename) {
+  public void setMiddlename(String middlename) {
     this.middlename = middlename;
   }
 
-  public java.lang.String getLastname() {
+  public String getLastname() {
     return this.lastname;
   }
 
-  public void setLastname(java.lang.String lastname) {
+  public void setLastname(String lastname) {
     this.lastname = lastname;
   }
 
-  public java.lang.String getNickname() {
+  public String getNickname() {
     return this.nickname;
   }
 
-  public void setNickname(java.lang.String nickname) {
+  public void setNickname(String nickname) {
     this.nickname = nickname;
   }
 
-  public java.lang.Integer getNameprefixtypeid() {
+  public Integer getNameprefixtypeid() {
     return this.nameprefixtypeid;
   }
 
-  public void setNameprefixtypeid(java.lang.Integer nameprefixtypeid) {
+  public void setNameprefixtypeid(Integer nameprefixtypeid) {
     this.nameprefixtypeid = nameprefixtypeid;
   }
 
-  public java.lang.Integer getNamesuffixtypeid() {
+  public Integer getNamesuffixtypeid() {
     return this.namesuffixtypeid;
   }
 
-  public void setNamesuffixtypeid(java.lang.Integer namesuffixtypeid) {
+  public void setNamesuffixtypeid(Integer namesuffixtypeid) {
     this.namesuffixtypeid = namesuffixtypeid;
   }
 
-  public java.lang.String getDisplayname() {
+  public String getDisplayname() {
     return this.displayname;
   }
 
-  public void setDisplayname(java.lang.String displayname) {
+  public void setDisplayname(String displayname) {
     this.displayname = displayname;
   }
 
-  public java.lang.Integer getPreferredlanguagetypeid() {
+  public Integer getPreferredlanguagetypeid() {
     return this.preferredlanguagetypeid;
   }
 
-  public void setPreferredlanguagetypeid(java.lang.Integer preferredlanguagetypeid) {
+  public void setPreferredlanguagetypeid(Integer preferredlanguagetypeid) {
     this.preferredlanguagetypeid = preferredlanguagetypeid;
   }
 
-  public java.lang.Integer getPreferredcommunicationmethodtypeid() {
+  public Integer getPreferredcommunicationmethodtypeid() {
     return this.preferredcommunicationmethodtypeid;
   }
 
-  public void setPreferredcommunicationmethodtypeid(java.lang.Integer preferredcommunicationmethodtypeid) {
+  public void setPreferredcommunicationmethodtypeid(Integer preferredcommunicationmethodtypeid) {
     this.preferredcommunicationmethodtypeid = preferredcommunicationmethodtypeid;
   }
 
@@ -159,11 +238,11 @@ public class IndividualEntity implements java.io.Serializable {
     this.photoimage = photoimage;
   }
 
-  public java.lang.String getUrl() {
+  public String getUrl() {
     return this.url;
   }
 
-  public void setUrl(java.lang.String url) {
+  public void setUrl(String url) {
     this.url = url;
   }
 

@@ -19,6 +19,7 @@ codegen-mysql)
 
 test)
     MVN_PROFILE=h2
+    MVN_TARGETS="clean test"
     ;;
 
 package)
@@ -31,7 +32,7 @@ tomcat)
 
 *)
     echo -e "\nUsage: `basename $0` (codegen-h2|codgen-mysql|package|test|tomcat)"
-    echo -e "\n  tomcat url -> http://localhost:8080/named-entity-service/ned/typeclasses\n"
+    echo -e "\n  tomcat url -> http://localhost:8080/typeclasses\n"
     exit 0
     ;;
 esac

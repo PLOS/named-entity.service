@@ -22,49 +22,49 @@ import java.util.Objects;
 /**
  * Modified JOOQ generated class(pojo=true).
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @XmlRootElement
 public class TypedescriptionEntity implements java.io.Serializable {
 
   private static final long serialVersionUID = -356395330;
 
-  private java.lang.Integer typeid;
-  private java.lang.String  description;
-  private java.lang.String  howused;
+  private Integer typeid;
+  private String  description;
+  private String  howused;
 
   public TypedescriptionEntity() {}
 
   public TypedescriptionEntity(
-    java.lang.Integer typeid,
-    java.lang.String  description,
-    java.lang.String  howused
+    Integer typeid,
+    String  description,
+    String  howused
   ) {
     this.typeid      = typeid;
     this.description = description;
     this.howused     = howused;
   }
 
-  public java.lang.Integer getTypeid() {
+  public Integer getTypeid() {
     return this.typeid;
   }
 
-  public void setTypeid(java.lang.Integer typeid) {
+  public void setTypeid(Integer typeid) {
     this.typeid = typeid;
   }
 
-  public java.lang.String getDescription() {
+  public String getDescription() {
     return this.description;
   }
 
-  public void setDescription(java.lang.String description) {
+  public void setDescription(String description) {
     this.description = description;
   }
 
-  public java.lang.String getHowused() {
+  public String getHowused() {
     return this.howused;
   }
 
-  public void setHowused(java.lang.String howused) {
+  public void setHowused(String howused) {
     this.howused = howused;
   }
 

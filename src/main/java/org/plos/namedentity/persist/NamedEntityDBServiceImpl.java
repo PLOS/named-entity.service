@@ -17,33 +17,11 @@
 package org.plos.namedentity.persist;
 
 // to reduce verbosity, static import generated tables and jooq functions
-import static org.jooq.impl.DSL.currentTimestamp;
-import static org.plos.namedentity.persist.db.namedentities.Tables.ADDRESSES;
-import static org.plos.namedentity.persist.db.namedentities.Tables.EMAILS;
-import static org.plos.namedentity.persist.db.namedentities.Tables.GLOBALTYPES;
-import static org.plos.namedentity.persist.db.namedentities.Tables.INDIVIDUALS;
-import static org.plos.namedentity.persist.db.namedentities.Tables.JOURNALS;
-import static org.plos.namedentity.persist.db.namedentities.Tables.NAMEDENTITYIDENTIFIERS;
-import static org.plos.namedentity.persist.db.namedentities.Tables.PHONENUMBERS;
-import static org.plos.namedentity.persist.db.namedentities.Tables.ROLES;
-import static org.plos.namedentity.persist.db.namedentities.Tables.TYPEDESCRIPTIONS;
-import static org.plos.namedentity.persist.db.namedentities.Tables.UNIQUEIDENTIFIERS;
-
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
-import org.plos.namedentity.api.dto.AddressDTO;
-import org.plos.namedentity.api.dto.EmailDTO;
-import org.plos.namedentity.api.dto.IndividualDTO;
-import org.plos.namedentity.api.dto.PhonenumberDTO;
-import org.plos.namedentity.api.dto.RoleDTO;
-import org.plos.namedentity.api.dto.UniqueidentifierDTO;
 import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
@@ -61,6 +39,13 @@ import org.plos.namedentity.persist.db.namedentities.tables.Phonenumbers;
 import org.plos.namedentity.persist.db.namedentities.tables.Roles;
 import org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static org.jooq.impl.DSL.currentTimestamp;
+import static org.plos.namedentity.persist.db.namedentities.Tables.*;
 
 public final class NamedEntityDBServiceImpl implements NamedEntityDBService, NamedEntityQueries {
 
@@ -203,7 +188,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
   /* ---------------------------------------------------------------------- */
 
   @Override
-  public IndividualDTO findIndividualByNedId(Integer nedId) {
+  public IndividualEntity findIndividualByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription nameprefix, i.firstName firstname, 
                i.middleName middlename, i.lastName lastname, 
@@ -237,11 +222,11 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt4).on(i.PREFERREDCOMMUNICATIONMETHODTYPEID.equal(gt4.GLOBALTYPEID))
       .where(i.NAMEDENTITYID.equal(nedId))
       .fetchOne()
-      .into(IndividualDTO.class);
+      .into(IndividualEntity.class);
   }
 
   @Override
-  public List<IndividualDTO> findIndividualsByUid(Integer srcTypeId, String uid) {
+  public List<IndividualEntity> findIndividualsByUid(Integer srcTypeId, String uid) {
 /*
    EXPLAIN
         SELECT gt1.shortDescription nameprefix, i.firstName firstname, 
@@ -288,11 +273,11 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt5).on(u.UNIQUEIDENTIFIERTYPEID.equal(gt5.GLOBALTYPEID))
       .where(u.UNIQUEIDENTIFIER.like(uid + "%"))
       .fetch()
-      .into(IndividualDTO.class);
+      .into(IndividualEntity.class);
   }
 
   @Override
-  public List<AddressDTO> findAddressesByNedId(Integer nedId) {
+  public List<AddressEntity> findAddressesByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription addresstype, a.addressline1, a.addressline2, 
                a.addressline3, a.city, a.postalCode, a.isprimary,
@@ -322,11 +307,11 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt3).on(a.COUNTRYCODETYPEID.equal(gt3.GLOBALTYPEID))
       .where(a.NAMEDENTITYID.equal(nedId))
       .fetch()
-      .into(AddressDTO.class);
+      .into(AddressEntity.class);
   }
 
   @Override
-  public List<EmailDTO> findEmailsByNedId(Integer nedId) {
+  public List<EmailEntity> findEmailsByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription emailtype, e.emailaddress, e.isprimary
           FROM emails e
@@ -344,11 +329,11 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt1).on(e.EMAILTYPEID.equal(gt1.GLOBALTYPEID))
       .where(e.NAMEDENTITYID.equal(nedId))
       .fetch()
-      .into(EmailDTO.class);
+      .into(EmailEntity.class);
   }
 
   @Override
-  public List<PhonenumberDTO> findPhoneNumbersByNedId(Integer nedId) {
+  public List<PhonenumberEntity> findPhoneNumbersByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription phonenumbertype,
                gt2.shortDescription countrycodetype,
@@ -372,11 +357,11 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt2).on(p.COUNTRYCODETYPEID.equal(gt2.GLOBALTYPEID))
       .where(p.NAMEDENTITYID.equal(nedId))
       .fetch()
-      .into(PhonenumberDTO.class);
+      .into(PhonenumberEntity.class);
   }
 
   @Override
-  public List<RoleDTO> findRolesByNedId(Integer nedId) {
+  public List<RoleEntity> findRolesByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription sourceapplicationtype,
                gt2.shortDescription roletype,
@@ -400,10 +385,10 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt2).on(r.ROLETYPEID.equal(gt2.GLOBALTYPEID))
       .where(r.NAMEDENTITYID.equal(nedId))
       .fetch()
-      .into(RoleDTO.class);
+      .into(RoleEntity.class);
   }
 
-  @Override public List<UniqueidentifierDTO> findUniqueIdsByNedId(Integer nedId) {
+  @Override public List<UniqueidentifierEntity> findUniqueIdsByNedId(Integer nedId) {
 /*
    EXPLAIN
         SELECT gt.shortDescription uniqueidentifiertype, uid.uniqueIdentifier 
@@ -421,11 +406,11 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt).on(uid.UNIQUEIDENTIFIERTYPEID.equal(gt.GLOBALTYPEID))
       .where(uid.NAMEDENTITYID.equal(nedId))
       .fetch()
-      .into(UniqueidentifierDTO.class);
+      .into(UniqueidentifierEntity.class);
   }
 
   /* ---------------------------------------------------------------------- */
-  /*  INTERNAL MAP : DTO POJO -> { JooqTable, JooqPkFieldForTable }         */
+  /*  INTERNAL MAP : ENTITY POJO -> { JooqTable, JooqPkFieldForTable }      */
   /* ---------------------------------------------------------------------- */
 
   static class TablePkPair {
@@ -441,7 +426,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
   }
 
   /*
-   * This map is used internally to associate a DTO with a database table
+   * This map is used internally to associate an entity pojo with a database table
    * and primary key for that table. The database references are JOOQ wrappers
    * (Table and TableField objects).
    *
@@ -452,23 +437,23 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
    * the appropriate class in org.plos.namedentity.persist.db.namedentities.tables
    */
 
-  private static final Map<Class,TablePkPair> dtoTableMap;
+  private static final Map<Class,TablePkPair> entityTableMap;
   static {
-    dtoTableMap = new ConcurrentHashMap<>();
-    dtoTableMap.put(AddressEntity.class, new TablePkPair(ADDRESSES, ADDRESSES.ADDRESSID));
-    dtoTableMap.put(EmailEntity.class, new TablePkPair(EMAILS, EMAILS.EMAILID));
-    dtoTableMap.put(GlobaltypeEntity.class, new TablePkPair(GLOBALTYPES, GLOBALTYPES.GLOBALTYPEID));
-    dtoTableMap.put(IndividualEntity.class, new TablePkPair(INDIVIDUALS, INDIVIDUALS.NAMEDENTITYID));
-    dtoTableMap.put(JournalEntity.class, new TablePkPair(JOURNALS, JOURNALS.JOURNALID));
-    dtoTableMap.put(PhonenumberEntity.class, new TablePkPair(PHONENUMBERS, PHONENUMBERS.PHONENUMBERID));
-    dtoTableMap.put(RoleEntity.class, new TablePkPair(ROLES, ROLES.ROLEID));
-    dtoTableMap.put(TypedescriptionEntity.class, new TablePkPair(TYPEDESCRIPTIONS, TYPEDESCRIPTIONS.TYPEID));
-    dtoTableMap.put(UniqueidentifierEntity.class, new TablePkPair(UNIQUEIDENTIFIERS, UNIQUEIDENTIFIERS.UNIQUEIDENTIFIERSID));
+    entityTableMap = new ConcurrentHashMap<>();
+    entityTableMap.put(AddressEntity.class, new TablePkPair(ADDRESSES, ADDRESSES.ADDRESSID));
+    entityTableMap.put(EmailEntity.class, new TablePkPair(EMAILS, EMAILS.EMAILID));
+    entityTableMap.put(GlobaltypeEntity.class, new TablePkPair(GLOBALTYPES, GLOBALTYPES.GLOBALTYPEID));
+    entityTableMap.put(IndividualEntity.class, new TablePkPair(INDIVIDUALS, INDIVIDUALS.NAMEDENTITYID));
+    entityTableMap.put(JournalEntity.class, new TablePkPair(JOURNALS, JOURNALS.JOURNALID));
+    entityTableMap.put(PhonenumberEntity.class, new TablePkPair(PHONENUMBERS, PHONENUMBERS.PHONENUMBERID));
+    entityTableMap.put(RoleEntity.class, new TablePkPair(ROLES, ROLES.ROLEID));
+    entityTableMap.put(TypedescriptionEntity.class, new TablePkPair(TYPEDESCRIPTIONS, TYPEDESCRIPTIONS.TYPEID));
+    entityTableMap.put(UniqueidentifierEntity.class, new TablePkPair(UNIQUEIDENTIFIERS, UNIQUEIDENTIFIERS.UNIQUEIDENTIFIERSID));
   }
   private static Table table(Class key) {
-    return dtoTableMap.get(key).table();
+    return entityTableMap.get(key).table();
   }
   private static TableField pkField(Class key) {
-    return dtoTableMap.get(key).pkField();
+    return entityTableMap.get(key).pkField();
   }
 }

@@ -4,24 +4,20 @@ import org.apache.log4j.Logger;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.service.CrudService;
 import org.plos.namedentity.service.NamedEntityService;
-import org.plos.namedentity.utils.Transformer;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-public class BaseController {
+public class BaseResource {
 
-  static Logger logger = Logger.getLogger(BaseController.class);
+  static Logger logger = Logger.getLogger(BaseResource.class);
 
   @Inject
   protected CrudService crudService;
 
   @Inject
   protected NamedEntityService namedEntityService;
-
-  @Inject
-  protected Transformer transformer;
 
   protected Response serverError(Exception e, String message) {
     logger.error("internal error", e);

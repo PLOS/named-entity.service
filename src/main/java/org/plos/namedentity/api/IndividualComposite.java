@@ -16,119 +16,129 @@
  */
 package org.plos.namedentity.api;
 
-import org.plos.namedentity.api.dto.AddressDTO;
-import org.plos.namedentity.api.dto.EmailDTO;
-import org.plos.namedentity.api.dto.PhonenumberDTO;
-import org.plos.namedentity.api.dto.RoleDTO;
-import org.plos.namedentity.api.dto.UniqueidentifierDTO;
+import org.plos.namedentity.api.entity.AddressEntity;
+import org.plos.namedentity.api.entity.EmailEntity;
+import org.plos.namedentity.api.entity.IndividualEntity;
+import org.plos.namedentity.api.entity.PhonenumberEntity;
+import org.plos.namedentity.api.entity.RoleEntity;
+import org.plos.namedentity.api.entity.UniqueidentifierEntity;
 
 import java.util.List;
 
 public class IndividualComposite {
 
-  private String namedentityid;
-  private String firstname;
-  private String middlename;
-  private String lastname;
-  private String nameprefix;
-  private String namesuffix;
-  private String preferredlanguage;
-  private String preferredcommunication;
+  private IndividualEntity             individual;
+  private RoleEntity                   role;
+  private List<AddressEntity>          addresses;
+  private List<EmailEntity>            emails;
+  private List<PhonenumberEntity>      phonenumbers;
+  private List<UniqueidentifierEntity> uniqueidentifiers;
 
-  private RoleDTO                   role;
-  private List<AddressDTO>          addresses;
-  private List<EmailDTO>            emails;
-  private List<PhonenumberDTO>      phonenumbers;
-  private List<UniqueidentifierDTO> uniqueidentifiers;
-
-  public String getNamedentityid() {
-    return namedentityid;
+  public IndividualComposite() {
+    this.individual = new IndividualEntity();
   }
-  public void setNamedentityid(String namedentityid) {
-    this.namedentityid = namedentityid;
+
+  public Integer getNamedentityid() {
+    return this.individual.getNamedentityid();
+  }
+
+  public void setNamedentityid(Integer namedentityid) {
+    this.individual.setNamedentityid(namedentityid);
   }
 
   public String getFirstname() {
-    return firstname;
+    return this.individual.getFirstname();
   }
+
   public void setFirstname(String firstname) {
-    this.firstname = firstname;
+    this.individual.setFirstname(firstname);
   }
 
   public String getMiddlename() {
-    return middlename;
+    return this.individual.getMiddlename();
   }
+
   public void setMiddlename(String middlename) {
-    this.middlename = middlename;
+    this.individual.setMiddlename(middlename);
   }
 
   public String getLastname() {
-    return lastname;
+    return this.individual.getLastname();
   }
+
   public void setLastname(String lastname) {
-    this.lastname = lastname;
+    this.individual.setLastname(lastname);
   }
 
   public String getNameprefix() {
-    return nameprefix;
+    return this.individual.getNameprefix();
   }
+
   public void setNameprefix(String nameprefix) {
-    this.nameprefix = nameprefix;
+    this.individual.setNameprefix(nameprefix);
   }
 
   public String getNamesuffix() {
-    return namesuffix;
+    return this.individual.getNamesuffix();
   }
+
   public void setNamesuffix(String namesuffix) {
-    this.namesuffix = namesuffix;
+    this.individual.setNamesuffix(namesuffix);
   }
 
   public String getPreferredlanguage() {
-    return preferredlanguage;
+    return this.individual.getPreferredlanguage();
   }
+
   public void setPreferredlanguage(String preferredlanguage) {
-    this.preferredlanguage = preferredlanguage;
+    this.individual.setPreferredlanguage(preferredlanguage);
   }
 
   public String getPreferredcommunication() {
-    return preferredcommunication;
-  }
-  public void setPreferredcommunication(String preferredcommunication) {
-    this.preferredcommunication = preferredcommunication;
+    return this.individual.getPreferredcommunication();
   }
 
-  public RoleDTO getRole() {
+  public void setPreferredcommunication(String preferredcommunication) {
+    this.individual.setPreferredcommunication(preferredcommunication);
+  }
+
+  public RoleEntity getRole() {
     return role;
   }
-  public void setRole(RoleDTO role) {
+
+  public void setRole(RoleEntity role) {
     this.role = role;
   }
-  
-  public List<AddressDTO> getAddresses() {
+
+  public List<AddressEntity> getAddresses() {
     return addresses;
   }
-  public void setAddresses(List<AddressDTO> addresses) {
+
+  public void setAddresses(List<AddressEntity> addresses) {
     this.addresses = addresses;
   }
-  
-  public List<EmailDTO> getEmails() {
+
+  public List<EmailEntity> getEmails() {
     return emails;
   }
-  public void setEmails(List<EmailDTO> emails) {
+
+  public void setEmails(List<EmailEntity> emails) {
     this.emails = emails;
   }
-  
-  public List<PhonenumberDTO> getPhonenumbers() {
+
+  public List<PhonenumberEntity> getPhonenumbers() {
     return phonenumbers;
   }
-  public void setPhonenumbers(List<PhonenumberDTO> phonenumbers) {
+
+  public void setPhonenumbers(List<PhonenumberEntity> phonenumbers) {
     this.phonenumbers = phonenumbers;
   }
-  
-  public List<UniqueidentifierDTO> getUniqueidentifiers() {
+
+  public List<UniqueidentifierEntity> getUniqueidentifiers() {
     return uniqueidentifiers;
   }
-  public void setUniqueidentifiers(List<UniqueidentifierDTO> uniqueidentifiers) {
+
+  public void setUniqueidentifiers(List<UniqueidentifierEntity> uniqueidentifiers) {
     this.uniqueidentifiers = uniqueidentifiers;
   }
 }

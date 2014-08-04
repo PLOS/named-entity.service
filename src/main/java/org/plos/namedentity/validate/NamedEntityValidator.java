@@ -16,15 +16,12 @@
  */
 package org.plos.namedentity.validate;
 
-import java.util.List;
-
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.springframework.core.Ordered;
-
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.dto.EmailDTO;
-import org.plos.namedentity.api.dto.RoleDTO;
+import org.plos.namedentity.api.entity.EmailEntity;
+import org.plos.namedentity.api.entity.RoleEntity;
+import org.springframework.core.Ordered;
 
 public class NamedEntityValidator implements Ordered {
 
@@ -44,7 +41,7 @@ public class NamedEntityValidator implements Ordered {
     Object[] args = call.getArgs();
     if (args != null && args.length > 0 && args[0] instanceof IndividualComposite) {
       // TODO - replace with chain of business rules.
-      RoleDTO role = ((IndividualComposite) args[0]).getRole();
+      RoleEntity role = ((IndividualComposite) args[0]).getRole();
       if (role == null) {
         throw new NedValidationException("Validation Phase 1 Failure. No ROLE defined for individual.");
       }
@@ -64,7 +61,7 @@ public class NamedEntityValidator implements Ordered {
     //TODO - *** REMOVE DEMO HACK *** 
 
     if (args != null && args.length > 0 && args[0] instanceof IndividualComposite) {
-      for (EmailDTO email : ((IndividualComposite) args[0]).getEmails()) {
+      for (EmailEntity email : ((IndividualComposite) args[0]).getEmails()) {
         if ("foo@bar.com".equals(email.getEmailaddress())) {
           throw new NedValidationException("Validation Phase 2 Failure. foo@bar.com backdoor detected !!!");
         }

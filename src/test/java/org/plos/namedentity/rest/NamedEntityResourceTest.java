@@ -16,31 +16,29 @@
  */
 package org.plos.namedentity.rest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.junit.Before;
+import org.junit.Test;
+import org.plos.namedentity.api.entity.AddressEntity;
+import org.plos.namedentity.api.entity.EmailEntity;
+import org.plos.namedentity.api.entity.GlobaltypeEntity;
+import org.plos.namedentity.api.entity.IndividualEntity;
+import org.plos.namedentity.api.entity.PhonenumberEntity;
+import org.plos.namedentity.api.entity.RoleEntity;
+import org.plos.namedentity.api.entity.TypedescriptionEntity;
+import org.plos.namedentity.api.entity.UniqueidentifierEntity;
 
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
-import org.codehaus.jackson.map.ObjectMapper;
-import org.junit.Before;
-import org.junit.Test;
-import org.plos.namedentity.api.dto.AddressDTO;
-import org.plos.namedentity.api.dto.EmailDTO;
-import org.plos.namedentity.api.dto.GlobaltypeDTO;
-import org.plos.namedentity.api.dto.IndividualDTO;
-import org.plos.namedentity.api.dto.PhonenumberDTO;
-import org.plos.namedentity.api.dto.RoleDTO;
-import org.plos.namedentity.api.dto.TypedescriptionDTO;
-import org.plos.namedentity.api.dto.UniqueidentifierDTO;
-import org.plos.namedentity.api.entity.IndividualEntity;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
@@ -77,12 +75,12 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    IndividualDTO dto = mapper.readValue(jsonPayload, IndividualDTO.class);
-    assertEquals(Integer.valueOf(1), dto.getNamedentityid());
-    assertEquals("firstname", dto.getFirstname());
-    assertEquals("middlename", dto.getMiddlename());
-    assertEquals("lastname", dto.getLastname());
-    assertEquals("Mr.", dto.getNameprefix());
+    IndividualEntity entity = mapper.readValue(jsonPayload, IndividualEntity.class);
+    assertEquals(Integer.valueOf(1), entity.getNamedentityid());
+    assertEquals("firstname", entity.getFirstname());
+    assertEquals("middlename", entity.getMiddlename());
+    assertEquals("lastname", entity.getLastname());
+    assertEquals("Mr.", entity.getNameprefix());
 
     // Request #2. Expect a validation exception (client-side error)
 
@@ -118,12 +116,12 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    IndividualDTO dto = mapper.readValue(jsonPayload, IndividualDTO.class);
-    assertEquals(Integer.valueOf(1), dto.getNamedentityid());
-    assertEquals("firstname", dto.getFirstname());
-    assertEquals("middlename", dto.getMiddlename());
-    assertEquals("lastname", dto.getLastname());
-    assertEquals("Mr.", dto.getNameprefix());
+    IndividualEntity entity = mapper.readValue(jsonPayload, IndividualEntity.class);
+    assertEquals(Integer.valueOf(1), entity.getNamedentityid());
+    assertEquals("firstname", entity.getFirstname());
+    assertEquals("middlename", entity.getMiddlename());
+    assertEquals("lastname", entity.getLastname());
+    assertEquals("Mr.", entity.getNameprefix());
 
     /* ------------------------------------------------------------------ */
     /*  FIND (ALL)                                                        */
@@ -153,14 +151,14 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    AddressDTO[] addresses = mapper.readValue(jsonPayload, AddressDTO[].class);
+    AddressEntity[] addresses = mapper.readValue(jsonPayload, AddressEntity[].class);
     assertEquals(1, addresses.length);
 
-    AddressDTO address = addresses[0];
+    AddressEntity address = addresses[0];
     assertEquals("Office", address.getAddresstype());
     assertEquals("city", address.getCity());
     assertEquals("1234567", address.getPostalcode());
-    assertTrue( address.getIsprimary() );
+    assertTrue(address.getIsprimary() == 1);
 
     //TODO - CREATE, UPDATE, DELETE
   }
@@ -178,13 +176,13 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    EmailDTO[] emails = mapper.readValue(jsonPayload, EmailDTO[].class);
+    EmailEntity[] emails = mapper.readValue(jsonPayload, EmailEntity[].class);
     assertEquals(2, emails.length);
 
-    EmailDTO email = emails[0];
+    EmailEntity email = emails[0];
     assertEquals("Work", email.getEmailtype());
     assertEquals("fu.manchu.work@foo.com", email.getEmailaddress());
-    assertTrue( email.getIsprimary() );
+    assertTrue(email.getIsprimary() == 1);
 
     //TODO - CREATE, UPDATE, DELETE
   }
@@ -202,10 +200,10 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    PhonenumberDTO[] phonenumbers = mapper.readValue(jsonPayload, PhonenumberDTO[].class);
+    PhonenumberEntity[] phonenumbers = mapper.readValue(jsonPayload, PhonenumberEntity[].class);
     assertEquals(3, phonenumbers.length);
 
-    PhonenumberDTO officePhone = phonenumbers[0];
+    PhonenumberEntity officePhone = phonenumbers[0];
     assertEquals("Office", officePhone.getPhonenumbertype());
     assertEquals("123-456-7890", officePhone.getPhonenumber());
 
@@ -225,10 +223,10 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    RoleDTO[] roles = mapper.readValue(jsonPayload, RoleDTO[].class);
+    RoleEntity[] roles = mapper.readValue(jsonPayload, RoleEntity[].class);
     assertEquals(1, roles.length);
 
-    RoleDTO role = roles[0];
+    RoleEntity role = roles[0];
     assertEquals("Author", role.getRoletype());
 
     //TODO - CREATE, UPDATE, DELETE
@@ -247,10 +245,10 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    UniqueidentifierDTO[] xrefs = mapper.readValue(jsonPayload, UniqueidentifierDTO[].class);
+    UniqueidentifierEntity[] xrefs = mapper.readValue(jsonPayload, UniqueidentifierEntity[].class);
     assertEquals(2, xrefs.length);
 
-    for (UniqueidentifierDTO xref : xrefs) { 
+    for (UniqueidentifierEntity xref : xrefs) {
       assertEquals("ORCID", xref.getUniqueidentifiertype());
     }
 
@@ -284,7 +282,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    TypedescriptionDTO newTypeClass = mapper.readValue(jsonPayload, TypedescriptionDTO.class);
+    TypedescriptionEntity newTypeClass = mapper.readValue(jsonPayload, TypedescriptionEntity.class);
     assertEquals(Integer.valueOf(1), newTypeClass.getTypeid());
     assertEquals(NEW_TYPE_DESC, newTypeClass.getDescription());
     assertEquals(NEW_TYPE_USAGE, newTypeClass.getHowused());
@@ -319,7 +317,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     jsonPayload = response.readEntity(String.class);
 
-    TypedescriptionDTO foundTypeClass = mapper.readValue(jsonPayload, TypedescriptionDTO.class);
+    TypedescriptionEntity foundTypeClass = mapper.readValue(jsonPayload, TypedescriptionEntity.class);
     assertEquals(Integer.valueOf(1), foundTypeClass.getTypeid());
     assertEquals(NEW_TYPE_DESC, foundTypeClass.getDescription());
     assertEquals(NEW_TYPE_USAGE, foundTypeClass.getHowused());
@@ -333,7 +331,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(200, response.getStatus());
     jsonPayload = response.readEntity(String.class);
 
-    TypedescriptionDTO[] typeClassArray = mapper.readValue(jsonPayload, TypedescriptionDTO[].class); 
+    TypedescriptionEntity[] typeClassArray = mapper.readValue(jsonPayload, TypedescriptionEntity[].class);
     assertEquals(3, typeClassArray.length);
 
     /* ------------------------------------------------------------------ */
@@ -343,11 +341,11 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     final String UPDATE_TYPE_DESC  = "Update Type Description";
     final String UPDATE_TYPE_USAGE = "Update Type Usage";
 
-    TypedescriptionDTO updatedTypeClass = foundTypeClass;
+    TypedescriptionEntity updatedTypeClass = foundTypeClass;
     updatedTypeClass.setDescription(UPDATE_TYPE_DESC);
     updatedTypeClass.setHowused(UPDATE_TYPE_USAGE);
 
-    // marshal Type description DTO object to JSON String.
+    // marshal Type description pojo object to JSON String.
 
     Writer writer = new StringWriter();
     mapper.writeValue(writer, updatedTypeClass);
@@ -413,7 +411,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    GlobaltypeDTO newTypeVal = mapper.readValue(jsonPayload, GlobaltypeDTO.class);
+    GlobaltypeEntity newTypeVal = mapper.readValue(jsonPayload, GlobaltypeEntity.class);
     assertEquals(Integer.valueOf(1), newTypeVal.getGlobaltypeid());
     assertEquals("Type Value #1 Short Description", newTypeVal.getShortdescription());
     assertEquals("TV1", newTypeVal.getTypecode());
@@ -448,7 +446,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     jsonPayload = response.readEntity(String.class);
 
-    GlobaltypeDTO foundTypeVal = mapper.readValue(jsonPayload, GlobaltypeDTO.class);
+    GlobaltypeEntity foundTypeVal = mapper.readValue(jsonPayload, GlobaltypeEntity.class);
     assertEquals(Integer.valueOf(1), foundTypeVal.getGlobaltypeid());
     assertEquals(Integer.valueOf(1), foundTypeVal.getTypeid());
     assertEquals("Type Value #1 Short Description", foundTypeVal.getShortdescription());
@@ -463,7 +461,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(200, response.getStatus());
     jsonPayload = response.readEntity(String.class);
 
-    GlobaltypeDTO[] typeValuesForTypeClassArray = mapper.readValue(jsonPayload, GlobaltypeDTO[].class); 
+    GlobaltypeEntity[] typeValuesForTypeClassArray = mapper.readValue(jsonPayload, GlobaltypeEntity[].class);
     assertEquals(5, typeValuesForTypeClassArray.length);
     for (int i = 0; i < 5; i++) {
       assertEquals(Integer.valueOf(i+1), typeValuesForTypeClassArray[i].getGlobaltypeid());
@@ -473,10 +471,10 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    GlobaltypeDTO updatedTypeVal = foundTypeVal;
+    GlobaltypeEntity updatedTypeVal = foundTypeVal;
     updatedTypeVal.setShortdescription("Update Type Value #1 Short Description");
 
-    // marshal Type value DTO object to JSON String.
+    // marshal Type value pojo object to JSON String.
 
     Writer writer = new StringWriter();
     mapper.writeValue(writer, updatedTypeVal);

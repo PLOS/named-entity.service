@@ -20,18 +20,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.dto.AddressDTO;
-import org.plos.namedentity.api.dto.EmailDTO;
-import org.plos.namedentity.api.dto.IndividualDTO;
-import org.plos.namedentity.api.dto.PhonenumberDTO;
-import org.plos.namedentity.api.dto.RoleDTO;
-import org.plos.namedentity.api.dto.UniqueidentifierDTO;
+import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
+import org.plos.namedentity.api.entity.IndividualEntity;
+import org.plos.namedentity.api.entity.PhonenumberEntity;
+import org.plos.namedentity.api.entity.RoleEntity;
+import org.plos.namedentity.api.entity.UniqueidentifierEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +54,7 @@ public class NamedEntityServiceTest {
   public void testCreateIndividualWithoutRole() {
     // triggers phase 1 validation failure
     try {
-      IndividualDTO dto = namedEntityService.createIndividual(new IndividualComposite());
+      namedEntityService.createIndividual(new IndividualComposite());
       fail();
     }
     catch (NedValidationException expected) {
@@ -71,18 +71,18 @@ public class NamedEntityServiceTest {
     /*  EMAILS                                                            */
     /* ------------------------------------------------------------------ */
 
-    List<EmailDTO> emails = new ArrayList<>();
+    List<EmailEntity> emails = new ArrayList<>();
 
-    EmailDTO workEmail = new EmailDTO();
+    EmailEntity workEmail = new EmailEntity();
     workEmail.setEmailtype("Work");
     workEmail.setEmailaddress("fu.manchu.work@foo.com");
-    workEmail.setIsprimary(true);
+    workEmail.setIsprimary((byte)1);
     emails.add( workEmail );
 
-    EmailDTO personalEmail = new EmailDTO();
+    EmailEntity personalEmail = new EmailEntity();
     personalEmail.setEmailtype("Personal");
     personalEmail.setEmailaddress("fu.manchu.home@foo.com");
-    personalEmail.setIsprimary(false);
+    personalEmail.setIsprimary((byte)0);
     emails.add( personalEmail );
 
     composite.setEmails( emails );
@@ -91,23 +91,23 @@ public class NamedEntityServiceTest {
     /*  PHONE NUMBERS                                                     */
     /* ------------------------------------------------------------------ */
 
-    List<PhonenumberDTO> phonenumbers = new ArrayList<>();
+    List<PhonenumberEntity> phonenumbers = new ArrayList<>();
 
-    PhonenumberDTO officePhone = new PhonenumberDTO();
+    PhonenumberEntity officePhone = new PhonenumberEntity();
     officePhone.setPhonenumbertype("Office");
     officePhone.setCountrycodetype("01");
     officePhone.setPhonenumber("123-456-7890");
     officePhone.setIsprimary(true);
     phonenumbers.add( officePhone );
 
-    PhonenumberDTO mobilePhone = new PhonenumberDTO();
+    PhonenumberEntity mobilePhone = new PhonenumberEntity();
     mobilePhone.setPhonenumbertype("Mobile");
     mobilePhone.setCountrycodetype("01");
     mobilePhone.setPhonenumber("123-444-0011");
     mobilePhone.setIsprimary(false);
     phonenumbers.add( mobilePhone );
 
-    PhonenumberDTO homePhone = new PhonenumberDTO();
+    PhonenumberEntity homePhone = new PhonenumberEntity();
     homePhone.setPhonenumbertype("Home");
     homePhone.setCountrycodetype("01");
     homePhone.setPhonenumber("123-555-6666");
@@ -120,9 +120,9 @@ public class NamedEntityServiceTest {
     /*  ADDRESSES                                                         */
     /* ------------------------------------------------------------------ */
 
-    List<AddressDTO> addresses = new ArrayList<>();
+    List<AddressEntity> addresses = new ArrayList<>();
 
-    AddressDTO officeAddress = new AddressDTO();
+    AddressEntity officeAddress = new AddressEntity();
     officeAddress.setAddresstype("Office");
     officeAddress.setAddressline1("addressline1");
     officeAddress.setAddressline2("addressline2");
@@ -130,7 +130,7 @@ public class NamedEntityServiceTest {
     officeAddress.setStatecodetype("CA");
     officeAddress.setCountrycodetype("United States");
     officeAddress.setPostalcode("1234567");
-    officeAddress.setIsprimary(true);
+    officeAddress.setIsprimary((byte)1);
     addresses.add( officeAddress );
 
     composite.setAddresses( addresses );
@@ -139,20 +139,20 @@ public class NamedEntityServiceTest {
     /*  UNIQUE IDENTIFIERS                                                */
     /* ------------------------------------------------------------------ */
 
-    List<UniqueidentifierDTO> uids = new ArrayList<>();
+    List<UniqueidentifierEntity> uids = new ArrayList<>();
 
-    UniqueidentifierDTO uidDto = new UniqueidentifierDTO();
-    uidDto.setUniqueidentifiertype("ORCID");
-    uidDto.setUniqueidentifier("0000-0001-9430-319X");
-    uids.add( uidDto );
+    UniqueidentifierEntity uidEntity = new UniqueidentifierEntity();
+    uidEntity.setUniqueidentifiertype("ORCID");
+    uidEntity.setUniqueidentifier("0000-0001-9430-319X");
+    uids.add( uidEntity );
 
     composite.setUniqueidentifiers( uids );
 
     Integer nedId = null;
     try {
-      IndividualDTO dto = namedEntityService.createIndividual(composite);
-      assertNotNull(dto);
-      assertNotNull(dto.getNamedentityid());
+      IndividualEntity entity = namedEntityService.createIndividual(composite);
+      assertNotNull(entity);
+      assertNotNull(entity.getNamedentityid());
     }
     catch (NedValidationException e) {
       fail();
@@ -169,31 +169,31 @@ public class NamedEntityServiceTest {
 
     // Test "By NedId" Finders
 
-    IndividualDTO individualDto = namedEntityService.findIndividualByNedId(nedId);
-    assertNotNull( individualDto );
+    IndividualEntity entity = namedEntityService.findIndividualByNedId(nedId);
+    assertNotNull( entity );
 
-    List<AddressDTO> addressesDto = namedEntityService.findAddressesByNedId(nedId);
-    assertEquals(1, addressesDto.size());
+    List<AddressEntity> addressesEntities = namedEntityService.findAddressesByNedId(nedId);
+    assertEquals(1, addressesEntities.size());
 
-    List<EmailDTO> emailsDto = namedEntityService.findEmailsByNedId(nedId);
-    assertEquals(2, emailsDto.size());
+    List<EmailEntity> emailEntities = namedEntityService.findEmailsByNedId(nedId);
+    assertEquals(2, emailEntities.size());
 
-    List<PhonenumberDTO> phonenumbersDto = namedEntityService.findPhoneNumbersByNedId(nedId);
-    assertEquals(3, phonenumbersDto.size());
+    List<PhonenumberEntity> phonenumberEntities = namedEntityService.findPhoneNumbersByNedId(nedId);
+    assertEquals(3, phonenumberEntities.size());
 
-    List<RoleDTO> rolesDto = namedEntityService.findRolesByNedId(nedId);
-    assertEquals(1, rolesDto.size());
+    List<RoleEntity> roleEntities = namedEntityService.findRolesByNedId(nedId);
+    assertEquals(1, roleEntities.size());
 
-    List<UniqueidentifierDTO> uidsDto = namedEntityService.findUniqueIdsByNedId(nedId);
-    assertEquals(1, uidsDto.size());
+    List<UniqueidentifierEntity> uidEntities = namedEntityService.findUniqueIdsByNedId(nedId);
+    assertEquals(1, uidEntities.size());
 
     Integer uidTypeId = findUidTypeIdByName("ORCID");
     assertNotNull( uidTypeId );
 
-    List<IndividualDTO> individuals = namedEntityService.findIndividualsByUid(uidTypeId, "0000-0001-9430-319X");
+    List<IndividualEntity> individuals = namedEntityService.findIndividualsByUid(uidTypeId, "0000-0001-9430-319X");
     assertEquals(1, individuals.size());
 
-    IndividualDTO individual = individuals.get(0);
+    IndividualEntity individual = individuals.get(0);
     assertEquals("firstname", individual.getFirstname());
     assertEquals("lastname", individual.getLastname());
   }
@@ -214,18 +214,18 @@ public class NamedEntityServiceTest {
 
     IndividualComposite composite = newCompositeIndividualWithRole();
 
-    List<EmailDTO> emails = new ArrayList<>();
+    List<EmailEntity> emails = new ArrayList<>();
 
-    EmailDTO workEmail = new EmailDTO();
+    EmailEntity workEmail = new EmailEntity();
     workEmail.setEmailtype("Work");
     workEmail.setEmailaddress("foo@bar.com");
-    workEmail.setIsprimary(true);
+    workEmail.setIsprimary((byte)1);
     emails.add( workEmail );
 
     composite.setEmails( emails );
 
     try {
-      IndividualDTO dto = namedEntityService.createIndividual(composite);
+      namedEntityService.createIndividual(composite);
       fail();
     }
     catch (NedValidationException expected) {
@@ -250,9 +250,9 @@ public class NamedEntityServiceTest {
     composite.setPreferredlanguage("English");
     composite.setPreferredcommunication("Email");
 
-    RoleDTO author = new RoleDTO();
+    RoleEntity author = new RoleEntity();
     author.setRoletype("Author");
-    author.setStartdate("2014-05-30");
+    author.setStartdate(new Timestamp(1401408000));  // "2014-05-30"
     composite.setRole(author);
 
     return composite;
