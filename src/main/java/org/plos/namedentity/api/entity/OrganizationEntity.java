@@ -16,6 +16,8 @@
  */
 package org.plos.namedentity.api.entity;
 
+import java.util.Objects;
+
 /**
  * Modified JOOQ generated class(pojo=true).
  */
@@ -34,28 +36,29 @@ public class OrganizationEntity implements java.io.Serializable {
   private Byte    isvisible;
   private String  url;
 
-  public OrganizationEntity() {}
+  public OrganizationEntity() {
+  }
 
   public OrganizationEntity(
-    Integer namedentityid,
-    Integer organizationtypeid,
-    String  organizationtype,
-    String  organizationfamiliarname,
-    String  organizationlegalname,
-    Integer organizationmaincontactid,
-    Byte    isactive,
-    Byte    isvisible,
-    String  url
-  ) {
-    this.namedentityid             = namedentityid;
-    this.organizationtypeid        = organizationtypeid;
-    this.organizationtype          = organizationtype;
-    this.organizationfamiliarname  = organizationfamiliarname;
-    this.organizationlegalname     = organizationlegalname;
+      Integer namedentityid,
+      Integer organizationtypeid,
+      String organizationtype,
+      String organizationfamiliarname,
+      String organizationlegalname,
+      Integer organizationmaincontactid,
+      Byte isactive,
+      Byte isvisible,
+      String url
+                           ) {
+    this.namedentityid = namedentityid;
+    this.organizationtypeid = organizationtypeid;
+    this.organizationtype = organizationtype;
+    this.organizationfamiliarname = organizationfamiliarname;
+    this.organizationlegalname = organizationlegalname;
     this.organizationmaincontactid = organizationmaincontactid;
-    this.isactive                  = isactive;
-    this.isvisible                 = isvisible;
-    this.url                       = url;
+    this.isactive = isactive;
+    this.isvisible = isvisible;
+    this.url = url;
   }
 
   public java.lang.Integer getNamedentityid() {
@@ -121,12 +124,34 @@ public class OrganizationEntity implements java.io.Serializable {
   public void setUrl(java.lang.String url) {
     this.url = url;
   }
-  
+
   public String getOrganizationtype() {
-      return organizationtype;
+    return organizationtype;
   }
-  
+
   public void setOrganizationtype(String organizationtype) {
-      this.organizationtype = organizationtype;
+    this.organizationtype = organizationtype;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof OrganizationEntity)) return false;
+
+    OrganizationEntity that = (OrganizationEntity) o;
+
+    return Objects.equals(this.namedentityid, that.namedentityid)
+        && Objects.equals(this.isactive, that.isactive)
+        && Objects.equals(this.isvisible, that.isvisible)
+        && Objects.equals(this.organizationfamiliarname, that.organizationfamiliarname)
+        && Objects.equals(this.organizationlegalname, that.organizationlegalname)
+        && Objects.equals(this.organizationmaincontactid, that.organizationmaincontactid)
+        && Objects.equals(this.organizationtypeid, that.organizationtypeid)
+        && Objects.equals(this.url, that.url);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.namedentityid, this.isactive, this.isvisible,this.organizationfamiliarname, this.organizationlegalname, this.organizationmaincontactid,this.organizationtypeid, this.url);
   }
 }
