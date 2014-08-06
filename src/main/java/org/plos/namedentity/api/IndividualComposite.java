@@ -38,6 +38,14 @@ public class IndividualComposite {
     this.individual = new IndividualEntity();
   }
 
+  public IndividualEntity getIndividual() {
+    return individual;
+  }
+
+  public void setIndividual(IndividualEntity individual) {
+    this.individual = individual;
+  }
+
   public Integer getNamedentityid() {
     return this.individual.getNamedentityid();
   }

@@ -23,6 +23,7 @@ import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
+import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.persist.db.namedentities.tables.Addresses;
 import org.plos.namedentity.persist.db.namedentities.tables.Emails;
@@ -231,16 +232,19 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Organizations o = ORGANIZATIONS.as("o");
 
-    return this.context
+    Record record = this.context
         .select(
             o.NAMEDENTITYID, o.ORGANIZATIONFAMILIARNAME,
             o.ORGANIZATIONLEGALNAME, o.ISACTIVE, o.ISVISIBLE,
             o.URL, gt1.SHORTDESCRIPTION.as("organizationtype"))
         .from(o)
         .leftOuterJoin(gt1).on(o.ORGANIZATIONTYPEID.equal(gt1.GLOBALTYPEID))
-        .where(o.NAMEDENTITYID.equal(nedId))
-        .fetchOne()
-        .into(OrganizationEntity.class);
+        .where(o.NAMEDENTITYID.equal(nedId)).fetchOne();
+
+    if (record == null)
+      throw new EntityNotFoundException("Organization not found");
+
+    return record.into(OrganizationEntity.class);
   }
 
   @Override
@@ -263,6 +267,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
         .where(u.UNIQUEIDENTIFIER.equal(uid))
         .fetch()
         .into(OrganizationEntity.class);
+
+    // TODO: make sure the empty set is handles gracefully
 
   }
 

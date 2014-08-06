@@ -24,6 +24,7 @@ import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
+import org.plos.namedentity.api.entity.OrganizationEntity;
 import org.plos.namedentity.api.entity.PhonenumberEntity;
 import org.plos.namedentity.api.entity.RoleEntity;
 import org.plos.namedentity.api.entity.UniqueidentifierEntity;
@@ -59,6 +60,25 @@ public class NamedEntityServiceTest {
     }
     catch (NedValidationException expected) {
       assertTrue(expected.getMessage().indexOf("No ROLE defined") != -1);
+    }
+  }
+
+  @Test
+  public void testCreatOrganization() {
+    OrganizationEntity inputEntity = new OrganizationEntity();
+    inputEntity.setOrganizationfamiliarname("familiarname");
+    inputEntity.setOrganizationlegalname("legalname");
+    inputEntity.setIsactive((byte) 1);
+    inputEntity.setIsvisible((byte) 0);
+
+    try {
+      OrganizationEntity outputEntity = namedEntityService.createOrganization(inputEntity);
+      assertNotNull(outputEntity);
+      assertNotNull(outputEntity.getNamedentityid());
+      assertTrue(inputEntity.equals(outputEntity));
+    }
+    catch (Exception e) {
+      fail();
     }
   }
 

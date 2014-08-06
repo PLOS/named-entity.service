@@ -211,25 +211,6 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     return ((NamedEntityQueries)nedDBSvc).findIndividualsByUid(srcTypeId, uid);
   }
 
-
-//  @Override @Transactional
-//  public OrganizationEntity createOrganization(OrganizationComposite composite) {
-//    Integer nedId = nedDBSvc.newNamedEntityId("Organization");
-//
-//    OrganizationEntity entity = new OrganizationEntity();
-//    entity.setNamedentityid(nedId);
-//    entity.setUrl(composite.getUrl());
-//    entity.setIsactive(composite.getIsactive());
-//    entity.setIsvisible(composite.getIsvisible());
-//    entity.setOrganizationfamiliarname(composite.getOrganizationfamiliarname());
-//    entity.setOrganizationlegalname(composite.getOrganizationlegalname());
-//
-//    if (entity)
-//
-//
-//
-//  }
-
   @Override @Transactional
   public OrganizationEntity createOrganization(OrganizationEntity entity) {
     Integer nedId = nedDBSvc.newNamedEntityId("Organization");

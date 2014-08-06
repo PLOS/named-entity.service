@@ -1,5 +1,7 @@
 package org.plos.namedentity.rest;
 
+import org.plos.namedentity.api.EntityNotFoundException;
+import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.OrganizationEntity;
@@ -19,10 +21,13 @@ public class OrganizationsResource extends BaseResource {
 
   @POST
   public Response createEntity(OrganizationEntity object) {
-
-    return Response.ok(namedEntityService.createOrganization(object)).build();
-
-    // TODO: handle runtime exception ?
+    try {
+      return Response.ok(namedEntityService.createOrganization(object)).build();
+    } catch(NedValidationException e) {
+      return validationError(e, "Unable to create individual");
+    } catch(Exception e) {
+      return serverError(e, "Unable to create individual");
+    }
   }
 
   @GET
@@ -37,25 +42,22 @@ public class OrganizationsResource extends BaseResource {
   public Response getEntity(@PathParam("id") int nedId) {
     try {
       return Response.ok(namedEntityService.findOrganizationByNedId(nedId)).build();
-    }
-    catch(Exception e) {
-      return serverError(e, "Find individual by id failed");
+    } catch (EntityNotFoundException e) {
+      return entityNotFound(e);
+    } catch (Exception e) {
+      return serverError(e, "Find organization by id failed");
     }
   }
-
-
-
-
-  // TODO: duplicated IndividualsResource.getEmailsForIndividual
-
-
 
   @GET
   @Path("/{id}/emails")
   public Response getEmails(@PathParam("id") int nedId) {
     try {
+
+      // TODO: should we return 404 if the nedId does not exist?
+
       return Response.ok(new GenericEntity<List<EmailEntity>>(
-          namedEntityService.findEmailsByNedId(nedId, "orginzations")
+          namedEntityService.findEmailsByNedId(nedId)
           ) {}).build();
     } catch (Exception e) {
       return serverError(e, "Find emails by nedId failed");
@@ -69,7 +71,7 @@ public class OrganizationsResource extends BaseResource {
       return Response.ok(new GenericEntity<List<AddressEntity>>(
               namedEntityService.findAddressesByNedId(nedId)
           ){}).build();
-    } catch(Exception e) {
+    } catch (Exception e) {
       return serverError(e, "Find addresses by nedId failed");
     }
   }
