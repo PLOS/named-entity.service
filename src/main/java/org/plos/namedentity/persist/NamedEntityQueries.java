@@ -29,12 +29,12 @@ import java.util.List;
 public interface NamedEntityQueries {
 
   IndividualEntity             findIndividualByNedId  (Integer nedId);
-  List<IndividualEntity>       findIndividualsByUid   (Integer srcTypeId, String uid);  // TODO: rename this function or dont return a list
+  List<IndividualEntity>       findIndividualsByUid   (Integer srcTypeId, String uid);
   List<AddressEntity>          findAddressesByNedId   (Integer nedId);
   List<EmailEntity>            findEmailsByNedId      (Integer nedId);
   List<PhonenumberEntity>      findPhoneNumbersByNedId(Integer nedId);
   List<RoleEntity>             findRolesByNedId       (Integer nedId);
   List<UniqueidentifierEntity> findUniqueIdsByNedId   (Integer nedId);
   OrganizationEntity           findOrganizationByNedId(Integer nedId);
-//  OrganizationEntity           findOrganizationByUid  (Integer srcTypeId, String uid);
+  List<OrganizationEntity>     findOrganizationsByUid (String srcType, String uid);
 }

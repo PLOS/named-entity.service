@@ -16,12 +16,14 @@
  */
 package org.plos.namedentity.api.entity;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 /**
  * Modified JOOQ generated class(pojo=true).
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@XmlRootElement
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class OrganizationEntity implements java.io.Serializable {
 
   private static final long serialVersionUID = 276513267;
@@ -61,67 +63,67 @@ public class OrganizationEntity implements java.io.Serializable {
     this.url = url;
   }
 
-  public java.lang.Integer getNamedentityid() {
+  public Integer getNamedentityid() {
     return this.namedentityid;
   }
 
-  public void setNamedentityid(java.lang.Integer namedentityid) {
+  public void setNamedentityid(Integer namedentityid) {
     this.namedentityid = namedentityid;
   }
 
-  public java.lang.Integer getOrganizationtypeid() {
+  public Integer getOrganizationtypeid() {
     return this.organizationtypeid;
   }
 
-  public void setOrganizationtypeid(java.lang.Integer organizationtypeid) {
+  public void setOrganizationtypeid(Integer organizationtypeid) {
     this.organizationtypeid = organizationtypeid;
   }
 
-  public java.lang.String getOrganizationfamiliarname() {
+  public String getOrganizationfamiliarname() {
     return this.organizationfamiliarname;
   }
 
-  public void setOrganizationfamiliarname(java.lang.String organizationfamiliarname) {
+  public void setOrganizationfamiliarname(String organizationfamiliarname) {
     this.organizationfamiliarname = organizationfamiliarname;
   }
 
-  public java.lang.String getOrganizationlegalname() {
+  public String getOrganizationlegalname() {
     return this.organizationlegalname;
   }
 
-  public void setOrganizationlegalname(java.lang.String organizationlegalname) {
+  public void setOrganizationlegalname(String organizationlegalname) {
     this.organizationlegalname = organizationlegalname;
   }
 
-  public java.lang.Integer getOrganizationmaincontactid() {
+  public Integer getOrganizationmaincontactid() {
     return this.organizationmaincontactid;
   }
 
-  public void setOrganizationmaincontactid(java.lang.Integer organizationmaincontactid) {
+  public void setOrganizationmaincontactid(Integer organizationmaincontactid) {
     this.organizationmaincontactid = organizationmaincontactid;
   }
 
-  public java.lang.Byte getIsactive() {
+  public Byte getIsactive() {
     return this.isactive;
   }
 
-  public void setIsactive(java.lang.Byte isactive) {
+  public void setIsactive(Byte isactive) {
     this.isactive = isactive;
   }
 
-  public java.lang.Byte getIsvisible() {
+  public Byte getIsvisible() {
     return this.isvisible;
   }
 
-  public void setIsvisible(java.lang.Byte isvisible) {
+  public void setIsvisible(Byte isvisible) {
     this.isvisible = isvisible;
   }
 
-  public java.lang.String getUrl() {
+  public String getUrl() {
     return this.url;
   }
 
-  public void setUrl(java.lang.String url) {
+  public void setUrl(String url) {
     this.url = url;
   }
 

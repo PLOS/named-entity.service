@@ -244,6 +244,29 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
   }
 
   @Override
+  public List<OrganizationEntity> findOrganizationsByUid(String srcType, String uid) {
+
+    Globaltypes gt1 = GLOBALTYPES.as("gt1");
+    Globaltypes gt2 = GLOBALTYPES.as("gt2");
+    Organizations o = ORGANIZATIONS.as("o");
+    Uniqueidentifiers u = UNIQUEIDENTIFIERS.as("u");
+
+    return this.context
+        .select(
+            o.NAMEDENTITYID, o.ORGANIZATIONFAMILIARNAME,
+            o.ORGANIZATIONLEGALNAME, o.ISACTIVE, o.ISVISIBLE,
+            o.URL, gt1.SHORTDESCRIPTION.as("organizationtype"))
+        .from(o)
+        .leftOuterJoin(gt1).on(o.ORGANIZATIONTYPEID.equal(gt1.GLOBALTYPEID))
+        .leftOuterJoin(gt2).on(u.UNIQUEIDENTIFIERTYPEID.equal(gt2.GLOBALTYPEID)).and(gt2.SHORTDESCRIPTION.equal(srcType))
+        .join(u).on(o.NAMEDENTITYID.equal(u.NAMEDENTITYID))
+        .where(u.UNIQUEIDENTIFIER.equal(uid))
+        .fetch()
+        .into(OrganizationEntity.class);
+
+  }
+
+  @Override
   public List<IndividualEntity> findIndividualsByUid(Integer srcTypeId, String uid) {
 /*
    EXPLAIN

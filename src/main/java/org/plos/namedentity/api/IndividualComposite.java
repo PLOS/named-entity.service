@@ -28,7 +28,7 @@ import java.util.List;
 public class IndividualComposite {
 
   private IndividualEntity             individual;
-  private RoleEntity                   role;  // todo: should be a list
+  private RoleEntity                   role;  // TODO: this should be a list
   private List<AddressEntity>          addresses;
   private List<EmailEntity>            emails;
   private List<PhonenumberEntity>      phonenumbers;
