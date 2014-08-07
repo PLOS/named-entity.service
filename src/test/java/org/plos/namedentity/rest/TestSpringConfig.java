@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.plos.namedentity.spring.config;
+package org.plos.namedentity.rest;
 
 import org.mockito.Mockito;
 import org.plos.namedentity.api.IndividualComposite;
@@ -23,12 +23,11 @@ import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
+import org.plos.namedentity.api.entity.OrganizationEntity;
 import org.plos.namedentity.api.entity.PhonenumberEntity;
 import org.plos.namedentity.api.entity.RoleEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
 import org.plos.namedentity.api.entity.UniqueidentifierEntity;
-import org.plos.namedentity.rest.IndividualsResource;
-import org.plos.namedentity.rest.TypeclassesResource;
 import org.plos.namedentity.service.CrudService;
 import org.plos.namedentity.service.NamedEntityService;
 import org.springframework.context.annotation.Bean;
@@ -46,26 +45,26 @@ import static org.mockito.Mockito.when;
 public class TestSpringConfig {
 
   @Bean @SuppressWarnings("unchecked")
-  static public CrudService namedEntityService() {
-    CrudService mockNamedEntityService =  Mockito.mock(CrudService.class);
+  static public CrudService crudService() {
+    CrudService mockCrudService =  Mockito.mock(CrudService.class);
 
-    when(mockNamedEntityService.create(any()))
-      .thenReturn(Integer.valueOf(1))
+    when(mockCrudService.create(any()))
+      .thenReturn(1)
         .thenThrow(NedValidationException.class)
           .thenThrow(RuntimeException.class);
 
-    when(mockNamedEntityService.update(any()))
+    when(mockCrudService.update(any()))
       .thenReturn(true)
         .thenThrow(NedValidationException.class)
           .thenThrow(RuntimeException.class);
 
-    when(mockNamedEntityService.delete(any()))
+    when(mockCrudService.delete(any()))
       .thenReturn(true)
         .thenThrow(RuntimeException.class);
 
     // TYPE DESCRIPTIONS (TYPE CLASSES)
 
-    when(mockNamedEntityService.findById(eq(1), eq(TypedescriptionEntity.class)))
+    when(mockCrudService.findById(eq(1), eq(TypedescriptionEntity.class)))
       .thenReturn(new TypedescriptionEntity(1, "New Type Description", "New Type Usage"));
 
     List<TypedescriptionEntity> typeClassList = new ArrayList<>();
@@ -73,7 +72,7 @@ public class TestSpringConfig {
     typeClassList.add(new TypedescriptionEntity(2, "Type Description2", "Type Usage2"));
     typeClassList.add(new TypedescriptionEntity(3, "Type Description3", "Type Usage3"));
 
-    when(mockNamedEntityService.findAll(eq(TypedescriptionEntity.class))).thenReturn(typeClassList);
+    when(mockCrudService.findAll(eq(TypedescriptionEntity.class))).thenReturn(typeClassList);
 
     // TYPE VALUES (GLOBAL TYPES)
 
@@ -83,7 +82,7 @@ public class TestSpringConfig {
     typeVal.setShortdescription("Type Value #1 Short Description");
     typeVal.setTypecode("TV1");
 
-    when(mockNamedEntityService.findById(eq(1), eq(GlobaltypeEntity.class))).thenReturn(typeVal);
+    when(mockCrudService.findById(eq(1), eq(GlobaltypeEntity.class))).thenReturn(typeVal);
 
     List<GlobaltypeEntity> typeValuesForTypeClass = new ArrayList<>();
     for (int i = 1; i <=5; i++) {
@@ -91,17 +90,17 @@ public class TestSpringConfig {
         i, 1, "shortdesc"+i, "longdesc"+i, "typ"+i, null, null, null, null));
     }
 
-    when(mockNamedEntityService.findByAttribute(isA(GlobaltypeEntity.class))).thenReturn(typeValuesForTypeClass);
+    when(mockCrudService.findByAttribute(isA(GlobaltypeEntity.class))).thenReturn(typeValuesForTypeClass);
 
     // INDIVIDUALS 
 
-    when(mockNamedEntityService.findAll(eq(IndividualEntity.class))).thenReturn( newIndividualEntities() );
+    when(mockCrudService.findAll(eq(IndividualEntity.class))).thenReturn( newIndividualEntities() );
 
-    return mockNamedEntityService;
+    return mockCrudService;
   }
 
   @Bean @SuppressWarnings("unchecked")
-  static public NamedEntityService namedEntityServiceHighApi() {
+  static public NamedEntityService namedEntityService() {
     NamedEntityService mockNamedEntityService =  Mockito.mock(NamedEntityService.class);
 
     IndividualEntity individualEntity = newIndividualEntity();
@@ -129,6 +128,14 @@ public class TestSpringConfig {
     when(mockNamedEntityService.findUniqueIdsByNedId(anyInt()))
       .thenReturn( newUidEntities() );
 
+    OrganizationEntity organizationEntity = newOrganizationEntity();
+
+    when(mockNamedEntityService.createOrganization(isA(OrganizationEntity.class)))
+        .thenReturn(organizationEntity);
+
+    when(mockNamedEntityService.findOrganizationByNedId(anyInt()))
+        .thenReturn( organizationEntity );
+
     return mockNamedEntityService;
   }
 
@@ -140,12 +147,12 @@ public class TestSpringConfig {
 //  }
 
   @Bean
-  static public IndividualsResource individualsController() {
+  static public IndividualsResource individualsResource() {
     return new IndividualsResource();
   }
 
   @Bean
-  static public TypeclassesResource typeclassesController() {
+  static public TypeclassesResource typeclassesResource() {
     return new TypeclassesResource();
   }
 
@@ -159,6 +166,16 @@ public class TestSpringConfig {
     entity.setNamesuffix("II");
     entity.setPreferredlanguage("Mandarin");
     entity.setPreferredcommunication("Phone");
+    return entity;
+  }
+
+  static private OrganizationEntity newOrganizationEntity() {
+    OrganizationEntity entity = new OrganizationEntity();
+    entity.setNamedentityid(1);
+    entity.setIsactive((byte)0);
+    entity.setIsvisible((byte)1);
+    entity.setOrganizationlegalname("legalname");
+    entity.setOrganizationfamiliarname("familiarname");
     return entity;
   }
 
@@ -240,7 +257,7 @@ public class TestSpringConfig {
 
     for (int i = 1; i <=3; i++) {
       IndividualEntity individual = new IndividualEntity();
-      individual.setNamedentityid(1);
+      individual.setNamedentityid(i);
       individual.setFirstname("firstname"+i);
       individual.setMiddlename("middlename"+i);
       individual.setLastname("lastname"+i);

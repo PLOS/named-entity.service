@@ -1,6 +1,7 @@
 package org.plos.namedentity.rest;
 
 import org.apache.log4j.Logger;
+import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.service.CrudService;
 import org.plos.namedentity.service.NamedEntityService;
@@ -18,6 +19,14 @@ public class BaseResource {
 
   @Inject
   protected NamedEntityService namedEntityService;
+
+
+  protected Response entityNotFound(EntityNotFoundException e) {
+    logger.error("entity not found" + e.getMessage());
+    return Response.status(Response.Status.NOT_FOUND)   // 404
+        .entity(e.getMessage())
+        .type(MediaType.TEXT_PLAIN).build();
+  }
 
   protected Response serverError(Exception e, String message) {
     logger.error("internal error", e);

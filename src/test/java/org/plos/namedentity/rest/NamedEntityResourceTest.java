@@ -23,6 +23,7 @@ import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
+import org.plos.namedentity.api.entity.OrganizationEntity;
 import org.plos.namedentity.api.entity.PhonenumberEntity;
 import org.plos.namedentity.api.entity.RoleEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
@@ -53,11 +54,59 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   private static final String INDIV_ROLE_URI  = INDIVIDUAL_URI + "/1/roles";
   private static final String INDIV_XREF_URI  = INDIVIDUAL_URI + "/1/xref";
 
+  private static final String ORGANIZATION_URI= "/organizations";
+
   private ObjectMapper mapper;
 
   @Before
   public void setup() {
     this.mapper = new ObjectMapper();
+  }
+
+  @Test
+  public void testOrganizationCrud() throws Exception {
+
+    // CREATE
+
+    String organizationJson = "{\n" +
+        "   \"organizationfamiliarname\" : \"organizationfamiliarname\",\n" +
+        "   \"organizationlegalname\" : \"organizationlegalname\",\n" +
+        "   \"isactive\" : 0,\n" +
+        "   \"isvisible\" : true,\n" +
+        "   \"url\" : \"website.com\" }";
+
+    // Request #1. Expect success.
+
+    Response response = target(ORGANIZATION_URI).request(MediaType.APPLICATION_JSON_TYPE).post(Entity.json(organizationJson));
+
+    assertEquals(200, response.getStatus());
+
+    String jsonPayload = response.readEntity(String.class);
+
+    OrganizationEntity entity = mapper.readValue(jsonPayload, OrganizationEntity.class);
+    assertEquals(Integer.valueOf(1), entity.getNamedentityid());
+    assertEquals("familiarname", entity.getOrganizationfamiliarname());
+    assertEquals("legalname", entity.getOrganizationlegalname());
+    assertEquals(new Byte((byte)0), entity.getIsactive());
+    assertEquals(new Byte((byte)1), entity.getIsvisible());
+
+    // GET
+
+    response = target(ORGANIZATION_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(200, response.getStatus());
+
+    jsonPayload = response.readEntity(String.class);
+
+    entity = mapper.readValue(jsonPayload, OrganizationEntity.class);
+    assertEquals(Integer.valueOf(1), entity.getNamedentityid());
+    assertEquals("familiarname", entity.getOrganizationfamiliarname());
+    assertEquals("legalname", entity.getOrganizationlegalname());
+    assertEquals(new Byte((byte)0), entity.getIsactive());
+    assertEquals(new Byte((byte)1), entity.getIsvisible());
+
+    
+    // TODO: LIST, DELETE, UPDATE
   }
 
   @Test

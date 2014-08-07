@@ -22,15 +22,7 @@ import org.jooq.Result;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.plos.namedentity.api.entity.AddressEntity;
-import org.plos.namedentity.api.entity.EmailEntity;
-import org.plos.namedentity.api.entity.GlobaltypeEntity;
-import org.plos.namedentity.api.entity.IndividualEntity;
-import org.plos.namedentity.api.entity.JournalEntity;
-import org.plos.namedentity.api.entity.PhonenumberEntity;
-import org.plos.namedentity.api.entity.RoleEntity;
-import org.plos.namedentity.api.entity.TypedescriptionEntity;
-import org.plos.namedentity.api.entity.UniqueidentifierEntity;
+import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.persist.db.namedentities.tables.Globaltypes;
 import org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -371,6 +363,60 @@ public class NamedEntityDBServiceTest {
     individualToDelete.setNamedentityid(individualId);
 
     assertTrue( nedDBSvc.delete(individualToDelete) );
+  }
+
+
+  @Test
+  public void testOrganizationCRUD() {
+
+    // CREATE
+
+    Integer nedId = nedDBSvc.newNamedEntityId("Organization");
+
+    Integer organizationTypeId = findTypeValueByName(findTypeClassStartWith("Organization Types"), "University");
+
+    OrganizationEntity organization = new OrganizationEntity();
+    organization.setNamedentityid(nedId);
+    organization.setOrganizationtypeid(organizationTypeId);
+    organization.setOrganizationfamiliarname("familiarname");
+    organization.setOrganizationlegalname("legalname");
+    organization.setIsactive((byte)1);
+    organization.setIsvisible((byte)1);
+    organization.setUrl("http://url.org");
+
+    Integer organizationId = nedDBSvc.create(organization);
+    assertNotNull(organizationId);
+
+    // UPDATE
+    OrganizationEntity savedEntity = nedDBSvc.findById(organizationId, OrganizationEntity.class);
+    savedEntity.setOrganizationlegalname("legalname2");
+    assertTrue(nedDBSvc.update(savedEntity));
+
+    // Get another instance of same individual record
+    OrganizationEntity savedEntity2 = nedDBSvc.findById(organizationId, OrganizationEntity.class);
+    assertEquals(savedEntity, savedEntity2);
+
+    // FIND ALL Email Records
+
+    List<OrganizationEntity> allEntitiesInDB = nedDBSvc.findAll(OrganizationEntity.class);
+    assertTrue(allEntitiesInDB.size() > 0);
+
+    // FIND entity with
+
+    NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
+
+    OrganizationEntity entity = nedQuery.findOrganizationByNedId(organizationId);
+    assertNotNull( entity );
+
+    entity.setOrganizationtypeid(organizationTypeId);
+    assertEquals(entity, savedEntity2);
+
+    // DELETE
+
+    OrganizationEntity entityToDelete = new OrganizationEntity();
+    entityToDelete.setNamedentityid(organizationId);
+
+    assertTrue( nedDBSvc.delete(entityToDelete) );
   }
 
   @Test
