@@ -43,6 +43,14 @@
          "emailaddress" : "jane.q.doe.work@foo.com"
       }
    ],
+   "degrees" : [
+      {
+        "degreetype":"MD"
+      },
+      {
+        "degreetype":"PhD"
+      }
+   ],
    "nameprefix" : "Mrs.",
    "role" : {
       "startdate" : "2014-06-02",

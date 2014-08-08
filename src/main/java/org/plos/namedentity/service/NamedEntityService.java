@@ -18,6 +18,7 @@ package org.plos.namedentity.service;
 
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.entity.AddressEntity;
+import org.plos.namedentity.api.entity.DegreeEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
 import org.plos.namedentity.api.entity.OrganizationEntity;
@@ -43,4 +44,5 @@ public interface NamedEntityService {
   public List<PhonenumberEntity>      findPhoneNumbersByNedId(Integer nedId);
   public List<RoleEntity>             findRolesByNedId       (Integer nedId);
   public List<UniqueidentifierEntity> findUniqueIdsByNedId   (Integer nedId);
+  public List<DegreeEntity>           findDegreesByNedId     (Integer nedId);
 }

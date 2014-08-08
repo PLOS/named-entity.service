@@ -17,6 +17,7 @@
 package org.plos.namedentity.api;
 
 import org.plos.namedentity.api.entity.AddressEntity;
+import org.plos.namedentity.api.entity.DegreeEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
 import org.plos.namedentity.api.entity.PhonenumberEntity;
@@ -33,9 +34,18 @@ public class IndividualComposite {
   private List<EmailEntity>            emails;
   private List<PhonenumberEntity>      phonenumbers;
   private List<UniqueidentifierEntity> uniqueidentifiers;
+  private List<DegreeEntity>           degrees;
 
   public IndividualComposite() {
     this.individual = new IndividualEntity();
+  }
+
+  public List<DegreeEntity> getDegrees() {
+    return degrees;
+  }
+
+  public void setDegrees(List<DegreeEntity> degrees) {
+    this.degrees = degrees;
   }
 
   public IndividualEntity getIndividual() {

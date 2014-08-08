@@ -17,6 +17,7 @@
 package org.plos.namedentity.persist;
 
 import org.plos.namedentity.api.entity.AddressEntity;
+import org.plos.namedentity.api.entity.DegreeEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
 import org.plos.namedentity.api.entity.OrganizationEntity;
@@ -37,4 +38,5 @@ public interface NamedEntityQueries {
   List<UniqueidentifierEntity> findUniqueIdsByNedId   (Integer nedId);
   OrganizationEntity           findOrganizationByNedId(Integer nedId);
   List<OrganizationEntity>     findOrganizationsByUid (String srcType, String uid);
+  List<DegreeEntity>           findDegreesByNedId     (Integer nedId);
 }
