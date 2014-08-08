@@ -19,15 +19,7 @@ package org.plos.namedentity.rest;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
-import org.plos.namedentity.api.entity.AddressEntity;
-import org.plos.namedentity.api.entity.EmailEntity;
-import org.plos.namedentity.api.entity.GlobaltypeEntity;
-import org.plos.namedentity.api.entity.IndividualEntity;
-import org.plos.namedentity.api.entity.OrganizationEntity;
-import org.plos.namedentity.api.entity.PhonenumberEntity;
-import org.plos.namedentity.api.entity.RoleEntity;
-import org.plos.namedentity.api.entity.TypedescriptionEntity;
-import org.plos.namedentity.api.entity.UniqueidentifierEntity;
+import org.plos.namedentity.api.entity.*;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
@@ -53,6 +45,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   private static final String INDIV_PHONE_URI = INDIVIDUAL_URI + "/1/phonenumbers";
   private static final String INDIV_ROLE_URI  = INDIVIDUAL_URI + "/1/roles";
   private static final String INDIV_XREF_URI  = INDIVIDUAL_URI + "/1/xref";
+  private static final String INDIV_DEGREE_URI  = INDIVIDUAL_URI + "/1/degrees";
 
   private static final String ORGANIZATION_URI= "/organizations";
 
@@ -232,6 +225,28 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals("Work", email.getEmailtype());
     assertEquals("fu.manchu.work@foo.com", email.getEmailaddress());
     assertTrue(email.getIsprimary() == 1);
+
+    //TODO - CREATE, UPDATE, DELETE
+  }
+
+  @Test
+  public void testDegreeCrud() throws IOException {
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY ID)                                                      */
+    /* ------------------------------------------------------------------ */
+
+    Response response = target(INDIV_DEGREE_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(200, response.getStatus());
+
+    String jsonPayload = response.readEntity(String.class);
+
+    DegreeEntity[] degrees = mapper.readValue(jsonPayload, DegreeEntity[].class);
+    assertEquals(1, degrees.length);
+
+    DegreeEntity degree = degrees[0];
+    assertEquals("Super Doctor", degree.getDegreetype());
 
     //TODO - CREATE, UPDATE, DELETE
   }

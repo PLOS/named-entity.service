@@ -21,6 +21,7 @@ import org.junit.runner.RunWith;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.AddressEntity;
+import org.plos.namedentity.api.entity.DegreeEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
@@ -64,7 +65,7 @@ public class NamedEntityServiceTest {
   }
 
   @Test
-  public void testCreatOrganization() {
+  public void testCreateOrganization() {
     OrganizationEntity inputEntity = new OrganizationEntity();
     inputEntity.setOrganizationfamiliarname("familiarname");
     inputEntity.setOrganizationlegalname("legalname");
@@ -154,6 +155,18 @@ public class NamedEntityServiceTest {
     addresses.add( officeAddress );
 
     composite.setAddresses( addresses );
+
+    /* ------------------------------------------------------------------ */
+    /*  DEGREES                                                           */
+    /* ------------------------------------------------------------------ */
+
+    List<DegreeEntity> degrees = new ArrayList<>();
+
+    DegreeEntity degree = new DegreeEntity();
+    degree.setDegreetype("MD");
+    degrees.add(degree);
+
+    composite.setDegrees( degrees );
 
     /* ------------------------------------------------------------------ */
     /*  UNIQUE IDENTIFIERS                                                */

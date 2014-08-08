@@ -19,15 +19,7 @@ package org.plos.namedentity.rest;
 import org.mockito.Mockito;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.entity.AddressEntity;
-import org.plos.namedentity.api.entity.EmailEntity;
-import org.plos.namedentity.api.entity.GlobaltypeEntity;
-import org.plos.namedentity.api.entity.IndividualEntity;
-import org.plos.namedentity.api.entity.OrganizationEntity;
-import org.plos.namedentity.api.entity.PhonenumberEntity;
-import org.plos.namedentity.api.entity.RoleEntity;
-import org.plos.namedentity.api.entity.TypedescriptionEntity;
-import org.plos.namedentity.api.entity.UniqueidentifierEntity;
+import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.service.CrudService;
 import org.plos.namedentity.service.NamedEntityService;
 import org.springframework.context.annotation.Bean;
@@ -118,6 +110,9 @@ public class TestSpringConfig {
 
     when(mockNamedEntityService.findEmailsByNedId(anyInt()))
       .thenReturn( newEmailEntities() );
+
+    when(mockNamedEntityService.findDegreesByNedId(anyInt()))
+        .thenReturn(newDegreeEntities());
 
     when(mockNamedEntityService.findPhoneNumbersByNedId(anyInt()))
       .thenReturn( newPhonenumberEntities() );
@@ -212,6 +207,16 @@ public class TestSpringConfig {
     emails.add( personalEmail );
 
     return emails;
+  }
+
+  static private List<DegreeEntity> newDegreeEntities() {
+    List<DegreeEntity> entities = new ArrayList<>();
+
+    DegreeEntity entity = new DegreeEntity();
+    entity.setDegreetype("Super Doctor");
+    entities.add( entity );
+
+    return entities;
   }
 
   static private List<PhonenumberEntity> newPhonenumberEntities() {
