@@ -18,15 +18,7 @@ package org.plos.namedentity.service;
 
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.entity.AddressEntity;
-import org.plos.namedentity.api.entity.EmailEntity;
-import org.plos.namedentity.api.entity.GlobaltypeEntity;
-import org.plos.namedentity.api.entity.IndividualEntity;
-import org.plos.namedentity.api.entity.OrganizationEntity;
-import org.plos.namedentity.api.entity.PhonenumberEntity;
-import org.plos.namedentity.api.entity.RoleEntity;
-import org.plos.namedentity.api.entity.TypedescriptionEntity;
-import org.plos.namedentity.api.entity.UniqueidentifierEntity;
+import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.persist.NamedEntityDBService;
 import org.plos.namedentity.persist.NamedEntityQueries;
 import org.springframework.transaction.annotation.Transactional;
@@ -158,6 +150,24 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     }
 
     /* ------------------------------------------------------------------ */
+    /*  DEGREES                                                            */
+    /* ------------------------------------------------------------------ */
+
+    Integer degreeTypeClassId = findTypeClassStartWith("Degrees");
+
+    List<DegreeEntity> degrees = composite.getDegrees();
+
+    if (degrees != null) {
+      for (DegreeEntity degree : degrees) {
+
+        degree.setDegreetypeid(findTypeValueByName(degreeTypeClassId, degree.getDegreetype()));
+        degree.setNamedentityid(nedId);
+
+        nedDBSvc.create(degree);
+      }
+    }
+
+    /* ------------------------------------------------------------------ */
     /*  ROLE                                                              */
     /* ------------------------------------------------------------------ */
 
@@ -233,6 +243,11 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   @Override
   public List<EmailEntity> findEmailsByNedId(Integer nedId) {
     return ((NamedEntityQueries)nedDBSvc).findEmailsByNedId(nedId);
+  }
+
+  @Override
+  public List<DegreeEntity> findDegreesByNedId(Integer nedId) {
+    return ((NamedEntityQueries)nedDBSvc).findDegreesByNedId(nedId);
   }
 
   @Override

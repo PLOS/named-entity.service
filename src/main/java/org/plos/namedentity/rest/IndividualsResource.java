@@ -3,6 +3,7 @@ package org.plos.namedentity.rest;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.AddressEntity;
+import org.plos.namedentity.api.entity.DegreeEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
 import org.plos.namedentity.api.entity.PhonenumberEntity;
@@ -69,6 +70,20 @@ public class IndividualsResource extends BaseResource {
     }
     catch(Exception e) {
       return serverError(e, "Find emails by nedId failed");
+    }
+  }
+
+  @GET
+  @Path("/{id}/degrees")
+  public Response getDegrees(@PathParam("id") int nedId) {
+    try {
+
+      return Response.status(Response.Status.OK).entity(
+          new GenericEntity<List<DegreeEntity>>(
+              namedEntityService.findDegreesByNedId(nedId)){}).build();
+    }
+    catch(Exception e) {
+      return serverError(e, "Find degrees by nedId failed");
     }
   }
 

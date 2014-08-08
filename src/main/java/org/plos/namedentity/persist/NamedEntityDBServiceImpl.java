@@ -26,6 +26,7 @@ import org.jooq.UpdatableRecord;
 import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.persist.db.namedentities.tables.Addresses;
+import org.plos.namedentity.persist.db.namedentities.tables.Degrees;
 import org.plos.namedentity.persist.db.namedentities.tables.Emails;
 import org.plos.namedentity.persist.db.namedentities.tables.Globaltypes;
 import org.plos.namedentity.persist.db.namedentities.tables.Individuals;
@@ -408,6 +409,23 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
   }
 
   @Override
+  public List<DegreeEntity> findDegreesByNedId(Integer nedId) {
+
+    Globaltypes gt1 = GLOBALTYPES.as("gt1");
+    Degrees     d   = DEGREES.as("d");
+
+    return this.context
+        .select(
+            d.DEGREEID, //d.DEGREETYPEID,
+            gt1.SHORTDESCRIPTION.as("degreetype"))
+        .from(d)
+        .leftOuterJoin(gt1).on(d.DEGREETYPEID.equal(gt1.GLOBALTYPEID))
+        .where(d.NAMEDENTITYID.equal(nedId))
+        .fetch()
+        .into(DegreeEntity.class);
+  }
+
+  @Override
   public List<RoleEntity> findRolesByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription sourceapplicationtype,
@@ -497,6 +515,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
     entityTableMap.put(TypedescriptionEntity.class, new TablePkPair(TYPEDESCRIPTIONS, TYPEDESCRIPTIONS.TYPEID));
     entityTableMap.put(UniqueidentifierEntity.class, new TablePkPair(UNIQUEIDENTIFIERS, UNIQUEIDENTIFIERS.UNIQUEIDENTIFIERSID));
     entityTableMap.put(OrganizationEntity.class, new TablePkPair(ORGANIZATIONS, ORGANIZATIONS.NAMEDENTITYID));
+    entityTableMap.put(DegreeEntity.class, new TablePkPair(DEGREES, DEGREES.DEGREEID));
   }
   private static Table table(Class key) {
     return entityTableMap.get(key).table();

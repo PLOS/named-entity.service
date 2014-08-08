@@ -61,6 +61,13 @@ public class NamedEntityValidator implements Ordered {
     //TODO - *** REMOVE DEMO HACK *** 
 
     if (args != null && args.length > 0 && args[0] instanceof IndividualComposite) {
+
+      // cross table constraint, since composite cannot be encapsulated in DB schema
+
+      if (((IndividualComposite) args[0]).getEmails() == null)
+        throw new NedValidationException("Email can not be empty");
+
+
       for (EmailEntity email : ((IndividualComposite) args[0]).getEmails()) {
         if ("foo@bar.com".equals(email.getEmailaddress())) {
           throw new NedValidationException("Validation Phase 2 Failure. foo@bar.com backdoor detected !!!");
