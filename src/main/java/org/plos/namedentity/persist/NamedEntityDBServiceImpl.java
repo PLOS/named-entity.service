@@ -243,9 +243,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
      LEFT JOIN globalTypes gt4 ON i.preferredCommunicationMethodTypeId = gt4.globalTypeId
         JOIN uniqueIdentifiers uid ON i.namedEntityId = uid.namedEntityId AND uid.uniqueIdentifierTypeId = 50
      LEFT JOIN globalTypes gt5 ON uid.uniqueIdentifierTypeId           = gt5.globalTypeId
-         WHERE uid.uniqueIdentifier LIKE '%0000-%'
-
-  TODO: wilcard(%) on both sides uid value?
+         WHERE uid.uniqueIdentifier = '<UID>'; 
 */
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
@@ -271,7 +269,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt4).on(i.PREFERREDCOMMUNICATIONMETHODTYPEID.equal(gt4.GLOBALTYPEID))
       .join(u).on(i.NAMEDENTITYID.equal(u.NAMEDENTITYID)).and(u.UNIQUEIDENTIFIERTYPEID.equal(srcTypeId))
       .leftOuterJoin(gt5).on(u.UNIQUEIDENTIFIERTYPEID.equal(gt5.GLOBALTYPEID))
-      .where(u.UNIQUEIDENTIFIER.like(uid + "%"))
+      .where(u.UNIQUEIDENTIFIER.equal(uid))
       .fetch()
       .into(IndividualEntity.class);
   }

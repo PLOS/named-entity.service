@@ -255,7 +255,17 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /* ------------------------------------------------------------------ */
     /*  FIND INDIVIDUALS BY EXTERNAL REFERENCE                            */
     /* ------------------------------------------------------------------ */
-    //TODO
+
+    response = target(INDIVIDUAL_URI)
+                .queryParam("uidType", "ORCID")
+                .queryParam("uidValue", "0000-0002-9430-3191")
+                .request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(200, response.getStatus());
+    jsonPayload = response.readEntity(String.class);
+
+    IndividualEntity[] individualEntityArray = mapper.readValue(jsonPayload, IndividualEntity[].class); 
+    assertEquals(3, individualEntityArray.length);
   }
 
   @Test

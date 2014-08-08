@@ -32,12 +32,12 @@ import java.util.List;
 
 public interface NamedEntityService {
 
-  public IndividualEntity          createIndividual       (IndividualComposite composite);
+  public IndividualEntity             createIndividual       (IndividualComposite composite);
 
-  public IndividualEntity          findIndividualByNedId  (Integer nedId);
-  public List<IndividualEntity>    findIndividualsByUid   (Integer srcTypeId, String uid);
-  public List<AddressEntity>       findAddressesByNedId   (Integer nedId);
-  public List<EmailEntity>         findEmailsByNedId      (Integer nedId);
+  public IndividualEntity             findIndividualByNedId  (Integer nedId);
+  public List<IndividualEntity>       findIndividualsByUid   (String uidType, String uid);
+  public List<AddressEntity>          findAddressesByNedId   (Integer nedId);
+  public List<EmailEntity>            findEmailsByNedId      (Integer nedId);
   public List<PhonenumberEntity>      findPhoneNumbersByNedId(Integer nedId);
   public List<RoleEntity>             findRolesByNedId       (Integer nedId);
   public List<UniqueidentifierEntity> findUniqueIdsByNedId   (Integer nedId);

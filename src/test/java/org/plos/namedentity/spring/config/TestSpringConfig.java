@@ -39,6 +39,7 @@ import java.util.List;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.when;
@@ -114,6 +115,9 @@ public class TestSpringConfig {
     when(mockNamedEntityService.findIndividualByNedId(anyInt()))
       .thenReturn( individualEntity );
 
+    when(mockNamedEntityService.findIndividualsByUid(anyString(), anyString()))
+      .thenReturn( newIndividualEntities() );
+
     when(mockNamedEntityService.findAddressesByNedId(anyInt()))
       .thenReturn( newAddressEntities() );
 
@@ -131,13 +135,6 @@ public class TestSpringConfig {
 
     return mockNamedEntityService;
   }
-
-//  @Bean
-//  static public NamedEntityResource namedEntityResource() {
-//    NamedEntityResource nedResource = new NamedEntityResource();
-//    //nedResource.setNamedEntityService(namedEntityService());
-//    return nedResource;
-//  }
 
   @Bean
   static public IndividualsResource individualsController() {
@@ -240,7 +237,7 @@ public class TestSpringConfig {
 
     for (int i = 1; i <=3; i++) {
       IndividualEntity individual = new IndividualEntity();
-      individual.setNamedentityid(1);
+      individual.setNamedentityid(i);
       individual.setFirstname("firstname"+i);
       individual.setMiddlename("middlename"+i);
       individual.setLastname("lastname"+i);

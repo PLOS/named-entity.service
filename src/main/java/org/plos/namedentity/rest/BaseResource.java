@@ -33,4 +33,7 @@ public class BaseResource {
         .type(MediaType.TEXT_PLAIN).build();
   }
 
+  protected boolean isEmptyOrBlank(String s) {
+    return s == null || s.trim().isEmpty();
+  }
 }

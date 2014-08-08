@@ -206,8 +206,9 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   }
 
   @Override
-  public List<IndividualEntity> findIndividualsByUid(Integer srcTypeId, String uid) {
-    return ((NamedEntityQueries)nedDBSvc).findIndividualsByUid(srcTypeId, uid);
+  public List<IndividualEntity> findIndividualsByUid(String uidType, String uid) {
+    Integer uidTypeId = findTypeValueByName(findTypeClassStartWith("Unique Identifier Types"), uidType);
+    return ((NamedEntityQueries)nedDBSvc).findIndividualsByUid(uidTypeId, uid);
   }
 
   @Override
