@@ -14,6 +14,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -36,9 +37,15 @@ public class IndividualsResource extends BaseResource {
   }
 
   @GET
-  public Response getAllIndividuals() {
+  public Response getAllIndividuals(@QueryParam("uidType") String uidType, @QueryParam("uidValue") String uidValue) {
     try {
-      List<IndividualEntity> individuals = crudService.findAll(IndividualEntity.class);
+      List<IndividualEntity> individuals = null; 
+      
+      if (isEmptyOrBlank(uidType) || isEmptyOrBlank(uidValue)) {
+        individuals = crudService.findAll(IndividualEntity.class);
+      } else {
+        individuals = namedEntityService.findIndividualsByUid(uidType, uidValue);
+      }
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<IndividualEntity>>(individuals){}).build();
     }
@@ -46,7 +53,6 @@ public class IndividualsResource extends BaseResource {
       return serverError(e, "Find all individuals failed");
     }
   }
-
 
   @GET
   @Path("/{id}")

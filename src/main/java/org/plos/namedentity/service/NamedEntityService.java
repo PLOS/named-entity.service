@@ -38,7 +38,7 @@ public interface NamedEntityService {
   public OrganizationEntity           createOrganization     (OrganizationEntity entity); // NOTE: this accepts an entity, not a composite
   public OrganizationEntity           findOrganizationByNedId(Integer nedId);
   public IndividualEntity             findIndividualByNedId  (Integer nedId);
-  public List<IndividualEntity>       findIndividualsByUid   (Integer srcTypeId, String uid);
+  public List<IndividualEntity>       findIndividualsByUid   (String srcTypeId, String uid);
   public List<AddressEntity>          findAddressesByNedId   (Integer nedId);
   public List<EmailEntity>            findEmailsByNedId      (Integer nedId);
   public List<PhonenumberEntity>      findPhoneNumbersByNedId(Integer nedId);
