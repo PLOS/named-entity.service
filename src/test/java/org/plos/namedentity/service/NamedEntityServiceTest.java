@@ -207,10 +207,7 @@ public class NamedEntityServiceTest {
     List<UniqueidentifierEntity> uidEntities = namedEntityService.findUniqueIdsByNedId(nedId);
     assertEquals(1, uidEntities.size());
 
-    Integer uidTypeId = findUidTypeIdByName("ORCID");
-    assertNotNull( uidTypeId );
-
-    List<IndividualEntity> individuals = namedEntityService.findIndividualsByUid(uidTypeId, "0000-0001-9430-319X");
+    List<IndividualEntity> individuals = namedEntityService.findIndividualsByUid("ORCID", "0000-0001-9430-319X");
     assertEquals(1, individuals.size());
 
     IndividualEntity individual = individuals.get(0);
