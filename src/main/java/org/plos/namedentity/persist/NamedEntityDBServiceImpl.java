@@ -17,24 +17,19 @@
 package org.plos.namedentity.persist;
 
 // to reduce verbosity, static import generated tables and jooq functions
+
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
-import org.plos.namedentity.api.entity.AddressEntity;
-import org.plos.namedentity.api.entity.EmailEntity;
-import org.plos.namedentity.api.entity.GlobaltypeEntity;
-import org.plos.namedentity.api.entity.IndividualEntity;
-import org.plos.namedentity.api.entity.JournalEntity;
-import org.plos.namedentity.api.entity.PhonenumberEntity;
-import org.plos.namedentity.api.entity.RoleEntity;
-import org.plos.namedentity.api.entity.TypedescriptionEntity;
-import org.plos.namedentity.api.entity.UniqueidentifierEntity;
+import org.plos.namedentity.api.EntityNotFoundException;
+import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.persist.db.namedentities.tables.Addresses;
 import org.plos.namedentity.persist.db.namedentities.tables.Emails;
 import org.plos.namedentity.persist.db.namedentities.tables.Globaltypes;
 import org.plos.namedentity.persist.db.namedentities.tables.Individuals;
+import org.plos.namedentity.persist.db.namedentities.tables.Organizations;
 import org.plos.namedentity.persist.db.namedentities.tables.Phonenumbers;
 import org.plos.namedentity.persist.db.namedentities.tables.Roles;
 import org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers;
@@ -223,6 +218,58 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .where(i.NAMEDENTITYID.equal(nedId))
       .fetchOne()
       .into(IndividualEntity.class);
+  }
+
+  @Override
+  public OrganizationEntity findOrganizationByNedId(Integer nedId) {
+/*
+        SELECT o.namedentityid, organizationfamiliarname, organizationlegalname,
+               isactive, isvisible, url, gt1.shortdescription organizationtype
+          FROM organizations o
+     LEFT JOIN globalTypes gt1 ON o.organizationtypeid = gt1.globalTypeId
+         WHERE o.namedentityid = 100
+*/
+    Globaltypes gt1 = GLOBALTYPES.as("gt1");
+    Organizations o = ORGANIZATIONS.as("o");
+
+    Record record = this.context
+        .select(
+            o.NAMEDENTITYID, o.ORGANIZATIONFAMILIARNAME,
+            o.ORGANIZATIONLEGALNAME, o.ISACTIVE, o.ISVISIBLE,
+            o.URL, gt1.SHORTDESCRIPTION.as("organizationtype"))
+        .from(o)
+        .leftOuterJoin(gt1).on(o.ORGANIZATIONTYPEID.equal(gt1.GLOBALTYPEID))
+        .where(o.NAMEDENTITYID.equal(nedId)).fetchOne();
+
+    if (record == null)
+      throw new EntityNotFoundException("Organization not found");
+
+    return record.into(OrganizationEntity.class);
+  }
+
+  @Override
+  public List<OrganizationEntity> findOrganizationsByUid(String srcType, String uid) {
+
+    Globaltypes gt1 = GLOBALTYPES.as("gt1");
+    Globaltypes gt2 = GLOBALTYPES.as("gt2");
+    Organizations o = ORGANIZATIONS.as("o");
+    Uniqueidentifiers u = UNIQUEIDENTIFIERS.as("u");
+
+    return this.context
+        .select(
+            o.NAMEDENTITYID, o.ORGANIZATIONFAMILIARNAME,
+            o.ORGANIZATIONLEGALNAME, o.ISACTIVE, o.ISVISIBLE,
+            o.URL, gt1.SHORTDESCRIPTION.as("organizationtype"))
+        .from(o)
+        .leftOuterJoin(gt1).on(o.ORGANIZATIONTYPEID.equal(gt1.GLOBALTYPEID))
+        .leftOuterJoin(gt2).on(u.UNIQUEIDENTIFIERTYPEID.equal(gt2.GLOBALTYPEID)).and(gt2.SHORTDESCRIPTION.equal(srcType))
+        .join(u).on(o.NAMEDENTITYID.equal(u.NAMEDENTITYID))
+        .where(u.UNIQUEIDENTIFIER.equal(uid))
+        .fetch()
+        .into(OrganizationEntity.class);
+
+    // TODO: make sure the empty set is handles gracefully
+
   }
 
   @Override
@@ -447,6 +494,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
     entityTableMap.put(RoleEntity.class, new TablePkPair(ROLES, ROLES.ROLEID));
     entityTableMap.put(TypedescriptionEntity.class, new TablePkPair(TYPEDESCRIPTIONS, TYPEDESCRIPTIONS.TYPEID));
     entityTableMap.put(UniqueidentifierEntity.class, new TablePkPair(UNIQUEIDENTIFIERS, UNIQUEIDENTIFIERS.UNIQUEIDENTIFIERSID));
+    entityTableMap.put(OrganizationEntity.class, new TablePkPair(ORGANIZATIONS, ORGANIZATIONS.NAMEDENTITYID));
   }
   private static Table table(Class key) {
     return entityTableMap.get(key).table();

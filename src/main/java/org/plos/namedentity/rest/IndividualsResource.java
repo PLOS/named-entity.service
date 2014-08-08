@@ -25,7 +25,7 @@ public class IndividualsResource extends BaseResource {
   public Response createIndividualComposite(IndividualComposite object) {
     try {
       IndividualEntity individual = namedEntityService.createIndividual(object);
-      return Response.status(Response.Status.OK).entity(individual).build();
+      return Response.status(Response.Status.OK).entity(individual).build();  // TODO: why not return the composite here?
     }
     catch(NedValidationException e) {
       return validationError(e, "Unable to create individual");
@@ -55,9 +55,9 @@ public class IndividualsResource extends BaseResource {
 
   @GET
   @Path("/{id}")
-  public Response getIndividual(@PathParam("id") int id) {
+  public Response getIndividual(@PathParam("id") int nedId) {
     try {
-      IndividualEntity individual = namedEntityService.findIndividualByNedId(id);
+      IndividualEntity individual = namedEntityService.findIndividualByNedId(nedId);
       return Response.status(Response.Status.OK).entity(individual).build();
     }
     catch(Exception e) {

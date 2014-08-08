@@ -28,7 +28,7 @@ import java.util.List;
 public class IndividualComposite {
 
   private IndividualEntity             individual;
-  private RoleEntity                   role;
+  private RoleEntity                   role;  // TODO: this should be a list
   private List<AddressEntity>          addresses;
   private List<EmailEntity>            emails;
   private List<PhonenumberEntity>      phonenumbers;
@@ -36,6 +36,14 @@ public class IndividualComposite {
 
   public IndividualComposite() {
     this.individual = new IndividualEntity();
+  }
+
+  public IndividualEntity getIndividual() {
+    return individual;
+  }
+
+  public void setIndividual(IndividualEntity individual) {
+    this.individual = individual;
   }
 
   public Integer getNamedentityid() {

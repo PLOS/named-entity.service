@@ -20,6 +20,7 @@ import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
+import org.plos.namedentity.api.entity.OrganizationEntity;
 import org.plos.namedentity.api.entity.PhonenumberEntity;
 import org.plos.namedentity.api.entity.RoleEntity;
 import org.plos.namedentity.api.entity.UniqueidentifierEntity;
@@ -33,9 +34,10 @@ import java.util.List;
 public interface NamedEntityService {
 
   public IndividualEntity             createIndividual       (IndividualComposite composite);
-
+  public OrganizationEntity           createOrganization     (OrganizationEntity entity); // NOTE: this accepts an entity, not a composite
+  public OrganizationEntity           findOrganizationByNedId(Integer nedId);
   public IndividualEntity             findIndividualByNedId  (Integer nedId);
-  public List<IndividualEntity>       findIndividualsByUid   (String uidType, String uid);
+  public List<IndividualEntity>       findIndividualsByUid   (String srcTypeId, String uid);
   public List<AddressEntity>          findAddressesByNedId   (Integer nedId);
   public List<EmailEntity>            findEmailsByNedId      (Integer nedId);
   public List<PhonenumberEntity>      findPhoneNumbersByNedId(Integer nedId);

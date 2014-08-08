@@ -22,6 +22,7 @@ import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
+import org.plos.namedentity.api.entity.OrganizationEntity;
 import org.plos.namedentity.api.entity.PhonenumberEntity;
 import org.plos.namedentity.api.entity.RoleEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
@@ -37,7 +38,7 @@ import java.util.List;
 
 public class NamedEntityServiceImpl implements NamedEntityService {
 
-  @Inject private NamedEntityDBService nedDBSvc; 
+  @Inject private NamedEntityDBService nedDBSvc;
 
   @Override @Transactional
   public IndividualEntity createIndividual(IndividualComposite composite) {
@@ -210,6 +211,20 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     Integer uidTypeId = findTypeValueByName(findTypeClassStartWith("Unique Identifier Types"), uidType);
     return ((NamedEntityQueries)nedDBSvc).findIndividualsByUid(uidTypeId, uid);
   }
+
+  @Override @Transactional
+  public OrganizationEntity createOrganization(OrganizationEntity entity) {
+    Integer nedId = nedDBSvc.newNamedEntityId("Organization");
+    entity.setNamedentityid(nedId);
+    nedDBSvc.create(entity);
+    return ((NamedEntityQueries)nedDBSvc).findOrganizationByNedId(nedId);
+  }
+
+  @Override
+  public OrganizationEntity findOrganizationByNedId(Integer nedId) {
+    return ((NamedEntityQueries)nedDBSvc).findOrganizationByNedId(nedId);
+  }
+
 
   @Override
   public List<AddressEntity> findAddressesByNedId(Integer nedId) {
