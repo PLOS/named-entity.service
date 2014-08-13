@@ -40,6 +40,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   private static final String TYPE_CLASS_URI  = "/typeclasses";
   private static final String TYPE_VALUE_URI  = TYPE_CLASS_URI + "/1/typevalues";
   private static final String INDIVIDUAL_URI  = "/individuals";
+  private static final String INDIVIDUAL_COMPOSITE_URI  = "/individuals_composite";
   private static final String INDIV_ADDR_URI  = INDIVIDUAL_URI + "/1/addresses";
   private static final String INDIV_EMAIL_URI = INDIVIDUAL_URI + "/1/emails";
   private static final String INDIV_PHONE_URI = INDIVIDUAL_URI + "/1/phonenumbers";
@@ -110,7 +111,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   
     // Request #1. Expect success.
 
-    Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+    Response response = target(INDIVIDUAL_COMPOSITE_URI).request(MediaType.APPLICATION_JSON_TYPE)
                           .post(Entity.json(compositeIndividualJson));
 
     assertEquals(200, response.getStatus());
@@ -126,7 +127,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     // Request #2. Expect a validation exception (client-side error)
 
-    response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+    response = target(INDIVIDUAL_COMPOSITE_URI).request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.json(compositeIndividualJson));
 
     assertEquals(400, response.getStatus());
@@ -136,7 +137,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     // Request #3. Expect a data access exception (server-side error)
 
-    response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+    response = target(INDIVIDUAL_COMPOSITE_URI).request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.json(compositeIndividualJson));
 
     assertEquals(500, response.getStatus());

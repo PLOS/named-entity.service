@@ -45,4 +45,11 @@ public interface NamedEntityService {
   public List<RoleEntity>             findRolesByNedId       (Integer nedId);
   public List<UniqueidentifierEntity> findUniqueIdsByNedId   (Integer nedId);
   public List<DegreeEntity>           findDegreesByNedId     (Integer nedId);
+
+  /**
+   * Resolve and entity's IDs to values associated with that ID
+   * @param t
+   * @param <T>
+   */
+  public <T> void                     resolveValues          (T t);
 }

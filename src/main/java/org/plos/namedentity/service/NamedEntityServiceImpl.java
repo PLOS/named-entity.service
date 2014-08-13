@@ -32,6 +32,42 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   @Inject private NamedEntityDBService nedDBSvc;
 
+  public <T> void resolveValues(T t) {
+    if (t instanceof IndividualEntity)
+      resolveIndividual((IndividualEntity) t);
+    else
+      throw new UnsupportedOperationException("Can not resolve entity for " + t.getClass());
+  }
+
+  private void resolveIndividual(IndividualEntity entity) {
+
+    if (entity.getNameprefix() != null) {
+      Integer prefixTypeClassId = findTypeClassStartWith("Named Party Prefixes");
+      Integer prefixTypeId = findTypeValueByName(prefixTypeClassId, entity.getNameprefix());
+      entity.setNameprefixtypeid(prefixTypeId);
+    }
+
+    if (entity.getNamesuffix() != null) {
+      Integer suffixTypeClassId = findTypeClassStartWith("Named Party Suffixes");
+      Integer suffixTypeId      = findTypeValueByName(suffixTypeClassId, entity.getNamesuffix());
+      entity.setNamesuffixtypeid(suffixTypeId);
+    }
+
+    if (entity.getPreferredlanguage() != null) {
+      Integer langTypeClassId = findTypeClassStartWith("Languages");
+      Integer langTypeId      = findTypeValueByName(langTypeClassId, entity.getPreferredlanguage());
+      entity.setPreferredlanguagetypeid(langTypeId);
+    }
+
+    if (entity.getPreferredcommunication() != null) {
+      Integer commMethodsTypeClassId = findTypeClassStartWith("Communication Methods");
+      Integer commMethodTypeId = findTypeValueByName(commMethodsTypeClassId, entity.getPreferredcommunication());
+      entity.setPreferredcommunicationmethodtypeid(commMethodTypeId);
+    }
+
+  }
+
+
   @Override @Transactional
   public IndividualEntity createIndividual(IndividualComposite composite) {
     //TODO - better validation. handle null fields!
@@ -42,35 +78,9 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     /*  INDIVIDUAL                                                        */
     /* ------------------------------------------------------------------ */
 
-    IndividualEntity individual = new IndividualEntity();
+    IndividualEntity individual = composite.getIndividual();
     individual.setNamedentityid(nedId);
-    individual.setFirstname(composite.getFirstname());
-    individual.setMiddlename(composite.getMiddlename());
-    individual.setLastname(composite.getLastname());
-
-    if (composite.getNameprefix() != null) {
-      Integer prefixTypeClassId = findTypeClassStartWith("Named Party Prefixes");
-      Integer prefixTypeId      = findTypeValueByName(prefixTypeClassId, composite.getNameprefix());
-      individual.setNameprefixtypeid(prefixTypeId);
-    }
-
-    if (composite.getNamesuffix() != null) {
-      Integer suffixTypeClassId = findTypeClassStartWith("Named Party Suffixes");
-      Integer suffixTypeId      = findTypeValueByName(suffixTypeClassId, composite.getNamesuffix());
-      individual.setNamesuffixtypeid(suffixTypeId);
-    }
-
-    if (composite.getPreferredlanguage() != null) {
-      Integer langTypeClassId = findTypeClassStartWith("Languages");
-      Integer langTypeId      = findTypeValueByName(langTypeClassId, composite.getPreferredlanguage());
-      individual.setPreferredlanguagetypeid(langTypeId);
-    }
-
-    if (composite.getPreferredcommunication() != null) {
-      Integer commMethodsTypeClassId = findTypeClassStartWith("Communication Methods");
-      Integer commMethodTypeId = findTypeValueByName(commMethodsTypeClassId, composite.getPreferredcommunication());
-      individual.setPreferredcommunicationmethodtypeid(commMethodTypeId);
-    }
+    resolveValues(individual);
 
     nedDBSvc.create( individual );
 
