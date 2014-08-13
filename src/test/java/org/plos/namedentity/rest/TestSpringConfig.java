@@ -98,8 +98,10 @@ public class TestSpringConfig {
 
     IndividualEntity individualEntity = newIndividualEntity();
 
-    when(mockNamedEntityService.createIndividual(isA(IndividualComposite.class)))
-      .thenReturn(individualEntity)
+    IndividualComposite individualComposite = newIndividualComposite();
+
+    when(mockNamedEntityService.createIndividualComposite(isA(IndividualComposite.class)))
+      .thenReturn(individualComposite)
         .thenThrow(NedValidationException.class)
           .thenThrow(RuntimeException.class);
 
@@ -159,6 +161,25 @@ public class TestSpringConfig {
     entity.setPreferredlanguage("Mandarin");
     entity.setPreferredcommunication("Phone");
     return entity;
+  }
+
+  static private IndividualComposite newIndividualComposite() {
+
+    IndividualComposite composite = new IndividualComposite();
+
+    IndividualEntity entity = new IndividualEntity();
+    entity.setNamedentityid(1);
+    entity.setFirstname("firstname");
+    entity.setMiddlename("middlename");
+    entity.setLastname("lastname");
+    entity.setNameprefix("Ms.");
+    entity.setNamesuffix("II");
+    entity.setPreferredlanguage("Mandarin");
+    entity.setPreferredcommunication("Phone");
+
+    composite.setIndividual(entity);
+
+    return composite;
   }
 
   static private OrganizationEntity newOrganizationEntity() {

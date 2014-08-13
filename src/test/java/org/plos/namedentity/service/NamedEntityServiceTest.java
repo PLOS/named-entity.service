@@ -56,7 +56,7 @@ public class NamedEntityServiceTest {
   public void testCreateIndividualWithoutRole() {
     // triggers phase 1 validation failure
     try {
-      namedEntityService.createIndividual(new IndividualComposite());
+      namedEntityService.createIndividualComposite(new IndividualComposite());
       fail();
     }
     catch (NedValidationException expected) {
@@ -183,9 +183,9 @@ public class NamedEntityServiceTest {
 
     Integer nedId = null;
     try {
-      IndividualEntity entity = namedEntityService.createIndividual(composite);
-      assertNotNull(entity);
-      assertNotNull(entity.getNamedentityid());
+      IndividualComposite postedComposite = namedEntityService.createIndividualComposite(composite);
+      assertNotNull(postedComposite);
+      assertNotNull(postedComposite.getNamedentityid());
     }
     catch (NedValidationException e) {
       fail();
@@ -255,7 +255,7 @@ public class NamedEntityServiceTest {
     composite.setEmails( emails );
 
     try {
-      namedEntityService.createIndividual(composite);
+      namedEntityService.createIndividualComposite(composite);
       fail();
     }
     catch (NedValidationException expected) {

@@ -24,8 +24,10 @@ import org.plos.namedentity.api.entity.PhonenumberEntity;
 import org.plos.namedentity.api.entity.RoleEntity;
 import org.plos.namedentity.api.entity.UniqueidentifierEntity;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
+@XmlRootElement
 public class IndividualComposite {
 
   private IndividualEntity             individual;

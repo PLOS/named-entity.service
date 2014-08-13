@@ -19,6 +19,7 @@ package org.plos.namedentity.rest;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
+import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.entity.*;
 
 import javax.ws.rs.client.Entity;
@@ -118,12 +119,12 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    IndividualEntity entity = mapper.readValue(jsonPayload, IndividualEntity.class);
-    assertEquals(Integer.valueOf(1), entity.getNamedentityid());
-    assertEquals("firstname", entity.getFirstname());
-    assertEquals("middlename", entity.getMiddlename());
-    assertEquals("lastname", entity.getLastname());
-    assertEquals("Mr.", entity.getNameprefix());
+    IndividualComposite composite = mapper.readValue(jsonPayload, IndividualComposite.class);
+    assertEquals(Integer.valueOf(1), composite.getNamedentityid());
+    assertEquals("firstname", composite.getFirstname());
+    assertEquals("middlename", composite.getMiddlename());
+    assertEquals("lastname", composite.getLastname());
+    assertEquals("Ms.", composite.getNameprefix());
 
     // Request #2. Expect a validation exception (client-side error)
 

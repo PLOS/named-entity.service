@@ -34,7 +34,7 @@ import java.util.List;
 
 public interface NamedEntityService {
 
-  public IndividualEntity             createIndividual       (IndividualComposite composite);
+  public IndividualComposite          createIndividualComposite (IndividualComposite composite);
   public OrganizationEntity           createOrganization     (OrganizationEntity entity); // NOTE: this accepts an entity, not a composite
   public OrganizationEntity           findOrganizationByNedId(Integer nedId);
   public IndividualEntity             findIndividualByNedId  (Integer nedId);
@@ -46,10 +46,11 @@ public interface NamedEntityService {
   public List<UniqueidentifierEntity> findUniqueIdsByNedId   (Integer nedId);
   public List<DegreeEntity>           findDegreesByNedId     (Integer nedId);
 
+  public IndividualComposite          findIndividualComposite(Integer nedId);
   /**
    * Resolve and entity's IDs to values associated with that ID
    * @param t
    * @param <T>
    */
-  public <T> void                     resolveValues          (T t);
+  public <T> T                        resolveValues          (T t);
 }
