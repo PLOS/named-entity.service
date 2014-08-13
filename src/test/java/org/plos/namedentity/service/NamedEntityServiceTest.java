@@ -280,10 +280,13 @@ public class NamedEntityServiceTest {
     composite.setPreferredlanguage("English");
     composite.setPreferredcommunication("Email");
 
+    List<RoleEntity> roles = new ArrayList<>();
     RoleEntity author = new RoleEntity();
     author.setRoletype("Author");
     author.setStartdate(new Timestamp(1401408000));  // "2014-05-30"
-    composite.setRole(author);
+    roles.add(author);
+
+    composite.setRoles(roles);
 
     return composite;
   }

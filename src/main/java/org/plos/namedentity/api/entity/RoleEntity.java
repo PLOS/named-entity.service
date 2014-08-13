@@ -43,32 +43,7 @@ public class RoleEntity implements java.io.Serializable {
 
 
   public RoleEntity() {
-    //this(null,null,null,null,null,null,null,null,null,null);
   }
-
-//  public RoleEntity(
-//    Integer  roleid,
-//    Integer  namedentityid,
-//    Integer  sourceapplicationtypeid,
-//    Integer  roletypeid,
-//    Timestamp startdate,
-//    Timestamp enddate,
-//    Timestamp created,
-//    Timestamp lastmodified,
-//    Integer  createdby,
-//    Integer  lastmodifiedby
-//  ) {
-//    this.roleid         = roleid;
-//    this.namedentityid  = namedentityid;
-//    this.sourceapplicationtypeid = sourceapplicationtypeid;
-//    this.roletypeid     = roletypeid;
-//    this.startdate      = startdate;
-//    this.enddate        = enddate;
-//    this.created        = (created != null ? created : new Timestamp(new Date().getTime()));
-//    this.lastmodified   = (lastmodified != null ? lastmodified : new Timestamp(new Date().getTime()));
-//    this.createdby      = createdby;
-//    this.lastmodifiedby = lastmodifiedby;
-//  }
 
   public String getSourceapplication() {
     return sourceapplication;
@@ -158,6 +133,7 @@ public class RoleEntity implements java.io.Serializable {
     this.createdby = createdby;
   }
 
+  // TODO: fix how this is rendering in XML
   public Integer getLastmodifiedby() {
     return this.lastmodifiedby;
   }

@@ -35,7 +35,7 @@ import java.util.List;
 public interface NamedEntityService {
 
   public IndividualComposite          createIndividualComposite (IndividualComposite composite);
-  public OrganizationEntity           createOrganization     (OrganizationEntity entity); // NOTE: this accepts an entity, not a composite
+  public OrganizationEntity           createOrganization     (OrganizationEntity entity);
   public OrganizationEntity           findOrganizationByNedId(Integer nedId);
   public IndividualEntity             findIndividualByNedId  (Integer nedId);
   public List<IndividualEntity>       findIndividualsByUid   (String srcTypeId, String uid);

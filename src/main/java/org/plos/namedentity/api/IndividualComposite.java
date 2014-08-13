@@ -31,7 +31,7 @@ import java.util.List;
 public class IndividualComposite {
 
   private IndividualEntity             individual;
-  private RoleEntity                   role;  // TODO: this should be a list
+  private List<RoleEntity>             roles;
   private List<AddressEntity>          addresses;
   private List<EmailEntity>            emails;
   private List<PhonenumberEntity>      phonenumbers;
@@ -122,12 +122,12 @@ public class IndividualComposite {
     this.individual.setPreferredcommunication(preferredcommunication);
   }
 
-  public RoleEntity getRole() {
-    return role;
+  public List<RoleEntity> getRoles() {
+    return roles;
   }
 
-  public void setRole(RoleEntity role) {
-    this.role = role;
+  public void setRoles(List<RoleEntity> roles) {
+    this.roles = roles;
   }
 
   public List<AddressEntity> getAddresses() {

@@ -38,6 +38,16 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       resolveIndividual((IndividualEntity) t);
     else if (t instanceof AddressEntity)
       resolveAddress((AddressEntity) t);
+    else if (t instanceof PhonenumberEntity)
+      resolvePhonenumber((PhonenumberEntity)t);
+    else if (t instanceof EmailEntity)
+      resolveEmail((EmailEntity)t);
+    else if (t instanceof UniqueidentifierEntity)
+      resolveReference((UniqueidentifierEntity)t);
+    else if (t instanceof DegreeEntity)
+      resolveDegree((DegreeEntity)t);
+    else if (t instanceof RoleEntity)
+      resolveRole((RoleEntity)t);
     else
       throw new UnsupportedOperationException("Can not resolve entity for " + t.getClass());
 
@@ -72,7 +82,6 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     return entity;
   }
-
 
   private AddressEntity resolveAddress(AddressEntity entity) {
 
@@ -125,7 +134,6 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     return entity;
   }
 
-
   @Override
   public IndividualComposite findIndividualComposite(Integer nedId) {
 
@@ -135,32 +143,32 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     List <AddressEntity> addresses = findAddressesByNedId(nedId);
     for (AddressEntity address : addresses)
-      resolveAddress(address);  // should change entry in the list
+      resolveValues(address);
     composite.setAddresses(addresses);
 
     List<PhonenumberEntity> phonenumbers = findPhoneNumbersByNedId(nedId);
     for (PhonenumberEntity phonenumber : phonenumbers)
-      resolvePhonenumber(phonenumber);
+      resolveValues(phonenumber);
     composite.setPhonenumbers(phonenumbers);
 
     List<EmailEntity> emails = findEmailsByNedId(nedId);
     for (EmailEntity email : emails)
-      resolveEmail(email);
+      resolveValues(email);
     composite.setEmails(emails);
 
     List<DegreeEntity> degrees = findDegreesByNedId(nedId);
     for (DegreeEntity degree : degrees)
-      resolveDegree(degree);
+      resolveValues(degree);
     composite.setDegrees(degrees);
 
-//    List<RoleEntity> roles = findRolesByNedId(nedId);
-//
-//    composite.setRole();
-    // TODO: handle roles, once it is moved to a list
+    List<RoleEntity> roles = findRolesByNedId(nedId);
+    for (RoleEntity role : roles)
+      resolveValues(role);
+    composite.setRoles(roles);
 
     List<UniqueidentifierEntity> references = findUniqueIdsByNedId(nedId);
     for (UniqueidentifierEntity uniqueidentifier : references)
-      resolveReference(uniqueidentifier);
+      resolveValues(uniqueidentifier);
     composite.setUniqueidentifiers(references);
 
     return composite;
@@ -176,75 +184,58 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     IndividualEntity individual = composite.getIndividual();
     individual.setNamedentityid(nedId);
-    //resolveIndividual(individual);
     resolveValues(individual);
+    nedDBSvc.create(resolveValues(individual));
 
-    nedDBSvc.create( individual );
-
-
-    //TODO - move to transformer
+    List<AddressEntity> addresses = composite.getAddresses();
     if (composite.getAddresses() != null) {
-      for (AddressEntity address : composite.getAddresses()) {
-
+      for (AddressEntity address : addresses) {
         address.setNamedentityid(nedId);
-        resolveAddress(address);
-
-        nedDBSvc.create( address );
+        nedDBSvc.create(resolveValues(address));
       }
     }
-
+    List<PhonenumberEntity> phonenumbers = composite.getPhonenumbers();
     if (composite.getPhonenumbers() != null) {
-      for (PhonenumberEntity phonenumber : composite.getPhonenumbers()) {
-
+      for (PhonenumberEntity phonenumber : phonenumbers) {
         phonenumber.setNamedentityid(nedId);
-        resolvePhonenumber(phonenumber);
-
-        nedDBSvc.create( phonenumber );
+        nedDBSvc.create(resolveValues(phonenumber));
       }
     }
 
+    List<EmailEntity> emails = composite.getEmails();
     if (composite.getEmails() != null) {
-      for (EmailEntity email : composite.getEmails()) {
+      for (EmailEntity email : emails) {
         email.setNamedentityid(nedId);
-        resolveEmail(email);
-
-        nedDBSvc.create( email );
+        nedDBSvc.create(resolveValues(email));
       }
     }
 
     List<DegreeEntity> degrees = composite.getDegrees();
-
     if (degrees != null) {
       for (DegreeEntity degree : degrees) {
         degree.setNamedentityid(nedId);
-        resolveDegree(degree);
-
-        nedDBSvc.create(degree);
+        nedDBSvc.create(resolveValues(degree));
       }
     }
 
-    RoleEntity role = composite.getRole();
-    if (role != null) {
-      role.setNamedentityid(nedId);
-      role.setStartdate(new Timestamp(new Date().getTime()));
-      resolveRole(role);
-
-      nedDBSvc.create( role );
+    List<RoleEntity> roles = composite.getRoles();
+    if (roles != null) {
+      for (RoleEntity role : roles) {
+        role.setNamedentityid(nedId);
+        role.setStartdate(new Timestamp(new Date().getTime()));
+        nedDBSvc.create(resolveValues(role));
+      }
     }
 
+    List<UniqueidentifierEntity> uids = composite.getUniqueidentifiers();
     if (composite.getUniqueidentifiers() != null) {
-      for (UniqueidentifierEntity uid : composite.getUniqueidentifiers()) {
+      for (UniqueidentifierEntity uid : uids) {
         uid.setNamedentityid(nedId);
-        resolveReference(uid);
-
-        nedDBSvc.create( uid );
+        nedDBSvc.create( resolveValues(uid) );
       }
     }
 
     return findIndividualComposite(nedId);
-
-//    return ((NamedEntityQueries)nedDBSvc).findIndividualByNedId(nedId);
-    //return nedDBSvc.findById(nedId, IndividualEntity.class);
   }
 
   @Override
