@@ -12,7 +12,6 @@ import org.plos.namedentity.api.entity.UniqueidentifierEntity;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
@@ -50,7 +49,7 @@ public class IndividualsResource extends BaseResource {
     }
   }
 
-  @PUT
+  @POST
   @Path("/{id}")
   public Response update(@PathParam("id") int nedId, IndividualEntity entity) {
 

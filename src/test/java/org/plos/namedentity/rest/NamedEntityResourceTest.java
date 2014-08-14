@@ -445,7 +445,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     mapper.writeValue(writer, updatedTypeClass);
 
     response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .put(Entity.json(writer.toString()));
+                .post(Entity.json(writer.toString()));
 
     assertEquals(200, response.getStatus());
 
@@ -457,14 +457,14 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     // UPDATE #2 should raise a validation exception
 
     response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .put(Entity.json(writer.toString()));
+                .post(Entity.json(writer.toString()));
 
     assertEquals(400, response.getStatus());
     
     // UPDATE #3 should raise a server-side exception
 
     response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .put(Entity.json(writer.toString()));
+                .post(Entity.json(writer.toString()));
 
     assertEquals(500, response.getStatus());
 
@@ -519,7 +519,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     // UPDATE
 
     response = target(INDIVIDUAL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .put(Entity.json(NEW_INDIVIDUALS_JSON_PAYLOAD));
+        .post(Entity.json(NEW_INDIVIDUALS_JSON_PAYLOAD));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
@@ -624,7 +624,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     mapper.writeValue(writer, updatedTypeVal);
 
     response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .put(Entity.json(writer.toString()));
+                .post(Entity.json(writer.toString()));
 
     assertEquals(200, response.getStatus());
 
@@ -636,14 +636,14 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     // UPDATE #2 should raise a validation exception
 
     response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .put(Entity.json(writer.toString()));
+                .post(Entity.json(writer.toString()));
 
     assertEquals(400, response.getStatus());
     
     // UPDATE #3 should raise a server-side exception
 
     response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .put(Entity.json(writer.toString()));
+                .post(Entity.json(writer.toString()));
 
     assertEquals(500, response.getStatus());
 
