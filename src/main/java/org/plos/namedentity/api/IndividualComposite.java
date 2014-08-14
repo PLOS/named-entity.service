@@ -25,6 +25,7 @@ import org.plos.namedentity.api.entity.RoleEntity;
 import org.plos.namedentity.api.entity.UniqueidentifierEntity;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.List;
 
 @XmlRootElement
@@ -50,6 +51,7 @@ public class IndividualComposite {
     this.degrees = degrees;
   }
 
+  @XmlTransient
   public IndividualEntity getIndividual() {
     return individual;
   }

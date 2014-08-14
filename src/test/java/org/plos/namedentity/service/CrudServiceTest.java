@@ -20,6 +20,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
+import org.plos.namedentity.api.entity.IndividualEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
 import org.plos.namedentity.api.entity.UniqueidentifierEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,34 @@ public class CrudServiceTest {
   CrudService crudService;
 
   @Test
+  public void testIndividualCrud() {
+
+    // CREATE
+    IndividualEntity entity = new IndividualEntity();
+    entity.setFirstname("somefirstname");
+
+    Integer pkId = crudService.create(entity);
+    assertNotNull(pkId);
+
+    // READ
+    IndividualEntity readEntity = crudService.findById(pkId, IndividualEntity.class);
+    assertNotNull(readEntity);
+    assertEquals("somefirstname", readEntity.getFirstname());
+    assertEquals(null, readEntity.getMiddlename());
+    assertEquals(pkId, readEntity.getNamedentityid());
+
+    // UPDATE
+    readEntity.setMiddlename("somemiddlename");
+    assertTrue(crudService.update(readEntity));
+    IndividualEntity readEntity2 = crudService.findById(pkId, IndividualEntity.class);
+//    assertEquals(null, readEntity.getFirstname());  // TODO: since PUT is a full replace
+    assertEquals("somemiddlename", readEntity.getMiddlename());
+
+    // DELETE
+    assertTrue(crudService.delete(readEntity));
+  }
+
+  @Test
   public void testTypeDescriptionCRUD() {
 
     // CREATE
@@ -50,8 +79,8 @@ public class CrudServiceTest {
     newType.setHowused("howused");
 
     Integer pkId = crudService.create(newType);
-    assertNotNull( pkId );
-    
+    assertNotNull(pkId);
+
     TypedescriptionEntity savedType = crudService.findById(pkId, TypedescriptionEntity.class);
     assertNotNull(savedType);
     assertEquals(pkId, savedType.getTypeid());

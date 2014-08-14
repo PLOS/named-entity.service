@@ -180,12 +180,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     //TODO - better validation. handle null fields!
 
-    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
-
     IndividualEntity individual = composite.getIndividual();
-    individual.setNamedentityid(nedId);
-    resolveValues(individual);
-    nedDBSvc.create(resolveValues(individual));
+    Integer nedId = nedDBSvc.create(resolveValues(individual));
 
     List<AddressEntity> addresses = composite.getAddresses();
     if (composite.getAddresses() != null) {
@@ -251,10 +247,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   @Override @Transactional
   public OrganizationEntity createOrganization(OrganizationEntity entity) {
-    Integer nedId = nedDBSvc.newNamedEntityId("Organization");
-    entity.setNamedentityid(nedId);
-    nedDBSvc.create(entity);
-    return ((NamedEntityQueries)nedDBSvc).findOrganizationByNedId(nedId);
+    return ((NamedEntityQueries)nedDBSvc).findOrganizationByNedId(nedDBSvc.create(entity));
   }
 
   @Override

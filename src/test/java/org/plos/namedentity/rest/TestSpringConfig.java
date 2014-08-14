@@ -26,6 +26,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.Matchers.any;
@@ -89,6 +90,8 @@ public class TestSpringConfig {
 
     when(mockCrudService.findAll(eq(IndividualEntity.class))).thenReturn( newIndividualEntities() );
 
+    when(mockCrudService.findById(eq(1), eq(IndividualEntity.class))).thenReturn( newIndividualEntity() );
+
     return mockCrudService;
   }
 
@@ -104,6 +107,9 @@ public class TestSpringConfig {
       .thenReturn(individualComposite)
         .thenThrow(NedValidationException.class)
           .thenThrow(RuntimeException.class);
+
+    when(mockNamedEntityService.findIndividualComposite(anyInt()))
+        .thenReturn( individualComposite );
 
     when(mockNamedEntityService.findIndividualByNedId(anyInt()))
       .thenReturn( individualEntity );
@@ -176,6 +182,11 @@ public class TestSpringConfig {
     entity.setNamesuffix("II");
     entity.setPreferredlanguage("Mandarin");
     entity.setPreferredcommunication("Phone");
+
+    EmailEntity emailEntity = new EmailEntity();
+    emailEntity.setEmailaddress("email@internet.com");
+
+    composite.setEmails(new ArrayList<>(Arrays.asList(emailEntity)));
 
     composite.setIndividual(entity);
 

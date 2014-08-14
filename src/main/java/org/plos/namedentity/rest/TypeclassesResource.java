@@ -147,7 +147,12 @@ public class TypeclassesResource extends BaseResource {
                                    @PathParam("typevalueid") int typeValueId,
                                    GlobaltypeEntity globalType) {
     try {
-      crudService.update( globalType );
+
+
+      // TODO: make use of path variables
+
+
+      crudService.update( globalType ); // TODO: handle 404 not_found?
       GlobaltypeEntity entity = crudService.findById(
           globalType.getGlobaltypeid(), GlobaltypeEntity.class);
       return Response.status(Response.Status.OK).entity( entity ).build();

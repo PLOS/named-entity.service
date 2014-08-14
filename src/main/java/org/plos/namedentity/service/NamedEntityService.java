@@ -47,6 +47,7 @@ public interface NamedEntityService {
   public List<DegreeEntity>           findDegreesByNedId     (Integer nedId);
 
   public IndividualComposite          findIndividualComposite(Integer nedId);
+
   /**
    * Resolve and entity's IDs to values associated with that ID
    * @param t

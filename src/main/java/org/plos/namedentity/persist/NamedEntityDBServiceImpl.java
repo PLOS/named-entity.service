@@ -50,6 +50,12 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
   @Override @SuppressWarnings("unchecked")
   public <T> Integer create(T t) {
     // load jooq-generated record from pojo. insert (implicitly)
+
+    if (t instanceof IndividualEntity)
+      ((IndividualEntity) t).setNamedentityid(newNamedEntityId("Individual"));
+    else if (t instanceof OrganizationEntity)
+      ((OrganizationEntity) t).setNamedentityid(newNamedEntityId("Organization"));
+
     UpdatableRecord record = (UpdatableRecord) context.newRecord(table(t.getClass()), t);
     record.store();
 

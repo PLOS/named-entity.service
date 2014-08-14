@@ -125,6 +125,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals("middlename", composite.getMiddlename());
     assertEquals("lastname", composite.getLastname());
     assertEquals("Ms.", composite.getNameprefix());
+    assertEquals("email@internet.com", composite.getEmails().get(0).getEmailaddress());
 
     // Request #2. Expect a validation exception (client-side error)
 
@@ -148,7 +149,24 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   }
 
   @Test
-  public void testIndividualCrud() throws IOException {
+  public void testReadIndividualComposite() throws Exception {
+
+    Response response = target(INDIVIDUAL_COMPOSITE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    String jsonPayload = response.readEntity(String.class);
+
+    IndividualComposite composite = mapper.readValue(jsonPayload, IndividualComposite.class);
+    assertEquals(Integer.valueOf(1), composite.getNamedentityid());
+    assertEquals("firstname", composite.getFirstname());
+    assertEquals("middlename", composite.getMiddlename());
+    assertEquals("lastname", composite.getLastname());
+    assertEquals("Ms.", composite.getNameprefix());
+    assertEquals("email@internet.com", composite.getEmails().get(0).getEmailaddress());
+  }
+
+  @Test
+  public void testIndividualFinders() throws IOException {
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY ID)                                                      */
@@ -459,6 +477,57 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).delete();
     assertEquals(500, response.getStatus());
+  }
+
+  @Test
+  public void testIndividualsCrud() throws Exception {
+
+    // CREATE, #1 expect success
+
+    final String NEW_FIRSTNAME = "origfirstname";
+    final String NEW_LASTNAME = "origlastname";
+
+    final String NEW_INDIVIDUALS_JSON_PAYLOAD = "{"
+        + "\"firstname\":\"" + NEW_FIRSTNAME + "\","
+        + "\"lastname\":\""  + NEW_LASTNAME  + "\""
+        + "}";
+
+    Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+        .post(Entity.json(NEW_INDIVIDUALS_JSON_PAYLOAD));
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    String jsonPayload = response.readEntity(String.class);
+
+    IndividualEntity entity = mapper.readValue(jsonPayload, IndividualEntity.class);
+    assertEquals(Integer.valueOf(1), entity.getNamedentityid());
+    assertEquals("firstname", entity.getFirstname());
+    assertEquals("lastname", entity.getLastname());
+
+    // READ
+
+    response = target(INDIVIDUAL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    jsonPayload = response.readEntity(String.class);
+
+    entity = mapper.readValue(jsonPayload, IndividualEntity.class);
+    assertEquals(Integer.valueOf(1), entity.getNamedentityid());
+    assertEquals("firstname", entity.getFirstname());
+    assertEquals("lastname", entity.getLastname());
+
+    // UPDATE
+
+    response = target(INDIVIDUAL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
+        .put(Entity.json(NEW_INDIVIDUALS_JSON_PAYLOAD));
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    // DELETE
+
+    response = target(INDIVIDUAL_URI + "/1").request().delete();
+    assertEquals(Response.Status.NO_CONTENT.getStatusCode(), response.getStatus());
   }
 
   @Test

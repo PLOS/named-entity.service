@@ -26,13 +26,14 @@ public class IndividualsResource extends BaseResource {
   @POST
   public Response create(IndividualEntity entity) {
     try {
+      Integer nedId = crudService.create(entity);
+
       return Response.status(Response.Status.OK).entity(
-          crudService.create(entity)).build();
-    }
-    catch(NedValidationException e) {
+          namedEntityService.findIndividualByNedId(nedId)).build();
+
+    } catch (NedValidationException e) {
       return validationError(e, "Unable to create individual");
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       return serverError(e, "Unable to create individual");
     }
   }
@@ -51,24 +52,22 @@ public class IndividualsResource extends BaseResource {
 
   @PUT
   @Path("/{id}")
-  public Response update(@PathParam("id") int nedId, IndividualEntity newEntity) {
+  public Response update(@PathParam("id") int nedId, IndividualEntity entity) {
 
     try {
 
-      newEntity.setNamedentityid(nedId);
+      entity.setNamedentityid(nedId);  // TODO: check if path var=payload for id?
 
-      IndividualEntity oldEntity = namedEntityService.findIndividualByNedId(nedId);
+      crudService.update(entity);
 
-      if (oldEntity == null)
-        return Response.status(Response.Status.NOT_FOUND).build();
+      namedEntityService.resolveValues(entity);
 
-      namedEntityService.resolveValues(newEntity);
-      crudService.update(newEntity);  // TODO: make sure this completely replaces old entity
+      // TODO: handle 404
 
-      return Response.status(Response.Status.NO_CONTENT).build();
+      return Response.ok().entity(entity).build();
 
     } catch (Exception e) {
-      return serverError(e, "Unable to delete individual");
+      return serverError(e, "Unable to update individual");
     }
 
   }
@@ -111,7 +110,6 @@ public class IndividualsResource extends BaseResource {
       return serverError(e, "Find all individuals failed");
     }
   }
-
 
 
   @GET
