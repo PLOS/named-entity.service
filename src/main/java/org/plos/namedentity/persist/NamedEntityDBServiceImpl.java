@@ -348,6 +348,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
 
     return this.context
       .select(
+        a.ADDRESSID,
         a.ADDRESSLINE1, a.ADDRESSLINE2, a.ADDRESSLINE3, a.CITY, 
         a.POSTALCODE, a.ISPRIMARY,
         gt1.SHORTDESCRIPTION.as("addresstype"),                 
@@ -375,6 +376,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
 
     return this.context
       .select(
+        e.EMAILID,
         e.EMAILADDRESS, e.ISPRIMARY, 
         gt1.SHORTDESCRIPTION.as("emailtype"))
       .from(e)
@@ -401,6 +403,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
 
     return this.context
       .select(
+        p.PHONENUMBERID,
         p.PHONENUMBER, p.EXTENSION, p.ISPRIMARY,
         gt1.SHORTDESCRIPTION.as("phonenumbertype"),                 
         gt2.SHORTDESCRIPTION.as("countrycodetype"))
@@ -420,7 +423,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
 
     return this.context
         .select(
-            d.DEGREEID, //d.DEGREETYPEID,
+            d.DEGREEID,
             gt1.SHORTDESCRIPTION.as("degreetype"))
         .from(d)
         .leftOuterJoin(gt1).on(d.DEGREETYPEID.equal(gt1.GLOBALTYPEID))
@@ -446,6 +449,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
 
     return this.context
       .select(
+        r.ROLEID,
         r.STARTDATE, r.ENDDATE,
         gt1.SHORTDESCRIPTION.as("sourceapplicationtype"),                 
         gt2.SHORTDESCRIPTION.as("roletype"))
@@ -470,6 +474,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
 
     return this.context
       .select(
+        uid.UNIQUEIDENTIFIERSID,
         uid.UNIQUEIDENTIFIER, gt.SHORTDESCRIPTION.as("uniqueidentifiertype"))
       .from(uid)
       .leftOuterJoin(gt).on(uid.UNIQUEIDENTIFIERTYPEID.equal(gt.GLOBALTYPEID))

@@ -507,7 +507,6 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     // READ
 
     response = target(INDIVIDUAL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
-
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
     jsonPayload = response.readEntity(String.class);
