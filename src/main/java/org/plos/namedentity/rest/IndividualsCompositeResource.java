@@ -29,7 +29,7 @@ public class IndividualsCompositeResource extends BaseResource {
     try {
       return Response.status(Response.Status.OK).entity(namedEntityService.findIndividualComposite(nedId)).build();
     } catch (Exception e) {
-      return serverError(e, "Unable to read individual");
+      return serverError(e, "Unable to read individual composite");
     }
   }
 
