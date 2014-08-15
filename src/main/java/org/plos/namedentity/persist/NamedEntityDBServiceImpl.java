@@ -189,8 +189,44 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
   /*  NAMED ENTITY QUERIES                                                  */
   /* ---------------------------------------------------------------------- */
 
-  @Override
-  public IndividualEntity findIndividualByNedId(Integer nedId) {
+  @SuppressWarnings("unchecked")
+  public <T> T findResolvedEntity(Integer nedId, Class<T> clazz) {
+
+    String cname = clazz.getCanonicalName();
+
+    if (cname.equals(IndividualEntity.class.getCanonicalName()))
+      return (T)findIndividualByNedId(nedId);
+    if (cname.equals(OrganizationEntity.class.getCanonicalName()))
+      return (T)findOrganizationByNedId(nedId);
+
+    throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
+
+  }
+
+  @SuppressWarnings("unchecked")
+  public <T> List<T> findResolvedEntities(Integer nedId, Class<T> clazz) {
+
+    String cname = clazz.getCanonicalName();
+
+    if (cname.equals(AddressEntity.class.getCanonicalName()))
+      return (List<T>)findAddressesByNedId(nedId);
+    if (cname.equals(EmailEntity.class.getCanonicalName()))
+      return (List<T>)findEmailsByNedId(nedId);
+    if (cname.equals(PhonenumberEntity.class.getCanonicalName()))
+      return (List<T>)findPhoneNumbersByNedId(nedId);
+    if (cname.equals(RoleEntity.class.getCanonicalName()))
+      return (List<T>)findRolesByNedId(nedId);
+    if (cname.equals(UniqueidentifierEntity.class.getCanonicalName()))
+      return (List<T>)findUniqueIdsByNedId(nedId);
+    if (cname.equals(DegreeEntity.class.getCanonicalName()))
+      return (List<T>)findDegreesByNedId(nedId);
+
+    throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
+
+  }
+
+
+  private IndividualEntity findIndividualByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription nameprefix, i.firstName firstname, 
                i.middleName middlename, i.lastName lastname, 
@@ -231,8 +267,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
     return record.into(IndividualEntity.class);
   }
 
-  @Override
-  public OrganizationEntity findOrganizationByNedId(Integer nedId) {
+  private OrganizationEntity findOrganizationByNedId(Integer nedId) {
 /*
         SELECT o.namedentityid, organizationfamiliarname, organizationlegalname,
                isactive, isvisible, url, gt1.shortdescription organizationtype

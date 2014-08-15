@@ -223,7 +223,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   @Override
   public IndividualEntity findIndividualByNedId(Integer nedId) {
-    return ((NamedEntityQueries)nedDBSvc).findIndividualByNedId(nedId);
+    return ((NamedEntityQueries)nedDBSvc).findResolvedEntity(nedId, IndividualEntity.class);
   }
 
   @Override
@@ -234,12 +234,12 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   @Override @Transactional
   public OrganizationEntity createOrganization(OrganizationEntity entity) {
-    return ((NamedEntityQueries)nedDBSvc).findOrganizationByNedId(nedDBSvc.create(entity));
+    return ((NamedEntityQueries)nedDBSvc).findResolvedEntity(nedDBSvc.create(entity), OrganizationEntity.class);
   }
 
   @Override
   public OrganizationEntity findOrganizationByNedId(Integer nedId) {
-    return ((NamedEntityQueries)nedDBSvc).findOrganizationByNedId(nedId);
+    return ((NamedEntityQueries)nedDBSvc).findResolvedEntity(nedId, OrganizationEntity.class);
   }
 
 

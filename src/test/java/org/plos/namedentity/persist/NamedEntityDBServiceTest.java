@@ -349,7 +349,7 @@ public class NamedEntityDBServiceTest {
     // FIND BY JOIN-QUERY 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    IndividualEntity entity = nedQuery.findIndividualByNedId(individualId);
+    IndividualEntity entity = nedQuery.findResolvedEntity(individualId, IndividualEntity.class);
     assertNotNull( entity );
     assertEquals("firstname", entity.getFirstname());
     assertEquals("Mr.", entity.getNameprefix());
@@ -405,7 +405,7 @@ public class NamedEntityDBServiceTest {
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
 
-    OrganizationEntity entity = nedQuery.findOrganizationByNedId(organizationId);
+    OrganizationEntity entity = nedQuery.findResolvedEntity(organizationId, OrganizationEntity.class);
     assertNotNull( entity );
 
     entity.setOrganizationtypeid(organizationTypeId);

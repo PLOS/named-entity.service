@@ -29,14 +29,21 @@ import java.util.List;
 
 public interface NamedEntityQueries {
 
-  IndividualEntity             findIndividualByNedId  (Integer nedId);
   List<IndividualEntity>       findIndividualsByUid   (Integer srcTypeId, String uid);
+  List<OrganizationEntity>     findOrganizationsByUid (String srcType, String uid);
+  //  IndividualEntity             findIndividualByNedId  (Integer nedId);
+//  OrganizationEntity           findOrganizationByNedId(Integer nedId);
   List<AddressEntity>          findAddressesByNedId   (Integer nedId);
   List<EmailEntity>            findEmailsByNedId      (Integer nedId);
   List<PhonenumberEntity>      findPhoneNumbersByNedId(Integer nedId);
   List<RoleEntity>             findRolesByNedId       (Integer nedId);
   List<UniqueidentifierEntity> findUniqueIdsByNedId   (Integer nedId);
-  OrganizationEntity           findOrganizationByNedId(Integer nedId);
-  List<OrganizationEntity>     findOrganizationsByUid (String srcType, String uid);
   List<DegreeEntity>           findDegreesByNedId     (Integer nedId);
+
+  <T> T findResolvedEntity(Integer nedId, Class<T> clazz);
+
+  <T> List<T> findResolvedEntities(Integer nedId, Class<T> clazz);
+
+//  findResolvedEntity(23, EmailEntity.class);
+
 }
