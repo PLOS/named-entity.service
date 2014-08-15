@@ -17,9 +17,9 @@ public class IndividualsCompositeResource extends BaseResource {
     try {
       return Response.status(Response.Status.OK).entity(namedEntityService.createIndividualComposite(object)).build();
     } catch (NedValidationException e) {
-      return validationError(e, "Unable to create individual");
+      return validationError(e, "Unable to create individual composite");
     } catch (Exception e) {
-      return serverError(e, "Unable to create individual");
+      return serverError(e, "Unable to create individual composite");
     }
   }
 
@@ -29,7 +29,7 @@ public class IndividualsCompositeResource extends BaseResource {
     try {
       return Response.status(Response.Status.OK).entity(namedEntityService.findIndividualComposite(nedId)).build();
     } catch (Exception e) {
-      return serverError(e, "Unable to create individual");
+      return serverError(e, "Unable to read individual");
     }
   }
 

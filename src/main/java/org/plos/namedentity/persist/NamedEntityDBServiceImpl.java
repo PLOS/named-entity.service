@@ -210,7 +210,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
     Globaltypes gt4 = GLOBALTYPES.as("gt4");
     Individuals i   = INDIVIDUALS.as("i");
 
-    return this.context
+    Record record = this.context
       .select(
           i.NAMEDENTITYID, i.FIRSTNAME, i.MIDDLENAME, i.LASTNAME, i.URL,
           gt1.SHORTDESCRIPTION.as("nameprefix"),
@@ -223,8 +223,12 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt3).on(i.PREFERREDLANGUAGETYPEID.equal(gt3.GLOBALTYPEID))
       .leftOuterJoin(gt4).on(i.PREFERREDCOMMUNICATIONMETHODTYPEID.equal(gt4.GLOBALTYPEID))
       .where(i.NAMEDENTITYID.equal(nedId))
-      .fetchOne()
-      .into(IndividualEntity.class);
+      .fetchOne();
+
+    if (record == null)
+      throw new EntityNotFoundException("Individual not found");
+
+    return record.into(IndividualEntity.class);
   }
 
   @Override

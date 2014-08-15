@@ -1,5 +1,6 @@
 package org.plos.namedentity.rest;
 
+import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.DegreeEntity;
@@ -25,6 +26,8 @@ public class IndividualsResource extends BaseResource {
   @POST
   public Response create(IndividualEntity entity) {
     try {
+      namedEntityService.resolveValuesToIds(entity);
+
       Integer nedId = crudService.create(entity);
 
       return Response.status(Response.Status.OK).entity(
@@ -63,11 +66,10 @@ public class IndividualsResource extends BaseResource {
 
       entity = namedEntityService.findIndividualByNedId(nedId);
 
-      if (entity == null)
-        return Response.status(Response.Status.NOT_FOUND).build();
-
       return Response.ok().entity(entity).build();
 
+    } catch (EntityNotFoundException e) {
+      return entityNotFound(e);
     } catch (Exception e) {
       return serverError(e, "Unable to update individual");
     }
@@ -82,13 +84,12 @@ public class IndividualsResource extends BaseResource {
 
       IndividualEntity entity = namedEntityService.findIndividualByNedId(nedId);
 
-      if (entity == null)
-        return Response.status(Response.Status.NOT_FOUND).build();
-
       crudService.delete(entity);
 
       return Response.status(Response.Status.NO_CONTENT).build();
 
+    } catch (EntityNotFoundException e) {
+      return entityNotFound(e);
     } catch (Exception e) {
       return serverError(e, "Unable to delete individual");
     }
@@ -170,7 +171,7 @@ public class IndividualsResource extends BaseResource {
 
   @GET
   @Path("/{id}/roles")
-  public Response getRolesFor(@PathParam("id") int nedId) {
+  public Response getRoles(@PathParam("id") int nedId) {
     try {
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<RoleEntity>>(

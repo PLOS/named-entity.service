@@ -24,8 +24,6 @@ import org.plos.namedentity.persist.NamedEntityQueries;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 public class NamedEntityServiceImpl implements NamedEntityService {
@@ -126,7 +124,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   private RoleEntity resolveRole(RoleEntity entity) {
 
-    entity.setSourceapplicationtypeid(findTypeValueByName(findTypeClassStartWith("Source Applications"), "Editorial Manager"));
+    if (entity.getSourceapplicationtype() != null)
+      entity.setSourceapplicationtypeid(findTypeValueByName(findTypeClassStartWith("Source Applications"), entity.getSourceapplicationtype()));
 
     if (entity.getRoletype() != null)
       entity.setRoletypeid(findTypeValueByName(findTypeClassStartWith("Roles"), entity.getRoletype()));
@@ -207,7 +206,6 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     if (roles != null) {
       for (RoleEntity role : roles) {
         role.setNamedentityid(nedId);
-        role.setStartdate(new Timestamp(new Date().getTime()));
         nedDBSvc.create(resolveRole(role));
       }
     }

@@ -27,30 +27,30 @@ public class RoleEntity implements java.io.Serializable {
 
   private static final long serialVersionUID = 315701916;
 
-  private Integer  roleid;
-  private Integer  namedentityid;
-  private Integer  sourceapplicationtypeid;
-  private Integer  roletypeid;
+  private Integer   roleid;
+  private Integer   namedentityid;
+  private Integer   sourceapplicationtypeid;
+  private Integer   roletypeid;
   private Timestamp startdate;
   private Timestamp enddate;
   private Timestamp created;
   private Timestamp lastmodified;
-  private Integer  createdby;
-  private Integer  lastmodifiedby;
+  private Integer   createdby;
+  private Integer   lastmodifiedby;
 
-  private String  sourceapplication;
-  private String  roletype;
+  private String sourceapplicationtype;
+  private String roletype;
 
 
   public RoleEntity() {
   }
 
-  public String getSourceapplication() {
-    return sourceapplication;
+  public String getSourceapplicationtype() {
+    return sourceapplicationtype;
   }
 
-  public void setSourceapplication(String sourceapplication) {
-    this.sourceapplication = sourceapplication;
+  public void setSourceapplicationtype(String sourceapplicationtype) {
+    this.sourceapplicationtype = sourceapplicationtype;
   }
 
   public String getRoletype() {
