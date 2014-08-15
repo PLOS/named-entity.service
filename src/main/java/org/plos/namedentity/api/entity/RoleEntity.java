@@ -27,55 +27,30 @@ public class RoleEntity implements java.io.Serializable {
 
   private static final long serialVersionUID = 315701916;
 
-  private Integer  roleid;
-  private Integer  namedentityid;
-  private Integer  sourceapplicationtypeid;
-  private Integer  roletypeid;
+  private Integer   roleid;
+  private Integer   namedentityid;
+  private Integer   sourceapplicationtypeid;
+  private Integer   roletypeid;
   private Timestamp startdate;
   private Timestamp enddate;
   private Timestamp created;
   private Timestamp lastmodified;
-  private Integer  createdby;
-  private Integer  lastmodifiedby;
+  private Integer   createdby;
+  private Integer   lastmodifiedby;
 
-  private String  sourceapplication;
-  private String  roletype;
+  private String sourceapplicationtype;
+  private String roletype;
 
 
   public RoleEntity() {
-    //this(null,null,null,null,null,null,null,null,null,null);
   }
 
-//  public RoleEntity(
-//    Integer  roleid,
-//    Integer  namedentityid,
-//    Integer  sourceapplicationtypeid,
-//    Integer  roletypeid,
-//    Timestamp startdate,
-//    Timestamp enddate,
-//    Timestamp created,
-//    Timestamp lastmodified,
-//    Integer  createdby,
-//    Integer  lastmodifiedby
-//  ) {
-//    this.roleid         = roleid;
-//    this.namedentityid  = namedentityid;
-//    this.sourceapplicationtypeid = sourceapplicationtypeid;
-//    this.roletypeid     = roletypeid;
-//    this.startdate      = startdate;
-//    this.enddate        = enddate;
-//    this.created        = (created != null ? created : new Timestamp(new Date().getTime()));
-//    this.lastmodified   = (lastmodified != null ? lastmodified : new Timestamp(new Date().getTime()));
-//    this.createdby      = createdby;
-//    this.lastmodifiedby = lastmodifiedby;
-//  }
-
-  public String getSourceapplication() {
-    return sourceapplication;
+  public String getSourceapplicationtype() {
+    return sourceapplicationtype;
   }
 
-  public void setSourceapplication(String sourceapplication) {
-    this.sourceapplication = sourceapplication;
+  public void setSourceapplicationtype(String sourceapplicationtype) {
+    this.sourceapplicationtype = sourceapplicationtype;
   }
 
   public String getRoletype() {
@@ -158,6 +133,7 @@ public class RoleEntity implements java.io.Serializable {
     this.createdby = createdby;
   }
 
+  // TODO: fix how this is rendering in XML
   public Integer getLastmodifiedby() {
     return this.lastmodifiedby;
   }

@@ -24,12 +24,15 @@ import org.plos.namedentity.api.entity.PhonenumberEntity;
 import org.plos.namedentity.api.entity.RoleEntity;
 import org.plos.namedentity.api.entity.UniqueidentifierEntity;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.List;
 
+@XmlRootElement
 public class IndividualComposite {
 
   private IndividualEntity             individual;
-  private RoleEntity                   role;  // TODO: this should be a list
+  private List<RoleEntity>             roles;
   private List<AddressEntity>          addresses;
   private List<EmailEntity>            emails;
   private List<PhonenumberEntity>      phonenumbers;
@@ -48,6 +51,7 @@ public class IndividualComposite {
     this.degrees = degrees;
   }
 
+  @XmlTransient
   public IndividualEntity getIndividual() {
     return individual;
   }
@@ -120,12 +124,12 @@ public class IndividualComposite {
     this.individual.setPreferredcommunication(preferredcommunication);
   }
 
-  public RoleEntity getRole() {
-    return role;
+  public List<RoleEntity> getRoles() {
+    return roles;
   }
 
-  public void setRole(RoleEntity role) {
-    this.role = role;
+  public void setRoles(List<RoleEntity> roles) {
+    this.roles = roles;
   }
 
   public List<AddressEntity> getAddresses() {

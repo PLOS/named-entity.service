@@ -19,6 +19,7 @@ package org.plos.namedentity.rest;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
+import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.entity.*;
 
 import javax.ws.rs.client.Entity;
@@ -40,6 +41,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   private static final String TYPE_CLASS_URI  = "/typeclasses";
   private static final String TYPE_VALUE_URI  = TYPE_CLASS_URI + "/1/typevalues";
   private static final String INDIVIDUAL_URI  = "/individuals";
+  private static final String INDIVIDUAL_COMPOSITE_URI  = "/individuals_composite";
   private static final String INDIV_ADDR_URI  = INDIVIDUAL_URI + "/1/addresses";
   private static final String INDIV_EMAIL_URI = INDIVIDUAL_URI + "/1/emails";
   private static final String INDIV_PHONE_URI = INDIVIDUAL_URI + "/1/phonenumbers";
@@ -110,23 +112,24 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   
     // Request #1. Expect success.
 
-    Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+    Response response = target(INDIVIDUAL_COMPOSITE_URI).request(MediaType.APPLICATION_JSON_TYPE)
                           .post(Entity.json(compositeIndividualJson));
 
     assertEquals(200, response.getStatus());
 
     String jsonPayload = response.readEntity(String.class);
 
-    IndividualEntity entity = mapper.readValue(jsonPayload, IndividualEntity.class);
-    assertEquals(Integer.valueOf(1), entity.getNamedentityid());
-    assertEquals("firstname", entity.getFirstname());
-    assertEquals("middlename", entity.getMiddlename());
-    assertEquals("lastname", entity.getLastname());
-    assertEquals("Mr.", entity.getNameprefix());
+    IndividualComposite composite = mapper.readValue(jsonPayload, IndividualComposite.class);
+    assertEquals(Integer.valueOf(1), composite.getNamedentityid());
+    assertEquals("firstname", composite.getFirstname());
+    assertEquals("middlename", composite.getMiddlename());
+    assertEquals("lastname", composite.getLastname());
+    assertEquals("Ms.", composite.getNameprefix());
+    assertEquals("email@internet.com", composite.getEmails().get(0).getEmailaddress());
 
     // Request #2. Expect a validation exception (client-side error)
 
-    response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+    response = target(INDIVIDUAL_COMPOSITE_URI).request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.json(compositeIndividualJson));
 
     assertEquals(400, response.getStatus());
@@ -136,7 +139,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     // Request #3. Expect a data access exception (server-side error)
 
-    response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+    response = target(INDIVIDUAL_COMPOSITE_URI).request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.json(compositeIndividualJson));
 
     assertEquals(500, response.getStatus());
@@ -146,7 +149,24 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   }
 
   @Test
-  public void testIndividualCrud() throws IOException {
+  public void testReadIndividualComposite() throws Exception {
+
+    Response response = target(INDIVIDUAL_COMPOSITE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    String jsonPayload = response.readEntity(String.class);
+
+    IndividualComposite composite = mapper.readValue(jsonPayload, IndividualComposite.class);
+    assertEquals(Integer.valueOf(1), composite.getNamedentityid());
+    assertEquals("firstname", composite.getFirstname());
+    assertEquals("middlename", composite.getMiddlename());
+    assertEquals("lastname", composite.getLastname());
+    assertEquals("Ms.", composite.getNameprefix());
+    assertEquals("email@internet.com", composite.getEmails().get(0).getEmailaddress());
+  }
+
+  @Test
+  public void testIndividualFinders() throws IOException {
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY ID)                                                      */
@@ -425,7 +445,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     mapper.writeValue(writer, updatedTypeClass);
 
     response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .put(Entity.json(writer.toString()));
+                .post(Entity.json(writer.toString()));
 
     assertEquals(200, response.getStatus());
 
@@ -437,14 +457,14 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     // UPDATE #2 should raise a validation exception
 
     response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .put(Entity.json(writer.toString()));
+                .post(Entity.json(writer.toString()));
 
     assertEquals(400, response.getStatus());
     
     // UPDATE #3 should raise a server-side exception
 
     response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .put(Entity.json(writer.toString()));
+                .post(Entity.json(writer.toString()));
 
     assertEquals(500, response.getStatus());
 
@@ -457,6 +477,56 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).delete();
     assertEquals(500, response.getStatus());
+  }
+
+  @Test
+  public void testIndividualsCrud() throws Exception {
+
+    // CREATE, #1 expect success
+
+    final String NEW_FIRSTNAME = "origfirstname";
+    final String NEW_LASTNAME = "origlastname";
+
+    final String NEW_INDIVIDUALS_JSON_PAYLOAD = "{"
+        + "\"firstname\":\"" + NEW_FIRSTNAME + "\","
+        + "\"lastname\":\""  + NEW_LASTNAME  + "\""
+        + "}";
+
+    Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+        .post(Entity.json(NEW_INDIVIDUALS_JSON_PAYLOAD));
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    String jsonPayload = response.readEntity(String.class);
+
+    IndividualEntity entity = mapper.readValue(jsonPayload, IndividualEntity.class);
+    assertEquals(Integer.valueOf(1), entity.getNamedentityid());
+    assertEquals("firstname", entity.getFirstname());
+    assertEquals("lastname", entity.getLastname());
+
+    // READ
+
+    response = target(INDIVIDUAL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    jsonPayload = response.readEntity(String.class);
+
+    entity = mapper.readValue(jsonPayload, IndividualEntity.class);
+    assertEquals(Integer.valueOf(1), entity.getNamedentityid());
+    assertEquals("firstname", entity.getFirstname());
+    assertEquals("lastname", entity.getLastname());
+
+    // UPDATE
+
+    response = target(INDIVIDUAL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
+        .post(Entity.json(NEW_INDIVIDUALS_JSON_PAYLOAD));
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    // DELETE
+
+    response = target(INDIVIDUAL_URI + "/1").request().delete();
+    assertEquals(Response.Status.NO_CONTENT.getStatusCode(), response.getStatus());
   }
 
   @Test
@@ -554,7 +624,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     mapper.writeValue(writer, updatedTypeVal);
 
     response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .put(Entity.json(writer.toString()));
+                .post(Entity.json(writer.toString()));
 
     assertEquals(200, response.getStatus());
 
@@ -566,14 +636,14 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     // UPDATE #2 should raise a validation exception
 
     response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .put(Entity.json(writer.toString()));
+                .post(Entity.json(writer.toString()));
 
     assertEquals(400, response.getStatus());
     
     // UPDATE #3 should raise a server-side exception
 
     response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .put(Entity.json(writer.toString()));
+                .post(Entity.json(writer.toString()));
 
     assertEquals(500, response.getStatus());
 

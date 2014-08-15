@@ -1,6 +1,6 @@
 package org.plos.namedentity.rest;
 
-import org.plos.namedentity.api.IndividualComposite;
+import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.AddressEntity;
 import org.plos.namedentity.api.entity.DegreeEntity;
@@ -10,6 +10,7 @@ import org.plos.namedentity.api.entity.PhonenumberEntity;
 import org.plos.namedentity.api.entity.RoleEntity;
 import org.plos.namedentity.api.entity.UniqueidentifierEntity;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -23,21 +24,80 @@ import java.util.List;
 public class IndividualsResource extends BaseResource {
 
   @POST
-  public Response createIndividualComposite(IndividualComposite object) {
+  public Response create(IndividualEntity entity) {
     try {
-      IndividualEntity individual = namedEntityService.createIndividual(object);
-      return Response.status(Response.Status.OK).entity(individual).build();  // TODO: why not return the composite here?
-    }
-    catch(NedValidationException e) {
+      namedEntityService.resolveValuesToIds(entity);
+
+      Integer nedId = crudService.create(entity);
+
+      return Response.status(Response.Status.OK).entity(
+          namedEntityService.findIndividualByNedId(nedId)).build();
+
+    } catch (NedValidationException e) {
       return validationError(e, "Unable to create individual");
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       return serverError(e, "Unable to create individual");
     }
   }
 
   @GET
-  public Response getAllIndividuals(@QueryParam("uidType") String uidType, @QueryParam("uidValue") String uidValue) {
+  @Path("/{id}")
+  public Response read(@PathParam("id") int nedId) {
+    try {
+      IndividualEntity individual = namedEntityService.findIndividualByNedId(nedId);
+      return Response.status(Response.Status.OK).entity(individual).build();
+    }
+    catch(Exception e) {
+      return serverError(e, "Find individual by id failed");
+    }
+  }
+
+  @POST
+  @Path("/{id}")
+  public Response update(@PathParam("id") int nedId, IndividualEntity entity) {
+
+    try {
+
+      entity.setNamedentityid(nedId);  // TODO: check if path var=payload for id?
+
+      namedEntityService.resolveValuesToIds(entity);
+
+      crudService.update(entity);
+
+      entity = namedEntityService.findIndividualByNedId(nedId);
+
+      return Response.ok().entity(entity).build();
+
+    } catch (EntityNotFoundException e) {
+      return entityNotFound(e);
+    } catch (Exception e) {
+      return serverError(e, "Unable to update individual");
+    }
+
+  }
+
+  @DELETE
+  @Path("/{id}")
+  public Response delete(@PathParam("id") int nedId) {
+
+    try {
+
+      IndividualEntity entity = namedEntityService.findIndividualByNedId(nedId);
+
+      crudService.delete(entity);
+
+      return Response.status(Response.Status.NO_CONTENT).build();
+
+    } catch (EntityNotFoundException e) {
+      return entityNotFound(e);
+    } catch (Exception e) {
+      return serverError(e, "Unable to delete individual");
+    }
+
+  }
+
+  @GET
+  public Response list(@QueryParam("uidType") String uidType, @QueryParam("uidValue") String uidValue) {
     try {
       List<IndividualEntity> individuals = null; 
       
@@ -54,25 +114,15 @@ public class IndividualsResource extends BaseResource {
     }
   }
 
-  @GET
-  @Path("/{id}")
-  public Response getIndividual(@PathParam("id") int nedId) {
-    try {
-      IndividualEntity individual = namedEntityService.findIndividualByNedId(nedId);
-      return Response.status(Response.Status.OK).entity(individual).build();
-    }
-    catch(Exception e) {
-      return serverError(e, "Find individual by id failed");
-    }
-  }
 
   @GET
   @Path("/{id}/emails")
-  public Response getEmailsForIndividual(@PathParam("id") int nedId) {
+  public Response getEmails(@PathParam("id") int nedId) {
     try {
-      List<EmailEntity> emails = namedEntityService.findEmailsByNedId(nedId);
       return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<EmailEntity>>(emails){}).build();
+          new GenericEntity<List<EmailEntity>>(
+              namedEntityService.findEmailsByNedId(nedId)
+          ){}).build();
     }
     catch(Exception e) {
       return serverError(e, "Find emails by nedId failed");
@@ -83,7 +133,6 @@ public class IndividualsResource extends BaseResource {
   @Path("/{id}/degrees")
   public Response getDegrees(@PathParam("id") int nedId) {
     try {
-
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<DegreeEntity>>(
               namedEntityService.findDegreesByNedId(nedId)){}).build();
@@ -95,11 +144,12 @@ public class IndividualsResource extends BaseResource {
 
   @GET
   @Path("/{id}/addresses")
-  public Response getAddressesForIndividual(@PathParam("id") int nedId) {
+  public Response getAddresses(@PathParam("id") int nedId) {
     try {
-      List<AddressEntity> addresses = namedEntityService.findAddressesByNedId(nedId);
       return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<AddressEntity>>(addresses){}).build();
+          new GenericEntity<List<AddressEntity>>(
+              namedEntityService.findAddressesByNedId(nedId)
+          ){}).build();
     }
     catch(Exception e) {
       return serverError(e, "Find addresses by nedId failed");
@@ -108,7 +158,7 @@ public class IndividualsResource extends BaseResource {
 
   @GET
   @Path("/{id}/phonenumbers")
-  public Response getPhonenumbersForIndividual(@PathParam("id") int nedId) {
+  public Response getPhonenumbers(@PathParam("id") int nedId) {
     try {
       List<PhonenumberEntity> phonenumbers = namedEntityService.findPhoneNumbersByNedId(nedId);
       return Response.status(Response.Status.OK).entity(
@@ -121,11 +171,12 @@ public class IndividualsResource extends BaseResource {
 
   @GET
   @Path("/{id}/roles")
-  public Response getRolesForIndividual(@PathParam("id") int nedId) {
+  public Response getRoles(@PathParam("id") int nedId) {
     try {
-      List<RoleEntity> roles = namedEntityService.findRolesByNedId(nedId);
       return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<RoleEntity>>(roles){}).build();
+          new GenericEntity<List<RoleEntity>>(
+              namedEntityService.findRolesByNedId(nedId)
+          ){}).build();
     }
     catch(Exception e) {
       return serverError(e, "Find roles by nedId failed");
@@ -134,11 +185,12 @@ public class IndividualsResource extends BaseResource {
 
   @GET
   @Path("/{id}/xref")
-  public Response getExternalReferencesForIndividual(@PathParam("id") int nedId) {
+  public Response getExternalReferences(@PathParam("id") int nedId) {
     try {
-      List<UniqueidentifierEntity> uids = namedEntityService.findUniqueIdsByNedId(nedId);
       return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<UniqueidentifierEntity>>(uids){}).build();
+          new GenericEntity<List<UniqueidentifierEntity>>(
+              namedEntityService.findUniqueIdsByNedId(nedId)
+          ){}).build();
     }
     catch(Exception e) {
       return serverError(e, "Find external references by nedId failed");
