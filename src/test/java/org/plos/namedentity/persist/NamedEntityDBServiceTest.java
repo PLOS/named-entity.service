@@ -338,8 +338,8 @@ public class NamedEntityDBServiceTest {
     assertTrue( nedDBSvc.update(savedIndividual) );
 
     // Get another instance of same individual record
-    IndividualEntity savedIndividual2 = nedDBSvc.findById(individualId, IndividualEntity.class);
-    assertEquals(savedIndividual, savedIndividual2);
+    IndividualEntity savedIndividualAfterUpdate = nedDBSvc.findById(individualId, IndividualEntity.class);
+    assertEquals(savedIndividual, savedIndividualAfterUpdate);
 
     // FIND ALL Email Records 
 

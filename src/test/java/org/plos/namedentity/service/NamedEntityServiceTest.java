@@ -84,7 +84,7 @@ public class NamedEntityServiceTest {
   }
 
   @Test
-  public void testCreateIndividualWithRole() {
+  public void testCreateIndividualCompositeWithRole() {
 
     IndividualComposite composite = newCompositeIndividualWithRole();
 
@@ -183,9 +183,13 @@ public class NamedEntityServiceTest {
 
     Integer nedId = null;
     try {
-      IndividualComposite postedComposite = namedEntityService.createIndividualComposite(composite);
-      assertNotNull(postedComposite);
-      assertNotNull(postedComposite.getNamedentityid());
+      IndividualComposite responseComposite = namedEntityService.createIndividualComposite(composite);
+      assertNotNull(responseComposite);
+      assertNotNull(responseComposite.getNamedentityid());
+
+      // make sure foreign keys are resolved for sub entities
+      assertNotNull(responseComposite.getEmails().get(0).getEmailid());
+
     }
     catch (NedValidationException e) {
       fail();

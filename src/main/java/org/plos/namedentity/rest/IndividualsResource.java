@@ -57,11 +57,14 @@ public class IndividualsResource extends BaseResource {
 
       entity.setNamedentityid(nedId);  // TODO: check if path var=payload for id?
 
+      namedEntityService.resolveValuesToIds(entity);
+
       crudService.update(entity);
 
-      namedEntityService.resolveValues(entity);
+      entity = namedEntityService.findIndividualByNedId(nedId);
 
-      // TODO: handle 404
+      if (entity == null)
+        return Response.status(Response.Status.NOT_FOUND).build();
 
       return Response.ok().entity(entity).build();
 

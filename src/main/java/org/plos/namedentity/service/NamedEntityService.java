@@ -49,9 +49,9 @@ public interface NamedEntityService {
   public IndividualComposite          findIndividualComposite(Integer nedId);
 
   /**
-   * Resolve and entity's IDs to values associated with that ID
+   * Resolve and entity's values to foreign keys
    * @param t
    * @param <T>
    */
-  public <T> T                        resolveValues          (T t);
+  public <T> T resolveValuesToIds(T t);
 }
