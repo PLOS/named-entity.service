@@ -17,6 +17,8 @@
 package org.plos.namedentity.rest;
 
 import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.*;
@@ -41,49 +43,8 @@ public class TestSpringConfig {
   static public CrudService crudService() {
     CrudService mockCrudService =  Mockito.mock(CrudService.class);
 
-    when(mockCrudService.create(any()))
-      .thenReturn(1)
-        .thenThrow(NedValidationException.class)
-          .thenThrow(RuntimeException.class);
-
-    when(mockCrudService.update(any()))
-      .thenReturn(true)
-        .thenThrow(NedValidationException.class)
-          .thenThrow(RuntimeException.class);
-
-    when(mockCrudService.delete(any()))
-      .thenReturn(true)
-        .thenThrow(RuntimeException.class);
-
-    // TYPE DESCRIPTIONS (TYPE CLASSES)
-
-    when(mockCrudService.findById(eq(1), eq(TypedescriptionEntity.class)))
-      .thenReturn(new TypedescriptionEntity(1, "New Type Description", "New Type Usage"));
-
-    List<TypedescriptionEntity> typeClassList = new ArrayList<>();
-    typeClassList.add(new TypedescriptionEntity(1, "Type Description1", "Type Usage1"));
-    typeClassList.add(new TypedescriptionEntity(2, "Type Description2", "Type Usage2"));
-    typeClassList.add(new TypedescriptionEntity(3, "Type Description3", "Type Usage3"));
-
-    when(mockCrudService.findAll(eq(TypedescriptionEntity.class))).thenReturn(typeClassList);
-
-    // TYPE VALUES (GLOBAL TYPES)
-
-    GlobaltypeEntity typeVal = new GlobaltypeEntity();
-    typeVal.setGlobaltypeid(1);
-    typeVal.setTypeid(1);
-    typeVal.setShortdescription("Type Value #1 Short Description");
-    typeVal.setTypecode("TV1");
-
-    when(mockCrudService.findById(eq(1), eq(GlobaltypeEntity.class))).thenReturn(typeVal);
-
-    List<GlobaltypeEntity> typeValuesForTypeClass = new ArrayList<>();
-    for (int i = 1; i <=5; i++) {
-      typeValuesForTypeClass.add(new GlobaltypeEntity(
-        i, 1, "shortdesc"+i, "longdesc"+i, "typ"+i, null, null, null, null));
-    }
-
-    when(mockCrudService.findByAttribute(isA(GlobaltypeEntity.class))).thenReturn(typeValuesForTypeClass);
+    mockCrudForTypes(mockCrudService);
+    mockCrudForEmails(mockCrudService);
 
     // INDIVIDUALS 
 
@@ -134,6 +95,8 @@ public class TestSpringConfig {
 
     when(mockNamedEntityService.findOrganizationByNedId(anyInt()))
         .thenReturn( organizationEntity );
+
+    mockNamedEntityServiceForEmails(mockNamedEntityService);
 
     return mockNamedEntityService;
   }
@@ -278,5 +241,95 @@ public class TestSpringConfig {
       uids.add(new UniqueidentifierEntity(null, 1, null, "0000-0002-9430-319"+i, "ORCID"));
     }
     return uids;
+  }
+
+  static private void mockCrudForEmails(CrudService mockCrudService) {
+    //when(mockCrudService.create(isA(EmailEntity.class)))
+        //.thenAnswer(new Answer<EmailEntity>() {
+            //@Override
+            //public EmailEntity answer(InvocationOnMock invocation) throws Throwable {
+                //Object[] args = invocation.getArguments();
+                ////EmailEntity entity = (EmailEntity) args[0];
+                //EmailEntity entity = new EmailEntity(); 
+                ////dto.setTypeid(1);
+                //return entity;
+            //}
+        //});
+
+    when(mockCrudService.create(isA(EmailEntity.class))).thenReturn(1);
+  }
+
+  static private void mockNamedEntityServiceForEmails(NamedEntityService mockNamedEntityService) {
+    EmailEntity emailEntity = new EmailEntity();
+    emailEntity.setEmailid(1);   // db assigned primary key
+    emailEntity.setNamedentityid(1);
+    emailEntity.setEmailaddress("foo.bar.personal@gmail.com");
+    emailEntity.setIsprimary((byte)1);
+    emailEntity.setIsactive((byte)1);
+    emailEntity.setEmailtype("Work");
+
+    when(mockNamedEntityService.findEmailByPrimaryKey(anyInt()))
+        .thenReturn( emailEntity );
+  }
+
+  static private void mockCrudForTypes(CrudService mockCrudService) {
+
+    // TYPE DESCRIPTIONS (TYPE CLASSES)
+
+    when(mockCrudService.create(isA(TypedescriptionEntity.class)))
+      .thenReturn(1)
+        .thenThrow(NedValidationException.class)
+          .thenThrow(RuntimeException.class);
+
+    when(mockCrudService.update(isA(TypedescriptionEntity.class)))
+      .thenReturn(true)
+        .thenThrow(NedValidationException.class)
+          .thenThrow(RuntimeException.class);
+
+    when(mockCrudService.delete(isA(TypedescriptionEntity.class)))
+      .thenReturn(true)
+        .thenThrow(RuntimeException.class);
+
+    when(mockCrudService.findById(eq(1), eq(TypedescriptionEntity.class)))
+      .thenReturn(new TypedescriptionEntity(1, "New Type Description", "New Type Usage"));
+
+    List<TypedescriptionEntity> typeClassList = new ArrayList<>();
+    typeClassList.add(new TypedescriptionEntity(1, "Type Description1", "Type Usage1"));
+    typeClassList.add(new TypedescriptionEntity(2, "Type Description2", "Type Usage2"));
+    typeClassList.add(new TypedescriptionEntity(3, "Type Description3", "Type Usage3"));
+
+    when(mockCrudService.findAll(eq(TypedescriptionEntity.class))).thenReturn(typeClassList);
+
+    // TYPE VALUES (GLOBAL TYPES)
+
+    when(mockCrudService.create(isA(GlobaltypeEntity.class)))
+      .thenReturn(1)
+        .thenThrow(NedValidationException.class)
+          .thenThrow(RuntimeException.class);
+
+    when(mockCrudService.update(isA(GlobaltypeEntity.class)))
+      .thenReturn(true)
+        .thenThrow(NedValidationException.class)
+          .thenThrow(RuntimeException.class);
+
+    when(mockCrudService.delete(isA(GlobaltypeEntity.class)))
+      .thenReturn(true)
+        .thenThrow(RuntimeException.class);
+
+    GlobaltypeEntity typeVal = new GlobaltypeEntity();
+    typeVal.setGlobaltypeid(1);
+    typeVal.setTypeid(1);
+    typeVal.setShortdescription("Type Value #1 Short Description");
+    typeVal.setTypecode("TV1");
+
+    when(mockCrudService.findById(eq(1), eq(GlobaltypeEntity.class))).thenReturn(typeVal);
+
+    List<GlobaltypeEntity> typeValuesForTypeClass = new ArrayList<>();
+    for (int i = 1; i <=5; i++) {
+      typeValuesForTypeClass.add(new GlobaltypeEntity(
+        i, 1, "shortdesc"+i, "longdesc"+i, "typ"+i, null, null, null, null));
+    }
+
+    when(mockCrudService.findByAttribute(isA(GlobaltypeEntity.class))).thenReturn(typeValuesForTypeClass);
   }
 }

@@ -262,7 +262,7 @@ public class NamedEntityDBServiceTest {
 
     List<EmailEntity> allEmailsInDB = nedDBSvc.findAll(EmailEntity.class);
     assertTrue( allEmailsInDB.size() >= 2 );
-              
+
     // FIND BY ATTRIBUTE (Lookup email by address)
 
     EmailEntity emailSearchByAddress = new EmailEntity();
@@ -282,9 +282,15 @@ public class NamedEntityDBServiceTest {
       assertTrue( allEmailsInDB.contains(email) );
     }
 
-    // FIND BY JOIN-QUERY 
+    // FIND BY PRIMARY KEY
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
+    for (EmailEntity email : allEmailsInDB) {
+      assertNotNull( nedQuery.findEmailByPrimaryKey(email.getEmailid()) );
+    }
+
+    // FIND BY JOIN-QUERY 
+
     List<EmailEntity> emails = nedQuery.findEmailsByNedId(foundEmails2.get(0).getNamedentityid());
     assertTrue( emails.size() > 0 );
 

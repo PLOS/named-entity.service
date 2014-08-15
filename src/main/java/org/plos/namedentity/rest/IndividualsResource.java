@@ -10,6 +10,7 @@ import org.plos.namedentity.api.entity.PhonenumberEntity;
 import org.plos.namedentity.api.entity.RoleEntity;
 import org.plos.namedentity.api.entity.UniqueidentifierEntity;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -66,6 +67,77 @@ public class IndividualsResource extends BaseResource {
     }
   }
 
+  /* ----------------------------------------------------------------------- */
+  /*  EMAIL CRUD                                                             */
+  /* ----------------------------------------------------------------------- */
+
+  @POST
+  @Path("/{nedId}/emails")
+  public Response createEmail(@PathParam("nedId") int nedId, EmailEntity emailEntity) {
+    try {
+      emailEntity.setNamedentityid(nedId);
+      // TODO: resolve entity here
+      Integer emailId = crudService.create(emailEntity);
+      EmailEntity savedEntity = namedEntityService.findEmailByPrimaryKey(emailId);
+      return Response.status(Response.Status.OK).entity(savedEntity).build();
+    }
+    catch(NedValidationException e) {
+      return validationError(e, "Unable to create email");
+    }
+    catch(Exception e) {
+      return serverError(e, "Unable to create email");
+    }
+  }
+
+  @POST
+  @Path("/{nedId}/emails/{emailId}")
+  public Response updateEmail(@PathParam("nedId") int nedId, 
+                              @PathParam("emailId") int emailId, 
+                              EmailEntity emailEntity) {
+    try {
+      emailEntity.setNamedentityid(nedId);
+      // TODO: resolve entity here
+      crudService.update(emailEntity);
+      EmailEntity savedEntity = namedEntityService.findEmailByPrimaryKey(emailEntity.getEmailid());
+      return Response.status(Response.Status.OK).entity(savedEntity).build();
+    }
+    catch(NedValidationException e) {
+      return validationError(e, "Unable to update email");
+    }
+    catch(Exception e) {
+      return serverError(e, "Unable to update email");
+    }
+  }
+
+  @DELETE
+  @Path("/{nedId}/emails/{emailId}")
+  public Response updateEmail(@PathParam("nedId") int nedId, 
+                              @PathParam("emailId") int emailId) {
+    try {
+      EmailEntity emailEntity = namedEntityService.findEmailByPrimaryKey(emailId);
+      crudService.delete(emailEntity);
+      return Response.status(Response.Status.NO_CONTENT).build();
+    }
+    catch(NedValidationException e) {
+      return validationError(e, "Unable to delete email");
+    }
+    catch(Exception e) {
+      return serverError(e, "Unable to delete email");
+    }
+  }
+
+  @GET
+  @Path("/{nedId}/emails/{emailId}")
+  public Response getEmail(@PathParam("nedId") int nedId, @PathParam("emailId") int emailId) {
+    try {
+      EmailEntity emailEntity = namedEntityService.findEmailByPrimaryKey(emailId);
+      return Response.status(Response.Status.OK).entity(emailEntity).build();
+    }
+    catch(Exception e) {
+      return serverError(e, "Find email by id failed");
+    }
+  }
+
   @GET
   @Path("/{id}/emails")
   public Response getEmailsForIndividual(@PathParam("id") int nedId) {
@@ -83,7 +155,6 @@ public class IndividualsResource extends BaseResource {
   @Path("/{id}/degrees")
   public Response getDegrees(@PathParam("id") int nedId) {
     try {
-
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<DegreeEntity>>(
               namedEntityService.findDegreesByNedId(nedId)){}).build();

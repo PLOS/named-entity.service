@@ -176,8 +176,6 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     IndividualEntity[] individualEntityArray = mapper.readValue(jsonPayload, IndividualEntity[].class); 
     assertEquals(3, individualEntityArray.length);
-
-    //TODO - CREATE, UPDATE, DELETE
   }
 
   @Test
@@ -209,14 +207,51 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   public void testEmailCrud() throws IOException {
 
     /* ------------------------------------------------------------------ */
-    /*  FIND (BY ID)                                                      */
+    /*  CREATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    Response response = target(INDIV_EMAIL_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    String emailsJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "emails.json")));
+  
+    Response response = target(INDIV_EMAIL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+                          .post(Entity.json(emailsJson));
 
     assertEquals(200, response.getStatus());
 
     String jsonPayload = response.readEntity(String.class);
+
+    EmailEntity entity = mapper.readValue(jsonPayload, EmailEntity.class);
+    assertEquals(Integer.valueOf(1), entity.getEmailid());
+    assertEquals(Integer.valueOf(1), entity.getNamedentityid());
+    assertEquals("Work", entity.getEmailtype());
+    assertEquals("foo.bar.personal@gmail.com", entity.getEmailaddress());
+    assertEquals(Byte.valueOf((byte)1), entity.getIsprimary());
+    assertEquals(Byte.valueOf((byte)1), entity.getIsactive());
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    entity.setEmailaddress("update." + entity.getEmailaddress());    
+
+    response = target(INDIV_EMAIL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
+                  .put(Entity.json(mapper.writeValueAsString(entity)));
+
+    assertEquals(200, response.getStatus());
+
+    String updatedJsonPayload = response.readEntity(String.class);
+
+    EmailEntity updatedEntity = mapper.readValue(updatedJsonPayload, EmailEntity.class);
+    assertEquals("updated.foo.bar.personal@gmail.com", updatedEntity.getEmailaddress());
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY ID)                                                      */
+    /* ------------------------------------------------------------------ */
+
+    response = target(INDIV_EMAIL_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(200, response.getStatus());
+
+    jsonPayload = response.readEntity(String.class);
 
     EmailEntity[] emails = mapper.readValue(jsonPayload, EmailEntity[].class);
     assertEquals(2, emails.length);

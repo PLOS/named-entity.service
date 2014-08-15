@@ -269,6 +269,28 @@ public class NamedEntityServiceTest {
     }
   }
 
+  @Test
+  public void testEmailEntityCrud() {
+
+    // CREATE
+
+    EmailEntity emailEntity = new EmailEntity();
+    emailEntity.setNamedentityid(1);
+    emailEntity.setEmailtype("Work");
+    emailEntity.setEmailaddress("foo@bar.com");
+    emailEntity.setIsprimary((byte)1);
+
+    Integer emailId = crudService.create(emailEntity);
+    assertNotNull( emailId );
+
+    EmailEntity savedEntity = namedEntityService.findEmailByPrimaryKey(emailId);
+    //MCB:FIX
+    //assertNotNull( emailEntity.getEmailtypeid() );
+
+    // UPDATE
+    // DELETE
+  }
+
   private IndividualComposite newCompositeIndividualWithRole() {
 
     IndividualComposite composite = new IndividualComposite();
