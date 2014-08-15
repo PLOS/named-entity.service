@@ -285,7 +285,7 @@ public class NamedEntityDBServiceTest {
     // FIND BY JOIN-QUERY 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<EmailEntity> emails = nedQuery.findEmailsByNedId(foundEmails2.get(0).getNamedentityid());
+    List<EmailEntity> emails = nedQuery.findResolvedEntities(foundEmails2.get(0).getNamedentityid(), EmailEntity.class);
     assertTrue( emails.size() > 0 );
 
     // Try to find an email which doesn't exist
@@ -495,7 +495,7 @@ public class NamedEntityDBServiceTest {
     // FIND BY JOIN-QUERY 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<PhonenumberEntity> phonenumbers = nedQuery.findPhoneNumbersByNedId(foundPhones.get(0).getNamedentityid());
+    List<PhonenumberEntity> phonenumbers = nedQuery.findResolvedEntities(foundPhones.get(0).getNamedentityid(), PhonenumberEntity.class);
     assertTrue( phonenumbers.size() > 0 );
 
     // DELETE
@@ -560,7 +560,7 @@ public class NamedEntityDBServiceTest {
     // FIND BY JOIN-QUERY 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<AddressEntity> addresses = nedQuery.findAddressesByNedId(savedAddress.getNamedentityid());
+    List<AddressEntity> addresses = nedQuery.findResolvedEntities(savedAddress.getNamedentityid(), AddressEntity.class);
     assertTrue( addresses.size() > 0 );
             
     //TODO : FIND BY ATTRIBUTE
@@ -615,7 +615,7 @@ public class NamedEntityDBServiceTest {
     // FIND BY JOIN-QUERY 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<RoleEntity> roles = nedQuery.findRolesByNedId(savedRole.getNamedentityid());
+    List<RoleEntity> roles = nedQuery.findResolvedEntities(savedRole.getNamedentityid(), RoleEntity.class);
     RoleEntity role = roles.get(0);
     assertEquals("Author", role.getRoletype());
               
@@ -683,7 +683,7 @@ public class NamedEntityDBServiceTest {
 
       // FIND BY JOIN-QUERY 
 
-      List<UniqueidentifierEntity> uids = nedQuery.findUniqueIdsByNedId(savedUid.getNamedentityid());
+      List<UniqueidentifierEntity> uids = nedQuery.findResolvedEntities(savedUid.getNamedentityid(), UniqueidentifierEntity.class);
       UniqueidentifierEntity uid = uids.get(0);
       assertEquals(ORCID_ID, uid.getUniqueidentifier());
     }

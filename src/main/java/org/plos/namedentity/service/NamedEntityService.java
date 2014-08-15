@@ -17,14 +17,8 @@
 package org.plos.namedentity.service;
 
 import org.plos.namedentity.api.IndividualComposite;
-import org.plos.namedentity.api.entity.AddressEntity;
-import org.plos.namedentity.api.entity.DegreeEntity;
-import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
 import org.plos.namedentity.api.entity.OrganizationEntity;
-import org.plos.namedentity.api.entity.PhonenumberEntity;
-import org.plos.namedentity.api.entity.RoleEntity;
-import org.plos.namedentity.api.entity.UniqueidentifierEntity;
 
 import java.util.List;
 
@@ -36,17 +30,12 @@ public interface NamedEntityService {
 
   public IndividualComposite          createIndividualComposite (IndividualComposite composite);
   public OrganizationEntity           createOrganization     (OrganizationEntity entity);
-  public OrganizationEntity           findOrganizationByNedId(Integer nedId);
-  public IndividualEntity             findIndividualByNedId  (Integer nedId);
   public List<IndividualEntity>       findIndividualsByUid   (String srcTypeId, String uid);
-  public List<AddressEntity>          findAddressesByNedId   (Integer nedId);
-  public List<EmailEntity>            findEmailsByNedId      (Integer nedId);
-  public List<PhonenumberEntity>      findPhoneNumbersByNedId(Integer nedId);
-  public List<RoleEntity>             findRolesByNedId       (Integer nedId);
-  public List<UniqueidentifierEntity> findUniqueIdsByNedId   (Integer nedId);
-  public List<DegreeEntity>           findDegreesByNedId     (Integer nedId);
 
   public IndividualComposite          findIndividualComposite(Integer nedId);
+
+  public <T> T findResolvedEntity(Integer nedId, Class<T> clazz);
+  public <T> List<T> findResolvedEntities(Integer nedId, Class<T> clazz);
 
   /**
    * Resolve and entity's values to foreign keys

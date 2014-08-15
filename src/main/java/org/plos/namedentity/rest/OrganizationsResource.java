@@ -41,7 +41,7 @@ public class OrganizationsResource extends BaseResource {
   @Path("/{id}")
   public Response getEntity(@PathParam("id") int nedId) {
     try {
-      return Response.ok(namedEntityService.findOrganizationByNedId(nedId)).build();
+      return Response.ok(namedEntityService.findResolvedEntity(nedId, OrganizationEntity.class)).build();
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
     } catch (Exception e) {
@@ -57,7 +57,7 @@ public class OrganizationsResource extends BaseResource {
       // TODO: should we return 404 if the nedId does not exist?
 
       return Response.ok(new GenericEntity<List<EmailEntity>>(
-          namedEntityService.findEmailsByNedId(nedId)
+          namedEntityService.findResolvedEntities(nedId, EmailEntity.class)
           ) {}).build();
     } catch (Exception e) {
       return serverError(e, "Find emails by nedId failed");
@@ -69,7 +69,7 @@ public class OrganizationsResource extends BaseResource {
   public Response getAddresses(@PathParam("id") int nedId) {
     try {
       return Response.ok(new GenericEntity<List<AddressEntity>>(
-              namedEntityService.findAddressesByNedId(nedId)
+              namedEntityService.findResolvedEntities(nedId, AddressEntity.class)
           ){}).build();
     } catch (Exception e) {
       return serverError(e, "Find addresses by nedId failed");
@@ -81,7 +81,7 @@ public class OrganizationsResource extends BaseResource {
   public Response getPhonenumbers(@PathParam("id") int nedId) {
     try {
       return Response.ok(new GenericEntity<List<PhonenumberEntity>>(
-              namedEntityService.findPhoneNumbersByNedId(nedId)
+              namedEntityService.findResolvedEntities(nedId, PhonenumberEntity.class)
           ){}).build();
     } catch(Exception e) {
       return serverError(e, "Find phone numbers by nedId failed");
@@ -93,7 +93,7 @@ public class OrganizationsResource extends BaseResource {
   public Response getExternalReferences(@PathParam("id") int nedId) {
     try {
       return Response.ok(new GenericEntity<List<UniqueidentifierEntity>>(
-              namedEntityService.findUniqueIdsByNedId(nedId)
+              namedEntityService.findResolvedEntities(nedId, UniqueidentifierEntity.class)
           ){}).build();
     } catch(Exception e) {
       return serverError(e, "Find external references by nedId failed");

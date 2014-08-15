@@ -206,22 +206,22 @@ public class NamedEntityServiceTest {
 
     // Test "By NedId" Finders
 
-    IndividualEntity entity = namedEntityService.findIndividualByNedId(nedId);
+    IndividualEntity entity = namedEntityService.findResolvedEntity(nedId, IndividualEntity.class);
     assertNotNull( entity );
 
-    List<AddressEntity> addressesEntities = namedEntityService.findAddressesByNedId(nedId);
+    List<AddressEntity> addressesEntities = namedEntityService.findResolvedEntities(nedId, AddressEntity.class);
     assertEquals(1, addressesEntities.size());
 
-    List<EmailEntity> emailEntities = namedEntityService.findEmailsByNedId(nedId);
+    List<EmailEntity> emailEntities = namedEntityService.findResolvedEntities(nedId, EmailEntity.class);
     assertEquals(2, emailEntities.size());
 
-    List<PhonenumberEntity> phonenumberEntities = namedEntityService.findPhoneNumbersByNedId(nedId);
+    List<PhonenumberEntity> phonenumberEntities = namedEntityService.findResolvedEntities(nedId, PhonenumberEntity.class);
     assertEquals(3, phonenumberEntities.size());
 
-    List<RoleEntity> roleEntities = namedEntityService.findRolesByNedId(nedId);
+    List<RoleEntity> roleEntities = namedEntityService.findResolvedEntities(nedId, RoleEntity.class);
     assertEquals(1, roleEntities.size());
 
-    List<UniqueidentifierEntity> uidEntities = namedEntityService.findUniqueIdsByNedId(nedId);
+    List<UniqueidentifierEntity> uidEntities = namedEntityService.findResolvedEntities(nedId, UniqueidentifierEntity.class);
     assertEquals(1, uidEntities.size());
 
     List<IndividualEntity> individuals = namedEntityService.findIndividualsByUid("ORCID", "0000-0001-9430-319X");

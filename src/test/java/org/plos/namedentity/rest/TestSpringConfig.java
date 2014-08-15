@@ -111,28 +111,28 @@ public class TestSpringConfig {
     when(mockNamedEntityService.findIndividualComposite(anyInt()))
         .thenReturn( individualComposite );
 
-    when(mockNamedEntityService.findIndividualByNedId(anyInt()))
+    when(mockNamedEntityService.findResolvedEntity(anyInt(), individualEntity.getClass()))
       .thenReturn( individualEntity );
 
     when(mockNamedEntityService.findIndividualsByUid(anyString(), anyString()))
       .thenReturn( newIndividualEntities() );
 
-    when(mockNamedEntityService.findAddressesByNedId(anyInt()))
+    when(mockNamedEntityService.findResolvedEntities(anyInt(), AddressEntity.class))
       .thenReturn( newAddressEntities() );
 
-    when(mockNamedEntityService.findEmailsByNedId(anyInt()))
+    when(mockNamedEntityService.findResolvedEntities(anyInt(), EmailEntity.class))
       .thenReturn( newEmailEntities() );
 
-    when(mockNamedEntityService.findDegreesByNedId(anyInt()))
+    when(mockNamedEntityService.findResolvedEntities(anyInt(), DegreeEntity.class))
         .thenReturn(newDegreeEntities());
 
-    when(mockNamedEntityService.findPhoneNumbersByNedId(anyInt()))
+    when(mockNamedEntityService.findResolvedEntities(anyInt(), PhonenumberEntity.class))
       .thenReturn( newPhonenumberEntities() );
 
-    when(mockNamedEntityService.findRolesByNedId(anyInt()))
+    when(mockNamedEntityService.findResolvedEntities(anyInt(), RoleEntity.class))
       .thenReturn( newRoleEntities() );
 
-    when(mockNamedEntityService.findUniqueIdsByNedId(anyInt()))
+    when(mockNamedEntityService.findResolvedEntities(anyInt(), UniqueidentifierEntity.class))
       .thenReturn( newUidEntities() );
 
     OrganizationEntity organizationEntity = newOrganizationEntity();
@@ -140,7 +140,7 @@ public class TestSpringConfig {
     when(mockNamedEntityService.createOrganization(isA(OrganizationEntity.class)))
         .thenReturn(organizationEntity);
 
-    when(mockNamedEntityService.findOrganizationByNedId(anyInt()))
+    when(mockNamedEntityService.findResolvedEntity(anyInt(), organizationEntity.getClass()))
         .thenReturn( organizationEntity );
 
     return mockNamedEntityService;

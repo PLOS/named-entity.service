@@ -367,8 +367,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .into(IndividualEntity.class);
   }
 
-  @Override
-  public List<AddressEntity> findAddressesByNedId(Integer nedId) {
+  private List<AddressEntity> findAddressesByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription addresstype, a.addressline1, a.addressline2, 
                a.addressline3, a.city, a.postalCode, a.isprimary,
@@ -402,8 +401,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .into(AddressEntity.class);
   }
 
-  @Override
-  public List<EmailEntity> findEmailsByNedId(Integer nedId) {
+  private List<EmailEntity> findEmailsByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription emailtype, e.emailaddress, e.isprimary
           FROM emails e
@@ -425,8 +423,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .into(EmailEntity.class);
   }
 
-  @Override
-  public List<PhonenumberEntity> findPhoneNumbersByNedId(Integer nedId) {
+  private List<PhonenumberEntity> findPhoneNumbersByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription phonenumbertype,
                gt2.shortDescription countrycodetype,
@@ -454,8 +451,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .into(PhonenumberEntity.class);
   }
 
-  @Override
-  public List<DegreeEntity> findDegreesByNedId(Integer nedId) {
+  private List<DegreeEntity> findDegreesByNedId(Integer nedId) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Degrees     d   = DEGREES.as("d");
@@ -471,8 +467,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
         .into(DegreeEntity.class);
   }
 
-  @Override
-  public List<RoleEntity> findRolesByNedId(Integer nedId) {
+  private List<RoleEntity> findRolesByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription sourceapplicationtype,
                gt2.shortDescription roletype,
@@ -500,7 +495,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .into(RoleEntity.class);
   }
 
-  @Override public List<UniqueidentifierEntity> findUniqueIdsByNedId(Integer nedId) {
+  private List<UniqueidentifierEntity> findUniqueIdsByNedId(Integer nedId) {
 /*
    EXPLAIN
         SELECT gt.shortDescription uniqueidentifiertype, uid.uniqueIdentifier 
