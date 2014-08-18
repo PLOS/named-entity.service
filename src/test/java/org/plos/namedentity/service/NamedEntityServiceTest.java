@@ -288,7 +288,7 @@ public class NamedEntityServiceTest {
     Integer createEmailId = crudService.create(emailEntity);
     assertNotNull( createEmailId );
 
-    EmailEntity savedEntity = namedEntityService.findEmailByPrimaryKey(createEmailId);
+    EmailEntity savedEntity = namedEntityService.findResolvedEntityByKey(createEmailId, EmailEntity.class);
     assertNull( savedEntity.getEmailtype() );
 
     // try again but this time use type resolver. remember that type names are
@@ -299,7 +299,7 @@ public class NamedEntityServiceTest {
     Integer createEmailId2 = crudService.create(emailEntity);
     assertNotNull( createEmailId2 );
 
-    EmailEntity savedEntity2 = namedEntityService.findEmailByPrimaryKey(createEmailId2);
+    EmailEntity savedEntity2 = namedEntityService.findResolvedEntityByKey(createEmailId2, EmailEntity.class);
     assertNotNull( savedEntity2.getEmailtype() );
 
     // UPDATE email entity. Scrub appropriate attributes from current instance
@@ -308,7 +308,7 @@ public class NamedEntityServiceTest {
     emailEntity.setEmailtypeid(null); emailEntity.setEmailid(createEmailId);
     assertTrue( crudService.update(emailEntity) );
 
-    EmailEntity savedEntity3 = namedEntityService.findEmailByPrimaryKey(createEmailId);
+    EmailEntity savedEntity3 = namedEntityService.findResolvedEntityByKey(createEmailId, EmailEntity.class);
     assertNull( savedEntity3.getEmailtype() );
 
     // try again with type resolver.
@@ -317,7 +317,7 @@ public class NamedEntityServiceTest {
 
     assertTrue( crudService.update(emailEntity) );
 
-    EmailEntity savedEntity4 = namedEntityService.findEmailByPrimaryKey(createEmailId);
+    EmailEntity savedEntity4 = namedEntityService.findResolvedEntityByKey(createEmailId, EmailEntity.class);
     assertNotNull( savedEntity4.getEmailtype() );
 
     // DELETE.

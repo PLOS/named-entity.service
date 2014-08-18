@@ -130,7 +130,7 @@ public class IndividualsResource extends BaseResource {
       Integer emailId = crudService.create(emailEntity);
 
       return Response.status(Response.Status.OK).entity(
-          namedEntityService.findEmailByPrimaryKey(emailId)).build();
+          namedEntityService.findResolvedEntityByKey(emailId, EmailEntity.class)).build();
     }
     catch(NedValidationException e) {
       return validationError(e, "Unable to create email");
@@ -152,7 +152,7 @@ public class IndividualsResource extends BaseResource {
 
       crudService.update(emailEntity);
 
-      emailEntity = namedEntityService.findEmailByPrimaryKey(emailId);
+      emailEntity = namedEntityService.findResolvedEntityByKey(emailId, EmailEntity.class);
 
       return Response.status(Response.Status.OK).entity(emailEntity).build();
     }
@@ -169,7 +169,7 @@ public class IndividualsResource extends BaseResource {
   public Response deleteEmail(@PathParam("nedId") int nedId, 
                               @PathParam("emailId") int emailId) {
     try {
-      EmailEntity emailEntity = namedEntityService.findEmailByPrimaryKey(emailId);
+      EmailEntity emailEntity = namedEntityService.findResolvedEntityByKey(emailId, EmailEntity.class);
 
       crudService.delete(emailEntity);
 
@@ -187,7 +187,7 @@ public class IndividualsResource extends BaseResource {
   @Path("/{nedId}/emails/{emailId}")
   public Response getEmail(@PathParam("nedId") int nedId, @PathParam("emailId") int emailId) {
     try {
-      EmailEntity emailEntity = namedEntityService.findEmailByPrimaryKey(emailId);
+      EmailEntity emailEntity = namedEntityService.findResolvedEntityByKey(emailId, EmailEntity.class);
       return Response.status(Response.Status.OK).entity(emailEntity).build();
     }
     catch(Exception e) {

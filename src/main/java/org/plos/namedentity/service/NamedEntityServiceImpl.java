@@ -232,6 +232,11 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   }
 
   @Override
+  public <T> T findResolvedEntityByKey(Integer pk, Class<T> clazz) {
+    return ((NamedEntityQueries)nedDBSvc).findResolvedEntityByKey(pk, clazz);
+  }
+
+  @Override
   public List<IndividualEntity> findIndividualsByUid(String uidType, String uid) {
     Integer uidTypeId = findTypeValueByName(findTypeClassStartWith("Unique Identifier Types"), uidType);
     return ((NamedEntityQueries)nedDBSvc).findIndividualsByUid(uidTypeId, uid);
@@ -240,11 +245,6 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   @Override @Transactional
   public OrganizationEntity createOrganization(OrganizationEntity entity) {
     return ((NamedEntityQueries)nedDBSvc).findResolvedEntity(nedDBSvc.create(entity), OrganizationEntity.class);
-  }
-
-  @Override
-  public EmailEntity findEmailByPrimaryKey(Integer emailId) {
-    return ((NamedEntityQueries)nedDBSvc).findEmailByPrimaryKey(emailId);
   }
     
   public NamedEntityDBService getNamedEntityDBService() {

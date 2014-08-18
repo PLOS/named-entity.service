@@ -190,6 +190,19 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
   /* ---------------------------------------------------------------------- */
 
   @SuppressWarnings("unchecked")
+  public <T> T findResolvedEntityByKey(Integer pk, Class<T> clazz) {
+
+    String cname = clazz.getCanonicalName();
+
+    if (cname.equals(EmailEntity.class.getCanonicalName()))
+      return (T)findEmailByPrimaryKey(pk);
+
+    throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
+
+  }
+
+
+  @SuppressWarnings("unchecked")
   public <T> T findResolvedEntity(Integer nedId, Class<T> clazz) {
 
     String cname = clazz.getCanonicalName();
@@ -517,8 +530,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .into(UniqueidentifierEntity.class);
   }
 
-  @Override
-  public EmailEntity findEmailByPrimaryKey(Integer emailId) {
+  private EmailEntity findEmailByPrimaryKey(Integer emailId) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");

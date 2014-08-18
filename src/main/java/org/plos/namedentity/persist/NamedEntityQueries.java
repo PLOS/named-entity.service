@@ -16,7 +16,6 @@
  */
 package org.plos.namedentity.persist;
 
-import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
 import org.plos.namedentity.api.entity.OrganizationEntity;
 
@@ -24,11 +23,13 @@ import java.util.List;
 
 public interface NamedEntityQueries {
 
-  List<IndividualEntity>       findIndividualsByUid   (Integer srcTypeId, String uid);
-  List<OrganizationEntity>     findOrganizationsByUid (String srcType, String uid);
+  List<IndividualEntity> findIndividualsByUid(Integer srcTypeId, String uid);
+
+  List<OrganizationEntity> findOrganizationsByUid(String srcType, String uid);
+
+  <T> T findResolvedEntityByKey(Integer pk, Class<T> clazz);
 
   <T> T findResolvedEntity(Integer nedId, Class<T> clazz);
-  <T> List<T> findResolvedEntities(Integer nedId, Class<T> clazz);
 
-  EmailEntity findEmailByPrimaryKey  (Integer emailId);
+  <T> List<T> findResolvedEntities(Integer nedId, Class<T> clazz);
 }

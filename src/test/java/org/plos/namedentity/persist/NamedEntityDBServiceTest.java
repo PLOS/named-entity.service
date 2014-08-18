@@ -287,7 +287,7 @@ public class NamedEntityDBServiceTest {
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
 
     for (EmailEntity email : allEmailsInDB) {
-      assertNotNull( nedQuery.findEmailByPrimaryKey(email.getEmailid()) );
+      assertNotNull( nedQuery.findResolvedEntityByKey(email.getEmailid(), EmailEntity.class) );
     }
     // FIND BY JOIN-QUERY 
     List<EmailEntity> emails = nedQuery.findResolvedEntities(foundEmails2.get(0).getNamedentityid(), EmailEntity.class);

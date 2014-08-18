@@ -297,7 +297,7 @@ public class TestSpringConfig {
     emailEntity.setIsactive((byte)1);
     emailEntity.setEmailtype("Work");
 
-    when(mockNamedEntityService.findEmailByPrimaryKey(anyInt()))
+    when(mockNamedEntityService.findResolvedEntityByKey(anyInt(), eq(EmailEntity.class)))
         .thenReturn( emailEntity );
   }
 
