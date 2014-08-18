@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -271,6 +272,60 @@ public class NamedEntityServiceTest {
       List<EmailEntity> emailSearchResult = crudService.findByAttribute(emailSearchCriteria);
       assertEquals(0, emailSearchResult.size());
     }
+  }
+
+  @Test
+  public void testEmailEntityCrud() {
+
+    // CREATE email entity. we don't expect the email type to persist.
+
+    EmailEntity emailEntity = new EmailEntity();
+    emailEntity.setNamedentityid(1);
+    emailEntity.setEmailtype("Work");
+    emailEntity.setEmailaddress("foo@bar.com");
+    emailEntity.setIsprimary((byte)1);
+
+    Integer createEmailId = crudService.create(emailEntity);
+    assertNotNull( createEmailId );
+
+    EmailEntity savedEntity = namedEntityService.findEmailByPrimaryKey(createEmailId);
+    assertNull( savedEntity.getEmailtype() );
+
+    // try again but this time use type resolver. remember that type names are
+    // resolved by joins when querying database -- need foreign key to get name.
+    
+    namedEntityService.resolveValuesToIds(emailEntity);
+
+    Integer createEmailId2 = crudService.create(emailEntity);
+    assertNotNull( createEmailId2 );
+
+    EmailEntity savedEntity2 = namedEntityService.findEmailByPrimaryKey(createEmailId2);
+    assertNotNull( savedEntity2.getEmailtype() );
+
+    // UPDATE email entity. Scrub appropriate attributes from current instance
+    // and reuse. Again, we don't expect for email type to persist.
+
+    emailEntity.setEmailtypeid(null); emailEntity.setEmailid(createEmailId);
+    assertTrue( crudService.update(emailEntity) );
+
+    EmailEntity savedEntity3 = namedEntityService.findEmailByPrimaryKey(createEmailId);
+    assertNull( savedEntity3.getEmailtype() );
+
+    // try again with type resolver.
+
+    namedEntityService.resolveValuesToIds(emailEntity);
+
+    assertTrue( crudService.update(emailEntity) );
+
+    EmailEntity savedEntity4 = namedEntityService.findEmailByPrimaryKey(createEmailId);
+    assertNotNull( savedEntity4.getEmailtype() );
+
+    // DELETE.
+
+    assertTrue( crudService.delete(emailEntity) );
+
+    emailEntity.setEmailid(createEmailId2);
+    assertTrue( crudService.delete(emailEntity) );
   }
 
   private IndividualComposite newCompositeIndividualWithRole() {

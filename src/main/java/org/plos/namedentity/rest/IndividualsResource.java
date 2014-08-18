@@ -115,6 +115,86 @@ public class IndividualsResource extends BaseResource {
   }
 
 
+  /* ----------------------------------------------------------------------- */
+  /*  EMAIL CRUD                                                             */
+  /* ----------------------------------------------------------------------- */
+
+  @POST
+  @Path("/{nedId}/emails")
+  public Response createEmail(@PathParam("nedId") int nedId, EmailEntity emailEntity) {
+    try {
+      emailEntity.setNamedentityid(nedId);
+
+      namedEntityService.resolveValuesToIds(emailEntity);
+
+      Integer emailId = crudService.create(emailEntity);
+
+      return Response.status(Response.Status.OK).entity(
+          namedEntityService.findEmailByPrimaryKey(emailId)).build();
+    }
+    catch(NedValidationException e) {
+      return validationError(e, "Unable to create email");
+    }
+    catch(Exception e) {
+      return serverError(e, "Unable to create email");
+    }
+  }
+
+  @POST
+  @Path("/{nedId}/emails/{emailId}")
+  public Response updateEmail(@PathParam("nedId") int nedId, 
+                              @PathParam("emailId") int emailId, 
+                              EmailEntity emailEntity) {
+    try {
+      emailEntity.setNamedentityid(nedId);
+
+      namedEntityService.resolveValuesToIds(emailEntity);
+
+      crudService.update(emailEntity);
+
+      emailEntity = namedEntityService.findEmailByPrimaryKey(emailId);
+
+      return Response.status(Response.Status.OK).entity(emailEntity).build();
+    }
+    catch(NedValidationException e) {
+      return validationError(e, "Unable to update email");
+    }
+    catch(Exception e) {
+      return serverError(e, "Unable to update email");
+    }
+  }
+
+  @DELETE
+  @Path("/{nedId}/emails/{emailId}")
+  public Response deleteEmail(@PathParam("nedId") int nedId, 
+                              @PathParam("emailId") int emailId) {
+    try {
+      EmailEntity emailEntity = namedEntityService.findEmailByPrimaryKey(emailId);
+
+      crudService.delete(emailEntity);
+
+      return Response.status(Response.Status.NO_CONTENT).build();
+    }
+    catch(NedValidationException e) {
+      return validationError(e, "Unable to delete email");
+    }
+    catch(Exception e) {
+      return serverError(e, "Unable to delete email");
+    }
+  }
+
+  @GET
+  @Path("/{nedId}/emails/{emailId}")
+  public Response getEmail(@PathParam("nedId") int nedId, @PathParam("emailId") int emailId) {
+    try {
+      EmailEntity emailEntity = namedEntityService.findEmailByPrimaryKey(emailId);
+      return Response.status(Response.Status.OK).entity(emailEntity).build();
+    }
+    catch(Exception e) {
+      return serverError(e, "Find email by id failed");
+    }
+  }
+
   @GET
   @Path("/{id}/emails")
   public Response getEmails(@PathParam("id") int nedId) {

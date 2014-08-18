@@ -517,6 +517,28 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .into(UniqueidentifierEntity.class);
   }
 
+  @Override
+  public EmailEntity findEmailByPrimaryKey(Integer emailId) {
+
+    Globaltypes gt1 = GLOBALTYPES.as("gt1");
+    Globaltypes gt2 = GLOBALTYPES.as("gt2");
+    Emails        e = EMAILS.as("e");
+
+    Record record = this.context
+      .select(
+        e.EMAILID, e.NAMEDENTITYID,
+        gt1.SHORTDESCRIPTION.as("emailType"),
+        e.EMAILADDRESS, e.ISPRIMARY, e.ISACTIVE)
+      .from(e)
+      .leftOuterJoin(gt1).on(e.EMAILTYPEID.equal(gt1.GLOBALTYPEID))
+      .where(e.EMAILID.equal(emailId))
+      .fetchOne();
+
+    if (record == null) throw new EntityNotFoundException("Email not found");
+
+    return record.into(EmailEntity.class);
+  }
+
   /* ---------------------------------------------------------------------- */
   /*  INTERNAL MAP : ENTITY POJO -> { JooqTable, JooqPkFieldForTable }      */
   /* ---------------------------------------------------------------------- */

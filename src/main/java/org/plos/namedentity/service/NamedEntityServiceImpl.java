@@ -241,6 +241,11 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   public OrganizationEntity createOrganization(OrganizationEntity entity) {
     return ((NamedEntityQueries)nedDBSvc).findResolvedEntity(nedDBSvc.create(entity), OrganizationEntity.class);
   }
+
+  @Override
+  public EmailEntity findEmailByPrimaryKey(Integer emailId) {
+    return ((NamedEntityQueries)nedDBSvc).findEmailByPrimaryKey(emailId);
+  }
     
   public NamedEntityDBService getNamedEntityDBService() {
     return nedDBSvc;

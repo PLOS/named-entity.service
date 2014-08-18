@@ -17,6 +17,7 @@
 package org.plos.namedentity.service;
 
 import org.plos.namedentity.api.IndividualComposite;
+import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.IndividualEntity;
 import org.plos.namedentity.api.entity.OrganizationEntity;
 
@@ -31,6 +32,8 @@ public interface NamedEntityService {
   public IndividualComposite          createIndividualComposite (IndividualComposite composite);
   public OrganizationEntity           createOrganization     (OrganizationEntity entity);
   public List<IndividualEntity>       findIndividualsByUid   (String srcTypeId, String uid);
+
+  public EmailEntity findEmailByPrimaryKey  (Integer emailId);
 
   public IndividualComposite          findIndividualComposite(Integer nedId);
 
