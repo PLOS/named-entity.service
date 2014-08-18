@@ -31,6 +31,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
@@ -231,20 +232,32 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    entity.setEmailaddress("update." + entity.getEmailaddress());    
-
     response = target(INDIV_EMAIL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                  .put(Entity.json(mapper.writeValueAsString(entity)));
+                  .post(Entity.json(mapper.writeValueAsString(entity)));
 
     assertEquals(200, response.getStatus());
 
-    String updatedJsonPayload = response.readEntity(String.class);
+    /* ------------------------------------------------------------------ */
+    /*  DELETE                                                            */
+    /* ------------------------------------------------------------------ */
 
-    EmailEntity updatedEntity = mapper.readValue(updatedJsonPayload, EmailEntity.class);
-    assertEquals("updated.foo.bar.personal@gmail.com", updatedEntity.getEmailaddress());
+    response = target(INDIV_EMAIL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).delete();
+    assertEquals(204, response.getStatus());
 
     /* ------------------------------------------------------------------ */
-    /*  FIND (BY ID)                                                      */
+    /*  FIND (BY EMAIL ID (PK))                                           */
+    /* ------------------------------------------------------------------ */
+
+    response = target(INDIV_EMAIL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
+    assertEquals(200, response.getStatus());
+
+    jsonPayload = response.readEntity(String.class);
+
+    EmailEntity email = mapper.readValue(jsonPayload, EmailEntity.class);
+    assertNotNull( email );
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY NED ID)                                                  */
     /* ------------------------------------------------------------------ */
 
     response = target(INDIV_EMAIL_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
@@ -256,12 +269,10 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     EmailEntity[] emails = mapper.readValue(jsonPayload, EmailEntity[].class);
     assertEquals(2, emails.length);
 
-    EmailEntity email = emails[0];
-    assertEquals("Work", email.getEmailtype());
-    assertEquals("fu.manchu.work@foo.com", email.getEmailaddress());
-    assertTrue(email.getIsprimary() == 1);
-
-    //TODO - CREATE, UPDATE, DELETE
+    EmailEntity workEmail = emails[0];
+    assertEquals("Work", workEmail.getEmailtype());
+    assertEquals("fu.manchu.work@foo.com", workEmail.getEmailaddress());
+    assertTrue(workEmail.getIsprimary() == 1);
   }
 
   @Test
