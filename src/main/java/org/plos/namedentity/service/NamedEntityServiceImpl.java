@@ -24,191 +24,201 @@ import org.plos.namedentity.persist.NamedEntityQueries;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 public class NamedEntityServiceImpl implements NamedEntityService {
 
   @Inject private NamedEntityDBService nedDBSvc;
 
+  public <T> T resolveValuesToIds(T t) {
+
+    if (t instanceof IndividualEntity)
+      resolveIndividual((IndividualEntity) t);
+    else if (t instanceof AddressEntity)
+      resolveAddress((AddressEntity) t);
+    else if (t instanceof PhonenumberEntity)
+      resolvePhonenumber((PhonenumberEntity)t);
+    else if (t instanceof EmailEntity)
+      resolveEmail((EmailEntity)t);
+    else if (t instanceof UniqueidentifierEntity)
+      resolveReference((UniqueidentifierEntity)t);
+    else if (t instanceof DegreeEntity)
+      resolveDegree((DegreeEntity)t);
+    else if (t instanceof RoleEntity)
+      resolveRole((RoleEntity)t);
+    else
+      throw new UnsupportedOperationException("Can not resolve entity for " + t.getClass());
+
+    return t;
+  }
+
+  private IndividualEntity resolveIndividual(IndividualEntity entity) {
+
+    if (entity.getNameprefix() != null) {
+      Integer prefixTypeClassId = findTypeClassStartWith("Named Party Prefixes");
+      Integer prefixTypeId = findTypeValueByName(prefixTypeClassId, entity.getNameprefix());
+      entity.setNameprefixtypeid(prefixTypeId);
+    }
+
+    if (entity.getNamesuffix() != null) {
+      Integer suffixTypeClassId = findTypeClassStartWith("Named Party Suffixes");
+      Integer suffixTypeId      = findTypeValueByName(suffixTypeClassId, entity.getNamesuffix());
+      entity.setNamesuffixtypeid(suffixTypeId);
+    }
+
+    if (entity.getPreferredlanguage() != null) {
+      Integer langTypeClassId = findTypeClassStartWith("Languages");
+      Integer langTypeId      = findTypeValueByName(langTypeClassId, entity.getPreferredlanguage());
+      entity.setPreferredlanguagetypeid(langTypeId);
+    }
+
+    if (entity.getPreferredcommunication() != null) {
+      Integer commMethodsTypeClassId = findTypeClassStartWith("Communication Methods");
+      Integer commMethodTypeId = findTypeValueByName(commMethodsTypeClassId, entity.getPreferredcommunication());
+      entity.setPreferredcommunicationmethodtypeid(commMethodTypeId);
+    }
+
+    return entity;
+  }
+
+  private AddressEntity resolveAddress(AddressEntity entity) {
+
+    if (entity.getAddresstype() != null)
+      entity.setAddresstypeid(findTypeValueByName(findTypeClassStartWith("Physical Address Types"), entity.getAddresstype()));
+
+    if (entity.getCountrycodetype() != null)
+      entity.setCountrycodetypeid(findTypeValueByName(findTypeClassStartWith("Country Types"), entity.getCountrycodetype()));
+
+    if (entity.getStatecodetype() != null)
+      entity.setStatecodetypeid(findTypeValueByName(findTypeClassStartWith("State and Province Codes"), entity.getStatecodetype()));
+
+    return entity;
+  }
+
+  private PhonenumberEntity resolvePhonenumber(PhonenumberEntity entity) {
+
+    if (entity.getPhonenumbertype() != null)
+      entity.setPhonenumbertypeid(findTypeValueByName(findTypeClassStartWith("Telephone Number Types"), entity.getPhonenumbertype()));
+
+    if (entity.getCountrycodetype() != null)
+      entity.setCountrycodetypeid(findTypeValueByName(findTypeClassStartWith("Country Codes for Phone Numbers"), entity.getCountrycodetype()));
+
+    return entity;
+  }
+
+  private EmailEntity resolveEmail(EmailEntity entity) {
+
+    if (entity.getEmailtype() != null)
+      entity.setEmailtypeid(findTypeValueByName(findTypeClassStartWith("Email Address Types"), entity.getEmailtype()));
+
+    return entity;
+  }
+
+  private DegreeEntity resolveDegree(DegreeEntity entity) {
+
+    if (entity.getDegreetype() != null)
+      entity.setDegreetypeid(findTypeValueByName(findTypeClassStartWith("Degrees"), entity.getDegreetype()));
+
+    return entity;
+  }
+
+  private RoleEntity resolveRole(RoleEntity entity) {
+
+    if (entity.getSourceapplicationtype() != null)
+      entity.setSourceapplicationtypeid(findTypeValueByName(findTypeClassStartWith("Source Applications"), entity.getSourceapplicationtype()));
+
+    if (entity.getRoletype() != null)
+      entity.setRoletypeid(findTypeValueByName(findTypeClassStartWith("Roles"), entity.getRoletype()));
+
+    return entity;
+  }
+
+  private UniqueidentifierEntity resolveReference(UniqueidentifierEntity entity) {
+
+    if (entity.getUniqueidentifiertype() != null)
+      entity.setUniqueidentifiertypeid(findTypeValueByName(findTypeClassStartWith("Unique Identifier Types"), entity.getUniqueidentifiertype()));
+
+    return entity;
+  }
+
+  @Override
+  public IndividualComposite findIndividualComposite(Integer nedId) {
+
+    IndividualComposite composite = new IndividualComposite();
+
+    composite.setIndividual(findIndividualByNedId(nedId));
+
+    composite.setAddresses(findAddressesByNedId(nedId));
+
+    composite.setPhonenumbers(findPhoneNumbersByNedId(nedId));
+
+    composite.setEmails(findEmailsByNedId(nedId));
+
+    composite.setDegrees(findDegreesByNedId(nedId));
+
+    composite.setRoles(findRolesByNedId(nedId));
+
+    composite.setUniqueidentifiers(findUniqueIdsByNedId(nedId));
+
+    return composite;
+  }
+
   @Override @Transactional
-  public IndividualEntity createIndividual(IndividualComposite composite) {
+  public IndividualComposite createIndividualComposite(IndividualComposite composite) {
+
     //TODO - better validation. handle null fields!
 
-    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+    IndividualEntity individual = composite.getIndividual();
+    Integer nedId = nedDBSvc.create(resolveIndividual(individual));
 
-    /* ------------------------------------------------------------------ */
-    /*  INDIVIDUAL                                                        */
-    /* ------------------------------------------------------------------ */
-
-    IndividualEntity individual = new IndividualEntity();
-    individual.setNamedentityid(nedId);
-    individual.setFirstname(composite.getFirstname());
-    individual.setMiddlename(composite.getMiddlename());
-    individual.setLastname(composite.getLastname());
-
-    if (composite.getNameprefix() != null) {
-      Integer prefixTypeClassId = findTypeClassStartWith("Named Party Prefixes");
-      Integer prefixTypeId      = findTypeValueByName(prefixTypeClassId, composite.getNameprefix());
-      individual.setNameprefixtypeid(prefixTypeId);
-    }
-
-    if (composite.getNamesuffix() != null) {
-      Integer suffixTypeClassId = findTypeClassStartWith("Named Party Suffixes");
-      Integer suffixTypeId      = findTypeValueByName(suffixTypeClassId, composite.getNamesuffix());
-      individual.setNamesuffixtypeid(suffixTypeId);
-    }
-
-    if (composite.getPreferredlanguage() != null) {
-      Integer langTypeClassId = findTypeClassStartWith("Languages");
-      Integer langTypeId      = findTypeValueByName(langTypeClassId, composite.getPreferredlanguage());
-      individual.setPreferredlanguagetypeid(langTypeId);
-    }
-
-    if (composite.getPreferredcommunication() != null) {
-      Integer commMethodsTypeClassId = findTypeClassStartWith("Communication Methods");
-      Integer commMethodTypeId = findTypeValueByName(commMethodsTypeClassId, composite.getPreferredcommunication());
-      individual.setPreferredcommunicationmethodtypeid(commMethodTypeId);
-    }
-
-    nedDBSvc.create( individual );
-
-    /* ------------------------------------------------------------------ */
-    /*  ADDRESSES                                                         */
-    /* ------------------------------------------------------------------ */
-
-    Integer addressTypeClassId   = findTypeClassStartWith("Physical Address Types");
-    Integer countryTypeClassId   = findTypeClassStartWith("Country Types");
-    Integer stateCodeTypeClassId = findTypeClassStartWith("State and Province Codes");
-
-    //TODO - move to transformer
+    List<AddressEntity> addresses = composite.getAddresses();
     if (composite.getAddresses() != null) {
-      for (AddressEntity address : composite.getAddresses()) {
-        Integer addressTypeId   = findTypeValueByName(addressTypeClassId, address.getAddresstype());
-        Integer countryTypeId   = findTypeValueByName(countryTypeClassId, address.getCountrycodetype());
-        Integer stateCodeTypeId = findTypeValueByName(stateCodeTypeClassId, address.getStatecodetype());
-
-        AddressEntity addressEntity = new AddressEntity();
-        addressEntity.setNamedentityid(nedId);
-        addressEntity.setAddresstypeid(addressTypeId);
-        addressEntity.setAddressline1(address.getAddressline1());
-        addressEntity.setAddressline2(address.getAddressline2());
-        addressEntity.setAddressline3(address.getAddressline3());
-        addressEntity.setCity(address.getCity());
-        addressEntity.setStatecodetypeid(stateCodeTypeId);
-        addressEntity.setCountrycodetypeid(countryTypeId);
-        addressEntity.setPostalcode(address.getPostalcode());
-        addressEntity.setIsprimary(1 == address.getIsprimary() ? (byte)1 : (byte)0);
-
-        nedDBSvc.create( addressEntity );
+      for (AddressEntity address : addresses) {
+        address.setNamedentityid(nedId);
+        nedDBSvc.create(resolveAddress(address));
       }
     }
-
-    /* ------------------------------------------------------------------ */
-    /*  PHONE NUMBERS                                                     */
-    /* ------------------------------------------------------------------ */
-
-    Integer phoneTypeClassId       = findTypeClassStartWith("Telephone Number Types");
-    Integer countryCodeTypeClassId = findTypeClassStartWith("Country Codes for Phone Numbers");
-
+    List<PhonenumberEntity> phonenumbers = composite.getPhonenumbers();
     if (composite.getPhonenumbers() != null) {
-      for (PhonenumberEntity phonenumber : composite.getPhonenumbers()) {
-        Integer phoneTypeId       = findTypeValueByName(phoneTypeClassId, phonenumber.getPhonenumbertype());
-        Integer countryCodeTypeId = findTypeValueByName(countryCodeTypeClassId, phonenumber.getCountrycodetype());
-
-        PhonenumberEntity phoneEntity = new PhonenumberEntity();
-        phoneEntity.setNamedentityid(nedId);
-        phoneEntity.setPhonenumbertypeid(phoneTypeId);
-        phoneEntity.setCountrycodetypeid(countryCodeTypeId);
-        phoneEntity.setPhonenumber(phonenumber.getPhonenumber());
-        phoneEntity.setExtension(phonenumber.getExtension());
-        phoneEntity.setIsprimary(phonenumber.getIsprimary());
-
-        nedDBSvc.create( phoneEntity );
+      for (PhonenumberEntity phonenumber : phonenumbers) {
+        phonenumber.setNamedentityid(nedId);
+        nedDBSvc.create(resolvePhonenumber(phonenumber));
       }
     }
 
-    /* ------------------------------------------------------------------ */
-    /*  EMAILS                                                            */
-    /* ------------------------------------------------------------------ */
-
-    Integer emailTypeClassId = findTypeClassStartWith("Email Address Types");
-
+    List<EmailEntity> emails = composite.getEmails();
     if (composite.getEmails() != null) {
-      for (EmailEntity email : composite.getEmails()) {
-        Integer emailTypeId = findTypeValueByName(emailTypeClassId, email.getEmailtype());
-
-        EmailEntity emailEntity = new EmailEntity();
-        emailEntity.setNamedentityid(nedId);
-        emailEntity.setEmailtypeid(emailTypeId);
-        emailEntity.setEmailaddress(email.getEmailaddress());
-        emailEntity.setIsprimary(1 == email.getIsprimary() ? (byte)1 : (byte)0);
-
-        nedDBSvc.create( emailEntity );
+      for (EmailEntity email : emails) {
+        email.setNamedentityid(nedId);
+        nedDBSvc.create(resolveEmail(email));
       }
     }
-
-    /* ------------------------------------------------------------------ */
-    /*  DEGREES                                                            */
-    /* ------------------------------------------------------------------ */
-
-    Integer degreeTypeClassId = findTypeClassStartWith("Degrees");
 
     List<DegreeEntity> degrees = composite.getDegrees();
-
     if (degrees != null) {
       for (DegreeEntity degree : degrees) {
-
-        degree.setDegreetypeid(findTypeValueByName(degreeTypeClassId, degree.getDegreetype()));
         degree.setNamedentityid(nedId);
-
-        nedDBSvc.create(degree);
+        nedDBSvc.create(resolveDegree(degree));
       }
     }
 
-    /* ------------------------------------------------------------------ */
-    /*  ROLE                                                              */
-    /* ------------------------------------------------------------------ */
-
-    Integer srcAppTypeClassId = findTypeClassStartWith("Source Applications");
-    Integer roleTypeClassId   = findTypeClassStartWith("Roles");
-
-    RoleEntity role = composite.getRole();
-    if (role != null) {
-      Integer srcAppTypeId = findTypeValueByName(srcAppTypeClassId, "Editorial Manager");
-      Integer roleTypeId   = findTypeValueByName(roleTypeClassId, role.getRoletype());
-
-      RoleEntity roleEntity = new RoleEntity();
-      roleEntity.setNamedentityid(nedId);
-      roleEntity.setSourceapplicationtypeid(srcAppTypeId);
-      roleEntity.setRoletypeid(roleTypeId);
-      roleEntity.setStartdate(new Timestamp(new Date().getTime()));
-
-      nedDBSvc.create( roleEntity );
+    List<RoleEntity> roles = composite.getRoles();
+    if (roles != null) {
+      for (RoleEntity role : roles) {
+        role.setNamedentityid(nedId);
+        nedDBSvc.create(resolveRole(role));
+      }
     }
 
-    /* ------------------------------------------------------------------ */
-    /*  EXTERNAL REFERENCES                                               */
-    /* ------------------------------------------------------------------ */
-
-    Integer uidTypeClassId = findTypeClassStartWith("Unique Identifier Types");
-
+    List<UniqueidentifierEntity> uids = composite.getUniqueidentifiers();
     if (composite.getUniqueidentifiers() != null) {
-      for (UniqueidentifierEntity uidEntity : composite.getUniqueidentifiers()) {
-        Integer uidTypeId = findTypeValueByName(uidTypeClassId, uidEntity.getUniqueidentifiertype());
-
-        UniqueidentifierEntity uid = new UniqueidentifierEntity();
+      for (UniqueidentifierEntity uid : uids) {
         uid.setNamedentityid(nedId);
-        uid.setUniqueidentifiertypeid(uidTypeId);
-        uid.setUniqueidentifier(uidEntity.getUniqueidentifier());
-
-        nedDBSvc.create( uid );
+        nedDBSvc.create(resolveReference(uid));
       }
     }
 
-    return ((NamedEntityQueries)nedDBSvc).findIndividualByNedId(nedId);
-    //return nedDBSvc.findById(nedId, IndividualEntity.class);
+    return findIndividualComposite(nedId);
   }
 
   @Override
@@ -224,10 +234,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   @Override @Transactional
   public OrganizationEntity createOrganization(OrganizationEntity entity) {
-    Integer nedId = nedDBSvc.newNamedEntityId("Organization");
-    entity.setNamedentityid(nedId);
-    nedDBSvc.create(entity);
-    return ((NamedEntityQueries)nedDBSvc).findOrganizationByNedId(nedId);
+    return ((NamedEntityQueries)nedDBSvc).findOrganizationByNedId(nedDBSvc.create(entity));
   }
 
   @Override

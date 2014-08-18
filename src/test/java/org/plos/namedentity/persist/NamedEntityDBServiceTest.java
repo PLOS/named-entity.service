@@ -344,8 +344,8 @@ public class NamedEntityDBServiceTest {
     assertTrue( nedDBSvc.update(savedIndividual) );
 
     // Get another instance of same individual record
-    IndividualEntity savedIndividual2 = nedDBSvc.findById(individualId, IndividualEntity.class);
-    assertEquals(savedIndividual, savedIndividual2);
+    IndividualEntity savedIndividualAfterUpdate = nedDBSvc.findById(individualId, IndividualEntity.class);
+    assertEquals(savedIndividual, savedIndividualAfterUpdate);
 
     // FIND ALL Email Records 
 
@@ -649,10 +649,8 @@ public class NamedEntityDBServiceTest {
     // Create two individuals with the same Orcid#
   
     for (int i = 1; i <= 2; i++) {
-      Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
       IndividualEntity individual = new IndividualEntity();
-      individual.setNamedentityid(nedId);
       individual.setFirstname("firstname");
       individual.setMiddlename("middlename");
       individual.setLastname("lastname");
@@ -660,7 +658,7 @@ public class NamedEntityDBServiceTest {
       assertNotNull(individualId);
 
       UniqueidentifierEntity uidEntity1 = new UniqueidentifierEntity();
-      uidEntity1.setNamedentityid(nedId);
+      uidEntity1.setNamedentityid(individualId);
       uidEntity1.setUniqueidentifiertypeid(orcidTypeId);
       uidEntity1.setUniqueidentifier(ORCID_ID);
 

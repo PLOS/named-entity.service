@@ -56,7 +56,7 @@ public class NamedEntityServiceTest {
   public void testCreateIndividualWithoutRole() {
     // triggers phase 1 validation failure
     try {
-      namedEntityService.createIndividual(new IndividualComposite());
+      namedEntityService.createIndividualComposite(new IndividualComposite());
       fail();
     }
     catch (NedValidationException expected) {
@@ -84,7 +84,7 @@ public class NamedEntityServiceTest {
   }
 
   @Test
-  public void testCreateIndividualWithRole() {
+  public void testCreateIndividualCompositeWithRole() {
 
     IndividualComposite composite = newCompositeIndividualWithRole();
 
@@ -183,9 +183,13 @@ public class NamedEntityServiceTest {
 
     Integer nedId = null;
     try {
-      IndividualEntity entity = namedEntityService.createIndividual(composite);
-      assertNotNull(entity);
-      assertNotNull(entity.getNamedentityid());
+      IndividualComposite responseComposite = namedEntityService.createIndividualComposite(composite);
+      assertNotNull(responseComposite);
+      assertNotNull(responseComposite.getNamedentityid());
+
+      // make sure foreign keys are resolved for sub entities
+      assertNotNull(responseComposite.getEmails().get(0).getEmailid());
+
     }
     catch (NedValidationException e) {
       fail();
@@ -255,7 +259,7 @@ public class NamedEntityServiceTest {
     composite.setEmails( emails );
 
     try {
-      namedEntityService.createIndividual(composite);
+      namedEntityService.createIndividualComposite(composite);
       fail();
     }
     catch (NedValidationException expected) {
@@ -302,10 +306,13 @@ public class NamedEntityServiceTest {
     composite.setPreferredlanguage("English");
     composite.setPreferredcommunication("Email");
 
+    List<RoleEntity> roles = new ArrayList<>();
     RoleEntity author = new RoleEntity();
     author.setRoletype("Author");
     author.setStartdate(new Timestamp(1401408000));  // "2014-05-30"
-    composite.setRole(author);
+    roles.add(author);
+
+    composite.setRoles(roles);
 
     return composite;
   }

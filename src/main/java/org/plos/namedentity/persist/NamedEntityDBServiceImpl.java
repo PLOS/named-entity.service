@@ -50,6 +50,12 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
   @Override @SuppressWarnings("unchecked")
   public <T> Integer create(T t) {
     // load jooq-generated record from pojo. insert (implicitly)
+
+    if (t instanceof IndividualEntity)
+      ((IndividualEntity) t).setNamedentityid(newNamedEntityId("Individual"));
+    else if (t instanceof OrganizationEntity)
+      ((OrganizationEntity) t).setNamedentityid(newNamedEntityId("Organization"));
+
     UpdatableRecord record = (UpdatableRecord) context.newRecord(table(t.getClass()), t);
     record.store();
 
@@ -204,7 +210,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
     Globaltypes gt4 = GLOBALTYPES.as("gt4");
     Individuals i   = INDIVIDUALS.as("i");
 
-    return this.context
+    Record record = this.context
       .select(
           i.NAMEDENTITYID, i.FIRSTNAME, i.MIDDLENAME, i.LASTNAME, i.URL,
           gt1.SHORTDESCRIPTION.as("nameprefix"),
@@ -217,8 +223,12 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt3).on(i.PREFERREDLANGUAGETYPEID.equal(gt3.GLOBALTYPEID))
       .leftOuterJoin(gt4).on(i.PREFERREDCOMMUNICATIONMETHODTYPEID.equal(gt4.GLOBALTYPEID))
       .where(i.NAMEDENTITYID.equal(nedId))
-      .fetchOne()
-      .into(IndividualEntity.class);
+      .fetchOne();
+
+    if (record == null)
+      throw new EntityNotFoundException("Individual not found");
+
+    return record.into(IndividualEntity.class);
   }
 
   @Override
@@ -342,6 +352,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
 
     return this.context
       .select(
+        a.ADDRESSID,
         a.ADDRESSLINE1, a.ADDRESSLINE2, a.ADDRESSLINE3, a.CITY, 
         a.POSTALCODE, a.ISPRIMARY,
         gt1.SHORTDESCRIPTION.as("addresstype"),                 
@@ -369,6 +380,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
 
     return this.context
       .select(
+        e.EMAILID,
         e.EMAILADDRESS, e.ISPRIMARY, 
         gt1.SHORTDESCRIPTION.as("emailtype"))
       .from(e)
@@ -395,6 +407,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
 
     return this.context
       .select(
+        p.PHONENUMBERID,
         p.PHONENUMBER, p.EXTENSION, p.ISPRIMARY,
         gt1.SHORTDESCRIPTION.as("phonenumbertype"),                 
         gt2.SHORTDESCRIPTION.as("countrycodetype"))
@@ -414,7 +427,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
 
     return this.context
         .select(
-            d.DEGREEID, //d.DEGREETYPEID,
+            d.DEGREEID,
             gt1.SHORTDESCRIPTION.as("degreetype"))
         .from(d)
         .leftOuterJoin(gt1).on(d.DEGREETYPEID.equal(gt1.GLOBALTYPEID))
@@ -440,6 +453,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
 
     return this.context
       .select(
+        r.ROLEID,
         r.STARTDATE, r.ENDDATE,
         gt1.SHORTDESCRIPTION.as("sourceapplicationtype"),                 
         gt2.SHORTDESCRIPTION.as("roletype"))
@@ -464,6 +478,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
 
     return this.context
       .select(
+        uid.UNIQUEIDENTIFIERSID,
         uid.UNIQUEIDENTIFIER, gt.SHORTDESCRIPTION.as("uniqueidentifiertype"))
       .from(uid)
       .leftOuterJoin(gt).on(uid.UNIQUEIDENTIFIERTYPEID.equal(gt.GLOBALTYPEID))

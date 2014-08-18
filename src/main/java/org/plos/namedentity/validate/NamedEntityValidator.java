@@ -23,6 +23,8 @@ import org.plos.namedentity.api.entity.EmailEntity;
 import org.plos.namedentity.api.entity.RoleEntity;
 import org.springframework.core.Ordered;
 
+import java.util.List;
+
 public class NamedEntityValidator implements Ordered {
 
   // allows us to control ordering of advice (ascending priority, 1 highest)
@@ -41,8 +43,8 @@ public class NamedEntityValidator implements Ordered {
     Object[] args = call.getArgs();
     if (args != null && args.length > 0 && args[0] instanceof IndividualComposite) {
       // TODO - replace with chain of business rules.
-      RoleEntity role = ((IndividualComposite) args[0]).getRole();
-      if (role == null) {
+      List<RoleEntity> roles = ((IndividualComposite) args[0]).getRoles();
+      if (roles == null || roles.size() == 0) {
         throw new NedValidationException("Validation Phase 1 Failure. No ROLE defined for individual.");
       }
     }

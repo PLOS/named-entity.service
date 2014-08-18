@@ -28,6 +28,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.Matchers.any;
@@ -50,6 +51,8 @@ public class TestSpringConfig {
 
     when(mockCrudService.findAll(eq(IndividualEntity.class))).thenReturn( newIndividualEntities() );
 
+    when(mockCrudService.findById(eq(1), eq(IndividualEntity.class))).thenReturn( newIndividualEntity() );
+
     return mockCrudService;
   }
 
@@ -59,10 +62,15 @@ public class TestSpringConfig {
 
     IndividualEntity individualEntity = newIndividualEntity();
 
-    when(mockNamedEntityService.createIndividual(isA(IndividualComposite.class)))
-      .thenReturn(individualEntity)
+    IndividualComposite individualComposite = newIndividualComposite();
+
+    when(mockNamedEntityService.createIndividualComposite(isA(IndividualComposite.class)))
+      .thenReturn(individualComposite)
         .thenThrow(NedValidationException.class)
           .thenThrow(RuntimeException.class);
+
+    when(mockNamedEntityService.findIndividualComposite(anyInt()))
+        .thenReturn( individualComposite );
 
     when(mockNamedEntityService.findIndividualByNedId(anyInt()))
       .thenReturn( individualEntity );
@@ -122,6 +130,30 @@ public class TestSpringConfig {
     entity.setPreferredlanguage("Mandarin");
     entity.setPreferredcommunication("Phone");
     return entity;
+  }
+
+  static private IndividualComposite newIndividualComposite() {
+
+    IndividualComposite composite = new IndividualComposite();
+
+    IndividualEntity entity = new IndividualEntity();
+    entity.setNamedentityid(1);
+    entity.setFirstname("firstname");
+    entity.setMiddlename("middlename");
+    entity.setLastname("lastname");
+    entity.setNameprefix("Ms.");
+    entity.setNamesuffix("II");
+    entity.setPreferredlanguage("Mandarin");
+    entity.setPreferredcommunication("Phone");
+
+    EmailEntity emailEntity = new EmailEntity();
+    emailEntity.setEmailaddress("email@internet.com");
+
+    composite.setEmails(new ArrayList<>(Arrays.asList(emailEntity)));
+
+    composite.setIndividual(entity);
+
+    return composite;
   }
 
   static private OrganizationEntity newOrganizationEntity() {
