@@ -124,10 +124,13 @@ public class IndividualsResource extends BaseResource {
   public Response createEmail(@PathParam("nedId") int nedId, EmailEntity emailEntity) {
     try {
       emailEntity.setNamedentityid(nedId);
-      // TODO: resolve entity here
+
+      namedEntityService.resolveValuesToIds(emailEntity);
+
       Integer emailId = crudService.create(emailEntity);
-      EmailEntity savedEntity = namedEntityService.findEmailByPrimaryKey(emailId);
-      return Response.status(Response.Status.OK).entity(savedEntity).build();
+
+      return Response.status(Response.Status.OK).entity(
+          namedEntityService.findEmailByPrimaryKey(emailId)).build();
     }
     catch(NedValidationException e) {
       return validationError(e, "Unable to create email");
@@ -144,10 +147,14 @@ public class IndividualsResource extends BaseResource {
                               EmailEntity emailEntity) {
     try {
       emailEntity.setNamedentityid(nedId);
-      // TODO: resolve entity here
+
+      namedEntityService.resolveValuesToIds(emailEntity);
+
       crudService.update(emailEntity);
-      EmailEntity savedEntity = namedEntityService.findEmailByPrimaryKey(emailEntity.getEmailid());
-      return Response.status(Response.Status.OK).entity(savedEntity).build();
+
+      emailEntity = namedEntityService.findEmailByPrimaryKey(emailId);
+
+      return Response.status(Response.Status.OK).entity(emailEntity).build();
     }
     catch(NedValidationException e) {
       return validationError(e, "Unable to update email");
@@ -159,11 +166,13 @@ public class IndividualsResource extends BaseResource {
 
   @DELETE
   @Path("/{nedId}/emails/{emailId}")
-  public Response updateEmail(@PathParam("nedId") int nedId, 
+  public Response deleteEmail(@PathParam("nedId") int nedId, 
                               @PathParam("emailId") int emailId) {
     try {
       EmailEntity emailEntity = namedEntityService.findEmailByPrimaryKey(emailId);
+
       crudService.delete(emailEntity);
+
       return Response.status(Response.Status.NO_CONTENT).build();
     }
     catch(NedValidationException e) {
