@@ -32,6 +32,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
@@ -196,8 +197,6 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     IndividualEntity[] individualEntityArray = mapper.readValue(jsonPayload, IndividualEntity[].class); 
     assertEquals(3, individualEntityArray.length);
-
-    //TODO - CREATE, UPDATE, DELETE
   }
 
   @Test
@@ -229,24 +228,71 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   public void testEmailCrud() throws IOException {
 
     /* ------------------------------------------------------------------ */
-    /*  FIND (BY ID)                                                      */
+    /*  CREATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    Response response = target(INDIV_EMAIL_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    String emailsJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "emails.json")));
+  
+    Response response = target(INDIV_EMAIL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+                          .post(Entity.json(emailsJson));
 
     assertEquals(200, response.getStatus());
 
     String jsonPayload = response.readEntity(String.class);
 
+    EmailEntity entity = mapper.readValue(jsonPayload, EmailEntity.class);
+    assertEquals(Integer.valueOf(1), entity.getEmailid());
+    assertEquals(Integer.valueOf(1), entity.getNamedentityid());
+    assertEquals("Work", entity.getEmailtype());
+    assertEquals("foo.bar.personal@gmail.com", entity.getEmailaddress());
+    assertEquals(Byte.valueOf((byte)1), entity.getIsprimary());
+    assertEquals(Byte.valueOf((byte)1), entity.getIsactive());
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    response = target(INDIV_EMAIL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
+                  .post(Entity.json(mapper.writeValueAsString(entity)));
+
+    assertEquals(200, response.getStatus());
+
+    /* ------------------------------------------------------------------ */
+    /*  DELETE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    response = target(INDIV_EMAIL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).delete();
+    assertEquals(204, response.getStatus());
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY EMAIL ID (PK))                                           */
+    /* ------------------------------------------------------------------ */
+
+    response = target(INDIV_EMAIL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
+    assertEquals(200, response.getStatus());
+
+    jsonPayload = response.readEntity(String.class);
+
+    EmailEntity email = mapper.readValue(jsonPayload, EmailEntity.class);
+    assertNotNull( email );
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY NED ID)                                                  */
+    /* ------------------------------------------------------------------ */
+
+    response = target(INDIV_EMAIL_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(200, response.getStatus());
+
+    jsonPayload = response.readEntity(String.class);
+
     EmailEntity[] emails = mapper.readValue(jsonPayload, EmailEntity[].class);
     assertEquals(2, emails.length);
 
-    EmailEntity email = emails[0];
-    assertEquals("Work", email.getEmailtype());
-    assertEquals("fu.manchu.work@foo.com", email.getEmailaddress());
-    assertTrue(email.getIsprimary() == 1);
-
-    //TODO - CREATE, UPDATE, DELETE
+    EmailEntity workEmail = emails[0];
+    assertEquals("Work", workEmail.getEmailtype());
+    assertEquals("fu.manchu.work@foo.com", workEmail.getEmailaddress());
+    assertTrue(workEmail.getIsprimary() == 1);
   }
 
   @Test

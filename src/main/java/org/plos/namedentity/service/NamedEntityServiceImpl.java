@@ -272,6 +272,11 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   public List<UniqueidentifierEntity> findUniqueIdsByNedId(Integer nedId) {
     return ((NamedEntityQueries)nedDBSvc).findUniqueIdsByNedId(nedId);
   }
+
+  @Override
+  public EmailEntity findEmailByPrimaryKey(Integer emailId) {
+    return ((NamedEntityQueries)nedDBSvc).findEmailByPrimaryKey(emailId);
+  }
     
   public NamedEntityDBService getNamedEntityDBService() {
     return nedDBSvc;

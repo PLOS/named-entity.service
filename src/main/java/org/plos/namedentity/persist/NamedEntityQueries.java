@@ -39,4 +39,5 @@ public interface NamedEntityQueries {
   OrganizationEntity           findOrganizationByNedId(Integer nedId);
   List<OrganizationEntity>     findOrganizationsByUid (String srcType, String uid);
   List<DegreeEntity>           findDegreesByNedId     (Integer nedId);
+  EmailEntity                  findEmailByPrimaryKey  (Integer emailId);
 }

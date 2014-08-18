@@ -45,6 +45,7 @@ public interface NamedEntityService {
   public List<RoleEntity>             findRolesByNedId       (Integer nedId);
   public List<UniqueidentifierEntity> findUniqueIdsByNedId   (Integer nedId);
   public List<DegreeEntity>           findDegreesByNedId     (Integer nedId);
+  public EmailEntity                  findEmailByPrimaryKey  (Integer emailId);
 
   public IndividualComposite          findIndividualComposite(Integer nedId);
 
