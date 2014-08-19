@@ -17,7 +17,6 @@
 package org.plos.namedentity.service;
 
 import org.plos.namedentity.api.IndividualComposite;
-import org.plos.namedentity.api.entity.IndividualEntity;
 import org.plos.namedentity.api.entity.OrganizationEntity;
 
 import java.util.List;
@@ -32,12 +31,11 @@ public interface NamedEntityService {
 
   public OrganizationEntity createOrganization(OrganizationEntity entity);
 
-  public List<IndividualEntity> findIndividualsByUid(String srcTypeId, String uid);
-
-//  public EmailEntity findEmailByPrimaryKey(Integer emailId);
-  public <T> T findResolvedEntityByKey(Integer pk, Class<T> clazz);
-
   public IndividualComposite findIndividualComposite(Integer nedId);
+
+  public <T> List<T> findResolvedEntityByUid(String srcType, String uid, Class<T> clazz);
+
+  public <T> T findResolvedEntityByKey(Integer pk, Class<T> clazz);
 
   public <T> T findResolvedEntity(Integer nedId, Class<T> clazz);
 

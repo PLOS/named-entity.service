@@ -104,7 +104,7 @@ public class IndividualsResource extends BaseResource {
       if (isEmptyOrBlank(uidType) || isEmptyOrBlank(uidValue)) {
         individuals = crudService.findAll(IndividualEntity.class);
       } else {
-        individuals = namedEntityService.findIndividualsByUid(uidType, uidValue);
+        individuals = namedEntityService.findResolvedEntityByUid(uidType, uidValue, IndividualEntity.class);
       }
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<IndividualEntity>>(individuals){}).build();

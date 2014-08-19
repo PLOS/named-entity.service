@@ -638,13 +638,10 @@ public class NamedEntityDBServiceTest {
 
     final String ORCID_ID = "0000-0001-9430-319X";
 
-    Integer uidTypeClassId = findTypeClassStartWith("Unique Identifier Types");
-    Integer orcidTypeId    = findTypeValueByName(uidTypeClassId, "ORCID"); assertNotNull(orcidTypeId);
-
     // FIND Individuals with an ORCID id. There should be none. 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<IndividualEntity> peopleWithOrcidId = nedQuery.findIndividualsByUid(orcidTypeId, ORCID_ID);
+    List<IndividualEntity> peopleWithOrcidId = nedQuery.findResolvedEntityByUid("ORCID", ORCID_ID, IndividualEntity.class);
     assertEquals(0, peopleWithOrcidId.size());
 
     // Create two individuals with the same Orcid#
@@ -660,7 +657,6 @@ public class NamedEntityDBServiceTest {
 
       UniqueidentifierEntity uidEntity1 = new UniqueidentifierEntity();
       uidEntity1.setNamedentityid(individualId);
-      uidEntity1.setUniqueidentifiertypeid(orcidTypeId);
       uidEntity1.setUniqueidentifier(ORCID_ID);
 
       assertNull(uidEntity1.getUniqueidentifiersid());
@@ -670,7 +666,7 @@ public class NamedEntityDBServiceTest {
       assertNotNull(uidId1);
 
       // FIND By UID (ORCID) #2
-      assertEquals(i, nedQuery.findIndividualsByUid(orcidTypeId, ORCID_ID).size());
+      assertEquals(i, nedQuery.findResolvedEntityByUid("ORCID", ORCID_ID, IndividualEntity.class).size());
 
       // UPDATE
 

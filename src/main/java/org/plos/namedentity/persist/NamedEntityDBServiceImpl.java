@@ -198,9 +198,19 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       return (T)findEmailByPrimaryKey(pk);
 
     throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
-
   }
 
+  @SuppressWarnings("unchecked")
+  public <T> List<T> findResolvedEntityByUid(String srcType, String uid, Class<T> clazz) {
+    String cname = clazz.getCanonicalName();
+
+    if (cname.equals(IndividualEntity.class.getCanonicalName()))
+      return (List<T>)findIndividualsByUid(srcType, uid);
+    if (cname.equals(OrganizationEntity.class.getCanonicalName()))
+      return (List<T>)findOrganizationsByUid(srcType, uid);
+
+    throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
+  }
 
   @SuppressWarnings("unchecked")
   public <T> T findResolvedEntity(Integer nedId, Class<T> clazz) {
@@ -306,8 +316,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
     return record.into(OrganizationEntity.class);
   }
 
-  @Override
-  public List<OrganizationEntity> findOrganizationsByUid(String srcType, String uid) {
+  private List<OrganizationEntity> findOrganizationsByUid(String srcType, String uid) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
@@ -331,8 +340,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
 
   }
 
-  @Override
-  public List<IndividualEntity> findIndividualsByUid(Integer srcTypeId, String uid) {
+  private List<IndividualEntity> findIndividualsByUid(String srcType, String uid) {
 /*
    EXPLAIN
         SELECT gt1.shortDescription nameprefix, i.firstName firstname, 
@@ -373,8 +381,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt2).on(i.NAMESUFFIXTYPEID.equal(gt2.GLOBALTYPEID))
       .leftOuterJoin(gt3).on(i.PREFERREDLANGUAGETYPEID.equal(gt3.GLOBALTYPEID))
       .leftOuterJoin(gt4).on(i.PREFERREDCOMMUNICATIONMETHODTYPEID.equal(gt4.GLOBALTYPEID))
-      .join(u).on(i.NAMEDENTITYID.equal(u.NAMEDENTITYID)).and(u.UNIQUEIDENTIFIERTYPEID.equal(srcTypeId))
-      .leftOuterJoin(gt5).on(u.UNIQUEIDENTIFIERTYPEID.equal(gt5.GLOBALTYPEID))
+      .join(u).on(i.NAMEDENTITYID.equal(u.NAMEDENTITYID))
+      .leftOuterJoin(gt5).on(u.UNIQUEIDENTIFIERTYPEID.equal(gt5.GLOBALTYPEID)).and(gt5.SHORTDESCRIPTION.eq(srcType))
       .where(u.UNIQUEIDENTIFIER.equal(uid))
       .fetch()
       .into(IndividualEntity.class);
