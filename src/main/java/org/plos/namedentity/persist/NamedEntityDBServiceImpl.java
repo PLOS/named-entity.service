@@ -189,8 +189,67 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
   /*  NAMED ENTITY QUERIES                                                  */
   /* ---------------------------------------------------------------------- */
 
-  @Override
-  public IndividualEntity findIndividualByNedId(Integer nedId) {
+  @SuppressWarnings("unchecked")
+  public <T> T findResolvedEntityByKey(Integer pk, Class<T> clazz) {
+
+    String cname = clazz.getCanonicalName();
+
+    if (cname.equals(EmailEntity.class.getCanonicalName()))
+      return (T)findEmailByPrimaryKey(pk);
+
+    throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
+  }
+
+  @SuppressWarnings("unchecked")
+  public <T> List<T> findResolvedEntityByUid(String srcType, String uid, Class<T> clazz) {
+    String cname = clazz.getCanonicalName();
+
+    if (cname.equals(IndividualEntity.class.getCanonicalName()))
+      return (List<T>)findIndividualsByUid(srcType, uid);
+    if (cname.equals(OrganizationEntity.class.getCanonicalName()))
+      return (List<T>)findOrganizationsByUid(srcType, uid);
+
+    throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
+  }
+
+  @SuppressWarnings("unchecked")
+  public <T> T findResolvedEntity(Integer nedId, Class<T> clazz) {
+
+    String cname = clazz.getCanonicalName();
+
+    if (cname.equals(IndividualEntity.class.getCanonicalName()))
+      return (T)findIndividualByNedId(nedId);
+    if (cname.equals(OrganizationEntity.class.getCanonicalName()))
+      return (T)findOrganizationByNedId(nedId);
+
+    throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
+
+  }
+
+  @SuppressWarnings("unchecked")
+  public <T> List<T> findResolvedEntities(Integer nedId, Class<T> clazz) {
+
+    String cname = clazz.getCanonicalName();
+
+    if (cname.equals(AddressEntity.class.getCanonicalName()))
+      return (List<T>)findAddressesByNedId(nedId);
+    if (cname.equals(EmailEntity.class.getCanonicalName()))
+      return (List<T>)findEmailsByNedId(nedId);
+    if (cname.equals(PhonenumberEntity.class.getCanonicalName()))
+      return (List<T>)findPhoneNumbersByNedId(nedId);
+    if (cname.equals(RoleEntity.class.getCanonicalName()))
+      return (List<T>)findRolesByNedId(nedId);
+    if (cname.equals(UniqueidentifierEntity.class.getCanonicalName()))
+      return (List<T>)findUniqueIdsByNedId(nedId);
+    if (cname.equals(DegreeEntity.class.getCanonicalName()))
+      return (List<T>)findDegreesByNedId(nedId);
+
+    throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
+
+  }
+
+
+  private IndividualEntity findIndividualByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription nameprefix, i.firstName firstname, 
                i.middleName middlename, i.lastName lastname, 
@@ -231,8 +290,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
     return record.into(IndividualEntity.class);
   }
 
-  @Override
-  public OrganizationEntity findOrganizationByNedId(Integer nedId) {
+  private OrganizationEntity findOrganizationByNedId(Integer nedId) {
 /*
         SELECT o.namedentityid, organizationfamiliarname, organizationlegalname,
                isactive, isvisible, url, gt1.shortdescription organizationtype
@@ -258,8 +316,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
     return record.into(OrganizationEntity.class);
   }
 
-  @Override
-  public List<OrganizationEntity> findOrganizationsByUid(String srcType, String uid) {
+  private List<OrganizationEntity> findOrganizationsByUid(String srcType, String uid) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
@@ -283,8 +340,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
 
   }
 
-  @Override
-  public List<IndividualEntity> findIndividualsByUid(Integer srcTypeId, String uid) {
+  private List<IndividualEntity> findIndividualsByUid(String srcType, String uid) {
 /*
    EXPLAIN
         SELECT gt1.shortDescription nameprefix, i.firstName firstname, 
@@ -325,15 +381,14 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt2).on(i.NAMESUFFIXTYPEID.equal(gt2.GLOBALTYPEID))
       .leftOuterJoin(gt3).on(i.PREFERREDLANGUAGETYPEID.equal(gt3.GLOBALTYPEID))
       .leftOuterJoin(gt4).on(i.PREFERREDCOMMUNICATIONMETHODTYPEID.equal(gt4.GLOBALTYPEID))
-      .join(u).on(i.NAMEDENTITYID.equal(u.NAMEDENTITYID)).and(u.UNIQUEIDENTIFIERTYPEID.equal(srcTypeId))
-      .leftOuterJoin(gt5).on(u.UNIQUEIDENTIFIERTYPEID.equal(gt5.GLOBALTYPEID))
+      .join(u).on(i.NAMEDENTITYID.equal(u.NAMEDENTITYID))
+      .leftOuterJoin(gt5).on(u.UNIQUEIDENTIFIERTYPEID.equal(gt5.GLOBALTYPEID)).and(gt5.SHORTDESCRIPTION.eq(srcType))
       .where(u.UNIQUEIDENTIFIER.equal(uid))
       .fetch()
       .into(IndividualEntity.class);
   }
 
-  @Override
-  public List<AddressEntity> findAddressesByNedId(Integer nedId) {
+  private List<AddressEntity> findAddressesByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription addresstype, a.addressline1, a.addressline2, 
                a.addressline3, a.city, a.postalCode, a.isprimary,
@@ -367,8 +422,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .into(AddressEntity.class);
   }
 
-  @Override
-  public List<EmailEntity> findEmailsByNedId(Integer nedId) {
+  private List<EmailEntity> findEmailsByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription emailtype, e.emailaddress, e.isprimary
           FROM emails e
@@ -390,8 +444,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .into(EmailEntity.class);
   }
 
-  @Override
-  public List<PhonenumberEntity> findPhoneNumbersByNedId(Integer nedId) {
+  private List<PhonenumberEntity> findPhoneNumbersByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription phonenumbertype,
                gt2.shortDescription countrycodetype,
@@ -419,8 +472,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .into(PhonenumberEntity.class);
   }
 
-  @Override
-  public List<DegreeEntity> findDegreesByNedId(Integer nedId) {
+  private List<DegreeEntity> findDegreesByNedId(Integer nedId) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Degrees     d   = DEGREES.as("d");
@@ -436,8 +488,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
         .into(DegreeEntity.class);
   }
 
-  @Override
-  public List<RoleEntity> findRolesByNedId(Integer nedId) {
+  private List<RoleEntity> findRolesByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription sourceapplicationtype,
                gt2.shortDescription roletype,
@@ -465,7 +516,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .into(RoleEntity.class);
   }
 
-  @Override public List<UniqueidentifierEntity> findUniqueIdsByNedId(Integer nedId) {
+  private List<UniqueidentifierEntity> findUniqueIdsByNedId(Integer nedId) {
 /*
    EXPLAIN
         SELECT gt.shortDescription uniqueidentifiertype, uid.uniqueIdentifier 
@@ -487,8 +538,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .into(UniqueidentifierEntity.class);
   }
 
-  @Override
-  public EmailEntity findEmailByPrimaryKey(Integer emailId) {
+  private EmailEntity findEmailByPrimaryKey(Integer emailId) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");

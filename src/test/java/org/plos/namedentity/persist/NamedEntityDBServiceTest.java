@@ -285,13 +285,14 @@ public class NamedEntityDBServiceTest {
     // FIND BY PRIMARY KEY
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
+
     for (EmailEntity email : allEmailsInDB) {
-      assertNotNull( nedQuery.findEmailByPrimaryKey(email.getEmailid()) );
+      assertNotNull( nedQuery.findResolvedEntityByKey(email.getEmailid(), EmailEntity.class) );
     }
-
     // FIND BY JOIN-QUERY 
+    List<EmailEntity> emails = nedQuery.findResolvedEntities(foundEmails2.get(0).getNamedentityid(), EmailEntity.class);
 
-    List<EmailEntity> emails = nedQuery.findEmailsByNedId(foundEmails2.get(0).getNamedentityid());
+
     assertTrue( emails.size() > 0 );
 
     // Try to find an email which doesn't exist
@@ -355,7 +356,7 @@ public class NamedEntityDBServiceTest {
     // FIND BY JOIN-QUERY 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    IndividualEntity entity = nedQuery.findIndividualByNedId(individualId);
+    IndividualEntity entity = nedQuery.findResolvedEntity(individualId, IndividualEntity.class);
     assertNotNull( entity );
     assertEquals("firstname", entity.getFirstname());
     assertEquals("Mr.", entity.getNameprefix());
@@ -411,7 +412,7 @@ public class NamedEntityDBServiceTest {
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
 
-    OrganizationEntity entity = nedQuery.findOrganizationByNedId(organizationId);
+    OrganizationEntity entity = nedQuery.findResolvedEntity(organizationId, OrganizationEntity.class);
     assertNotNull( entity );
 
     entity.setOrganizationtypeid(organizationTypeId);
@@ -501,7 +502,7 @@ public class NamedEntityDBServiceTest {
     // FIND BY JOIN-QUERY 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<PhonenumberEntity> phonenumbers = nedQuery.findPhoneNumbersByNedId(foundPhones.get(0).getNamedentityid());
+    List<PhonenumberEntity> phonenumbers = nedQuery.findResolvedEntities(foundPhones.get(0).getNamedentityid(), PhonenumberEntity.class);
     assertTrue( phonenumbers.size() > 0 );
 
     // DELETE
@@ -566,7 +567,7 @@ public class NamedEntityDBServiceTest {
     // FIND BY JOIN-QUERY 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<AddressEntity> addresses = nedQuery.findAddressesByNedId(savedAddress.getNamedentityid());
+    List<AddressEntity> addresses = nedQuery.findResolvedEntities(savedAddress.getNamedentityid(), AddressEntity.class);
     assertTrue( addresses.size() > 0 );
             
     //TODO : FIND BY ATTRIBUTE
@@ -621,7 +622,7 @@ public class NamedEntityDBServiceTest {
     // FIND BY JOIN-QUERY 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<RoleEntity> roles = nedQuery.findRolesByNedId(savedRole.getNamedentityid());
+    List<RoleEntity> roles = nedQuery.findResolvedEntities(savedRole.getNamedentityid(), RoleEntity.class);
     RoleEntity role = roles.get(0);
     assertEquals("Author", role.getRoletype());
               
@@ -637,13 +638,10 @@ public class NamedEntityDBServiceTest {
 
     final String ORCID_ID = "0000-0001-9430-319X";
 
-    Integer uidTypeClassId = findTypeClassStartWith("Unique Identifier Types");
-    Integer orcidTypeId    = findTypeValueByName(uidTypeClassId, "ORCID"); assertNotNull(orcidTypeId);
-
     // FIND Individuals with an ORCID id. There should be none. 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<IndividualEntity> peopleWithOrcidId = nedQuery.findIndividualsByUid(orcidTypeId, ORCID_ID);
+    List<IndividualEntity> peopleWithOrcidId = nedQuery.findResolvedEntityByUid("ORCID", ORCID_ID, IndividualEntity.class);
     assertEquals(0, peopleWithOrcidId.size());
 
     // Create two individuals with the same Orcid#
@@ -659,7 +657,6 @@ public class NamedEntityDBServiceTest {
 
       UniqueidentifierEntity uidEntity1 = new UniqueidentifierEntity();
       uidEntity1.setNamedentityid(individualId);
-      uidEntity1.setUniqueidentifiertypeid(orcidTypeId);
       uidEntity1.setUniqueidentifier(ORCID_ID);
 
       assertNull(uidEntity1.getUniqueidentifiersid());
@@ -669,7 +666,7 @@ public class NamedEntityDBServiceTest {
       assertNotNull(uidId1);
 
       // FIND By UID (ORCID) #2
-      assertEquals(i, nedQuery.findIndividualsByUid(orcidTypeId, ORCID_ID).size());
+      assertEquals(i, nedQuery.findResolvedEntityByUid("ORCID", ORCID_ID, IndividualEntity.class).size());
 
       // UPDATE
 
@@ -689,7 +686,7 @@ public class NamedEntityDBServiceTest {
 
       // FIND BY JOIN-QUERY 
 
-      List<UniqueidentifierEntity> uids = nedQuery.findUniqueIdsByNedId(savedUid.getNamedentityid());
+      List<UniqueidentifierEntity> uids = nedQuery.findResolvedEntities(savedUid.getNamedentityid(), UniqueidentifierEntity.class);
       UniqueidentifierEntity uid = uids.get(0);
       assertEquals(ORCID_ID, uid.getUniqueidentifier());
     }

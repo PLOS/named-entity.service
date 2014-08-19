@@ -31,7 +31,7 @@ public class IndividualsResource extends BaseResource {
       Integer nedId = crudService.create(entity);
 
       return Response.status(Response.Status.OK).entity(
-          namedEntityService.findIndividualByNedId(nedId)).build();
+          namedEntityService.findResolvedEntity(nedId, IndividualEntity.class)).build();
 
     } catch (NedValidationException e) {
       return validationError(e, "Unable to create individual");
@@ -44,7 +44,7 @@ public class IndividualsResource extends BaseResource {
   @Path("/{id}")
   public Response read(@PathParam("id") int nedId) {
     try {
-      IndividualEntity individual = namedEntityService.findIndividualByNedId(nedId);
+      IndividualEntity individual = namedEntityService.findResolvedEntity(nedId, IndividualEntity.class);
       return Response.status(Response.Status.OK).entity(individual).build();
     }
     catch(Exception e) {
@@ -64,7 +64,7 @@ public class IndividualsResource extends BaseResource {
 
       crudService.update(entity);
 
-      entity = namedEntityService.findIndividualByNedId(nedId);
+      entity = namedEntityService.findResolvedEntity(nedId, IndividualEntity.class);
 
       return Response.ok().entity(entity).build();
 
@@ -82,7 +82,7 @@ public class IndividualsResource extends BaseResource {
 
     try {
 
-      IndividualEntity entity = namedEntityService.findIndividualByNedId(nedId);
+      IndividualEntity entity = namedEntityService.findResolvedEntity(nedId, IndividualEntity.class);
 
       crudService.delete(entity);
 
@@ -104,7 +104,7 @@ public class IndividualsResource extends BaseResource {
       if (isEmptyOrBlank(uidType) || isEmptyOrBlank(uidValue)) {
         individuals = crudService.findAll(IndividualEntity.class);
       } else {
-        individuals = namedEntityService.findIndividualsByUid(uidType, uidValue);
+        individuals = namedEntityService.findResolvedEntityByUid(uidType, uidValue, IndividualEntity.class);
       }
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<IndividualEntity>>(individuals){}).build();
@@ -130,7 +130,7 @@ public class IndividualsResource extends BaseResource {
       Integer emailId = crudService.create(emailEntity);
 
       return Response.status(Response.Status.OK).entity(
-          namedEntityService.findEmailByPrimaryKey(emailId)).build();
+          namedEntityService.findResolvedEntityByKey(emailId, EmailEntity.class)).build();
     }
     catch(NedValidationException e) {
       return validationError(e, "Unable to create email");
@@ -152,7 +152,7 @@ public class IndividualsResource extends BaseResource {
 
       crudService.update(emailEntity);
 
-      emailEntity = namedEntityService.findEmailByPrimaryKey(emailId);
+      emailEntity = namedEntityService.findResolvedEntityByKey(emailId, EmailEntity.class);
 
       return Response.status(Response.Status.OK).entity(emailEntity).build();
     }
@@ -169,7 +169,7 @@ public class IndividualsResource extends BaseResource {
   public Response deleteEmail(@PathParam("nedId") int nedId, 
                               @PathParam("emailId") int emailId) {
     try {
-      EmailEntity emailEntity = namedEntityService.findEmailByPrimaryKey(emailId);
+      EmailEntity emailEntity = namedEntityService.findResolvedEntityByKey(emailId, EmailEntity.class);
 
       crudService.delete(emailEntity);
 
@@ -187,7 +187,7 @@ public class IndividualsResource extends BaseResource {
   @Path("/{nedId}/emails/{emailId}")
   public Response getEmail(@PathParam("nedId") int nedId, @PathParam("emailId") int emailId) {
     try {
-      EmailEntity emailEntity = namedEntityService.findEmailByPrimaryKey(emailId);
+      EmailEntity emailEntity = namedEntityService.findResolvedEntityByKey(emailId, EmailEntity.class);
       return Response.status(Response.Status.OK).entity(emailEntity).build();
     }
     catch(Exception e) {
@@ -201,7 +201,7 @@ public class IndividualsResource extends BaseResource {
     try {
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<EmailEntity>>(
-              namedEntityService.findEmailsByNedId(nedId)
+              namedEntityService.findResolvedEntities(nedId, EmailEntity.class)
           ){}).build();
     }
     catch(Exception e) {
@@ -215,7 +215,8 @@ public class IndividualsResource extends BaseResource {
     try {
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<DegreeEntity>>(
-              namedEntityService.findDegreesByNedId(nedId)){}).build();
+              namedEntityService.findResolvedEntities(
+                  nedId, DegreeEntity.class)){}).build();
     }
     catch(Exception e) {
       return serverError(e, "Find degrees by nedId failed");
@@ -228,7 +229,8 @@ public class IndividualsResource extends BaseResource {
     try {
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<AddressEntity>>(
-              namedEntityService.findAddressesByNedId(nedId)
+              namedEntityService.findResolvedEntities(
+                  nedId, AddressEntity.class)
           ){}).build();
     }
     catch(Exception e) {
@@ -240,7 +242,7 @@ public class IndividualsResource extends BaseResource {
   @Path("/{id}/phonenumbers")
   public Response getPhonenumbers(@PathParam("id") int nedId) {
     try {
-      List<PhonenumberEntity> phonenumbers = namedEntityService.findPhoneNumbersByNedId(nedId);
+      List<PhonenumberEntity> phonenumbers = namedEntityService.findResolvedEntities(nedId, PhonenumberEntity.class);
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<PhonenumberEntity>>(phonenumbers){}).build();
     }
@@ -255,7 +257,7 @@ public class IndividualsResource extends BaseResource {
     try {
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<RoleEntity>>(
-              namedEntityService.findRolesByNedId(nedId)
+              namedEntityService.findResolvedEntities(nedId, RoleEntity.class)
           ){}).build();
     }
     catch(Exception e) {
@@ -269,7 +271,7 @@ public class IndividualsResource extends BaseResource {
     try {
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<UniqueidentifierEntity>>(
-              namedEntityService.findUniqueIdsByNedId(nedId)
+              namedEntityService.findResolvedEntities(nedId, UniqueidentifierEntity.class)
           ){}).build();
     }
     catch(Exception e) {

@@ -146,19 +146,19 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     IndividualComposite composite = new IndividualComposite();
 
-    composite.setIndividual(findIndividualByNedId(nedId));
+    composite.setIndividual(findResolvedEntity(nedId, IndividualEntity.class));
 
-    composite.setAddresses(findAddressesByNedId(nedId));
+    composite.setAddresses(findResolvedEntities(nedId, AddressEntity.class));
 
-    composite.setPhonenumbers(findPhoneNumbersByNedId(nedId));
+    composite.setPhonenumbers(findResolvedEntities(nedId, PhonenumberEntity.class));
 
-    composite.setEmails(findEmailsByNedId(nedId));
+    composite.setEmails(findResolvedEntities(nedId, EmailEntity.class));
 
-    composite.setDegrees(findDegreesByNedId(nedId));
+    composite.setDegrees(findResolvedEntities(nedId, DegreeEntity.class));
 
-    composite.setRoles(findRolesByNedId(nedId));
+    composite.setRoles(findResolvedEntities(nedId, RoleEntity.class));
 
-    composite.setUniqueidentifiers(findUniqueIdsByNedId(nedId));
+    composite.setUniqueidentifiers(findResolvedEntities(nedId, UniqueidentifierEntity.class));
 
     return composite;
   }
@@ -222,60 +222,28 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   }
 
   @Override
-  public IndividualEntity findIndividualByNedId(Integer nedId) {
-    return ((NamedEntityQueries)nedDBSvc).findIndividualByNedId(nedId);
+  public <T> T findResolvedEntity(Integer nedId, Class<T> clazz) {
+    return ((NamedEntityQueries)nedDBSvc).findResolvedEntity(nedId, clazz);
   }
 
   @Override
-  public List<IndividualEntity> findIndividualsByUid(String uidType, String uid) {
-    Integer uidTypeId = findTypeValueByName(findTypeClassStartWith("Unique Identifier Types"), uidType);
-    return ((NamedEntityQueries)nedDBSvc).findIndividualsByUid(uidTypeId, uid);
+  public <T> List<T> findResolvedEntities(Integer nedId, Class<T> clazz) {
+    return ((NamedEntityQueries)nedDBSvc).findResolvedEntities(nedId, clazz);
+  }
+
+  @Override
+  public <T> T findResolvedEntityByKey(Integer pk, Class<T> clazz) {
+    return ((NamedEntityQueries)nedDBSvc).findResolvedEntityByKey(pk, clazz);
+  }
+
+  @Override
+  public <T> List<T> findResolvedEntityByUid(String srcType, String uid, Class<T> clazz) {
+    return ((NamedEntityQueries)nedDBSvc).findResolvedEntityByUid(srcType, uid, clazz);
   }
 
   @Override @Transactional
   public OrganizationEntity createOrganization(OrganizationEntity entity) {
-    return ((NamedEntityQueries)nedDBSvc).findOrganizationByNedId(nedDBSvc.create(entity));
-  }
-
-  @Override
-  public OrganizationEntity findOrganizationByNedId(Integer nedId) {
-    return ((NamedEntityQueries)nedDBSvc).findOrganizationByNedId(nedId);
-  }
-
-
-  @Override
-  public List<AddressEntity> findAddressesByNedId(Integer nedId) {
-    return ((NamedEntityQueries)nedDBSvc).findAddressesByNedId(nedId);
-  }
-
-  @Override
-  public List<EmailEntity> findEmailsByNedId(Integer nedId) {
-    return ((NamedEntityQueries)nedDBSvc).findEmailsByNedId(nedId);
-  }
-
-  @Override
-  public List<DegreeEntity> findDegreesByNedId(Integer nedId) {
-    return ((NamedEntityQueries)nedDBSvc).findDegreesByNedId(nedId);
-  }
-
-  @Override
-  public List<PhonenumberEntity> findPhoneNumbersByNedId(Integer nedId) {
-    return ((NamedEntityQueries)nedDBSvc).findPhoneNumbersByNedId(nedId);
-  }
-
-  @Override
-  public List<RoleEntity> findRolesByNedId(Integer nedId) {
-    return ((NamedEntityQueries)nedDBSvc).findRolesByNedId(nedId);
-  }
-
-  @Override
-  public List<UniqueidentifierEntity> findUniqueIdsByNedId(Integer nedId) {
-    return ((NamedEntityQueries)nedDBSvc).findUniqueIdsByNedId(nedId);
-  }
-
-  @Override
-  public EmailEntity findEmailByPrimaryKey(Integer emailId) {
-    return ((NamedEntityQueries)nedDBSvc).findEmailByPrimaryKey(emailId);
+    return ((NamedEntityQueries)nedDBSvc).findResolvedEntity(nedDBSvc.create(entity), OrganizationEntity.class);
   }
     
   public NamedEntityDBService getNamedEntityDBService() {

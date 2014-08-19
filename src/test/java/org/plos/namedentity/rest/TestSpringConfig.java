@@ -17,8 +17,6 @@
 package org.plos.namedentity.rest;
 
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.*;
@@ -31,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
@@ -72,28 +69,28 @@ public class TestSpringConfig {
     when(mockNamedEntityService.findIndividualComposite(anyInt()))
         .thenReturn( individualComposite );
 
-    when(mockNamedEntityService.findIndividualByNedId(anyInt()))
+    when(mockNamedEntityService.findResolvedEntity(anyInt(), eq(IndividualEntity.class)))
       .thenReturn( individualEntity );
 
-    when(mockNamedEntityService.findIndividualsByUid(anyString(), anyString()))
+    when(mockNamedEntityService.findResolvedEntityByUid(anyString(), anyString(), eq(IndividualEntity.class)))
       .thenReturn( newIndividualEntities() );
 
-    when(mockNamedEntityService.findAddressesByNedId(anyInt()))
+    when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(AddressEntity.class)))
       .thenReturn( newAddressEntities() );
 
-    when(mockNamedEntityService.findEmailsByNedId(anyInt()))
+    when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(EmailEntity.class)))
       .thenReturn( newEmailEntities() );
 
-    when(mockNamedEntityService.findDegreesByNedId(anyInt()))
+    when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(DegreeEntity.class)))
         .thenReturn(newDegreeEntities());
 
-    when(mockNamedEntityService.findPhoneNumbersByNedId(anyInt()))
+    when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(PhonenumberEntity.class)))
       .thenReturn( newPhonenumberEntities() );
 
-    when(mockNamedEntityService.findRolesByNedId(anyInt()))
+    when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(RoleEntity.class)))
       .thenReturn( newRoleEntities() );
 
-    when(mockNamedEntityService.findUniqueIdsByNedId(anyInt()))
+    when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(UniqueidentifierEntity.class)))
       .thenReturn( newUidEntities() );
 
     OrganizationEntity organizationEntity = newOrganizationEntity();
@@ -101,7 +98,7 @@ public class TestSpringConfig {
     when(mockNamedEntityService.createOrganization(isA(OrganizationEntity.class)))
         .thenReturn(organizationEntity);
 
-    when(mockNamedEntityService.findOrganizationByNedId(anyInt()))
+    when(mockNamedEntityService.findResolvedEntity(anyInt(), eq(OrganizationEntity.class)))
         .thenReturn( organizationEntity );
 
     mockNamedEntityServiceForEmails(mockNamedEntityService);
@@ -300,10 +297,11 @@ public class TestSpringConfig {
     emailEntity.setIsactive((byte)1);
     emailEntity.setEmailtype("Work");
 
-    when(mockNamedEntityService.findEmailByPrimaryKey(anyInt()))
+    when(mockNamedEntityService.findResolvedEntityByKey(anyInt(), eq(EmailEntity.class)))
         .thenReturn( emailEntity );
   }
 
+  @SuppressWarnings("unchecked")
   static private void mockCrudForTypes(CrudService mockCrudService) {
 
     // TYPE DESCRIPTIONS (TYPE CLASSES)

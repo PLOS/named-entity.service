@@ -16,28 +16,15 @@
  */
 package org.plos.namedentity.persist;
 
-import org.plos.namedentity.api.entity.AddressEntity;
-import org.plos.namedentity.api.entity.DegreeEntity;
-import org.plos.namedentity.api.entity.EmailEntity;
-import org.plos.namedentity.api.entity.IndividualEntity;
-import org.plos.namedentity.api.entity.OrganizationEntity;
-import org.plos.namedentity.api.entity.PhonenumberEntity;
-import org.plos.namedentity.api.entity.RoleEntity;
-import org.plos.namedentity.api.entity.UniqueidentifierEntity;
-
 import java.util.List;
 
 public interface NamedEntityQueries {
 
-  IndividualEntity             findIndividualByNedId  (Integer nedId);
-  List<IndividualEntity>       findIndividualsByUid   (Integer srcTypeId, String uid);
-  List<AddressEntity>          findAddressesByNedId   (Integer nedId);
-  List<EmailEntity>            findEmailsByNedId      (Integer nedId);
-  List<PhonenumberEntity>      findPhoneNumbersByNedId(Integer nedId);
-  List<RoleEntity>             findRolesByNedId       (Integer nedId);
-  List<UniqueidentifierEntity> findUniqueIdsByNedId   (Integer nedId);
-  OrganizationEntity           findOrganizationByNedId(Integer nedId);
-  List<OrganizationEntity>     findOrganizationsByUid (String srcType, String uid);
-  List<DegreeEntity>           findDegreesByNedId     (Integer nedId);
-  EmailEntity                  findEmailByPrimaryKey  (Integer emailId);
+  <T> List<T> findResolvedEntityByUid(String srcType, String uid, Class<T> clazz);
+
+  <T> T findResolvedEntityByKey(Integer pk, Class<T> clazz);
+
+  <T> T findResolvedEntity(Integer nedId, Class<T> clazz);
+
+  <T> List<T> findResolvedEntities(Integer nedId, Class<T> clazz);
 }
