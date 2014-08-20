@@ -187,10 +187,19 @@ public class IndividualsResource extends BaseResource {
   @Path("/{nedId}/emails/{emailId}")
   public Response getEmail(@PathParam("nedId") int nedId, @PathParam("emailId") int emailId) {
     try {
-      EmailEntity emailEntity = namedEntityService.findResolvedEntityByKey(emailId, EmailEntity.class);
-      return Response.status(Response.Status.OK).entity(emailEntity).build();
-    }
-    catch(Exception e) {
+
+      List<EmailEntity> emails = namedEntityService.findResolvedEntities(nedId, EmailEntity.class);
+
+      if (emails.size() == 0)
+        return entityNotFound("Individual not found");
+
+      for (EmailEntity email : emails)
+        if (email.getEmailid().equals(emailId))
+          return Response.status(Response.Status.OK).entity(email).build();
+
+      return entityNotFound("Email not found");
+
+    } catch (Exception e) {
       return serverError(e, "Find email by id failed");
     }
   }
@@ -199,12 +208,18 @@ public class IndividualsResource extends BaseResource {
   @Path("/{id}/emails")
   public Response getEmails(@PathParam("id") int nedId) {
     try {
+
+      // make sure the nedId belongs to an individual
+      namedEntityService.findResolvedEntity(nedId, IndividualEntity.class);
+
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<EmailEntity>>(
               namedEntityService.findResolvedEntities(nedId, EmailEntity.class)
-          ){}).build();
-    }
-    catch(Exception e) {
+          ) {
+          }).build();
+    } catch (EntityNotFoundException e) {
+      return entityNotFound(e);
+    } catch (Exception e) {
       return serverError(e, "Find emails by nedId failed");
     }
   }

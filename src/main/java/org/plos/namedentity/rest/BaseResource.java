@@ -20,12 +20,15 @@ public class BaseResource {
   @Inject
   protected NamedEntityService namedEntityService;
 
+  protected Response entityNotFound(String message) {
+    logger.error("entity not found: " + message);
+    return Response.status(Response.Status.NOT_FOUND)   // 404
+        .entity(message)
+        .type(MediaType.TEXT_PLAIN).build();
+  }
 
   protected Response entityNotFound(EntityNotFoundException e) {
-    logger.error("entity not found" + e.getMessage());
-    return Response.status(Response.Status.NOT_FOUND)   // 404
-        .entity(e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+    return entityNotFound(e.getMessage());
   }
 
   protected Response serverError(Exception e, String message) {
