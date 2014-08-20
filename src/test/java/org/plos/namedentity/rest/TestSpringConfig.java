@@ -184,12 +184,14 @@ public class TestSpringConfig {
     List<EmailEntity> emails = new ArrayList<>();
 
     EmailEntity workEmail = new EmailEntity();
+    workEmail.setEmailid(1);
     workEmail.setEmailtype("Work");
     workEmail.setEmailaddress("fu.manchu.work@foo.com");
     workEmail.setIsprimary((byte)1);
     emails.add( workEmail );
 
     EmailEntity personalEmail = new EmailEntity();
+    workEmail.setEmailid(1);
     personalEmail.setEmailtype("Personal");
     personalEmail.setEmailaddress("fu.manchu.home@foo.com");
     personalEmail.setIsprimary((byte)0);
@@ -212,6 +214,7 @@ public class TestSpringConfig {
     List<PhonenumberEntity> phonenumbers = new ArrayList<>();
 
     PhonenumberEntity officePhone = new PhonenumberEntity();
+    officePhone.setPhonenumberid(1);
     officePhone.setPhonenumbertype("Office");
     officePhone.setCountrycodetype("01");
     officePhone.setPhonenumber("123-456-7890");
@@ -219,6 +222,7 @@ public class TestSpringConfig {
     phonenumbers.add( officePhone );
 
     PhonenumberEntity mobilePhone = new PhonenumberEntity();
+    officePhone.setPhonenumberid(2);
     mobilePhone.setPhonenumbertype("Mobile");
     mobilePhone.setCountrycodetype("01");
     mobilePhone.setPhonenumber("123-444-0011");
@@ -226,6 +230,7 @@ public class TestSpringConfig {
     phonenumbers.add( mobilePhone );
 
     PhonenumberEntity homePhone = new PhonenumberEntity();
+    officePhone.setPhonenumberid(3);
     homePhone.setPhonenumbertype("Home");
     homePhone.setCountrycodetype("01");
     homePhone.setPhonenumber("123-555-6666");
@@ -239,6 +244,7 @@ public class TestSpringConfig {
     List<RoleEntity> roles = new ArrayList<>();
 
     RoleEntity author = new RoleEntity();
+    author.setRoleid(1);
     author.setRoletype("Author");
     author.setStartdate(new Timestamp(1401408000)); // "2014-05-30"
     roles.add( author );
@@ -267,7 +273,7 @@ public class TestSpringConfig {
   static private List<UniqueidentifierEntity> newUidEntities() {
     List<UniqueidentifierEntity> uids = new ArrayList<>();
     for (int i = 1; i <=2; i++) {
-      uids.add(new UniqueidentifierEntity(null, 1, null, "0000-0002-9430-319"+i, "ORCID"));
+      uids.add(new UniqueidentifierEntity(i, 1, null, "0000-0002-9430-319"+i, "ORCID"));
     }
     return uids;
   }
