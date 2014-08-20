@@ -41,10 +41,10 @@ public class IndividualsResource extends BaseResource {
   @Path("/{nedId}")
   public Response read(@PathParam("nedId") int nedId) {
     try {
-      IndividualEntity individual = namedEntityService.findResolvedEntity(nedId, IndividualEntity.class);
-      return Response.status(Response.Status.OK).entity(individual).build();
-    }
-    catch(Exception e) {
+      return Response.status(Response.Status.OK).entity(namedEntityService.findResolvedEntity(nedId, IndividualEntity.class)).build();
+    } catch (EntityNotFoundException e) {
+      return entityNotFound(e);
+    } catch (Exception e) {
       return serverError(e, "Find individual by id failed");
     }
   }

@@ -69,7 +69,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
         "   \"organizationlegalname\" : \"organizationlegalname\",\n" +
         "   \"isactive\" : 0,\n" +
         "   \"isvisible\" : true,\n" +
-        "   \"url\" : \"website.com\" }";
+        "   \"url\" : \"website.com\" }"; // TODO: make use of this in assertions
 
     // Request #1. Expect success.
 
@@ -80,7 +80,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     String jsonPayload = response.readEntity(String.class);
 
     OrganizationEntity entity = mapper.readValue(jsonPayload, OrganizationEntity.class);
-    assertEquals(Integer.valueOf(1), entity.getNamedentityid());
+    assertEquals(Integer.valueOf(2), entity.getNamedentityid());
     assertEquals("familiarname", entity.getOrganizationfamiliarname());
     assertEquals("legalname", entity.getOrganizationlegalname());
     assertEquals(new Byte((byte)0), entity.getIsactive());
@@ -88,14 +88,14 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     // GET
 
-    response = target(ORGANIZATION_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
+    response = target(ORGANIZATION_URI + "/2").request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(200, response.getStatus());
 
     jsonPayload = response.readEntity(String.class);
 
     entity = mapper.readValue(jsonPayload, OrganizationEntity.class);
-    assertEquals(Integer.valueOf(1), entity.getNamedentityid());
+    assertEquals(Integer.valueOf(2), entity.getNamedentityid());
     assertEquals("familiarname", entity.getOrganizationfamiliarname());
     assertEquals("legalname", entity.getOrganizationlegalname());
     assertEquals(new Byte((byte)0), entity.getIsactive());
@@ -293,6 +293,46 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals("Work", workEmail.getEmailtype());
     assertEquals("fu.manchu.work@foo.com", workEmail.getEmailaddress());
     assertTrue(workEmail.getIsprimary() == 1);
+
+
+    /* ------------------------------------------------------------------ */
+    /*  404 ERRORS                                                        */
+    /* ------------------------------------------------------------------ */
+
+    assertEquals(Response.Status.OK.getStatusCode(),
+        target("/individuals/1")
+            .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
+
+    assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
+        target("/individuals/2")
+            .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
+
+    // INDIVIDUAL NOT
+
+    assertEquals(Response.Status.OK.getStatusCode(),
+        target("/individuals/1/emails")
+        .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
+
+//    assertEquals(Response.Status.OK.getStatusCode(),
+//        target("/organizations/2/emails")
+//            .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
+
+    assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
+        target("/individuals/2/emails")
+        .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
+
+    // EMAIL CROSSING ENTITIES
+
+    assertEquals(Response.Status.OK.getStatusCode(),
+        target("/individuals/1/emails/1")
+        .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
+
+//    assertEquals(Response.Status.OK.getStatusCode(), target("/organizations/2/emails/5").request(MediaType.APPLICATION_JSON_TYPE).get().getStatus()); // TODO: add this once /organizations email CRUD is done
+
+    assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
+        target("/individuals/1/emails/5")
+        .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
+
   }
 
   @Test
