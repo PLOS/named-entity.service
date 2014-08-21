@@ -1,10 +1,10 @@
 package org.plos.namedentity.rest;
 
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.GlobaltypeEntity;
 import org.plos.namedentity.api.entity.TypedescriptionEntity;
-import org.plos.namedentity.service.CrudService;
-import org.plos.namedentity.service.NamedEntityService;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -16,75 +16,78 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/typeclasses")
+@Api("/typeclasses")
 public class TypeclassesResource extends BaseResource {
 
   @GET
   @Path("/{id}")
-  public Response getTypedescription(@PathParam("id") int id) {
+  @ApiOperation(value = "Read", response = TypedescriptionEntity.class)
+  public Response read(@PathParam("id") int id) {
     try {
-      TypedescriptionEntity entity = crudService.findById(id, TypedescriptionEntity.class);
-      return Response.status(Response.Status.OK).entity( entity ).build();
+      return Response.status(Response.Status.OK).entity(
+          crudService.findById(id, TypedescriptionEntity.class)).build();
       //return Response.status(Response.Status.OK).entity( toPojo(entity) ).build();
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       return serverError(e, "Find type class by id failed");
     }
   }
 
   @GET
-  public Response getTypedescriptions() {
+  @ApiOperation("List")
+  public Response list() {
     try {
-      List<TypedescriptionEntity> typeClasses = crudService.findAll(TypedescriptionEntity.class);
       return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<TypedescriptionEntity>>(typeClasses){}).build();
-    }
-    catch(Exception e) {
+          new GenericEntity<List<TypedescriptionEntity>>(
+              crudService.findAll(TypedescriptionEntity.class)
+          ) {
+          }).build();
+    } catch (Exception e) {
       return serverError(e, "Find all type classes failed");
     }
   }
 
   @POST
-  public Response createTypedescription(TypedescriptionEntity typeDescription) {
+  @ApiOperation(value = "Create", response = TypedescriptionEntity.class)
+  public Response create(TypedescriptionEntity typeDescription) {
     try {
-      Integer pkId = crudService.create( typeDescription );
-      TypedescriptionEntity entity = crudService.findById(pkId, TypedescriptionEntity.class);
-      return Response.status(Response.Status.OK).entity( entity ).build();
-    }
-    catch(NedValidationException e) {
+      Integer pkId = crudService.create(typeDescription);
+
+      return Response.status(Response.Status.OK).entity(
+          crudService.findById(pkId, TypedescriptionEntity.class)).build();
+    } catch (NedValidationException e) {
       return validationError(e, "Unable to create Type Class");
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       return serverError(e, "Unable to create Type Class");
     }
   }
 
   @POST
   @Path("/{id}")
-  public Response updateTypedescription(TypedescriptionEntity typeDescription) {
+  @ApiOperation(value = "Update", response = TypedescriptionEntity.class)
+  public Response update(TypedescriptionEntity typeDescription) {
     try {
-      crudService.update( typeDescription );
-      TypedescriptionEntity entity = crudService.findById(
-          typeDescription.getTypeid(), TypedescriptionEntity.class);
-      return Response.status(Response.Status.OK).entity( entity ).build();
-    }
-    catch(NedValidationException e) {
+      crudService.update(typeDescription);
+
+      return Response.status(Response.Status.OK).entity(
+          crudService.findById(typeDescription.getTypeid(),
+              TypedescriptionEntity.class)).build();
+    } catch (NedValidationException e) {
       return validationError(e, "Unable to update Type Class");
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       return serverError(e, "Unable to update Type Class");
     }
   }
 
   @DELETE
   @Path("/{id}")
-  public Response deleteTypedescription(@PathParam("id") int id) {
+  @ApiOperation("Delete")
+  public Response delete(@PathParam("id") int id) {
     try {
       TypedescriptionEntity entity = new TypedescriptionEntity();
       entity.setTypeid(id);
       crudService.delete(entity);
       return Response.status(Response.Status.NO_CONTENT).build();
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       return serverError(e, "Unable to delete Type Class");
     }
   }
@@ -95,11 +98,12 @@ public class TypeclassesResource extends BaseResource {
 
   @GET
   @Path("/{typeclassid}/typevalues/{typevalueid}")
+  @ApiOperation(value = "Read global type", response = GlobaltypeEntity.class)
   public Response getGlobalType(@PathParam("typeclassid") int typeClassId,
                                 @PathParam("typevalueid") int typeValueId) {
     try {
-      GlobaltypeEntity entity = crudService.findById(typeValueId, GlobaltypeEntity.class);
-      return Response.status(Response.Status.OK).entity( entity ).build();
+      return Response.status(Response.Status.OK).entity(
+          crudService.findById(typeValueId, GlobaltypeEntity.class)).build();
     }
     catch(Exception e) {
       return serverError(e, "Find type value by id failed");
@@ -108,14 +112,16 @@ public class TypeclassesResource extends BaseResource {
 
   @GET
   @Path("/{typeclassid}/typevalues")
+  @ApiOperation("List global types")
   public Response getGlobalTypeForTypeClass(@PathParam("typeclassid") int typeClassId) {
     try {
       GlobaltypeEntity searchCriteria = new GlobaltypeEntity();
       searchCriteria.setTypeid(typeClassId);
 
-      List<GlobaltypeEntity> typeClasses = crudService.findByAttribute(searchCriteria);
       return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<GlobaltypeEntity>>(typeClasses){}).build();
+          new GenericEntity<List<GlobaltypeEntity>>(
+              crudService.findByAttribute(searchCriteria)
+          ){}).build();
     }
     catch(Exception e) {
       return serverError(e, "Find type classes for a type class failed");
@@ -124,13 +130,14 @@ public class TypeclassesResource extends BaseResource {
 
   @POST
   @Path("/{typeclassid}/typevalues")
+  @ApiOperation(value = "Create global type", response = GlobaltypeEntity.class)
   public Response createGlobalType(@PathParam("typeclassid") int typeClassId, GlobaltypeEntity globalType) {
     try {
       globalType.setTypeid(typeClassId);
       Integer pkId = crudService.create(globalType);
 
-      GlobaltypeEntity foundEntity = crudService.findById(pkId, GlobaltypeEntity.class);
-      return Response.status(Response.Status.OK).entity( foundEntity ).build();
+      return Response.status(Response.Status.OK).entity(
+          crudService.findById(pkId, GlobaltypeEntity.class)).build();
     }
     catch(NedValidationException e) {
       return validationError(e, "Unable to create Type Value");
@@ -142,13 +149,14 @@ public class TypeclassesResource extends BaseResource {
 
   @POST
   @Path("/{typeclassid}/typevalues/{typevalueid}")
+  @ApiOperation(value = "Update global type", response = GlobaltypeEntity.class)
   public Response updateGlobalType(@PathParam("typeclassid") int typeClassId,
                                    @PathParam("typevalueid") int typeValueId,
                                    GlobaltypeEntity globalType) {
     try {
 
 
-      // TODO: make use of path variables
+      // TODO: make use of path variables, since they are currently ignored
 
 
       crudService.update( globalType ); // TODO: handle 404 not_found?
@@ -166,6 +174,7 @@ public class TypeclassesResource extends BaseResource {
 
   @DELETE
   @Path("/{typeclassid}/typevalues/{typevalueid}")
+  @ApiOperation("Delete global type")
   public Response deleteGlobalType(@PathParam("typeclassid") int typeClassId,
                                    @PathParam("typevalueid") int typeValueId) {
     try {
@@ -179,18 +188,4 @@ public class TypeclassesResource extends BaseResource {
     }
   }
 
-  public CrudService getNamedEntityService() {
-    return crudService;
-  }
-  public void setNamedEntityService(CrudService nedSvcLowApi) {
-    this.crudService = nedSvcLowApi;
-  }
-
-  public NamedEntityService getNamedEntityServiceHighApi() {
-    return namedEntityService;
-  }
-  public void setNamedEntityServiceHighApi(NamedEntityService nedSvcHighApi) {
-    this.namedEntityService = nedSvcHighApi;
-    this.namedEntityService = nedSvcHighApi;
-  }
 }
