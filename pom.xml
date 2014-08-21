@@ -13,6 +13,8 @@
   <version>0.1.0-SNAPSHOT</version>
 
   <properties>
+    <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+    <buildDate>${maven.build.timestamp}</buildDate>
     <h2db.version>1.4.180</h2db.version>
     <jackson.version>1.9.12</jackson.version>
     <mysql.connector.version>5.1.30</mysql.connector.version> 
@@ -187,6 +189,13 @@
 
   <build>
     <finalName>${project.artifactId}-${project.version}</finalName>
+
+    <resources>
+      <resource>
+        <directory>src/main/resources/</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
 
     <plugins>
       <plugin>

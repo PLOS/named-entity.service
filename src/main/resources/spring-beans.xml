@@ -60,6 +60,7 @@
     <bean id="namedEntityDBService" class="org.plos.namedentity.persist.NamedEntityDBServiceImpl"/>
     <bean id="crudService" class="org.plos.namedentity.service.CrudServiceImpl"/>
     <bean id="namedEntityService" class="org.plos.namedentity.service.NamedEntityServiceImpl"/>
+    <bean id="infoService" class="org.plos.namedentity.service.InfoService" />
 
     <bean id="validator" class="org.plos.namedentity.validate.NamedEntityValidator">
         <!-- execute after the Transactional advice (hence higher order number) -->
