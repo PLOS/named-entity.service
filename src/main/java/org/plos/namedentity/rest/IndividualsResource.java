@@ -1,5 +1,7 @@
 package org.plos.namedentity.rest;
 
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.DegreeEntity;
@@ -18,9 +20,11 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/individuals")
+@Api(value="/individuals")
 public class IndividualsResource extends BaseResource {
 
   @POST
+  @ApiOperation(value = "Create", response = IndividualEntity.class)
   public Response create(IndividualEntity entity) {
     try {
       namedEntityService.resolveValuesToIds(entity);
@@ -39,6 +43,7 @@ public class IndividualsResource extends BaseResource {
 
   @GET
   @Path("/{nedId}")
+  @ApiOperation(value = "Read", response = IndividualEntity.class)
   public Response read(@PathParam("nedId") int nedId) {
     try {
       return Response.status(Response.Status.OK).entity(namedEntityService.findResolvedEntity(nedId, IndividualEntity.class)).build();
@@ -51,6 +56,7 @@ public class IndividualsResource extends BaseResource {
 
   @POST
   @Path("/{nedId}")
+  @ApiOperation(value = "Update", response = IndividualEntity.class)
   public Response update(@PathParam("nedId") int nedId, IndividualEntity entity) {
 
     try {
@@ -75,6 +81,7 @@ public class IndividualsResource extends BaseResource {
 
   @DELETE
   @Path("/{nedId}")
+  @ApiOperation(value = "Delete", response = IndividualEntity.class)
   public Response delete(@PathParam("nedId") int nedId) {
 
     try {
@@ -94,6 +101,7 @@ public class IndividualsResource extends BaseResource {
   }
 
   @GET
+  @ApiOperation(value = "List", response = IndividualEntity.class)
   public Response list(@QueryParam("uidType") String uidType, @QueryParam("uidValue") String uidValue) {
     try {
       List<IndividualEntity> individuals = null; 
@@ -118,6 +126,7 @@ public class IndividualsResource extends BaseResource {
 
   @POST
   @Path("/{nedId}/emails")
+  @ApiOperation(value = "Create email", response = IndividualEntity.class)
   public Response createEmail(@PathParam("nedId") int nedId,
                               EmailEntity emailEntity) {
     return createEmail(nedId, emailEntity, IndividualEntity.class);
@@ -125,6 +134,7 @@ public class IndividualsResource extends BaseResource {
 
   @POST
   @Path("/{nedId}/emails/{emailId}")
+  @ApiOperation(value = "Update email", response = IndividualEntity.class)
   public Response updateEmail(@PathParam("nedId") int nedId, 
                               @PathParam("emailId") int emailId, 
                               EmailEntity emailEntity) {
@@ -134,6 +144,7 @@ public class IndividualsResource extends BaseResource {
 
   @DELETE
   @Path("/{nedId}/emails/{emailId}")
+  @ApiOperation(value = "Delete email", response = IndividualEntity.class)
   public Response deleteEmail(@PathParam("nedId") int nedId, 
                               @PathParam("emailId") int emailId) {
     return deleteEmail(nedId, emailId, IndividualEntity.class);
@@ -141,6 +152,7 @@ public class IndividualsResource extends BaseResource {
 
   @GET
   @Path("/{nedId}/emails/{emailId}")
+  @ApiOperation(value = "Read email", response = IndividualEntity.class)
   public Response getEmail(@PathParam("nedId") int nedId,
                            @PathParam("emailId") int emailId) {
     return getEmail(nedId, emailId, IndividualEntity.class);
@@ -148,6 +160,7 @@ public class IndividualsResource extends BaseResource {
 
   @GET
   @Path("/{nedId}/emails")
+  @ApiOperation(value = "List emails", response = IndividualEntity.class)
   public Response getEmails(@PathParam("nedId") int nedId) {
     return getEmails(nedId, IndividualEntity.class);
   }
@@ -155,24 +168,28 @@ public class IndividualsResource extends BaseResource {
 
   @GET
   @Path("/{nedId}/addresses")
+  @ApiOperation(value = "List addresses", response = IndividualEntity.class)
   public Response getAddresses(@PathParam("nedId") int nedId) {
     return getAddresses(nedId, IndividualEntity.class);
   }
 
   @GET
   @Path("/{nedId}/phonenumbers")
+  @ApiOperation(value = "List phone numbers", response = IndividualEntity.class)
   public Response getPhonenumbers(@PathParam("nedId") int nedId) {
     return getPhonenumbers(nedId, IndividualEntity.class);
   }
 
   @GET
   @Path("/{nedId}/xref")
+  @ApiOperation(value = "List references", response = IndividualEntity.class)
   public Response getExternalReferences(@PathParam("nedId") int nedId) {
     return getExternalReferences(nedId, IndividualEntity.class);
   }
 
   @GET
   @Path("/{nedId}/degrees")
+  @ApiOperation(value = "List degrees", response = IndividualEntity.class)
   public Response getDegrees(@PathParam("nedId") int nedId) {
     try {
       return Response.status(Response.Status.OK).entity(
@@ -187,6 +204,7 @@ public class IndividualsResource extends BaseResource {
 
   @GET
   @Path("/{nedId}/roles")
+  @ApiOperation(value = "List roles", response = IndividualEntity.class)
   public Response getRoles(@PathParam("nedId") int nedId) {
     try {
       return Response.status(Response.Status.OK).entity(
