@@ -17,6 +17,7 @@
 package org.plos.namedentity.rest;
 
 import org.mockito.Mockito;
+import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.*;
@@ -44,11 +45,14 @@ public class TestSpringConfig {
     mockCrudForTypes(mockCrudService);
     mockCrudForEmails(mockCrudService);
 
-    // INDIVIDUALS 
+    // INDIVIDUALS
+    IndividualEntity individualEntity = newIndividualEntity();
+
+    when(mockCrudService.create(isA(IndividualEntity.class))).thenReturn( individualEntity.getNamedentityid() );
 
     when(mockCrudService.findAll(eq(IndividualEntity.class))).thenReturn( newIndividualEntities() );
 
-    when(mockCrudService.findById(eq(1), eq(IndividualEntity.class))).thenReturn( newIndividualEntity() );
+    when(mockCrudService.findById(eq(individualEntity.getNamedentityid()), eq(IndividualEntity.class))).thenReturn(individualEntity);
 
     return mockCrudService;
   }
@@ -58,6 +62,8 @@ public class TestSpringConfig {
     NamedEntityService mockNamedEntityService =  Mockito.mock(NamedEntityService.class);
 
     IndividualEntity individualEntity = newIndividualEntity();
+
+    OrganizationEntity organizationEntity = newOrganizationEntity();
 
     IndividualComposite individualComposite = newIndividualComposite();
 
@@ -70,7 +76,10 @@ public class TestSpringConfig {
         .thenReturn( individualComposite );
 
     when(mockNamedEntityService.findResolvedEntity(anyInt(), eq(IndividualEntity.class)))
-      .thenReturn( individualEntity );
+        .thenThrow(new EntityNotFoundException("Not found"));
+
+    when(mockNamedEntityService.findResolvedEntity(eq(individualEntity.getNamedentityid()), eq(IndividualEntity.class)))
+      .thenReturn(individualEntity);
 
     when(mockNamedEntityService.findResolvedEntityByUid(anyString(), anyString(), eq(IndividualEntity.class)))
       .thenReturn( newIndividualEntities() );
@@ -78,8 +87,11 @@ public class TestSpringConfig {
     when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(AddressEntity.class)))
       .thenReturn( newAddressEntities() );
 
-    when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(EmailEntity.class)))
-      .thenReturn( newEmailEntities() );
+    when(mockNamedEntityService.findResolvedEntities(eq(individualEntity.getNamedentityid()), eq(EmailEntity.class)))
+      .thenReturn( newEmailEntitiesForIndividual() );
+
+    when(mockNamedEntityService.findResolvedEntities(eq(organizationEntity.getNamedentityid()), eq(EmailEntity.class)))
+        .thenReturn( newEmailEntitiesForOrganization() );
 
     when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(DegreeEntity.class)))
         .thenReturn(newDegreeEntities());
@@ -93,13 +105,11 @@ public class TestSpringConfig {
     when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(UniqueidentifierEntity.class)))
       .thenReturn( newUidEntities() );
 
-    OrganizationEntity organizationEntity = newOrganizationEntity();
-
     when(mockNamedEntityService.createOrganization(isA(OrganizationEntity.class)))
         .thenReturn(organizationEntity);
 
-    when(mockNamedEntityService.findResolvedEntity(anyInt(), eq(OrganizationEntity.class)))
-        .thenReturn( organizationEntity );
+    when(mockNamedEntityService.findResolvedEntity(eq(organizationEntity.getNamedentityid()), eq(OrganizationEntity.class)))
+        .thenReturn(organizationEntity);
 
     mockNamedEntityServiceForEmails(mockNamedEntityService);
 
@@ -155,7 +165,7 @@ public class TestSpringConfig {
 
   static private OrganizationEntity newOrganizationEntity() {
     OrganizationEntity entity = new OrganizationEntity();
-    entity.setNamedentityid(1);
+    entity.setNamedentityid(2);
     entity.setIsactive((byte)0);
     entity.setIsvisible((byte)1);
     entity.setOrganizationlegalname("legalname");
@@ -180,20 +190,38 @@ public class TestSpringConfig {
     return addresses;
   }
 
-  static private List<EmailEntity> newEmailEntities() {
+  static private List<EmailEntity> newEmailEntitiesForIndividual() {
     List<EmailEntity> emails = new ArrayList<>();
 
     EmailEntity workEmail = new EmailEntity();
+    workEmail.setNamedentityid(1);
+    workEmail.setEmailid(1);
     workEmail.setEmailtype("Work");
     workEmail.setEmailaddress("fu.manchu.work@foo.com");
     workEmail.setIsprimary((byte)1);
     emails.add( workEmail );
 
     EmailEntity personalEmail = new EmailEntity();
+    personalEmail.setNamedentityid(1);
+    personalEmail.setEmailid(2);
     personalEmail.setEmailtype("Personal");
     personalEmail.setEmailaddress("fu.manchu.home@foo.com");
     personalEmail.setIsprimary((byte)0);
     emails.add( personalEmail );
+
+    return emails;
+  }
+
+  static private List<EmailEntity> newEmailEntitiesForOrganization() {
+    List<EmailEntity> emails = new ArrayList<>();
+
+    EmailEntity workEmail = new EmailEntity();
+    workEmail.setNamedentityid(2);
+    workEmail.setEmailid(5);
+    workEmail.setEmailtype("Work");
+    workEmail.setEmailaddress("bill@microsoft.com");
+    workEmail.setIsprimary((byte)1);
+    emails.add( workEmail );
 
     return emails;
   }
@@ -212,6 +240,7 @@ public class TestSpringConfig {
     List<PhonenumberEntity> phonenumbers = new ArrayList<>();
 
     PhonenumberEntity officePhone = new PhonenumberEntity();
+    officePhone.setPhonenumberid(1);
     officePhone.setPhonenumbertype("Office");
     officePhone.setCountrycodetype("01");
     officePhone.setPhonenumber("123-456-7890");
@@ -219,6 +248,7 @@ public class TestSpringConfig {
     phonenumbers.add( officePhone );
 
     PhonenumberEntity mobilePhone = new PhonenumberEntity();
+    officePhone.setPhonenumberid(2);
     mobilePhone.setPhonenumbertype("Mobile");
     mobilePhone.setCountrycodetype("01");
     mobilePhone.setPhonenumber("123-444-0011");
@@ -226,6 +256,7 @@ public class TestSpringConfig {
     phonenumbers.add( mobilePhone );
 
     PhonenumberEntity homePhone = new PhonenumberEntity();
+    officePhone.setPhonenumberid(3);
     homePhone.setPhonenumbertype("Home");
     homePhone.setCountrycodetype("01");
     homePhone.setPhonenumber("123-555-6666");
@@ -239,6 +270,7 @@ public class TestSpringConfig {
     List<RoleEntity> roles = new ArrayList<>();
 
     RoleEntity author = new RoleEntity();
+    author.setRoleid(1);
     author.setRoletype("Author");
     author.setStartdate(new Timestamp(1401408000)); // "2014-05-30"
     roles.add( author );
@@ -267,7 +299,7 @@ public class TestSpringConfig {
   static private List<UniqueidentifierEntity> newUidEntities() {
     List<UniqueidentifierEntity> uids = new ArrayList<>();
     for (int i = 1; i <=2; i++) {
-      uids.add(new UniqueidentifierEntity(null, 1, null, "0000-0002-9430-319"+i, "ORCID"));
+      uids.add(new UniqueidentifierEntity(i, 1, null, "0000-0002-9430-319"+i, "ORCID"));
     }
     return uids;
   }
@@ -297,7 +329,7 @@ public class TestSpringConfig {
     emailEntity.setIsactive((byte)1);
     emailEntity.setEmailtype("Work");
 
-    when(mockNamedEntityService.findResolvedEntityByKey(anyInt(), eq(EmailEntity.class)))
+    when(mockNamedEntityService.findResolvedEntityByKey(eq(emailEntity.getEmailid()), eq(EmailEntity.class)))
         .thenReturn( emailEntity );
   }
 
