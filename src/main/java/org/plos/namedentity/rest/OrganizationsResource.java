@@ -20,9 +20,9 @@ public class OrganizationsResource extends BaseResource {
     try {
       return Response.ok(namedEntityService.createOrganization(object)).build();
     } catch (NedValidationException e) {
-      return validationError(e, "Unable to create individual");
+      return validationError(e, "Unable to create organization");
     } catch (Exception e) {
-      return serverError(e, "Unable to create individual");
+      return serverError(e, "Unable to create organization");
     }
   }
 
