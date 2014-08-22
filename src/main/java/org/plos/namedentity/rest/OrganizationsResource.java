@@ -1,5 +1,23 @@
+/*
+ * Copyright (c) 2006-2014 by Public Library of Science
+ * http://plos.org
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.plos.namedentity.rest;
 
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.OrganizationEntity;
@@ -13,9 +31,11 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/organizations")
+@Api("/organizations")
 public class OrganizationsResource extends BaseResource {
 
   @POST
+  @ApiOperation(value = "Create", response =  OrganizationEntity.class)
   public Response create(OrganizationEntity object) {
     try {
       return Response.ok(namedEntityService.createOrganization(object)).build();
@@ -28,6 +48,7 @@ public class OrganizationsResource extends BaseResource {
 
   @GET
   @Path("/{nedId}")
+  @ApiOperation(value = "Read", response =  OrganizationEntity.class)
   public Response read(@PathParam("nedId") int nedId) {
     try {
       return Response.ok(namedEntityService.findResolvedEntity(nedId, OrganizationEntity.class)).build();
@@ -39,6 +60,7 @@ public class OrganizationsResource extends BaseResource {
   }
 
   @GET
+  @ApiOperation(value = "List")
   public Response list() {
     return Response.ok(new GenericEntity<List<OrganizationEntity>>
         (crudService.findAll(OrganizationEntity.class)) {
@@ -47,24 +69,28 @@ public class OrganizationsResource extends BaseResource {
 
   @GET
   @Path("/{nedId}/emails")
+  @ApiOperation("List emails")
   public Response getEmails(@PathParam("nedId") int nedId) {
     return getEmails(nedId, OrganizationEntity.class);
   }
 
   @GET
   @Path("/{nedId}/addresses")
+  @ApiOperation("List addresses")
   public Response getAddresses(@PathParam("nedId") int nedId) {
     return getAddresses(nedId, OrganizationEntity.class);
   }
 
   @GET
   @Path("/{nedId}/phonenumbers")
+  @ApiOperation("List phone numbers")
   public Response getPhonenumbers(@PathParam("nedId") int nedId) {
     return getPhonenumbers(nedId, OrganizationEntity.class);
   }
 
   @GET
   @Path("/{nedId}/xref")
+  @ApiOperation("List references")
   public Response getExternalReferences(@PathParam("nedId") int nedId) {
     return getExternalReferences(nedId, OrganizationEntity.class);
   }

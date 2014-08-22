@@ -13,6 +13,8 @@
   <version>0.1.0-SNAPSHOT</version>
 
   <properties>
+    <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+    <buildDate>${maven.build.timestamp}</buildDate>
     <h2db.version>1.4.180</h2db.version>
     <jackson.version>1.9.12</jackson.version>
     <mysql.connector.version>5.1.30</mysql.connector.version> 
@@ -131,6 +133,12 @@
     </dependency>
 
     <dependency>
+      <groupId>com.wordnik</groupId>
+      <artifactId>swagger-jersey2-jaxrs_2.10</artifactId>
+      <version>1.3.5</version>
+    </dependency>
+
+    <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
       <version>1.2.16</version>
@@ -174,12 +182,20 @@
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <version>3.0.1</version>
-      <scope>test</scope>
+      <scope>provided</scope>
     </dependency>
+
   </dependencies>
 
   <build>
     <finalName>${project.artifactId}-${project.version}</finalName>
+
+    <resources>
+      <resource>
+        <directory>src/main/resources/</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
 
     <plugins>
       <plugin>
