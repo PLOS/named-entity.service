@@ -88,6 +88,14 @@ public class IndividualComposite {
     return this.individual.getLastname();
   }
 
+  public void setDisplayname(String Displayname) {
+    this.individual.setDisplayname(Displayname);
+  }
+
+  public String getDisplayname() {
+    return this.individual.getDisplayname();
+  }
+
   public void setLastname(String lastname) {
     this.individual.setLastname(lastname);
   }
