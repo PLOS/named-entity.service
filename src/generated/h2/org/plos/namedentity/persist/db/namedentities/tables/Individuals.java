@@ -38,7 +38,7 @@ public class Individuals extends org.jooq.impl.TableImpl<org.plos.namedentity.pe
 
 	/**
 	 * The column <code>namedentities.individuals.middlename</code>.
-	 */
+	 *
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> MIDDLENAME = createField("middlename", org.jooq.impl.SQLDataType.VARCHAR.length(45), this, "");
 
