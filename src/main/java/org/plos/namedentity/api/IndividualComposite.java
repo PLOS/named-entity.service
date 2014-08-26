@@ -89,7 +89,7 @@ public class IndividualComposite {
   }
 
   public void setDisplayname(String Displayname) {
-    this.individual.setMiddlename(Displayname);
+    this.individual.setDisplayname(Displayname);
   }
 
   public String getDisplayname() {
