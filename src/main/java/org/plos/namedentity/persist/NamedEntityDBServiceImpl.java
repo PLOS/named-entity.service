@@ -271,7 +271,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
 
     Record record = this.context
       .select(
-          i.NAMEDENTITYID, i.FIRSTNAME, i.MIDDLENAME, i.LASTNAME, i.URL,
+          i.NAMEDENTITYID, i.FIRSTNAME, i.MIDDLENAME, i.LASTNAME, i.DISPLAYNAME,
+          i.URL,
           gt1.SHORTDESCRIPTION.as("nameprefix"),
           gt2.SHORTDESCRIPTION.as("namesuffix"),
           gt3.SHORTDESCRIPTION.as("preferredlanguage"),
@@ -369,7 +370,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
 
     return this.context
       .select(
-        i.NAMEDENTITYID, i.FIRSTNAME, i.MIDDLENAME, i.LASTNAME, i.URL,
+        i.NAMEDENTITYID, i.FIRSTNAME, i.MIDDLENAME, i.LASTNAME, i.DISPLAYNAME, i.URL,
         gt1.SHORTDESCRIPTION.as("nameprefix"),                 
         gt2.SHORTDESCRIPTION.as("namesuffix"),
         gt3.SHORTDESCRIPTION.as("preferredlanguage"), 
