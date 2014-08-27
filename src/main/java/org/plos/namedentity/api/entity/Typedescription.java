@@ -24,7 +24,7 @@ import java.util.Objects;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @XmlRootElement
-public class TypedescriptionEntity implements java.io.Serializable {
+public class Typedescription extends Entity {
 
   private static final long serialVersionUID = -356395330;
 
@@ -32,13 +32,13 @@ public class TypedescriptionEntity implements java.io.Serializable {
   private String  description;
   private String  howused;
 
-  public TypedescriptionEntity() {}
+  public Typedescription() {}
 
-  public TypedescriptionEntity(
-    Integer typeid,
-    String  description,
-    String  howused
-  ) {
+  public Typedescription(
+      Integer typeid,
+      String description,
+      String howused
+                        ) {
     this.typeid      = typeid;
     this.description = description;
     this.howused     = howused;
@@ -74,7 +74,7 @@ public class TypedescriptionEntity implements java.io.Serializable {
 
     if (o == null || this.getClass() != o.getClass()) { return false; }
 
-    TypedescriptionEntity entity = (TypedescriptionEntity) o;
+    Typedescription entity = (Typedescription) o;
     return Objects.equals(this.typeid, entity.typeid)
         && Objects.equals(this.description, entity.description)
         && Objects.equals(this.howused, entity.howused);

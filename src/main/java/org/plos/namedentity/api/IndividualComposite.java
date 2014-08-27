@@ -16,47 +16,48 @@
  */
 package org.plos.namedentity.api;
 
-import org.plos.namedentity.api.entity.AddressEntity;
-import org.plos.namedentity.api.entity.DegreeEntity;
-import org.plos.namedentity.api.entity.EmailEntity;
-import org.plos.namedentity.api.entity.IndividualEntity;
-import org.plos.namedentity.api.entity.PhonenumberEntity;
-import org.plos.namedentity.api.entity.RoleEntity;
-import org.plos.namedentity.api.entity.UniqueidentifierEntity;
+import org.plos.namedentity.api.entity.Address;
+import org.plos.namedentity.api.entity.Degree;
+import org.plos.namedentity.api.entity.Email;
+import org.plos.namedentity.api.entity.Individual;
+import org.plos.namedentity.api.entity.Phonenumber;
+import org.plos.namedentity.api.entity.Role;
+import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.validate.Validatable;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.util.List;
 
 @XmlRootElement
-public class IndividualComposite {
+public class IndividualComposite implements Validatable {
 
-  private IndividualEntity             individual;
-  private List<RoleEntity>             roles;
-  private List<AddressEntity>          addresses;
-  private List<EmailEntity>            emails;
-  private List<PhonenumberEntity>      phonenumbers;
-  private List<UniqueidentifierEntity> uniqueidentifiers;
-  private List<DegreeEntity>           degrees;
+  private Individual             individual;
+  private List<Role>             roles;
+  private List<Address>          addresses;
+  private List<Email>            emails;
+  private List<Phonenumber>      phonenumbers;
+  private List<Uniqueidentifier> uniqueidentifiers;
+  private List<Degree>           degrees;
 
   public IndividualComposite() {
-    this.individual = new IndividualEntity();
+    this.individual = new Individual();
   }
 
-  public List<DegreeEntity> getDegrees() {
+  public List<Degree> getDegrees() {
     return degrees;
   }
 
-  public void setDegrees(List<DegreeEntity> degrees) {
+  public void setDegrees(List<Degree> degrees) {
     this.degrees = degrees;
   }
 
   @XmlTransient
-  public IndividualEntity getIndividual() {
+  public Individual getIndividual() {
     return individual;
   }
 
-  public void setIndividual(IndividualEntity individual) {
+  public void setIndividual(Individual individual) {
     this.individual = individual;
   }
 
@@ -132,43 +133,51 @@ public class IndividualComposite {
     this.individual.setPreferredcommunication(preferredcommunication);
   }
 
-  public List<RoleEntity> getRoles() {
+  public List<Role> getRoles() {
     return roles;
   }
 
-  public void setRoles(List<RoleEntity> roles) {
+  public void setRoles(List<Role> roles) {
     this.roles = roles;
   }
 
-  public List<AddressEntity> getAddresses() {
+  public List<Address> getAddresses() {
     return addresses;
   }
 
-  public void setAddresses(List<AddressEntity> addresses) {
+  public void setAddresses(List<Address> addresses) {
     this.addresses = addresses;
   }
 
-  public List<EmailEntity> getEmails() {
+  public List<Email> getEmails() {
     return emails;
   }
 
-  public void setEmails(List<EmailEntity> emails) {
+  public void setEmails(List<Email> emails) {
     this.emails = emails;
   }
 
-  public List<PhonenumberEntity> getPhonenumbers() {
+  public List<Phonenumber> getPhonenumbers() {
     return phonenumbers;
   }
 
-  public void setPhonenumbers(List<PhonenumberEntity> phonenumbers) {
+  public void setPhonenumbers(List<Phonenumber> phonenumbers) {
     this.phonenumbers = phonenumbers;
   }
 
-  public List<UniqueidentifierEntity> getUniqueidentifiers() {
+  public List<Uniqueidentifier> getUniqueidentifiers() {
     return uniqueidentifiers;
   }
 
-  public void setUniqueidentifiers(List<UniqueidentifierEntity> uniqueidentifiers) {
+  public void setUniqueidentifiers(List<Uniqueidentifier> uniqueidentifiers) {
     this.uniqueidentifiers = uniqueidentifiers;
+  }
+
+  @Override
+  public void validate() {
+
+    if (roles == null || roles.size() == 0) {
+      throw new NedValidationException("No ROLE defined for individual.");
+    }
   }
 }

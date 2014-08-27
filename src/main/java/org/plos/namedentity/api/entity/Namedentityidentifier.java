@@ -20,7 +20,7 @@ package org.plos.namedentity.api.entity;
  * Modified JOOQ generated class(pojo=true).
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class NamedentityidentifierEntity implements java.io.Serializable {
+public class Namedentityidentifier extends Entity {
 
   private static final long serialVersionUID = -1205876651;
 
@@ -31,16 +31,16 @@ public class NamedentityidentifierEntity implements java.io.Serializable {
   private java.lang.Integer  createdby;
   private java.lang.Integer  lastmodifiedby;
 
-  public NamedentityidentifierEntity() {}
+  public Namedentityidentifier() {}
 
-  public NamedentityidentifierEntity(
-    java.lang.Integer  namedentityid,
-    java.lang.Integer  typeid,
-    java.sql.Timestamp created,
-    java.sql.Timestamp lastmodified,
-    java.lang.Integer  createdby,
-    java.lang.Integer  lastmodifiedby
-  ) {
+  public Namedentityidentifier(
+      java.lang.Integer namedentityid,
+      java.lang.Integer typeid,
+      java.sql.Timestamp created,
+      java.sql.Timestamp lastmodified,
+      java.lang.Integer createdby,
+      java.lang.Integer lastmodifiedby
+                              ) {
     this.namedentityid  = namedentityid;
     this.typeid         = typeid;
     this.created        = created;

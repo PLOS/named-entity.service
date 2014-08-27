@@ -3,8 +3,8 @@ package org.plos.namedentity.rest;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.entity.GlobaltypeEntity;
-import org.plos.namedentity.api.entity.TypedescriptionEntity;
+import org.plos.namedentity.api.entity.Globaltype;
+import org.plos.namedentity.api.entity.Typedescription;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -21,11 +21,11 @@ public class TypeclassesResource extends BaseResource {
 
   @GET
   @Path("/{id}")
-  @ApiOperation(value = "Read", response = TypedescriptionEntity.class)
+  @ApiOperation(value = "Read", response = Typedescription.class)
   public Response read(@PathParam("id") int id) {
     try {
       return Response.status(Response.Status.OK).entity(
-          crudService.findById(id, TypedescriptionEntity.class)).build();
+          crudService.findById(id, Typedescription.class)).build();
       //return Response.status(Response.Status.OK).entity( toPojo(entity) ).build();
     } catch (Exception e) {
       return serverError(e, "Find type class by id failed");
@@ -37,8 +37,8 @@ public class TypeclassesResource extends BaseResource {
   public Response list() {
     try {
       return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<TypedescriptionEntity>>(
-              crudService.findAll(TypedescriptionEntity.class)
+          new GenericEntity<List<Typedescription>>(
+              crudService.findAll(Typedescription.class)
           ) {
           }).build();
     } catch (Exception e) {
@@ -47,13 +47,13 @@ public class TypeclassesResource extends BaseResource {
   }
 
   @POST
-  @ApiOperation(value = "Create", response = TypedescriptionEntity.class)
-  public Response create(TypedescriptionEntity typeDescription) {
+  @ApiOperation(value = "Create", response = Typedescription.class)
+  public Response create(Typedescription typeDescription) {
     try {
       Integer pkId = crudService.create(typeDescription);
 
       return Response.status(Response.Status.OK).entity(
-          crudService.findById(pkId, TypedescriptionEntity.class)).build();
+          crudService.findById(pkId, Typedescription.class)).build();
     } catch (NedValidationException e) {
       return validationError(e, "Unable to create Type Class");
     } catch (Exception e) {
@@ -63,14 +63,14 @@ public class TypeclassesResource extends BaseResource {
 
   @POST
   @Path("/{id}")
-  @ApiOperation(value = "Update", response = TypedescriptionEntity.class)
-  public Response update(TypedescriptionEntity typeDescription) {
+  @ApiOperation(value = "Update", response = Typedescription.class)
+  public Response update(Typedescription typeDescription) {
     try {
       crudService.update(typeDescription);
 
       return Response.status(Response.Status.OK).entity(
           crudService.findById(typeDescription.getTypeid(),
-              TypedescriptionEntity.class)).build();
+              Typedescription.class)).build();
     } catch (NedValidationException e) {
       return validationError(e, "Unable to update Type Class");
     } catch (Exception e) {
@@ -83,7 +83,7 @@ public class TypeclassesResource extends BaseResource {
   @ApiOperation("Delete")
   public Response delete(@PathParam("id") int id) {
     try {
-      TypedescriptionEntity entity = new TypedescriptionEntity();
+      Typedescription entity = new Typedescription();
       entity.setTypeid(id);
       crudService.delete(entity);
       return Response.status(Response.Status.NO_CONTENT).build();
@@ -98,12 +98,12 @@ public class TypeclassesResource extends BaseResource {
 
   @GET
   @Path("/{typeclassid}/typevalues/{typevalueid}")
-  @ApiOperation(value = "Read global type", response = GlobaltypeEntity.class)
+  @ApiOperation(value = "Read global type", response = Globaltype.class)
   public Response getGlobalType(@PathParam("typeclassid") int typeClassId,
                                 @PathParam("typevalueid") int typeValueId) {
     try {
       return Response.status(Response.Status.OK).entity(
-          crudService.findById(typeValueId, GlobaltypeEntity.class)).build();
+          crudService.findById(typeValueId, Globaltype.class)).build();
     }
     catch(Exception e) {
       return serverError(e, "Find type value by id failed");
@@ -115,11 +115,11 @@ public class TypeclassesResource extends BaseResource {
   @ApiOperation("List global types")
   public Response getGlobalTypeForTypeClass(@PathParam("typeclassid") int typeClassId) {
     try {
-      GlobaltypeEntity searchCriteria = new GlobaltypeEntity();
+      Globaltype searchCriteria = new Globaltype();
       searchCriteria.setTypeid(typeClassId);
 
       return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<GlobaltypeEntity>>(
+          new GenericEntity<List<Globaltype>>(
               crudService.findByAttribute(searchCriteria)
           ){}).build();
     }
@@ -130,14 +130,14 @@ public class TypeclassesResource extends BaseResource {
 
   @POST
   @Path("/{typeclassid}/typevalues")
-  @ApiOperation(value = "Create global type", response = GlobaltypeEntity.class)
-  public Response createGlobalType(@PathParam("typeclassid") int typeClassId, GlobaltypeEntity globalType) {
+  @ApiOperation(value = "Create global type", response = Globaltype.class)
+  public Response createGlobalType(@PathParam("typeclassid") int typeClassId, Globaltype globalType) {
     try {
       globalType.setTypeid(typeClassId);
       Integer pkId = crudService.create(globalType);
 
       return Response.status(Response.Status.OK).entity(
-          crudService.findById(pkId, GlobaltypeEntity.class)).build();
+          crudService.findById(pkId, Globaltype.class)).build();
     }
     catch(NedValidationException e) {
       return validationError(e, "Unable to create Type Value");
@@ -149,10 +149,10 @@ public class TypeclassesResource extends BaseResource {
 
   @POST
   @Path("/{typeclassid}/typevalues/{typevalueid}")
-  @ApiOperation(value = "Update global type", response = GlobaltypeEntity.class)
+  @ApiOperation(value = "Update global type", response = Globaltype.class)
   public Response updateGlobalType(@PathParam("typeclassid") int typeClassId,
                                    @PathParam("typevalueid") int typeValueId,
-                                   GlobaltypeEntity globalType) {
+                                   Globaltype globalType) {
     try {
 
 
@@ -160,8 +160,8 @@ public class TypeclassesResource extends BaseResource {
 
 
       crudService.update( globalType ); // TODO: handle 404 not_found?
-      GlobaltypeEntity entity = crudService.findById(
-          globalType.getGlobaltypeid(), GlobaltypeEntity.class);
+      Globaltype entity = crudService.findById(
+          globalType.getGlobaltypeid(), Globaltype.class);
       return Response.status(Response.Status.OK).entity( entity ).build();
     }
     catch(NedValidationException e) {
@@ -178,7 +178,7 @@ public class TypeclassesResource extends BaseResource {
   public Response deleteGlobalType(@PathParam("typeclassid") int typeClassId,
                                    @PathParam("typevalueid") int typeValueId) {
     try {
-      GlobaltypeEntity entity = new GlobaltypeEntity();
+      Globaltype entity = new Globaltype();
       entity.setGlobaltypeid(typeValueId);
       crudService.delete(entity);
       return Response.status(Response.Status.NO_CONTENT).build();

@@ -20,7 +20,7 @@ package org.plos.namedentity.api.entity;
  * Modified JOOQ generated class(pojo=true).
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class SubjectareaEntity implements java.io.Serializable {
+public class Subjectarea extends Entity {
 
   private static final long serialVersionUID = 169794521;
 
@@ -28,13 +28,13 @@ public class SubjectareaEntity implements java.io.Serializable {
   private Integer namedentityid;
   private Integer subjectareatypeid;
 
-  public SubjectareaEntity() {}
+  public Subjectarea() {}
 
-  public SubjectareaEntity(
-    Integer subjectareaid,
-    Integer namedentityid,
-    Integer subjectareatypeid
-  ) {
+  public Subjectarea(
+      Integer subjectareaid,
+      Integer namedentityid,
+      Integer subjectareatypeid
+                    ) {
     this.subjectareaid     = subjectareaid;
     this.namedentityid     = namedentityid;
     this.subjectareatypeid = subjectareatypeid;

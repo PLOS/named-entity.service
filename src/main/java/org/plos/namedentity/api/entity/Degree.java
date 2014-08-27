@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @XmlRootElement
-public class DegreeEntity implements java.io.Serializable {
+public class Degree extends Entity {
 
   private static final long serialVersionUID = -1999999966;
 
@@ -32,7 +32,7 @@ public class DegreeEntity implements java.io.Serializable {
   private Integer degreetypeid;
   private String  degreetype;
 
-  public DegreeEntity() {}
+  public Degree() {}
 
   public String getDegreetype() {
     return degreetype;

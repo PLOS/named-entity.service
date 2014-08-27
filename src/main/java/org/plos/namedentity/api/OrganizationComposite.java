@@ -1,23 +1,24 @@
 package org.plos.namedentity.api;
 
-import org.plos.namedentity.api.entity.AddressEntity;
-import org.plos.namedentity.api.entity.EmailEntity;
-import org.plos.namedentity.api.entity.OrganizationEntity;
-import org.plos.namedentity.api.entity.PhonenumberEntity;
-import org.plos.namedentity.api.entity.UniqueidentifierEntity;
+import org.plos.namedentity.api.entity.Address;
+import org.plos.namedentity.api.entity.Email;
+import org.plos.namedentity.api.entity.Organization;
+import org.plos.namedentity.api.entity.Phonenumber;
+import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.validate.Validatable;
 
 import java.util.List;
 
-public class OrganizationComposite {
+public class OrganizationComposite implements Validatable {
 
-  private OrganizationEntity           organization;
-  private List<AddressEntity>          addresses;
-  private List<EmailEntity>            emails;
-  private List<PhonenumberEntity>      phonenumbers;
-  private List<UniqueidentifierEntity> uniqueidentifiers;
+  private Organization           organization;
+  private List<Address>          addresses;
+  private List<Email>            emails;
+  private List<Phonenumber>      phonenumbers;
+  private List<Uniqueidentifier> uniqueidentifiers;
 
   public OrganizationComposite() {
-    this.organization = new OrganizationEntity();
+    this.organization = new Organization();
   }
 
   public Integer getNamedentityid() {
@@ -92,27 +93,31 @@ public class OrganizationComposite {
     this.organization.setOrganizationtype(organizationtype);
   }
 
-  public List<AddressEntity> getAddresses() {
+  public List<Address> getAddresses() {
     return addresses;
   }
 
-  public void setAddresses(List<AddressEntity> addresses) {
+  public void setAddresses(List<Address> addresses) {
     this.addresses = addresses;
   }
 
-  public List<EmailEntity> getEmails() {
+  public List<Email> getEmails() {
     return emails;
   }
 
-  public void setEmails(List<EmailEntity> emails) {
+  public void setEmails(List<Email> emails) {
     this.emails = emails;
   }
 
-  public List<PhonenumberEntity> getPhonenumbers() {
+  public List<Phonenumber> getPhonenumbers() {
     return phonenumbers;
   }
 
-  public void setPhonenumbers(List<PhonenumberEntity> phonenumbers) {
+  public void setPhonenumbers(List<Phonenumber> phonenumbers) {
     this.phonenumbers = phonenumbers;
+  }
+
+  @Override
+  public void validate() {
   }
 }

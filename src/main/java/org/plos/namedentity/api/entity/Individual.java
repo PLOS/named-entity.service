@@ -24,7 +24,7 @@ import java.util.Objects;
  */
 @XmlRootElement
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class IndividualEntity implements java.io.Serializable {
+public class Individual extends Entity {
 
   private static final long serialVersionUID = 2026965529;
 
@@ -51,26 +51,26 @@ public class IndividualEntity implements java.io.Serializable {
   private byte[]  photoimage;
   private String  url;
 
-  public IndividualEntity() {}
+  public Individual() {}
 
-  public IndividualEntity(
+  public Individual(
       Integer namedentityid,
-      String  firstname,
-      String  middlename,
-      String  lastname,
-      String  nickname,
-      String  nameprefix,
+      String firstname,
+      String middlename,
+      String lastname,
+      String nickname,
+      String nameprefix,
       Integer nameprefixtypeid,
-      String  namesuffix,
+      String namesuffix,
       Integer namesuffixtypeid,
-      String  displayname,
-      String  preferredlanguage,
+      String displayname,
+      String preferredlanguage,
       Integer preferredlanguagetypeid,
-      String  preferredcommunication,
+      String preferredcommunication,
       Integer preferredcommunicationmethodtypeid,
-      byte[]  photoimage,
-      String  url
-  ) {
+      byte[] photoimage,
+      String url
+                   ) {
     this(namedentityid,
         firstname,
         middlename,
@@ -90,20 +90,20 @@ public class IndividualEntity implements java.io.Serializable {
     this.preferredcommunication = preferredcommunication;
   }
   
-  public IndividualEntity(
-    Integer namedentityid,
-    String  firstname,
-    String  middlename,
-    String  lastname,
-    String  nickname,
-    Integer nameprefixtypeid,
-    Integer namesuffixtypeid,
-    String  displayname,
-    Integer preferredlanguagetypeid,
-    Integer preferredcommunicationmethodtypeid,
-    byte[]  photoimage,
-    String  url
-  ) {
+  public Individual(
+      Integer namedentityid,
+      String firstname,
+      String middlename,
+      String lastname,
+      String nickname,
+      Integer nameprefixtypeid,
+      Integer namesuffixtypeid,
+      String displayname,
+      Integer preferredlanguagetypeid,
+      Integer preferredcommunicationmethodtypeid,
+      byte[] photoimage,
+      String url
+                   ) {
     this.namedentityid = namedentityid;
     this.firstname = firstname;
     this.middlename = middlename;
@@ -252,7 +252,7 @@ public class IndividualEntity implements java.io.Serializable {
 
     if (o == null || this.getClass() != o.getClass()) { return false; }
 
-    IndividualEntity entity = (IndividualEntity) o;
+    Individual entity = (Individual) o;
     return Objects.equals(this.namedentityid, entity.namedentityid)
         && Objects.equals(this.firstname, entity.firstname)
         && Objects.equals(this.middlename, entity.middlename)

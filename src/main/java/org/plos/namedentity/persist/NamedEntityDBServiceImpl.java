@@ -51,10 +51,10 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
   public <T> Integer create(T t) {
     // load jooq-generated record from pojo. insert (implicitly)
 
-    if (t instanceof IndividualEntity)
-      ((IndividualEntity) t).setNamedentityid(newNamedEntityId("Individual"));
-    else if (t instanceof OrganizationEntity)
-      ((OrganizationEntity) t).setNamedentityid(newNamedEntityId("Organization"));
+    if (t instanceof Individual)
+      ((Individual) t).setNamedentityid(newNamedEntityId("Individual"));
+    else if (t instanceof Organization)
+      ((Organization) t).setNamedentityid(newNamedEntityId("Organization"));
 
     UpdatableRecord record = (UpdatableRecord) context.newRecord(table(t.getClass()), t);
     record.store();
@@ -94,8 +94,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
   @Override @SuppressWarnings("unchecked")
   public <T> List<T> findByAttribute(T t) {
   
-    if (t instanceof GlobaltypeEntity) {
-      GlobaltypeEntity gt = (GlobaltypeEntity)t;
+    if (t instanceof Globaltype) {
+      Globaltype gt = (Globaltype)t;
       if (gt.getTypeid() != null) {
 
         // lookup a specific type value
@@ -115,8 +115,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
         }
       }
     }
-    else if (t instanceof EmailEntity) {
-      EmailEntity et = (EmailEntity)t;
+    else if (t instanceof Email) {
+      Email et = (Email)t;
 
       // lookup emails for an individual
       if (et.getNamedentityid() != null) {
@@ -133,8 +133,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
           .fetchInto((Class<T>)t.getClass());
       }
     }
-    else if (t instanceof PhonenumberEntity) {
-      PhonenumberEntity pt = (PhonenumberEntity)t;
+    else if (t instanceof Phonenumber) {
+      Phonenumber pt = (Phonenumber)t;
 
       // lookup phone numbers for an individual
       if (pt.getNamedentityid() != null) {
@@ -190,36 +190,36 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
   /* ---------------------------------------------------------------------- */
 
   @SuppressWarnings("unchecked")
-  public <T> T findResolvedEntityByKey(Integer pk, Class<T> clazz) {
+  public <T extends Entity> T findResolvedEntityByKey(Integer pk, Class<T> clazz) {
 
     String cname = clazz.getCanonicalName();
 
-    if (cname.equals(EmailEntity.class.getCanonicalName()))
+    if (cname.equals(Email.class.getCanonicalName()))
       return (T)findEmailByPrimaryKey(pk);
 
     throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
   }
 
   @SuppressWarnings("unchecked")
-  public <T> List<T> findResolvedEntityByUid(String srcType, String uid, Class<T> clazz) {
+  public <T extends Entity> List<T> findResolvedEntityByUid(String srcType, String uid, Class<T> clazz) {
     String cname = clazz.getCanonicalName();
 
-    if (cname.equals(IndividualEntity.class.getCanonicalName()))
+    if (cname.equals(Individual.class.getCanonicalName()))
       return (List<T>)findIndividualsByUid(srcType, uid);
-    if (cname.equals(OrganizationEntity.class.getCanonicalName()))
+    if (cname.equals(Organization.class.getCanonicalName()))
       return (List<T>)findOrganizationsByUid(srcType, uid);
 
     throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
   }
 
   @SuppressWarnings("unchecked")
-  public <T> T findResolvedEntity(Integer nedId, Class<T> clazz) {
+  public <T extends Entity> T findResolvedEntity(Integer nedId, Class<T> clazz) {
 
     String cname = clazz.getCanonicalName();
 
-    if (cname.equals(IndividualEntity.class.getCanonicalName()))
+    if (cname.equals(Individual.class.getCanonicalName()))
       return (T)findIndividualByNedId(nedId);
-    if (cname.equals(OrganizationEntity.class.getCanonicalName()))
+    if (cname.equals(Organization.class.getCanonicalName()))
       return (T)findOrganizationByNedId(nedId);
 
     throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
@@ -227,21 +227,21 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
   }
 
   @SuppressWarnings("unchecked")
-  public <T> List<T> findResolvedEntities(Integer nedId, Class<T> clazz) {
+  public <T extends Entity> List<T> findResolvedEntities(Integer nedId, Class<T> clazz) {
 
     String cname = clazz.getCanonicalName();
 
-    if (cname.equals(AddressEntity.class.getCanonicalName()))
+    if (cname.equals(Address.class.getCanonicalName()))
       return (List<T>)findAddressesByNedId(nedId);
-    if (cname.equals(EmailEntity.class.getCanonicalName()))
+    if (cname.equals(Email.class.getCanonicalName()))
       return (List<T>)findEmailsByNedId(nedId);
-    if (cname.equals(PhonenumberEntity.class.getCanonicalName()))
+    if (cname.equals(Phonenumber.class.getCanonicalName()))
       return (List<T>)findPhoneNumbersByNedId(nedId);
-    if (cname.equals(RoleEntity.class.getCanonicalName()))
+    if (cname.equals(Role.class.getCanonicalName()))
       return (List<T>)findRolesByNedId(nedId);
-    if (cname.equals(UniqueidentifierEntity.class.getCanonicalName()))
+    if (cname.equals(Uniqueidentifier.class.getCanonicalName()))
       return (List<T>)findUniqueIdsByNedId(nedId);
-    if (cname.equals(DegreeEntity.class.getCanonicalName()))
+    if (cname.equals(Degree.class.getCanonicalName()))
       return (List<T>)findDegreesByNedId(nedId);
 
     throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
@@ -249,7 +249,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
   }
 
 
-  private IndividualEntity findIndividualByNedId(Integer nedId) {
+  private Individual findIndividualByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription nameprefix, i.firstName firstname, 
                i.middleName middlename, i.lastName lastname, 
@@ -288,10 +288,10 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
     if (record == null)
       throw new EntityNotFoundException("Individual not found");
 
-    return record.into(IndividualEntity.class);
+    return record.into(Individual.class);
   }
 
-  private OrganizationEntity findOrganizationByNedId(Integer nedId) {
+  private Organization findOrganizationByNedId(Integer nedId) {
 /*
         SELECT o.namedentityid, organizationfamiliarname, organizationlegalname,
                isactive, isvisible, url, gt1.shortdescription organizationtype
@@ -314,10 +314,10 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
     if (record == null)
       throw new EntityNotFoundException("Organization not found");
 
-    return record.into(OrganizationEntity.class);
+    return record.into(Organization.class);
   }
 
-  private List<OrganizationEntity> findOrganizationsByUid(String srcType, String uid) {
+  private List<Organization> findOrganizationsByUid(String srcType, String uid) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
@@ -335,13 +335,13 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
         .join(u).on(o.NAMEDENTITYID.equal(u.NAMEDENTITYID))
         .where(u.UNIQUEIDENTIFIER.equal(uid))
         .fetch()
-        .into(OrganizationEntity.class);
+        .into(Organization.class);
 
     // TODO: make sure the empty set is handles gracefully
 
   }
 
-  private List<IndividualEntity> findIndividualsByUid(String srcType, String uid) {
+  private List<Individual> findIndividualsByUid(String srcType, String uid) {
 /*
    EXPLAIN
         SELECT gt1.shortDescription nameprefix, i.firstName firstname, 
@@ -386,10 +386,10 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt5).on(u.UNIQUEIDENTIFIERTYPEID.equal(gt5.GLOBALTYPEID)).and(gt5.SHORTDESCRIPTION.eq(srcType))
       .where(u.UNIQUEIDENTIFIER.equal(uid))
       .fetch()
-      .into(IndividualEntity.class);
+      .into(Individual.class);
   }
 
-  private List<AddressEntity> findAddressesByNedId(Integer nedId) {
+  private List<Address> findAddressesByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription addresstype, a.addressline1, a.addressline2, 
                a.addressline3, a.city, a.postalCode, a.isprimary,
@@ -420,10 +420,10 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt3).on(a.COUNTRYCODETYPEID.equal(gt3.GLOBALTYPEID))
       .where(a.NAMEDENTITYID.equal(nedId))
       .fetch()
-      .into(AddressEntity.class);
+      .into(Address.class);
   }
 
-  private List<EmailEntity> findEmailsByNedId(Integer nedId) {
+  private List<Email> findEmailsByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription emailtype, e.emailaddress, e.isprimary
           FROM emails e
@@ -442,10 +442,10 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt1).on(e.EMAILTYPEID.equal(gt1.GLOBALTYPEID))
       .where(e.NAMEDENTITYID.equal(nedId))
       .fetch()
-      .into(EmailEntity.class);
+      .into(Email.class);
   }
 
-  private List<PhonenumberEntity> findPhoneNumbersByNedId(Integer nedId) {
+  private List<Phonenumber> findPhoneNumbersByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription phonenumbertype,
                gt2.shortDescription countrycodetype,
@@ -470,10 +470,10 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt2).on(p.COUNTRYCODETYPEID.equal(gt2.GLOBALTYPEID))
       .where(p.NAMEDENTITYID.equal(nedId))
       .fetch()
-      .into(PhonenumberEntity.class);
+      .into(Phonenumber.class);
   }
 
-  private List<DegreeEntity> findDegreesByNedId(Integer nedId) {
+  private List<Degree> findDegreesByNedId(Integer nedId) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Degrees     d   = DEGREES.as("d");
@@ -486,10 +486,10 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
         .leftOuterJoin(gt1).on(d.DEGREETYPEID.equal(gt1.GLOBALTYPEID))
         .where(d.NAMEDENTITYID.equal(nedId))
         .fetch()
-        .into(DegreeEntity.class);
+        .into(Degree.class);
   }
 
-  private List<RoleEntity> findRolesByNedId(Integer nedId) {
+  private List<Role> findRolesByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription sourceapplicationtype,
                gt2.shortDescription roletype,
@@ -514,10 +514,10 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt2).on(r.ROLETYPEID.equal(gt2.GLOBALTYPEID))
       .where(r.NAMEDENTITYID.equal(nedId))
       .fetch()
-      .into(RoleEntity.class);
+      .into(Role.class);
   }
 
-  private List<UniqueidentifierEntity> findUniqueIdsByNedId(Integer nedId) {
+  private List<Uniqueidentifier> findUniqueIdsByNedId(Integer nedId) {
 /*
    EXPLAIN
         SELECT gt.shortDescription uniqueidentifiertype, uid.uniqueIdentifier 
@@ -536,10 +536,10 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       .leftOuterJoin(gt).on(uid.UNIQUEIDENTIFIERTYPEID.equal(gt.GLOBALTYPEID))
       .where(uid.NAMEDENTITYID.equal(nedId))
       .fetch()
-      .into(UniqueidentifierEntity.class);
+      .into(Uniqueidentifier.class);
   }
 
-  private EmailEntity findEmailByPrimaryKey(Integer emailId) {
+  private Email findEmailByPrimaryKey(Integer emailId) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
@@ -557,7 +557,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
 
     if (record == null) throw new EntityNotFoundException("Email not found");
 
-    return record.into(EmailEntity.class);
+    return record.into(Email.class);
   }
 
   /* ---------------------------------------------------------------------- */
@@ -591,17 +591,17 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
   private static final Map<Class,TablePkPair> entityTableMap;
   static {
     entityTableMap = new ConcurrentHashMap<>();
-    entityTableMap.put(AddressEntity.class, new TablePkPair(ADDRESSES, ADDRESSES.ADDRESSID));
-    entityTableMap.put(EmailEntity.class, new TablePkPair(EMAILS, EMAILS.EMAILID));
-    entityTableMap.put(GlobaltypeEntity.class, new TablePkPair(GLOBALTYPES, GLOBALTYPES.GLOBALTYPEID));
-    entityTableMap.put(IndividualEntity.class, new TablePkPair(INDIVIDUALS, INDIVIDUALS.NAMEDENTITYID));
-    entityTableMap.put(JournalEntity.class, new TablePkPair(JOURNALS, JOURNALS.JOURNALID));
-    entityTableMap.put(PhonenumberEntity.class, new TablePkPair(PHONENUMBERS, PHONENUMBERS.PHONENUMBERID));
-    entityTableMap.put(RoleEntity.class, new TablePkPair(ROLES, ROLES.ROLEID));
-    entityTableMap.put(TypedescriptionEntity.class, new TablePkPair(TYPEDESCRIPTIONS, TYPEDESCRIPTIONS.TYPEID));
-    entityTableMap.put(UniqueidentifierEntity.class, new TablePkPair(UNIQUEIDENTIFIERS, UNIQUEIDENTIFIERS.UNIQUEIDENTIFIERSID));
-    entityTableMap.put(OrganizationEntity.class, new TablePkPair(ORGANIZATIONS, ORGANIZATIONS.NAMEDENTITYID));
-    entityTableMap.put(DegreeEntity.class, new TablePkPair(DEGREES, DEGREES.DEGREEID));
+    entityTableMap.put(Address.class, new TablePkPair(ADDRESSES, ADDRESSES.ADDRESSID));
+    entityTableMap.put(Email.class, new TablePkPair(EMAILS, EMAILS.EMAILID));
+    entityTableMap.put(Globaltype.class, new TablePkPair(GLOBALTYPES, GLOBALTYPES.GLOBALTYPEID));
+    entityTableMap.put(Individual.class, new TablePkPair(INDIVIDUALS, INDIVIDUALS.NAMEDENTITYID));
+    entityTableMap.put(Journal.class, new TablePkPair(JOURNALS, JOURNALS.JOURNALID));
+    entityTableMap.put(Phonenumber.class, new TablePkPair(PHONENUMBERS, PHONENUMBERS.PHONENUMBERID));
+    entityTableMap.put(Role.class, new TablePkPair(ROLES, ROLES.ROLEID));
+    entityTableMap.put(Typedescription.class, new TablePkPair(TYPEDESCRIPTIONS, TYPEDESCRIPTIONS.TYPEID));
+    entityTableMap.put(Uniqueidentifier.class, new TablePkPair(UNIQUEIDENTIFIERS, UNIQUEIDENTIFIERS.UNIQUEIDENTIFIERSID));
+    entityTableMap.put(Organization.class, new TablePkPair(ORGANIZATIONS, ORGANIZATIONS.NAMEDENTITYID));
+    entityTableMap.put(Degree.class, new TablePkPair(DEGREES, DEGREES.DEGREEID));
   }
   private static Table table(Class key) {
     return entityTableMap.get(key).table();

@@ -17,7 +17,8 @@
 package org.plos.namedentity.service;
 
 import org.plos.namedentity.api.IndividualComposite;
-import org.plos.namedentity.api.entity.OrganizationEntity;
+import org.plos.namedentity.api.entity.Entity;
+import org.plos.namedentity.api.entity.Organization;
 
 import java.util.List;
 
@@ -29,17 +30,17 @@ public interface NamedEntityService {
 
   public IndividualComposite createIndividualComposite(IndividualComposite composite);
 
-  public OrganizationEntity createOrganization(OrganizationEntity entity);
+  public Organization createOrganization(Organization entity);
 
   public IndividualComposite findIndividualComposite(Integer nedId);
 
-  public <T> List<T> findResolvedEntityByUid(String srcType, String uid, Class<T> clazz);
+  public <T extends Entity> List<T> findResolvedEntityByUid(String srcType, String uid, Class<T> clazz);
 
-  public <T> T findResolvedEntityByKey(Integer pk, Class<T> clazz);
+  public <T extends Entity> T findResolvedEntityByKey(Integer pk, Class<T> clazz);
 
-  public <T> T findResolvedEntity(Integer nedId, Class<T> clazz);
+  public <T extends Entity> T findResolvedEntity(Integer nedId, Class<T> clazz);
 
-  public <T> List<T> findResolvedEntities(Integer nedId, Class<T> clazz);
+  public <T extends Entity> List<T> findResolvedEntities(Integer nedId, Class<T> clazz);
 
   /**
    * Resolve and entity's values to foreign keys
@@ -47,5 +48,5 @@ public interface NamedEntityService {
    * @param t
    * @param <T>
    */
-  public <T> T resolveValuesToIds(T t);
+  public <T extends Entity> T resolveValuesToIds(T t);
 }

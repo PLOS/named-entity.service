@@ -16,16 +16,15 @@
  */
 package org.plos.namedentity.api.entity;
 
-import java.util.Objects;
-
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Objects;
 
 /**
  * Modified JOOQ generated class(pojo=true).
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @XmlRootElement
-public class EmailEntity implements java.io.Serializable {
+public class Email extends Entity {
 
   private static final long serialVersionUID = -945009318;
 
@@ -39,30 +38,19 @@ public class EmailEntity implements java.io.Serializable {
   private Byte    isprimary;
   private Byte    isactive;
 
-  public EmailEntity() {
+  public Email() {
     this(null,null,null,null,null,null,null); 
   }
 
-  public EmailEntity(
-    Integer emailid,
-    Integer namedentityid,
-    Integer emailtypeid,
-    String  emailaddress,
-    Byte    isprimary,
-    Byte    isactive
-  ) {
-    this(emailid, namedentityid, emailtypeid, null, emailaddress, isprimary, isactive);
-  }
-
-  public EmailEntity(
-    Integer emailid,
-    Integer namedentityid,
-    Integer emailtypeid,
-    String  emailtype,
-    String  emailaddress,
-    Byte    isprimary,
-    Byte    isactive
-  ) {
+  public Email(
+      Integer emailid,
+      Integer namedentityid,
+      Integer emailtypeid,
+      String emailtype,
+      String emailaddress,
+      Byte isprimary,
+      Byte isactive
+              ) {
     this.emailid       = emailid;
     this.namedentityid = namedentityid;
     this.emailtypeid   = emailtypeid;
@@ -134,7 +122,7 @@ public class EmailEntity implements java.io.Serializable {
 
     if (o == null || this.getClass() != o.getClass()) { return false; }
 
-    EmailEntity entity = (EmailEntity) o;
+    Email entity = (Email) o;
     return Objects.equals(this.emailid, entity.emailid)
         && Objects.equals(this.namedentityid, entity.namedentityid)
         && Objects.equals(this.emailtypeid, entity.emailtypeid)
@@ -149,4 +137,11 @@ public class EmailEntity implements java.io.Serializable {
     return Objects.hash(
       emailid, namedentityid, emailtypeid, emailtype, emailaddress, isprimary, isactive);
   }
+
+  @Override
+  public void validate() {
+    // check email address syntax
+
+  }
+
 }

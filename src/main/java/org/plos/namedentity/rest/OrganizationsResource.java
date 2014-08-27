@@ -20,7 +20,7 @@ import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.entity.OrganizationEntity;
+import org.plos.namedentity.api.entity.Organization;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -35,8 +35,8 @@ import java.util.List;
 public class OrganizationsResource extends BaseResource {
 
   @POST
-  @ApiOperation(value = "Create", response =  OrganizationEntity.class)
-  public Response create(OrganizationEntity object) {
+  @ApiOperation(value = "Create", response =  Organization.class)
+  public Response create(Organization object) {
     try {
       return Response.ok(namedEntityService.createOrganization(object)).build();
     } catch (NedValidationException e) {
@@ -48,10 +48,10 @@ public class OrganizationsResource extends BaseResource {
 
   @GET
   @Path("/{nedId}")
-  @ApiOperation(value = "Read", response =  OrganizationEntity.class)
+  @ApiOperation(value = "Read", response =  Organization.class)
   public Response read(@PathParam("nedId") int nedId) {
     try {
-      return Response.ok(namedEntityService.findResolvedEntity(nedId, OrganizationEntity.class)).build();
+      return Response.ok(namedEntityService.findResolvedEntity(nedId, Organization.class)).build();
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
     } catch (Exception e) {
@@ -62,8 +62,8 @@ public class OrganizationsResource extends BaseResource {
   @GET
   @ApiOperation(value = "List")
   public Response list() {
-    return Response.ok(new GenericEntity<List<OrganizationEntity>>
-        (crudService.findAll(OrganizationEntity.class)) {
+    return Response.ok(new GenericEntity<List<Organization>>
+        (crudService.findAll(Organization.class)) {
     }).build();
   }
 
@@ -71,28 +71,28 @@ public class OrganizationsResource extends BaseResource {
   @Path("/{nedId}/emails")
   @ApiOperation("List emails")
   public Response getEmails(@PathParam("nedId") int nedId) {
-    return getEmails(nedId, OrganizationEntity.class);
+    return getEmails(nedId, Organization.class);
   }
 
   @GET
   @Path("/{nedId}/addresses")
   @ApiOperation("List addresses")
   public Response getAddresses(@PathParam("nedId") int nedId) {
-    return getAddresses(nedId, OrganizationEntity.class);
+    return getAddresses(nedId, Organization.class);
   }
 
   @GET
   @Path("/{nedId}/phonenumbers")
   @ApiOperation("List phone numbers")
   public Response getPhonenumbers(@PathParam("nedId") int nedId) {
-    return getPhonenumbers(nedId, OrganizationEntity.class);
+    return getPhonenumbers(nedId, Organization.class);
   }
 
   @GET
   @Path("/{nedId}/xref")
   @ApiOperation("List references")
   public Response getExternalReferences(@PathParam("nedId") int nedId) {
-    return getExternalReferences(nedId, OrganizationEntity.class);
+    return getExternalReferences(nedId, Organization.class);
   }
 
 }
