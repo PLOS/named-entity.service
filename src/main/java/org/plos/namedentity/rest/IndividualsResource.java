@@ -4,6 +4,7 @@ import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Individual;
@@ -127,7 +128,6 @@ public class IndividualsResource extends BaseResource {
     }
   }
 
-
   /* ----------------------------------------------------------------------- */
   /*  EMAIL CRUD                                                             */
   /* ----------------------------------------------------------------------- */
@@ -173,13 +173,53 @@ public class IndividualsResource extends BaseResource {
     return getEmails(nedId, Individual.class);
   }
 
+  /* ----------------------------------------------------------------------- */
+  /*  ADDRESS CRUD                                                           */
+  /* ----------------------------------------------------------------------- */
+
+  @POST
+  @Path("/{nedId}/addresses")
+  @ApiOperation(value = "Create address", response = Address.class)
+  public Response createAddress(@PathParam("nedId") int nedId,
+                                Address addressEntity) {
+    return createAddress(nedId, addressEntity, Individual.class);
+  }
+
+  @POST
+  @Path("/{nedId}/addresses/{addressId}")
+  @ApiOperation(value = "Update address", response = Address.class)
+  public Response updateAddress(@PathParam("nedId") int nedId, 
+                                @PathParam("addressId") int addressId, 
+                                Address addressEntity) {
+    return updateAddress(nedId, addressId, addressEntity, Individual.class);
+  }
+
+  @DELETE
+  @Path("/{nedId}/addresses/{addressId}")
+  @ApiOperation(value = "Delete address")
+  public Response deleteAddress(@PathParam("nedId") int nedId, 
+                                @PathParam("addressId") int addressId) {
+    return deleteAddress(nedId, addressId, Individual.class);
+  }
+
+  @GET
+  @Path("/{nedId}/addresses/{addressId}")
+  @ApiOperation(value = "Read address", response = Address.class)
+  public Response getAddress(@PathParam("nedId") int nedId,
+                             @PathParam("addressId") int addressId) {
+    return getAddress(nedId, addressId, Individual.class);
+  }
 
   @GET
   @Path("/{nedId}/addresses")
   @ApiOperation(value = "List addresses")
-  public Response getAddresses(@PathParam("nedId") int nedId) {
+  public Response getAddresss(@PathParam("nedId") int nedId) {
     return getAddresses(nedId, Individual.class);
   }
+
+  /* ----------------------------------------------------------------------- */
+  /*  PHONE NUMBER CRUD                                                      */
+  /* ----------------------------------------------------------------------- */
 
   @GET
   @Path("/{nedId}/phonenumbers")
@@ -224,5 +264,4 @@ public class IndividualsResource extends BaseResource {
       return serverError(e, "Find roles by nedId failed");
     }
   }
-
 }

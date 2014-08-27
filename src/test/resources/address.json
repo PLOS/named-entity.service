@@ -1,0 +1,10 @@
+{
+    "addresstype"     : "Office",
+    "addressline1"    : "addressline 1",
+    "addressline2"    : "addressline 2",
+    "addressline3"    : "addressline 3",
+    "city"            : "city",
+    "statecodetype"   : "CA",
+    "countrycodetype" : "United States",
+    "postalcode"      : "12345"
+}

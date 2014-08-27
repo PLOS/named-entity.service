@@ -328,6 +328,64 @@ public class NamedEntityServiceTest {
     assertTrue( crudService.delete(emailEntity) );
   }
 
+  @Test
+  public void testAddressEntityCrud() {
+
+    // CREATE address entity. we don't expect the address type to persist.
+
+    Address addressEntity = new Address();
+    addressEntity.setNamedentityid(1);
+    addressEntity.setAddresstype("Office");
+    addressEntity.setAddressline1("addressline 1");
+    addressEntity.setAddressline2("addressline 2");
+    addressEntity.setAddressline3("addressline 3");
+    addressEntity.setCity("city");
+    addressEntity.setStatecodetype("CA");
+    addressEntity.setCountrycodetype("United States");
+    addressEntity.setPostalcode("94401");
+
+    Integer createAddressId = crudService.create(addressEntity);
+    assertNotNull( createAddressId );
+
+    Address savedEntity = namedEntityService.findResolvedEntityByKey(createAddressId, Address.class);
+    assertNull( savedEntity.getAddresstype() );
+
+    // try again but this time use type resolver. remember that type names are
+    // resolved by joins when querying database -- need foreign key to get name.
+    
+    Integer createAddressId2 = crudService.create( namedEntityService.resolveValuesToIds(addressEntity) );
+    assertNotNull( createAddressId2 );
+
+    Address savedEntity2 = namedEntityService.findResolvedEntityByKey(createAddressId2, Address.class);
+    assertNotNull( savedEntity2.getAddresstype() );
+
+    // UPDATE address entity. Scrub appropriate attributes from current instance
+    // and reuse. Again, we don't expect for address type to persist.
+
+    addressEntity.setAddressid(createAddressId); 
+    addressEntity.setAddresstypeid(null); 
+    addressEntity.setStatecodetypeid(null); 
+    addressEntity.setCountrycodetypeid(null); 
+    assertTrue( crudService.update(addressEntity) );
+
+    Address savedEntity3 = namedEntityService.findResolvedEntityByKey(createAddressId, Address.class);
+    assertNull( savedEntity3.getAddresstype() );
+
+    // try again with type resolver.
+
+    assertTrue( crudService.update(namedEntityService.resolveValuesToIds(addressEntity)) );
+
+    Address savedEntity4 = namedEntityService.findResolvedEntityByKey(createAddressId, Address.class);
+    assertNotNull( savedEntity4.getAddresstype() );
+
+    // DELETE.
+
+    assertTrue( crudService.delete(addressEntity) );
+
+    addressEntity.setAddressid(createAddressId2);
+    assertTrue( crudService.delete(addressEntity) );
+  }
+
   private IndividualComposite newCompositeIndividualWithRole() {
 
     IndividualComposite composite = new IndividualComposite();

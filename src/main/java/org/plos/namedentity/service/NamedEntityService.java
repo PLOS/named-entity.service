@@ -34,19 +34,68 @@ public interface NamedEntityService {
 
   public IndividualComposite findIndividualComposite(Integer nedId);
 
+  /** 
+   * Finds entity by a unique identifier. Type id references in entity are
+   * replaced by equivalent type names (ie, "resolved"). Unique identifiers are
+   * unique for a given type class. For example, "Office" could a unique
+   * identifier for either Telephone or Physical Address type classes. This is
+   * why it is also necessary to specify a type class along with the type value.
+   *
+   * @param srcType  type class to evaluate unique identifier (ex: "Editorial Manager")
+   * @param uid      type value
+   * @param clazz    type of resolved entity to return (ex: individual) 
+   *
+   * @return         list of entities with unique identifier (typically just one)
+   */
   public <T extends Entity> List<T> findResolvedEntityByUid(String srcType, String uid, Class<T> clazz);
 
+
+  /** 
+   * Finds entity by primary key. Type id references in entity are replaced by
+   * equivalent type names (ie, "resolved").
+   *
+   * @param nedId  primary key of entity
+   * @param clazz  entity class to lookup by key 
+   *
+   * @return       entity with specified primary key
+   */
   public <T extends Entity> T findResolvedEntityByKey(Integer pk, Class<T> clazz);
 
-  public <T extends Entity> T findResolvedEntity(Integer nedId, Class<T> clazz);
-
-  public <T extends Entity> List<T> findResolvedEntities(Integer nedId, Class<T> clazz);
 
   /**
-   * Resolve and entity's values to foreign keys
+   * Finds entities by ned id. Type id references in entity are replaced by
+   * equivalent type names (ie, "resolved"). It is assumed that ned id is the 
+   * primary key of the entity. This is currently only true for Individual and
+   * Organization entities.
    *
-   * @param t
-   * @param <T>
+   * @param nedId  primary key of entity
+   * @param clazz  entity class to search by ned id
+   *
+   * @return       entity whose primary key is ned id 
+   */
+  public <T extends Entity> T findResolvedEntity(Integer nedId, Class<T> clazz);
+
+
+  /**
+   * Finds entities by ned id. Type id references in entity are replaced by
+   * equivalent type names (ie, "resolved"). It is assumed that ned id is a 
+   * foreign key in the entity. For example, the phone numbers for an individual 
+   * are associated by ned id (which is the primary key of the individual).
+   *
+   * @param nedId  foreign key to individual or organization. 
+   * @param clazz  entity class to search by ned id
+   *
+   * @return       a list of entities (of type T) that have ned id.
+   */
+  public <T extends Entity> List<T> findResolvedEntities(Integer nedId, Class<T> clazz);
+
+
+  /**
+   * Resolves entity's type names to their corresponding primary key (ie,
+   * foreign key references). 
+   *
+   * @param  t  entity object containing type names to resolve
+   * @return    same entity object with type ids populated (ie, resolved) 
    */
   public <T extends Entity> T resolveValuesToIds(T t);
 }
