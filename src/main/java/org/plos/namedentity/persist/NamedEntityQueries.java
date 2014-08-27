@@ -16,15 +16,17 @@
  */
 package org.plos.namedentity.persist;
 
+import org.plos.namedentity.api.entity.Entity;
+
 import java.util.List;
 
 public interface NamedEntityQueries {
 
-  <T> List<T> findResolvedEntityByUid(String srcType, String uid, Class<T> clazz);
+  <T extends Entity> List<T> findResolvedEntityByUid(String srcType, String uid, Class<T> clazz);
 
-  <T> T findResolvedEntityByKey(Integer pk, Class<T> clazz);
+  <T extends Entity> T findResolvedEntityByKey(Integer pk, Class<T> clazz);
 
-  <T> T findResolvedEntity(Integer nedId, Class<T> clazz);
+  <T extends Entity> T findResolvedEntity(Integer nedId, Class<T> clazz);
 
-  <T> List<T> findResolvedEntities(Integer nedId, Class<T> clazz);
+  <T extends Entity> List<T> findResolvedEntities(Integer nedId, Class<T> clazz);
 }

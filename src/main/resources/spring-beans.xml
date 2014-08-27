@@ -69,9 +69,9 @@
 
     <aop:config>
         <aop:aspect id="validatingAspect" ref="validator">
-            <aop:pointcut id="createMethod"
-                    expression="execution(* org.plos.namedentity.service.NamedEntityServiceImpl.create*(..))"/>
-            <aop:around method="validate" pointcut-ref="createMethod"/>
+            <aop:pointcut id="createOrUpdate"
+                    expression="execution(* org.plos.namedentity.service.NamedEntityServiceImpl.create*(..)) || execution(* org.plos.namedentity.service.CrudServiceImpl.create(..)) || execution(* org.plos.namedentity.service.CrudServiceImpl.update(..))"/>
+            <aop:around method="validate" pointcut-ref="createOrUpdate"/>
         </aop:aspect>
     </aop:config>
 </beans>

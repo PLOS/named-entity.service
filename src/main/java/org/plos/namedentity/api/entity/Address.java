@@ -25,7 +25,7 @@ import java.util.Objects;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @XmlRootElement
-public class AddressEntity implements java.io.Serializable {
+public class Address extends Entity {
 
   private static final long serialVersionUID = 2006852801;
 
@@ -56,50 +56,50 @@ public class AddressEntity implements java.io.Serializable {
   private Byte    isprimary;
   private Byte    isactive;
 
-  public AddressEntity() {
+  public Address() {
     this(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
   }
 
-  public AddressEntity(
-    Integer addressid,
-    Integer namedentityid,
-    Integer addresstypeid,
-    String  addressline1,
-    String  addressline2,
-    String  addressline3,
-    String  city,
-    Integer statecodetypeid,
-    Integer countrycodetypeid,
-    String  postalcode,
-    Integer maincontactnamedentityid,
-    Integer latitude,
-    Integer longitude,
-    Byte    isprimary,
-    Byte    isactive
-  ) {
+  public Address(
+      Integer addressid,
+      Integer namedentityid,
+      Integer addresstypeid,
+      String addressline1,
+      String addressline2,
+      String addressline3,
+      String city,
+      Integer statecodetypeid,
+      Integer countrycodetypeid,
+      String postalcode,
+      Integer maincontactnamedentityid,
+      Integer latitude,
+      Integer longitude,
+      Byte isprimary,
+      Byte isactive
+                ) {
     this(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
   }
 
-  public AddressEntity(
-    Integer addressid,
-    Integer namedentityid,
-    Integer addresstypeid,
-    String  addresstype,
-    String  addressline1,
-    String  addressline2,
-    String  addressline3,
-    String  city,
-    Integer statecodetypeid,
-    String  statecodetype,
-    Integer countrycodetypeid,
-    String  countrycodetype,
-    String  postalcode,
-    Integer maincontactnamedentityid,
-    Integer latitude,
-    Integer longitude,
-    Byte    isprimary,
-    Byte    isactive
-  ) {
+  public Address(
+      Integer addressid,
+      Integer namedentityid,
+      Integer addresstypeid,
+      String addresstype,
+      String addressline1,
+      String addressline2,
+      String addressline3,
+      String city,
+      Integer statecodetypeid,
+      String statecodetype,
+      Integer countrycodetypeid,
+      String countrycodetype,
+      String postalcode,
+      Integer maincontactnamedentityid,
+      Integer latitude,
+      Integer longitude,
+      Byte isprimary,
+      Byte isactive
+                ) {
     this.addressid                = addressid;
     this.namedentityid            = namedentityid;
     this.addresstypeid            = addresstypeid;
@@ -270,7 +270,7 @@ public class AddressEntity implements java.io.Serializable {
 
     if (o == null || this.getClass() != o.getClass()) { return false; }
 
-    AddressEntity entity = (AddressEntity) o;
+    Address entity = (Address) o;
     return    Objects.equals(this.addressid, entity.addressid)
            && Objects.equals(this.namedentityid, entity.namedentityid)
            && Objects.equals(this.addresstypeid, entity.addresstypeid)

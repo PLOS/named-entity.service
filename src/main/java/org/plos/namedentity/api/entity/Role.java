@@ -23,7 +23,7 @@ import java.util.Objects;
  * Modified JOOQ generated class(pojo=true).
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class RoleEntity implements java.io.Serializable {
+public class Role extends Entity {
 
   private static final long serialVersionUID = 315701916;
 
@@ -42,7 +42,7 @@ public class RoleEntity implements java.io.Serializable {
   private String roletype;
 
 
-  public RoleEntity() {
+  public Role() {
   }
 
   public String getSourceapplicationtype() {
@@ -148,7 +148,7 @@ public class RoleEntity implements java.io.Serializable {
 
     if (o == null || this.getClass() != o.getClass()) { return false; }
 
-    RoleEntity entity = (RoleEntity) o;
+    Role entity = (Role) o;
     return Objects.equals(this.roleid, entity.roleid)
         && Objects.equals(this.namedentityid, entity.namedentityid)
         && Objects.equals(this.roletypeid, entity.roletypeid);

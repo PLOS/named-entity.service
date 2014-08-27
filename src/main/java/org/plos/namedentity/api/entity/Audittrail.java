@@ -20,7 +20,7 @@ package org.plos.namedentity.api.entity;
  * JOOQ generated class(pojo=true).
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class AudittrailEntity implements java.io.Serializable {
+public class Audittrail extends Entity {
 
   private static final long serialVersionUID = -508010656;
 
@@ -32,17 +32,17 @@ public class AudittrailEntity implements java.io.Serializable {
   private java.sql.Timestamp lastmodified;
   private java.lang.Integer  lastmodifiedby;
 
-  public AudittrailEntity() {}
+  public Audittrail() {}
 
-  public AudittrailEntity(
-    java.lang.Integer  audittrailid,
-    java.lang.Integer  sourcefieldid,
-    java.lang.Integer  rownumber,
-    java.lang.String   oldvalue,
-    java.lang.String   newvalue,
-    java.sql.Timestamp lastmodified,
-    java.lang.Integer  lastmodifiedby
-  ) {
+  public Audittrail(
+      java.lang.Integer audittrailid,
+      java.lang.Integer sourcefieldid,
+      java.lang.Integer rownumber,
+      java.lang.String oldvalue,
+      java.lang.String newvalue,
+      java.sql.Timestamp lastmodified,
+      java.lang.Integer lastmodifiedby
+                   ) {
     this.audittrailid   = audittrailid;
     this.sourcefieldid  = sourcefieldid;
     this.rownumber      = rownumber;

@@ -20,7 +20,7 @@ package org.plos.namedentity.api.entity;
  * Modified JOOQ generated class(pojo=true).
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class SourcefieldEntity implements java.io.Serializable {
+public class Sourcefield extends Entity {
 
   private static final long serialVersionUID = -2013224879;
 
@@ -28,13 +28,13 @@ public class SourcefieldEntity implements java.io.Serializable {
   private String  sourcetable;
   private String  sourcefield;
 
-  public SourcefieldEntity() {}
+  public Sourcefield() {}
 
-  public SourcefieldEntity(
-    Integer sourcefieldid,
-    String  sourcetable,
-    String  sourcefield
-  ) {
+  public Sourcefield(
+      Integer sourcefieldid,
+      String sourcetable,
+      String sourcefield
+                    ) {
     this.sourcefieldid = sourcefieldid;
     this.sourcetable   = sourcetable;
     this.sourcefield   = sourcefield;

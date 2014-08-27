@@ -22,7 +22,7 @@ import java.util.Objects;
  * Modified JOOQ generated class(pojo=true).
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class UniqueidentifierEntity implements java.io.Serializable {
+public class Uniqueidentifier extends Entity {
 
   private static final long serialVersionUID = 1900442676;
 
@@ -32,26 +32,26 @@ public class UniqueidentifierEntity implements java.io.Serializable {
   private Integer uniqueidentifiertypeid;
   private String  uniqueidentifier;
 
-  public UniqueidentifierEntity() {}
+  public Uniqueidentifier() {}
 
 
-  public UniqueidentifierEntity(
+  public Uniqueidentifier(
       Integer uniqueidentifiersid,
       Integer namedentityid,
       Integer uniqueidentifiertypeid,
-      String  uniqueidentifier,
-      String  uniqueidentifiertype) {
+      String uniqueidentifier,
+      String uniqueidentifiertype) {
 
     this(uniqueidentifiersid, namedentityid, uniqueidentifiertypeid, uniqueidentifier);
     this.uniqueidentifiertype = uniqueidentifiertype;
   }
 
-  public UniqueidentifierEntity(
-    Integer uniqueidentifiersid,
-    Integer namedentityid,
-    Integer uniqueidentifiertypeid,
-    String  uniqueidentifier
-  ) {
+  public Uniqueidentifier(
+      Integer uniqueidentifiersid,
+      Integer namedentityid,
+      Integer uniqueidentifiertypeid,
+      String uniqueidentifier
+                         ) {
     this.uniqueidentifiersid    = uniqueidentifiersid;
     this.namedentityid          = namedentityid;
     this.uniqueidentifiertypeid = uniqueidentifiertypeid;
@@ -104,7 +104,7 @@ public class UniqueidentifierEntity implements java.io.Serializable {
 
     if (o == null || this.getClass() != o.getClass()) { return false; }
 
-    UniqueidentifierEntity entity = (UniqueidentifierEntity) o;
+    Uniqueidentifier entity = (Uniqueidentifier) o;
     return Objects.equals(this.uniqueidentifiersid, entity.uniqueidentifiersid)
         && Objects.equals(this.namedentityid, entity.namedentityid)
         && Objects.equals(this.uniqueidentifiertypeid, entity.uniqueidentifiertypeid)
