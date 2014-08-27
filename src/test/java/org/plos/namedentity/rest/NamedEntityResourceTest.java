@@ -16,6 +16,7 @@
  */
 package org.plos.namedentity.rest;
 
+import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -57,6 +58,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   @Before
   public void setup() {
     this.mapper = new ObjectMapper();
+    mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
   }
 
   @Test
@@ -79,7 +81,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    OrganizationEntity entity = mapper.readValue(jsonPayload, OrganizationEntity.class);
+    Organization entity = mapper.readValue(jsonPayload, Organization.class);
     assertEquals(Integer.valueOf(2), entity.getNamedentityid());
     assertEquals("familiarname", entity.getOrganizationfamiliarname());
     assertEquals("legalname", entity.getOrganizationlegalname());
@@ -94,7 +96,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     jsonPayload = response.readEntity(String.class);
 
-    entity = mapper.readValue(jsonPayload, OrganizationEntity.class);
+    entity = mapper.readValue(jsonPayload, Organization.class);
     assertEquals(Integer.valueOf(2), entity.getNamedentityid());
     assertEquals("familiarname", entity.getOrganizationfamiliarname());
     assertEquals("legalname", entity.getOrganizationlegalname());
@@ -179,7 +181,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    IndividualEntity entity = mapper.readValue(jsonPayload, IndividualEntity.class);
+    Individual entity = mapper.readValue(jsonPayload, Individual.class);
     assertEquals(Integer.valueOf(1), entity.getNamedentityid());
     assertEquals("firstname", entity.getFirstname());
     assertEquals("middlename", entity.getMiddlename());
@@ -195,7 +197,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(200, response.getStatus());
     jsonPayload = response.readEntity(String.class);
 
-    IndividualEntity[] individualEntityArray = mapper.readValue(jsonPayload, IndividualEntity[].class); 
+    Individual[] individualEntityArray = mapper.readValue(jsonPayload, Individual[].class);
     assertEquals(3, individualEntityArray.length);
   }
 
@@ -215,7 +217,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String responseJson = response.readEntity(String.class);
 
-    AddressEntity entity = mapper.readValue(responseJson, AddressEntity.class);
+    Address entity = mapper.readValue(responseJson, Address.class);
     assertEquals(Integer.valueOf(1), entity.getAddressid());
     assertEquals(Integer.valueOf(1), entity.getNamedentityid());
     assertEquals("Office", entity.getAddresstype());
@@ -254,7 +256,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     responseJson = response.readEntity(String.class);
 
-    AddressEntity address = mapper.readValue(responseJson, AddressEntity.class);
+    Address address = mapper.readValue(responseJson, Address.class);
     assertNotNull( address );
 
     /* ------------------------------------------------------------------ */
@@ -267,16 +269,16 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     responseJson = response.readEntity(String.class);
 
-    AddressEntity[] addresses = mapper.readValue(responseJson, AddressEntity[].class);
+    Address[] addresses = mapper.readValue(responseJson, Address[].class);
     assertEquals(2, addresses.length);
 
-    AddressEntity officeAddress = addresses[0];
+    Address officeAddress = addresses[0];
     assertEquals("Office", officeAddress.getAddresstype());
     assertEquals("addressline 1", officeAddress.getAddressline1());
     assertEquals("CA", officeAddress.getStatecodetype());
     assertEquals("12345", officeAddress.getPostalcode());
 
-    AddressEntity homeAddress = addresses[1];
+    Address homeAddress = addresses[1];
     assertEquals("Home", homeAddress.getAddresstype());
     assertEquals("addressline 1.2", homeAddress.getAddressline1());
     assertEquals("ONT", homeAddress.getStatecodetype());
@@ -299,7 +301,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    EmailEntity entity = mapper.readValue(jsonPayload, EmailEntity.class);
+    Email entity = mapper.readValue(jsonPayload, Email.class);
     assertEquals(Integer.valueOf(1), entity.getEmailid());
     assertEquals(Integer.valueOf(1), entity.getNamedentityid());
     assertEquals("Work", entity.getEmailtype());
@@ -332,7 +334,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     jsonPayload = response.readEntity(String.class);
 
-    EmailEntity email = mapper.readValue(jsonPayload, EmailEntity.class);
+    Email email = mapper.readValue(jsonPayload, Email.class);
     assertNotNull( email );
 
     /* ------------------------------------------------------------------ */
@@ -345,10 +347,10 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     jsonPayload = response.readEntity(String.class);
 
-    EmailEntity[] emails = mapper.readValue(jsonPayload, EmailEntity[].class);
+    Email[] emails = mapper.readValue(jsonPayload, Email[].class);
     assertEquals(2, emails.length);
 
-    EmailEntity workEmail = emails[0];
+    Email workEmail = emails[0];
     assertEquals("Work", workEmail.getEmailtype());
     assertEquals("fu.manchu.work@foo.com", workEmail.getEmailaddress());
     assertTrue(workEmail.getIsprimary() == 1);
@@ -406,10 +408,10 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    DegreeEntity[] degrees = mapper.readValue(jsonPayload, DegreeEntity[].class);
+    Degree[] degrees = mapper.readValue(jsonPayload, Degree[].class);
     assertEquals(1, degrees.length);
 
-    DegreeEntity degree = degrees[0];
+    Degree degree = degrees[0];
     assertEquals("Super Doctor", degree.getDegreetype());
 
     //TODO - CREATE, UPDATE, DELETE
@@ -428,10 +430,10 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    PhonenumberEntity[] phonenumbers = mapper.readValue(jsonPayload, PhonenumberEntity[].class);
+    Phonenumber[] phonenumbers = mapper.readValue(jsonPayload, Phonenumber[].class);
     assertEquals(3, phonenumbers.length);
 
-    PhonenumberEntity officePhone = phonenumbers[0];
+    Phonenumber officePhone = phonenumbers[0];
     assertEquals("Office", officePhone.getPhonenumbertype());
     assertEquals("123-456-7890", officePhone.getPhonenumber());
 
@@ -451,10 +453,10 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    RoleEntity[] roles = mapper.readValue(jsonPayload, RoleEntity[].class);
+    Role[] roles = mapper.readValue(jsonPayload, Role[].class);
     assertEquals(1, roles.length);
 
-    RoleEntity role = roles[0];
+    Role role = roles[0];
     assertEquals("Author", role.getRoletype());
 
     //TODO - CREATE, UPDATE, DELETE
@@ -473,10 +475,10 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    UniqueidentifierEntity[] xrefs = mapper.readValue(jsonPayload, UniqueidentifierEntity[].class);
+    Uniqueidentifier[] xrefs = mapper.readValue(jsonPayload, Uniqueidentifier[].class);
     assertEquals(2, xrefs.length);
 
-    for (UniqueidentifierEntity xref : xrefs) {
+    for (Uniqueidentifier xref : xrefs) {
       assertEquals("ORCID", xref.getUniqueidentifiertype());
     }
 
@@ -492,7 +494,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(200, response.getStatus());
     jsonPayload = response.readEntity(String.class);
 
-    IndividualEntity[] individualEntityArray = mapper.readValue(jsonPayload, IndividualEntity[].class); 
+    Individual[] individualEntityArray = mapper.readValue(jsonPayload, Individual[].class);
     assertEquals(3, individualEntityArray.length);
   }
 
@@ -520,7 +522,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    TypedescriptionEntity newTypeClass = mapper.readValue(jsonPayload, TypedescriptionEntity.class);
+    Typedescription newTypeClass = mapper.readValue(jsonPayload, Typedescription.class);
     assertEquals(Integer.valueOf(1), newTypeClass.getTypeid());
     assertEquals(NEW_TYPE_DESC, newTypeClass.getDescription());
     assertEquals(NEW_TYPE_USAGE, newTypeClass.getHowused());
@@ -555,7 +557,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     jsonPayload = response.readEntity(String.class);
 
-    TypedescriptionEntity foundTypeClass = mapper.readValue(jsonPayload, TypedescriptionEntity.class);
+    Typedescription foundTypeClass = mapper.readValue(jsonPayload, Typedescription.class);
     assertEquals(Integer.valueOf(1), foundTypeClass.getTypeid());
     assertEquals(NEW_TYPE_DESC, foundTypeClass.getDescription());
     assertEquals(NEW_TYPE_USAGE, foundTypeClass.getHowused());
@@ -569,7 +571,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(200, response.getStatus());
     jsonPayload = response.readEntity(String.class);
 
-    TypedescriptionEntity[] typeClassArray = mapper.readValue(jsonPayload, TypedescriptionEntity[].class);
+    Typedescription[] typeClassArray = mapper.readValue(jsonPayload, Typedescription[].class);
     assertEquals(3, typeClassArray.length);
 
     /* ------------------------------------------------------------------ */
@@ -579,7 +581,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     final String UPDATE_TYPE_DESC  = "Update Type Description";
     final String UPDATE_TYPE_USAGE = "Update Type Usage";
 
-    TypedescriptionEntity updatedTypeClass = foundTypeClass;
+    Typedescription updatedTypeClass = foundTypeClass;
     updatedTypeClass.setDescription(UPDATE_TYPE_DESC);
     updatedTypeClass.setHowused(UPDATE_TYPE_USAGE);
 
@@ -643,7 +645,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    IndividualEntity entity = mapper.readValue(jsonPayload, IndividualEntity.class);
+    Individual entity = mapper.readValue(jsonPayload, Individual.class);
     assertEquals(Integer.valueOf(1), entity.getNamedentityid());
     assertEquals("firstname", entity.getFirstname());
     assertEquals("lastname", entity.getLastname());
@@ -655,7 +657,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     jsonPayload = response.readEntity(String.class);
 
-    entity = mapper.readValue(jsonPayload, IndividualEntity.class);
+    entity = mapper.readValue(jsonPayload, Individual.class);
     assertEquals(Integer.valueOf(1), entity.getNamedentityid());
     assertEquals("firstname", entity.getFirstname());
     assertEquals("lastname", entity.getLastname());
@@ -699,7 +701,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    GlobaltypeEntity newTypeVal = mapper.readValue(jsonPayload, GlobaltypeEntity.class);
+    Globaltype newTypeVal = mapper.readValue(jsonPayload, Globaltype.class);
     assertEquals(Integer.valueOf(1), newTypeVal.getGlobaltypeid());
     assertEquals("Type Value #1 Short Description", newTypeVal.getShortdescription());
     assertEquals("TV1", newTypeVal.getTypecode());
@@ -734,7 +736,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     jsonPayload = response.readEntity(String.class);
 
-    GlobaltypeEntity foundTypeVal = mapper.readValue(jsonPayload, GlobaltypeEntity.class);
+    Globaltype foundTypeVal = mapper.readValue(jsonPayload, Globaltype.class);
     assertEquals(Integer.valueOf(1), foundTypeVal.getGlobaltypeid());
     assertEquals(Integer.valueOf(1), foundTypeVal.getTypeid());
     assertEquals("Type Value #1 Short Description", foundTypeVal.getShortdescription());
@@ -749,7 +751,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(200, response.getStatus());
     jsonPayload = response.readEntity(String.class);
 
-    GlobaltypeEntity[] typeValuesForTypeClassArray = mapper.readValue(jsonPayload, GlobaltypeEntity[].class);
+    Globaltype[] typeValuesForTypeClassArray = mapper.readValue(jsonPayload, Globaltype[].class);
     assertEquals(5, typeValuesForTypeClassArray.length);
     for (int i = 0; i < 5; i++) {
       assertEquals(Integer.valueOf(i+1), typeValuesForTypeClassArray[i].getGlobaltypeid());
@@ -759,7 +761,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    GlobaltypeEntity updatedTypeVal = foundTypeVal;
+    Globaltype updatedTypeVal = foundTypeVal;
     updatedTypeVal.setShortdescription("Update Type Value #1 Short Description");
 
     // marshal Type value pojo object to JSON String.

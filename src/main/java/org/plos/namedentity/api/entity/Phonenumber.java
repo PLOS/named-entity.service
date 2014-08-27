@@ -22,7 +22,7 @@ import java.util.Objects;
  * Modified JOOQ generated class(pojo=true).
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class PhonenumberEntity implements java.io.Serializable {
+public class Phonenumber extends Entity {
 
   private static final long serialVersionUID = -1728456967;
 
@@ -38,7 +38,7 @@ public class PhonenumberEntity implements java.io.Serializable {
   private String  phonenumbertype;
   private String  countrycodetype;
 
-  public PhonenumberEntity() {
+  public Phonenumber() {
     isactive = true;
     isprimary = true;
 //    this(null,null,null,null,null,null,null,null);
@@ -150,7 +150,7 @@ public class PhonenumberEntity implements java.io.Serializable {
 
     if (o == null || this.getClass() != o.getClass()) { return false; }
 
-    PhonenumberEntity entity = (PhonenumberEntity) o;
+    Phonenumber entity = (Phonenumber) o;
     return Objects.equals(this.phonenumberid, entity.phonenumberid)
         && Objects.equals(this.namedentityid, entity.namedentityid)
         && Objects.equals(this.phonenumber, entity.phonenumber);

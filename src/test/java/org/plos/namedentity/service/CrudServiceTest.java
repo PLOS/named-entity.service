@@ -18,12 +18,13 @@ package org.plos.namedentity.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.plos.namedentity.api.entity.AddressEntity;
-import org.plos.namedentity.api.entity.EmailEntity;
-import org.plos.namedentity.api.entity.GlobaltypeEntity;
-import org.plos.namedentity.api.entity.IndividualEntity;
-import org.plos.namedentity.api.entity.TypedescriptionEntity;
-import org.plos.namedentity.api.entity.UniqueidentifierEntity;
+import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.entity.Address;
+import org.plos.namedentity.api.entity.Email;
+import org.plos.namedentity.api.entity.Globaltype;
+import org.plos.namedentity.api.entity.Individual;
+import org.plos.namedentity.api.entity.Typedescription;
+import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -46,17 +47,17 @@ public class CrudServiceTest {
   CrudService crudService;
 
   @Test
-  public void testIndividualCrud() {
+  public void testIndividualCRUD() {
 
     // CREATE
-    IndividualEntity entity = new IndividualEntity();
+    Individual entity = new Individual();
     entity.setFirstname("somefirstname");
 
     Integer pkId = crudService.create(entity);
     assertNotNull(pkId);
 
     // READ
-    IndividualEntity readEntity = crudService.findById(pkId, IndividualEntity.class);
+    Individual readEntity = crudService.findById(pkId, Individual.class);
     assertNotNull(readEntity);
     assertEquals("somefirstname", readEntity.getFirstname());
     assertEquals(null, readEntity.getMiddlename());
@@ -65,7 +66,7 @@ public class CrudServiceTest {
     // UPDATE
     readEntity.setMiddlename("somemiddlename");
     assertTrue(crudService.update(readEntity));
-    IndividualEntity readEntity2 = crudService.findById(pkId, IndividualEntity.class);
+    Individual readEntity2 = crudService.findById(pkId, Individual.class);
 //    assertEquals(null, readEntity.getFirstname());  // TODO: since PUT is a full replace
     assertEquals("somemiddlename", readEntity.getMiddlename());
 
@@ -74,18 +75,77 @@ public class CrudServiceTest {
   }
 
   @Test
+  public void testIndividualInvalidEmail() {
+
+    Individual entity = new Individual();
+    entity.setFirstname("somefirstname");
+    Integer nedId = crudService.create(entity);
+
+    // Create
+    Email email = new Email();
+    email.setNamedentityid(nedId);
+    email.setEmailtype("Work");
+    email.setEmailaddress("bill@microsoft");
+
+    try {
+      crudService.create(email);
+      fail();
+    } catch (NedValidationException expected) {
+    }
+
+    // Update
+    email.setEmailaddress("bill@microsoft.com");
+    crudService.create(email);
+
+    email.setEmailaddress("bill@microsoft");
+
+    try {
+      crudService.update(email);
+      fail();
+    } catch (NedValidationException expected) {
+    }
+  }
+
+  @Test
+  public void testIndividualInvalidUrl() {
+
+    Individual entity = new Individual();
+    entity.setFirstname("somefirstname");
+    entity.setUrl("httpXX://billgates.plos.org");
+
+    // Create
+    try {
+      crudService.create(entity);
+      fail();
+    } catch (NedValidationException expected) {
+    }
+
+    // Update
+    entity.setUrl("http://billgates.plos.org/abc");
+    crudService.create(entity);
+
+    entity.setUrl("httpXX://billgates.plos.org/abc");
+
+    try {
+      crudService.create(entity);
+      fail();
+    } catch (NedValidationException expected) {
+    }
+  }
+
+  @Test
   public void testTypeDescriptionCRUD() {
 
     // CREATE
 
-    TypedescriptionEntity newType = new TypedescriptionEntity();
+    Typedescription newType = new Typedescription();
     newType.setDescription("description");
     newType.setHowused("howused");
 
     Integer pkId = crudService.create(newType);
     assertNotNull(pkId);
 
-    TypedescriptionEntity savedType = crudService.findById(pkId, TypedescriptionEntity.class);
+    Typedescription savedType = crudService.findById(pkId, Typedescription.class);
     assertNotNull(savedType);
     assertEquals(pkId, savedType.getTypeid());
 
@@ -93,7 +153,7 @@ public class CrudServiceTest {
 
     savedType.setDescription("description2");
     assertTrue(crudService.update(savedType));
-    TypedescriptionEntity savedType2 = crudService.findById(pkId, TypedescriptionEntity.class);
+    Typedescription savedType2 = crudService.findById(pkId, Typedescription.class);
     assertEquals(savedType, savedType2);
 
     // DELETE - delete type class without any children
@@ -104,7 +164,7 @@ public class CrudServiceTest {
     //          exception.
 
     try {
-      TypedescriptionEntity typeClassWithKids = new TypedescriptionEntity();
+      Typedescription typeClassWithKids = new Typedescription();
       typeClassWithKids.setTypeid(1);
       crudService.delete(typeClassWithKids);
       fail();
@@ -112,12 +172,12 @@ public class CrudServiceTest {
     }
 
     // FIND By Id
-    TypedescriptionEntity typeClass1 = crudService.findById(1, TypedescriptionEntity.class);
+    Typedescription typeClass1 = crudService.findById(1, Typedescription.class);
     assertNotNull(typeClass1);
     assertEquals(Integer.valueOf(1), typeClass1.getTypeid());
 
     // FIND All
-    List<TypedescriptionEntity> typeClasses = crudService.findAll(TypedescriptionEntity.class);
+    List<Typedescription> typeClasses = crudService.findAll(Typedescription.class);
     assertNotNull(typeClasses);
     assertTrue(typeClasses.contains(typeClass1));
   }
@@ -127,7 +187,7 @@ public class CrudServiceTest {
 
     // CREATE
 
-    GlobaltypeEntity newTypeVal = new GlobaltypeEntity();
+    Globaltype newTypeVal = new Globaltype();
     newTypeVal.setTypeid(1);
     newTypeVal.setShortdescription("type value abc");
     newTypeVal.setLongdescription("longdescription");
@@ -138,7 +198,7 @@ public class CrudServiceTest {
     assertNotNull(newTypeVal.getCreated());
     assertNotNull(newTypeVal.getLastmodified());
     
-    GlobaltypeEntity savedTypeVal = crudService.findById(pkId, GlobaltypeEntity.class);
+    Globaltype savedTypeVal = crudService.findById(pkId, Globaltype.class);
     assertNotNull( savedTypeVal );
     assertEquals(pkId, savedTypeVal.getGlobaltypeid());
 
@@ -146,7 +206,7 @@ public class CrudServiceTest {
 
     savedTypeVal.setShortdescription("abc2");
     assertTrue( crudService.update(savedTypeVal) );
-    GlobaltypeEntity savedTypeVal2 = crudService.findById(pkId, GlobaltypeEntity.class);
+    Globaltype savedTypeVal2 = crudService.findById(pkId, Globaltype.class);
     assertEquals(savedTypeVal, savedTypeVal2);
 
     // DELETE - delete type class without any children
@@ -157,24 +217,24 @@ public class CrudServiceTest {
 
     // FIND By Id
 
-    GlobaltypeEntity typeVal1 = crudService.findById(1, GlobaltypeEntity.class);
+    Globaltype typeVal1 = crudService.findById(1, Globaltype.class);
     assertNotNull(typeVal1);
     assertEquals(Integer.valueOf(1), typeVal1.getGlobaltypeid());
 
     // FIND All
 
-    List<GlobaltypeEntity> globalTypes = crudService.findAll(GlobaltypeEntity.class);
+    List<Globaltype> globalTypes = crudService.findAll(Globaltype.class);
     assertNotNull(globalTypes);
     assertTrue(globalTypes.contains(typeVal1));
 
     // FIND BY ATTRIBUTE(S)
 
-    GlobaltypeEntity globalTypesearchCriteria = new GlobaltypeEntity();
+    Globaltype globalTypesearchCriteria = new Globaltype();
     globalTypesearchCriteria.setTypeid(1);
 
-    List<GlobaltypeEntity> globalTypesForTypeClass = crudService.findByAttribute(globalTypesearchCriteria);
+    List<Globaltype> globalTypesForTypeClass = crudService.findByAttribute(globalTypesearchCriteria);
     assertNotNull(globalTypesForTypeClass);
-    for (GlobaltypeEntity gtype : globalTypesForTypeClass) {
+    for (Globaltype gtype : globalTypesForTypeClass) {
       assertTrue(globalTypes.contains(gtype));
     }
   }
@@ -188,10 +248,10 @@ public class CrudServiceTest {
 
     // lookup id for "work" email type
 
-    GlobaltypeEntity globalTypesearchCriteria = new GlobaltypeEntity();
+    Globaltype globalTypesearchCriteria = new Globaltype();
     globalTypesearchCriteria.setTypeid(10);
     globalTypesearchCriteria.setShortdescription("Work");
-    List<GlobaltypeEntity> globalTypesResult = crudService.findByAttribute(globalTypesearchCriteria);
+    List<Globaltype> globalTypesResult = crudService.findByAttribute(globalTypesearchCriteria);
     assertEquals(1, globalTypesResult.size());
 
     Integer emailTypeId = globalTypesResult.get(0).getGlobaltypeid(); 
@@ -199,7 +259,7 @@ public class CrudServiceTest {
 
     // create pojo
 
-    EmailEntity newEmail = new EmailEntity();
+    Email newEmail = new Email();
     newEmail.setNamedentityid(1);
     newEmail.setEmailtypeid(emailTypeId);
     newEmail.setEmailaddress("walter@foo.com");
@@ -209,7 +269,7 @@ public class CrudServiceTest {
     Integer pkId = crudService.create(newEmail);
     assertNotNull( pkId );
 
-    EmailEntity savedEmail = crudService.findById(pkId, EmailEntity.class);
+    Email savedEmail = crudService.findById(pkId, Email.class);
     assertNotNull( savedEmail );
     assertEquals(pkId, savedEmail.getEmailid());
     assertEquals(emailTypeId, savedEmail.getEmailtypeid());
@@ -220,7 +280,7 @@ public class CrudServiceTest {
 
     savedEmail.setEmailaddress("super" + savedEmail.getEmailaddress());
     assertTrue( crudService.update(savedEmail) );
-    EmailEntity savedEmail2 = crudService.findById(pkId, EmailEntity.class);
+    Email savedEmail2 = crudService.findById(pkId, Email.class);
     assertEquals(savedEmail, savedEmail2);
 
     /* ------------------------------------------------------------------ */
@@ -229,16 +289,16 @@ public class CrudServiceTest {
 
     // FIND All
 
-    List<EmailEntity> allEmails = crudService.findAll(EmailEntity.class);
+    List<Email> allEmails = crudService.findAll(Email.class);
     assertNotNull(allEmails);
     assertTrue(allEmails.contains(savedEmail2));
 
     // FIND BY ATTRIBUTE(S)
 
-    EmailEntity emailSearchCriteria = new EmailEntity();
+    Email emailSearchCriteria = new Email();
     emailSearchCriteria.setEmailaddress(savedEmail2.getEmailaddress());
 
-    List<EmailEntity> foundEmails = crudService.findByAttribute(emailSearchCriteria);
+    List<Email> foundEmails = crudService.findByAttribute(emailSearchCriteria);
     assertNotNull(foundEmails);
     assertEquals(savedEmail2.getEmailaddress(), foundEmails.get(0).getEmailaddress());
 
@@ -256,7 +316,7 @@ public class CrudServiceTest {
     /*  CREATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    AddressEntity newAddress = new AddressEntity();
+    Address newAddress = new Address();
     newAddress.setNamedentityid(1);
     newAddress.setAddresstype("Office");
     newAddress.setAddressline1("addressline 1");
@@ -276,7 +336,7 @@ public class CrudServiceTest {
     Integer pkId = crudService.create( namedEntityService.resolveValuesToIds(newAddress) );
     assertNotNull( pkId );
 
-    AddressEntity savedAddress = crudService.findById(pkId, AddressEntity.class);
+    Address savedAddress = crudService.findById(pkId, Address.class);
     assertNotNull( savedAddress );
     assertEquals(pkId, savedAddress.getAddressid());
     assertNotNull( savedAddress.getAddresstypeid() );
@@ -288,14 +348,14 @@ public class CrudServiceTest {
 
     savedAddress.setAddressline1("update." + savedAddress.getAddressline1());
     assertTrue( crudService.update(savedAddress) );
-    AddressEntity savedAddress2 = crudService.findById(pkId, AddressEntity.class);
+    Address savedAddress2 = crudService.findById(pkId, Address.class);
     assertEquals(savedAddress, savedAddress2);
 
     /* ------------------------------------------------------------------ */
     /*  FINDERS                                                           */
     /* ------------------------------------------------------------------ */
 
-    List<AddressEntity> allAddresses = crudService.findAll(AddressEntity.class);
+    List<Address> allAddresses = crudService.findAll(Address.class);
     assertNotNull(allAddresses);
     assertTrue(allAddresses.contains(savedAddress2));
 
@@ -313,10 +373,10 @@ public class CrudServiceTest {
 
     // lookup id for orcid (using hardcoded type class 17 :))
 
-    GlobaltypeEntity globalTypesearchCriteria = new GlobaltypeEntity();
+    Globaltype globalTypesearchCriteria = new Globaltype();
     globalTypesearchCriteria.setTypeid(17);
     globalTypesearchCriteria.setShortdescription("ORCID");
-    List<GlobaltypeEntity> globalTypesResult = crudService.findByAttribute(globalTypesearchCriteria);
+    List<Globaltype> globalTypesResult = crudService.findByAttribute(globalTypesearchCriteria);
     assertEquals(1, globalTypesResult.size());
 
     Integer orcidTypeId = globalTypesResult.get(0).getGlobaltypeid(); 
@@ -326,7 +386,7 @@ public class CrudServiceTest {
     /*  CREATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    UniqueidentifierEntity uidEntity = new UniqueidentifierEntity();
+    Uniqueidentifier uidEntity = new Uniqueidentifier();
     uidEntity.setNamedentityid(1);
     uidEntity.setUniqueidentifiertypeid(orcidTypeId);
     uidEntity.setUniqueidentifier(ORCID_ID1);
@@ -336,7 +396,7 @@ public class CrudServiceTest {
     Integer pkId = crudService.create(uidEntity);
     assertNotNull( pkId );
 
-    UniqueidentifierEntity savedUid = crudService.findById(pkId, UniqueidentifierEntity.class);
+    Uniqueidentifier savedUid = crudService.findById(pkId, Uniqueidentifier.class);
     assertNotNull( savedUid );
     assertEquals(pkId, savedUid.getUniqueidentifiersid());
     assertEquals(orcidTypeId, savedUid.getUniqueidentifiertypeid());
@@ -348,7 +408,7 @@ public class CrudServiceTest {
     savedUid.setUniqueidentifier( savedUid.getUniqueidentifier() + "Z" );
     assertTrue( crudService.update(savedUid) );
 
-    UniqueidentifierEntity savedUid2 = crudService.findById(pkId, UniqueidentifierEntity.class);
+    Uniqueidentifier savedUid2 = crudService.findById(pkId, Uniqueidentifier.class);
     assertEquals(savedUid, savedUid2);
 
     /* ------------------------------------------------------------------ */
@@ -357,7 +417,7 @@ public class CrudServiceTest {
 
     // FIND All
 
-    List<UniqueidentifierEntity> allUids = crudService.findAll(UniqueidentifierEntity.class);
+    List<Uniqueidentifier> allUids = crudService.findAll(Uniqueidentifier.class);
     assertNotNull(allUids);
     assertTrue(allUids.contains(savedUid2));
 

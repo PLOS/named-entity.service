@@ -20,7 +20,7 @@ package org.plos.namedentity.api.entity;
  * Modified JOOQ generated class(pojo=true).
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class JournalEntity implements java.io.Serializable {
+public class Journal extends Entity {
 
   private static final long serialVersionUID = 254575195;
 
@@ -28,13 +28,13 @@ public class JournalEntity implements java.io.Serializable {
   private java.lang.Integer namedentityid;
   private java.lang.Integer journaltypeid;
 
-  public JournalEntity() {}
+  public Journal() {}
 
-  public JournalEntity(
-    java.lang.Integer journalid,
-    java.lang.Integer namedentityid,
-    java.lang.Integer journaltypeid
-  ) {
+  public Journal(
+      java.lang.Integer journalid,
+      java.lang.Integer namedentityid,
+      java.lang.Integer journaltypeid
+                ) {
     this.journalid     = journalid;
     this.namedentityid = namedentityid;
     this.journaltypeid = journaltypeid;

@@ -21,7 +21,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.entity.IndividualEntity;
+import org.plos.namedentity.api.entity.Individual;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -51,7 +51,7 @@ public class IndividualsCompositeResource extends BaseResource {
   @GET
   @Path("/{id}")
   @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-  @ApiOperation(value = "Read", response = IndividualEntity.class)
+  @ApiOperation(value = "Read", response = Individual.class)
   public Response read(@PathParam("id") int nedId) {
     try {
       return Response.status(Response.Status.OK).entity(

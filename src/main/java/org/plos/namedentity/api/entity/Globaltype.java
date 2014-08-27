@@ -26,7 +26,7 @@ import java.util.Objects;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @XmlRootElement
-public class GlobaltypeEntity implements java.io.Serializable {
+public class Globaltype extends Entity {
 
   private static final long serialVersionUID = 541426103;
 
@@ -40,21 +40,21 @@ public class GlobaltypeEntity implements java.io.Serializable {
   private Integer  createdby;
   private Integer  lastmodifiedby;
 
-  public GlobaltypeEntity() {
+  public Globaltype() {
     this(null,null,null,null,null,null,null,null,null);
   }
 
-  public GlobaltypeEntity(
-    Integer  globaltypeid,
-    Integer  typeid,
-    String   shortdescription,
-    String   longdescription,
-    String   typecode,
-    Timestamp created,
-    Timestamp lastmodified,
-    Integer  createdby,
-    Integer  lastmodifiedby
-  ) {
+  public Globaltype(
+      Integer globaltypeid,
+      Integer typeid,
+      String shortdescription,
+      String longdescription,
+      String typecode,
+      Timestamp created,
+      Timestamp lastmodified,
+      Integer createdby,
+      Integer lastmodifiedby
+                   ) {
     this.globaltypeid     = globaltypeid;
     this.typeid           = typeid;
     this.shortdescription = shortdescription;
@@ -146,7 +146,7 @@ public class GlobaltypeEntity implements java.io.Serializable {
 
     if (o == null || this.getClass() != o.getClass()) { return false; }
 
-    GlobaltypeEntity entity = (GlobaltypeEntity) o;
+    Globaltype entity = (Globaltype) o;
     return Objects.equals(this.globaltypeid, entity.globaltypeid)
         && Objects.equals(this.typeid, entity.typeid)
         && Objects.equals(this.shortdescription, entity.shortdescription)

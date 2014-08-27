@@ -110,7 +110,7 @@ public class NamedEntityDBServiceTest {
 
   @Test
   public void testFindAllOnEmptyTable() {
-    List<JournalEntity> journals = nedDBSvc.findAll(JournalEntity.class);
+    List<Journal> journals = nedDBSvc.findAll(Journal.class);
     assertNotNull(journals);
     assertEquals(0, journals.size());
   }
@@ -119,30 +119,30 @@ public class NamedEntityDBServiceTest {
   public void testTypedescriptionCRUD() {
 
     // CREATE
-    Integer newTypeClassId = nedDBSvc.create( new TypedescriptionEntity(null, "New Type Class", "Yada yada") );
+    Integer newTypeClassId = nedDBSvc.create( new Typedescription(null, "New Type Class", "Yada yada") );
     assertNotNull(newTypeClassId);
 
     // UPDATE description.
-    TypedescriptionEntity entity = nedDBSvc.findById(newTypeClassId, TypedescriptionEntity.class);
+    Typedescription entity = nedDBSvc.findById(newTypeClassId, Typedescription.class);
     entity.setDescription( entity.getDescription() + "2");
     assertTrue( nedDBSvc.update(entity) );
 
     // Get another instance of same type class
-    TypedescriptionEntity entity2 = nedDBSvc.findById(newTypeClassId, TypedescriptionEntity.class);
+    Typedescription entity2 = nedDBSvc.findById(newTypeClassId, Typedescription.class);
     assertEquals(entity, entity2);
 
     // Find all type classes
-    List<TypedescriptionEntity> typeClasses = nedDBSvc.findAll(TypedescriptionEntity.class);
+    List<Typedescription> typeClasses = nedDBSvc.findAll(Typedescription.class);
     assertTrue(typeClasses.size() >= 20);
 
     // Try to find a type class which doesn't exist
-    TypedescriptionEntity entity3 = nedDBSvc.findById(666, TypedescriptionEntity.class);
+    Typedescription entity3 = nedDBSvc.findById(666, Typedescription.class);
     assertNull(entity3);
 
     // DELETE. we should be able to delete newly added type class because
     // it doesn't have any values associated with it (ie, has no globaltypes).
 
-    TypedescriptionEntity typeDescription = new TypedescriptionEntity();
+    Typedescription typeDescription = new Typedescription();
     typeDescription.setTypeid(newTypeClassId);
 
     assertTrue( nedDBSvc.delete(typeDescription) );
@@ -163,7 +163,7 @@ public class NamedEntityDBServiceTest {
   @Test
   public void testGlobaltypesCRUD() {
 
-    GlobaltypeEntity newGlobaltype = new GlobaltypeEntity();
+    Globaltype newGlobaltype = new Globaltype();
     newGlobaltype.setTypeid( findTypeClassStartWith("Named Party") );
     newGlobaltype.setShortdescription("Group XYZ");
     newGlobaltype.setTypecode("GRPX");
@@ -178,30 +178,30 @@ public class NamedEntityDBServiceTest {
     assertNotNull(newGlobalTypeId);
 
     // UPDATE short description.
-    GlobaltypeEntity entity = nedDBSvc.findById(newGlobalTypeId, GlobaltypeEntity.class);
+    Globaltype entity = nedDBSvc.findById(newGlobalTypeId, Globaltype.class);
     entity.setShortdescription( entity.getShortdescription() + "2");
     assertTrue( nedDBSvc.update(entity) );
 
     // Get another instance of same type value
-    GlobaltypeEntity entity2 = nedDBSvc.findById(newGlobalTypeId, GlobaltypeEntity.class);
+    Globaltype entity2 = nedDBSvc.findById(newGlobalTypeId, Globaltype.class);
     assertEquals(entity, entity2);
 
     // Find all global types 
-    List<GlobaltypeEntity> globalTypes = nedDBSvc.findAll(GlobaltypeEntity.class);
+    List<Globaltype> globalTypes = nedDBSvc.findAll(Globaltype.class);
     assertTrue(globalTypes.size() >= 75);
 
     // Find global types for a type class
-    GlobaltypeEntity typeClassFilter = new GlobaltypeEntity();
+    Globaltype typeClassFilter = new Globaltype();
     typeClassFilter.setTypeid(1);
-    List<GlobaltypeEntity> globalTypesForTypeClass = nedDBSvc.findByAttribute(typeClassFilter);
+    List<Globaltype> globalTypesForTypeClass = nedDBSvc.findByAttribute(typeClassFilter);
     assertEquals(3, globalTypesForTypeClass.size());
 
     // Try to find a global type which doesn't exist
-    GlobaltypeEntity entity3 = nedDBSvc.findById(666, GlobaltypeEntity.class);
+    Globaltype entity3 = nedDBSvc.findById(666, Globaltype.class);
     assertNull(entity3);
 
     // DELETE
-    GlobaltypeEntity typeValueToDelete = new GlobaltypeEntity();
+    Globaltype typeValueToDelete = new Globaltype();
     typeValueToDelete.setGlobaltypeid(newGlobalTypeId);
 
     assertTrue( nedDBSvc.delete(typeValueToDelete) );
@@ -216,7 +216,7 @@ public class NamedEntityDBServiceTest {
 
     // CREATE Work Email
 
-    EmailEntity workEmail = new EmailEntity();
+    Email workEmail = new Email();
     workEmail.setNamedentityid(1);
     workEmail.setEmailtypeid(findTypeValueByName(emailTypeClassId, "Work"));
     workEmail.setEmailaddress("walter.work@foo.com");
@@ -232,19 +232,19 @@ public class NamedEntityDBServiceTest {
 
     // UPDATE Work Email and Status 
 
-    EmailEntity savedWorkEmail = nedDBSvc.findById(workEmailId, EmailEntity.class);
+    Email savedWorkEmail = nedDBSvc.findById(workEmailId, Email.class);
     savedWorkEmail.setEmailaddress("super." + savedWorkEmail.getEmailaddress());
     savedWorkEmail.setIsactive((byte)0);
     assertTrue( nedDBSvc.update(savedWorkEmail) );
 
     // Get another instance of same email record 
 
-    EmailEntity savedWorkEmail2 = nedDBSvc.findById(workEmailId, EmailEntity.class);
+    Email savedWorkEmail2 = nedDBSvc.findById(workEmailId, Email.class);
     assertEquals(savedWorkEmail, savedWorkEmail2);
 
     // CREATE Home Email
 
-    EmailEntity homeEmail = new EmailEntity();
+    Email homeEmail = new Email();
     homeEmail.setNamedentityid(1);
     homeEmail.setEmailtypeid(findTypeValueByName(emailTypeClassId, "Personal"));
     homeEmail.setEmailaddress("walter.home@foo.com");
@@ -260,25 +260,25 @@ public class NamedEntityDBServiceTest {
 
     // FIND ALL Email Records 
 
-    List<EmailEntity> allEmailsInDB = nedDBSvc.findAll(EmailEntity.class);
+    List<Email> allEmailsInDB = nedDBSvc.findAll(Email.class);
     assertTrue( allEmailsInDB.size() >= 2 );
 
     // FIND BY ATTRIBUTE (Lookup email by address)
 
-    EmailEntity emailSearchByAddress = new EmailEntity();
+    Email emailSearchByAddress = new Email();
     emailSearchByAddress.setEmailaddress("super.walter.work@foo.com");
-    List<EmailEntity> foundEmails = nedDBSvc.findByAttribute(emailSearchByAddress);
+    List<Email> foundEmails = nedDBSvc.findByAttribute(emailSearchByAddress);
     assertEquals(1, foundEmails.size());
     assertEquals("super.walter.work@foo.com", foundEmails.get(0).getEmailaddress());
 
     // FIND BY ATTRIBUTE (Lookup email addresses for an individual)
 
-    EmailEntity emailSearchByIndividual = new EmailEntity();
+    Email emailSearchByIndividual = new Email();
     emailSearchByIndividual.setNamedentityid(1);
-    List<EmailEntity> foundEmails2 = nedDBSvc.findByAttribute(emailSearchByIndividual);
+    List<Email> foundEmails2 = nedDBSvc.findByAttribute(emailSearchByIndividual);
     assertEquals(2, foundEmails2.size());
 
-    for (EmailEntity email : allEmailsInDB) {
+    for (Email email : allEmailsInDB) {
       assertTrue( allEmailsInDB.contains(email) );
     }
 
@@ -286,23 +286,23 @@ public class NamedEntityDBServiceTest {
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
 
-    for (EmailEntity email : allEmailsInDB) {
-      assertNotNull( nedQuery.findResolvedEntityByKey(email.getEmailid(), EmailEntity.class) );
+    for (Email email : allEmailsInDB) {
+      assertNotNull( nedQuery.findResolvedEntityByKey(email.getEmailid(), Email.class) );
     }
     // FIND BY JOIN-QUERY 
-    List<EmailEntity> emails = nedQuery.findResolvedEntities(foundEmails2.get(0).getNamedentityid(), EmailEntity.class);
+    List<Email> emails = nedQuery.findResolvedEntities(foundEmails2.get(0).getNamedentityid(), Email.class);
 
 
     assertTrue( emails.size() > 0 );
 
     // Try to find an email which doesn't exist
 
-    EmailEntity entity3 = nedDBSvc.findById(666, EmailEntity.class);
+    Email entity3 = nedDBSvc.findById(666, Email.class);
     assertNull(entity3);
 
     // DELETE
 
-    EmailEntity emailToDelete = new EmailEntity();
+    Email emailToDelete = new Email();
     emailToDelete.setEmailid(workEmailId);
 
     assertTrue( nedDBSvc.delete(emailToDelete) );
@@ -325,7 +325,7 @@ public class NamedEntityDBServiceTest {
     Integer langTypeId       = findTypeValueByName(langTypeClassId, "Italian")      ; assertNotNull(langTypeClassId)        ; 
     Integer commMethodTypeId = findTypeValueByName(commMethodsTypeClassId, "Email") ; assertNotNull(commMethodsTypeClassId) ; 
 
-    IndividualEntity individual = new IndividualEntity();
+    Individual individual = new Individual();
     individual.setNamedentityid(nedId);
     individual.setFirstname("firstname");
     individual.setMiddlename("middlename");
@@ -340,23 +340,23 @@ public class NamedEntityDBServiceTest {
 
     // UPDATE
     
-    IndividualEntity savedIndividual = nedDBSvc.findById(individualId, IndividualEntity.class);
+    Individual savedIndividual = nedDBSvc.findById(individualId, Individual.class);
     savedIndividual.setMiddlename("chuck");
     assertTrue( nedDBSvc.update(savedIndividual) );
 
     // Get another instance of same individual record
-    IndividualEntity savedIndividualAfterUpdate = nedDBSvc.findById(individualId, IndividualEntity.class);
+    Individual savedIndividualAfterUpdate = nedDBSvc.findById(individualId, Individual.class);
     assertEquals(savedIndividual, savedIndividualAfterUpdate);
 
     // FIND ALL Email Records 
 
-    List<IndividualEntity> allIndividualsInDB = nedDBSvc.findAll(IndividualEntity.class);
+    List<Individual> allIndividualsInDB = nedDBSvc.findAll(Individual.class);
     assertTrue(allIndividualsInDB.size() > 0);
 
     // FIND BY JOIN-QUERY 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    IndividualEntity entity = nedQuery.findResolvedEntity(individualId, IndividualEntity.class);
+    Individual entity = nedQuery.findResolvedEntity(individualId, Individual.class);
     assertNotNull( entity );
     assertEquals("firstname", entity.getFirstname());
     assertEquals("Mr.", entity.getNameprefix());
@@ -366,7 +366,7 @@ public class NamedEntityDBServiceTest {
 
     // DELETE
 
-    IndividualEntity individualToDelete = new IndividualEntity();
+    Individual individualToDelete = new Individual();
     individualToDelete.setNamedentityid(individualId);
 
     assertTrue( nedDBSvc.delete(individualToDelete) );
@@ -382,7 +382,7 @@ public class NamedEntityDBServiceTest {
 
     Integer organizationTypeId = findTypeValueByName(findTypeClassStartWith("Organization Types"), "University");
 
-    OrganizationEntity organization = new OrganizationEntity();
+    Organization organization = new Organization();
     organization.setNamedentityid(nedId);
     organization.setOrganizationtypeid(organizationTypeId);
     organization.setOrganizationfamiliarname("familiarname");
@@ -395,24 +395,24 @@ public class NamedEntityDBServiceTest {
     assertNotNull(organizationId);
 
     // UPDATE
-    OrganizationEntity savedEntity = nedDBSvc.findById(organizationId, OrganizationEntity.class);
+    Organization savedEntity = nedDBSvc.findById(organizationId, Organization.class);
     savedEntity.setOrganizationlegalname("legalname2");
     assertTrue(nedDBSvc.update(savedEntity));
 
     // Get another instance of same individual record
-    OrganizationEntity savedEntity2 = nedDBSvc.findById(organizationId, OrganizationEntity.class);
+    Organization savedEntity2 = nedDBSvc.findById(organizationId, Organization.class);
     assertEquals(savedEntity, savedEntity2);
 
     // FIND ALL Email Records
 
-    List<OrganizationEntity> allEntitiesInDB = nedDBSvc.findAll(OrganizationEntity.class);
+    List<Organization> allEntitiesInDB = nedDBSvc.findAll(Organization.class);
     assertTrue(allEntitiesInDB.size() > 0);
 
     // FIND entity with
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
 
-    OrganizationEntity entity = nedQuery.findResolvedEntity(organizationId, OrganizationEntity.class);
+    Organization entity = nedQuery.findResolvedEntity(organizationId, Organization.class);
     assertNotNull( entity );
 
     entity.setOrganizationtypeid(organizationTypeId);
@@ -420,7 +420,7 @@ public class NamedEntityDBServiceTest {
 
     // DELETE
 
-    OrganizationEntity entityToDelete = new OrganizationEntity();
+    Organization entityToDelete = new Organization();
     entityToDelete.setNamedentityid(organizationId);
 
     assertTrue( nedDBSvc.delete(entityToDelete) );
@@ -440,7 +440,7 @@ public class NamedEntityDBServiceTest {
     Integer usaCountryCodeTypeId = findTypeValueByName(countryCodeTypeClassId, "01");
     assertNotNull(usaCountryCodeTypeId); 
 
-    PhonenumberEntity mobilePhone = new PhonenumberEntity();
+    Phonenumber mobilePhone = new Phonenumber();
     mobilePhone.setNamedentityid(1);
     mobilePhone.setPhonenumbertypeid(mobilePhoneTypeId);
     mobilePhone.setCountrycodetypeid(usaCountryCodeTypeId);
@@ -456,18 +456,18 @@ public class NamedEntityDBServiceTest {
 
     // UPDATE
 
-    PhonenumberEntity savedMobilePhone = nedDBSvc.findById(mobilePhoneId, PhonenumberEntity.class);
+    Phonenumber savedMobilePhone = nedDBSvc.findById(mobilePhoneId, Phonenumber.class);
     savedMobilePhone.setExtension("xxx");
     assertTrue( nedDBSvc.update(savedMobilePhone) );
 
     // Get another instance of same email record 
 
-    PhonenumberEntity savedMobilePhone2 = nedDBSvc.findById(mobilePhoneId, PhonenumberEntity.class);
+    Phonenumber savedMobilePhone2 = nedDBSvc.findById(mobilePhoneId, Phonenumber.class);
     assertEquals(savedMobilePhone, savedMobilePhone2);
 
     // CREATE (Office Phone)
 
-    PhonenumberEntity officePhone = new PhonenumberEntity();
+    Phonenumber officePhone = new Phonenumber();
     officePhone.setNamedentityid(1);
     officePhone.setPhonenumbertypeid(officePhoneTypeId);
     officePhone.setCountrycodetypeid(usaCountryCodeTypeId);
@@ -483,31 +483,31 @@ public class NamedEntityDBServiceTest {
 
     // FIND ALL Phone Numbers 
 
-    List<PhonenumberEntity> allPhonenumbersInDb = nedDBSvc.findAll(PhonenumberEntity.class);
+    List<Phonenumber> allPhonenumbersInDb = nedDBSvc.findAll(Phonenumber.class);
     assertTrue( allPhonenumbersInDb.size() >= 2 );
             
     //TODO : FIND BY ATTRIBUTE (Lookup email by phone number)
 
     // FIND BY ATTRIBUTE (Lookup phone numbers for an individual)
 
-    PhonenumberEntity phoneSearchByIndividual = new PhonenumberEntity();
+    Phonenumber phoneSearchByIndividual = new Phonenumber();
     phoneSearchByIndividual.setNamedentityid(1);
-    List<PhonenumberEntity> foundPhones = nedDBSvc.findByAttribute(phoneSearchByIndividual);
+    List<Phonenumber> foundPhones = nedDBSvc.findByAttribute(phoneSearchByIndividual);
     assertEquals(2, foundPhones.size());
 
-    for (PhonenumberEntity phone : foundPhones) {
+    for (Phonenumber phone : foundPhones) {
       assertTrue( allPhonenumbersInDb.contains(phone) );
     }
 
     // FIND BY JOIN-QUERY 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<PhonenumberEntity> phonenumbers = nedQuery.findResolvedEntities(foundPhones.get(0).getNamedentityid(), PhonenumberEntity.class);
+    List<Phonenumber> phonenumbers = nedQuery.findResolvedEntities(foundPhones.get(0).getNamedentityid(), Phonenumber.class);
     assertTrue( phonenumbers.size() > 0 );
 
     // DELETE
 
-    PhonenumberEntity phoneToDelete = new PhonenumberEntity();
+    Phonenumber phoneToDelete = new Phonenumber();
 
     phoneToDelete.setPhonenumberid(mobilePhoneId);
     assertTrue( nedDBSvc.delete(phoneToDelete) );
@@ -529,7 +529,7 @@ public class NamedEntityDBServiceTest {
     Integer countryTypeId       = findTypeValueByName(countryTypeClassId, "United States"); assertNotNull(countryTypeId)      ; 
     Integer stateCodeTypeId     = findTypeValueByName(stateCodeTypeClassId, "CA")         ; assertNotNull(stateCodeTypeId)    ; 
 
-    AddressEntity address = new AddressEntity();
+    Address address = new Address();
     address.setNamedentityid(1);
     address.setAddresstypeid(officeAddressTypeId);
     address.setAddressline1("addressline1");
@@ -550,29 +550,29 @@ public class NamedEntityDBServiceTest {
 
     // UPDATE
 
-    AddressEntity savedAddress = nedDBSvc.findById(addressId, AddressEntity.class);
+    Address savedAddress = nedDBSvc.findById(addressId, Address.class);
     savedAddress.setAddressline2("updated addressline2");
     assertTrue( nedDBSvc.update(savedAddress) );
 
     // Get another instance of same address record 
 
-    AddressEntity savedAddress2 = nedDBSvc.findById(addressId, AddressEntity.class);
+    Address savedAddress2 = nedDBSvc.findById(addressId, Address.class);
     assertEquals(savedAddress, savedAddress2);
 
     // FIND ALL Phone Numbers 
 
-    List<AddressEntity> allAddressesInDb = nedDBSvc.findAll(AddressEntity.class);
+    List<Address> allAddressesInDb = nedDBSvc.findAll(Address.class);
     assertTrue( allAddressesInDb.size() > 0 );
 
     // FIND BY JOIN-QUERY 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<AddressEntity> addresses = nedQuery.findResolvedEntities(savedAddress.getNamedentityid(), AddressEntity.class);
+    List<Address> addresses = nedQuery.findResolvedEntities(savedAddress.getNamedentityid(), Address.class);
     assertTrue( addresses.size() > 0 );
             
     // DELETE
 
-    AddressEntity addressToDelete = new AddressEntity();
+    Address addressToDelete = new Address();
 
     addressToDelete.setAddressid(addressId);
     assertTrue( nedDBSvc.delete(addressToDelete) );
@@ -589,7 +589,7 @@ public class NamedEntityDBServiceTest {
     Integer srcAppTypeId = findTypeValueByName(srcAppTypeClassId, "Editorial Manager"); assertNotNull(srcAppTypeId); 
     Integer roleTypeId   = findTypeValueByName(roleTypeClassId, "Author")             ; assertNotNull(roleTypeId)  ; 
 
-    RoleEntity authorRole = new RoleEntity();
+    Role authorRole = new Role();
     authorRole.setNamedentityid(1);
     authorRole.setSourceapplicationtypeid(srcAppTypeId);
     authorRole.setRoletypeid(roleTypeId);
@@ -603,30 +603,30 @@ public class NamedEntityDBServiceTest {
 
     // UPDATE
 
-    RoleEntity savedRole = nedDBSvc.findById(authorId, RoleEntity.class);
+    Role savedRole = nedDBSvc.findById(authorId, Role.class);
     savedRole.setEnddate(new Timestamp(new Date().getTime()));
     assertTrue( nedDBSvc.update(savedRole) );
 
     // Get another instance of same role record 
 
-    RoleEntity savedRole2 = nedDBSvc.findById(authorId, RoleEntity.class);
+    Role savedRole2 = nedDBSvc.findById(authorId, Role.class);
     assertEquals(savedRole, savedRole2);
 
     // FIND ALL Roles 
 
-    List<RoleEntity> allRolesInDb = nedDBSvc.findAll(RoleEntity.class);
+    List<Role> allRolesInDb = nedDBSvc.findAll(Role.class);
     assertTrue( allRolesInDb.size() > 0 );
 
     // FIND BY JOIN-QUERY 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<RoleEntity> roles = nedQuery.findResolvedEntities(savedRole.getNamedentityid(), RoleEntity.class);
-    RoleEntity role = roles.get(0);
+    List<Role> roles = nedQuery.findResolvedEntities(savedRole.getNamedentityid(), Role.class);
+    Role role = roles.get(0);
     assertEquals("Author", role.getRoletype());
               
     // DELETE
 
-    RoleEntity roleToDelete = new RoleEntity();
+    Role roleToDelete = new Role();
     roleToDelete.setRoleid(authorId);
     assertTrue( nedDBSvc.delete(roleToDelete) );
   }
@@ -639,21 +639,21 @@ public class NamedEntityDBServiceTest {
     // FIND Individuals with an ORCID id. There should be none. 
 
     NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<IndividualEntity> peopleWithOrcidId = nedQuery.findResolvedEntityByUid("ORCID", ORCID_ID, IndividualEntity.class);
+    List<Individual> peopleWithOrcidId = nedQuery.findResolvedEntityByUid("ORCID", ORCID_ID, Individual.class);
     assertEquals(0, peopleWithOrcidId.size());
 
     // Create two individuals with the same Orcid#
   
     for (int i = 1; i <= 2; i++) {
 
-      IndividualEntity individual = new IndividualEntity();
+      Individual individual = new Individual();
       individual.setFirstname("firstname");
       individual.setMiddlename("middlename");
       individual.setLastname("lastname");
       Integer individualId = nedDBSvc.create( individual );
       assertNotNull(individualId);
 
-      UniqueidentifierEntity uidEntity1 = new UniqueidentifierEntity();
+      Uniqueidentifier uidEntity1 = new Uniqueidentifier();
       uidEntity1.setNamedentityid(individualId);
       uidEntity1.setUniqueidentifier(ORCID_ID);
 
@@ -664,17 +664,17 @@ public class NamedEntityDBServiceTest {
       assertNotNull(uidId1);
 
       // FIND By UID (ORCID) #2
-      assertEquals(i, nedQuery.findResolvedEntityByUid("ORCID", ORCID_ID, IndividualEntity.class).size());
+      assertEquals(i, nedQuery.findResolvedEntityByUid("ORCID", ORCID_ID, Individual.class).size());
 
       // UPDATE
 
-      UniqueidentifierEntity savedUid = nedDBSvc.findById(uidId1, UniqueidentifierEntity.class);
+      Uniqueidentifier savedUid = nedDBSvc.findById(uidId1, Uniqueidentifier.class);
       savedUid.setUniqueidentifier( savedUid.getUniqueidentifier() + "Z" );
       assertTrue( nedDBSvc.update(savedUid) );
 
       // Get another instance of same role record 
 
-      UniqueidentifierEntity savedUid2 = nedDBSvc.findById(uidId1, UniqueidentifierEntity.class);
+      Uniqueidentifier savedUid2 = nedDBSvc.findById(uidId1, Uniqueidentifier.class);
       assertEquals(savedUid, savedUid2);
 
       // Restore orcid id.
@@ -684,25 +684,25 @@ public class NamedEntityDBServiceTest {
 
       // FIND BY JOIN-QUERY 
 
-      List<UniqueidentifierEntity> uids = nedQuery.findResolvedEntities(savedUid.getNamedentityid(), UniqueidentifierEntity.class);
-      UniqueidentifierEntity uid = uids.get(0);
+      List<Uniqueidentifier> uids = nedQuery.findResolvedEntities(savedUid.getNamedentityid(), Uniqueidentifier.class);
+      Uniqueidentifier uid = uids.get(0);
       assertEquals(ORCID_ID, uid.getUniqueidentifier());
     }
 
     // FIND ALL Roles 
 
-    List<UniqueidentifierEntity> allUidsInDb = nedDBSvc.findAll(UniqueidentifierEntity.class);
+    List<Uniqueidentifier> allUidsInDb = nedDBSvc.findAll(Uniqueidentifier.class);
     assertEquals(2, allUidsInDb.size());
 
-    for (UniqueidentifierEntity uid : allUidsInDb) {
-      UniqueidentifierEntity uidToDelete = new UniqueidentifierEntity();
+    for (Uniqueidentifier uid : allUidsInDb) {
+      Uniqueidentifier uidToDelete = new Uniqueidentifier();
       uidToDelete.setUniqueidentifiersid(uid.getUniqueidentifiersid());
       assertTrue( nedDBSvc.delete(uidToDelete) );
     }
   }
 
   private Integer findTypeClassStartWith(String prefix) {
-    for(TypedescriptionEntity typeClass : nedDBSvc.findAll(TypedescriptionEntity.class)) {
+    for(Typedescription typeClass : nedDBSvc.findAll(Typedescription.class)) {
       if (typeClass.getDescription().startsWith(prefix)) {
         return typeClass.getTypeid();
       }
@@ -711,7 +711,7 @@ public class NamedEntityDBServiceTest {
   }
 
   private Integer findTypeValueByName(Integer typeClassId, String name) {
-    for(GlobaltypeEntity typeValue : nedDBSvc.findAll(GlobaltypeEntity.class)) {
+    for(Globaltype typeValue : nedDBSvc.findAll(Globaltype.class)) {
       if (typeClassId.equals(typeValue.getTypeid()) &&
           typeValue.getShortdescription().equals(name))
       {

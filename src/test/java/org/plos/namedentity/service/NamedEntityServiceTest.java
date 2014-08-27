@@ -20,15 +20,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.entity.AddressEntity;
-import org.plos.namedentity.api.entity.DegreeEntity;
-import org.plos.namedentity.api.entity.EmailEntity;
-import org.plos.namedentity.api.entity.GlobaltypeEntity;
-import org.plos.namedentity.api.entity.IndividualEntity;
-import org.plos.namedentity.api.entity.OrganizationEntity;
-import org.plos.namedentity.api.entity.PhonenumberEntity;
-import org.plos.namedentity.api.entity.RoleEntity;
-import org.plos.namedentity.api.entity.UniqueidentifierEntity;
+import org.plos.namedentity.api.entity.Address;
+import org.plos.namedentity.api.entity.Degree;
+import org.plos.namedentity.api.entity.Email;
+import org.plos.namedentity.api.entity.Globaltype;
+import org.plos.namedentity.api.entity.Individual;
+import org.plos.namedentity.api.entity.Organization;
+import org.plos.namedentity.api.entity.Phonenumber;
+import org.plos.namedentity.api.entity.Role;
+import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -61,20 +61,20 @@ public class NamedEntityServiceTest {
       fail();
     }
     catch (NedValidationException expected) {
-      assertTrue(expected.getMessage().indexOf("No ROLE defined") != -1);
+      assertTrue(expected.getMessage().indexOf("Roles can not be empty") != -1);
     }
   }
 
   @Test
   public void testCreateOrganization() {
-    OrganizationEntity inputEntity = new OrganizationEntity();
+    Organization inputEntity = new Organization();
     inputEntity.setOrganizationfamiliarname("familiarname");
     inputEntity.setOrganizationlegalname("legalname");
     inputEntity.setIsactive((byte) 1);
     inputEntity.setIsvisible((byte) 0);
 
     try {
-      OrganizationEntity outputEntity = namedEntityService.createOrganization(inputEntity);
+      Organization outputEntity = namedEntityService.createOrganization(inputEntity);
       assertNotNull(outputEntity);
       assertNotNull(outputEntity.getNamedentityid());
       assertTrue(inputEntity.equals(outputEntity));
@@ -93,15 +93,15 @@ public class NamedEntityServiceTest {
     /*  EMAILS                                                            */
     /* ------------------------------------------------------------------ */
 
-    List<EmailEntity> emails = new ArrayList<>();
+    List<Email> emails = new ArrayList<>();
 
-    EmailEntity workEmail = new EmailEntity();
+    Email workEmail = new Email();
     workEmail.setEmailtype("Work");
     workEmail.setEmailaddress("fu.manchu.work@foo.com");
     workEmail.setIsprimary((byte)1);
     emails.add( workEmail );
 
-    EmailEntity personalEmail = new EmailEntity();
+    Email personalEmail = new Email();
     personalEmail.setEmailtype("Personal");
     personalEmail.setEmailaddress("fu.manchu.home@foo.com");
     personalEmail.setIsprimary((byte)0);
@@ -113,23 +113,23 @@ public class NamedEntityServiceTest {
     /*  PHONE NUMBERS                                                     */
     /* ------------------------------------------------------------------ */
 
-    List<PhonenumberEntity> phonenumbers = new ArrayList<>();
+    List<Phonenumber> phonenumbers = new ArrayList<>();
 
-    PhonenumberEntity officePhone = new PhonenumberEntity();
+    Phonenumber officePhone = new Phonenumber();
     officePhone.setPhonenumbertype("Office");
     officePhone.setCountrycodetype("01");
     officePhone.setPhonenumber("123-456-7890");
     officePhone.setIsprimary(true);
     phonenumbers.add( officePhone );
 
-    PhonenumberEntity mobilePhone = new PhonenumberEntity();
+    Phonenumber mobilePhone = new Phonenumber();
     mobilePhone.setPhonenumbertype("Mobile");
     mobilePhone.setCountrycodetype("01");
     mobilePhone.setPhonenumber("123-444-0011");
     mobilePhone.setIsprimary(false);
     phonenumbers.add( mobilePhone );
 
-    PhonenumberEntity homePhone = new PhonenumberEntity();
+    Phonenumber homePhone = new Phonenumber();
     homePhone.setPhonenumbertype("Home");
     homePhone.setCountrycodetype("01");
     homePhone.setPhonenumber("123-555-6666");
@@ -142,9 +142,9 @@ public class NamedEntityServiceTest {
     /*  ADDRESSES                                                         */
     /* ------------------------------------------------------------------ */
 
-    List<AddressEntity> addresses = new ArrayList<>();
+    List<Address> addresses = new ArrayList<>();
 
-    AddressEntity officeAddress = new AddressEntity();
+    Address officeAddress = new Address();
     officeAddress.setAddresstype("Office");
     officeAddress.setAddressline1("addressline1");
     officeAddress.setAddressline2("addressline2");
@@ -161,9 +161,9 @@ public class NamedEntityServiceTest {
     /*  DEGREES                                                           */
     /* ------------------------------------------------------------------ */
 
-    List<DegreeEntity> degrees = new ArrayList<>();
+    List<Degree> degrees = new ArrayList<>();
 
-    DegreeEntity degree = new DegreeEntity();
+    Degree degree = new Degree();
     degree.setDegreetype("MD");
     degrees.add(degree);
 
@@ -173,9 +173,9 @@ public class NamedEntityServiceTest {
     /*  UNIQUE IDENTIFIERS                                                */
     /* ------------------------------------------------------------------ */
 
-    List<UniqueidentifierEntity> uids = new ArrayList<>();
+    List<Uniqueidentifier> uids = new ArrayList<>();
 
-    UniqueidentifierEntity uidEntity = new UniqueidentifierEntity();
+    Uniqueidentifier uidEntity = new Uniqueidentifier();
     uidEntity.setUniqueidentifiertype("ORCID");
     uidEntity.setUniqueidentifier("0000-0001-9430-319X");
     uids.add( uidEntity );
@@ -196,9 +196,9 @@ public class NamedEntityServiceTest {
       fail();
     }
     finally {
-      EmailEntity emailSearchCriteria = new EmailEntity();
+      Email emailSearchCriteria = new Email();
       emailSearchCriteria.setEmailaddress("fu.manchu.work@foo.com");
-      List<EmailEntity> emailSearchResult = crudService.findByAttribute(emailSearchCriteria);
+      List<Email> emailSearchResult = crudService.findByAttribute(emailSearchCriteria);
       assertEquals(1, emailSearchResult.size());
 
       nedId = emailSearchResult.get(0).getNamedentityid();
@@ -207,53 +207,53 @@ public class NamedEntityServiceTest {
 
     // Test "By NedId" Finders
 
-    IndividualEntity entity = namedEntityService.findResolvedEntity(nedId, IndividualEntity.class);
+    Individual entity = namedEntityService.findResolvedEntity(nedId, Individual.class);
     assertNotNull( entity );
 
-    List<AddressEntity> addressesEntities = namedEntityService.findResolvedEntities(nedId, AddressEntity.class);
+    List<Address> addressesEntities = namedEntityService.findResolvedEntities(nedId, Address.class);
     assertEquals(1, addressesEntities.size());
 
-    List<EmailEntity> emailEntities = namedEntityService.findResolvedEntities(nedId, EmailEntity.class);
+    List<Email> emailEntities = namedEntityService.findResolvedEntities(nedId, Email.class);
     assertEquals(2, emailEntities.size());
 
-    List<PhonenumberEntity> phonenumberEntities = namedEntityService.findResolvedEntities(nedId, PhonenumberEntity.class);
+    List<Phonenumber> phonenumberEntities = namedEntityService.findResolvedEntities(nedId, Phonenumber.class);
     assertEquals(3, phonenumberEntities.size());
 
-    List<RoleEntity> roleEntities = namedEntityService.findResolvedEntities(nedId, RoleEntity.class);
+    List<Role> roleEntities = namedEntityService.findResolvedEntities(nedId, Role.class);
     assertEquals(1, roleEntities.size());
 
-    List<UniqueidentifierEntity> uidEntities = namedEntityService.findResolvedEntities(nedId, UniqueidentifierEntity.class);
+    List<Uniqueidentifier> uidEntities = namedEntityService.findResolvedEntities(nedId, Uniqueidentifier.class);
     assertEquals(1, uidEntities.size());
 
-    List<IndividualEntity> individuals = namedEntityService.findResolvedEntityByUid("ORCID", "0000-0001-9430-319X", IndividualEntity.class);
+    List<Individual> individuals = namedEntityService.findResolvedEntityByUid("ORCID", "0000-0001-9430-319X", Individual.class);
     assertEquals(1, individuals.size());
 
-    IndividualEntity individual = individuals.get(0);
+    Individual individual = individuals.get(0);
     assertEquals("firstname", individual.getFirstname());
     assertEquals("lastname", individual.getLastname());
   }
 
   private Integer findUidTypeIdByName(String typeName) {
 
-    GlobaltypeEntity globalTypesearchCriteria = new GlobaltypeEntity();
+    Globaltype globalTypesearchCriteria = new Globaltype();
     globalTypesearchCriteria.setTypeid(17);
     globalTypesearchCriteria.setShortdescription(typeName);
-    List<GlobaltypeEntity> globalTypesResult = crudService.findByAttribute(globalTypesearchCriteria);
+    List<Globaltype> globalTypesResult = crudService.findByAttribute(globalTypesearchCriteria);
     assertEquals(1, globalTypesResult.size());
 
     return globalTypesResult.get(0).getGlobaltypeid(); 
   }
 
   @Test
-  public void testCreateIndividualWithPhaseTwoValidationException() {
+  public void testCreateIndividualCompositeWithInvalidEmail() {
 
     IndividualComposite composite = newCompositeIndividualWithRole();
 
-    List<EmailEntity> emails = new ArrayList<>();
+    List<Email> emails = new ArrayList<>();
 
-    EmailEntity workEmail = new EmailEntity();
+    Email workEmail = new Email();
     workEmail.setEmailtype("Work");
-    workEmail.setEmailaddress("foo@bar.com");
+    workEmail.setEmailaddress("invalid@email");
     workEmail.setIsprimary((byte)1);
     emails.add( workEmail );
 
@@ -267,9 +267,9 @@ public class NamedEntityServiceTest {
     }
     // verify entities not committed to db. we'll just check email.
     finally {
-      EmailEntity emailSearchCriteria = new EmailEntity();
-      emailSearchCriteria.setEmailaddress("foo@bar.com");
-      List<EmailEntity> emailSearchResult = crudService.findByAttribute(emailSearchCriteria);
+      Email emailSearchCriteria = new Email();
+      emailSearchCriteria.setEmailaddress("invalid@email");
+      List<Email> emailSearchResult = crudService.findByAttribute(emailSearchCriteria);
       assertEquals(0, emailSearchResult.size());
     }
   }
@@ -279,16 +279,16 @@ public class NamedEntityServiceTest {
 
     // CREATE email entity. we don't expect the email type to persist.
 
-    EmailEntity emailEntity = new EmailEntity();
+    Email emailEntity = new Email();
     emailEntity.setNamedentityid(1);
     emailEntity.setEmailtype("Work");
-    emailEntity.setEmailaddress("foo@bar.com");
+    emailEntity.setEmailaddress("bill@microsoft.com");
     emailEntity.setIsprimary((byte)1);
 
     Integer createEmailId = crudService.create(emailEntity);
     assertNotNull( createEmailId );
 
-    EmailEntity savedEntity = namedEntityService.findResolvedEntityByKey(createEmailId, EmailEntity.class);
+    Email savedEntity = namedEntityService.findResolvedEntityByKey(createEmailId, Email.class);
     assertNull( savedEntity.getEmailtype() );
 
     // try again but this time use type resolver. remember that type names are
@@ -299,7 +299,7 @@ public class NamedEntityServiceTest {
     Integer createEmailId2 = crudService.create(emailEntity);
     assertNotNull( createEmailId2 );
 
-    EmailEntity savedEntity2 = namedEntityService.findResolvedEntityByKey(createEmailId2, EmailEntity.class);
+    Email savedEntity2 = namedEntityService.findResolvedEntityByKey(createEmailId2, Email.class);
     assertNotNull( savedEntity2.getEmailtype() );
 
     // UPDATE email entity. Scrub appropriate attributes from current instance
@@ -308,7 +308,7 @@ public class NamedEntityServiceTest {
     emailEntity.setEmailtypeid(null); emailEntity.setEmailid(createEmailId);
     assertTrue( crudService.update(emailEntity) );
 
-    EmailEntity savedEntity3 = namedEntityService.findResolvedEntityByKey(createEmailId, EmailEntity.class);
+    Email savedEntity3 = namedEntityService.findResolvedEntityByKey(createEmailId, Email.class);
     assertNull( savedEntity3.getEmailtype() );
 
     // try again with type resolver.
@@ -317,7 +317,7 @@ public class NamedEntityServiceTest {
 
     assertTrue( crudService.update(emailEntity) );
 
-    EmailEntity savedEntity4 = namedEntityService.findResolvedEntityByKey(createEmailId, EmailEntity.class);
+    Email savedEntity4 = namedEntityService.findResolvedEntityByKey(createEmailId, Email.class);
     assertNotNull( savedEntity4.getEmailtype() );
 
     // DELETE.
@@ -333,7 +333,7 @@ public class NamedEntityServiceTest {
 
     // CREATE address entity. we don't expect the address type to persist.
 
-    AddressEntity addressEntity = new AddressEntity();
+    Address addressEntity = new Address();
     addressEntity.setNamedentityid(1);
     addressEntity.setAddresstype("Office");
     addressEntity.setAddressline1("addressline 1");
@@ -347,7 +347,7 @@ public class NamedEntityServiceTest {
     Integer createAddressId = crudService.create(addressEntity);
     assertNotNull( createAddressId );
 
-    AddressEntity savedEntity = namedEntityService.findResolvedEntityByKey(createAddressId, AddressEntity.class);
+    Address savedEntity = namedEntityService.findResolvedEntityByKey(createAddressId, Address.class);
     assertNull( savedEntity.getAddresstype() );
 
     // try again but this time use type resolver. remember that type names are
@@ -356,7 +356,7 @@ public class NamedEntityServiceTest {
     Integer createAddressId2 = crudService.create( namedEntityService.resolveValuesToIds(addressEntity) );
     assertNotNull( createAddressId2 );
 
-    AddressEntity savedEntity2 = namedEntityService.findResolvedEntityByKey(createAddressId2, AddressEntity.class);
+    Address savedEntity2 = namedEntityService.findResolvedEntityByKey(createAddressId2, Address.class);
     assertNotNull( savedEntity2.getAddresstype() );
 
     // UPDATE address entity. Scrub appropriate attributes from current instance
@@ -368,14 +368,14 @@ public class NamedEntityServiceTest {
     addressEntity.setCountrycodetypeid(null); 
     assertTrue( crudService.update(addressEntity) );
 
-    AddressEntity savedEntity3 = namedEntityService.findResolvedEntityByKey(createAddressId, AddressEntity.class);
+    Address savedEntity3 = namedEntityService.findResolvedEntityByKey(createAddressId, Address.class);
     assertNull( savedEntity3.getAddresstype() );
 
     // try again with type resolver.
 
     assertTrue( crudService.update(namedEntityService.resolveValuesToIds(addressEntity)) );
 
-    AddressEntity savedEntity4 = namedEntityService.findResolvedEntityByKey(createAddressId, AddressEntity.class);
+    Address savedEntity4 = namedEntityService.findResolvedEntityByKey(createAddressId, Address.class);
     assertNotNull( savedEntity4.getAddresstype() );
 
     // DELETE.
@@ -397,8 +397,8 @@ public class NamedEntityServiceTest {
     composite.setPreferredlanguage("English");
     composite.setPreferredcommunication("Email");
 
-    List<RoleEntity> roles = new ArrayList<>();
-    RoleEntity author = new RoleEntity();
+    List<Role> roles = new ArrayList<>();
+    Role author = new Role();
     author.setRoletype("Author");
     author.setStartdate(new Timestamp(1401408000));  // "2014-05-30"
     roles.add(author);

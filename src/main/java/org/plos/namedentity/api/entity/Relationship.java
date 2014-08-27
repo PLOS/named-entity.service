@@ -22,7 +22,7 @@ import java.sql.Timestamp;
  * Modified JOOQ generated class(pojo=true).
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class RelationshipEntity implements java.io.Serializable {
+public class Relationship extends Entity {
 
   private static final long serialVersionUID = 1494801838;
 
@@ -38,21 +38,21 @@ public class RelationshipEntity implements java.io.Serializable {
   private Integer   createdby;
   private Integer   lastmodifiedby;
 
-  public RelationshipEntity() {}
+  public Relationship() {}
 
-  public RelationshipEntity(
-    Integer   relationshipid,
-    Integer   masternamedentityid,
-    Integer   childnamedentityid,
-    Integer   relationshiptypeid,
-    String    relationshiptype,
-    Timestamp startdate,
-    Timestamp enddate,
-    Timestamp created,
-    Timestamp lastmodified,
-    Integer   createdby,
-    Integer   lastmodifiedby
-  ) {
+  public Relationship(
+      Integer relationshipid,
+      Integer masternamedentityid,
+      Integer childnamedentityid,
+      Integer relationshiptypeid,
+      String relationshiptype,
+      Timestamp startdate,
+      Timestamp enddate,
+      Timestamp created,
+      Timestamp lastmodified,
+      Integer createdby,
+      Integer lastmodifiedby
+                     ) {
     this.relationshipid      = relationshipid;
     this.masternamedentityid = masternamedentityid;
     this.childnamedentityid  = childnamedentityid;

@@ -20,7 +20,7 @@ package org.plos.namedentity.api.entity;
  * JOOQ generated class(pojo=true).
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class CasEntity implements java.io.Serializable {
+public class Cas extends Entity {
 
   private static final long serialVersionUID = -108875444;
 
@@ -28,13 +28,13 @@ public class CasEntity implements java.io.Serializable {
   private java.lang.Integer namedentityid;
   private java.lang.Integer sourceapplicationtypeid;
 
-  public CasEntity() {}
+  public Cas() {}
 
-  public CasEntity(
-    java.lang.Integer casid,
-    java.lang.Integer namedentityid,
-    java.lang.Integer sourceapplicationtypeid
-  ) {
+  public Cas(
+      java.lang.Integer casid,
+      java.lang.Integer namedentityid,
+      java.lang.Integer sourceapplicationtypeid
+            ) {
     this.casid = casid;
     this.namedentityid = namedentityid;
     this.sourceapplicationtypeid = sourceapplicationtypeid;

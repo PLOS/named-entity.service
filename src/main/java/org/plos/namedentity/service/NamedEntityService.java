@@ -17,7 +17,8 @@
 package org.plos.namedentity.service;
 
 import org.plos.namedentity.api.IndividualComposite;
-import org.plos.namedentity.api.entity.OrganizationEntity;
+import org.plos.namedentity.api.entity.Entity;
+import org.plos.namedentity.api.entity.Organization;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public interface NamedEntityService {
 
   public IndividualComposite createIndividualComposite(IndividualComposite composite);
 
-  public OrganizationEntity createOrganization(OrganizationEntity entity);
+  public Organization createOrganization(Organization entity);
 
   public IndividualComposite findIndividualComposite(Integer nedId);
 
@@ -46,7 +47,7 @@ public interface NamedEntityService {
    *
    * @return         list of entities with unique identifier (typically just one)
    */
-  public <T> List<T> findResolvedEntityByUid(String srcType, String uid, Class<T> clazz);
+  public <T extends Entity> List<T> findResolvedEntityByUid(String srcType, String uid, Class<T> clazz);
 
 
   /** 
@@ -58,7 +59,7 @@ public interface NamedEntityService {
    *
    * @return       entity with specified primary key
    */
-  public <T> T findResolvedEntityByKey(Integer pk, Class<T> clazz);
+  public <T extends Entity> T findResolvedEntityByKey(Integer pk, Class<T> clazz);
 
 
   /**
@@ -72,7 +73,7 @@ public interface NamedEntityService {
    *
    * @return       entity whose primary key is ned id 
    */
-  public <T> T findResolvedEntity(Integer nedId, Class<T> clazz);
+  public <T extends Entity> T findResolvedEntity(Integer nedId, Class<T> clazz);
 
 
   /**
@@ -86,7 +87,7 @@ public interface NamedEntityService {
    *
    * @return       a list of entities (of type T) that have ned id.
    */
-  public <T> List<T> findResolvedEntities(Integer nedId, Class<T> clazz);
+  public <T extends Entity> List<T> findResolvedEntities(Integer nedId, Class<T> clazz);
 
 
   /**
@@ -96,5 +97,5 @@ public interface NamedEntityService {
    * @param  t  entity object containing type names to resolve
    * @return    same entity object with type ids populated (ie, resolved) 
    */
-  public <T> T resolveValuesToIds(T t);
+  public <T extends Entity> T resolveValuesToIds(T t);
 }

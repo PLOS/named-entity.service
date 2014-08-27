@@ -16,18 +16,22 @@
  */
 package org.plos.namedentity.api.entity;
 
-import java.util.Objects;
+import org.apache.commons.validator.routines.EmailValidator;
+import org.plos.namedentity.api.NedValidationException;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Objects;
 
 /**
  * Modified JOOQ generated class(pojo=true).
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @XmlRootElement
-public class EmailEntity implements java.io.Serializable {
+public class Email extends Entity {
 
   private static final long serialVersionUID = -945009318;
+
+  private static EmailValidator emailValidator = EmailValidator.getInstance();
 
   private Integer emailid;
   private Integer namedentityid;
@@ -36,41 +40,39 @@ public class EmailEntity implements java.io.Serializable {
   private String  emailtype;
 
   private String  emailaddress;
-  private Byte    isprimary;
-  private Byte    isactive;
+  private Byte    isprimary = 1;  // TODO: change Byte to Bool
+  private Byte    isactive = 1;
 
-  public EmailEntity() {
-    this(null,null,null,null,null,null,null); 
+  @Override
+  public void validate() {
+
+    if (emailaddress != null && !emailValidator.isValid(emailaddress))
+      throw new NedValidationException("Email not valid");
+
   }
 
-  public EmailEntity(
-    Integer emailid,
-    Integer namedentityid,
-    Integer emailtypeid,
-    String  emailaddress,
-    Byte    isprimary,
-    Byte    isactive
-  ) {
-    this(emailid, namedentityid, emailtypeid, null, emailaddress, isprimary, isactive);
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) { return true; }
+
+    if (o == null || this.getClass() != o.getClass()) { return false; }
+
+    Email entity = (Email) o;
+    return Objects.equals(this.emailid, entity.emailid)
+        && Objects.equals(this.namedentityid, entity.namedentityid)
+        && Objects.equals(this.emailtypeid, entity.emailtypeid)
+        && Objects.equals(this.emailtype, entity.emailtype)
+        && Objects.equals(this.emailaddress, entity.emailaddress)
+        && Objects.equals(this.isprimary, entity.isprimary)
+        && Objects.equals(this.isactive, entity.isactive);
   }
 
-  public EmailEntity(
-    Integer emailid,
-    Integer namedentityid,
-    Integer emailtypeid,
-    String  emailtype,
-    String  emailaddress,
-    Byte    isprimary,
-    Byte    isactive
-  ) {
-    this.emailid       = emailid;
-    this.namedentityid = namedentityid;
-    this.emailtypeid   = emailtypeid;
-    this.emailtype     = emailtype;
-    this.emailaddress  = emailaddress;
-    this.isprimary     = (isprimary != null ? isprimary : 1);
-    this.isactive      = (isactive != null ? isactive : 1);
+  @Override
+  public int hashCode() {
+    return Objects.hash(
+        emailid, namedentityid, emailtypeid, emailtype, emailaddress, isprimary, isactive);
   }
+
 
   public java.lang.Integer getEmailid() {
     return this.emailid;
@@ -128,25 +130,4 @@ public class EmailEntity implements java.io.Serializable {
       this.emailtype = emailtype;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) { return true; }
-
-    if (o == null || this.getClass() != o.getClass()) { return false; }
-
-    EmailEntity entity = (EmailEntity) o;
-    return Objects.equals(this.emailid, entity.emailid)
-        && Objects.equals(this.namedentityid, entity.namedentityid)
-        && Objects.equals(this.emailtypeid, entity.emailtypeid)
-        && Objects.equals(this.emailtype, entity.emailtype)
-        && Objects.equals(this.emailaddress, entity.emailaddress)
-        && Objects.equals(this.isprimary, entity.isprimary)
-        && Objects.equals(this.isactive, entity.isactive);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(
-      emailid, namedentityid, emailtypeid, emailtype, emailaddress, isprimary, isactive);
-  }
 }

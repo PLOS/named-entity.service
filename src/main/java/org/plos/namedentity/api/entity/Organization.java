@@ -24,7 +24,7 @@ import java.util.Objects;
  */
 @XmlRootElement
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class OrganizationEntity implements java.io.Serializable {
+public class Organization extends Entity {
 
   private static final long serialVersionUID = 276513267;
 
@@ -37,31 +37,6 @@ public class OrganizationEntity implements java.io.Serializable {
   private Byte    isactive;
   private Byte    isvisible;
   private String  url;
-
-  public OrganizationEntity() {
-  }
-
-  public OrganizationEntity(
-      Integer namedentityid,
-      Integer organizationtypeid,
-      String organizationtype,
-      String organizationfamiliarname,
-      String organizationlegalname,
-      Integer organizationmaincontactid,
-      Byte isactive,
-      Byte isvisible,
-      String url
-                           ) {
-    this.namedentityid = namedentityid;
-    this.organizationtypeid = organizationtypeid;
-    this.organizationtype = organizationtype;
-    this.organizationfamiliarname = organizationfamiliarname;
-    this.organizationlegalname = organizationlegalname;
-    this.organizationmaincontactid = organizationmaincontactid;
-    this.isactive = isactive;
-    this.isvisible = isvisible;
-    this.url = url;
-  }
 
   public Integer getNamedentityid() {
     return this.namedentityid;
@@ -138,9 +113,9 @@ public class OrganizationEntity implements java.io.Serializable {
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (!(o instanceof OrganizationEntity)) return false;
+    if (!(o instanceof Organization)) return false;
 
-    OrganizationEntity that = (OrganizationEntity) o;
+    Organization that = (Organization) o;
 
     return Objects.equals(this.namedentityid, that.namedentityid)
         && Objects.equals(this.isactive, that.isactive)
