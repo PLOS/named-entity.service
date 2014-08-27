@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Subjectareas extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord> {
 
-	private static final long serialVersionUID = -2002601387;
+	private static final long serialVersionUID = -524374314;
 
 	/**
 	 * The singleton instance of <code>namedentities.subjectareas</code>
@@ -39,7 +39,7 @@ public class Subjectareas extends org.jooq.impl.TableImpl<org.plos.namedentity.p
 	/**
 	 * The column <code>namedentities.subjectareas.subjectareatypeid</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord, java.lang.Integer> SUBJECTAREATYPEID = createField("subjectareatypeid", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord, java.lang.Integer> SUBJECTAREATYPEID = createField("subjectareatypeid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>namedentities.subjectareas</code> table reference

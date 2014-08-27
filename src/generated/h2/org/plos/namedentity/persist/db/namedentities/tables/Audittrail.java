@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Audittrail extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord> {
 
-	private static final long serialVersionUID = 1605699305;
+	private static final long serialVersionUID = 1071715326;
 
 	/**
 	 * The singleton instance of <code>namedentities.audittrail</code>
@@ -34,7 +34,7 @@ public class Audittrail extends org.jooq.impl.TableImpl<org.plos.namedentity.per
 	/**
 	 * The column <code>namedentities.audittrail.sourcefieldid</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord, java.lang.Integer> SOURCEFIELDID = createField("sourcefieldid", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord, java.lang.Integer> SOURCEFIELDID = createField("sourcefieldid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>namedentities.audittrail.rownumber</code>.
@@ -44,12 +44,12 @@ public class Audittrail extends org.jooq.impl.TableImpl<org.plos.namedentity.per
 	/**
 	 * The column <code>namedentities.audittrail.oldvalue</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord, java.lang.String> OLDVALUE = createField("oldvalue", org.jooq.impl.SQLDataType.VARCHAR.length(45), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord, java.lang.String> OLDVALUE = createField("oldvalue", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
 
 	/**
 	 * The column <code>namedentities.audittrail.newvalue</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord, java.lang.String> NEWVALUE = createField("newvalue", org.jooq.impl.SQLDataType.VARCHAR.length(45), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord, java.lang.String> NEWVALUE = createField("newvalue", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
 
 	/**
 	 * The column <code>namedentities.audittrail.lastmodified</code>.

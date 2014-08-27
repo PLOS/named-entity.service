@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Globaltypes extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord> {
 
-	private static final long serialVersionUID = -366938524;
+	private static final long serialVersionUID = -725442872;
 
 	/**
 	 * The singleton instance of <code>namedentities.globaltypes</code>
@@ -39,17 +39,17 @@ public class Globaltypes extends org.jooq.impl.TableImpl<org.plos.namedentity.pe
 	/**
 	 * The column <code>namedentities.globaltypes.shortdescription</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.lang.String> SHORTDESCRIPTION = createField("shortdescription", org.jooq.impl.SQLDataType.VARCHAR.length(32), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.lang.String> SHORTDESCRIPTION = createField("shortdescription", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
 
 	/**
 	 * The column <code>namedentities.globaltypes.longdescription</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.lang.String> LONGDESCRIPTION = createField("longdescription", org.jooq.impl.SQLDataType.VARCHAR.length(128), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.lang.String> LONGDESCRIPTION = createField("longdescription", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
 
 	/**
 	 * The column <code>namedentities.globaltypes.typecode</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.lang.String> TYPECODE = createField("typecode", org.jooq.impl.SQLDataType.VARCHAR.length(4), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.lang.String> TYPECODE = createField("typecode", org.jooq.impl.SQLDataType.VARCHAR.length(4).nullable(false), this, "");
 
 	/**
 	 * The column <code>namedentities.globaltypes.created</code>.

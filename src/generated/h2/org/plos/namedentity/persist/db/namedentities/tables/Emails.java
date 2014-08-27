@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Emails extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord> {
 
-	private static final long serialVersionUID = -163528700;
+	private static final long serialVersionUID = -498208155;
 
 	/**
 	 * The singleton instance of <code>namedentities.emails</code>
@@ -44,17 +44,17 @@ public class Emails extends org.jooq.impl.TableImpl<org.plos.namedentity.persist
 	/**
 	 * The column <code>namedentities.emails.emailaddress</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.String> EMAILADDRESS = createField("emailaddress", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.String> EMAILADDRESS = createField("emailaddress", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
 
 	/**
 	 * The column <code>namedentities.emails.isprimary</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Byte> ISPRIMARY = createField("isprimary", org.jooq.impl.SQLDataType.TINYINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Byte> ISPRIMARY = createField("isprimary", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
 
 	/**
 	 * The column <code>namedentities.emails.isactive</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Byte> ISACTIVE = createField("isactive", org.jooq.impl.SQLDataType.TINYINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Byte> ISACTIVE = createField("isactive", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
 
 	/**
 	 * Create a <code>namedentities.emails</code> table reference

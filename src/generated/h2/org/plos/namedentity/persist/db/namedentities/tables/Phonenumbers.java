@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Phonenumbers extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord> {
 
-	private static final long serialVersionUID = -1357656741;
+	private static final long serialVersionUID = 391541214;
 
 	/**
 	 * The singleton instance of <code>namedentities.phonenumbers</code>
@@ -49,7 +49,7 @@ public class Phonenumbers extends org.jooq.impl.TableImpl<org.plos.namedentity.p
 	/**
 	 * The column <code>namedentities.phonenumbers.phonenumber</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.String> PHONENUMBER = createField("phonenumber", org.jooq.impl.SQLDataType.CLOB.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.String> PHONENUMBER = createField("phonenumber", org.jooq.impl.SQLDataType.CLOB.length(2147483647).nullable(false), this, "");
 
 	/**
 	 * The column <code>namedentities.phonenumbers.extension</code>.
@@ -59,12 +59,12 @@ public class Phonenumbers extends org.jooq.impl.TableImpl<org.plos.namedentity.p
 	/**
 	 * The column <code>namedentities.phonenumbers.isprimary</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.Byte> ISPRIMARY = createField("isprimary", org.jooq.impl.SQLDataType.TINYINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.Byte> ISPRIMARY = createField("isprimary", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
 
 	/**
 	 * The column <code>namedentities.phonenumbers.isactive</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.Byte> ISACTIVE = createField("isactive", org.jooq.impl.SQLDataType.TINYINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.Byte> ISACTIVE = createField("isactive", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
 
 	/**
 	 * Create a <code>namedentities.phonenumbers</code> table reference

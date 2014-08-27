@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Roles extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord> {
 
-	private static final long serialVersionUID = 981980804;
+	private static final long serialVersionUID = 1365482821;
 
 	/**
 	 * The singleton instance of <code>namedentities.roles</code>
@@ -44,7 +44,7 @@ public class Roles extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.
 	/**
 	 * The column <code>namedentities.roles.roletypeid</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.lang.Integer> ROLETYPEID = createField("roletypeid", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.lang.Integer> ROLETYPEID = createField("roletypeid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>namedentities.roles.startdate</code>.

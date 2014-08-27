@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Organizations extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord> {
 
-	private static final long serialVersionUID = -955961363;
+	private static final long serialVersionUID = -65255286;
 
 	/**
 	 * The singleton instance of <code>namedentities.organizations</code>
@@ -39,12 +39,12 @@ public class Organizations extends org.jooq.impl.TableImpl<org.plos.namedentity.
 	/**
 	 * The column <code>namedentities.organizations.organizationfamiliarname</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.String> ORGANIZATIONFAMILIARNAME = createField("organizationfamiliarname", org.jooq.impl.SQLDataType.VARCHAR.length(100), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.String> ORGANIZATIONFAMILIARNAME = createField("organizationfamiliarname", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
 
 	/**
 	 * The column <code>namedentities.organizations.organizationlegalname</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.String> ORGANIZATIONLEGALNAME = createField("organizationlegalname", org.jooq.impl.SQLDataType.VARCHAR.length(100), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.String> ORGANIZATIONLEGALNAME = createField("organizationlegalname", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
 
 	/**
 	 * The column <code>namedentities.organizations.organizationmaincontactid</code>.
@@ -54,17 +54,17 @@ public class Organizations extends org.jooq.impl.TableImpl<org.plos.namedentity.
 	/**
 	 * The column <code>namedentities.organizations.isactive</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.Byte> ISACTIVE = createField("isactive", org.jooq.impl.SQLDataType.TINYINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.Byte> ISACTIVE = createField("isactive", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
 
 	/**
 	 * The column <code>namedentities.organizations.isvisible</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.Byte> ISVISIBLE = createField("isvisible", org.jooq.impl.SQLDataType.TINYINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.Byte> ISVISIBLE = createField("isvisible", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
 
 	/**
 	 * The column <code>namedentities.organizations.url</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.String> URL = createField("url", org.jooq.impl.SQLDataType.VARCHAR.length(45), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.String> URL = createField("url", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
 
 	/**
 	 * Create a <code>namedentities.organizations</code> table reference

@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Degrees extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord> {
 
-	private static final long serialVersionUID = -1097390394;
+	private static final long serialVersionUID = -1775364857;
 
 	/**
 	 * The singleton instance of <code>namedentities.degrees</code>
@@ -39,7 +39,7 @@ public class Degrees extends org.jooq.impl.TableImpl<org.plos.namedentity.persis
 	/**
 	 * The column <code>namedentities.degrees.degreetypeid</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> DEGREETYPEID = createField("degreetypeid", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> DEGREETYPEID = createField("degreetypeid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>namedentities.degrees</code> table reference
