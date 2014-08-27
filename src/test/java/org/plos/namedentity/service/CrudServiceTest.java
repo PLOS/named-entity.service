@@ -18,6 +18,7 @@ package org.plos.namedentity.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
 import org.plos.namedentity.api.entity.Individual;
@@ -42,7 +43,7 @@ public class CrudServiceTest {
   CrudService crudService;
 
   @Test
-  public void testIndividualCrud() {
+  public void testIndividualCRUD() {
 
     // CREATE
     Individual entity = new Individual();
@@ -67,6 +68,65 @@ public class CrudServiceTest {
 
     // DELETE
     assertTrue(crudService.delete(readEntity));
+  }
+
+  @Test
+  public void testIndividualInvalidEmail() {
+
+    Individual entity = new Individual();
+    entity.setFirstname("somefirstname");
+    Integer nedId = crudService.create(entity);
+
+    // Create
+    Email email = new Email();
+    email.setNamedentityid(nedId);
+    email.setEmailtype("Work");
+    email.setEmailaddress("bill@microsoft");
+
+    try {
+      crudService.create(email);
+      fail();
+    } catch (NedValidationException expected) {
+    }
+
+    // Update
+    email.setEmailaddress("bill@microsoft.com");
+    crudService.create(email);
+
+    email.setEmailaddress("bill@microsoft");
+
+    try {
+      crudService.update(email);
+      fail();
+    } catch (NedValidationException expected) {
+    }
+  }
+
+  @Test
+  public void testIndividualInvalidUrl() {
+
+    Individual entity = new Individual();
+    entity.setFirstname("somefirstname");
+    entity.setUrl("httpXX://billgates.plos.org");
+
+    // Create
+    try {
+      crudService.create(entity);
+      fail();
+    } catch (NedValidationException expected) {
+    }
+
+    // Update
+    entity.setUrl("http://billgates.plos.org/abc");
+    crudService.create(entity);
+
+    entity.setUrl("httpXX://billgates.plos.org/abc");
+
+    try {
+      crudService.create(entity);
+      fail();
+    } catch (NedValidationException expected) {
+    }
   }
 
   @Test

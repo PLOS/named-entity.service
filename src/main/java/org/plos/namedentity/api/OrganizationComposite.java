@@ -21,6 +21,23 @@ public class OrganizationComposite implements Validatable {
     this.organization = new Organization();
   }
 
+  @Override
+  public void validate() {
+
+    if (emails == null || emails.size() == 0)
+      throw new NedValidationException("Emails can not be empty");
+
+    // TODO: determine exactly which lists are required
+
+    organization.validate();
+
+//    for (Address address : addresses)            address.validate();
+    for (Email email : emails)                   email.validate();
+//    for (Phonenumber p : phonenumbers)           p.validate();
+//    for (Uniqueidentifier u: uniqueidentifiers)  u.validate();
+
+  }
+
   public Integer getNamedentityid() {
     return this.organization.getNamedentityid();
   }
@@ -115,9 +132,5 @@ public class OrganizationComposite implements Validatable {
 
   public void setPhonenumbers(List<Phonenumber> phonenumbers) {
     this.phonenumbers = phonenumbers;
-  }
-
-  @Override
-  public void validate() {
   }
 }

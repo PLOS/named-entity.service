@@ -61,7 +61,7 @@ public class NamedEntityServiceTest {
       fail();
     }
     catch (NedValidationException expected) {
-      assertTrue(expected.getMessage().indexOf("No ROLE defined") != -1);
+      assertTrue(expected.getMessage().indexOf("Roles can not be empty") != -1);
     }
   }
 
@@ -282,7 +282,7 @@ public class NamedEntityServiceTest {
     Email emailEntity = new Email();
     emailEntity.setNamedentityid(1);
     emailEntity.setEmailtype("Work");
-    emailEntity.setEmailaddress("foo@bar.com");
+    emailEntity.setEmailaddress("bill@microsoft.com");
     emailEntity.setIsprimary((byte)1);
 
     Integer createEmailId = crudService.create(emailEntity);

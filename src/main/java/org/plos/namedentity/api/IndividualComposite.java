@@ -44,6 +44,28 @@ public class IndividualComposite implements Validatable {
     this.individual = new Individual();
   }
 
+  @Override
+  public void validate() {
+
+    if (roles == null || roles.size() == 0)
+      throw new NedValidationException("Roles can not be empty");
+
+    if (emails == null || emails.size() == 0)
+      throw new NedValidationException("Emails can not be empty");
+
+    // TODO: determine exactly which lists are required
+
+    individual.validate();
+
+    for (Role role : roles)                      role.validate();
+//    for (Address address : addresses)            address.validate();
+    for (Email email : emails)                   email.validate();
+//    for (Phonenumber p : phonenumbers)           p.validate();
+//    for (Uniqueidentifier u: uniqueidentifiers)  u.validate();
+//    for (Degree degree : degrees)                degree.validate();
+
+  }
+
   public List<Degree> getDegrees() {
     return degrees;
   }
@@ -173,11 +195,4 @@ public class IndividualComposite implements Validatable {
     this.uniqueidentifiers = uniqueidentifiers;
   }
 
-  @Override
-  public void validate() {
-
-    if (roles == null || roles.size() == 0) {
-      throw new NedValidationException("No ROLE defined for individual.");
-    }
-  }
 }

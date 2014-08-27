@@ -16,6 +16,9 @@
  */
 package org.plos.namedentity.api.entity;
 
+import org.apache.commons.validator.routines.UrlValidator;
+import org.plos.namedentity.api.NedValidationException;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
@@ -27,6 +30,8 @@ import java.util.Objects;
 public class Individual extends Entity {
 
   private static final long serialVersionUID = 2026965529;
+
+  private static UrlValidator urlValidator = UrlValidator.getInstance();
 
   private Integer namedentityid;
   private String  firstname;
@@ -51,71 +56,10 @@ public class Individual extends Entity {
   private byte[]  photoimage;
   private String  url;
 
-  public Individual() {}
-
-  public Individual(
-      Integer namedentityid,
-      String firstname,
-      String middlename,
-      String lastname,
-      String nickname,
-      String nameprefix,
-      Integer nameprefixtypeid,
-      String namesuffix,
-      Integer namesuffixtypeid,
-      String displayname,
-      String preferredlanguage,
-      Integer preferredlanguagetypeid,
-      String preferredcommunication,
-      Integer preferredcommunicationmethodtypeid,
-      byte[] photoimage,
-      String url
-                   ) {
-    this(namedentityid,
-        firstname,
-        middlename,
-        lastname,
-        nickname,
-        nameprefixtypeid,
-        namesuffixtypeid,
-        displayname,
-        preferredlanguagetypeid,
-        preferredcommunicationmethodtypeid,
-        photoimage,
-        url);
-
-    this.namesuffix = namesuffix;
-    this.nameprefix = nameprefix;
-    this.preferredlanguage = preferredlanguage;
-    this.preferredcommunication = preferredcommunication;
-  }
-  
-  public Individual(
-      Integer namedentityid,
-      String firstname,
-      String middlename,
-      String lastname,
-      String nickname,
-      Integer nameprefixtypeid,
-      Integer namesuffixtypeid,
-      String displayname,
-      Integer preferredlanguagetypeid,
-      Integer preferredcommunicationmethodtypeid,
-      byte[] photoimage,
-      String url
-                   ) {
-    this.namedentityid = namedentityid;
-    this.firstname = firstname;
-    this.middlename = middlename;
-    this.lastname = lastname;
-    this.nickname = nickname;
-    this.nameprefixtypeid = nameprefixtypeid;
-    this.namesuffixtypeid = namesuffixtypeid;
-    this.displayname = displayname;
-    this.preferredlanguagetypeid = preferredlanguagetypeid;
-    this.preferredcommunicationmethodtypeid = preferredcommunicationmethodtypeid;
-    this.photoimage = photoimage;
-    this.url = url;
+  @Override
+  public void validate() {
+    if (url != null && !urlValidator.isValid(url))
+      throw new NedValidationException("URL not valid");
   }
 
   public String getNameprefix() {

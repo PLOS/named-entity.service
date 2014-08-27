@@ -16,6 +16,9 @@
  */
 package org.plos.namedentity.api.entity;
 
+import org.apache.commons.validator.routines.EmailValidator;
+import org.plos.namedentity.api.NedValidationException;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
@@ -28,6 +31,8 @@ public class Email extends Entity {
 
   private static final long serialVersionUID = -945009318;
 
+  private static EmailValidator emailValidator = EmailValidator.getInstance();
+
   private Integer emailid;
   private Integer namedentityid;
 
@@ -35,30 +40,43 @@ public class Email extends Entity {
   private String  emailtype;
 
   private String  emailaddress;
-  private Byte    isprimary;
-  private Byte    isactive;
+  private Byte    isprimary = 1;  // TODO: change Byte to Bool
+  private Byte    isactive = 1;
 
-  public Email() {
-    this(null,null,null,null,null,null,null); 
+  @Override
+  public void validate() {
+
+    if (emailaddress != null && !emailValidator.isValid(emailaddress))
+      throw new NedValidationException("Email not valid");
+
+    // TODO - *** REMOVE DEMO HACK ***
+    if (emailaddress != null && "foo@bar.com".equals(emailaddress)) {
+      throw new NedValidationException("foo@bar.com backdoor detected !!!");
+    }
   }
 
-  public Email(
-      Integer emailid,
-      Integer namedentityid,
-      Integer emailtypeid,
-      String emailtype,
-      String emailaddress,
-      Byte isprimary,
-      Byte isactive
-              ) {
-    this.emailid       = emailid;
-    this.namedentityid = namedentityid;
-    this.emailtypeid   = emailtypeid;
-    this.emailtype     = emailtype;
-    this.emailaddress  = emailaddress;
-    this.isprimary     = (isprimary != null ? isprimary : 1);
-    this.isactive      = (isactive != null ? isactive : 1);
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) { return true; }
+
+    if (o == null || this.getClass() != o.getClass()) { return false; }
+
+    Email entity = (Email) o;
+    return Objects.equals(this.emailid, entity.emailid)
+        && Objects.equals(this.namedentityid, entity.namedentityid)
+        && Objects.equals(this.emailtypeid, entity.emailtypeid)
+        && Objects.equals(this.emailtype, entity.emailtype)
+        && Objects.equals(this.emailaddress, entity.emailaddress)
+        && Objects.equals(this.isprimary, entity.isprimary)
+        && Objects.equals(this.isactive, entity.isactive);
   }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(
+        emailid, namedentityid, emailtypeid, emailtype, emailaddress, isprimary, isactive);
+  }
+
 
   public java.lang.Integer getEmailid() {
     return this.emailid;
@@ -114,34 +132,6 @@ public class Email extends Entity {
   
   public void setEmailtype(String emailtype) {
       this.emailtype = emailtype;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) { return true; }
-
-    if (o == null || this.getClass() != o.getClass()) { return false; }
-
-    Email entity = (Email) o;
-    return Objects.equals(this.emailid, entity.emailid)
-        && Objects.equals(this.namedentityid, entity.namedentityid)
-        && Objects.equals(this.emailtypeid, entity.emailtypeid)
-        && Objects.equals(this.emailtype, entity.emailtype)
-        && Objects.equals(this.emailaddress, entity.emailaddress)
-        && Objects.equals(this.isprimary, entity.isprimary)
-        && Objects.equals(this.isactive, entity.isactive);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(
-      emailid, namedentityid, emailtypeid, emailtype, emailaddress, isprimary, isactive);
-  }
-
-  @Override
-  public void validate() {
-    // check email address syntax
-
   }
 
 }
