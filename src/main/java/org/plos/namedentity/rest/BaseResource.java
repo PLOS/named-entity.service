@@ -42,6 +42,10 @@ public class BaseResource {
   @Inject
   protected NamedEntityService namedEntityService;
 
+  /* ------------------------------------------------------------------------ */
+  /*  EMAIL ENTITY                                                            */
+  /* ------------------------------------------------------------------------ */
+
   public Response createEmail(int nedId, EmailEntity emailEntity, Class clazz) {
     try {
 
@@ -148,6 +152,95 @@ public class BaseResource {
     }
   }
 
+  /* ------------------------------------------------------------------------ */
+  /*  ADDRESS ENTITY                                                          */
+  /* ------------------------------------------------------------------------ */
+
+  public Response createAddress(int nedId, AddressEntity addressEntity, Class clazz) {
+    try {
+      // verify parent entity exists. throw a 404 if not found.
+      namedEntityService.findResolvedEntity(nedId, clazz);
+
+      addressEntity.setNamedentityid(nedId);
+
+      namedEntityService.resolveValuesToIds(addressEntity);
+
+      Integer addressId = crudService.create(addressEntity);
+
+      return Response.status(Response.Status.OK).entity(
+          namedEntityService.findResolvedEntityByKey(addressId, AddressEntity.class)).build();
+    } catch (EntityNotFoundException e) {
+      return entityNotFound(e);
+    } catch (NedValidationException e) {
+      return validationError(e, "Unable to create address");
+    } catch (Exception e) {
+      return serverError(e, "Unable to create address");
+    }
+  }
+
+  protected Response updateAddress(int nedId, int addressId,
+                                   AddressEntity addressEntity, Class clazz) {
+    try {
+      // verify parent entity exists. throw a 404 if not found.
+      namedEntityService.findResolvedEntity(nedId, clazz);
+
+      addressEntity.setNamedentityid(nedId);
+
+      namedEntityService.resolveValuesToIds(addressEntity);
+
+      crudService.update(addressEntity);
+
+      addressEntity = namedEntityService.findResolvedEntityByKey(addressId, AddressEntity.class);
+
+      return Response.status(Response.Status.OK).entity(addressEntity).build();
+    } catch (EntityNotFoundException e) {
+      return entityNotFound(e);
+    } catch (NedValidationException e) {
+      return validationError(e, "Unable to update address");
+    } catch (Exception e) {
+      return serverError(e, "Unable to update address");
+    }
+  }
+
+  protected Response deleteAddress(int nedId, int addressId, Class clazz) {
+    try {
+      namedEntityService.findResolvedEntity(nedId, clazz);
+
+      AddressEntity addressEntity = namedEntityService.findResolvedEntityByKey(addressId, AddressEntity.class);
+
+      crudService.delete(addressEntity);
+
+      return Response.status(Response.Status.NO_CONTENT).build();
+    } catch (EntityNotFoundException e) {
+      return entityNotFound(e);
+    } catch (NedValidationException e) {
+      return validationError(e, "Unable to delete address");
+    } catch (Exception e) {
+      return serverError(e, "Unable to delete address");
+    }
+  }
+
+  protected Response getAddress(int nedId, int addressId, Class clazz) {
+    try {
+
+      // make sure the nedId belongs to an individual
+      namedEntityService.findResolvedEntity(nedId, clazz);
+
+      List<AddressEntity> addresses = namedEntityService.findResolvedEntities(nedId, AddressEntity.class);
+
+      for (AddressEntity address : addresses)
+        if (address.getAddressid().equals(addressId))
+          return Response.status(Response.Status.OK).entity(address).build();
+
+      return entityNotFound("Address not found");
+
+    } catch (EntityNotFoundException e) {
+      return entityNotFound(e);
+    } catch (Exception e) {
+      return serverError(e, "Find address by id failed");
+    }
+  }
+
   protected Response getAddresses(int nedId, Class clazz) {
     try {
       namedEntityService.findResolvedEntity(nedId, clazz);
@@ -155,15 +248,18 @@ public class BaseResource {
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<AddressEntity>>(
               namedEntityService.findResolvedEntities(
-                  nedId, AddressEntity.class)
-          ) {
-          }).build();
+                  nedId, AddressEntity.class)){ }).build();
+
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
     } catch (Exception e) {
       return serverError(e, "Find addresses by nedId failed");
     }
   }
+
+  /* ------------------------------------------------------------------------ */
+  /*  PHONE NUMBER ENTITY                                                     */
+  /* ------------------------------------------------------------------------ */
 
   protected Response getPhonenumbers(int nedId, Class clazz) {
     try {
@@ -180,6 +276,10 @@ public class BaseResource {
     }
   }
 
+  /* ------------------------------------------------------------------------ */
+  /*  UNIQUE IDENTIFIER ENTITY                                                */
+  /* ------------------------------------------------------------------------ */
+
   protected Response getExternalReferences(int nedId, Class clazz) {
     try {
       namedEntityService.findResolvedEntity(nedId, clazz);
@@ -195,7 +295,6 @@ public class BaseResource {
       return serverError(e, "Find external references by nedId failed");
     }
   }
-
 
   protected Response entityNotFound(String message) {
     logger.error("entity not found: " + message);

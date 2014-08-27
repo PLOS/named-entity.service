@@ -196,6 +196,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
 
     if (cname.equals(EmailEntity.class.getCanonicalName()))
       return (T)findEmailByPrimaryKey(pk);
+    else if (cname.equals(AddressEntity.class.getCanonicalName()))
+      return (T)findAddressesByPrimaryKey(pk);
 
     throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
   }
@@ -558,6 +560,33 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
     if (record == null) throw new EntityNotFoundException("Email not found");
 
     return record.into(EmailEntity.class);
+  }
+
+  private AddressEntity findAddressesByPrimaryKey(Integer addressId) {
+
+    Globaltypes gt1 = GLOBALTYPES.as("gt1");
+    Globaltypes gt2 = GLOBALTYPES.as("gt2");
+    Globaltypes gt3 = GLOBALTYPES.as("gt3");
+    Addresses   a   = ADDRESSES.as("a");
+
+    Record record = this.context
+      .select(
+        a.ADDRESSID,
+        a.ADDRESSLINE1, a.ADDRESSLINE2, a.ADDRESSLINE3, a.CITY, 
+        a.POSTALCODE, a.ISPRIMARY,
+        gt1.SHORTDESCRIPTION.as("addresstype"),                 
+        gt2.SHORTDESCRIPTION.as("statecodetype"),
+        gt3.SHORTDESCRIPTION.as("countrycodetype"))
+      .from(a)
+      .leftOuterJoin(gt1).on(a.ADDRESSTYPEID.equal(gt1.GLOBALTYPEID))
+      .leftOuterJoin(gt2).on(a.STATECODETYPEID.equal(gt2.GLOBALTYPEID))
+      .leftOuterJoin(gt3).on(a.COUNTRYCODETYPEID.equal(gt3.GLOBALTYPEID))
+      .where(a.ADDRESSID.equal(addressId))
+      .fetchOne();
+
+      if (record == null) throw new EntityNotFoundException("Address not found");
+
+      return record.into(AddressEntity.class); 
   }
 
   /* ---------------------------------------------------------------------- */

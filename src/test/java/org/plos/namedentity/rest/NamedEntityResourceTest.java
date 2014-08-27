@@ -203,25 +203,84 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   public void testAddressCrud() throws IOException {
 
     /* ------------------------------------------------------------------ */
-    /*  FIND (BY ID)                                                      */
+    /*  CREATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    Response response = target(INDIV_ADDR_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    String requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "address.json")));
+  
+    Response response = target(INDIV_ADDR_URI).request(MediaType.APPLICATION_JSON_TYPE)
+                          .post(Entity.json(requestJson));
 
     assertEquals(200, response.getStatus());
 
-    String jsonPayload = response.readEntity(String.class);
+    String responseJson = response.readEntity(String.class);
 
-    AddressEntity[] addresses = mapper.readValue(jsonPayload, AddressEntity[].class);
-    assertEquals(1, addresses.length);
+    AddressEntity entity = mapper.readValue(responseJson, AddressEntity.class);
+    assertEquals(Integer.valueOf(1), entity.getAddressid());
+    assertEquals(Integer.valueOf(1), entity.getNamedentityid());
+    assertEquals("Office", entity.getAddresstype());
+    assertEquals("addressline 1", entity.getAddressline1());
+    assertEquals("addressline 2", entity.getAddressline2());
+    assertEquals("addressline 3", entity.getAddressline3());
+    assertEquals("city", entity.getCity());
+    assertEquals("CA", entity.getStatecodetype());
+    assertEquals("United States", entity.getCountrycodetype());
+    assertEquals("12345", entity.getPostalcode());
+    assertEquals(Byte.valueOf((byte)1), entity.getIsprimary());
+    assertEquals(Byte.valueOf((byte)1), entity.getIsactive());
 
-    AddressEntity address = addresses[0];
-    assertEquals("Office", address.getAddresstype());
-    assertEquals("city", address.getCity());
-    assertEquals("1234567", address.getPostalcode());
-    assertTrue(address.getIsprimary() == 1);
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
 
-    //TODO - CREATE, UPDATE, DELETE
+    response = target(INDIV_ADDR_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
+                .post(Entity.json(mapper.writeValueAsString(entity)));
+
+    assertEquals(200, response.getStatus());
+
+    /* ------------------------------------------------------------------ */
+    /*  DELETE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    response = target(INDIV_ADDR_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).delete();
+    assertEquals(204, response.getStatus());
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY ADDRESS ID (PK))                                         */
+    /* ------------------------------------------------------------------ */
+
+    response = target(INDIV_ADDR_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
+    assertEquals(200, response.getStatus());
+
+    responseJson = response.readEntity(String.class);
+
+    AddressEntity address = mapper.readValue(responseJson, AddressEntity.class);
+    assertNotNull( address );
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY NED ID)                                                  */
+    /* ------------------------------------------------------------------ */
+
+    response = target(INDIV_ADDR_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(200, response.getStatus());
+
+    responseJson = response.readEntity(String.class);
+
+    AddressEntity[] addresses = mapper.readValue(responseJson, AddressEntity[].class);
+    assertEquals(2, addresses.length);
+
+    AddressEntity officeAddress = addresses[0];
+    assertEquals("Office", officeAddress.getAddresstype());
+    assertEquals("addressline 1", officeAddress.getAddressline1());
+    assertEquals("CA", officeAddress.getStatecodetype());
+    assertEquals("12345", officeAddress.getPostalcode());
+
+    AddressEntity homeAddress = addresses[1];
+    assertEquals("Home", homeAddress.getAddresstype());
+    assertEquals("addressline 1.2", homeAddress.getAddressline1());
+    assertEquals("ONT", homeAddress.getStatecodetype());
+    assertEquals("M4C 1B5", homeAddress.getPostalcode());
   }
 
   @Test
@@ -332,7 +391,6 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
         target("/individuals/1/emails/5")
         .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
-
   }
 
   @Test
