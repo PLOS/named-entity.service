@@ -38,31 +38,6 @@ public class Organization extends Entity {
   private Byte    isvisible;
   private String  url;
 
-  public Organization() {
-  }
-
-  public Organization(
-      Integer namedentityid,
-      Integer organizationtypeid,
-      String organizationtype,
-      String organizationfamiliarname,
-      String organizationlegalname,
-      Integer organizationmaincontactid,
-      Byte isactive,
-      Byte isvisible,
-      String url
-                     ) {
-    this.namedentityid = namedentityid;
-    this.organizationtypeid = organizationtypeid;
-    this.organizationtype = organizationtype;
-    this.organizationfamiliarname = organizationfamiliarname;
-    this.organizationlegalname = organizationlegalname;
-    this.organizationmaincontactid = organizationmaincontactid;
-    this.isactive = isactive;
-    this.isvisible = isvisible;
-    this.url = url;
-  }
-
   public Integer getNamedentityid() {
     return this.namedentityid;
   }

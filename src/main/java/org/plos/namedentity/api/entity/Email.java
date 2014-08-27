@@ -49,10 +49,6 @@ public class Email extends Entity {
     if (emailaddress != null && !emailValidator.isValid(emailaddress))
       throw new NedValidationException("Email not valid");
 
-    // TODO - *** REMOVE DEMO HACK ***
-    if (emailaddress != null && "foo@bar.com".equals(emailaddress)) {
-      throw new NedValidationException("foo@bar.com backdoor detected !!!");
-    }
   }
 
   @Override

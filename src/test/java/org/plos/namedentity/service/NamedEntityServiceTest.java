@@ -245,7 +245,7 @@ public class NamedEntityServiceTest {
   }
 
   @Test
-  public void testCreateIndividualWithPhaseTwoValidationException() {
+  public void testCreateIndividualCompositeWithInvalidEmail() {
 
     IndividualComposite composite = newCompositeIndividualWithRole();
 
@@ -253,7 +253,7 @@ public class NamedEntityServiceTest {
 
     Email workEmail = new Email();
     workEmail.setEmailtype("Work");
-    workEmail.setEmailaddress("foo@bar.com");
+    workEmail.setEmailaddress("invalid@email");
     workEmail.setIsprimary((byte)1);
     emails.add( workEmail );
 
@@ -268,7 +268,7 @@ public class NamedEntityServiceTest {
     // verify entities not committed to db. we'll just check email.
     finally {
       Email emailSearchCriteria = new Email();
-      emailSearchCriteria.setEmailaddress("foo@bar.com");
+      emailSearchCriteria.setEmailaddress("invalid@email");
       List<Email> emailSearchResult = crudService.findByAttribute(emailSearchCriteria);
       assertEquals(0, emailSearchResult.size());
     }
