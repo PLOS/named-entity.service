@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @XmlRootElement
-public class Degree extends Entity {
+public class Degree extends ChildEntity {
 
   private static final long serialVersionUID = -1999999966;
 

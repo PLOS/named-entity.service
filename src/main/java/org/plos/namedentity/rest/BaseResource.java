@@ -19,6 +19,9 @@ package org.plos.namedentity.rest;
 import org.apache.log4j.Logger;
 import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.entity.Entity;
+import org.plos.namedentity.api.entity.ChildEntity;
+import org.plos.namedentity.api.entity.ParentEntity;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Phonenumber;
@@ -42,160 +45,158 @@ public class BaseResource {
   @Inject
   protected NamedEntityService namedEntityService;
 
-  public Response createEmail(int nedId, Email emailEntity, Class clazz) {
+  protected <S extends ChildEntity, T extends ParentEntity> 
+    Response createEntity(int nedId, S entity, Class<T> parent) {
+
     try {
+      // make sure ned id is valid for entity type (ie, is owner).throw a 404 if not found.
+      namedEntityService.findResolvedEntity(nedId, parent);
 
-      namedEntityService.findResolvedEntity(nedId, clazz);
+      entity.setNamedentityid(nedId);
 
-      emailEntity.setNamedentityid(nedId);
+      namedEntityService.resolveValuesToIds(entity);
 
-      namedEntityService.resolveValuesToIds(emailEntity);
-
-      Integer emailId = crudService.create(emailEntity);
+      Integer pkId = crudService.create(entity);
 
       return Response.status(Response.Status.OK).entity(
-          namedEntityService.findResolvedEntityByKey(emailId, Email.class)).build();
+          namedEntityService.findResolvedEntityByKey(pkId, entity.getClass())).build();
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
     } catch (NedValidationException e) {
-      return validationError(e, "Unable to create email");
+      return validationError(e, "Unable to create " + entity.getClass().getSimpleName());
     } catch (Exception e) {
-      return serverError(e, "Unable to create email");
+      return serverError(e, "Unable to create " + entity.getClass().getSimpleName());
     }
   }
 
-  protected Response updateEmail(int nedId, int emailId,
-                                 Email emailEntity, Class clazz) {
+  protected <S extends ChildEntity, T extends ParentEntity> 
+    Response updateEntity(int nedId, int pkId, S entity, Class<T> parent) {
+
     try {
+      // make sure ned id is valid for entity type (ie, is owner).throw a 404 if not found.
+      namedEntityService.findResolvedEntity(nedId, parent);
 
-      namedEntityService.findResolvedEntity(nedId, clazz);
+      entity.setNamedentityid(nedId);
 
-      emailEntity.setNamedentityid(nedId);
+      namedEntityService.resolveValuesToIds(entity);
 
-      namedEntityService.resolveValuesToIds(emailEntity);
+      crudService.update(entity);
 
-      crudService.update(emailEntity);
+      Entity dbEntity = namedEntityService.findResolvedEntityByKey(pkId, entity.getClass());
 
-      emailEntity = namedEntityService.findResolvedEntityByKey(emailId, Email.class);
-
-      return Response.status(Response.Status.OK).entity(emailEntity).build();
+      return Response.status(Response.Status.OK).entity(dbEntity).build();
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
     } catch (NedValidationException e) {
-      return validationError(e, "Unable to update email");
+      return validationError(e, "Unable to update " + entity.getClass().getSimpleName());
     } catch (Exception e) {
-      return serverError(e, "Unable to update email");
+      return serverError(e, "Unable to update "  + entity.getClass().getSimpleName());
     }
   }
 
-  protected Response deleteEmail(int nedId, int emailId, Class clazz) {
+  protected <S extends ChildEntity, T extends ParentEntity> 
+    Response deleteEntity(int nedId, int pkId, Class<S> child, Class<T> parent) {
+
     try {
+      // make sure ned id is valid for entity type (ie, is owner).throw a 404 if not found.
+      namedEntityService.findResolvedEntity(nedId, parent);
 
-      namedEntityService.findResolvedEntity(nedId, clazz);
+      S entity = namedEntityService.findResolvedEntityByKey(pkId, child);
 
-      Email emailEntity = namedEntityService.findResolvedEntityByKey(emailId, Email.class);
-
-      crudService.delete(emailEntity);
+      crudService.delete(entity);
 
       return Response.status(Response.Status.NO_CONTENT).build();
+
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
     } catch (NedValidationException e) {
-      return validationError(e, "Unable to delete email");
+      return validationError(e, "Unable to delete " + child.getSimpleName());
     } catch (Exception e) {
-      return serverError(e, "Unable to delete email");
+      return serverError(e, "Unable to delete " + child.getSimpleName());
     }
   }
 
-  protected Response getEmail(int nedId, int emailId, Class clazz) {
+  protected <S extends ChildEntity, T extends ParentEntity> 
+    Response getEntity(int nedId, int pkId, Class<S> child, Class<T> parent) {
 
     try {
+      // make sure ned id is valid for entity type (ie, is owner).throw a 404 if not found.
+      namedEntityService.findResolvedEntity(nedId, parent);
 
-      // make sure the nedId belongs to an individual
-      namedEntityService.findResolvedEntity(nedId, clazz);
+      List<S> entities = namedEntityService.findResolvedEntities(nedId, child);
 
-      List<Email> emails = namedEntityService.findResolvedEntities(nedId, Email.class);
+      for (ChildEntity entity : entities)
+        if (entity.getPrimaryid().equals(pkId))
+          return Response.status(Response.Status.OK).entity(entity).build();
 
-      for (Email email : emails)
-        if (email.getEmailid().equals(emailId))
-          return Response.status(Response.Status.OK).entity(email).build();
-
-      return entityNotFound("Email not found");
+      return entityNotFound(child.getSimpleName() + " not found");
 
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
     } catch (Exception e) {
-      return serverError(e, "Find email by id failed");
-    }
-
-  }
-
-  protected Response getEmails(int nedId, Class clazz) {
-    try {
-
-      // make sure the nedId belongs to an individual
-      namedEntityService.findResolvedEntity(nedId, clazz);
-
-      return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<Email>>(
-              namedEntityService.findResolvedEntities(nedId, Email.class)
-          ) {
-          }).build();
-    } catch (EntityNotFoundException e) {
-      return entityNotFound(e);
-    } catch (Exception e) {
-      return serverError(e, "Find emails by nedId failed");
+      return serverError(e, String.format("Find % by id failed", child.getSimpleName()));
     }
   }
 
-  protected Response getAddresses(int nedId, Class clazz) {
-    try {
-      namedEntityService.findResolvedEntity(nedId, clazz);
+  /**
+   * @note #1 - it doesn't appear that the glassfish test container can handle
+   *            a generic type parameter in the GenericEntity, specifically this: 
+   *
+   *  return Response.status(Response.Status.OK).entity(
+   *    new GenericEntity<List<S>>(
+   *      namedEntityService.findResolvedEntities(nedId, child)){}).build();
+   *
+   * You'll see this error written to console when marshalling the response. 
+   *
+   *  SEVERE: MessageBodyWriter not found for media type=application/json,
+   *          type=class java.util.ArrayList, genericType=java.util.List<S>.
+   *
+   * what to do? how about doing a brute-force switch on child class -- 
+   * not pretty, but at least allows a generic entry-point. fix in future.
+   */
+  protected <S extends ChildEntity, T extends ParentEntity> 
+    Response getEntities(int nedId, Class<S> child, Class<T> parent) {
 
-      return Response.status(Response.Status.OK).entity(
+    try {
+      // make sure ned id is valid for entity type (ie, is owner).throw a 404 if not found.
+      namedEntityService.findResolvedEntity(nedId, parent);
+
+      // *** GENERICS TYPE ERASURE HACK ***! see note #1.
+
+      String cname = child.getCanonicalName();
+
+      if (cname.equals(Address.class.getCanonicalName())) {
+        return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<Address>>(
-              namedEntityService.findResolvedEntities(
-                  nedId, Address.class)
-          ) {
-          }).build();
-    } catch (EntityNotFoundException e) {
-      return entityNotFound(e);
-    } catch (Exception e) {
-      return serverError(e, "Find addresses by nedId failed");
-    }
-  }
-
-  protected Response getPhonenumbers(int nedId, Class clazz) {
-    try {
-      namedEntityService.findResolvedEntity(nedId, clazz);
-
-      List<Phonenumber> phonenumbers = namedEntityService.findResolvedEntities(nedId, Phonenumber.class);
-      return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<Phonenumber>>(phonenumbers) {
-          }).build();
-    } catch (EntityNotFoundException e) {
-      return entityNotFound(e);
-    } catch (Exception e) {
-      return serverError(e, "Find phone numberse by nedId failed");
-    }
-  }
-
-  protected Response getExternalReferences(int nedId, Class clazz) {
-    try {
-      namedEntityService.findResolvedEntity(nedId, clazz);
-
-      return Response.status(Response.Status.OK).entity(
+            namedEntityService.findResolvedEntities(nedId, Address.class)
+          ){}).build();
+      } 
+      else if (cname.equals(Email.class.getCanonicalName())) {
+        return Response.status(Response.Status.OK).entity(
+          new GenericEntity<List<Email>>(
+            namedEntityService.findResolvedEntities(nedId, Email.class)
+          ){}).build();
+      } 
+      else if (cname.equals(Phonenumber.class.getCanonicalName())) {
+        return Response.status(Response.Status.OK).entity(
+          new GenericEntity<List<Phonenumber>>(
+            namedEntityService.findResolvedEntities(nedId, Phonenumber.class)
+          ){}).build();
+      }
+      else if (cname.equals(Uniqueidentifier.class.getCanonicalName())) {
+        return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<Uniqueidentifier>>(
-              namedEntityService.findResolvedEntities(nedId, Uniqueidentifier.class)
-          ) {
-          }).build();
+            namedEntityService.findResolvedEntities(nedId, Uniqueidentifier.class)
+          ){}).build();
+      }
+      throw new UnsupportedOperationException("Unsupported child entity: " + child.getSimpleName());
+
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
     } catch (Exception e) {
-      return serverError(e, "Find external references by nedId failed");
+      return serverError(e, String.format("Find %s by nedId failed", child.getSimpleName()));
     }
   }
-
 
   protected Response entityNotFound(String message) {
     logger.error("entity not found: " + message);

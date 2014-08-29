@@ -19,9 +19,11 @@ package org.plos.namedentity.service;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
 import org.plos.namedentity.api.entity.Individual;
+import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,9 @@ import static org.junit.Assert.fail;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
 public class CrudServiceTest {
+
+  @Autowired
+  NamedEntityService namedEntityService;  // inject so can resolve type names to ids
 
   @Autowired
   CrudService crudService;
@@ -303,6 +308,99 @@ public class CrudServiceTest {
     /* ------------------------------------------------------------------ */
 
     assertTrue( crudService.delete(savedEmail) );
+  }
+
+
+    //Integer srcAppTypeClassId = findTypeClassStartWith("Source Applications");
+    //Integer roleTypeClassId   = findTypeClassStartWith("Roles");
+
+    //Integer srcAppTypeId = findTypeValueByName(srcAppTypeClassId, "Editorial Manager"); assertNotNull(srcAppTypeId); 
+    //Integer roleTypeId   = findTypeValueByName(roleTypeClassId, "Author")             ; assertNotNull(roleTypeId)  ; 
+
+    //Role authorRole = new Role();
+    //authorRole.setNamedentityid(1);
+    //authorRole.setSourceapplicationtypeid(srcAppTypeId);
+    //authorRole.setRoletypeid(roleTypeId);
+    //authorRole.setStartdate(new Timestamp(new Date().getTime()));
+
+
+
+  //public void setSourceapplicationtype(String sourceapplicationtype) {
+  //public void setRoletype(String roletype) {
+//-  public void setRoleid(Integer roleid) {
+//x  public void setNamedentityid(Integer namedentityid) {
+  //public void setSourceapplicationtypeid(Integer sourceapplicationtypeid) {
+  //public void setRoletypeid(Integer roletypeid) {
+  //public void setStartdate(java.sql.Timestamp startdate) {
+  //public void setEnddate(java.sql.Timestamp enddate) {
+  //public void setCreated(java.sql.Timestamp created) {
+  //public void setLastmodified(java.sql.Timestamp lastmodified) {
+  //public void setCreatedby(Integer createdby) {
+  //public void setLastmodifiedby(Integer lastmodifiedby) {
+
+
+  @Test
+  public void testRolesCRUD() {
+
+    /* ------------------------------------------------------------------ */
+    /*  CREATE                                                            */
+    /* ------------------------------------------------------------------ */
+/*
+    Role authorRole = new Role();
+    authorRole.setNamedentityid(1);
+    authorRole.setSourceapplicationtypeid(srcAppTypeId);
+    authorRole.setRoletypeid(roleTypeId);
+    authorRole.setStartdate(new Timestamp(new Date().getTime()));
+
+    Address newAddress = new Address();
+    newAddress.setNamedentityid(1);
+    newAddress.setAddresstype("Office");
+    newAddress.setAddressline1("addressline 1");
+    newAddress.setAddressline2("addressline 2");
+    newAddress.setAddressline3("addressline 3");
+    newAddress.setCity("city");
+    newAddress.setStatecodetype("CA");
+    newAddress.setCountrycodetype("United States");
+    newAddress.setPostalcode("94401");
+    //TODO - main contact not well defined.
+    //newAddress.setMaincontactnamedentityid(java.lang.Integer maincontactnamedentityid);
+    newAddress.setIsprimary((byte)1);
+    newAddress.setIsactive((byte)1);
+
+    // save record
+
+    Integer pkId = crudService.create( namedEntityService.resolveValuesToIds(newAddress) );
+    assertNotNull( pkId );
+
+    Address savedAddress = crudService.findById(pkId, Address.class);
+    assertNotNull( savedAddress );
+    assertEquals(pkId, savedAddress.getAddressid());
+    assertNotNull( savedAddress.getAddresstypeid() );
+    assertNotNull( savedAddress.getStatecodetypeid() );
+*/
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    //savedAddress.setAddressline1("update." + savedAddress.getAddressline1());
+    //assertTrue( crudService.update(savedAddress) );
+    //Address savedAddress2 = crudService.findById(pkId, Address.class);
+    //assertEquals(savedAddress, savedAddress2);
+
+    /* ------------------------------------------------------------------ */
+    /*  FINDERS                                                           */
+    /* ------------------------------------------------------------------ */
+
+    //List<Address> allAddresses = crudService.findAll(Address.class);
+    //assertNotNull(allAddresses);
+    //assertTrue(allAddresses.contains(savedAddress2));
+
+    /* ------------------------------------------------------------------ */
+    /*  DELETE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    //assertTrue( crudService.delete(savedAddress) );
   }
 
   @Test

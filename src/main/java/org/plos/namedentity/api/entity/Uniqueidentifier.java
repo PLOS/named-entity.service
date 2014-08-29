@@ -22,7 +22,7 @@ import java.util.Objects;
  * Modified JOOQ generated class(pojo=true).
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class Uniqueidentifier extends Entity {
+public class Uniqueidentifier extends ChildEntity {
 
   private static final long serialVersionUID = 1900442676;
 

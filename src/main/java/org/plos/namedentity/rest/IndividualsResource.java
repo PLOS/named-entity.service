@@ -4,10 +4,13 @@ import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Individual;
+import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Role;
+import org.plos.namedentity.api.entity.Uniqueidentifier;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -137,7 +140,7 @@ public class IndividualsResource extends BaseResource {
   @ApiOperation(value = "Create email", response = Email.class)
   public Response createEmail(@PathParam("nedId") int nedId,
                               Email emailEntity) {
-    return createEmail(nedId, emailEntity, Individual.class);
+    return createEntity(nedId, emailEntity, Individual.class);
   }
 
   @POST
@@ -146,8 +149,7 @@ public class IndividualsResource extends BaseResource {
   public Response updateEmail(@PathParam("nedId") int nedId, 
                               @PathParam("emailId") int emailId, 
                               Email emailEntity) {
-
-    return updateEmail(nedId, emailId, emailEntity, Individual.class);
+    return updateEntity(nedId, emailId, emailEntity, Individual.class);
   }
 
   @DELETE
@@ -155,7 +157,7 @@ public class IndividualsResource extends BaseResource {
   @ApiOperation(value = "Delete email")
   public Response deleteEmail(@PathParam("nedId") int nedId, 
                               @PathParam("emailId") int emailId) {
-    return deleteEmail(nedId, emailId, Individual.class);
+    return deleteEntity(nedId, emailId, Email.class, Individual.class);
   }
 
   @GET
@@ -163,36 +165,35 @@ public class IndividualsResource extends BaseResource {
   @ApiOperation(value = "Read email", response = Email.class)
   public Response getEmail(@PathParam("nedId") int nedId,
                            @PathParam("emailId") int emailId) {
-    return getEmail(nedId, emailId, Individual.class);
+    return getEntity(nedId, emailId, Email.class, Individual.class);
   }
 
   @GET
   @Path("/{nedId}/emails")
   @ApiOperation(value = "List emails")
   public Response getEmails(@PathParam("nedId") int nedId) {
-    return getEmails(nedId, Individual.class);
+    return getEntities(nedId, Email.class, Individual.class);
   }
-
 
   @GET
   @Path("/{nedId}/addresses")
   @ApiOperation(value = "List addresses")
   public Response getAddresses(@PathParam("nedId") int nedId) {
-    return getAddresses(nedId, Individual.class);
+    return getEntities(nedId, Address.class, Individual.class);
   }
 
   @GET
   @Path("/{nedId}/phonenumbers")
   @ApiOperation(value = "List phone numbers")
   public Response getPhonenumbers(@PathParam("nedId") int nedId) {
-    return getPhonenumbers(nedId, Individual.class);
+    return getEntities(nedId, Phonenumber.class, Individual.class);
   }
 
   @GET
   @Path("/{nedId}/xref")
   @ApiOperation(value = "List references")
   public Response getExternalReferences(@PathParam("nedId") int nedId) {
-    return getExternalReferences(nedId, Individual.class);
+    return getEntities(nedId, Uniqueidentifier.class, Individual.class);
   }
 
   @GET

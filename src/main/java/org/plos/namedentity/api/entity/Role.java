@@ -23,7 +23,7 @@ import java.util.Objects;
  * Modified JOOQ generated class(pojo=true).
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class Role extends Entity {
+public class Role extends ChildEntity {
 
   private static final long serialVersionUID = 315701916;
 

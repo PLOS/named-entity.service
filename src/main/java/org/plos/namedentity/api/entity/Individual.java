@@ -27,7 +27,7 @@ import java.util.Objects;
  */
 @XmlRootElement
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class Individual extends Entity {
+public class Individual extends ParentEntity {
 
   private static final long serialVersionUID = 2026965529;
 
