@@ -14,6 +14,9 @@ public abstract class ChildEntity extends Entity {
     if (this instanceof Email) {
       return ((Email)this).getEmailid();
     }
+    else if (this instanceof Address) {
+      return ((Address)this).getAddressid();
+    }
     throw new UnsupportedOperationException(
       "Unable to lookup primary key for " + this.getClass().getSimpleName());
   }

@@ -130,7 +130,6 @@ public class IndividualsResource extends BaseResource {
     }
   }
 
-
   /* ----------------------------------------------------------------------- */
   /*  EMAIL CRUD                                                             */
   /* ----------------------------------------------------------------------- */
@@ -175,12 +174,53 @@ public class IndividualsResource extends BaseResource {
     return getEntities(nedId, Email.class, Individual.class);
   }
 
+  /* ----------------------------------------------------------------------- */
+  /*  ADDRESS CRUD                                                           */
+  /* ----------------------------------------------------------------------- */
+
+  @POST
+  @Path("/{nedId}/addresses")
+  @ApiOperation(value = "Create address", response = Address.class)
+  public Response createAddress(@PathParam("nedId") int nedId,
+                                Address addressEntity) {
+    return createEntity(nedId, addressEntity, Individual.class);
+  }
+
+  @POST
+  @Path("/{nedId}/addresses/{addressId}")
+  @ApiOperation(value = "Update address", response = Address.class)
+  public Response updateAddress(@PathParam("nedId") int nedId, 
+                                @PathParam("addressId") int addressId, 
+                                Address addressEntity) {
+    return updateEntity(nedId, addressId, addressEntity, Individual.class);
+  }
+
+  @DELETE
+  @Path("/{nedId}/addresses/{addressId}")
+  @ApiOperation(value = "Delete address")
+  public Response deleteAddress(@PathParam("nedId") int nedId, 
+                                @PathParam("addressId") int addressId) {
+    return deleteEntity(nedId, addressId, Address.class, Individual.class);
+  }
+
+  @GET
+  @Path("/{nedId}/addresses/{addressId}")
+  @ApiOperation(value = "Read address", response = Address.class)
+  public Response getAddress(@PathParam("nedId") int nedId,
+                             @PathParam("addressId") int addressId) {
+    return getEntity(nedId, addressId, Address.class, Individual.class);
+  }
+
   @GET
   @Path("/{nedId}/addresses")
   @ApiOperation(value = "List addresses")
-  public Response getAddresses(@PathParam("nedId") int nedId) {
+  public Response getAddresss(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Address.class, Individual.class);
   }
+
+  /* ----------------------------------------------------------------------- */
+  /*  PHONE NUMBER CRUD                                                      */
+  /* ----------------------------------------------------------------------- */
 
   @GET
   @Path("/{nedId}/phonenumbers")
@@ -225,5 +265,4 @@ public class IndividualsResource extends BaseResource {
       return serverError(e, "Find roles by nedId failed");
     }
   }
-
 }
