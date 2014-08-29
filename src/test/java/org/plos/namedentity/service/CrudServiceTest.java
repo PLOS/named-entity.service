@@ -28,6 +28,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -193,6 +195,8 @@ public class CrudServiceTest {
     newTypeVal.setShortdescription("type value abc");
     newTypeVal.setLongdescription("longdescription");
     newTypeVal.setTypecode("abc");
+    newTypeVal.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    newTypeVal.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
 
     Integer pkId = crudService.create(newTypeVal);
     assertNotNull( pkId );

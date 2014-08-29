@@ -11,10 +11,10 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Individuals extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord> {
 
-	private static final long serialVersionUID = 613582205;
+	private static final long serialVersionUID = 1172925619;
 
 	/**
-	 * The singleton instance of <code>namedentities.individuals</code>
+	 * The singleton instance of <code>NAMEDENTITIES.INDIVIDUALS</code>
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Individuals INDIVIDUALS = new org.plos.namedentity.persist.db.namedentities.tables.Individuals();
 
@@ -27,74 +27,84 @@ public class Individuals extends org.jooq.impl.TableImpl<org.plos.namedentity.pe
 	}
 
 	/**
-	 * The column <code>namedentities.individuals.namedentityid</code>.
+	 * The column <code>NAMEDENTITIES.INDIVIDUALS.NAMEDENTITYID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Integer> NAMEDENTITYID = createField("namedentityid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Integer> NAMEDENTITYID = createField("NAMEDENTITYID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.individuals.firstname</code>.
+	 * The column <code>NAMEDENTITIES.INDIVIDUALS.FIRSTNAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> FIRSTNAME = createField("firstname", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> FIRSTNAME = createField("FIRSTNAME", org.jooq.impl.SQLDataType.CLOB.length(2147483647).nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.individuals.middlename</code>.
+	 * The column <code>NAMEDENTITIES.INDIVIDUALS.MIDDLENAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> MIDDLENAME = createField("middlename", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> MIDDLENAME = createField("MIDDLENAME", org.jooq.impl.SQLDataType.CLOB.length(2147483647), this, "");
 
 	/**
-	 * The column <code>namedentities.individuals.lastname</code>.
+	 * The column <code>NAMEDENTITIES.INDIVIDUALS.LASTNAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> LASTNAME = createField("lastname", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> LASTNAME = createField("LASTNAME", org.jooq.impl.SQLDataType.CLOB.length(2147483647).nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.individuals.nickname</code>.
+	 * The column <code>NAMEDENTITIES.INDIVIDUALS.NICKNAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> NICKNAME = createField("nickname", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> NICKNAME = createField("NICKNAME", org.jooq.impl.SQLDataType.CLOB.length(2147483647), this, "");
 
 	/**
-	 * The column <code>namedentities.individuals.nameprefixtypeid</code>.
+	 * The column <code>NAMEDENTITIES.INDIVIDUALS.NAMEPREFIXTYPEID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Integer> NAMEPREFIXTYPEID = createField("nameprefixtypeid", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Integer> NAMEPREFIXTYPEID = createField("NAMEPREFIXTYPEID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>namedentities.individuals.namesuffixtypeid</code>.
+	 * The column <code>NAMEDENTITIES.INDIVIDUALS.NAMESUFFIXTYPEID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Integer> NAMESUFFIXTYPEID = createField("namesuffixtypeid", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Integer> NAMESUFFIXTYPEID = createField("NAMESUFFIXTYPEID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>namedentities.individuals.displayname</code>.
+	 * The column <code>NAMEDENTITIES.INDIVIDUALS.DISPLAYNAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> DISPLAYNAME = createField("displayname", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> DISPLAYNAME = createField("DISPLAYNAME", org.jooq.impl.SQLDataType.CLOB.length(2147483647).nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.individuals.preferredlanguagetypeid</code>.
+	 * The column <code>NAMEDENTITIES.INDIVIDUALS.PREFERREDLANGUAGETYPEID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Integer> PREFERREDLANGUAGETYPEID = createField("preferredlanguagetypeid", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Integer> PREFERREDLANGUAGETYPEID = createField("PREFERREDLANGUAGETYPEID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>namedentities.individuals.preferredcommunicationmethodtypeid</code>.
+	 * The column <code>NAMEDENTITIES.INDIVIDUALS.PREFERREDCOMMUNICATIONMETHODTYPEID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Integer> PREFERREDCOMMUNICATIONMETHODTYPEID = createField("preferredcommunicationmethodtypeid", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Integer> PREFERREDCOMMUNICATIONMETHODTYPEID = createField("PREFERREDCOMMUNICATIONMETHODTYPEID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>namedentities.individuals.photoimage</code>.
+	 * The column <code>NAMEDENTITIES.INDIVIDUALS.PHOTOIMAGE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, byte[]> PHOTOIMAGE = createField("photoimage", org.jooq.impl.SQLDataType.VARBINARY, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, byte[]> PHOTOIMAGE = createField("PHOTOIMAGE", org.jooq.impl.SQLDataType.VARBINARY, this, "");
 
 	/**
-	 * The column <code>namedentities.individuals.url</code>.
+	 * The column <code>NAMEDENTITIES.INDIVIDUALS.URL</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> URL = createField("url", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> URL = createField("URL", org.jooq.impl.SQLDataType.CLOB.length(2147483647), this, "");
 
 	/**
-	 * Create a <code>namedentities.individuals</code> table reference
+	 * The column <code>NAMEDENTITIES.INDIVIDUALS.ISACTIVE</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Byte> ISACTIVE = createField("ISACTIVE", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
+
+	/**
+	 * The column <code>NAMEDENTITIES.INDIVIDUALS.ISVISIBLE</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Byte> ISVISIBLE = createField("ISVISIBLE", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
+
+	/**
+	 * Create a <code>NAMEDENTITIES.INDIVIDUALS</code> table reference
 	 */
 	public Individuals() {
-		this("individuals", null);
+		this("INDIVIDUALS", null);
 	}
 
 	/**
-	 * Create an aliased <code>namedentities.individuals</code> table reference
+	 * Create an aliased <code>NAMEDENTITIES.INDIVIDUALS</code> table reference
 	 */
 	public Individuals(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.namedentities.tables.Individuals.INDIVIDUALS);

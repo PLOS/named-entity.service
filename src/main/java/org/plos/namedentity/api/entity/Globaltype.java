@@ -18,7 +18,6 @@ package org.plos.namedentity.api.entity;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -35,38 +34,10 @@ public class Globaltype extends Entity {
   private String   shortdescription;
   private String   longdescription;
   private String   typecode;
-  private Timestamp created;
-  private Timestamp lastmodified;
+  private Timestamp created;// = new Timestamp(new Date().getTime());
+  private Timestamp lastmodified;// = new Timestamp(new Date().getTime());
   private Integer  createdby;
   private Integer  lastmodifiedby;
-
-  public Globaltype() {
-    this(null,null,null,null,null,null,null,null,null);
-  }
-
-  public Globaltype(
-      Integer globaltypeid,
-      Integer typeid,
-      String shortdescription,
-      String longdescription,
-      String typecode,
-      Timestamp created,
-      Timestamp lastmodified,
-      Integer createdby,
-      Integer lastmodifiedby
-                   ) {
-    this.globaltypeid     = globaltypeid;
-    this.typeid           = typeid;
-    this.shortdescription = shortdescription;
-    this.longdescription  = longdescription;
-    this.typecode         = typecode;
-
-    this.created          = (created != null ? created : new Timestamp(new Date().getTime()));
-    this.lastmodified     = (lastmodified != null ? lastmodified : new Timestamp(new Date().getTime()));
-
-    this.createdby        = createdby;
-    this.lastmodifiedby   = lastmodifiedby;
-  }
 
   public Integer getGlobaltypeid() {
     return this.globaltypeid;

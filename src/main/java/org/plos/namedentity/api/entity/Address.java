@@ -54,71 +54,7 @@ public class Address extends Entity {
   private Integer latitude;
   private Integer longitude;
   private Byte    isprimary;
-  private Byte    isactive;
-
-  public Address() {
-    this(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
-  }
-
-  public Address(
-      Integer addressid,
-      Integer namedentityid,
-      Integer addresstypeid,
-      String addressline1,
-      String addressline2,
-      String addressline3,
-      String city,
-      Integer statecodetypeid,
-      Integer countrycodetypeid,
-      String postalcode,
-      Integer maincontactnamedentityid,
-      Integer latitude,
-      Integer longitude,
-      Byte isprimary,
-      Byte isactive
-                ) {
-    this(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
-  }
-
-  public Address(
-      Integer addressid,
-      Integer namedentityid,
-      Integer addresstypeid,
-      String addresstype,
-      String addressline1,
-      String addressline2,
-      String addressline3,
-      String city,
-      Integer statecodetypeid,
-      String statecodetype,
-      Integer countrycodetypeid,
-      String countrycodetype,
-      String postalcode,
-      Integer maincontactnamedentityid,
-      Integer latitude,
-      Integer longitude,
-      Byte isprimary,
-      Byte isactive
-                ) {
-    this.addressid                = addressid;
-    this.namedentityid            = namedentityid;
-    this.addresstypeid            = addresstypeid;
-    this.addresstype              = addresstype;
-    this.addressline1             = addressline1;
-    this.addressline2             = addressline2;
-    this.addressline3             = addressline3;
-    this.city                     = city;
-    this.statecodetypeid          = statecodetypeid;
-    this.statecodetype            = statecodetype;
-    this.countrycodetypeid        = countrycodetypeid;
-    this.countrycodetype          = countrycodetype;
-    this.postalcode               = postalcode;
-    this.maincontactnamedentityid = maincontactnamedentityid;
-    this.latitude                 = latitude;
-    this.longitude                = longitude;
-    this.isprimary                = (isprimary != null ? isprimary : (byte)1);
-    this.isactive                 = (isactive != null ? isactive : (byte)1);
-  }
+  private Byte    isactive = 1;
 
   public java.lang.Integer getAddressid() {
     return this.addressid;

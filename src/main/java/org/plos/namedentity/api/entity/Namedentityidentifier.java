@@ -31,24 +31,6 @@ public class Namedentityidentifier extends Entity {
   private java.lang.Integer  createdby;
   private java.lang.Integer  lastmodifiedby;
 
-  public Namedentityidentifier() {}
-
-  public Namedentityidentifier(
-      java.lang.Integer namedentityid,
-      java.lang.Integer typeid,
-      java.sql.Timestamp created,
-      java.sql.Timestamp lastmodified,
-      java.lang.Integer createdby,
-      java.lang.Integer lastmodifiedby
-                              ) {
-    this.namedentityid  = namedentityid;
-    this.typeid         = typeid;
-    this.created        = created;
-    this.lastmodified   = lastmodified;
-    this.createdby      = createdby;
-    this.lastmodifiedby = lastmodifiedby;
-  }
-
   public java.lang.Integer getNamedentityid() {
     return this.namedentityid;
   }

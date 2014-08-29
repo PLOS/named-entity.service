@@ -41,10 +41,6 @@ public class Role extends Entity {
   private String sourceapplicationtype;
   private String roletype;
 
-
-  public Role() {
-  }
-
   public String getSourceapplicationtype() {
     return sourceapplicationtype;
   }

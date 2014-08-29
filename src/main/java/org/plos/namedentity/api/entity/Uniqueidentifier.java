@@ -32,32 +32,6 @@ public class Uniqueidentifier extends Entity {
   private Integer uniqueidentifiertypeid;
   private String  uniqueidentifier;
 
-  public Uniqueidentifier() {}
-
-
-  public Uniqueidentifier(
-      Integer uniqueidentifiersid,
-      Integer namedentityid,
-      Integer uniqueidentifiertypeid,
-      String uniqueidentifier,
-      String uniqueidentifiertype) {
-
-    this(uniqueidentifiersid, namedentityid, uniqueidentifiertypeid, uniqueidentifier);
-    this.uniqueidentifiertype = uniqueidentifiertype;
-  }
-
-  public Uniqueidentifier(
-      Integer uniqueidentifiersid,
-      Integer namedentityid,
-      Integer uniqueidentifiertypeid,
-      String uniqueidentifier
-                         ) {
-    this.uniqueidentifiersid    = uniqueidentifiersid;
-    this.namedentityid          = namedentityid;
-    this.uniqueidentifiertypeid = uniqueidentifiertypeid;
-    this.uniqueidentifier       = uniqueidentifier;
-  }
-
   public String getUniqueidentifiertype() {
     return uniqueidentifiertype;
   }

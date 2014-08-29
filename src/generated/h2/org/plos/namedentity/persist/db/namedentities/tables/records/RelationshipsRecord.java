@@ -11,143 +11,143 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RelationshipsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1333644739;
+	private static final long serialVersionUID = 926516547;
 
 	/**
-	 * Setter for <code>namedentities.relationships.relationshipid</code>.
+	 * Setter for <code>NAMEDENTITIES.RELATIONSHIPS.RELATIONSHIPID</code>.
 	 */
 	public void setRelationshipid(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.relationships.relationshipid</code>.
+	 * Getter for <code>NAMEDENTITIES.RELATIONSHIPS.RELATIONSHIPID</code>.
 	 */
 	public java.lang.Integer getRelationshipid() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.relationships.masternamedentityid</code>.
+	 * Setter for <code>NAMEDENTITIES.RELATIONSHIPS.MASTERNAMEDENTITYID</code>.
 	 */
 	public void setMasternamedentityid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.relationships.masternamedentityid</code>.
+	 * Getter for <code>NAMEDENTITIES.RELATIONSHIPS.MASTERNAMEDENTITYID</code>.
 	 */
 	public java.lang.Integer getMasternamedentityid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.relationships.childnamedentityid</code>.
+	 * Setter for <code>NAMEDENTITIES.RELATIONSHIPS.CHILDNAMEDENTITYID</code>.
 	 */
 	public void setChildnamedentityid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.relationships.childnamedentityid</code>.
+	 * Getter for <code>NAMEDENTITIES.RELATIONSHIPS.CHILDNAMEDENTITYID</code>.
 	 */
 	public java.lang.Integer getChildnamedentityid() {
 		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>namedentities.relationships.relationshiptypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.RELATIONSHIPS.RELATIONSHIPTYPEID</code>.
 	 */
 	public void setRelationshiptypeid(java.lang.Integer value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.relationships.relationshiptypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.RELATIONSHIPS.RELATIONSHIPTYPEID</code>.
 	 */
 	public java.lang.Integer getRelationshiptypeid() {
 		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>namedentities.relationships.startdate</code>.
+	 * Setter for <code>NAMEDENTITIES.RELATIONSHIPS.STARTDATE</code>.
 	 */
 	public void setStartdate(java.sql.Timestamp value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.relationships.startdate</code>.
+	 * Getter for <code>NAMEDENTITIES.RELATIONSHIPS.STARTDATE</code>.
 	 */
 	public java.sql.Timestamp getStartdate() {
 		return (java.sql.Timestamp) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>namedentities.relationships.enddate</code>.
+	 * Setter for <code>NAMEDENTITIES.RELATIONSHIPS.ENDDATE</code>.
 	 */
 	public void setEnddate(java.sql.Timestamp value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.relationships.enddate</code>.
+	 * Getter for <code>NAMEDENTITIES.RELATIONSHIPS.ENDDATE</code>.
 	 */
 	public java.sql.Timestamp getEnddate() {
 		return (java.sql.Timestamp) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>namedentities.relationships.created</code>.
+	 * Setter for <code>NAMEDENTITIES.RELATIONSHIPS.CREATED</code>.
 	 */
 	public void setCreated(java.sql.Timestamp value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.relationships.created</code>.
+	 * Getter for <code>NAMEDENTITIES.RELATIONSHIPS.CREATED</code>.
 	 */
 	public java.sql.Timestamp getCreated() {
 		return (java.sql.Timestamp) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>namedentities.relationships.lastmodified</code>.
+	 * Setter for <code>NAMEDENTITIES.RELATIONSHIPS.LASTMODIFIED</code>.
 	 */
 	public void setLastmodified(java.sql.Timestamp value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.relationships.lastmodified</code>.
+	 * Getter for <code>NAMEDENTITIES.RELATIONSHIPS.LASTMODIFIED</code>.
 	 */
 	public java.sql.Timestamp getLastmodified() {
 		return (java.sql.Timestamp) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>namedentities.relationships.createdby</code>.
+	 * Setter for <code>NAMEDENTITIES.RELATIONSHIPS.CREATEDBY</code>.
 	 */
 	public void setCreatedby(java.lang.Integer value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.relationships.createdby</code>.
+	 * Getter for <code>NAMEDENTITIES.RELATIONSHIPS.CREATEDBY</code>.
 	 */
 	public java.lang.Integer getCreatedby() {
 		return (java.lang.Integer) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>namedentities.relationships.lastmodifiedby</code>.
+	 * Setter for <code>NAMEDENTITIES.RELATIONSHIPS.LASTMODIFIEDBY</code>.
 	 */
 	public void setLastmodifiedby(java.lang.Integer value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.relationships.lastmodifiedby</code>.
+	 * Getter for <code>NAMEDENTITIES.RELATIONSHIPS.LASTMODIFIEDBY</code>.
 	 */
 	public java.lang.Integer getLastmodifiedby() {
 		return (java.lang.Integer) getValue(9);

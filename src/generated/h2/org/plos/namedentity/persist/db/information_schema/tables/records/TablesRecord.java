@@ -11,171 +11,171 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TablesRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord> implements org.jooq.Record12<java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Long, java.lang.Integer, java.lang.String, java.lang.String, java.lang.Long> {
 
-	private static final long serialVersionUID = 1824165323;
+	private static final long serialVersionUID = 97071115;
 
 	/**
-	 * Setter for <code>information_schema.tables.table_catalog</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TABLES.TABLE_CATALOG</code>.
 	 */
 	public void setTableCatalog(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.tables.table_catalog</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TABLES.TABLE_CATALOG</code>.
 	 */
 	public java.lang.String getTableCatalog() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>information_schema.tables.table_schema</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TABLES.TABLE_SCHEMA</code>.
 	 */
 	public void setTableSchema(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.tables.table_schema</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TABLES.TABLE_SCHEMA</code>.
 	 */
 	public java.lang.String getTableSchema() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>information_schema.tables.table_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TABLES.TABLE_NAME</code>.
 	 */
 	public void setTableName(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.tables.table_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TABLES.TABLE_NAME</code>.
 	 */
 	public java.lang.String getTableName() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>information_schema.tables.table_type</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TABLES.TABLE_TYPE</code>.
 	 */
 	public void setTableType(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.tables.table_type</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TABLES.TABLE_TYPE</code>.
 	 */
 	public java.lang.String getTableType() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>information_schema.tables.storage_type</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TABLES.STORAGE_TYPE</code>.
 	 */
 	public void setStorageType(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.tables.storage_type</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TABLES.STORAGE_TYPE</code>.
 	 */
 	public java.lang.String getStorageType() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>information_schema.tables.sql</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TABLES.SQL</code>.
 	 */
 	public void setSql(java.lang.String value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.tables.sql</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TABLES.SQL</code>.
 	 */
 	public java.lang.String getSql() {
 		return (java.lang.String) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>information_schema.tables.remarks</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TABLES.REMARKS</code>.
 	 */
 	public void setRemarks(java.lang.String value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.tables.remarks</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TABLES.REMARKS</code>.
 	 */
 	public java.lang.String getRemarks() {
 		return (java.lang.String) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>information_schema.tables.last_modification</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TABLES.LAST_MODIFICATION</code>.
 	 */
 	public void setLastModification(java.lang.Long value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.tables.last_modification</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TABLES.LAST_MODIFICATION</code>.
 	 */
 	public java.lang.Long getLastModification() {
 		return (java.lang.Long) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>information_schema.tables.id</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TABLES.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.tables.id</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TABLES.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>information_schema.tables.type_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TABLES.TYPE_NAME</code>.
 	 */
 	public void setTypeName(java.lang.String value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.tables.type_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TABLES.TYPE_NAME</code>.
 	 */
 	public java.lang.String getTypeName() {
 		return (java.lang.String) getValue(9);
 	}
 
 	/**
-	 * Setter for <code>information_schema.tables.table_class</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TABLES.TABLE_CLASS</code>.
 	 */
 	public void setTableClass(java.lang.String value) {
 		setValue(10, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.tables.table_class</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TABLES.TABLE_CLASS</code>.
 	 */
 	public java.lang.String getTableClass() {
 		return (java.lang.String) getValue(10);
 	}
 
 	/**
-	 * Setter for <code>information_schema.tables.row_count_estimate</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TABLES.ROW_COUNT_ESTIMATE</code>.
 	 */
 	public void setRowCountEstimate(java.lang.Long value) {
 		setValue(11, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.tables.row_count_estimate</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TABLES.ROW_COUNT_ESTIMATE</code>.
 	 */
 	public java.lang.Long getRowCountEstimate() {
 		return (java.lang.Long) getValue(11);

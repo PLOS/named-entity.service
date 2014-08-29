@@ -11,45 +11,45 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class JournalsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1821749077;
+	private static final long serialVersionUID = -1922420907;
 
 	/**
-	 * Setter for <code>namedentities.journals.journalid</code>.
+	 * Setter for <code>NAMEDENTITIES.JOURNALS.JOURNALID</code>.
 	 */
 	public void setJournalid(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.journals.journalid</code>.
+	 * Getter for <code>NAMEDENTITIES.JOURNALS.JOURNALID</code>.
 	 */
 	public java.lang.Integer getJournalid() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.journals.namedentityid</code>.
+	 * Setter for <code>NAMEDENTITIES.JOURNALS.NAMEDENTITYID</code>.
 	 */
 	public void setNamedentityid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.journals.namedentityid</code>.
+	 * Getter for <code>NAMEDENTITIES.JOURNALS.NAMEDENTITYID</code>.
 	 */
 	public java.lang.Integer getNamedentityid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.journals.journaltypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.JOURNALS.JOURNALTYPEID</code>.
 	 */
 	public void setJournaltypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.journals.journaltypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.JOURNALS.JOURNALTYPEID</code>.
 	 */
 	public java.lang.Integer getJournaltypeid() {
 		return (java.lang.Integer) getValue(2);

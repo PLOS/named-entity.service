@@ -34,8 +34,8 @@ public class Organization extends Entity {
   private String  organizationfamiliarname;
   private String  organizationlegalname;
   private Integer organizationmaincontactid;
-  private Byte    isactive;
-  private Byte    isvisible;
+  private Byte    isactive = 1;
+  private Byte    isvisible = 1;
   private String  url;
 
   public Integer getNamedentityid() {

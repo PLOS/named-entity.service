@@ -11,199 +11,199 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DomainsRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.DomainsRecord> implements org.jooq.Record14<java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = -2089829504;
+	private static final long serialVersionUID = 19046208;
 
 	/**
-	 * Setter for <code>information_schema.domains.domain_catalog</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.DOMAINS.DOMAIN_CATALOG</code>.
 	 */
 	public void setDomainCatalog(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.domains.domain_catalog</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.DOMAINS.DOMAIN_CATALOG</code>.
 	 */
 	public java.lang.String getDomainCatalog() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>information_schema.domains.domain_schema</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.DOMAINS.DOMAIN_SCHEMA</code>.
 	 */
 	public void setDomainSchema(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.domains.domain_schema</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.DOMAINS.DOMAIN_SCHEMA</code>.
 	 */
 	public java.lang.String getDomainSchema() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>information_schema.domains.domain_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.DOMAINS.DOMAIN_NAME</code>.
 	 */
 	public void setDomainName(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.domains.domain_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.DOMAINS.DOMAIN_NAME</code>.
 	 */
 	public java.lang.String getDomainName() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>information_schema.domains.column_default</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.DOMAINS.COLUMN_DEFAULT</code>.
 	 */
 	public void setColumnDefault(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.domains.column_default</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.DOMAINS.COLUMN_DEFAULT</code>.
 	 */
 	public java.lang.String getColumnDefault() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>information_schema.domains.is_nullable</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.DOMAINS.IS_NULLABLE</code>.
 	 */
 	public void setIsNullable(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.domains.is_nullable</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.DOMAINS.IS_NULLABLE</code>.
 	 */
 	public java.lang.String getIsNullable() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>information_schema.domains.data_type</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.DOMAINS.DATA_TYPE</code>.
 	 */
 	public void setDataType(java.lang.Integer value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.domains.data_type</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.DOMAINS.DATA_TYPE</code>.
 	 */
 	public java.lang.Integer getDataType() {
 		return (java.lang.Integer) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>information_schema.domains.precision</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.DOMAINS.PRECISION</code>.
 	 */
 	public void setPrecision(java.lang.Integer value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.domains.precision</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.DOMAINS.PRECISION</code>.
 	 */
 	public java.lang.Integer getPrecision() {
 		return (java.lang.Integer) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>information_schema.domains.scale</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.DOMAINS.SCALE</code>.
 	 */
 	public void setScale(java.lang.Integer value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.domains.scale</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.DOMAINS.SCALE</code>.
 	 */
 	public java.lang.Integer getScale() {
 		return (java.lang.Integer) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>information_schema.domains.type_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.DOMAINS.TYPE_NAME</code>.
 	 */
 	public void setTypeName(java.lang.String value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.domains.type_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.DOMAINS.TYPE_NAME</code>.
 	 */
 	public java.lang.String getTypeName() {
 		return (java.lang.String) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>information_schema.domains.selectivity</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.DOMAINS.SELECTIVITY</code>.
 	 */
 	public void setSelectivity(java.lang.Integer value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.domains.selectivity</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.DOMAINS.SELECTIVITY</code>.
 	 */
 	public java.lang.Integer getSelectivity() {
 		return (java.lang.Integer) getValue(9);
 	}
 
 	/**
-	 * Setter for <code>information_schema.domains.check_constraint</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.DOMAINS.CHECK_CONSTRAINT</code>.
 	 */
 	public void setCheckConstraint(java.lang.String value) {
 		setValue(10, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.domains.check_constraint</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.DOMAINS.CHECK_CONSTRAINT</code>.
 	 */
 	public java.lang.String getCheckConstraint() {
 		return (java.lang.String) getValue(10);
 	}
 
 	/**
-	 * Setter for <code>information_schema.domains.remarks</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.DOMAINS.REMARKS</code>.
 	 */
 	public void setRemarks(java.lang.String value) {
 		setValue(11, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.domains.remarks</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.DOMAINS.REMARKS</code>.
 	 */
 	public java.lang.String getRemarks() {
 		return (java.lang.String) getValue(11);
 	}
 
 	/**
-	 * Setter for <code>information_schema.domains.sql</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.DOMAINS.SQL</code>.
 	 */
 	public void setSql(java.lang.String value) {
 		setValue(12, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.domains.sql</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.DOMAINS.SQL</code>.
 	 */
 	public java.lang.String getSql() {
 		return (java.lang.String) getValue(12);
 	}
 
 	/**
-	 * Setter for <code>information_schema.domains.id</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.DOMAINS.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(13, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.domains.id</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.DOMAINS.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(13);

@@ -28,18 +28,6 @@ public class Sourcefield extends Entity {
   private String  sourcetable;
   private String  sourcefield;
 
-  public Sourcefield() {}
-
-  public Sourcefield(
-      Integer sourcefieldid,
-      String sourcetable,
-      String sourcefield
-                    ) {
-    this.sourcefieldid = sourcefieldid;
-    this.sourcetable   = sourcetable;
-    this.sourcefield   = sourcefield;
-  }
-
   public Integer getSourcefieldid() {
     return this.sourcefieldid;
   }

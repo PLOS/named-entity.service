@@ -142,7 +142,11 @@ public class NamedEntityDBServiceTest {
   public void testTypedescriptionCRUD() {
 
     // CREATE
-    Integer newTypeClassId = nedDBSvc.create( new Typedescription(null, "New Type Class", "Yada yada") );
+    Typedescription typedescription = new Typedescription();
+    typedescription.setDescription("New Type Class");
+    typedescription.setHowused("Yada yada");
+
+    Integer newTypeClassId = nedDBSvc.create( typedescription );
     assertNotNull(newTypeClassId);
 
     // UPDATE description.
@@ -190,6 +194,8 @@ public class NamedEntityDBServiceTest {
     newGlobaltype.setTypeid( nedDBSvc.findTypeClass("Named Party Types") );
     newGlobaltype.setShortdescription("Group XYZ");
     newGlobaltype.setTypecode("GRPX");
+    newGlobaltype.setLastmodified(new Timestamp(new Date().getTime()));
+    newGlobaltype.setCreated(new Timestamp(new Date().getTime()));
 
     assertNull(newGlobaltype.getGlobaltypeid());
     assertNotNull(newGlobaltype.getTypeid());
@@ -247,7 +253,7 @@ public class NamedEntityDBServiceTest {
     assertNull(workEmail.getEmailid());
     assertNotNull(workEmail.getNamedentityid());
     assertNotNull(workEmail.getEmailtypeid());
-    assertEquals(Byte.valueOf((byte)1), workEmail.getIsprimary());
+    assertEquals(Byte.valueOf((byte)0), workEmail.getIsprimary());
     assertEquals(Byte.valueOf((byte)1), workEmail.getIsactive());
 
     Integer workEmailId = nedDBSvc.create( workEmail );
@@ -275,7 +281,7 @@ public class NamedEntityDBServiceTest {
     assertNull(homeEmail.getEmailid());
     assertNotNull(homeEmail.getNamedentityid());
     assertNotNull(homeEmail.getEmailtypeid());
-    assertEquals(Byte.valueOf((byte)1), homeEmail.getIsprimary());
+    assertEquals(Byte.valueOf((byte)0), homeEmail.getIsprimary());
     assertEquals(Byte.valueOf((byte)1), homeEmail.getIsactive());
 
     Integer homeEmailId = nedDBSvc.create( homeEmail );
@@ -464,11 +470,11 @@ public class NamedEntityDBServiceTest {
     mobilePhone.setPhonenumbertypeid(mobilePhoneTypeId);
     mobilePhone.setCountrycodetypeid(usaCountryCodeTypeId);
     mobilePhone.setPhonenumber("650-123-4567");
+    mobilePhone.setIsprimary(true);
 
     assertNull(mobilePhone.getPhonenumberid());
     assertNotNull(mobilePhone.getNamedentityid());
     assertTrue(mobilePhone.getIsprimary());
-    assertTrue(mobilePhone.getIsactive());
 
     Integer mobilePhoneId = nedDBSvc.create( mobilePhone );
     assertNotNull(mobilePhoneId);
@@ -491,10 +497,10 @@ public class NamedEntityDBServiceTest {
     officePhone.setPhonenumbertypeid(officePhoneTypeId);
     officePhone.setCountrycodetypeid(usaCountryCodeTypeId);
     officePhone.setPhonenumber("650-222-9876");
+    officePhone.setIsprimary(false);
 
     assertNull(officePhone.getPhonenumberid());
     assertNotNull(officePhone.getNamedentityid());
-    assertTrue(officePhone.getIsprimary());
     assertTrue(officePhone.getIsactive());
 
     Integer officePhoneId = nedDBSvc.create( officePhone );
@@ -557,6 +563,7 @@ public class NamedEntityDBServiceTest {
     address.setStatecodetypeid(stateCodeTypeId);
     address.setCountrycodetypeid(countryTypeId);
     address.setPostalcode("94501");
+    address.setIsprimary((byte)1);
 
     assertNull(address.getAddressid());
     assertNotNull(address.getNamedentityid());

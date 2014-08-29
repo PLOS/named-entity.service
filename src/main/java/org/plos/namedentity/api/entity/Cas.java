@@ -28,17 +28,6 @@ public class Cas extends Entity {
   private java.lang.Integer namedentityid;
   private java.lang.Integer sourceapplicationtypeid;
 
-  public Cas() {}
-
-  public Cas(
-      java.lang.Integer casid,
-      java.lang.Integer namedentityid,
-      java.lang.Integer sourceapplicationtypeid
-            ) {
-    this.casid = casid;
-    this.namedentityid = namedentityid;
-    this.sourceapplicationtypeid = sourceapplicationtypeid;
-  }
 
   public java.lang.Integer getCasid() {
     return this.casid;

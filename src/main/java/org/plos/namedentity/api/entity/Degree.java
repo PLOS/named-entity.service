@@ -32,8 +32,6 @@ public class Degree extends Entity {
   private Integer degreetypeid;
   private String  degreetype;
 
-  public Degree() {}
-
   public String getDegreetype() {
     return degreetype;
   }
