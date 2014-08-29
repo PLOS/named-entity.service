@@ -46,16 +46,17 @@ public class CrudServiceTest {
   public void testIndividualCRUD() {
 
     // CREATE
-    Individual entity = new Individual();
-    entity.setFirstname("somefirstname");
-
-    Integer pkId = crudService.create(entity);
+    Individual individual = new Individual();
+    individual.setFirstname("firstname");
+    individual.setLastname("lastname");
+    individual.setDisplayname("displayname");
+    Integer pkId = crudService.create(individual);
     assertNotNull(pkId);
 
     // READ
     Individual readEntity = crudService.findById(pkId, Individual.class);
     assertNotNull(readEntity);
-    assertEquals("somefirstname", readEntity.getFirstname());
+    assertEquals("firstname", readEntity.getFirstname());
     assertEquals(null, readEntity.getMiddlename());
     assertEquals(pkId, readEntity.getNamedentityid());
 
@@ -73,9 +74,11 @@ public class CrudServiceTest {
   @Test
   public void testIndividualInvalidEmail() {
 
-    Individual entity = new Individual();
-    entity.setFirstname("somefirstname");
-    Integer nedId = crudService.create(entity);
+    Individual individual = new Individual();
+    individual.setFirstname("firstname");
+    individual.setLastname("lastname");
+    individual.setDisplayname("displayname");
+    Integer nedId = crudService.create(individual);
 
     // Create
     Email email = new Email();
@@ -105,25 +108,27 @@ public class CrudServiceTest {
   @Test
   public void testIndividualInvalidUrl() {
 
-    Individual entity = new Individual();
-    entity.setFirstname("somefirstname");
-    entity.setUrl("httpXX://billgates.plos.org");
+    Individual individual = new Individual();
+    individual.setFirstname("firstname");
+    individual.setLastname("lastname");
+    individual.setDisplayname("displayname");
+    individual.setUrl("httpXX://billgates.plos.org");
 
     // Create
     try {
-      crudService.create(entity);
+      crudService.create(individual);
       fail();
     } catch (NedValidationException expected) {
     }
 
     // Update
-    entity.setUrl("http://billgates.plos.org/abc");
-    crudService.create(entity);
+    individual.setUrl("http://billgates.plos.org/abc");
+    crudService.create(individual);
 
-    entity.setUrl("httpXX://billgates.plos.org/abc");
+    individual.setUrl("httpXX://billgates.plos.org/abc");
 
     try {
-      crudService.create(entity);
+      crudService.create(individual);
       fail();
     } catch (NedValidationException expected) {
     }

@@ -34,6 +34,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -106,6 +107,28 @@ public class NamedEntityDBServiceTest {
       // TODO: NamedEntityDBService should throw a uniform runtime
       //       exception (capturing this exception as cause)
     }
+  }
+
+  @Test
+  public void testNonNullDbConstraint() throws Exception {
+
+    Integer emailTypeClassId = nedDBSvc.findTypeClass("Email Address Types");
+
+    // CREATE Work Email
+
+    Email workEmail = new Email();
+    workEmail.setNamedentityid(1);
+    workEmail.setEmailtypeid(nedDBSvc.findTypeValue(emailTypeClassId, "Work"));
+
+    workEmail.setEmailaddress(null);
+
+    try {
+      Integer pkid = nedDBSvc.create( workEmail );
+      fail("entity created " + pkid);
+    } catch (Exception expected) {
+      // this should happen because emailAddress is required
+    }
+
   }
 
   @Test
@@ -328,6 +351,7 @@ public class NamedEntityDBServiceTest {
     individual.setFirstname("firstname");
     individual.setMiddlename("middlename");
     individual.setLastname("lastname");
+    individual.setDisplayname("displayname");
     individual.setNameprefixtypeid(prefixTypeId);
     individual.setNamesuffixtypeid(suffixTypeId);
     individual.setPreferredlanguagetypeid(langTypeId);
@@ -589,6 +613,8 @@ public class NamedEntityDBServiceTest {
     authorRole.setSourceapplicationtypeid(srcAppTypeId);
     authorRole.setRoletypeid(roleTypeId);
     authorRole.setStartdate(new Timestamp(new Date().getTime()));
+    authorRole.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    authorRole.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
 
     assertNull(authorRole.getRoleid());
     assertNotNull(authorRole.getNamedentityid());
@@ -646,6 +672,7 @@ public class NamedEntityDBServiceTest {
       individual.setFirstname("firstname");
       individual.setMiddlename("middlename");
       individual.setLastname("lastname");
+      individual.setDisplayname("displayname");
       Integer individualId = nedDBSvc.create( individual );
       assertNotNull(individualId);
 

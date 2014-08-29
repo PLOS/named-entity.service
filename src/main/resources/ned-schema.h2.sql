@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS namedEntities.emails (
     emailId INT NOT NULL AUTO_INCREMENT,
     namedEntityId INT NOT NULL,
     emailTypeId INT NULL,
-    emailAddress VARCHAR(255) NOT NULL,
+    emailAddress TEXT NOT NULL,
     isPrimary TINYINT(1) NOT NULL,
     isActive TINYINT(1) NOT NULL,
     PRIMARY KEY (emailId),
@@ -341,5 +341,5 @@ INSERT INTO namedEntities.globalTypes VALUES (75,17,'Editorial Manager',NULL,'EM
 INSERT INTO namedEntities.globalTypes VALUES (76,17,'CAS',NULL,'CAS','2014-03-23 20:34:40','2014-03-23 20:34:40',1,1);
 INSERT INTO namedEntities.globalTypes VALUES (77,17,'Salesforce',NULL,'SF','2014-03-23 20:34:40','2014-03-23 20:34:40',1,1);
 
-INSERT INTO namedEntities.namedEntityIdentifiers (namedEntityId, typeId, created, lastModified) VALUES (1, 1, null, null);
-INSERT INTO namedEntities.individuals (namedEntityId, firstName) VALUES (1, 'NED');
+INSERT INTO namedEntities.namedEntityIdentifiers VALUES (1, 1, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, NULL, NULL);
+INSERT INTO namedEntities.individuals VALUES (1, 'NED', NULL, 'NED', NULL, NULL, NULL, 'NED', NULL, NULL, NULL, NULL);

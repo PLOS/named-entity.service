@@ -35,11 +35,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -331,18 +332,24 @@ public class NamedEntityServiceTest {
   private IndividualComposite newCompositeIndividualWithRole() {
 
     IndividualComposite composite = new IndividualComposite();
-    composite.setFirstname("firstname");
-    composite.setMiddlename("middlename");
-    composite.setLastname("lastname");
-    composite.setNameprefix("Mr.");
-    composite.setNamesuffix("III");
-    composite.setPreferredlanguage("English");
-    composite.setPreferredcommunication("Email");
+    Individual individual = new Individual();
+    individual.setFirstname("firstname");
+    individual.setLastname("lastname");
+    individual.setDisplayname("displayname");
+    individual.setNameprefix("Mr.");
+    individual.setNamesuffix("III");
+    individual.setPreferredlanguage("English");
+    individual.setPreferredcommunication("Email");
+
+    composite.setIndividual(individual);
 
     List<Role> roles = new ArrayList<>();
     Role author = new Role();
     author.setRoletype("Author");
     author.setStartdate(new Timestamp(1401408000));  // "2014-05-30"
+
+    author.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    author.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
     roles.add(author);
 
     composite.setRoles(roles);
