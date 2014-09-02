@@ -27,6 +27,7 @@ import org.plos.namedentity.persist.db.namedentities.tables.Globaltypes;
 import org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -120,12 +121,10 @@ public class NamedEntityDBServiceTest {
     workEmail.setNamedentityid(1);
     workEmail.setEmailtypeid(nedDBSvc.findTypeValue(emailTypeClassId, "Work"));
 
-    workEmail.setEmailaddress(null);
-
     try {
       Integer pkid = nedDBSvc.create( workEmail );
       fail("entity created " + pkid);
-    } catch (Exception expected) {
+    } catch (DataIntegrityViolationException expected) {
       // this should happen because emailAddress is required
     }
 

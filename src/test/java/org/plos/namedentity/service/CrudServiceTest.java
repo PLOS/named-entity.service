@@ -108,6 +108,27 @@ public class CrudServiceTest {
   }
 
   @Test
+  public void testNonNullConstraint() {
+
+    Individual individual = new Individual();
+    individual.setFirstname("firstname");
+    individual.setLastname("lastname");
+    individual.setDisplayname("displayname");
+    Integer nedId = crudService.create(individual);
+
+    // Create
+    Email email = new Email();
+    email.setNamedentityid(nedId);
+    email.setEmailtype("Work");
+
+    try {
+      crudService.create(email);
+      fail();
+    } catch (NedValidationException expected) {
+    }
+  }
+
+  @Test
   public void testIndividualInvalidUrl() {
 
     Individual individual = new Individual();
