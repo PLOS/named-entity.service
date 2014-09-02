@@ -94,8 +94,8 @@ CREATE TABLE IF NOT EXISTS namedEntities.addresses (
     mainContactNamedEntityId INT NULL,
     latitude INT NULL,
     longitude INT NULL,
-    isPrimary TINYINT(1) NULL,
-    isActive TINYINT(1) NULL,
+    isPrimary TINYINT(1) NOT NULL,
+    isActive TINYINT(1) NOT NULL,
     PRIMARY KEY (addressId),
     FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId)
 )   ENGINE=INNODB;
