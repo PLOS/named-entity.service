@@ -593,8 +593,6 @@ public class NamedEntityDBServiceTest {
     List<Address> addresses = nedDBSvc.findResolvedEntities(savedAddress.getNamedentityid(), Address.class);
     assertTrue( addresses.size() > 0 );
             
-    //TODO : FIND BY ATTRIBUTE
-
     // DELETE
 
     Address addressToDelete = new Address();

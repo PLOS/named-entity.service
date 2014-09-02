@@ -16,6 +16,7 @@
  */
 package org.plos.namedentity.rest;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.mockito.Mockito;
 import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.IndividualComposite;
@@ -25,6 +26,9 @@ import org.plos.namedentity.service.CrudService;
 import org.plos.namedentity.service.NamedEntityService;
 import org.springframework.context.annotation.Bean;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,12 +42,17 @@ import static org.mockito.Mockito.when;
 
 public class TestSpringConfig {
 
+  private static final String TEST_RESOURCE_PATH = "src/test/resources/";
+
+  private static ObjectMapper mapper = new ObjectMapper();
+
   @Bean @SuppressWarnings("unchecked")
   static public CrudService crudService() {
     CrudService mockCrudService =  Mockito.mock(CrudService.class);
 
     mockCrudForTypes(mockCrudService);
     mockCrudForEmails(mockCrudService);
+    mockCrudForAddresses(mockCrudService);
 
     // INDIVIDUALS
     Individual individualEntity = newIndividualEntity();
@@ -84,9 +93,6 @@ public class TestSpringConfig {
     when(mockNamedEntityService.findResolvedEntityByUid(anyString(), anyString(), eq(Individual.class)))
       .thenReturn( newIndividualEntities() );
 
-    when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(Address.class)))
-      .thenReturn( newAddressEntities() );
-
     when(mockNamedEntityService.findResolvedEntities(eq(individualEntity.getNamedentityid()), eq(Email.class)))
       .thenReturn( newEmailEntitiesForIndividual() );
 
@@ -112,6 +118,7 @@ public class TestSpringConfig {
         .thenReturn(organizationEntity);
 
     mockNamedEntityServiceForEmails(mockNamedEntityService);
+    mockNamedEntityServiceForAddresses(mockNamedEntityService);
 
     return mockNamedEntityService;
   }
@@ -171,23 +178,6 @@ public class TestSpringConfig {
     entity.setOrganizationlegalname("legalname");
     entity.setOrganizationfamiliarname("familiarname");
     return entity;
-  }
-
-  static private List<Address> newAddressEntities() {
-    List<Address> addresses = new ArrayList<>();
-
-    Address address = new Address();
-    address.setAddresstype("Office");
-    address.setAddressline1("addressline1");
-    address.setAddressline2("addressline2");
-    address.setCity("city");
-    address.setStatecodetype("CA");
-    address.setCountrycodetype("United States");
-    address.setPostalcode("1234567");
-    address.setIsprimary((byte)1);
-    addresses.add( address );
-
-    return addresses;
   }
 
   static private List<Email> newEmailEntitiesForIndividual() {
@@ -338,6 +328,34 @@ public class TestSpringConfig {
 
     when(mockNamedEntityService.findResolvedEntityByKey(eq(emailEntity.getEmailid()), eq(Email.class)))
         .thenReturn( emailEntity );
+  }
+
+  static private void mockCrudForAddresses(CrudService mockCrudService) {
+    when(mockCrudService.create(isA(Address.class))).thenReturn(1);
+  }
+
+  static private void mockNamedEntityServiceForAddresses(NamedEntityService mockNamedEntityService) {
+    try {
+      String addressesJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "addresses.json")));
+      Address[] addresses = mapper.readValue(addressesJson, Address[].class);
+
+      for (int i = 0; i < addresses.length; i++) {
+        addresses[i].setAddressid(i+1);   // db assigned primary key (1-based)
+        addresses[i].setNamedentityid(1);
+        addresses[i].setIsprimary((byte)1);
+        addresses[i].setIsactive((byte)1);
+      }
+
+      when(mockNamedEntityService.findResolvedEntityByKey(eq(addresses[0].getAddressid()), eq(Address.class)))
+        .thenReturn( addresses[0] );
+
+      when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(Address.class)))
+        .thenReturn( Arrays.asList(addresses) );
+    }
+    catch (IOException e) {
+      throw new RuntimeException(String.format(
+        "Problem reading addresses json file. Reason: %s", e.getMessage()));
+    }
   }
 
   @SuppressWarnings("unchecked")

@@ -19,6 +19,7 @@ package org.plos.namedentity.service;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
 import org.plos.namedentity.api.entity.Individual;
@@ -40,6 +41,9 @@ import static org.junit.Assert.fail;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
 public class CrudServiceTest {
+
+  @Autowired
+  NamedEntityService namedEntityService;  // inject so can resolve type names to ids
 
   @Autowired
   CrudService crudService;
@@ -333,6 +337,63 @@ public class CrudServiceTest {
     /* ------------------------------------------------------------------ */
 
     assertTrue( crudService.delete(savedEmail) );
+  }
+
+  @Test
+  public void testAddressesCRUD() {
+
+    /* ------------------------------------------------------------------ */
+    /*  CREATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    Address newAddress = new Address();
+    newAddress.setNamedentityid(1);
+    newAddress.setAddresstype("Office");
+    newAddress.setAddressline1("addressline 1");
+    newAddress.setAddressline2("addressline 2");
+    newAddress.setAddressline3("addressline 3");
+    newAddress.setCity("city");
+    newAddress.setStatecodetype("CA");
+    newAddress.setCountrycodetype("United States");
+    newAddress.setPostalcode("94401");
+    //TODO - main contact not well defined.
+    //newAddress.setMaincontactnamedentityid(java.lang.Integer maincontactnamedentityid);
+    newAddress.setIsprimary((byte)1);
+    newAddress.setIsactive((byte)1);
+
+    // save record
+
+    Integer pkId = crudService.create( namedEntityService.resolveValuesToIds(newAddress) );
+    assertNotNull( pkId );
+
+    Address savedAddress = crudService.findById(pkId, Address.class);
+    assertNotNull( savedAddress );
+    assertEquals(pkId, savedAddress.getAddressid());
+    assertNotNull( savedAddress.getAddresstypeid() );
+    assertNotNull( savedAddress.getStatecodetypeid() );
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    savedAddress.setAddressline1("update." + savedAddress.getAddressline1());
+    assertTrue( crudService.update(savedAddress) );
+    Address savedAddress2 = crudService.findById(pkId, Address.class);
+    assertEquals(savedAddress, savedAddress2);
+
+    /* ------------------------------------------------------------------ */
+    /*  FINDERS                                                           */
+    /* ------------------------------------------------------------------ */
+
+    List<Address> allAddresses = crudService.findAll(Address.class);
+    assertNotNull(allAddresses);
+    assertTrue(allAddresses.contains(savedAddress2));
+
+    /* ------------------------------------------------------------------ */
+    /*  DELETE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    assertTrue( crudService.delete(savedAddress) );
   }
 
   @Test
