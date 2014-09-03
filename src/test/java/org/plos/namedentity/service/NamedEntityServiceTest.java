@@ -35,6 +35,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -326,6 +327,58 @@ public class NamedEntityServiceTest {
 
     emailEntity.setEmailid(createEmailId2);
     assertTrue( crudService.delete(emailEntity) );
+  }
+
+  @Test
+  public void testRoleEntityCrud() {
+
+    // CREATE role entity. we don't expect the address type to persist.
+
+    Role roleEntity = new Role();
+    roleEntity.setNamedentityid(1);
+    roleEntity.setSourceapplicationtype("Editorial Manager");
+    roleEntity.setRoletype("Academic Editor (PLOSONE)");
+    roleEntity.setStartdate(new Timestamp(new Date().getTime()));
+
+    Integer createRoleId = crudService.create(roleEntity);
+    assertNotNull( createRoleId );
+
+    Role savedEntity = namedEntityService.findResolvedEntityByKey(createRoleId, Role.class);
+    assertNull( savedEntity.getRoletype() );
+
+    // try again but this time use type resolver. remember that type names are
+    // resolved by joins when querying database -- need foreign key to get name.
+    
+    Integer createRoleId2 = crudService.create( namedEntityService.resolveValuesToIds(roleEntity) );
+    assertNotNull( createRoleId2 );
+
+    Role savedEntity2 = namedEntityService.findResolvedEntityByKey(createRoleId2, Role.class);
+    assertNotNull( savedEntity2.getRoletype() );
+
+    // UPDATE role entity. Scrub appropriate attributes from current instance
+    // and reuse. Again, we don't expect for role or source types to persist.
+
+    roleEntity.setRoleid(createRoleId); 
+    roleEntity.setSourceapplicationtypeid(null); 
+    roleEntity.setRoletypeid(null); 
+    assertTrue( crudService.update(roleEntity) );
+
+    Role savedEntity3 = namedEntityService.findResolvedEntityByKey(createRoleId, Role.class);
+    assertNull( savedEntity3.getRoletype() );
+
+    // try again with type resolver.
+
+    assertTrue( crudService.update(namedEntityService.resolveValuesToIds(roleEntity)) );
+
+    Role savedEntity4 = namedEntityService.findResolvedEntityByKey(createRoleId, Role.class);
+    assertNotNull( savedEntity4.getRoletype() );
+
+    // DELETE.
+
+    assertTrue( crudService.delete(roleEntity) );
+
+    roleEntity.setRoleid(createRoleId2);
+    assertTrue( crudService.delete(roleEntity) );
   }
 
   @Test

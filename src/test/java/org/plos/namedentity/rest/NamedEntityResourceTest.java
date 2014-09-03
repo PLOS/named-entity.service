@@ -32,6 +32,10 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -286,6 +290,134 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   }
 
   @Test
+  public void testRoleCrud() throws IOException {
+/* ------------------------------------------------------------------ */
+/*  FIND (BY ID)                                                      */
+/* ------------------------------------------------------------------ */
+
+//Response response = target(INDIV_ROLE_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+//assertEquals(200, response.getStatus());
+
+//String jsonPayload = response.readEntity(String.class);
+
+//Role[] roles = mapper.readValue(jsonPayload, Role[].class);
+//assertEquals(1, roles.length);
+
+//Role role = roles[0];
+//assertEquals("Author", role.getRoletype());
+
+
+    /* ------------------------------------------------------------------ */
+    /*  CREATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    String requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "role.json")));
+  
+    Response response = target(INDIV_ROLE_URI).request(MediaType.APPLICATION_JSON_TYPE)
+                          .post(Entity.json(requestJson));
+
+    assertEquals(200, response.getStatus());
+
+    String responseJson = response.readEntity(String.class);
+
+//entity = {
+//serialVersionUID: 315701916
+//x roleid: instance of java.lang.Integer(id=7193)
+//x namedentityid: instance of java.lang.Integer(id=7193)
+//sourceapplicationtypeid: null
+//roletypeid: null
+//startdate: instance of java.sql.Timestamp(id=7194)
+//enddate: null
+//created: null
+//lastmodified: null
+//createdby: null
+//lastmodifiedby: null
+//sourceapplicationtype: "Editorial Manager"
+//roletype: "Academic Editor (PLOSONE)"
+//}
+
+//java.util.GregorianCalendar
+
+    Role entity = mapper.readValue(responseJson, Role.class);
+    assertEquals(Integer.valueOf(1), entity.getRoleid());
+    assertEquals(Integer.valueOf(1), entity.getNamedentityid());
+    assertEquals("Editorial Manager", entity.getSourceapplicationtype());
+    assertEquals("Academic Editor (PLOSONE)", entity.getRoletype());
+
+    Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+    // (year, month(0=jan), date, hour24, minute)
+    cal.set(2014, 5, 30, 0, 0);
+
+    int x = 1;
+
+
+    //assertEquals("Office", entity.getAddresstype());
+    //assertEquals("addressline 1", entity.getAddressline1());
+    //assertEquals("addressline 2", entity.getAddressline2());
+    //assertEquals("addressline 3", entity.getAddressline3());
+    //assertEquals("city", entity.getCity());
+    //assertEquals("CA", entity.getStatecodetype());
+    //assertEquals("United States", entity.getCountrycodetype());
+    //assertEquals("12345", entity.getPostalcode());
+    //assertEquals(Byte.valueOf((byte)1), entity.getIsprimary());
+    //assertEquals(Byte.valueOf((byte)1), entity.getIsactive());
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    //response = target(INDIV_ADDR_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
+                //.post(Entity.json(mapper.writeValueAsString(entity)));
+
+    //assertEquals(200, response.getStatus());
+
+    /* ------------------------------------------------------------------ */
+    /*  DELETE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    //response = target(INDIV_ADDR_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).delete();
+    //assertEquals(204, response.getStatus());
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY ADDRESS ID (PK))                                         */
+    /* ------------------------------------------------------------------ */
+
+    //response = target(INDIV_ADDR_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
+    //assertEquals(200, response.getStatus());
+
+    //responseJson = response.readEntity(String.class);
+
+    //Address address = mapper.readValue(responseJson, Address.class);
+    //assertNotNull( address );
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY NED ID)                                                  */
+    /* ------------------------------------------------------------------ */
+
+    //response = target(INDIV_ADDR_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    //assertEquals(200, response.getStatus());
+
+    //responseJson = response.readEntity(String.class);
+
+    //Address[] addresses = mapper.readValue(responseJson, Address[].class);
+    //assertEquals(2, addresses.length);
+
+    //Address officeAddress = addresses[0];
+    //assertEquals("Office", officeAddress.getAddresstype());
+    //assertEquals("addressline 1", officeAddress.getAddressline1());
+    //assertEquals("CA", officeAddress.getStatecodetype());
+    //assertEquals("12345", officeAddress.getPostalcode());
+
+    //Address homeAddress = addresses[1];
+    //assertEquals("Home", homeAddress.getAddresstype());
+    //assertEquals("addressline 1.2", homeAddress.getAddressline1());
+    //assertEquals("ONT", homeAddress.getStatecodetype());
+    //assertEquals("M4C 1B5", homeAddress.getPostalcode());
+  }
+
+  @Test
   public void testEmailCrud() throws IOException {
 
     /* ------------------------------------------------------------------ */
@@ -436,28 +568,6 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     Phonenumber officePhone = phonenumbers[0];
     assertEquals("Office", officePhone.getPhonenumbertype());
     assertEquals("123-456-7890", officePhone.getPhonenumber());
-
-    //TODO - CREATE, UPDATE, DELETE
-  }
-
-  @Test
-  public void testRoleCrud() throws IOException {
-
-    /* ------------------------------------------------------------------ */
-    /*  FIND (BY ID)                                                      */
-    /* ------------------------------------------------------------------ */
-
-    Response response = target(INDIV_ROLE_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
-
-    assertEquals(200, response.getStatus());
-
-    String jsonPayload = response.readEntity(String.class);
-
-    Role[] roles = mapper.readValue(jsonPayload, Role[].class);
-    assertEquals(1, roles.length);
-
-    Role role = roles[0];
-    assertEquals("Author", role.getRoletype());
 
     //TODO - CREATE, UPDATE, DELETE
   }

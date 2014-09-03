@@ -251,18 +251,46 @@ public class IndividualsResource extends BaseResource {
     }
   }
 
+  /* ----------------------------------------------------------------------- */
+  /*  ROLE CRUD                                                              */
+  /* ----------------------------------------------------------------------- */
+
+  @POST
+  @Path("/{nedId}/roles")
+  @ApiOperation(value = "Create role", response = Role.class)
+  public Response createRole(@PathParam("nedId") int nedId, Role roleEntity) {
+    return createEntity(nedId, roleEntity, Individual.class);
+  }
+
+  @POST
+  @Path("/{nedId}/roles/{roleId}")
+  @ApiOperation(value = "Update role", response = Role.class)
+  public Response updateRole(@PathParam("nedId") int nedId, 
+                             @PathParam("roleId") int roleId, 
+                             Role roleEntity) {
+    return updateEntity(nedId, roleId, roleEntity, Individual.class);
+  }
+
+  @DELETE
+  @Path("/{nedId}/roles/{roleId}")
+  @ApiOperation(value = "Delete role")
+  public Response deleteRole(@PathParam("nedId") int nedId, 
+                             @PathParam("roleId") int roleId) {
+    return deleteEntity(nedId, roleId, Role.class, Individual.class);
+  }
+
+  @GET
+  @Path("/{nedId}/roles/{roleId}")
+  @ApiOperation(value = "Read role", response = Role.class)
+  public Response getRole(@PathParam("nedId") int nedId,
+                          @PathParam("roleId") int roleId) {
+    return getEntity(nedId, roleId, Role.class, Individual.class);
+  }
+
   @GET
   @Path("/{nedId}/roles")
   @ApiOperation(value = "List roles")
   public Response getRoles(@PathParam("nedId") int nedId) {
-    try {
-      return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<Role>>(
-              namedEntityService.findResolvedEntities(nedId, Role.class)
-          ){}).build();
-    }
-    catch(Exception e) {
-      return serverError(e, "Find roles by nedId failed");
-    }
+    return getEntities(nedId, Role.class, Individual.class);
   }
 }

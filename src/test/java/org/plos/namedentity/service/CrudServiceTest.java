@@ -30,6 +30,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -310,97 +312,52 @@ public class CrudServiceTest {
     assertTrue( crudService.delete(savedEmail) );
   }
 
-
-    //Integer srcAppTypeClassId = findTypeClassStartWith("Source Applications");
-    //Integer roleTypeClassId   = findTypeClassStartWith("Roles");
-
-    //Integer srcAppTypeId = findTypeValueByName(srcAppTypeClassId, "Editorial Manager"); assertNotNull(srcAppTypeId); 
-    //Integer roleTypeId   = findTypeValueByName(roleTypeClassId, "Author")             ; assertNotNull(roleTypeId)  ; 
-
-    //Role authorRole = new Role();
-    //authorRole.setNamedentityid(1);
-    //authorRole.setSourceapplicationtypeid(srcAppTypeId);
-    //authorRole.setRoletypeid(roleTypeId);
-    //authorRole.setStartdate(new Timestamp(new Date().getTime()));
-
-
-
-  //public void setSourceapplicationtype(String sourceapplicationtype) {
-  //public void setRoletype(String roletype) {
-//-  public void setRoleid(Integer roleid) {
-//x  public void setNamedentityid(Integer namedentityid) {
-  //public void setSourceapplicationtypeid(Integer sourceapplicationtypeid) {
-  //public void setRoletypeid(Integer roletypeid) {
-  //public void setStartdate(java.sql.Timestamp startdate) {
-  //public void setEnddate(java.sql.Timestamp enddate) {
-  //public void setCreated(java.sql.Timestamp created) {
-  //public void setLastmodified(java.sql.Timestamp lastmodified) {
-  //public void setCreatedby(Integer createdby) {
-  //public void setLastmodifiedby(Integer lastmodifiedby) {
-
-
   @Test
   public void testRolesCRUD() {
 
     /* ------------------------------------------------------------------ */
     /*  CREATE                                                            */
     /* ------------------------------------------------------------------ */
-/*
-    Role authorRole = new Role();
-    authorRole.setNamedentityid(1);
-    authorRole.setSourceapplicationtypeid(srcAppTypeId);
-    authorRole.setRoletypeid(roleTypeId);
-    authorRole.setStartdate(new Timestamp(new Date().getTime()));
 
-    Address newAddress = new Address();
-    newAddress.setNamedentityid(1);
-    newAddress.setAddresstype("Office");
-    newAddress.setAddressline1("addressline 1");
-    newAddress.setAddressline2("addressline 2");
-    newAddress.setAddressline3("addressline 3");
-    newAddress.setCity("city");
-    newAddress.setStatecodetype("CA");
-    newAddress.setCountrycodetype("United States");
-    newAddress.setPostalcode("94401");
-    //TODO - main contact not well defined.
-    //newAddress.setMaincontactnamedentityid(java.lang.Integer maincontactnamedentityid);
-    newAddress.setIsprimary((byte)1);
-    newAddress.setIsactive((byte)1);
+    Role newRole = new Role();
+    newRole.setNamedentityid(1);
+    newRole.setSourceapplicationtype("Editorial Manager");
+    newRole.setRoletype("Academic Editor (PLOSONE)");
+    newRole.setStartdate(new Timestamp(new Date().getTime()));
 
     // save record
 
-    Integer pkId = crudService.create( namedEntityService.resolveValuesToIds(newAddress) );
+    Integer pkId = crudService.create( namedEntityService.resolveValuesToIds(newRole) );
     assertNotNull( pkId );
 
-    Address savedAddress = crudService.findById(pkId, Address.class);
-    assertNotNull( savedAddress );
-    assertEquals(pkId, savedAddress.getAddressid());
-    assertNotNull( savedAddress.getAddresstypeid() );
-    assertNotNull( savedAddress.getStatecodetypeid() );
-*/
+    Role savedRole = crudService.findById(pkId, Role.class);
+    assertNotNull( savedRole );
+    assertEquals(pkId, savedRole.getRoleid());
+    assertNotNull( savedRole.getSourceapplicationtypeid() );
+    assertNotNull( savedRole.getRoletypeid() );
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    //savedAddress.setAddressline1("update." + savedAddress.getAddressline1());
-    //assertTrue( crudService.update(savedAddress) );
-    //Address savedAddress2 = crudService.findById(pkId, Address.class);
-    //assertEquals(savedAddress, savedAddress2);
+    savedRole.setEnddate(new Timestamp(new Date().getTime()));
+    assertTrue( crudService.update(savedRole) );
+    Role savedRole2 = crudService.findById(pkId, Role.class);
+    assertEquals(savedRole, savedRole2);
 
     /* ------------------------------------------------------------------ */
     /*  FINDERS                                                           */
     /* ------------------------------------------------------------------ */
 
-    //List<Address> allAddresses = crudService.findAll(Address.class);
-    //assertNotNull(allAddresses);
-    //assertTrue(allAddresses.contains(savedAddress2));
+    List<Role> allRoles = crudService.findAll(Role.class);
+    assertNotNull(allRoles);
+    assertTrue(allRoles.contains(savedRole2));
 
     /* ------------------------------------------------------------------ */
     /*  DELETE                                                            */
     /* ------------------------------------------------------------------ */
 
-    //assertTrue( crudService.delete(savedAddress) );
+    assertTrue( crudService.delete(savedRole) );
   }
 
   @Test

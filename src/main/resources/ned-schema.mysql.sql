@@ -260,7 +260,7 @@ INSERT INTO typeDescriptions(description, howUsed) VALUES ('Roles','Academic Edi
 SELECT typeId INTO @typeIdVar FROM typeDescriptions WHERE description='Roles';
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Author', NULL, 'AUTH', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Co-Author', NULL, 'COAU', CURRENT_TIMESTAMP);
-INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Academic Editor', NULL, 'AE', CURRENT_TIMESTAMP);
+INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Academic Editor (PLOSONE)', NULL, 'AE1', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'NP System Administrator', NULL, 'SANP', CURRENT_TIMESTAMP);
 
 /* Named Party Prefixes */

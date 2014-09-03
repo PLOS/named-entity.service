@@ -53,6 +53,7 @@ public class TestSpringConfig {
     mockCrudForTypes(mockCrudService);
     mockCrudForEmails(mockCrudService);
     mockCrudForAddresses(mockCrudService);
+    mockCrudForRoles(mockCrudService);
 
     // INDIVIDUALS
     Individual individualEntity = newIndividualEntity();
@@ -105,9 +106,6 @@ public class TestSpringConfig {
     when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(Phonenumber.class)))
       .thenReturn( newPhonenumberEntities() );
 
-    when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(Role.class)))
-      .thenReturn( newRoleEntities() );
-
     when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(Uniqueidentifier.class)))
       .thenReturn( newUidEntities() );
 
@@ -119,6 +117,7 @@ public class TestSpringConfig {
 
     mockNamedEntityServiceForEmails(mockNamedEntityService);
     mockNamedEntityServiceForAddresses(mockNamedEntityService);
+    mockNamedEntityServiceForRoles(mockNamedEntityService);
 
     return mockNamedEntityService;
   }
@@ -256,18 +255,6 @@ public class TestSpringConfig {
     return phonenumbers;
   }
 
-  static private List<Role> newRoleEntities() {
-    List<Role> roles = new ArrayList<>();
-
-    Role author = new Role();
-    author.setRoleid(1);
-    author.setRoletype("Author");
-    author.setStartdate(new Timestamp(1401408000)); // "2014-05-30"
-    roles.add( author );
-
-    return roles;
-  }
-
   static private List<Individual> newIndividualEntities() {
     List<Individual> individualEntities = new ArrayList<>();
 
@@ -327,6 +314,10 @@ public class TestSpringConfig {
     when(mockCrudService.create(isA(Address.class))).thenReturn(1);
   }
 
+  static private void mockCrudForRoles(CrudService mockCrudService) {
+    when(mockCrudService.create(isA(Role.class))).thenReturn(1);
+  }
+
   static private void mockNamedEntityServiceForAddresses(NamedEntityService mockNamedEntityService) {
     try {
       String addressesJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "addresses.json")));
@@ -348,6 +339,29 @@ public class TestSpringConfig {
     catch (IOException e) {
       throw new RuntimeException(String.format(
         "Problem reading addresses json file. Reason: %s", e.getMessage()));
+    }
+  }
+
+  static private void mockNamedEntityServiceForRoles(NamedEntityService mockNamedEntityService) {
+    try {
+      String rolesJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "role.json")));
+      Role role = mapper.readValue(rolesJson, Role.class);
+
+      role.setRoleid(1);
+      role.setNamedentityid(1);
+
+      when(mockNamedEntityService.findResolvedEntityByKey(eq(role.getRoleid()), eq(Role.class)))
+        .thenReturn( role );
+
+      List<Role> roles = new ArrayList<Role>();
+      roles.add(role);
+
+      when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(Role.class)))
+        .thenReturn( roles );
+    }
+    catch (IOException e) {
+      throw new RuntimeException(String.format(
+        "Problem reading role json file. Reason: %s", e.getMessage()));
     }
   }
 

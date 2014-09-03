@@ -197,7 +197,9 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
     if (cname.equals(Email.class.getCanonicalName()))
       return (T)findEmailByPrimaryKey(pk);
     else if (cname.equals(Address.class.getCanonicalName()))
-      return (T)findAddressesByPrimaryKey(pk);
+      return (T)findAddressByPrimaryKey(pk);
+    else if (cname.equals(Role.class.getCanonicalName()))
+      return (T)findRoleByPrimaryKey(pk);
 
     throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
   }
@@ -562,7 +564,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
     return record.into(Email.class);
   }
 
-  private Address findAddressesByPrimaryKey(Integer addressId) {
+  private Address findAddressByPrimaryKey(Integer addressId) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
@@ -587,6 +589,28 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
       if (record == null) throw new EntityNotFoundException("Address not found");
 
       return record.into(Address.class); 
+  }
+
+  private Role findRoleByPrimaryKey(Integer roleId) {
+
+    Globaltypes gt1 = GLOBALTYPES.as("gt1");
+    Globaltypes gt2 = GLOBALTYPES.as("gt2");
+    Roles       r   = ROLES.as("r");
+
+    Record record = this.context
+      .select(
+        r.ROLEID, r.STARTDATE, r.ENDDATE,
+        gt1.SHORTDESCRIPTION.as("sourceapplicationtype"),                 
+        gt2.SHORTDESCRIPTION.as("roletype"))
+      .from(r)
+      .leftOuterJoin(gt1).on(r.SOURCEAPPLICATIONTYPEID.equal(gt1.GLOBALTYPEID))
+      .leftOuterJoin(gt2).on(r.ROLETYPEID.equal(gt2.GLOBALTYPEID))
+      .where(r.ROLEID.equal(roleId))
+      .fetchOne();
+
+      if (record == null) throw new EntityNotFoundException("Role not found");
+
+      return record.into(Role.class); 
   }
 
   /* ---------------------------------------------------------------------- */

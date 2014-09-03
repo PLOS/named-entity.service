@@ -271,7 +271,7 @@ INSERT INTO namedEntities.globalTypes VALUES (6,3,'University',NULL,'UNIV','2014
 INSERT INTO namedEntities.globalTypes VALUES (7,3,'Department',NULL,'DEPT','2014-03-23 20:37:26','2014-03-23 20:37:26',1,1);
 INSERT INTO namedEntities.globalTypes VALUES (8,4,'Author',NULL,'AUTH','2014-03-23 20:44:32','2014-03-23 20:44:32',1,1);
 INSERT INTO namedEntities.globalTypes VALUES (9,4,'Co-Author',NULL,'COAU','2014-03-23 20:44:57','2014-03-23 20:44:57',1,1);
-INSERT INTO namedEntities.globalTypes VALUES (10,4,'Academic Editor',NULL,'AE','2014-03-23 20:45:37','2014-03-23 20:45:37',1,1);
+INSERT INTO namedEntities.globalTypes VALUES (10,4,'Academic Editor (PLOSONE)',NULL,'AE1','2014-03-23 20:45:37','2014-03-23 20:45:37',1,1);
 INSERT INTO namedEntities.globalTypes VALUES (11,4,'Reviewer',NULL,'REV','2014-03-23 20:46:08','2014-03-23 20:46:08',1,1);
 INSERT INTO namedEntities.globalTypes VALUES (12,5,'Mr.',NULL,'MR','2014-03-23 20:47:09','2014-03-23 20:47:09',1,1);
 INSERT INTO namedEntities.globalTypes VALUES (13,5,'Mrs.',NULL,'MRS','2014-03-23 20:47:26','2014-03-23 20:47:26',1,1);
