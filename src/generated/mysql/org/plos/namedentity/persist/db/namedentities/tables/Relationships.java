@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Relationships extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord> {
 
-	private static final long serialVersionUID = -1335633697;
+	private static final long serialVersionUID = -1001097633;
 
 	/**
 	 * The singleton instance of <code>namedEntities.relationships</code>
@@ -49,12 +49,12 @@ public class Relationships extends org.jooq.impl.TableImpl<org.plos.namedentity.
 	/**
 	 * The column <code>namedEntities.relationships.startDate</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.sql.Timestamp> STARTDATE = createField("startDate", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.sql.Date> STARTDATE = createField("startDate", org.jooq.impl.SQLDataType.DATE, this, "");
 
 	/**
 	 * The column <code>namedEntities.relationships.endDate</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.sql.Timestamp> ENDDATE = createField("endDate", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.sql.Date> ENDDATE = createField("endDate", org.jooq.impl.SQLDataType.DATE, this, "");
 
 	/**
 	 * The column <code>namedEntities.relationships.created</code>.

@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Namedentities extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -742733097;
+	private static final long serialVersionUID = 2049403331;
 
 	/**
 	 * The singleton instance of <code>namedentities</code>
@@ -34,20 +34,20 @@ public class Namedentities extends org.jooq.impl.SchemaImpl {
 
 	private final java.util.List<org.jooq.Sequence<?>> getSequences0() {
 		return java.util.Arrays.<org.jooq.Sequence<?>>asList(
-			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_0EF5EBCC_2042_4450_ADA7_8A66D5EBE314,
-			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_4136AB11_6E53_4941_8A29_7AA76E52CC14,
-			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_7070D854_14F2_466E_B886_69FF96C8DD57,
-			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_71BB8101_22DD_484A_B673_05E2540F8549,
-			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_743972FA_CEEC_43A9_9A58_D840AA6ACF74,
-			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_7B7F8EBD_A5D5_4BD2_BF3A_46698DBAFFA4,
-			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_81EE4FD4_E782_4606_89EC_A759768ACA56,
-			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_8CED71BF_6B78_43A3_8763_A3359735C72E,
-			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_A38ABE89_BB1F_4FB6_B348_E7A79C364C0E,
-			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_A42C08E6_66A1_4199_9122_7318A22A30F4,
-			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_BC59FF82_5E7D_49E5_985F_279CFCE71488,
-			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_CFE6E449_741E_4240_8F7A_65D0D034DE6E,
-			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_D181D468_AB03_40C9_9794_73CFE248D1C8,
-			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_DA06B3DE_96B2_4C88_A27C_57DA6BC49DBB);
+			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_0F12EECF_298B_43E9_9F34_1C2735BC9403,
+			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_3DDBAFC3_F59A_48BD_9483_33CBFD61DFF2,
+			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_3E95052E_87B5_483F_B192_1CC6E520D364,
+			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_4D5A199C_334B_4B2A_8D42_288CCEAA7D55,
+			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_4D830355_D6B3_44B2_8547_39A51D184FDF,
+			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_5D9991E1_A342_4E2B_93F1_B4A450D41E22,
+			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_5E15CFD0_D1F9_4636_B2C9_3ABE337CA501,
+			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_7F88C702_8D29_4B95_B255_2301DD2F5FF5,
+			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_883747BB_BC64_4FB4_86DC_160C3851B974,
+			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_8C6F7872_B3A7_4FD9_A26F_B0FFFE5C959D,
+			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_914F8D28_FC5A_44AA_8592_C16951ABDE60,
+			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_9A9765DF_BB32_4152_ABD3_11A0F9F667D4,
+			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_A916BCEF_6E3B_4B4E_A55E_956DCBDBDC36,
+			org.plos.namedentity.persist.db.namedentities.Sequences.SYSTEM_SEQUENCE_B000A03B_B638_4A41_82A3_DBB8A082AE49);
 	}
 
 	@Override
