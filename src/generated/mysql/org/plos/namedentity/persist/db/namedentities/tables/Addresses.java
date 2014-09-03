@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Addresses extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.AddressesRecord> {
 
-	private static final long serialVersionUID = -195184424;
+	private static final long serialVersionUID = -1249194820;
 
 	/**
 	 * The singleton instance of <code>namedEntities.addresses</code>
@@ -44,22 +44,22 @@ public class Addresses extends org.jooq.impl.TableImpl<org.plos.namedentity.pers
 	/**
 	 * The column <code>namedEntities.addresses.addressLine1</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AddressesRecord, java.lang.String> ADDRESSLINE1 = createField("addressLine1", org.jooq.impl.SQLDataType.VARCHAR.length(128), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AddressesRecord, java.lang.String> ADDRESSLINE1 = createField("addressLine1", org.jooq.impl.SQLDataType.CLOB.length(65535), this, "");
 
 	/**
 	 * The column <code>namedEntities.addresses.addressLine2</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AddressesRecord, java.lang.String> ADDRESSLINE2 = createField("addressLine2", org.jooq.impl.SQLDataType.VARCHAR.length(128), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AddressesRecord, java.lang.String> ADDRESSLINE2 = createField("addressLine2", org.jooq.impl.SQLDataType.CLOB.length(65535), this, "");
 
 	/**
 	 * The column <code>namedEntities.addresses.addressLine3</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AddressesRecord, java.lang.String> ADDRESSLINE3 = createField("addressLine3", org.jooq.impl.SQLDataType.VARCHAR.length(128), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AddressesRecord, java.lang.String> ADDRESSLINE3 = createField("addressLine3", org.jooq.impl.SQLDataType.CLOB.length(65535), this, "");
 
 	/**
 	 * The column <code>namedEntities.addresses.city</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AddressesRecord, java.lang.String> CITY = createField("city", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AddressesRecord, java.lang.String> CITY = createField("city", org.jooq.impl.SQLDataType.CLOB.length(65535), this, "");
 
 	/**
 	 * The column <code>namedEntities.addresses.stateCodeTypeId</code>.
@@ -69,12 +69,12 @@ public class Addresses extends org.jooq.impl.TableImpl<org.plos.namedentity.pers
 	/**
 	 * The column <code>namedEntities.addresses.countryCodeTypeId</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AddressesRecord, java.lang.Integer> COUNTRYCODETYPEID = createField("countryCodeTypeId", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AddressesRecord, java.lang.Integer> COUNTRYCODETYPEID = createField("countryCodeTypeId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>namedEntities.addresses.postalCode</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AddressesRecord, java.lang.String> POSTALCODE = createField("postalCode", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AddressesRecord, java.lang.String> POSTALCODE = createField("postalCode", org.jooq.impl.SQLDataType.VARCHAR.length(16), this, "");
 
 	/**
 	 * The column <code>namedEntities.addresses.mainContactNamedEntityId</code>.
