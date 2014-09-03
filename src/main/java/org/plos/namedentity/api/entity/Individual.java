@@ -56,6 +56,25 @@ public class Individual extends Entity {
   private byte[]  photoimage;
   private String  url;
 
+  private Byte    isactive = 1;
+  private Byte    isvisible = 1;
+
+  public Byte getIsactive() {
+    return isactive;
+  }
+
+  public void setIsactive(Byte isactive) {
+    this.isactive = isactive;
+  }
+
+  public Byte getIsvisible() {
+    return isvisible;
+  }
+
+  public void setIsvisible(Byte isvisible) {
+    this.isvisible = isvisible;
+  }
+
   @Override
   public void validate() {
     if (url != null && !urlValidator.isValid(url))

@@ -11,45 +11,45 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CasRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.CasRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 2027976123;
+	private static final long serialVersionUID = 1282144251;
 
 	/**
-	 * Setter for <code>namedentities.cas.casid</code>.
+	 * Setter for <code>NAMEDENTITIES.CAS.CASID</code>.
 	 */
 	public void setCasid(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.cas.casid</code>.
+	 * Getter for <code>NAMEDENTITIES.CAS.CASID</code>.
 	 */
 	public java.lang.Integer getCasid() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.cas.namedentityid</code>.
+	 * Setter for <code>NAMEDENTITIES.CAS.NAMEDENTITYID</code>.
 	 */
 	public void setNamedentityid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.cas.namedentityid</code>.
+	 * Getter for <code>NAMEDENTITIES.CAS.NAMEDENTITYID</code>.
 	 */
 	public java.lang.Integer getNamedentityid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.cas.sourceapplicationtypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.CAS.SOURCEAPPLICATIONTYPEID</code>.
 	 */
 	public void setSourceapplicationtypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.cas.sourceapplicationtypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.CAS.SOURCEAPPLICATIONTYPEID</code>.
 	 */
 	public java.lang.Integer getSourceapplicationtypeid() {
 		return (java.lang.Integer) getValue(2);

@@ -24,6 +24,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
 import org.plos.namedentity.api.EntityNotFoundException;
+import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.persist.db.namedentities.tables.Addresses;
 import org.plos.namedentity.persist.db.namedentities.tables.Degrees;
@@ -43,7 +44,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import static org.jooq.impl.DSL.currentTimestamp;
 import static org.plos.namedentity.persist.db.namedentities.Tables.*;
 
-public final class NamedEntityDBServiceImpl implements NamedEntityDBService, NamedEntityQueries {
+public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
   @Autowired DSLContext context;
 
@@ -147,6 +148,30 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService, Nam
     }
 
     throw new UnsupportedOperationException("findByAttribute hasn't been implemented for all types");
+  }
+
+  @Override
+  public Integer findTypeClass(String description) {
+
+    //TODO - cache type classes and values ?
+
+    for (Typedescription typeClass : findAll(Typedescription.class)) {
+      if (typeClass.getDescription().equals(description)) {
+        return typeClass.getTypeid();
+      }
+    }
+    throw new NedValidationException("No type class found with description " + description);
+  }
+
+  @Override
+  public Integer findTypeValue(Integer typeClassId, String name) {
+    for (Globaltype typeValue : findAll(Globaltype.class)) {
+      if (typeClassId.equals(typeValue.getTypeid()) &&
+          typeValue.getShortdescription().equals(name)) {
+        return typeValue.getGlobaltypeid();
+      }
+    }
+    throw new NedValidationException("No type value found with short description =  " + name);
   }
 
   @Override

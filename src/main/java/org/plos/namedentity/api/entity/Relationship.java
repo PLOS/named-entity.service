@@ -38,34 +38,6 @@ public class Relationship extends Entity {
   private Integer   createdby;
   private Integer   lastmodifiedby;
 
-  public Relationship() {}
-
-  public Relationship(
-      Integer relationshipid,
-      Integer masternamedentityid,
-      Integer childnamedentityid,
-      Integer relationshiptypeid,
-      String relationshiptype,
-      Timestamp startdate,
-      Timestamp enddate,
-      Timestamp created,
-      Timestamp lastmodified,
-      Integer createdby,
-      Integer lastmodifiedby
-                     ) {
-    this.relationshipid      = relationshipid;
-    this.masternamedentityid = masternamedentityid;
-    this.childnamedentityid  = childnamedentityid;
-    this.relationshiptypeid  = relationshiptypeid;
-    this.relationshiptype    = relationshiptype;
-    this.startdate           = startdate;
-    this.enddate             = enddate;
-    this.created             = created;
-    this.lastmodified        = lastmodified;
-    this.createdby           = createdby;
-    this.lastmodifiedby      = lastmodifiedby;
-  }
-
   public java.lang.Integer getRelationshipid() {
     return this.relationshipid;
   }

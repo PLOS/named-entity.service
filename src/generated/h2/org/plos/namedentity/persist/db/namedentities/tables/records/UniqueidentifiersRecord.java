@@ -11,59 +11,59 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UniqueidentifiersRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord> implements org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -1014205016;
+	private static final long serialVersionUID = 424026024;
 
 	/**
-	 * Setter for <code>namedentities.uniqueidentifiers.uniqueidentifiersid</code>.
+	 * Setter for <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.UNIQUEIDENTIFIERSID</code>.
 	 */
 	public void setUniqueidentifiersid(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.uniqueidentifiers.uniqueidentifiersid</code>.
+	 * Getter for <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.UNIQUEIDENTIFIERSID</code>.
 	 */
 	public java.lang.Integer getUniqueidentifiersid() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.uniqueidentifiers.namedentityid</code>.
+	 * Setter for <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.NAMEDENTITYID</code>.
 	 */
 	public void setNamedentityid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.uniqueidentifiers.namedentityid</code>.
+	 * Getter for <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.NAMEDENTITYID</code>.
 	 */
 	public java.lang.Integer getNamedentityid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.uniqueidentifiers.uniqueidentifiertypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.UNIQUEIDENTIFIERTYPEID</code>.
 	 */
 	public void setUniqueidentifiertypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.uniqueidentifiers.uniqueidentifiertypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.UNIQUEIDENTIFIERTYPEID</code>.
 	 */
 	public java.lang.Integer getUniqueidentifiertypeid() {
 		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>namedentities.uniqueidentifiers.uniqueidentifier</code>.
+	 * Setter for <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.UNIQUEIDENTIFIER</code>.
 	 */
 	public void setUniqueidentifier(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.uniqueidentifiers.uniqueidentifier</code>.
+	 * Getter for <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.UNIQUEIDENTIFIER</code>.
 	 */
 	public java.lang.String getUniqueidentifier() {
 		return (java.lang.String) getValue(3);

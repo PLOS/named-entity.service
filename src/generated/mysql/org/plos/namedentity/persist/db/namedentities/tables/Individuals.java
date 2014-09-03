@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Individuals extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord> {
 
-	private static final long serialVersionUID = 1470718775;
+	private static final long serialVersionUID = 764879031;
 
 	/**
 	 * The singleton instance of <code>namedEntities.individuals</code>
@@ -34,22 +34,22 @@ public class Individuals extends org.jooq.impl.TableImpl<org.plos.namedentity.pe
 	/**
 	 * The column <code>namedEntities.individuals.firstName</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> FIRSTNAME = createField("firstName", org.jooq.impl.SQLDataType.VARCHAR.length(45), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> FIRSTNAME = createField("firstName", org.jooq.impl.SQLDataType.CLOB.length(65535).nullable(false), this, "");
 
 	/**
 	 * The column <code>namedEntities.individuals.middleName</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> MIDDLENAME = createField("middleName", org.jooq.impl.SQLDataType.VARCHAR.length(45), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> MIDDLENAME = createField("middleName", org.jooq.impl.SQLDataType.CLOB.length(65535), this, "");
 
 	/**
 	 * The column <code>namedEntities.individuals.lastName</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> LASTNAME = createField("lastName", org.jooq.impl.SQLDataType.VARCHAR.length(45), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> LASTNAME = createField("lastName", org.jooq.impl.SQLDataType.CLOB.length(65535).nullable(false), this, "");
 
 	/**
 	 * The column <code>namedEntities.individuals.nickName</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> NICKNAME = createField("nickName", org.jooq.impl.SQLDataType.VARCHAR.length(45), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> NICKNAME = createField("nickName", org.jooq.impl.SQLDataType.CLOB.length(65535), this, "");
 
 	/**
 	 * The column <code>namedEntities.individuals.namePrefixTypeId</code>.
@@ -64,7 +64,7 @@ public class Individuals extends org.jooq.impl.TableImpl<org.plos.namedentity.pe
 	/**
 	 * The column <code>namedEntities.individuals.displayName</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> DISPLAYNAME = createField("displayName", org.jooq.impl.SQLDataType.VARCHAR.length(45), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> DISPLAYNAME = createField("displayName", org.jooq.impl.SQLDataType.CLOB.length(65535).nullable(false), this, "");
 
 	/**
 	 * The column <code>namedEntities.individuals.preferredLanguageTypeId</code>.
@@ -79,22 +79,22 @@ public class Individuals extends org.jooq.impl.TableImpl<org.plos.namedentity.pe
 	/**
 	 * The column <code>namedEntities.individuals.photoImage</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, byte[]> PHOTOIMAGE = createField("photoImage", org.jooq.impl.SQLDataType.VARBINARY.length(256), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, byte[]> PHOTOIMAGE = createField("photoImage", org.jooq.impl.SQLDataType.VARBINARY.length(255), this, "");
 
 	/**
 	 * The column <code>namedEntities.individuals.url</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> URL = createField("url", org.jooq.impl.SQLDataType.VARCHAR.length(45), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> URL = createField("url", org.jooq.impl.SQLDataType.CLOB.length(65535), this, "");
 
 	/**
 	 * The column <code>namedEntities.individuals.isActive</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Byte> ISACTIVE = createField("isActive", org.jooq.impl.SQLDataType.TINYINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Byte> ISACTIVE = createField("isActive", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
 
 	/**
 	 * The column <code>namedEntities.individuals.isVisible</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Byte> ISVISIBLE = createField("isVisible", org.jooq.impl.SQLDataType.TINYINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Byte> ISVISIBLE = createField("isVisible", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
 
 	/**
 	 * Create a <code>namedEntities.individuals</code> table reference

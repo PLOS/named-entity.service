@@ -32,26 +32,6 @@ public class Audittrail extends Entity {
   private java.sql.Timestamp lastmodified;
   private java.lang.Integer  lastmodifiedby;
 
-  public Audittrail() {}
-
-  public Audittrail(
-      java.lang.Integer audittrailid,
-      java.lang.Integer sourcefieldid,
-      java.lang.Integer rownumber,
-      java.lang.String oldvalue,
-      java.lang.String newvalue,
-      java.sql.Timestamp lastmodified,
-      java.lang.Integer lastmodifiedby
-                   ) {
-    this.audittrailid   = audittrailid;
-    this.sourcefieldid  = sourcefieldid;
-    this.rownumber      = rownumber;
-    this.oldvalue       = oldvalue;
-    this.newvalue       = newvalue;
-    this.lastmodified   = lastmodified;
-    this.lastmodifiedby = lastmodifiedby;
-  }
-
   public java.lang.Integer getAudittrailid() {
     return this.audittrailid;
   }

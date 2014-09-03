@@ -11,297 +11,297 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class IndexesRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord> implements org.jooq.Record21<java.lang.String, java.lang.String, java.lang.String, java.lang.Boolean, java.lang.String, java.lang.Short, java.lang.String, java.lang.Integer, java.lang.Boolean, java.lang.String, java.lang.Boolean, java.lang.Short, java.lang.String, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -1050408818;
+	private static final long serialVersionUID = 1238240206;
 
 	/**
-	 * Setter for <code>information_schema.indexes.table_catalog</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.INDEXES.TABLE_CATALOG</code>.
 	 */
 	public void setTableCatalog(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.indexes.table_catalog</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.INDEXES.TABLE_CATALOG</code>.
 	 */
 	public java.lang.String getTableCatalog() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>information_schema.indexes.table_schema</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.INDEXES.TABLE_SCHEMA</code>.
 	 */
 	public void setTableSchema(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.indexes.table_schema</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.INDEXES.TABLE_SCHEMA</code>.
 	 */
 	public java.lang.String getTableSchema() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>information_schema.indexes.table_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.INDEXES.TABLE_NAME</code>.
 	 */
 	public void setTableName(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.indexes.table_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.INDEXES.TABLE_NAME</code>.
 	 */
 	public java.lang.String getTableName() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>information_schema.indexes.non_unique</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.INDEXES.NON_UNIQUE</code>.
 	 */
 	public void setNonUnique(java.lang.Boolean value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.indexes.non_unique</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.INDEXES.NON_UNIQUE</code>.
 	 */
 	public java.lang.Boolean getNonUnique() {
 		return (java.lang.Boolean) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>information_schema.indexes.index_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.INDEXES.INDEX_NAME</code>.
 	 */
 	public void setIndexName(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.indexes.index_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.INDEXES.INDEX_NAME</code>.
 	 */
 	public java.lang.String getIndexName() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>information_schema.indexes.ordinal_position</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.INDEXES.ORDINAL_POSITION</code>.
 	 */
 	public void setOrdinalPosition(java.lang.Short value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.indexes.ordinal_position</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.INDEXES.ORDINAL_POSITION</code>.
 	 */
 	public java.lang.Short getOrdinalPosition() {
 		return (java.lang.Short) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>information_schema.indexes.column_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.INDEXES.COLUMN_NAME</code>.
 	 */
 	public void setColumnName(java.lang.String value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.indexes.column_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.INDEXES.COLUMN_NAME</code>.
 	 */
 	public java.lang.String getColumnName() {
 		return (java.lang.String) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>information_schema.indexes.cardinality</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.INDEXES.CARDINALITY</code>.
 	 */
 	public void setCardinality(java.lang.Integer value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.indexes.cardinality</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.INDEXES.CARDINALITY</code>.
 	 */
 	public java.lang.Integer getCardinality() {
 		return (java.lang.Integer) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>information_schema.indexes.primary_key</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.INDEXES.PRIMARY_KEY</code>.
 	 */
 	public void setPrimaryKey_(java.lang.Boolean value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.indexes.primary_key</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.INDEXES.PRIMARY_KEY</code>.
 	 */
 	public java.lang.Boolean getPrimaryKey_() {
 		return (java.lang.Boolean) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>information_schema.indexes.index_type_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.INDEXES.INDEX_TYPE_NAME</code>.
 	 */
 	public void setIndexTypeName(java.lang.String value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.indexes.index_type_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.INDEXES.INDEX_TYPE_NAME</code>.
 	 */
 	public java.lang.String getIndexTypeName() {
 		return (java.lang.String) getValue(9);
 	}
 
 	/**
-	 * Setter for <code>information_schema.indexes.is_generated</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.INDEXES.IS_GENERATED</code>.
 	 */
 	public void setIsGenerated(java.lang.Boolean value) {
 		setValue(10, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.indexes.is_generated</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.INDEXES.IS_GENERATED</code>.
 	 */
 	public java.lang.Boolean getIsGenerated() {
 		return (java.lang.Boolean) getValue(10);
 	}
 
 	/**
-	 * Setter for <code>information_schema.indexes.index_type</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.INDEXES.INDEX_TYPE</code>.
 	 */
 	public void setIndexType(java.lang.Short value) {
 		setValue(11, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.indexes.index_type</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.INDEXES.INDEX_TYPE</code>.
 	 */
 	public java.lang.Short getIndexType() {
 		return (java.lang.Short) getValue(11);
 	}
 
 	/**
-	 * Setter for <code>information_schema.indexes.asc_or_desc</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.INDEXES.ASC_OR_DESC</code>.
 	 */
 	public void setAscOrDesc(java.lang.String value) {
 		setValue(12, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.indexes.asc_or_desc</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.INDEXES.ASC_OR_DESC</code>.
 	 */
 	public java.lang.String getAscOrDesc() {
 		return (java.lang.String) getValue(12);
 	}
 
 	/**
-	 * Setter for <code>information_schema.indexes.pages</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.INDEXES.PAGES</code>.
 	 */
 	public void setPages(java.lang.Integer value) {
 		setValue(13, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.indexes.pages</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.INDEXES.PAGES</code>.
 	 */
 	public java.lang.Integer getPages() {
 		return (java.lang.Integer) getValue(13);
 	}
 
 	/**
-	 * Setter for <code>information_schema.indexes.filter_condition</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.INDEXES.FILTER_CONDITION</code>.
 	 */
 	public void setFilterCondition(java.lang.String value) {
 		setValue(14, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.indexes.filter_condition</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.INDEXES.FILTER_CONDITION</code>.
 	 */
 	public java.lang.String getFilterCondition() {
 		return (java.lang.String) getValue(14);
 	}
 
 	/**
-	 * Setter for <code>information_schema.indexes.remarks</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.INDEXES.REMARKS</code>.
 	 */
 	public void setRemarks(java.lang.String value) {
 		setValue(15, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.indexes.remarks</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.INDEXES.REMARKS</code>.
 	 */
 	public java.lang.String getRemarks() {
 		return (java.lang.String) getValue(15);
 	}
 
 	/**
-	 * Setter for <code>information_schema.indexes.sql</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.INDEXES.SQL</code>.
 	 */
 	public void setSql(java.lang.String value) {
 		setValue(16, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.indexes.sql</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.INDEXES.SQL</code>.
 	 */
 	public java.lang.String getSql() {
 		return (java.lang.String) getValue(16);
 	}
 
 	/**
-	 * Setter for <code>information_schema.indexes.id</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.INDEXES.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(17, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.indexes.id</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.INDEXES.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(17);
 	}
 
 	/**
-	 * Setter for <code>information_schema.indexes.sort_type</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.INDEXES.SORT_TYPE</code>.
 	 */
 	public void setSortType(java.lang.Integer value) {
 		setValue(18, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.indexes.sort_type</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.INDEXES.SORT_TYPE</code>.
 	 */
 	public java.lang.Integer getSortType() {
 		return (java.lang.Integer) getValue(18);
 	}
 
 	/**
-	 * Setter for <code>information_schema.indexes.constraint_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.INDEXES.CONSTRAINT_NAME</code>.
 	 */
 	public void setConstraintName(java.lang.String value) {
 		setValue(19, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.indexes.constraint_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.INDEXES.CONSTRAINT_NAME</code>.
 	 */
 	public java.lang.String getConstraintName() {
 		return (java.lang.String) getValue(19);
 	}
 
 	/**
-	 * Setter for <code>information_schema.indexes.index_class</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.INDEXES.INDEX_CLASS</code>.
 	 */
 	public void setIndexClass(java.lang.String value) {
 		setValue(20, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.indexes.index_class</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.INDEXES.INDEX_CLASS</code>.
 	 */
 	public java.lang.String getIndexClass() {
 		return (java.lang.String) getValue(20);

@@ -11,10 +11,10 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Emails extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord> {
 
-	private static final long serialVersionUID = -163528700;
+	private static final long serialVersionUID = -469553238;
 
 	/**
-	 * The singleton instance of <code>namedentities.emails</code>
+	 * The singleton instance of <code>NAMEDENTITIES.EMAILS</code>
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Emails EMAILS = new org.plos.namedentity.persist.db.namedentities.tables.Emails();
 
@@ -27,44 +27,44 @@ public class Emails extends org.jooq.impl.TableImpl<org.plos.namedentity.persist
 	}
 
 	/**
-	 * The column <code>namedentities.emails.emailid</code>.
+	 * The column <code>NAMEDENTITIES.EMAILS.EMAILID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Integer> EMAILID = createField("emailid", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Integer> EMAILID = createField("EMAILID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>namedentities.emails.namedentityid</code>.
+	 * The column <code>NAMEDENTITIES.EMAILS.NAMEDENTITYID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Integer> NAMEDENTITYID = createField("namedentityid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Integer> NAMEDENTITYID = createField("NAMEDENTITYID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.emails.emailtypeid</code>.
+	 * The column <code>NAMEDENTITIES.EMAILS.EMAILTYPEID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Integer> EMAILTYPEID = createField("emailtypeid", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Integer> EMAILTYPEID = createField("EMAILTYPEID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>namedentities.emails.emailaddress</code>.
+	 * The column <code>NAMEDENTITIES.EMAILS.EMAILADDRESS</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.String> EMAILADDRESS = createField("emailaddress", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.String> EMAILADDRESS = createField("EMAILADDRESS", org.jooq.impl.SQLDataType.CLOB.length(2147483647).nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.emails.isprimary</code>.
+	 * The column <code>NAMEDENTITIES.EMAILS.ISPRIMARY</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Byte> ISPRIMARY = createField("isprimary", org.jooq.impl.SQLDataType.TINYINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Byte> ISPRIMARY = createField("ISPRIMARY", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.emails.isactive</code>.
+	 * The column <code>NAMEDENTITIES.EMAILS.ISACTIVE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Byte> ISACTIVE = createField("isactive", org.jooq.impl.SQLDataType.TINYINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Byte> ISACTIVE = createField("ISACTIVE", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
 
 	/**
-	 * Create a <code>namedentities.emails</code> table reference
+	 * Create a <code>NAMEDENTITIES.EMAILS</code> table reference
 	 */
 	public Emails() {
-		this("emails", null);
+		this("EMAILS", null);
 	}
 
 	/**
-	 * Create an aliased <code>namedentities.emails</code> table reference
+	 * Create an aliased <code>NAMEDENTITIES.EMAILS</code> table reference
 	 */
 	public Emails(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.namedentities.tables.Emails.EMAILS);

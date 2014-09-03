@@ -11,87 +11,87 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class EmailsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Byte, java.lang.Byte> {
 
-	private static final long serialVersionUID = -1034381140;
+	private static final long serialVersionUID = -1002831828;
 
 	/**
-	 * Setter for <code>namedentities.emails.emailid</code>.
+	 * Setter for <code>NAMEDENTITIES.EMAILS.EMAILID</code>.
 	 */
 	public void setEmailid(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.emails.emailid</code>.
+	 * Getter for <code>NAMEDENTITIES.EMAILS.EMAILID</code>.
 	 */
 	public java.lang.Integer getEmailid() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.emails.namedentityid</code>.
+	 * Setter for <code>NAMEDENTITIES.EMAILS.NAMEDENTITYID</code>.
 	 */
 	public void setNamedentityid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.emails.namedentityid</code>.
+	 * Getter for <code>NAMEDENTITIES.EMAILS.NAMEDENTITYID</code>.
 	 */
 	public java.lang.Integer getNamedentityid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.emails.emailtypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.EMAILS.EMAILTYPEID</code>.
 	 */
 	public void setEmailtypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.emails.emailtypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.EMAILS.EMAILTYPEID</code>.
 	 */
 	public java.lang.Integer getEmailtypeid() {
 		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>namedentities.emails.emailaddress</code>.
+	 * Setter for <code>NAMEDENTITIES.EMAILS.EMAILADDRESS</code>.
 	 */
 	public void setEmailaddress(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.emails.emailaddress</code>.
+	 * Getter for <code>NAMEDENTITIES.EMAILS.EMAILADDRESS</code>.
 	 */
 	public java.lang.String getEmailaddress() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>namedentities.emails.isprimary</code>.
+	 * Setter for <code>NAMEDENTITIES.EMAILS.ISPRIMARY</code>.
 	 */
 	public void setIsprimary(java.lang.Byte value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.emails.isprimary</code>.
+	 * Getter for <code>NAMEDENTITIES.EMAILS.ISPRIMARY</code>.
 	 */
 	public java.lang.Byte getIsprimary() {
 		return (java.lang.Byte) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>namedentities.emails.isactive</code>.
+	 * Setter for <code>NAMEDENTITIES.EMAILS.ISACTIVE</code>.
 	 */
 	public void setIsactive(java.lang.Byte value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.emails.isactive</code>.
+	 * Getter for <code>NAMEDENTITIES.EMAILS.ISACTIVE</code>.
 	 */
 	public java.lang.Byte getIsactive() {
 		return (java.lang.Byte) getValue(5);

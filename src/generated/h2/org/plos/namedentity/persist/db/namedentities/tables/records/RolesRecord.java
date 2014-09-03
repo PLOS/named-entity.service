@@ -11,143 +11,143 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RolesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1593750836;
+	private static final long serialVersionUID = -2089399540;
 
 	/**
-	 * Setter for <code>namedentities.roles.roleid</code>.
+	 * Setter for <code>NAMEDENTITIES.ROLES.ROLEID</code>.
 	 */
 	public void setRoleid(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.roles.roleid</code>.
+	 * Getter for <code>NAMEDENTITIES.ROLES.ROLEID</code>.
 	 */
 	public java.lang.Integer getRoleid() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.roles.namedentityid</code>.
+	 * Setter for <code>NAMEDENTITIES.ROLES.NAMEDENTITYID</code>.
 	 */
 	public void setNamedentityid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.roles.namedentityid</code>.
+	 * Getter for <code>NAMEDENTITIES.ROLES.NAMEDENTITYID</code>.
 	 */
 	public java.lang.Integer getNamedentityid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.roles.sourceapplicationtypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.ROLES.SOURCEAPPLICATIONTYPEID</code>.
 	 */
 	public void setSourceapplicationtypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.roles.sourceapplicationtypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.ROLES.SOURCEAPPLICATIONTYPEID</code>.
 	 */
 	public java.lang.Integer getSourceapplicationtypeid() {
 		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>namedentities.roles.roletypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.ROLES.ROLETYPEID</code>.
 	 */
 	public void setRoletypeid(java.lang.Integer value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.roles.roletypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.ROLES.ROLETYPEID</code>.
 	 */
 	public java.lang.Integer getRoletypeid() {
 		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>namedentities.roles.startdate</code>.
+	 * Setter for <code>NAMEDENTITIES.ROLES.STARTDATE</code>.
 	 */
 	public void setStartdate(java.sql.Timestamp value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.roles.startdate</code>.
+	 * Getter for <code>NAMEDENTITIES.ROLES.STARTDATE</code>.
 	 */
 	public java.sql.Timestamp getStartdate() {
 		return (java.sql.Timestamp) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>namedentities.roles.enddate</code>.
+	 * Setter for <code>NAMEDENTITIES.ROLES.ENDDATE</code>.
 	 */
 	public void setEnddate(java.sql.Timestamp value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.roles.enddate</code>.
+	 * Getter for <code>NAMEDENTITIES.ROLES.ENDDATE</code>.
 	 */
 	public java.sql.Timestamp getEnddate() {
 		return (java.sql.Timestamp) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>namedentities.roles.created</code>.
+	 * Setter for <code>NAMEDENTITIES.ROLES.CREATED</code>.
 	 */
 	public void setCreated(java.sql.Timestamp value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.roles.created</code>.
+	 * Getter for <code>NAMEDENTITIES.ROLES.CREATED</code>.
 	 */
 	public java.sql.Timestamp getCreated() {
 		return (java.sql.Timestamp) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>namedentities.roles.lastmodified</code>.
+	 * Setter for <code>NAMEDENTITIES.ROLES.LASTMODIFIED</code>.
 	 */
 	public void setLastmodified(java.sql.Timestamp value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.roles.lastmodified</code>.
+	 * Getter for <code>NAMEDENTITIES.ROLES.LASTMODIFIED</code>.
 	 */
 	public java.sql.Timestamp getLastmodified() {
 		return (java.sql.Timestamp) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>namedentities.roles.createdby</code>.
+	 * Setter for <code>NAMEDENTITIES.ROLES.CREATEDBY</code>.
 	 */
 	public void setCreatedby(java.lang.Integer value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.roles.createdby</code>.
+	 * Getter for <code>NAMEDENTITIES.ROLES.CREATEDBY</code>.
 	 */
 	public java.lang.Integer getCreatedby() {
 		return (java.lang.Integer) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>namedentities.roles.lastmodifiedby</code>.
+	 * Setter for <code>NAMEDENTITIES.ROLES.LASTMODIFIEDBY</code>.
 	 */
 	public void setLastmodifiedby(java.lang.Integer value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.roles.lastmodifiedby</code>.
+	 * Getter for <code>NAMEDENTITIES.ROLES.LASTMODIFIEDBY</code>.
 	 */
 	public java.lang.Integer getLastmodifiedby() {
 		return (java.lang.Integer) getValue(9);

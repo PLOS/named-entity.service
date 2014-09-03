@@ -11,10 +11,10 @@ package org.plos.namedentity.persist.db.public_;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 1903529510;
+	private static final long serialVersionUID = 1705774630;
 
 	/**
-	 * The singleton instance of <code>public</code>
+	 * The singleton instance of <code>PUBLIC</code>
 	 */
 	public static final Public PUBLIC = new Public();
 
@@ -22,6 +22,6 @@ public class Public extends org.jooq.impl.SchemaImpl {
 	 * No further instances allowed
 	 */
 	private Public() {
-		super("public");
+		super("PUBLIC");
 	}
 }

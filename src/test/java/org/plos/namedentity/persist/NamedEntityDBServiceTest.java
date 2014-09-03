@@ -27,6 +27,7 @@ import org.plos.namedentity.persist.db.namedentities.tables.Globaltypes;
 import org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -34,6 +35,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -109,6 +111,26 @@ public class NamedEntityDBServiceTest {
   }
 
   @Test
+  public void testNonNullDbConstraint() throws Exception {
+
+    Integer emailTypeClassId = nedDBSvc.findTypeClass("Email Address Types");
+
+    // CREATE Work Email
+
+    Email workEmail = new Email();
+    workEmail.setNamedentityid(1);
+    workEmail.setEmailtypeid(nedDBSvc.findTypeValue(emailTypeClassId, "Work"));
+
+    try {
+      Integer pkid = nedDBSvc.create( workEmail );
+      fail("entity created " + pkid);
+    } catch (DataIntegrityViolationException expected) {
+      // this should happen because emailAddress is required
+    }
+
+  }
+
+  @Test
   public void testFindAllOnEmptyTable() {
     List<Journal> journals = nedDBSvc.findAll(Journal.class);
     assertNotNull(journals);
@@ -119,7 +141,11 @@ public class NamedEntityDBServiceTest {
   public void testTypedescriptionCRUD() {
 
     // CREATE
-    Integer newTypeClassId = nedDBSvc.create( new Typedescription(null, "New Type Class", "Yada yada") );
+    Typedescription typedescription = new Typedescription();
+    typedescription.setDescription("New Type Class");
+    typedescription.setHowused("Yada yada");
+
+    Integer newTypeClassId = nedDBSvc.create( typedescription );
     assertNotNull(newTypeClassId);
 
     // UPDATE description.
@@ -164,9 +190,11 @@ public class NamedEntityDBServiceTest {
   public void testGlobaltypesCRUD() {
 
     Globaltype newGlobaltype = new Globaltype();
-    newGlobaltype.setTypeid( findTypeClassStartWith("Named Party") );
+    newGlobaltype.setTypeid( nedDBSvc.findTypeClass("Named Party Types") );
     newGlobaltype.setShortdescription("Group XYZ");
     newGlobaltype.setTypecode("GRPX");
+    newGlobaltype.setLastmodified(new Timestamp(new Date().getTime()));
+    newGlobaltype.setCreated(new Timestamp(new Date().getTime()));
 
     assertNull(newGlobaltype.getGlobaltypeid());
     assertNotNull(newGlobaltype.getTypeid());
@@ -212,19 +240,19 @@ public class NamedEntityDBServiceTest {
   @Test
   public void testEmailsCRUD() {
 
-    Integer emailTypeClassId = findTypeClassStartWith("Email Address Types");
+    Integer emailTypeClassId = nedDBSvc.findTypeClass("Email Address Types");
 
     // CREATE Work Email
 
     Email workEmail = new Email();
     workEmail.setNamedentityid(1);
-    workEmail.setEmailtypeid(findTypeValueByName(emailTypeClassId, "Work"));
+    workEmail.setEmailtypeid(nedDBSvc.findTypeValue(emailTypeClassId, "Work"));
     workEmail.setEmailaddress("walter.work@foo.com");
 
     assertNull(workEmail.getEmailid());
     assertNotNull(workEmail.getNamedentityid());
     assertNotNull(workEmail.getEmailtypeid());
-    assertEquals(Byte.valueOf((byte)1), workEmail.getIsprimary());
+    assertEquals(Byte.valueOf((byte)0), workEmail.getIsprimary());
     assertEquals(Byte.valueOf((byte)1), workEmail.getIsactive());
 
     Integer workEmailId = nedDBSvc.create( workEmail );
@@ -246,13 +274,13 @@ public class NamedEntityDBServiceTest {
 
     Email homeEmail = new Email();
     homeEmail.setNamedentityid(1);
-    homeEmail.setEmailtypeid(findTypeValueByName(emailTypeClassId, "Personal"));
+    homeEmail.setEmailtypeid(nedDBSvc.findTypeValue(emailTypeClassId, "Personal"));
     homeEmail.setEmailaddress("walter.home@foo.com");
 
     assertNull(homeEmail.getEmailid());
     assertNotNull(homeEmail.getNamedentityid());
     assertNotNull(homeEmail.getEmailtypeid());
-    assertEquals(Byte.valueOf((byte)1), homeEmail.getIsprimary());
+    assertEquals(Byte.valueOf((byte)0), homeEmail.getIsprimary());
     assertEquals(Byte.valueOf((byte)1), homeEmail.getIsactive());
 
     Integer homeEmailId = nedDBSvc.create( homeEmail );
@@ -284,13 +312,11 @@ public class NamedEntityDBServiceTest {
 
     // FIND BY PRIMARY KEY
 
-    NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-
     for (Email email : allEmailsInDB) {
-      assertNotNull( nedQuery.findResolvedEntityByKey(email.getEmailid(), Email.class) );
+      assertNotNull( nedDBSvc.findResolvedEntityByKey(email.getEmailid(), Email.class) );
     }
     // FIND BY JOIN-QUERY 
-    List<Email> emails = nedQuery.findResolvedEntities(foundEmails2.get(0).getNamedentityid(), Email.class);
+    List<Email> emails = nedDBSvc.findResolvedEntities(foundEmails2.get(0).getNamedentityid(), Email.class);
 
 
     assertTrue( emails.size() > 0 );
@@ -315,21 +341,22 @@ public class NamedEntityDBServiceTest {
 
     Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
-    Integer prefixTypeClassId      = findTypeClassStartWith("Named Party Prefixes");
-    Integer suffixTypeClassId      = findTypeClassStartWith("Named Party Suffixes");
-    Integer langTypeClassId        = findTypeClassStartWith("Languages");
-    Integer commMethodsTypeClassId = findTypeClassStartWith("Communication Methods");
+    Integer prefixTypeClassId      = nedDBSvc.findTypeClass("Named Party Prefixes");
+    Integer suffixTypeClassId      = nedDBSvc.findTypeClass("Named Party Suffixes");
+    Integer langTypeClassId        = nedDBSvc.findTypeClass("Languages");
+    Integer commMethodsTypeClassId = nedDBSvc.findTypeClass("Communication Methods");
 
-    Integer prefixTypeId     = findTypeValueByName(prefixTypeClassId, "Mr.")        ; assertNotNull(prefixTypeId)           ; 
-    Integer suffixTypeId     = findTypeValueByName(suffixTypeClassId, "II")         ; assertNotNull(suffixTypeId)           ; 
-    Integer langTypeId       = findTypeValueByName(langTypeClassId, "Italian")      ; assertNotNull(langTypeClassId)        ; 
-    Integer commMethodTypeId = findTypeValueByName(commMethodsTypeClassId, "Email") ; assertNotNull(commMethodsTypeClassId) ; 
+    Integer prefixTypeId     = nedDBSvc.findTypeValue(prefixTypeClassId, "Mr.")        ; assertNotNull(prefixTypeId)           ;
+    Integer suffixTypeId     = nedDBSvc.findTypeValue(suffixTypeClassId, "II")         ; assertNotNull(suffixTypeId)           ;
+    Integer langTypeId       = nedDBSvc.findTypeValue(langTypeClassId, "Italian")      ; assertNotNull(langTypeClassId)        ;
+    Integer commMethodTypeId = nedDBSvc.findTypeValue(commMethodsTypeClassId, "Email") ; assertNotNull(commMethodsTypeClassId) ;
 
     Individual individual = new Individual();
     individual.setNamedentityid(nedId);
     individual.setFirstname("firstname");
     individual.setMiddlename("middlename");
     individual.setLastname("lastname");
+    individual.setDisplayname("displayname");
     individual.setNameprefixtypeid(prefixTypeId);
     individual.setNamesuffixtypeid(suffixTypeId);
     individual.setPreferredlanguagetypeid(langTypeId);
@@ -355,8 +382,7 @@ public class NamedEntityDBServiceTest {
 
     // FIND BY JOIN-QUERY 
 
-    NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    Individual entity = nedQuery.findResolvedEntity(individualId, Individual.class);
+    Individual entity = nedDBSvc.findResolvedEntity(individualId, Individual.class);
     assertNotNull( entity );
     assertEquals("firstname", entity.getFirstname());
     assertEquals("Mr.", entity.getNameprefix());
@@ -380,7 +406,7 @@ public class NamedEntityDBServiceTest {
 
     Integer nedId = nedDBSvc.newNamedEntityId("Organization");
 
-    Integer organizationTypeId = findTypeValueByName(findTypeClassStartWith("Organization Types"), "University");
+    Integer organizationTypeId = nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Organization Types"), "University");
 
     Organization organization = new Organization();
     organization.setNamedentityid(nedId);
@@ -410,9 +436,7 @@ public class NamedEntityDBServiceTest {
 
     // FIND entity with
 
-    NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-
-    Organization entity = nedQuery.findResolvedEntity(organizationId, Organization.class);
+    Organization entity = nedDBSvc.findResolvedEntity(organizationId, Organization.class);
     assertNotNull( entity );
 
     entity.setOrganizationtypeid(organizationTypeId);
@@ -431,13 +455,13 @@ public class NamedEntityDBServiceTest {
 
     // CREATE (Mobile Phone)
 
-    Integer phoneTypeClassId       = findTypeClassStartWith("Telephone Number Types");
-    Integer countryCodeTypeClassId = findTypeClassStartWith("Country Codes for Phone Numbers");
+    Integer phoneTypeClassId       = nedDBSvc.findTypeClass("Telephone Number Types");
+    Integer countryCodeTypeClassId = nedDBSvc.findTypeClass("Country Codes for Phone Numbers");
 
-    Integer officePhoneTypeId = findTypeValueByName(phoneTypeClassId, "Office") ; assertNotNull(officePhoneTypeId); 
-    Integer mobilePhoneTypeId = findTypeValueByName(phoneTypeClassId, "Mobile") ; assertNotNull(mobilePhoneTypeId); 
+    Integer officePhoneTypeId = nedDBSvc.findTypeValue(phoneTypeClassId, "Office") ; assertNotNull(officePhoneTypeId);
+    Integer mobilePhoneTypeId = nedDBSvc.findTypeValue(phoneTypeClassId, "Mobile") ; assertNotNull(mobilePhoneTypeId);
 
-    Integer usaCountryCodeTypeId = findTypeValueByName(countryCodeTypeClassId, "01");
+    Integer usaCountryCodeTypeId = nedDBSvc.findTypeValue(countryCodeTypeClassId, "01");
     assertNotNull(usaCountryCodeTypeId); 
 
     Phonenumber mobilePhone = new Phonenumber();
@@ -445,11 +469,11 @@ public class NamedEntityDBServiceTest {
     mobilePhone.setPhonenumbertypeid(mobilePhoneTypeId);
     mobilePhone.setCountrycodetypeid(usaCountryCodeTypeId);
     mobilePhone.setPhonenumber("650-123-4567");
+    mobilePhone.setIsprimary(true);
 
     assertNull(mobilePhone.getPhonenumberid());
     assertNotNull(mobilePhone.getNamedentityid());
     assertTrue(mobilePhone.getIsprimary());
-    assertTrue(mobilePhone.getIsactive());
 
     Integer mobilePhoneId = nedDBSvc.create( mobilePhone );
     assertNotNull(mobilePhoneId);
@@ -472,10 +496,10 @@ public class NamedEntityDBServiceTest {
     officePhone.setPhonenumbertypeid(officePhoneTypeId);
     officePhone.setCountrycodetypeid(usaCountryCodeTypeId);
     officePhone.setPhonenumber("650-222-9876");
+    officePhone.setIsprimary(false);
 
     assertNull(officePhone.getPhonenumberid());
     assertNotNull(officePhone.getNamedentityid());
-    assertTrue(officePhone.getIsprimary());
     assertTrue(officePhone.getIsactive());
 
     Integer officePhoneId = nedDBSvc.create( officePhone );
@@ -501,8 +525,7 @@ public class NamedEntityDBServiceTest {
 
     // FIND BY JOIN-QUERY 
 
-    NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<Phonenumber> phonenumbers = nedQuery.findResolvedEntities(foundPhones.get(0).getNamedentityid(), Phonenumber.class);
+    List<Phonenumber> phonenumbers = nedDBSvc.findResolvedEntities(foundPhones.get(0).getNamedentityid(), Phonenumber.class);
     assertTrue( phonenumbers.size() > 0 );
 
     // DELETE
@@ -521,13 +544,13 @@ public class NamedEntityDBServiceTest {
 
     // CREATE
 
-    Integer addressTypeClassId   = findTypeClassStartWith("Physical Address Types");
-    Integer countryTypeClassId   = findTypeClassStartWith("Country Types");
-    Integer stateCodeTypeClassId = findTypeClassStartWith("State and Province Codes");
+    Integer addressTypeClassId   = nedDBSvc.findTypeClass("Physical Address Types");
+    Integer countryTypeClassId   = nedDBSvc.findTypeClass("Country Types");
+    Integer stateCodeTypeClassId = nedDBSvc.findTypeClass("State and Province Codes");
 
-    Integer officeAddressTypeId = findTypeValueByName(addressTypeClassId, "Office")       ; assertNotNull(officeAddressTypeId); 
-    Integer countryTypeId       = findTypeValueByName(countryTypeClassId, "United States"); assertNotNull(countryTypeId)      ; 
-    Integer stateCodeTypeId     = findTypeValueByName(stateCodeTypeClassId, "CA")         ; assertNotNull(stateCodeTypeId)    ; 
+    Integer officeAddressTypeId = nedDBSvc.findTypeValue(addressTypeClassId, "Office")       ; assertNotNull(officeAddressTypeId);
+    Integer countryTypeId       = nedDBSvc.findTypeValue(countryTypeClassId, "United States"); assertNotNull(countryTypeId)      ;
+    Integer stateCodeTypeId     = nedDBSvc.findTypeValue(stateCodeTypeClassId, "CA")         ; assertNotNull(stateCodeTypeId)    ;
 
     Address address = new Address();
     address.setNamedentityid(1);
@@ -539,6 +562,7 @@ public class NamedEntityDBServiceTest {
     address.setStatecodetypeid(stateCodeTypeId);
     address.setCountrycodetypeid(countryTypeId);
     address.setPostalcode("94501");
+    address.setIsprimary((byte)1);
 
     assertNull(address.getAddressid());
     assertNotNull(address.getNamedentityid());
@@ -566,8 +590,7 @@ public class NamedEntityDBServiceTest {
 
     // FIND BY JOIN-QUERY 
 
-    NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<Address> addresses = nedQuery.findResolvedEntities(savedAddress.getNamedentityid(), Address.class);
+    List<Address> addresses = nedDBSvc.findResolvedEntities(savedAddress.getNamedentityid(), Address.class);
     assertTrue( addresses.size() > 0 );
             
     // DELETE
@@ -583,17 +606,19 @@ public class NamedEntityDBServiceTest {
 
     // CREATE
 
-    Integer srcAppTypeClassId = findTypeClassStartWith("Source Applications");
-    Integer roleTypeClassId   = findTypeClassStartWith("Roles");
+    Integer srcAppTypeClassId = nedDBSvc.findTypeClass("Source Applications");
+    Integer roleTypeClassId   = nedDBSvc.findTypeClass("Roles");
 
-    Integer srcAppTypeId = findTypeValueByName(srcAppTypeClassId, "Editorial Manager"); assertNotNull(srcAppTypeId); 
-    Integer roleTypeId   = findTypeValueByName(roleTypeClassId, "Author")             ; assertNotNull(roleTypeId)  ; 
+    Integer srcAppTypeId = nedDBSvc.findTypeValue(srcAppTypeClassId, "Editorial Manager"); assertNotNull(srcAppTypeId);
+    Integer roleTypeId   = nedDBSvc.findTypeValue(roleTypeClassId, "Author")             ; assertNotNull(roleTypeId)  ;
 
     Role authorRole = new Role();
     authorRole.setNamedentityid(1);
     authorRole.setSourceapplicationtypeid(srcAppTypeId);
     authorRole.setRoletypeid(roleTypeId);
     authorRole.setStartdate(new Timestamp(new Date().getTime()));
+    authorRole.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    authorRole.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
 
     assertNull(authorRole.getRoleid());
     assertNotNull(authorRole.getNamedentityid());
@@ -619,8 +644,7 @@ public class NamedEntityDBServiceTest {
 
     // FIND BY JOIN-QUERY 
 
-    NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<Role> roles = nedQuery.findResolvedEntities(savedRole.getNamedentityid(), Role.class);
+    List<Role> roles = nedDBSvc.findResolvedEntities(savedRole.getNamedentityid(), Role.class);
     Role role = roles.get(0);
     assertEquals("Author", role.getRoletype());
               
@@ -638,11 +662,13 @@ public class NamedEntityDBServiceTest {
 
     // FIND Individuals with an ORCID id. There should be none. 
 
-    NamedEntityQueries nedQuery = (NamedEntityQueries) nedDBSvc;
-    List<Individual> peopleWithOrcidId = nedQuery.findResolvedEntityByUid("ORCID", ORCID_ID, Individual.class);
+    List<Individual> peopleWithOrcidId = nedDBSvc.findResolvedEntityByUid("ORCID", ORCID_ID, Individual.class);
     assertEquals(0, peopleWithOrcidId.size());
 
     // Create two individuals with the same Orcid#
+
+    Integer uidId = nedDBSvc.findTypeClass("Unique Identifier Types");
+    //((NamedEntityQueries) nedDBSvc).findResolvedEntityByKey()
   
     for (int i = 1; i <= 2; i++) {
 
@@ -650,11 +676,13 @@ public class NamedEntityDBServiceTest {
       individual.setFirstname("firstname");
       individual.setMiddlename("middlename");
       individual.setLastname("lastname");
+      individual.setDisplayname("displayname");
       Integer individualId = nedDBSvc.create( individual );
       assertNotNull(individualId);
 
       Uniqueidentifier uidEntity1 = new Uniqueidentifier();
       uidEntity1.setNamedentityid(individualId);
+      uidEntity1.setUniqueidentifiertypeid(uidId);
       uidEntity1.setUniqueidentifier(ORCID_ID);
 
       assertNull(uidEntity1.getUniqueidentifiersid());
@@ -664,7 +692,7 @@ public class NamedEntityDBServiceTest {
       assertNotNull(uidId1);
 
       // FIND By UID (ORCID) #2
-      assertEquals(i, nedQuery.findResolvedEntityByUid("ORCID", ORCID_ID, Individual.class).size());
+      assertEquals(i, nedDBSvc.findResolvedEntityByUid("ORCID", ORCID_ID, Individual.class).size());
 
       // UPDATE
 
@@ -684,7 +712,7 @@ public class NamedEntityDBServiceTest {
 
       // FIND BY JOIN-QUERY 
 
-      List<Uniqueidentifier> uids = nedQuery.findResolvedEntities(savedUid.getNamedentityid(), Uniqueidentifier.class);
+      List<Uniqueidentifier> uids = nedDBSvc.findResolvedEntities(savedUid.getNamedentityid(), Uniqueidentifier.class);
       Uniqueidentifier uid = uids.get(0);
       assertEquals(ORCID_ID, uid.getUniqueidentifier());
     }
@@ -701,23 +729,4 @@ public class NamedEntityDBServiceTest {
     }
   }
 
-  private Integer findTypeClassStartWith(String prefix) {
-    for(Typedescription typeClass : nedDBSvc.findAll(Typedescription.class)) {
-      if (typeClass.getDescription().startsWith(prefix)) {
-        return typeClass.getTypeid();
-      }
-    }
-    throw new RuntimeException("No type class found which begins with " + prefix);
-  }
-
-  private Integer findTypeValueByName(Integer typeClassId, String name) {
-    for(Globaltype typeValue : nedDBSvc.findAll(Globaltype.class)) {
-      if (typeClassId.equals(typeValue.getTypeid()) &&
-          typeValue.getShortdescription().equals(name))
-      {
-        return typeValue.getGlobaltypeid();
-      }
-    }
-    throw new RuntimeException("No type value found with short description =  " + name);
-  }
 }

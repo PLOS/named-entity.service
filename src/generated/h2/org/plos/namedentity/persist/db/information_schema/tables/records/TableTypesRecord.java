@@ -11,17 +11,17 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TableTypesRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.TableTypesRecord> implements org.jooq.Record1<java.lang.String> {
 
-	private static final long serialVersionUID = -772499676;
+	private static final long serialVersionUID = -518963484;
 
 	/**
-	 * Setter for <code>information_schema.table_types.type</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TABLE_TYPES.TYPE</code>.
 	 */
 	public void setType(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.table_types.type</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TABLE_TYPES.TYPE</code>.
 	 */
 	public java.lang.String getType() {
 		return (java.lang.String) getValue(0);

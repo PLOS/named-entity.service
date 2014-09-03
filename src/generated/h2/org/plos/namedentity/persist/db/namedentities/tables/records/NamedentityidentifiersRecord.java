@@ -11,87 +11,87 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class NamedentityidentifiersRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.NamedentityidentifiersRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -708072423;
+	private static final long serialVersionUID = -1020595239;
 
 	/**
-	 * Setter for <code>namedentities.namedentityidentifiers.namedentityid</code>.
+	 * Setter for <code>NAMEDENTITIES.NAMEDENTITYIDENTIFIERS.NAMEDENTITYID</code>.
 	 */
 	public void setNamedentityid(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.namedentityidentifiers.namedentityid</code>.
+	 * Getter for <code>NAMEDENTITIES.NAMEDENTITYIDENTIFIERS.NAMEDENTITYID</code>.
 	 */
 	public java.lang.Integer getNamedentityid() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.namedentityidentifiers.typeid</code>.
+	 * Setter for <code>NAMEDENTITIES.NAMEDENTITYIDENTIFIERS.TYPEID</code>.
 	 */
 	public void setTypeid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.namedentityidentifiers.typeid</code>.
+	 * Getter for <code>NAMEDENTITIES.NAMEDENTITYIDENTIFIERS.TYPEID</code>.
 	 */
 	public java.lang.Integer getTypeid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.namedentityidentifiers.created</code>.
+	 * Setter for <code>NAMEDENTITIES.NAMEDENTITYIDENTIFIERS.CREATED</code>.
 	 */
 	public void setCreated(java.sql.Timestamp value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.namedentityidentifiers.created</code>.
+	 * Getter for <code>NAMEDENTITIES.NAMEDENTITYIDENTIFIERS.CREATED</code>.
 	 */
 	public java.sql.Timestamp getCreated() {
 		return (java.sql.Timestamp) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>namedentities.namedentityidentifiers.lastmodified</code>.
+	 * Setter for <code>NAMEDENTITIES.NAMEDENTITYIDENTIFIERS.LASTMODIFIED</code>.
 	 */
 	public void setLastmodified(java.sql.Timestamp value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.namedentityidentifiers.lastmodified</code>.
+	 * Getter for <code>NAMEDENTITIES.NAMEDENTITYIDENTIFIERS.LASTMODIFIED</code>.
 	 */
 	public java.sql.Timestamp getLastmodified() {
 		return (java.sql.Timestamp) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>namedentities.namedentityidentifiers.createdby</code>.
+	 * Setter for <code>NAMEDENTITIES.NAMEDENTITYIDENTIFIERS.CREATEDBY</code>.
 	 */
 	public void setCreatedby(java.lang.Integer value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.namedentityidentifiers.createdby</code>.
+	 * Getter for <code>NAMEDENTITIES.NAMEDENTITYIDENTIFIERS.CREATEDBY</code>.
 	 */
 	public java.lang.Integer getCreatedby() {
 		return (java.lang.Integer) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>namedentities.namedentityidentifiers.lastmodifiedby</code>.
+	 * Setter for <code>NAMEDENTITIES.NAMEDENTITYIDENTIFIERS.LASTMODIFIEDBY</code>.
 	 */
 	public void setLastmodifiedby(java.lang.Integer value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.namedentityidentifiers.lastmodifiedby</code>.
+	 * Getter for <code>NAMEDENTITIES.NAMEDENTITYIDENTIFIERS.LASTMODIFIEDBY</code>.
 	 */
 	public java.lang.Integer getLastmodifiedby() {
 		return (java.lang.Integer) getValue(5);

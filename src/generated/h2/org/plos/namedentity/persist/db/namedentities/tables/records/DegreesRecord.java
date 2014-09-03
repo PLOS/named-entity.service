@@ -11,45 +11,45 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DegreesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 18070017;
+	private static final long serialVersionUID = 1952830401;
 
 	/**
-	 * Setter for <code>namedentities.degrees.degreeid</code>.
+	 * Setter for <code>NAMEDENTITIES.DEGREES.DEGREEID</code>.
 	 */
 	public void setDegreeid(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.degrees.degreeid</code>.
+	 * Getter for <code>NAMEDENTITIES.DEGREES.DEGREEID</code>.
 	 */
 	public java.lang.Integer getDegreeid() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.degrees.namedentityid</code>.
+	 * Setter for <code>NAMEDENTITIES.DEGREES.NAMEDENTITYID</code>.
 	 */
 	public void setNamedentityid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.degrees.namedentityid</code>.
+	 * Getter for <code>NAMEDENTITIES.DEGREES.NAMEDENTITYID</code>.
 	 */
 	public java.lang.Integer getNamedentityid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.degrees.degreetypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.DEGREES.DEGREETYPEID</code>.
 	 */
 	public void setDegreetypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.degrees.degreetypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.DEGREES.DEGREETYPEID</code>.
 	 */
 	public java.lang.Integer getDegreetypeid() {
 		return (java.lang.Integer) getValue(2);

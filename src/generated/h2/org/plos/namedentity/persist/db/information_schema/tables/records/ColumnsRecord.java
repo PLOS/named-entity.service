@@ -11,325 +11,325 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ColumnsRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.ColumnsRecord> {
 
-	private static final long serialVersionUID = -1632714885;
+	private static final long serialVersionUID = 2023815099;
 
 	/**
-	 * Setter for <code>information_schema.columns.table_catalog</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.TABLE_CATALOG</code>.
 	 */
 	public void setTableCatalog(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.table_catalog</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.TABLE_CATALOG</code>.
 	 */
 	public java.lang.String getTableCatalog() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>information_schema.columns.table_schema</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.TABLE_SCHEMA</code>.
 	 */
 	public void setTableSchema(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.table_schema</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.TABLE_SCHEMA</code>.
 	 */
 	public java.lang.String getTableSchema() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>information_schema.columns.table_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.TABLE_NAME</code>.
 	 */
 	public void setTableName(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.table_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.TABLE_NAME</code>.
 	 */
 	public java.lang.String getTableName() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>information_schema.columns.column_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.COLUMN_NAME</code>.
 	 */
 	public void setColumnName(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.column_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.COLUMN_NAME</code>.
 	 */
 	public java.lang.String getColumnName() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>information_schema.columns.ordinal_position</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.ORDINAL_POSITION</code>.
 	 */
 	public void setOrdinalPosition(java.lang.Integer value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.ordinal_position</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.ORDINAL_POSITION</code>.
 	 */
 	public java.lang.Integer getOrdinalPosition() {
 		return (java.lang.Integer) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>information_schema.columns.column_default</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.COLUMN_DEFAULT</code>.
 	 */
 	public void setColumnDefault(java.lang.String value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.column_default</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.COLUMN_DEFAULT</code>.
 	 */
 	public java.lang.String getColumnDefault() {
 		return (java.lang.String) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>information_schema.columns.is_nullable</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.IS_NULLABLE</code>.
 	 */
 	public void setIsNullable(java.lang.String value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.is_nullable</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.IS_NULLABLE</code>.
 	 */
 	public java.lang.String getIsNullable() {
 		return (java.lang.String) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>information_schema.columns.data_type</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.DATA_TYPE</code>.
 	 */
 	public void setDataType(java.lang.Integer value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.data_type</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.DATA_TYPE</code>.
 	 */
 	public java.lang.Integer getDataType() {
 		return (java.lang.Integer) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>information_schema.columns.character_maximum_length</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.CHARACTER_MAXIMUM_LENGTH</code>.
 	 */
 	public void setCharacterMaximumLength(java.lang.Integer value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.character_maximum_length</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.CHARACTER_MAXIMUM_LENGTH</code>.
 	 */
 	public java.lang.Integer getCharacterMaximumLength() {
 		return (java.lang.Integer) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>information_schema.columns.character_octet_length</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.CHARACTER_OCTET_LENGTH</code>.
 	 */
 	public void setCharacterOctetLength(java.lang.Integer value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.character_octet_length</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.CHARACTER_OCTET_LENGTH</code>.
 	 */
 	public java.lang.Integer getCharacterOctetLength() {
 		return (java.lang.Integer) getValue(9);
 	}
 
 	/**
-	 * Setter for <code>information_schema.columns.numeric_precision</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.NUMERIC_PRECISION</code>.
 	 */
 	public void setNumericPrecision(java.lang.Integer value) {
 		setValue(10, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.numeric_precision</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.NUMERIC_PRECISION</code>.
 	 */
 	public java.lang.Integer getNumericPrecision() {
 		return (java.lang.Integer) getValue(10);
 	}
 
 	/**
-	 * Setter for <code>information_schema.columns.numeric_precision_radix</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.NUMERIC_PRECISION_RADIX</code>.
 	 */
 	public void setNumericPrecisionRadix(java.lang.Integer value) {
 		setValue(11, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.numeric_precision_radix</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.NUMERIC_PRECISION_RADIX</code>.
 	 */
 	public java.lang.Integer getNumericPrecisionRadix() {
 		return (java.lang.Integer) getValue(11);
 	}
 
 	/**
-	 * Setter for <code>information_schema.columns.numeric_scale</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.NUMERIC_SCALE</code>.
 	 */
 	public void setNumericScale(java.lang.Integer value) {
 		setValue(12, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.numeric_scale</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.NUMERIC_SCALE</code>.
 	 */
 	public java.lang.Integer getNumericScale() {
 		return (java.lang.Integer) getValue(12);
 	}
 
 	/**
-	 * Setter for <code>information_schema.columns.character_set_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.CHARACTER_SET_NAME</code>.
 	 */
 	public void setCharacterSetName(java.lang.String value) {
 		setValue(13, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.character_set_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.CHARACTER_SET_NAME</code>.
 	 */
 	public java.lang.String getCharacterSetName() {
 		return (java.lang.String) getValue(13);
 	}
 
 	/**
-	 * Setter for <code>information_schema.columns.collation_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.COLLATION_NAME</code>.
 	 */
 	public void setCollationName(java.lang.String value) {
 		setValue(14, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.collation_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.COLLATION_NAME</code>.
 	 */
 	public java.lang.String getCollationName() {
 		return (java.lang.String) getValue(14);
 	}
 
 	/**
-	 * Setter for <code>information_schema.columns.type_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.TYPE_NAME</code>.
 	 */
 	public void setTypeName(java.lang.String value) {
 		setValue(15, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.type_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.TYPE_NAME</code>.
 	 */
 	public java.lang.String getTypeName() {
 		return (java.lang.String) getValue(15);
 	}
 
 	/**
-	 * Setter for <code>information_schema.columns.nullable</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.NULLABLE</code>.
 	 */
 	public void setNullable(java.lang.Integer value) {
 		setValue(16, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.nullable</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.NULLABLE</code>.
 	 */
 	public java.lang.Integer getNullable() {
 		return (java.lang.Integer) getValue(16);
 	}
 
 	/**
-	 * Setter for <code>information_schema.columns.is_computed</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.IS_COMPUTED</code>.
 	 */
 	public void setIsComputed(java.lang.Boolean value) {
 		setValue(17, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.is_computed</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.IS_COMPUTED</code>.
 	 */
 	public java.lang.Boolean getIsComputed() {
 		return (java.lang.Boolean) getValue(17);
 	}
 
 	/**
-	 * Setter for <code>information_schema.columns.selectivity</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.SELECTIVITY</code>.
 	 */
 	public void setSelectivity(java.lang.Integer value) {
 		setValue(18, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.selectivity</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.SELECTIVITY</code>.
 	 */
 	public java.lang.Integer getSelectivity() {
 		return (java.lang.Integer) getValue(18);
 	}
 
 	/**
-	 * Setter for <code>information_schema.columns.check_constraint</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.CHECK_CONSTRAINT</code>.
 	 */
 	public void setCheckConstraint(java.lang.String value) {
 		setValue(19, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.check_constraint</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.CHECK_CONSTRAINT</code>.
 	 */
 	public java.lang.String getCheckConstraint() {
 		return (java.lang.String) getValue(19);
 	}
 
 	/**
-	 * Setter for <code>information_schema.columns.sequence_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.SEQUENCE_NAME</code>.
 	 */
 	public void setSequenceName(java.lang.String value) {
 		setValue(20, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.sequence_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.SEQUENCE_NAME</code>.
 	 */
 	public java.lang.String getSequenceName() {
 		return (java.lang.String) getValue(20);
 	}
 
 	/**
-	 * Setter for <code>information_schema.columns.remarks</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.REMARKS</code>.
 	 */
 	public void setRemarks(java.lang.String value) {
 		setValue(21, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.remarks</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.REMARKS</code>.
 	 */
 	public java.lang.String getRemarks() {
 		return (java.lang.String) getValue(21);
 	}
 
 	/**
-	 * Setter for <code>information_schema.columns.source_data_type</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.COLUMNS.SOURCE_DATA_TYPE</code>.
 	 */
 	public void setSourceDataType(java.lang.Short value) {
 		setValue(22, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.columns.source_data_type</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.COLUMNS.SOURCE_DATA_TYPE</code>.
 	 */
 	public java.lang.Short getSourceDataType() {
 		return (java.lang.Short) getValue(22);

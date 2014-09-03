@@ -11,115 +11,115 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PhonenumbersRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord> implements org.jooq.Record8<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.Byte, java.lang.Byte> {
 
-	private static final long serialVersionUID = -569442931;
+	private static final long serialVersionUID = 2146469197;
 
 	/**
-	 * Setter for <code>namedentities.phonenumbers.phonenumberid</code>.
+	 * Setter for <code>NAMEDENTITIES.PHONENUMBERS.PHONENUMBERID</code>.
 	 */
 	public void setPhonenumberid(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.phonenumbers.phonenumberid</code>.
+	 * Getter for <code>NAMEDENTITIES.PHONENUMBERS.PHONENUMBERID</code>.
 	 */
 	public java.lang.Integer getPhonenumberid() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.phonenumbers.namedentityid</code>.
+	 * Setter for <code>NAMEDENTITIES.PHONENUMBERS.NAMEDENTITYID</code>.
 	 */
 	public void setNamedentityid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.phonenumbers.namedentityid</code>.
+	 * Getter for <code>NAMEDENTITIES.PHONENUMBERS.NAMEDENTITYID</code>.
 	 */
 	public java.lang.Integer getNamedentityid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.phonenumbers.phonenumbertypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.PHONENUMBERS.PHONENUMBERTYPEID</code>.
 	 */
 	public void setPhonenumbertypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.phonenumbers.phonenumbertypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.PHONENUMBERS.PHONENUMBERTYPEID</code>.
 	 */
 	public java.lang.Integer getPhonenumbertypeid() {
 		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>namedentities.phonenumbers.countrycodetypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.PHONENUMBERS.COUNTRYCODETYPEID</code>.
 	 */
 	public void setCountrycodetypeid(java.lang.Integer value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.phonenumbers.countrycodetypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.PHONENUMBERS.COUNTRYCODETYPEID</code>.
 	 */
 	public java.lang.Integer getCountrycodetypeid() {
 		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>namedentities.phonenumbers.phonenumber</code>.
+	 * Setter for <code>NAMEDENTITIES.PHONENUMBERS.PHONENUMBER</code>.
 	 */
 	public void setPhonenumber(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.phonenumbers.phonenumber</code>.
+	 * Getter for <code>NAMEDENTITIES.PHONENUMBERS.PHONENUMBER</code>.
 	 */
 	public java.lang.String getPhonenumber() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>namedentities.phonenumbers.extension</code>.
+	 * Setter for <code>NAMEDENTITIES.PHONENUMBERS.EXTENSION</code>.
 	 */
 	public void setExtension(java.lang.String value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.phonenumbers.extension</code>.
+	 * Getter for <code>NAMEDENTITIES.PHONENUMBERS.EXTENSION</code>.
 	 */
 	public java.lang.String getExtension() {
 		return (java.lang.String) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>namedentities.phonenumbers.isprimary</code>.
+	 * Setter for <code>NAMEDENTITIES.PHONENUMBERS.ISPRIMARY</code>.
 	 */
 	public void setIsprimary(java.lang.Byte value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.phonenumbers.isprimary</code>.
+	 * Getter for <code>NAMEDENTITIES.PHONENUMBERS.ISPRIMARY</code>.
 	 */
 	public java.lang.Byte getIsprimary() {
 		return (java.lang.Byte) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>namedentities.phonenumbers.isactive</code>.
+	 * Setter for <code>NAMEDENTITIES.PHONENUMBERS.ISACTIVE</code>.
 	 */
 	public void setIsactive(java.lang.Byte value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.phonenumbers.isactive</code>.
+	 * Getter for <code>NAMEDENTITIES.PHONENUMBERS.ISACTIVE</code>.
 	 */
 	public java.lang.Byte getIsactive() {
 		return (java.lang.Byte) getValue(7);

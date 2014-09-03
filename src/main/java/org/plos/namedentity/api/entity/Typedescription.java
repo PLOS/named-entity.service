@@ -32,18 +32,6 @@ public class Typedescription extends Entity {
   private String  description;
   private String  howused;
 
-  public Typedescription() {}
-
-  public Typedescription(
-      Integer typeid,
-      String description,
-      String howused
-                        ) {
-    this.typeid      = typeid;
-    this.description = description;
-    this.howused     = howused;
-  }
-
   public Integer getTypeid() {
     return this.typeid;
   }

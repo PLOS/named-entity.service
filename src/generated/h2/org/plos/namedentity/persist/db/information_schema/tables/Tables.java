@@ -11,10 +11,10 @@ package org.plos.namedentity.persist.db.information_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord> {
 
-	private static final long serialVersionUID = 1749666877;
+	private static final long serialVersionUID = 1807560605;
 
 	/**
-	 * The singleton instance of <code>information_schema.tables</code>
+	 * The singleton instance of <code>INFORMATION_SCHEMA.TABLES</code>
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Tables TABLES = new org.plos.namedentity.persist.db.information_schema.tables.Tables();
 
@@ -27,74 +27,74 @@ public class Tables extends org.jooq.impl.TableImpl<org.plos.namedentity.persist
 	}
 
 	/**
-	 * The column <code>information_schema.tables.table_catalog</code>.
+	 * The column <code>INFORMATION_SCHEMA.TABLES.TABLE_CATALOG</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.String> TABLE_CATALOG = createField("table_catalog", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.String> TABLE_CATALOG = createField("TABLE_CATALOG", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.tables.table_schema</code>.
+	 * The column <code>INFORMATION_SCHEMA.TABLES.TABLE_SCHEMA</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.String> TABLE_SCHEMA = createField("table_schema", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.String> TABLE_SCHEMA = createField("TABLE_SCHEMA", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.tables.table_name</code>.
+	 * The column <code>INFORMATION_SCHEMA.TABLES.TABLE_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.String> TABLE_NAME = createField("table_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.String> TABLE_NAME = createField("TABLE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.tables.table_type</code>.
+	 * The column <code>INFORMATION_SCHEMA.TABLES.TABLE_TYPE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.String> TABLE_TYPE = createField("table_type", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.String> TABLE_TYPE = createField("TABLE_TYPE", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.tables.storage_type</code>.
+	 * The column <code>INFORMATION_SCHEMA.TABLES.STORAGE_TYPE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.String> STORAGE_TYPE = createField("storage_type", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.String> STORAGE_TYPE = createField("STORAGE_TYPE", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.tables.sql</code>.
+	 * The column <code>INFORMATION_SCHEMA.TABLES.SQL</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.String> SQL = createField("sql", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.String> SQL = createField("SQL", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.tables.remarks</code>.
+	 * The column <code>INFORMATION_SCHEMA.TABLES.REMARKS</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.String> REMARKS = createField("remarks", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.String> REMARKS = createField("REMARKS", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.tables.last_modification</code>.
+	 * The column <code>INFORMATION_SCHEMA.TABLES.LAST_MODIFICATION</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.Long> LAST_MODIFICATION = createField("last_modification", org.jooq.impl.SQLDataType.BIGINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.Long> LAST_MODIFICATION = createField("LAST_MODIFICATION", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
 	/**
-	 * The column <code>information_schema.tables.id</code>.
+	 * The column <code>INFORMATION_SCHEMA.TABLES.ID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>information_schema.tables.type_name</code>.
+	 * The column <code>INFORMATION_SCHEMA.TABLES.TYPE_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.String> TYPE_NAME = createField("type_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.String> TYPE_NAME = createField("TYPE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.tables.table_class</code>.
+	 * The column <code>INFORMATION_SCHEMA.TABLES.TABLE_CLASS</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.String> TABLE_CLASS = createField("table_class", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.String> TABLE_CLASS = createField("TABLE_CLASS", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.tables.row_count_estimate</code>.
+	 * The column <code>INFORMATION_SCHEMA.TABLES.ROW_COUNT_ESTIMATE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.Long> ROW_COUNT_ESTIMATE = createField("row_count_estimate", org.jooq.impl.SQLDataType.BIGINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablesRecord, java.lang.Long> ROW_COUNT_ESTIMATE = createField("ROW_COUNT_ESTIMATE", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
 	/**
-	 * Create a <code>information_schema.tables</code> table reference
+	 * Create a <code>INFORMATION_SCHEMA.TABLES</code> table reference
 	 */
 	public Tables() {
-		this("tables", null);
+		this("TABLES", null);
 	}
 
 	/**
-	 * Create an aliased <code>information_schema.tables</code> table reference
+	 * Create an aliased <code>INFORMATION_SCHEMA.TABLES</code> table reference
 	 */
 	public Tables(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.information_schema.tables.Tables.TABLES);

@@ -11,10 +11,10 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Typedescriptions extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.TypedescriptionsRecord> {
 
-	private static final long serialVersionUID = -617925161;
+	private static final long serialVersionUID = 1993379234;
 
 	/**
-	 * The singleton instance of <code>namedentities.typedescriptions</code>
+	 * The singleton instance of <code>NAMEDENTITIES.TYPEDESCRIPTIONS</code>
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions TYPEDESCRIPTIONS = new org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions();
 
@@ -27,29 +27,29 @@ public class Typedescriptions extends org.jooq.impl.TableImpl<org.plos.namedenti
 	}
 
 	/**
-	 * The column <code>namedentities.typedescriptions.typeid</code>.
+	 * The column <code>NAMEDENTITIES.TYPEDESCRIPTIONS.TYPEID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.TypedescriptionsRecord, java.lang.Integer> TYPEID = createField("typeid", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.TypedescriptionsRecord, java.lang.Integer> TYPEID = createField("TYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>namedentities.typedescriptions.description</code>.
+	 * The column <code>NAMEDENTITIES.TYPEDESCRIPTIONS.DESCRIPTION</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.TypedescriptionsRecord, java.lang.String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR.length(45), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.TypedescriptionsRecord, java.lang.String> DESCRIPTION = createField("DESCRIPTION", org.jooq.impl.SQLDataType.CLOB.length(2147483647).nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.typedescriptions.howused</code>.
+	 * The column <code>NAMEDENTITIES.TYPEDESCRIPTIONS.HOWUSED</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.TypedescriptionsRecord, java.lang.String> HOWUSED = createField("howused", org.jooq.impl.SQLDataType.VARCHAR.length(45), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.TypedescriptionsRecord, java.lang.String> HOWUSED = createField("HOWUSED", org.jooq.impl.SQLDataType.CLOB.length(2147483647), this, "");
 
 	/**
-	 * Create a <code>namedentities.typedescriptions</code> table reference
+	 * Create a <code>NAMEDENTITIES.TYPEDESCRIPTIONS</code> table reference
 	 */
 	public Typedescriptions() {
-		this("typedescriptions", null);
+		this("TYPEDESCRIPTIONS", null);
 	}
 
 	/**
-	 * Create an aliased <code>namedentities.typedescriptions</code> table reference
+	 * Create an aliased <code>NAMEDENTITIES.TYPEDESCRIPTIONS</code> table reference
 	 */
 	public Typedescriptions(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions.TYPEDESCRIPTIONS);

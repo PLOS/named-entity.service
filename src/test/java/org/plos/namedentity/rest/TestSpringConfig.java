@@ -289,7 +289,14 @@ public class TestSpringConfig {
   static private List<Uniqueidentifier> newUidEntities() {
     List<Uniqueidentifier> uids = new ArrayList<>();
     for (int i = 1; i <=2; i++) {
-      uids.add(new Uniqueidentifier(i, 1, null, "0000-0002-9430-319"+i, "ORCID"));
+
+      Uniqueidentifier uid = new Uniqueidentifier();
+      uid.setUniqueidentifiersid(i);
+      uid.setNamedentityid(1);
+      uid.setUniqueidentifier("0000-0002-9430-319"+i);
+      uid.setUniqueidentifiertype("ORCID");
+
+      uids.add(uid);
     }
     return uids;
   }
@@ -370,13 +377,23 @@ public class TestSpringConfig {
       .thenReturn(true)
         .thenThrow(RuntimeException.class);
 
+    Typedescription typedescription = new Typedescription();
+    typedescription.setTypeid(1);
+    typedescription.setDescription("New Type Description");
+    typedescription.setHowused("New Type Usage");
+
     when(mockCrudService.findById(eq(1), eq(Typedescription.class)))
-      .thenReturn(new Typedescription(1, "New Type Description", "New Type Usage"));
+      .thenReturn(typedescription);
 
     List<Typedescription> typeClassList = new ArrayList<>();
-    typeClassList.add(new Typedescription(1, "Type Description1", "Type Usage1"));
-    typeClassList.add(new Typedescription(2, "Type Description2", "Type Usage2"));
-    typeClassList.add(new Typedescription(3, "Type Description3", "Type Usage3"));
+
+    for (int i = 1; i <=3; i++) {
+      Typedescription td = new Typedescription();
+      td.setTypeid(i);
+      td.setDescription("Type Description" + i);
+      td.setHowused("Type Usage" + i);
+      typeClassList.add(td);
+    }
 
     when(mockCrudService.findAll(eq(Typedescription.class))).thenReturn(typeClassList);
 
@@ -406,8 +423,15 @@ public class TestSpringConfig {
 
     List<Globaltype> typeValuesForTypeClass = new ArrayList<>();
     for (int i = 1; i <=5; i++) {
-      typeValuesForTypeClass.add(new Globaltype(
-        i, 1, "shortdesc"+i, "longdesc"+i, "typ"+i, null, null, null, null));
+      Globaltype globaltype = new Globaltype();
+
+      globaltype.setGlobaltypeid(i);
+      globaltype.setTypeid(1);
+      globaltype.setShortdescription("shortdesc"+i);
+      globaltype.setLongdescription("longdesc"+i);
+      globaltype.setTypecode("typ"+i);
+
+      typeValuesForTypeClass.add(globaltype);
     }
 
     when(mockCrudService.findByAttribute(isA(Globaltype.class))).thenReturn(typeValuesForTypeClass);

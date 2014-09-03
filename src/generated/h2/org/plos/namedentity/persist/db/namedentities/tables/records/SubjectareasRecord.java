@@ -11,45 +11,45 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SubjectareasRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1310881691;
+	private static final long serialVersionUID = -2074015643;
 
 	/**
-	 * Setter for <code>namedentities.subjectareas.subjectareaid</code>.
+	 * Setter for <code>NAMEDENTITIES.SUBJECTAREAS.SUBJECTAREAID</code>.
 	 */
 	public void setSubjectareaid(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.subjectareas.subjectareaid</code>.
+	 * Getter for <code>NAMEDENTITIES.SUBJECTAREAS.SUBJECTAREAID</code>.
 	 */
 	public java.lang.Integer getSubjectareaid() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.subjectareas.namedentityid</code>.
+	 * Setter for <code>NAMEDENTITIES.SUBJECTAREAS.NAMEDENTITYID</code>.
 	 */
 	public void setNamedentityid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.subjectareas.namedentityid</code>.
+	 * Getter for <code>NAMEDENTITIES.SUBJECTAREAS.NAMEDENTITYID</code>.
 	 */
 	public java.lang.Integer getNamedentityid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.subjectareas.subjectareatypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.SUBJECTAREAS.SUBJECTAREATYPEID</code>.
 	 */
 	public void setSubjectareatypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.subjectareas.subjectareatypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.SUBJECTAREAS.SUBJECTAREATYPEID</code>.
 	 */
 	public java.lang.Integer getSubjectareatypeid() {
 		return (java.lang.Integer) getValue(2);

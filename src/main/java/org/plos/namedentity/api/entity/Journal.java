@@ -28,18 +28,6 @@ public class Journal extends Entity {
   private java.lang.Integer namedentityid;
   private java.lang.Integer journaltypeid;
 
-  public Journal() {}
-
-  public Journal(
-      java.lang.Integer journalid,
-      java.lang.Integer namedentityid,
-      java.lang.Integer journaltypeid
-                ) {
-    this.journalid     = journalid;
-    this.namedentityid = namedentityid;
-    this.journaltypeid = journaltypeid;
-  }
-
   public java.lang.Integer getJournalid() {
     return this.journalid;
   }

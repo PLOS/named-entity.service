@@ -11,10 +11,10 @@ package org.plos.namedentity.persist.db.information_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Catalogs extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.information_schema.tables.records.CatalogsRecord> {
 
-	private static final long serialVersionUID = 15567073;
+	private static final long serialVersionUID = 1575897377;
 
 	/**
-	 * The singleton instance of <code>information_schema.catalogs</code>
+	 * The singleton instance of <code>INFORMATION_SCHEMA.CATALOGS</code>
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Catalogs CATALOGS = new org.plos.namedentity.persist.db.information_schema.tables.Catalogs();
 
@@ -27,19 +27,19 @@ public class Catalogs extends org.jooq.impl.TableImpl<org.plos.namedentity.persi
 	}
 
 	/**
-	 * The column <code>information_schema.catalogs.catalog_name</code>.
+	 * The column <code>INFORMATION_SCHEMA.CATALOGS.CATALOG_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CatalogsRecord, java.lang.String> CATALOG_NAME = createField("catalog_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CatalogsRecord, java.lang.String> CATALOG_NAME = createField("CATALOG_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * Create a <code>information_schema.catalogs</code> table reference
+	 * Create a <code>INFORMATION_SCHEMA.CATALOGS</code> table reference
 	 */
 	public Catalogs() {
-		this("catalogs", null);
+		this("CATALOGS", null);
 	}
 
 	/**
-	 * Create an aliased <code>information_schema.catalogs</code> table reference
+	 * Create an aliased <code>INFORMATION_SCHEMA.CATALOGS</code> table reference
 	 */
 	public Catalogs(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.information_schema.tables.Catalogs.CATALOGS);

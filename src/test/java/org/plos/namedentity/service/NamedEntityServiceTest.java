@@ -35,11 +35,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -343,12 +345,14 @@ public class NamedEntityServiceTest {
     addressEntity.setStatecodetype("CA");
     addressEntity.setCountrycodetype("United States");
     addressEntity.setPostalcode("94401");
+    addressEntity.setIsprimary((byte)1);
 
-    Integer createAddressId = crudService.create(addressEntity);
-    assertNotNull( createAddressId );
-
-    Address savedEntity = namedEntityService.findResolvedEntityByKey(createAddressId, Address.class);
-    assertNull( savedEntity.getAddresstype() );
+    try {
+      crudService.create(addressEntity);
+      fail();
+    } catch (NedValidationException e) {
+      // expected since the countrycodeid was not resolved
+    }
 
     // try again but this time use type resolver. remember that type names are
     // resolved by joins when querying database -- need foreign key to get name.
@@ -362,20 +366,23 @@ public class NamedEntityServiceTest {
     // UPDATE address entity. Scrub appropriate attributes from current instance
     // and reuse. Again, we don't expect for address type to persist.
 
-    addressEntity.setAddressid(createAddressId); 
+    addressEntity.setAddressid(createAddressId2);
     addressEntity.setAddresstypeid(null); 
     addressEntity.setStatecodetypeid(null); 
-    addressEntity.setCountrycodetypeid(null); 
-    assertTrue( crudService.update(addressEntity) );
+    addressEntity.setCountrycodetypeid(null);
 
-    Address savedEntity3 = namedEntityService.findResolvedEntityByKey(createAddressId, Address.class);
-    assertNull( savedEntity3.getAddresstype() );
+    try {
+      assertFalse(crudService.update(addressEntity));
+      fail();
+    } catch (NedValidationException e) {
+      // expected since the data is incomplete in regards to DB schema
+    }
 
     // try again with type resolver.
 
     assertTrue( crudService.update(namedEntityService.resolveValuesToIds(addressEntity)) );
 
-    Address savedEntity4 = namedEntityService.findResolvedEntityByKey(createAddressId, Address.class);
+    Address savedEntity4 = namedEntityService.findResolvedEntityByKey(createAddressId2, Address.class);
     assertNotNull( savedEntity4.getAddresstype() );
 
     // DELETE.
@@ -383,24 +390,31 @@ public class NamedEntityServiceTest {
     assertTrue( crudService.delete(addressEntity) );
 
     addressEntity.setAddressid(createAddressId2);
-    assertTrue( crudService.delete(addressEntity) );
+
+    assertFalse(crudService.delete(addressEntity));
   }
 
   private IndividualComposite newCompositeIndividualWithRole() {
 
     IndividualComposite composite = new IndividualComposite();
-    composite.setFirstname("firstname");
-    composite.setMiddlename("middlename");
-    composite.setLastname("lastname");
-    composite.setNameprefix("Mr.");
-    composite.setNamesuffix("III");
-    composite.setPreferredlanguage("English");
-    composite.setPreferredcommunication("Email");
+    Individual individual = new Individual();
+    individual.setFirstname("firstname");
+    individual.setLastname("lastname");
+    individual.setDisplayname("displayname");
+    individual.setNameprefix("Mr.");
+    individual.setNamesuffix("III");
+    individual.setPreferredlanguage("English");
+    individual.setPreferredcommunication("Email");
+
+    composite.setIndividual(individual);
 
     List<Role> roles = new ArrayList<>();
     Role author = new Role();
     author.setRoletype("Author");
     author.setStartdate(new Timestamp(1401408000));  // "2014-05-30"
+
+    author.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    author.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
     roles.add(author);
 
     composite.setRoles(roles);

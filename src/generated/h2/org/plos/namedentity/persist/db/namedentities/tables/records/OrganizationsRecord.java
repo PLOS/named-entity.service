@@ -11,115 +11,115 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class OrganizationsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord> implements org.jooq.Record8<java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Byte, java.lang.Byte, java.lang.String> {
 
-	private static final long serialVersionUID = 1570418822;
+	private static final long serialVersionUID = 120625798;
 
 	/**
-	 * Setter for <code>namedentities.organizations.namedentityid</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.NAMEDENTITYID</code>.
 	 */
 	public void setNamedentityid(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.organizations.namedentityid</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.NAMEDENTITYID</code>.
 	 */
 	public java.lang.Integer getNamedentityid() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.organizations.organizationtypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.ORGANIZATIONTYPEID</code>.
 	 */
 	public void setOrganizationtypeid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.organizations.organizationtypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.ORGANIZATIONTYPEID</code>.
 	 */
 	public java.lang.Integer getOrganizationtypeid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.organizations.organizationfamiliarname</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.ORGANIZATIONFAMILIARNAME</code>.
 	 */
 	public void setOrganizationfamiliarname(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.organizations.organizationfamiliarname</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.ORGANIZATIONFAMILIARNAME</code>.
 	 */
 	public java.lang.String getOrganizationfamiliarname() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>namedentities.organizations.organizationlegalname</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.ORGANIZATIONLEGALNAME</code>.
 	 */
 	public void setOrganizationlegalname(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.organizations.organizationlegalname</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.ORGANIZATIONLEGALNAME</code>.
 	 */
 	public java.lang.String getOrganizationlegalname() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>namedentities.organizations.organizationmaincontactid</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.ORGANIZATIONMAINCONTACTID</code>.
 	 */
 	public void setOrganizationmaincontactid(java.lang.Integer value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.organizations.organizationmaincontactid</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.ORGANIZATIONMAINCONTACTID</code>.
 	 */
 	public java.lang.Integer getOrganizationmaincontactid() {
 		return (java.lang.Integer) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>namedentities.organizations.isactive</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.ISACTIVE</code>.
 	 */
 	public void setIsactive(java.lang.Byte value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.organizations.isactive</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.ISACTIVE</code>.
 	 */
 	public java.lang.Byte getIsactive() {
 		return (java.lang.Byte) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>namedentities.organizations.isvisible</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.ISVISIBLE</code>.
 	 */
 	public void setIsvisible(java.lang.Byte value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.organizations.isvisible</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.ISVISIBLE</code>.
 	 */
 	public java.lang.Byte getIsvisible() {
 		return (java.lang.Byte) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>namedentities.organizations.url</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.URL</code>.
 	 */
 	public void setUrl(java.lang.String value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.organizations.url</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.URL</code>.
 	 */
 	public java.lang.String getUrl() {
 		return (java.lang.String) getValue(7);

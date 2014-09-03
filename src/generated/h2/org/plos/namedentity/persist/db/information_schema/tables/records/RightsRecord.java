@@ -11,101 +11,101 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RightsRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.RightsRecord> implements org.jooq.Record7<java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1382929651;
+	private static final long serialVersionUID = -1554592051;
 
 	/**
-	 * Setter for <code>information_schema.rights.grantee</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.RIGHTS.GRANTEE</code>.
 	 */
 	public void setGrantee(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.rights.grantee</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.RIGHTS.GRANTEE</code>.
 	 */
 	public java.lang.String getGrantee() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>information_schema.rights.granteetype</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.RIGHTS.GRANTEETYPE</code>.
 	 */
 	public void setGranteetype(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.rights.granteetype</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.RIGHTS.GRANTEETYPE</code>.
 	 */
 	public java.lang.String getGranteetype() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>information_schema.rights.grantedrole</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.RIGHTS.GRANTEDROLE</code>.
 	 */
 	public void setGrantedrole(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.rights.grantedrole</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.RIGHTS.GRANTEDROLE</code>.
 	 */
 	public java.lang.String getGrantedrole() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>information_schema.rights.rights</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.RIGHTS.RIGHTS</code>.
 	 */
 	public void setRights(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.rights.rights</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.RIGHTS.RIGHTS</code>.
 	 */
 	public java.lang.String getRights() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>information_schema.rights.table_schema</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.RIGHTS.TABLE_SCHEMA</code>.
 	 */
 	public void setTableSchema(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.rights.table_schema</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.RIGHTS.TABLE_SCHEMA</code>.
 	 */
 	public java.lang.String getTableSchema() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>information_schema.rights.table_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.RIGHTS.TABLE_NAME</code>.
 	 */
 	public void setTableName(java.lang.String value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.rights.table_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.RIGHTS.TABLE_NAME</code>.
 	 */
 	public java.lang.String getTableName() {
 		return (java.lang.String) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>information_schema.rights.id</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.RIGHTS.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.rights.id</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.RIGHTS.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(6);

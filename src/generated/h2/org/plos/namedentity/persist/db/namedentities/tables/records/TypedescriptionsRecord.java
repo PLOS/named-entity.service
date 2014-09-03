@@ -11,45 +11,45 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TypedescriptionsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.TypedescriptionsRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 621489218;
+	private static final long serialVersionUID = -1776246718;
 
 	/**
-	 * Setter for <code>namedentities.typedescriptions.typeid</code>.
+	 * Setter for <code>NAMEDENTITIES.TYPEDESCRIPTIONS.TYPEID</code>.
 	 */
 	public void setTypeid(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.typedescriptions.typeid</code>.
+	 * Getter for <code>NAMEDENTITIES.TYPEDESCRIPTIONS.TYPEID</code>.
 	 */
 	public java.lang.Integer getTypeid() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.typedescriptions.description</code>.
+	 * Setter for <code>NAMEDENTITIES.TYPEDESCRIPTIONS.DESCRIPTION</code>.
 	 */
 	public void setDescription(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.typedescriptions.description</code>.
+	 * Getter for <code>NAMEDENTITIES.TYPEDESCRIPTIONS.DESCRIPTION</code>.
 	 */
 	public java.lang.String getDescription() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.typedescriptions.howused</code>.
+	 * Setter for <code>NAMEDENTITIES.TYPEDESCRIPTIONS.HOWUSED</code>.
 	 */
 	public void setHowused(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.typedescriptions.howused</code>.
+	 * Getter for <code>NAMEDENTITIES.TYPEDESCRIPTIONS.HOWUSED</code>.
 	 */
 	public java.lang.String getHowused() {
 		return (java.lang.String) getValue(2);

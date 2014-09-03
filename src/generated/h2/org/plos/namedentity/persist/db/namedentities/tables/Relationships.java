@@ -11,10 +11,10 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Relationships extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord> {
 
-	private static final long serialVersionUID = -1804242500;
+	private static final long serialVersionUID = -1026571908;
 
 	/**
-	 * The singleton instance of <code>namedentities.relationships</code>
+	 * The singleton instance of <code>NAMEDENTITIES.RELATIONSHIPS</code>
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Relationships RELATIONSHIPS = new org.plos.namedentity.persist.db.namedentities.tables.Relationships();
 
@@ -27,64 +27,64 @@ public class Relationships extends org.jooq.impl.TableImpl<org.plos.namedentity.
 	}
 
 	/**
-	 * The column <code>namedentities.relationships.relationshipid</code>.
+	 * The column <code>NAMEDENTITIES.RELATIONSHIPS.RELATIONSHIPID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> RELATIONSHIPID = createField("relationshipid", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> RELATIONSHIPID = createField("RELATIONSHIPID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>namedentities.relationships.masternamedentityid</code>.
+	 * The column <code>NAMEDENTITIES.RELATIONSHIPS.MASTERNAMEDENTITYID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> MASTERNAMEDENTITYID = createField("masternamedentityid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> MASTERNAMEDENTITYID = createField("MASTERNAMEDENTITYID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.relationships.childnamedentityid</code>.
+	 * The column <code>NAMEDENTITIES.RELATIONSHIPS.CHILDNAMEDENTITYID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> CHILDNAMEDENTITYID = createField("childnamedentityid", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> CHILDNAMEDENTITYID = createField("CHILDNAMEDENTITYID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.relationships.relationshiptypeid</code>.
+	 * The column <code>NAMEDENTITIES.RELATIONSHIPS.RELATIONSHIPTYPEID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> RELATIONSHIPTYPEID = createField("relationshiptypeid", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> RELATIONSHIPTYPEID = createField("RELATIONSHIPTYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.relationships.startdate</code>.
+	 * The column <code>NAMEDENTITIES.RELATIONSHIPS.STARTDATE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.sql.Timestamp> STARTDATE = createField("startdate", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.sql.Timestamp> STARTDATE = createField("STARTDATE", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
 	/**
-	 * The column <code>namedentities.relationships.enddate</code>.
+	 * The column <code>NAMEDENTITIES.RELATIONSHIPS.ENDDATE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.sql.Timestamp> ENDDATE = createField("enddate", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.sql.Timestamp> ENDDATE = createField("ENDDATE", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
 	/**
-	 * The column <code>namedentities.relationships.created</code>.
+	 * The column <code>NAMEDENTITIES.RELATIONSHIPS.CREATED</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.sql.Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.sql.Timestamp> CREATED = createField("CREATED", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>namedentities.relationships.lastmodified</code>.
+	 * The column <code>NAMEDENTITIES.RELATIONSHIPS.LASTMODIFIED</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.sql.Timestamp> LASTMODIFIED = createField("lastmodified", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.sql.Timestamp> LASTMODIFIED = createField("LASTMODIFIED", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>namedentities.relationships.createdby</code>.
+	 * The column <code>NAMEDENTITIES.RELATIONSHIPS.CREATEDBY</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> CREATEDBY = createField("createdby", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> CREATEDBY = createField("CREATEDBY", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>namedentities.relationships.lastmodifiedby</code>.
+	 * The column <code>NAMEDENTITIES.RELATIONSHIPS.LASTMODIFIEDBY</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> LASTMODIFIEDBY = createField("lastmodifiedby", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> LASTMODIFIEDBY = createField("LASTMODIFIEDBY", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * Create a <code>namedentities.relationships</code> table reference
+	 * Create a <code>NAMEDENTITIES.RELATIONSHIPS</code> table reference
 	 */
 	public Relationships() {
-		this("relationships", null);
+		this("RELATIONSHIPS", null);
 	}
 
 	/**
-	 * Create an aliased <code>namedentities.relationships</code> table reference
+	 * Create an aliased <code>NAMEDENTITIES.RELATIONSHIPS</code> table reference
 	 */
 	public Relationships(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.namedentities.tables.Relationships.RELATIONSHIPS);

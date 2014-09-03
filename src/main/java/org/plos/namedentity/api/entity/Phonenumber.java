@@ -32,37 +32,12 @@ public class Phonenumber extends Entity {
   private Integer countrycodetypeid;
   private String  phonenumber;
   private String  extension;
+
   private Boolean isprimary;
-  private Boolean isactive;
+  private Boolean isactive = true;
 
   private String  phonenumbertype;
   private String  countrycodetype;
-
-  public Phonenumber() {
-    isactive = true;
-    isprimary = true;
-//    this(null,null,null,null,null,null,null,null);
-  }
-
-//  public PhonenumberEntity(
-//    Integer phonenumberid,
-//    Integer namedentityid,
-//    Integer phonenumbertypeid,
-//    Integer countrycodetypeid,
-//    String  phonenumber,
-//    String  extension,
-//    Byte    isprimary,
-//    Byte    isactive
-//  ) {
-//    this.phonenumberid     = phonenumberid;
-//    this.namedentityid     = namedentityid;
-//    this.phonenumbertypeid = phonenumbertypeid;
-//    this.countrycodetypeid = countrycodetypeid;
-//    this.phonenumber       = phonenumber;
-//    this.extension         = extension;
-//    this.isprimary         = (isprimary != null ? isprimary : (byte)1);
-//    this.isactive          = (isactive != null ? isactive : (byte)1);
-//  }
 
   public String getPhonenumbertype() {
     return phonenumbertype;

@@ -40,7 +40,7 @@ public class Email extends Entity {
   private String  emailtype;
 
   private String  emailaddress;
-  private Byte    isprimary = 1;  // TODO: change Byte to Bool
+  private Byte    isprimary = 0;  // TODO: change Byte to Bool
   private Byte    isactive = 1;
 
   @Override

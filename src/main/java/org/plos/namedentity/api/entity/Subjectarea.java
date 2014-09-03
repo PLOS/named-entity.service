@@ -28,18 +28,6 @@ public class Subjectarea extends Entity {
   private Integer namedentityid;
   private Integer subjectareatypeid;
 
-  public Subjectarea() {}
-
-  public Subjectarea(
-      Integer subjectareaid,
-      Integer namedentityid,
-      Integer subjectareatypeid
-                    ) {
-    this.subjectareaid     = subjectareaid;
-    this.namedentityid     = namedentityid;
-    this.subjectareatypeid = subjectareatypeid;
-  }
-
   public Integer getSubjectareaid() {
     return this.subjectareaid;
   }

@@ -11,59 +11,59 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class LocksRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.LocksRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -732602372;
+	private static final long serialVersionUID = 116576188;
 
 	/**
-	 * Setter for <code>information_schema.locks.table_schema</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.LOCKS.TABLE_SCHEMA</code>.
 	 */
 	public void setTableSchema(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.locks.table_schema</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.LOCKS.TABLE_SCHEMA</code>.
 	 */
 	public java.lang.String getTableSchema() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>information_schema.locks.table_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.LOCKS.TABLE_NAME</code>.
 	 */
 	public void setTableName(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.locks.table_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.LOCKS.TABLE_NAME</code>.
 	 */
 	public java.lang.String getTableName() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>information_schema.locks.session_id</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.LOCKS.SESSION_ID</code>.
 	 */
 	public void setSessionId(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.locks.session_id</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.LOCKS.SESSION_ID</code>.
 	 */
 	public java.lang.Integer getSessionId() {
 		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>information_schema.locks.lock_type</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.LOCKS.LOCK_TYPE</code>.
 	 */
 	public void setLockType(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.locks.lock_type</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.LOCKS.LOCK_TYPE</code>.
 	 */
 	public java.lang.String getLockType() {
 		return (java.lang.String) getValue(3);
