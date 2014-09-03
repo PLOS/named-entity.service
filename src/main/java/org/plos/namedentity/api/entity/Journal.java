@@ -22,8 +22,6 @@ package org.plos.namedentity.api.entity;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Journal extends Entity {
 
-  private static final long serialVersionUID = 254575195;
-
   private java.lang.Integer journalid;
   private java.lang.Integer namedentityid;
   private java.lang.Integer journaltypeid;

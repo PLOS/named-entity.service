@@ -133,35 +133,6 @@ public class CrudServiceTest {
   }
 
   @Test
-  public void testIndividualInvalidUrl() {
-
-    Individual individual = new Individual();
-    individual.setFirstname("firstname");
-    individual.setLastname("lastname");
-    individual.setDisplayname("displayname");
-    individual.setUrl("httpXX://billgates.plos.org");
-
-    // Create
-    try {
-      crudService.create(individual);
-      fail();
-    } catch (NedValidationException expected) {
-    }
-
-    // Update
-    individual.setUrl("http://billgates.plos.org/abc");
-    crudService.create(individual);
-
-    individual.setUrl("httpXX://billgates.plos.org/abc");
-
-    try {
-      crudService.create(individual);
-      fail();
-    } catch (NedValidationException expected) {
-    }
-  }
-
-  @Test
   public void testTypeDescriptionCRUD() {
 
     // CREATE

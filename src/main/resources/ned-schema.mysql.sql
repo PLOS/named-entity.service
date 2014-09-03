@@ -55,7 +55,6 @@ CREATE TABLE IF NOT EXISTS namedEntities.individuals (
     preferredLanguageTypeId INT NULL,
     preferredCommunicationMethodTypeId INT NULL,
     photoImage VARBINARY(255) NULL,
-    url TEXT NULL,
     isActive TINYINT(1) NOT NULL,
     isVisible TINYINT(1) NOT NULL,
     PRIMARY KEY (namedEntityId),
@@ -74,7 +73,6 @@ CREATE TABLE IF NOT EXISTS namedEntities.organizations (
     organizationMainContactId INT NULL,
     isActive TINYINT(1) NOT NULL,
     isVisible TINYINT(1) NOT NULL,
-    url TEXT NULL,
     PRIMARY KEY (namedEntityId),
     FOREIGN KEY (organizationTypeId) REFERENCES globalTypes(globalTypeId)
 )   ENGINE=INNODB;
@@ -152,6 +150,7 @@ CREATE TABLE IF NOT EXISTS namedEntities.relationships (
     masterNamedEntityId INT NOT NULL,
     childNamedEntityId INT NOT NULL,
     relationshipTypeId INT NOT NULL,
+    title TEXT NULL,
     startDate TIMESTAMP NULL,
     endDate TIMESTAMP NULL,
     created TIMESTAMP NOT NULL DEFAULT 0,
@@ -222,6 +221,15 @@ CREATE TABLE IF NOT EXISTS namedEntities.degrees (
     PRIMARY KEY (degreeId),
     FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId),
     FOREIGN KEY (degreeTypeId) REFERENCES globalTypes(globalTypeId)
+)   ENGINE=INNODB;
+
+DROP TABLE IF EXISTS namedEntities.urls;
+CREATE TABLE IF NOT EXISTS namedEntities.urls (
+    id INT NOT NULL AUTO_INCREMENT,
+    namedEntityId INT NOT NULL,
+    url TEXT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.uniqueIdentifiers;

@@ -22,8 +22,6 @@ package org.plos.namedentity.api.entity;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Cas extends Entity {
 
-  private static final long serialVersionUID = -108875444;
-
   private java.lang.Integer casid;
   private java.lang.Integer namedentityid;
   private java.lang.Integer sourceapplicationtypeid;

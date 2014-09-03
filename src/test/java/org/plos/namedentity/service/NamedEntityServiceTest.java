@@ -20,15 +20,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.entity.Address;
-import org.plos.namedentity.api.entity.Degree;
-import org.plos.namedentity.api.entity.Email;
-import org.plos.namedentity.api.entity.Globaltype;
-import org.plos.namedentity.api.entity.Individual;
-import org.plos.namedentity.api.entity.Organization;
-import org.plos.namedentity.api.entity.Phonenumber;
-import org.plos.namedentity.api.entity.Role;
-import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.api.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -184,7 +176,32 @@ public class NamedEntityServiceTest {
 
     composite.setUniqueidentifiers( uids );
 
+    /* ------------------------------------------------------------------ */
+    /*  URLS                                                              */
+    /* ------------------------------------------------------------------ */
+
+    List<Url> urls = new ArrayList<>();
+    Url url = new Url();
+    url.setUrl("http://goodurl.org");
+    url.setUrl("httpXX://badurl.org");
+    urls.add(url);
+
+    composite.setUrls(urls);
+
     Integer nedId = null;
+
+    try {
+      namedEntityService.createIndividualComposite(composite);
+    } catch (NedValidationException expected) {
+      // expected since url is invalid
+    }
+
+    urls = new ArrayList<>();
+    url.setUrl("http://newgoodurl.org");
+    urls.add(url);
+
+    composite.setUrls(urls);
+
     try {
       IndividualComposite responseComposite = namedEntityService.createIndividualComposite(composite);
       assertNotNull(responseComposite);
@@ -192,7 +209,6 @@ public class NamedEntityServiceTest {
 
       // make sure foreign keys are resolved for sub entities
       assertNotNull(responseComposite.getEmails().get(0).getEmailid());
-
     }
     catch (NedValidationException e) {
       fail();

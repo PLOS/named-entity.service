@@ -24,8 +24,6 @@ import java.util.Objects;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Phonenumber extends Entity {
 
-  private static final long serialVersionUID = -1728456967;
-
   private Integer phonenumberid;
   private Integer namedentityid;
   private Integer phonenumbertypeid;

@@ -26,8 +26,6 @@ import java.util.Objects;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Organization extends Entity {
 
-  private static final long serialVersionUID = 276513267;
-
   private Integer namedentityid;
   private Integer organizationtypeid;
   private String  organizationtype;
@@ -36,7 +34,6 @@ public class Organization extends Entity {
   private Integer organizationmaincontactid;
   private Byte    isactive = 1;
   private Byte    isvisible = 1;
-  private String  url;
 
   public Integer getNamedentityid() {
     return this.namedentityid;
@@ -94,14 +91,6 @@ public class Organization extends Entity {
     this.isvisible = isvisible;
   }
 
-  public String getUrl() {
-    return this.url;
-  }
-
-  public void setUrl(String url) {
-    this.url = url;
-  }
-
   public String getOrganizationtype() {
     return organizationtype;
   }
@@ -123,12 +112,11 @@ public class Organization extends Entity {
         && Objects.equals(this.organizationfamiliarname, that.organizationfamiliarname)
         && Objects.equals(this.organizationlegalname, that.organizationlegalname)
         && Objects.equals(this.organizationmaincontactid, that.organizationmaincontactid)
-        && Objects.equals(this.organizationtypeid, that.organizationtypeid)
-        && Objects.equals(this.url, that.url);
+        && Objects.equals(this.organizationtypeid, that.organizationtypeid);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.namedentityid, this.isactive, this.isvisible,this.organizationfamiliarname, this.organizationlegalname, this.organizationmaincontactid,this.organizationtypeid, this.url);
+    return Objects.hash(this.namedentityid, this.isactive, this.isvisible,this.organizationfamiliarname, this.organizationlegalname, this.organizationmaincontactid,this.organizationtypeid);
   }
 }

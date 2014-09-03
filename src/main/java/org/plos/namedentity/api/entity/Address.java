@@ -27,8 +27,6 @@ import java.util.Objects;
 @XmlRootElement
 public class Address extends Entity {
 
-  private static final long serialVersionUID = 2006852801;
-
   private Integer addressid;
   private Integer namedentityid;
 

@@ -97,4 +97,9 @@ public class Tables {
 	 * The table namedEntities.uniqueIdentifiers
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers UNIQUEIDENTIFIERS = org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS;
+
+	/**
+	 * The table namedEntities.urls
+	 */
+	public static final org.plos.namedentity.persist.db.namedentities.tables.Urls URLS = org.plos.namedentity.persist.db.namedentities.tables.Urls.URLS;
 }

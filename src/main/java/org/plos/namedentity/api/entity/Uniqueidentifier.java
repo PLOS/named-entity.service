@@ -24,8 +24,6 @@ import java.util.Objects;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Uniqueidentifier extends Entity {
 
-  private static final long serialVersionUID = 1900442676;
-
   private Integer uniqueidentifiersid;
   private Integer namedentityid;
   private String  uniqueidentifiertype;

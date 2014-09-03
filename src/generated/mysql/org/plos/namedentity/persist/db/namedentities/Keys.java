@@ -32,6 +32,7 @@ public class Keys {
 	public static final org.jooq.Identity<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord, java.lang.Integer> IDENTITY_SUBJECTAREAS = Identities0.IDENTITY_SUBJECTAREAS;
 	public static final org.jooq.Identity<org.plos.namedentity.persist.db.namedentities.tables.records.TypedescriptionsRecord, java.lang.Integer> IDENTITY_TYPEDESCRIPTIONS = Identities0.IDENTITY_TYPEDESCRIPTIONS;
 	public static final org.jooq.Identity<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, java.lang.Integer> IDENTITY_UNIQUEIDENTIFIERS = Identities0.IDENTITY_UNIQUEIDENTIFIERS;
+	public static final org.jooq.Identity<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord, java.lang.Integer> IDENTITY_URLS = Identities0.IDENTITY_URLS;
 
 	// -------------------------------------------------------------------------
 	// UNIQUE and PRIMARY KEY definitions
@@ -54,6 +55,7 @@ public class Keys {
 	public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord> KEY_SUBJECTAREAS_PRIMARY = UniqueKeys0.KEY_SUBJECTAREAS_PRIMARY;
 	public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.TypedescriptionsRecord> KEY_TYPEDESCRIPTIONS_PRIMARY = UniqueKeys0.KEY_TYPEDESCRIPTIONS_PRIMARY;
 	public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord> KEY_UNIQUEIDENTIFIERS_PRIMARY = UniqueKeys0.KEY_UNIQUEIDENTIFIERS_PRIMARY;
+	public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord> KEY_URLS_PRIMARY = UniqueKeys0.KEY_URLS_PRIMARY;
 
 	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
@@ -86,6 +88,8 @@ public class Keys {
 	public static final org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord, org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord> SUBJECTAREAS_IBFK_2 = ForeignKeys0.SUBJECTAREAS_IBFK_2;
 	public static final org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, org.plos.namedentity.persist.db.namedentities.tables.records.NamedentityidentifiersRecord> UNIQUEIDENTIFIERS_IBFK_1 = ForeignKeys0.UNIQUEIDENTIFIERS_IBFK_1;
 	public static final org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord> UNIQUEIDENTIFIERS_IBFK_2 = ForeignKeys0.UNIQUEIDENTIFIERS_IBFK_2;
+	public static final org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord, org.plos.namedentity.persist.db.namedentities.tables.records.NamedentityidentifiersRecord> URLS_IBFK_1 = ForeignKeys0.URLS_IBFK_1;
+	public static final org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord, org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord> URLS_IBFK_2 = ForeignKeys0.URLS_IBFK_2;
 
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb
@@ -106,6 +110,7 @@ public class Keys {
 		public static org.jooq.Identity<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord, java.lang.Integer> IDENTITY_SUBJECTAREAS = createIdentity(org.plos.namedentity.persist.db.namedentities.tables.Subjectareas.SUBJECTAREAS, org.plos.namedentity.persist.db.namedentities.tables.Subjectareas.SUBJECTAREAS.SUBJECTAREAID);
 		public static org.jooq.Identity<org.plos.namedentity.persist.db.namedentities.tables.records.TypedescriptionsRecord, java.lang.Integer> IDENTITY_TYPEDESCRIPTIONS = createIdentity(org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions.TYPEDESCRIPTIONS, org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions.TYPEDESCRIPTIONS.TYPEID);
 		public static org.jooq.Identity<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, java.lang.Integer> IDENTITY_UNIQUEIDENTIFIERS = createIdentity(org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS, org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS.UNIQUEIDENTIFIERSID);
+		public static org.jooq.Identity<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord, java.lang.Integer> IDENTITY_URLS = createIdentity(org.plos.namedentity.persist.db.namedentities.tables.Urls.URLS, org.plos.namedentity.persist.db.namedentities.tables.Urls.URLS.ID);
 	}
 
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
@@ -126,6 +131,7 @@ public class Keys {
 		public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord> KEY_SUBJECTAREAS_PRIMARY = createUniqueKey(org.plos.namedentity.persist.db.namedentities.tables.Subjectareas.SUBJECTAREAS, org.plos.namedentity.persist.db.namedentities.tables.Subjectareas.SUBJECTAREAS.SUBJECTAREAID);
 		public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.TypedescriptionsRecord> KEY_TYPEDESCRIPTIONS_PRIMARY = createUniqueKey(org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions.TYPEDESCRIPTIONS, org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions.TYPEDESCRIPTIONS.TYPEID);
 		public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord> KEY_UNIQUEIDENTIFIERS_PRIMARY = createUniqueKey(org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS, org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS.UNIQUEIDENTIFIERSID);
+		public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord> KEY_URLS_PRIMARY = createUniqueKey(org.plos.namedentity.persist.db.namedentities.tables.Urls.URLS, org.plos.namedentity.persist.db.namedentities.tables.Urls.URLS.ID);
 	}
 
 	private static class ForeignKeys0 extends org.jooq.impl.AbstractKeys {
@@ -156,5 +162,7 @@ public class Keys {
 		public static final org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord, org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord> SUBJECTAREAS_IBFK_2 = createForeignKey(org.plos.namedentity.persist.db.namedentities.Keys.KEY_GLOBALTYPES_PRIMARY, org.plos.namedentity.persist.db.namedentities.tables.Subjectareas.SUBJECTAREAS, org.plos.namedentity.persist.db.namedentities.tables.Subjectareas.SUBJECTAREAS.SUBJECTAREATYPEID);
 		public static final org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, org.plos.namedentity.persist.db.namedentities.tables.records.NamedentityidentifiersRecord> UNIQUEIDENTIFIERS_IBFK_1 = createForeignKey(org.plos.namedentity.persist.db.namedentities.Keys.KEY_NAMEDENTITYIDENTIFIERS_PRIMARY, org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS, org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS.NAMEDENTITYID);
 		public static final org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord> UNIQUEIDENTIFIERS_IBFK_2 = createForeignKey(org.plos.namedentity.persist.db.namedentities.Keys.KEY_GLOBALTYPES_PRIMARY, org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS, org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS.UNIQUEIDENTIFIERTYPEID);
+		public static final org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord, org.plos.namedentity.persist.db.namedentities.tables.records.NamedentityidentifiersRecord> URLS_IBFK_1 = createForeignKey(org.plos.namedentity.persist.db.namedentities.Keys.KEY_NAMEDENTITYIDENTIFIERS_PRIMARY, org.plos.namedentity.persist.db.namedentities.tables.Urls.URLS, org.plos.namedentity.persist.db.namedentities.tables.Urls.URLS.NAMEDENTITYID);
+		public static final org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord, org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord> URLS_IBFK_2 = createForeignKey(org.plos.namedentity.persist.db.namedentities.Keys.KEY_GLOBALTYPES_PRIMARY, org.plos.namedentity.persist.db.namedentities.tables.Urls.URLS, org.plos.namedentity.persist.db.namedentities.tables.Urls.URLS.URLTYPEID);
 	}
 }

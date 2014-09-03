@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Relationships extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord> {
 
-	private static final long serialVersionUID = -1026571908;
+	private static final long serialVersionUID = -496921370;
 
 	/**
 	 * The singleton instance of <code>NAMEDENTITIES.RELATIONSHIPS</code>
@@ -45,6 +45,11 @@ public class Relationships extends org.jooq.impl.TableImpl<org.plos.namedentity.
 	 * The column <code>NAMEDENTITIES.RELATIONSHIPS.RELATIONSHIPTYPEID</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> RELATIONSHIPTYPEID = createField("RELATIONSHIPTYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
+	 * The column <code>NAMEDENTITIES.RELATIONSHIPS.TITLE</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.CLOB.length(2147483647), this, "");
 
 	/**
 	 * The column <code>NAMEDENTITIES.RELATIONSHIPS.STARTDATE</code>.

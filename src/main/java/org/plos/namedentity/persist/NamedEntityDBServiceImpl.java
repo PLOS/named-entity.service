@@ -299,7 +299,6 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     Record record = this.context
       .select(
           i.NAMEDENTITYID, i.FIRSTNAME, i.MIDDLENAME, i.LASTNAME, i.DISPLAYNAME,
-          i.URL,
           gt1.SHORTDESCRIPTION.as("nameprefix"),
           gt2.SHORTDESCRIPTION.as("namesuffix"),
           gt3.SHORTDESCRIPTION.as("preferredlanguage"),
@@ -333,7 +332,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .select(
             o.NAMEDENTITYID, o.ORGANIZATIONFAMILIARNAME,
             o.ORGANIZATIONLEGALNAME, o.ISACTIVE, o.ISVISIBLE,
-            o.URL, gt1.SHORTDESCRIPTION.as("organizationtype"))
+            gt1.SHORTDESCRIPTION.as("organizationtype"))
         .from(o)
         .leftOuterJoin(gt1).on(o.ORGANIZATIONTYPEID.equal(gt1.GLOBALTYPEID))
         .where(o.NAMEDENTITYID.equal(nedId)).fetchOne();
@@ -355,7 +354,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .select(
             o.NAMEDENTITYID, o.ORGANIZATIONFAMILIARNAME,
             o.ORGANIZATIONLEGALNAME, o.ISACTIVE, o.ISVISIBLE,
-            o.URL, gt1.SHORTDESCRIPTION.as("organizationtype"))
+            gt1.SHORTDESCRIPTION.as("organizationtype"))
         .from(o)
         .leftOuterJoin(gt1).on(o.ORGANIZATIONTYPEID.equal(gt1.GLOBALTYPEID))
         .leftOuterJoin(gt2).on(u.UNIQUEIDENTIFIERTYPEID.equal(gt2.GLOBALTYPEID)).and(gt2.SHORTDESCRIPTION.equal(srcType))
@@ -397,7 +396,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     return this.context
       .select(
-        i.NAMEDENTITYID, i.FIRSTNAME, i.MIDDLENAME, i.LASTNAME, i.DISPLAYNAME, i.URL,
+        i.NAMEDENTITYID, i.FIRSTNAME, i.MIDDLENAME, i.LASTNAME, i.DISPLAYNAME, 
         gt1.SHORTDESCRIPTION.as("nameprefix"),                 
         gt2.SHORTDESCRIPTION.as("namesuffix"),
         gt3.SHORTDESCRIPTION.as("preferredlanguage"), 

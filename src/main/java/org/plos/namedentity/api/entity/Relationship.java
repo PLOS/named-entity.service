@@ -24,13 +24,12 @@ import java.sql.Timestamp;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Relationship extends Entity {
 
-  private static final long serialVersionUID = 1494801838;
-
   private Integer   relationshipid;
   private Integer   masternamedentityid;
   private Integer   childnamedentityid;
   private Integer   relationshiptypeid;
   private String    relationshiptype;
+  private String    title;
   private Timestamp startdate;
   private Timestamp enddate;
   private Timestamp created;

@@ -55,7 +55,6 @@ CREATE TABLE IF NOT EXISTS namedEntities.individuals (
     preferredLanguageTypeId INT NULL,
     preferredCommunicationMethodTypeId INT NULL,
     photoImage VARBINARY(255) NULL,
-    url TEXT NULL,
     isActive TINYINT(1) NOT NULL,
     isVisible TINYINT(1) NOT NULL,
     PRIMARY KEY (namedEntityId),
@@ -74,7 +73,6 @@ CREATE TABLE IF NOT EXISTS namedEntities.organizations (
     organizationMainContactId INT NULL,
     isActive TINYINT(1) NOT NULL,
     isVisible TINYINT(1) NOT NULL,
-    url TEXT NULL,
     PRIMARY KEY (namedEntityId),
     FOREIGN KEY (organizationTypeId) REFERENCES globalTypes(globalTypeId)
 )   ENGINE=INNODB;
@@ -152,6 +150,7 @@ CREATE TABLE IF NOT EXISTS namedEntities.relationships (
     masterNamedEntityId INT NOT NULL,
     childNamedEntityId INT NOT NULL,
     relationshipTypeId INT NOT NULL,
+    title TEXT NULL,
     startDate TIMESTAMP NULL,
     endDate TIMESTAMP NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -222,6 +221,15 @@ CREATE TABLE IF NOT EXISTS namedEntities.degrees (
     PRIMARY KEY (degreeId),
     FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId),
     FOREIGN KEY (degreeTypeId) REFERENCES globalTypes(globalTypeId)
+)   ENGINE=INNODB;
+
+DROP TABLE IF EXISTS namedEntities.urls;
+CREATE TABLE IF NOT EXISTS namedEntities.urls (
+    id INT NOT NULL AUTO_INCREMENT,
+    namedEntityId INT NOT NULL,
+    url TEXT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.uniqueIdentifiers;
@@ -342,4 +350,4 @@ INSERT INTO namedEntities.globalTypes VALUES (76,17,'CAS',NULL,'CAS','2014-03-23
 INSERT INTO namedEntities.globalTypes VALUES (77,17,'Salesforce',NULL,'SF','2014-03-23 20:34:40','2014-03-23 20:34:40',1,1);
 
 INSERT INTO namedEntities.namedEntityIdentifiers VALUES (1, 1, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, NULL, NULL);
-INSERT INTO namedEntities.individuals VALUES (1, 'NED', NULL, 'NED', NULL, NULL, NULL, 'NED', NULL, NULL, NULL, NULL, 1,  1);
+INSERT INTO namedEntities.individuals VALUES (1, 'NED', NULL, 'NED', NULL, NULL, NULL, 'NED', NULL, NULL, NULL, 1,  1);

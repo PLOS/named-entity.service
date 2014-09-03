@@ -94,14 +94,6 @@ public class OrganizationComposite implements Validatable {
     this.organization.setIsvisible(isvisible);
   }
 
-  public String getUrl() {
-    return this.organization.getUrl();
-  }
-
-  public void setUrl(String url) {
-    this.organization.setUrl(url);
-  }
-
   public String getOrganizationtype() {
     return this.organization.getOrganizationtype();
   }

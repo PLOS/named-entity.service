@@ -22,8 +22,6 @@ package org.plos.namedentity.api.entity;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Namedentityidentifier extends Entity {
 
-  private static final long serialVersionUID = -1205876651;
-
   private java.lang.Integer  namedentityid;
   private java.lang.Integer  typeid;
   private java.sql.Timestamp created;

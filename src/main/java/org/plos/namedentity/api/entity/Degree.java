@@ -25,8 +25,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Degree extends Entity {
 
-  private static final long serialVersionUID = -1999999966;
-
   private Integer degreeid;
   private Integer namedentityid;
   private Integer degreetypeid;

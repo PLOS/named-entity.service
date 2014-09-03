@@ -16,9 +16,6 @@
  */
 package org.plos.namedentity.api.entity;
 
-import org.apache.commons.validator.routines.UrlValidator;
-import org.plos.namedentity.api.NedValidationException;
-
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
@@ -28,10 +25,6 @@ import java.util.Objects;
 @XmlRootElement
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Individual extends Entity {
-
-  private static final long serialVersionUID = 2026965529;
-
-  private static UrlValidator urlValidator = UrlValidator.getInstance();
 
   private Integer namedentityid;
   private String  firstname;
@@ -54,10 +47,27 @@ public class Individual extends Entity {
   private Integer preferredcommunicationmethodtypeid;
 
   private byte[]  photoimage;
-  private String  url;
 
   private Byte    isactive = 1;
   private Byte    isvisible = 1;
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) { return true; }
+
+    if (o == null || this.getClass() != o.getClass()) { return false; }
+
+    Individual entity = (Individual) o;
+    return Objects.equals(this.namedentityid, entity.namedentityid)
+        && Objects.equals(this.firstname, entity.firstname)
+        && Objects.equals(this.middlename, entity.middlename)
+        && Objects.equals(this.lastname, entity.lastname);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(namedentityid, firstname, middlename, lastname);
+  }
 
   public Byte getIsactive() {
     return isactive;
@@ -73,12 +83,6 @@ public class Individual extends Entity {
 
   public void setIsvisible(Byte isvisible) {
     this.isvisible = isvisible;
-  }
-
-  @Override
-  public void validate() {
-    if (url != null && !urlValidator.isValid(url))
-      throw new NedValidationException("URL not valid");
   }
 
   public String getNameprefix() {
@@ -201,29 +205,4 @@ public class Individual extends Entity {
     this.photoimage = photoimage;
   }
 
-  public String getUrl() {
-    return this.url;
-  }
-
-  public void setUrl(String url) {
-    this.url = url;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) { return true; }
-
-    if (o == null || this.getClass() != o.getClass()) { return false; }
-
-    Individual entity = (Individual) o;
-    return Objects.equals(this.namedentityid, entity.namedentityid)
-        && Objects.equals(this.firstname, entity.firstname)
-        && Objects.equals(this.middlename, entity.middlename)
-        && Objects.equals(this.lastname, entity.lastname);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(namedentityid, firstname, middlename, lastname);
-  }
 }

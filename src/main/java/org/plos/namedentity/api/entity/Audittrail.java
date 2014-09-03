@@ -22,8 +22,6 @@ package org.plos.namedentity.api.entity;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Audittrail extends Entity {
 
-  private static final long serialVersionUID = -508010656;
-
   private java.lang.Integer  audittrailid;
   private java.lang.Integer  sourcefieldid;
   private java.lang.Integer  rownumber;

@@ -22,8 +22,6 @@ package org.plos.namedentity.api.entity;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Subjectarea extends Entity {
 
-  private static final long serialVersionUID = 169794521;
-
   private Integer subjectareaid;
   private Integer namedentityid;
   private Integer subjectareatypeid;

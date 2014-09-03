@@ -94,6 +94,11 @@ public class Tables {
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Degrees DEGREES = org.plos.namedentity.persist.db.namedentities.tables.Degrees.DEGREES;
 
 	/**
+	 * The table NAMEDENTITIES.URLS
+	 */
+	public static final org.plos.namedentity.persist.db.namedentities.tables.Urls URLS = org.plos.namedentity.persist.db.namedentities.tables.Urls.URLS;
+
+	/**
 	 * The table NAMEDENTITIES.UNIQUEIDENTIFIERS
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers UNIQUEIDENTIFIERS = org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS;

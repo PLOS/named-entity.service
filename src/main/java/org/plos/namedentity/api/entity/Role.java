@@ -25,8 +25,6 @@ import java.util.Objects;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Role extends Entity {
 
-  private static final long serialVersionUID = 315701916;
-
   private Integer   roleid;
   private Integer   namedentityid;
   private Integer   sourceapplicationtypeid;

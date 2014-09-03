@@ -27,8 +27,6 @@ import java.util.Objects;
 @XmlRootElement
 public class Globaltype extends Entity {
 
-  private static final long serialVersionUID = 541426103;
-
   private Integer  globaltypeid;
   private Integer  typeid;
   private String   shortdescription;

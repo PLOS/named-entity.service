@@ -26,8 +26,6 @@ import java.util.Objects;
 @XmlRootElement
 public class Typedescription extends Entity {
 
-  private static final long serialVersionUID = -356395330;
-
   private Integer typeid;
   private String  description;
   private String  howused;

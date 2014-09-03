@@ -415,7 +415,6 @@ public class NamedEntityDBServiceTest {
     organization.setOrganizationlegalname("legalname");
     organization.setIsactive((byte)1);
     organization.setIsvisible((byte)1);
-    organization.setUrl("http://url.org");
 
     Integer organizationId = nedDBSvc.create(organization);
     assertNotNull(organizationId);

@@ -29,8 +29,6 @@ import java.util.Objects;
 @XmlRootElement
 public class Email extends Entity {
 
-  private static final long serialVersionUID = -945009318;
-
   private static EmailValidator emailValidator = EmailValidator.getInstance();
 
   private Integer emailid;
