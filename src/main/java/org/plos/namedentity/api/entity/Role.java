@@ -16,6 +16,7 @@
  */
 package org.plos.namedentity.api.entity;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -31,8 +32,8 @@ public class Role extends ChildEntity {
   private Integer   namedentityid;
   private Integer   sourceapplicationtypeid;
   private Integer   roletypeid;
-  private Timestamp startdate;
-  private Timestamp enddate;
+  private Date      startdate;
+  private Date      enddate;
   private Timestamp created;
   private Timestamp lastmodified;
   private Integer   createdby;
@@ -93,19 +94,19 @@ public class Role extends ChildEntity {
     this.roletypeid = roletypeid;
   }
 
-  public java.sql.Timestamp getStartdate() {
+  public java.sql.Date getStartdate() {
     return this.startdate;
   }
 
-  public void setStartdate(java.sql.Timestamp startdate) {
+  public void setStartdate(java.sql.Date startdate) {
     this.startdate = startdate;
   }
 
-  public java.sql.Timestamp getEnddate() {
+  public java.sql.Date getEnddate() {
     return this.enddate;
   }
 
-  public void setEnddate(java.sql.Timestamp enddate) {
+  public void setEnddate(java.sql.Date enddate) {
     this.enddate = enddate;
   }
 

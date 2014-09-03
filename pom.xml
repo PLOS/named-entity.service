@@ -337,7 +337,6 @@
                 <name>org.jooq.util.mysql.MySQLDatabase</name>
                 <includes>.*</includes>
                 <excludes/>
-                <dateAsTimestamp>true</dateAsTimestamp>
                 <inputSchema>namedEntities</inputSchema>
               </database>
               <generate>
@@ -476,7 +475,6 @@
                   <name>org.jooq.util.h2.H2Database</name>
                   <includes>.*</includes>
                   <excludes/>
-                  <dateAsTimestamp>true</dateAsTimestamp>
                   <!--<inputSchema>namedEntities</inputSchema>-->
                 </database>
                 <generate>

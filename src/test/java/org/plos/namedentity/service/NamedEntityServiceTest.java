@@ -33,8 +33,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -338,7 +338,7 @@ public class NamedEntityServiceTest {
     roleEntity.setNamedentityid(1);
     roleEntity.setSourceapplicationtype("Editorial Manager");
     roleEntity.setRoletype("Academic Editor (PLOSONE)");
-    roleEntity.setStartdate(new Timestamp(new Date().getTime()));
+    roleEntity.setStartdate( dateNow() );
 
     Integer createRoleId = crudService.create(roleEntity);
     assertNotNull( createRoleId );
@@ -453,7 +453,7 @@ public class NamedEntityServiceTest {
     List<Role> roles = new ArrayList<>();
     Role author = new Role();
     author.setRoletype("Author");
-    author.setStartdate(new Timestamp(1401408000));  // "2014-05-30"
+    author.setStartdate(new java.sql.Date(1401408000));  // "2014-05-30"
     roles.add(author);
 
     composite.setRoles(roles);
@@ -461,5 +461,13 @@ public class NamedEntityServiceTest {
     return composite;
   }
 
-  //TODO - add tests with address, email, and phone combinations
+  private java.sql.Date dateNow() {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(new java.util.Date());
+    cal.set(Calendar.HOUR_OF_DAY, 0);
+    cal.set(Calendar.MINUTE, 0);
+    cal.set(Calendar.SECOND, 0);
+    cal.set(Calendar.MILLISECOND, 0);
+    return new java.sql.Date( cal.getTimeInMillis() );
+  }
 }

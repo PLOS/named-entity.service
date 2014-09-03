@@ -16,6 +16,7 @@
  */
 package org.plos.namedentity.api.entity;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
@@ -31,8 +32,8 @@ public class Relationship extends Entity {
   private Integer   childnamedentityid;
   private Integer   relationshiptypeid;
   private String    relationshiptype;
-  private Timestamp startdate;
-  private Timestamp enddate;
+  private Date      startdate;
+  private Date      enddate;
   private Timestamp created;
   private Timestamp lastmodified;
   private Integer   createdby;
@@ -41,17 +42,17 @@ public class Relationship extends Entity {
   public Relationship() {}
 
   public Relationship(
-      Integer relationshipid,
-      Integer masternamedentityid,
-      Integer childnamedentityid,
-      Integer relationshiptypeid,
-      String relationshiptype,
-      Timestamp startdate,
-      Timestamp enddate,
+      Integer   relationshipid,
+      Integer   masternamedentityid,
+      Integer   childnamedentityid,
+      Integer   relationshiptypeid,
+      String    relationshiptype,
+      Date      startdate,
+      Date      enddate,
       Timestamp created,
       Timestamp lastmodified,
-      Integer createdby,
-      Integer lastmodifiedby
+      Integer   createdby,
+      Integer   lastmodifiedby
                      ) {
     this.relationshipid      = relationshipid;
     this.masternamedentityid = masternamedentityid;
@@ -98,19 +99,19 @@ public class Relationship extends Entity {
     this.relationshiptypeid = relationshiptypeid;
   }
 
-  public java.sql.Timestamp getStartdate() {
+  public java.sql.Date getStartdate() {
     return this.startdate;
   }
 
-  public void setStartdate(java.sql.Timestamp startdate) {
+  public void setStartdate(java.sql.Date startdate) {
     this.startdate = startdate;
   }
 
-  public java.sql.Timestamp getEnddate() {
+  public java.sql.Date getEnddate() {
     return this.enddate;
   }
 
-  public void setEnddate(java.sql.Timestamp enddate) {
+  public void setEnddate(java.sql.Date enddate) {
     this.enddate = enddate;
   }
 

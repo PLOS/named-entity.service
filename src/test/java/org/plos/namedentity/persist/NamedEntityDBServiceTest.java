@@ -33,7 +33,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -593,7 +593,9 @@ public class NamedEntityDBServiceTest {
     authorRole.setNamedentityid(1);
     authorRole.setSourceapplicationtypeid(srcAppTypeId);
     authorRole.setRoletypeid(roleTypeId);
-    authorRole.setStartdate(new Timestamp(new Date().getTime()));
+
+    java.sql.Date startDate = dateNow();
+    authorRole.setStartdate(startDate);
 
     assertNull(authorRole.getRoleid());
     assertNotNull(authorRole.getNamedentityid());
@@ -604,13 +606,17 @@ public class NamedEntityDBServiceTest {
     // UPDATE
 
     Role savedRole = nedDBSvc.findById(authorId, Role.class);
-    savedRole.setEnddate(new Timestamp(new Date().getTime()));
+
+    java.sql.Date endDate = dateNow();
+    savedRole.setEnddate(endDate);
+
     assertTrue( nedDBSvc.update(savedRole) );
 
     // Get another instance of same role record 
 
     Role savedRole2 = nedDBSvc.findById(authorId, Role.class);
     assertEquals(savedRole, savedRole2);
+    assertEquals(savedRole.getStartdate(), savedRole2.getStartdate());
 
     // FIND ALL Roles 
 
@@ -719,5 +725,15 @@ public class NamedEntityDBServiceTest {
       }
     }
     throw new RuntimeException("No type value found with short description =  " + name);
+  }
+
+  private java.sql.Date dateNow() {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(new java.util.Date());
+    cal.set(Calendar.HOUR_OF_DAY, 0);
+    cal.set(Calendar.MINUTE, 0);
+    cal.set(Calendar.SECOND, 0);
+    cal.set(Calendar.MILLISECOND, 0);
+    return new java.sql.Date( cal.getTimeInMillis() );
   }
 }

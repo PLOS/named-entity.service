@@ -30,7 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -323,7 +323,7 @@ public class CrudServiceTest {
     newRole.setNamedentityid(1);
     newRole.setSourceapplicationtype("Editorial Manager");
     newRole.setRoletype("Academic Editor (PLOSONE)");
-    newRole.setStartdate(new Timestamp(new Date().getTime()));
+    newRole.setStartdate( dateNow() );
 
     // save record
 
@@ -340,7 +340,7 @@ public class CrudServiceTest {
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    savedRole.setEnddate(new Timestamp(new Date().getTime()));
+    savedRole.setEnddate( dateNow() );
     assertTrue( crudService.update(savedRole) );
     Role savedRole2 = crudService.findById(pkId, Role.class);
     assertEquals(savedRole, savedRole2);
@@ -479,5 +479,15 @@ public class CrudServiceTest {
     /* ------------------------------------------------------------------ */
 
     assertTrue( crudService.delete(savedUid) );
+  }
+
+  private java.sql.Date dateNow() {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(new java.util.Date());
+    cal.set(Calendar.HOUR_OF_DAY, 0);
+    cal.set(Calendar.MINUTE, 0);
+    cal.set(Calendar.SECOND, 0);
+    cal.set(Calendar.MILLISECOND, 0);
+    return new java.sql.Date( cal.getTimeInMillis() );
   }
 }
