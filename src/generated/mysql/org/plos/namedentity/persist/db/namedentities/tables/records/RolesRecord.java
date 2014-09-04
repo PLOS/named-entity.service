@@ -11,61 +11,61 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RolesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1079160908;
+	private static final long serialVersionUID = -2081689457;
 
 	/**
-	 * Setter for <code>namedEntities.roles.roleId</code>.
+	 * Setter for <code>namedEntities.roles.id</code>.
 	 */
-	public void setRoleid(java.lang.Integer value) {
+	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedEntities.roles.roleId</code>.
+	 * Getter for <code>namedEntities.roles.id</code>.
 	 */
-	public java.lang.Integer getRoleid() {
+	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedEntities.roles.namedEntityId</code>.
+	 * Setter for <code>namedEntities.roles.nedId</code>.
 	 */
-	public void setNamedentityid(java.lang.Integer value) {
+	public void setNedid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedEntities.roles.namedEntityId</code>.
+	 * Getter for <code>namedEntities.roles.nedId</code>.
 	 */
-	public java.lang.Integer getNamedentityid() {
+	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(1);
+	}
+
+	/**
+	 * Setter for <code>namedEntities.roles.typeID</code>.
+	 */
+	public void setTypeid(java.lang.Integer value) {
+		setValue(2, value);
+	}
+
+	/**
+	 * Getter for <code>namedEntities.roles.typeID</code>.
+	 */
+	public java.lang.Integer getTypeid() {
+		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>namedEntities.roles.sourceApplicationTypeId</code>.
 	 */
 	public void setSourceapplicationtypeid(java.lang.Integer value) {
-		setValue(2, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>namedEntities.roles.sourceApplicationTypeId</code>.
 	 */
 	public java.lang.Integer getSourceapplicationtypeid() {
-		return (java.lang.Integer) getValue(2);
-	}
-
-	/**
-	 * Setter for <code>namedEntities.roles.roleTypeID</code>.
-	 */
-	public void setRoletypeid(java.lang.Integer value) {
-		setValue(3, value);
-	}
-
-	/**
-	 * Getter for <code>namedEntities.roles.roleTypeID</code>.
-	 */
-	public java.lang.Integer getRoletypeid() {
 		return (java.lang.Integer) getValue(3);
 	}
 
@@ -190,7 +190,7 @@ public class RolesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.name
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Roles.ROLES.ROLEID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Roles.ROLES.ID;
 	}
 
 	/**
@@ -198,7 +198,7 @@ public class RolesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.name
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Roles.ROLES.NAMEDENTITYID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Roles.ROLES.NEDID;
 	}
 
 	/**
@@ -206,7 +206,7 @@ public class RolesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.name
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field3() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Roles.ROLES.SOURCEAPPLICATIONTYPEID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Roles.ROLES.TYPEID;
 	}
 
 	/**
@@ -214,7 +214,7 @@ public class RolesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.name
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field4() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Roles.ROLES.ROLETYPEID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Roles.ROLES.SOURCEAPPLICATIONTYPEID;
 	}
 
 	/**
@@ -270,7 +270,7 @@ public class RolesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.name
 	 */
 	@Override
 	public java.lang.Integer value1() {
-		return getRoleid();
+		return getId();
 	}
 
 	/**
@@ -278,7 +278,7 @@ public class RolesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.name
 	 */
 	@Override
 	public java.lang.Integer value2() {
-		return getNamedentityid();
+		return getNedid();
 	}
 
 	/**
@@ -286,7 +286,7 @@ public class RolesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.name
 	 */
 	@Override
 	public java.lang.Integer value3() {
-		return getSourceapplicationtypeid();
+		return getTypeid();
 	}
 
 	/**
@@ -294,7 +294,7 @@ public class RolesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.name
 	 */
 	@Override
 	public java.lang.Integer value4() {
-		return getRoletypeid();
+		return getSourceapplicationtypeid();
 	}
 
 	/**
@@ -350,7 +350,7 @@ public class RolesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.name
 	 */
 	@Override
 	public RolesRecord value1(java.lang.Integer value) {
-		setRoleid(value);
+		setId(value);
 		return this;
 	}
 
@@ -359,7 +359,7 @@ public class RolesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.name
 	 */
 	@Override
 	public RolesRecord value2(java.lang.Integer value) {
-		setNamedentityid(value);
+		setNedid(value);
 		return this;
 	}
 
@@ -368,7 +368,7 @@ public class RolesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.name
 	 */
 	@Override
 	public RolesRecord value3(java.lang.Integer value) {
-		setSourceapplicationtypeid(value);
+		setTypeid(value);
 		return this;
 	}
 
@@ -377,7 +377,7 @@ public class RolesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.name
 	 */
 	@Override
 	public RolesRecord value4(java.lang.Integer value) {
-		setRoletypeid(value);
+		setSourceapplicationtypeid(value);
 		return this;
 	}
 
@@ -457,13 +457,13 @@ public class RolesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.name
 	/**
 	 * Create a detached, initialised RolesRecord
 	 */
-	public RolesRecord(java.lang.Integer roleid, java.lang.Integer namedentityid, java.lang.Integer sourceapplicationtypeid, java.lang.Integer roletypeid, java.sql.Timestamp startdate, java.sql.Timestamp enddate, java.sql.Timestamp created, java.sql.Timestamp lastmodified, java.lang.Integer createdby, java.lang.Integer lastmodifiedby) {
+	public RolesRecord(java.lang.Integer id, java.lang.Integer nedid, java.lang.Integer typeid, java.lang.Integer sourceapplicationtypeid, java.sql.Timestamp startdate, java.sql.Timestamp enddate, java.sql.Timestamp created, java.sql.Timestamp lastmodified, java.lang.Integer createdby, java.lang.Integer lastmodifiedby) {
 		super(org.plos.namedentity.persist.db.namedentities.tables.Roles.ROLES);
 
-		setValue(0, roleid);
-		setValue(1, namedentityid);
-		setValue(2, sourceapplicationtypeid);
-		setValue(3, roletypeid);
+		setValue(0, id);
+		setValue(1, nedid);
+		setValue(2, typeid);
+		setValue(3, sourceapplicationtypeid);
 		setValue(4, startdate);
 		setValue(5, enddate);
 		setValue(6, created);

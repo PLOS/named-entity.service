@@ -24,42 +24,42 @@ import java.util.Objects;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Uniqueidentifier extends Entity {
 
-  private Integer uniqueidentifiersid;
-  private Integer namedentityid;
-  private String  uniqueidentifiertype;
-  private Integer uniqueidentifiertypeid;
+  private Integer id;
+  private Integer nedid;
+  private String  type;
+  private Integer typeid;
   private String  uniqueidentifier;
 
-  public String getUniqueidentifiertype() {
-    return uniqueidentifiertype;
+  public String getType() {
+    return type;
   }
 
-  public void setUniqueidentifiertype(String uniqueidentifiertype) {
-    this.uniqueidentifiertype = uniqueidentifiertype;
+  public void setType(String type) {
+    this.type = type;
   }
 
-  public Integer getUniqueidentifiersid() {
-    return this.uniqueidentifiersid;
+  public Integer getId() {
+    return this.id;
   }
 
-  public void setUniqueidentifiersid(Integer uniqueidentifiersid) {
-    this.uniqueidentifiersid = uniqueidentifiersid;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
-  public Integer getNamedentityid() {
-    return this.namedentityid;
+  public Integer getNedid() {
+    return this.nedid;
   }
 
-  public void setNamedentityid(Integer namedentityid) {
-    this.namedentityid = namedentityid;
+  public void setNedid(Integer nedid) {
+    this.nedid = nedid;
   }
 
-  public Integer getUniqueidentifiertypeid() {
-    return this.uniqueidentifiertypeid;
+  public Integer getTypeid() {
+    return this.typeid;
   }
 
-  public void setUniqueidentifiertypeid(Integer uniqueidentifiertypeid) {
-    this.uniqueidentifiertypeid = uniqueidentifiertypeid;
+  public void setTypeid(Integer typeid) {
+    this.typeid = typeid;
   }
 
   public String getUniqueidentifier() {
@@ -72,20 +72,24 @@ public class Uniqueidentifier extends Entity {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) { return true; }
+    if (this == o) {
+      return true;
+    }
 
-    if (o == null || this.getClass() != o.getClass()) { return false; }
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
 
     Uniqueidentifier entity = (Uniqueidentifier) o;
-    return Objects.equals(this.uniqueidentifiersid, entity.uniqueidentifiersid)
-        && Objects.equals(this.namedentityid, entity.namedentityid)
-        && Objects.equals(this.uniqueidentifiertypeid, entity.uniqueidentifiertypeid)
+    return Objects.equals(this.id, entity.id)
+        && Objects.equals(this.nedid, entity.nedid)
+        && Objects.equals(this.typeid, entity.typeid)
         && Objects.equals(this.uniqueidentifier, entity.uniqueidentifier);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.uniqueidentifiersid, this.namedentityid, 
-      this.uniqueidentifiertypeid, this.uniqueidentifier);
+    return Objects.hash(this.id, this.nedid,
+      this.typeid, this.uniqueidentifier);
   }
 }

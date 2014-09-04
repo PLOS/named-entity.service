@@ -11,75 +11,75 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class OrganizationsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord> implements org.jooq.Record7<java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Byte, java.lang.Byte> {
 
-	private static final long serialVersionUID = -1673178572;
+	private static final long serialVersionUID = 2054304429;
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.NAMEDENTITYID</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.NEDID</code>.
 	 */
-	public void setNamedentityid(java.lang.Integer value) {
+	public void setNedid(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.NAMEDENTITYID</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.NEDID</code>.
 	 */
-	public java.lang.Integer getNamedentityid() {
+	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.ORGANIZATIONTYPEID</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.TYPEID</code>.
 	 */
-	public void setOrganizationtypeid(java.lang.Integer value) {
+	public void setTypeid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.ORGANIZATIONTYPEID</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.TYPEID</code>.
 	 */
-	public java.lang.Integer getOrganizationtypeid() {
+	public java.lang.Integer getTypeid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.ORGANIZATIONFAMILIARNAME</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.FAMILIARNAME</code>.
 	 */
-	public void setOrganizationfamiliarname(java.lang.String value) {
+	public void setFamiliarname(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.ORGANIZATIONFAMILIARNAME</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.FAMILIARNAME</code>.
 	 */
-	public java.lang.String getOrganizationfamiliarname() {
+	public java.lang.String getFamiliarname() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.ORGANIZATIONLEGALNAME</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.LEGALNAME</code>.
 	 */
-	public void setOrganizationlegalname(java.lang.String value) {
+	public void setLegalname(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.ORGANIZATIONLEGALNAME</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.LEGALNAME</code>.
 	 */
-	public java.lang.String getOrganizationlegalname() {
+	public java.lang.String getLegalname() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.ORGANIZATIONMAINCONTACTID</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.MAINCONTACTID</code>.
 	 */
-	public void setOrganizationmaincontactid(java.lang.Integer value) {
+	public void setMaincontactid(java.lang.Integer value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.ORGANIZATIONMAINCONTACTID</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.MAINCONTACTID</code>.
 	 */
-	public java.lang.Integer getOrganizationmaincontactid() {
+	public java.lang.Integer getMaincontactid() {
 		return (java.lang.Integer) getValue(4);
 	}
 
@@ -148,7 +148,7 @@ public class OrganizationsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Organizations.ORGANIZATIONS.NAMEDENTITYID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Organizations.ORGANIZATIONS.NEDID;
 	}
 
 	/**
@@ -156,7 +156,7 @@ public class OrganizationsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Organizations.ORGANIZATIONS.ORGANIZATIONTYPEID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Organizations.ORGANIZATIONS.TYPEID;
 	}
 
 	/**
@@ -164,7 +164,7 @@ public class OrganizationsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field3() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Organizations.ORGANIZATIONS.ORGANIZATIONFAMILIARNAME;
+		return org.plos.namedentity.persist.db.namedentities.tables.Organizations.ORGANIZATIONS.FAMILIARNAME;
 	}
 
 	/**
@@ -172,7 +172,7 @@ public class OrganizationsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field4() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Organizations.ORGANIZATIONS.ORGANIZATIONLEGALNAME;
+		return org.plos.namedentity.persist.db.namedentities.tables.Organizations.ORGANIZATIONS.LEGALNAME;
 	}
 
 	/**
@@ -180,7 +180,7 @@ public class OrganizationsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field5() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Organizations.ORGANIZATIONS.ORGANIZATIONMAINCONTACTID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Organizations.ORGANIZATIONS.MAINCONTACTID;
 	}
 
 	/**
@@ -204,7 +204,7 @@ public class OrganizationsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public java.lang.Integer value1() {
-		return getNamedentityid();
+		return getNedid();
 	}
 
 	/**
@@ -212,7 +212,7 @@ public class OrganizationsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public java.lang.Integer value2() {
-		return getOrganizationtypeid();
+		return getTypeid();
 	}
 
 	/**
@@ -220,7 +220,7 @@ public class OrganizationsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public java.lang.String value3() {
-		return getOrganizationfamiliarname();
+		return getFamiliarname();
 	}
 
 	/**
@@ -228,7 +228,7 @@ public class OrganizationsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public java.lang.String value4() {
-		return getOrganizationlegalname();
+		return getLegalname();
 	}
 
 	/**
@@ -236,7 +236,7 @@ public class OrganizationsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public java.lang.Integer value5() {
-		return getOrganizationmaincontactid();
+		return getMaincontactid();
 	}
 
 	/**
@@ -260,7 +260,7 @@ public class OrganizationsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public OrganizationsRecord value1(java.lang.Integer value) {
-		setNamedentityid(value);
+		setNedid(value);
 		return this;
 	}
 
@@ -269,7 +269,7 @@ public class OrganizationsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public OrganizationsRecord value2(java.lang.Integer value) {
-		setOrganizationtypeid(value);
+		setTypeid(value);
 		return this;
 	}
 
@@ -278,7 +278,7 @@ public class OrganizationsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public OrganizationsRecord value3(java.lang.String value) {
-		setOrganizationfamiliarname(value);
+		setFamiliarname(value);
 		return this;
 	}
 
@@ -287,7 +287,7 @@ public class OrganizationsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public OrganizationsRecord value4(java.lang.String value) {
-		setOrganizationlegalname(value);
+		setLegalname(value);
 		return this;
 	}
 
@@ -296,7 +296,7 @@ public class OrganizationsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public OrganizationsRecord value5(java.lang.Integer value) {
-		setOrganizationmaincontactid(value);
+		setMaincontactid(value);
 		return this;
 	}
 
@@ -340,14 +340,14 @@ public class OrganizationsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	/**
 	 * Create a detached, initialised OrganizationsRecord
 	 */
-	public OrganizationsRecord(java.lang.Integer namedentityid, java.lang.Integer organizationtypeid, java.lang.String organizationfamiliarname, java.lang.String organizationlegalname, java.lang.Integer organizationmaincontactid, java.lang.Byte isactive, java.lang.Byte isvisible) {
+	public OrganizationsRecord(java.lang.Integer nedid, java.lang.Integer typeid, java.lang.String familiarname, java.lang.String legalname, java.lang.Integer maincontactid, java.lang.Byte isactive, java.lang.Byte isvisible) {
 		super(org.plos.namedentity.persist.db.namedentities.tables.Organizations.ORGANIZATIONS);
 
-		setValue(0, namedentityid);
-		setValue(1, organizationtypeid);
-		setValue(2, organizationfamiliarname);
-		setValue(3, organizationlegalname);
-		setValue(4, organizationmaincontactid);
+		setValue(0, nedid);
+		setValue(1, typeid);
+		setValue(2, familiarname);
+		setValue(3, legalname);
+		setValue(4, maincontactid);
 		setValue(5, isactive);
 		setValue(6, isvisible);
 	}

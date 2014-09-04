@@ -24,9 +24,9 @@ import java.util.Objects;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Phonenumber extends Entity {
 
-  private Integer phonenumberid;
-  private Integer namedentityid;
-  private Integer phonenumbertypeid;
+  private Integer id;
+  private Integer nedid;
+  private Integer typeid;
   private Integer countrycodetypeid;
   private String  phonenumber;
   private String  extension;
@@ -34,15 +34,15 @@ public class Phonenumber extends Entity {
   private Boolean isprimary;
   private Boolean isactive = true;
 
-  private String  phonenumbertype;
-  private String  countrycodetype;
+  private String type;
+  private String countrycodetype;
 
-  public String getPhonenumbertype() {
-    return phonenumbertype;
+  public String getType() {
+    return type;
   }
 
-  public void setPhonenumbertype(String phonenumbertype) {
-    this.phonenumbertype = phonenumbertype;
+  public void setType(String type) {
+    this.type = type;
   }
 
   public String getCountrycodetype() {
@@ -53,28 +53,28 @@ public class Phonenumber extends Entity {
     this.countrycodetype = countrycodetype;
   }
 
-  public Integer getPhonenumberid() {
-    return this.phonenumberid;
+  public Integer getId() {
+    return this.id;
   }
 
-  public void setPhonenumberid(Integer phonenumberid) {
-    this.phonenumberid = phonenumberid;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
-  public Integer getNamedentityid() {
-    return this.namedentityid;
+  public Integer getNedid() {
+    return this.nedid;
   }
 
-  public void setNamedentityid(Integer namedentityid) {
-    this.namedentityid = namedentityid;
+  public void setNedid(Integer nedid) {
+    this.nedid = nedid;
   }
 
-  public Integer getPhonenumbertypeid() {
-    return this.phonenumbertypeid;
+  public Integer getTypeid() {
+    return this.typeid;
   }
 
-  public void setPhonenumbertypeid(Integer phonenumbertypeid) {
-    this.phonenumbertypeid = phonenumbertypeid;
+  public void setTypeid(Integer typeid) {
+    this.typeid = typeid;
   }
 
   public Integer getCountrycodetypeid() {
@@ -124,13 +124,13 @@ public class Phonenumber extends Entity {
     if (o == null || this.getClass() != o.getClass()) { return false; }
 
     Phonenumber entity = (Phonenumber) o;
-    return Objects.equals(this.phonenumberid, entity.phonenumberid)
-        && Objects.equals(this.namedentityid, entity.namedentityid)
+    return Objects.equals(this.id, entity.id)
+        && Objects.equals(this.nedid, entity.nedid)
         && Objects.equals(this.phonenumber, entity.phonenumber);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(phonenumberid, namedentityid, phonenumber);
+    return Objects.hash(id, nedid, phonenumber);
   }
 }

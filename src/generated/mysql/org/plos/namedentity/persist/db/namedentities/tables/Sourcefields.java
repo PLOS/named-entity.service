@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sourcefields extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.SourcefieldsRecord> {
 
-	private static final long serialVersionUID = -863366870;
+	private static final long serialVersionUID = -178724403;
 
 	/**
 	 * The singleton instance of <code>namedEntities.sourceFields</code>
@@ -27,9 +27,9 @@ public class Sourcefields extends org.jooq.impl.TableImpl<org.plos.namedentity.p
 	}
 
 	/**
-	 * The column <code>namedEntities.sourceFields.sourceFieldId</code>.
+	 * The column <code>namedEntities.sourceFields.id</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SourcefieldsRecord, java.lang.Integer> SOURCEFIELDID = createField("sourceFieldId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SourcefieldsRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>namedEntities.sourceFields.sourceTable</code>.

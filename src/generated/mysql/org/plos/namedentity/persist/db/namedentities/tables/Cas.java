@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Cas extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.CasRecord> {
 
-	private static final long serialVersionUID = 306623238;
+	private static final long serialVersionUID = -1870518363;
 
 	/**
 	 * The singleton instance of <code>namedEntities.cas</code>
@@ -27,19 +27,19 @@ public class Cas extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db
 	}
 
 	/**
-	 * The column <code>namedEntities.cas.casId</code>.
+	 * The column <code>namedEntities.cas.id</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.CasRecord, java.lang.Integer> CASID = createField("casId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.CasRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedEntities.cas.namedEntityId</code>.
+	 * The column <code>namedEntities.cas.nedId</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.CasRecord, java.lang.Integer> NAMEDENTITYID = createField("namedEntityId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.CasRecord, java.lang.Integer> NEDID = createField("nedId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedEntities.cas.sourceApplicationTypeId</code>.
+	 * The column <code>namedEntities.cas.typeId</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.CasRecord, java.lang.Integer> SOURCEAPPLICATIONTYPEID = createField("sourceApplicationTypeId", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.CasRecord, java.lang.Integer> TYPEID = createField("typeId", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>namedEntities.cas</code> table reference

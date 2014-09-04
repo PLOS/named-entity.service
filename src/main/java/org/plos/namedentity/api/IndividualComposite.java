@@ -105,11 +105,11 @@ public class IndividualComposite implements Validatable {
   }
 
   public Integer getNamedentityid() {
-    return this.individual.getNamedentityid();
+    return this.individual.getNedid();
   }
 
   public void setNamedentityid(Integer namedentityid) {
-    this.individual.setNamedentityid(namedentityid);
+    this.individual.setNedid(namedentityid);
   }
 
   public String getFirstname() {

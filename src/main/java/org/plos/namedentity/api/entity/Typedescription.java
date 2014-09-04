@@ -26,16 +26,16 @@ import java.util.Objects;
 @XmlRootElement
 public class Typedescription extends Entity {
 
-  private Integer typeid;
+  private Integer id;
   private String  description;
   private String  howused;
 
-  public Integer getTypeid() {
-    return this.typeid;
+  public Integer getId() {
+    return this.id;
   }
 
-  public void setTypeid(Integer typeid) {
-    this.typeid = typeid;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public String getDescription() {
@@ -56,18 +56,22 @@ public class Typedescription extends Entity {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) { return true; }
+    if (this == o) {
+      return true;
+    }
 
-    if (o == null || this.getClass() != o.getClass()) { return false; }
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
 
     Typedescription entity = (Typedescription) o;
-    return Objects.equals(this.typeid, entity.typeid)
+    return Objects.equals(this.id, entity.id)
         && Objects.equals(this.description, entity.description)
         && Objects.equals(this.howused, entity.howused);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.typeid, this.description, this.howused);
+    return Objects.hash(this.id, this.description, this.howused);
   }
 }

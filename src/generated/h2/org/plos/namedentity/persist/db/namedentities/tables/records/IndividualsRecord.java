@@ -11,19 +11,19 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class IndividualsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord> implements org.jooq.Record13<java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, byte[], java.lang.Byte, java.lang.Byte> {
 
-	private static final long serialVersionUID = 642382428;
+	private static final long serialVersionUID = 863581963;
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.INDIVIDUALS.NAMEDENTITYID</code>.
+	 * Setter for <code>NAMEDENTITIES.INDIVIDUALS.NEDID</code>.
 	 */
-	public void setNamedentityid(java.lang.Integer value) {
+	public void setNedid(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.INDIVIDUALS.NAMEDENTITYID</code>.
+	 * Getter for <code>NAMEDENTITIES.INDIVIDUALS.NEDID</code>.
 	 */
-	public java.lang.Integer getNamedentityid() {
+	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(0);
 	}
 
@@ -232,7 +232,7 @@ public class IndividualsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plo
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Individuals.INDIVIDUALS.NAMEDENTITYID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Individuals.INDIVIDUALS.NEDID;
 	}
 
 	/**
@@ -336,7 +336,7 @@ public class IndividualsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plo
 	 */
 	@Override
 	public java.lang.Integer value1() {
-		return getNamedentityid();
+		return getNedid();
 	}
 
 	/**
@@ -440,7 +440,7 @@ public class IndividualsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plo
 	 */
 	@Override
 	public IndividualsRecord value1(java.lang.Integer value) {
-		setNamedentityid(value);
+		setNedid(value);
 		return this;
 	}
 
@@ -574,10 +574,10 @@ public class IndividualsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plo
 	/**
 	 * Create a detached, initialised IndividualsRecord
 	 */
-	public IndividualsRecord(java.lang.Integer namedentityid, java.lang.String firstname, java.lang.String middlename, java.lang.String lastname, java.lang.String nickname, java.lang.Integer nameprefixtypeid, java.lang.Integer namesuffixtypeid, java.lang.String displayname, java.lang.Integer preferredlanguagetypeid, java.lang.Integer preferredcommunicationmethodtypeid, byte[] photoimage, java.lang.Byte isactive, java.lang.Byte isvisible) {
+	public IndividualsRecord(java.lang.Integer nedid, java.lang.String firstname, java.lang.String middlename, java.lang.String lastname, java.lang.String nickname, java.lang.Integer nameprefixtypeid, java.lang.Integer namesuffixtypeid, java.lang.String displayname, java.lang.Integer preferredlanguagetypeid, java.lang.Integer preferredcommunicationmethodtypeid, byte[] photoimage, java.lang.Byte isactive, java.lang.Byte isvisible) {
 		super(org.plos.namedentity.persist.db.namedentities.tables.Individuals.INDIVIDUALS);
 
-		setValue(0, namedentityid);
+		setValue(0, nedid);
 		setValue(1, firstname);
 		setValue(2, middlename);
 		setValue(3, lastname);

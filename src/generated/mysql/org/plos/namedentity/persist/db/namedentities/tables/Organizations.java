@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Organizations extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord> {
 
-	private static final long serialVersionUID = 688538234;
+	private static final long serialVersionUID = 753276047;
 
 	/**
 	 * The singleton instance of <code>namedEntities.organizations</code>
@@ -27,29 +27,29 @@ public class Organizations extends org.jooq.impl.TableImpl<org.plos.namedentity.
 	}
 
 	/**
-	 * The column <code>namedEntities.organizations.namedEntityId</code>.
+	 * The column <code>namedEntities.organizations.nedId</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.Integer> NAMEDENTITYID = createField("namedEntityId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.Integer> NEDID = createField("nedId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedEntities.organizations.organizationTypeId</code>.
+	 * The column <code>namedEntities.organizations.typeId</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.Integer> ORGANIZATIONTYPEID = createField("organizationTypeId", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.Integer> TYPEID = createField("typeId", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>namedEntities.organizations.organizationFamiliarName</code>.
+	 * The column <code>namedEntities.organizations.familiarName</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.String> ORGANIZATIONFAMILIARNAME = createField("organizationFamiliarName", org.jooq.impl.SQLDataType.CLOB.length(65535), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.String> FAMILIARNAME = createField("familiarName", org.jooq.impl.SQLDataType.CLOB.length(65535), this, "");
 
 	/**
-	 * The column <code>namedEntities.organizations.organizationLegalName</code>.
+	 * The column <code>namedEntities.organizations.legalName</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.String> ORGANIZATIONLEGALNAME = createField("organizationLegalName", org.jooq.impl.SQLDataType.CLOB.length(65535), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.String> LEGALNAME = createField("legalName", org.jooq.impl.SQLDataType.CLOB.length(65535), this, "");
 
 	/**
-	 * The column <code>namedEntities.organizations.organizationMainContactId</code>.
+	 * The column <code>namedEntities.organizations.mainContactId</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.Integer> ORGANIZATIONMAINCONTACTID = createField("organizationMainContactId", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.Integer> MAINCONTACTID = createField("mainContactId", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>namedEntities.organizations.isActive</code>.

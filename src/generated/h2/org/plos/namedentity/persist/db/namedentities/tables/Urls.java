@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Urls extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord> {
 
-	private static final long serialVersionUID = -1049196091;
+	private static final long serialVersionUID = -443273258;
 
 	/**
 	 * The singleton instance of <code>NAMEDENTITIES.URLS</code>
@@ -32,9 +32,9 @@ public class Urls extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.d
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>NAMEDENTITIES.URLS.NAMEDENTITYID</code>.
+	 * The column <code>NAMEDENTITIES.URLS.NEDID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord, java.lang.Integer> NAMEDENTITYID = createField("NAMEDENTITYID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord, java.lang.Integer> NEDID = createField("NEDID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>NAMEDENTITIES.URLS.URL</code>.

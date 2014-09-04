@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Emails extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord> {
 
-	private static final long serialVersionUID = -469553238;
+	private static final long serialVersionUID = 1371360203;
 
 	/**
 	 * The singleton instance of <code>NAMEDENTITIES.EMAILS</code>
@@ -27,19 +27,19 @@ public class Emails extends org.jooq.impl.TableImpl<org.plos.namedentity.persist
 	}
 
 	/**
-	 * The column <code>NAMEDENTITIES.EMAILS.EMAILID</code>.
+	 * The column <code>NAMEDENTITIES.EMAILS.ID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Integer> EMAILID = createField("EMAILID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>NAMEDENTITIES.EMAILS.NAMEDENTITYID</code>.
+	 * The column <code>NAMEDENTITIES.EMAILS.NEDID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Integer> NAMEDENTITYID = createField("NAMEDENTITYID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Integer> NEDID = createField("NEDID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>NAMEDENTITIES.EMAILS.EMAILTYPEID</code>.
+	 * The column <code>NAMEDENTITIES.EMAILS.TYPEID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Integer> EMAILTYPEID = createField("EMAILTYPEID", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Integer> TYPEID = createField("TYPEID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>NAMEDENTITIES.EMAILS.EMAILADDRESS</code>.

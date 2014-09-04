@@ -11,47 +11,47 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class JournalsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1922420907;
+	private static final long serialVersionUID = -359752114;
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.JOURNALS.JOURNALID</code>.
+	 * Setter for <code>NAMEDENTITIES.JOURNALS.ID</code>.
 	 */
-	public void setJournalid(java.lang.Integer value) {
+	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.JOURNALS.JOURNALID</code>.
+	 * Getter for <code>NAMEDENTITIES.JOURNALS.ID</code>.
 	 */
-	public java.lang.Integer getJournalid() {
+	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.JOURNALS.NAMEDENTITYID</code>.
+	 * Setter for <code>NAMEDENTITIES.JOURNALS.NEDID</code>.
 	 */
-	public void setNamedentityid(java.lang.Integer value) {
+	public void setNedid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.JOURNALS.NAMEDENTITYID</code>.
+	 * Getter for <code>NAMEDENTITIES.JOURNALS.NEDID</code>.
 	 */
-	public java.lang.Integer getNamedentityid() {
+	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.JOURNALS.JOURNALTYPEID</code>.
+	 * Setter for <code>NAMEDENTITIES.JOURNALS.TYPEID</code>.
 	 */
-	public void setJournaltypeid(java.lang.Integer value) {
+	public void setTypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.JOURNALS.JOURNALTYPEID</code>.
+	 * Getter for <code>NAMEDENTITIES.JOURNALS.TYPEID</code>.
 	 */
-	public java.lang.Integer getJournaltypeid() {
+	public java.lang.Integer getTypeid() {
 		return (java.lang.Integer) getValue(2);
 	}
 
@@ -92,7 +92,7 @@ public class JournalsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.n
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Journals.JOURNALS.JOURNALID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Journals.JOURNALS.ID;
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class JournalsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.n
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Journals.JOURNALS.NAMEDENTITYID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Journals.JOURNALS.NEDID;
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class JournalsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.n
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field3() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Journals.JOURNALS.JOURNALTYPEID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Journals.JOURNALS.TYPEID;
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class JournalsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.n
 	 */
 	@Override
 	public java.lang.Integer value1() {
-		return getJournalid();
+		return getId();
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class JournalsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.n
 	 */
 	@Override
 	public java.lang.Integer value2() {
-		return getNamedentityid();
+		return getNedid();
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class JournalsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.n
 	 */
 	@Override
 	public java.lang.Integer value3() {
-		return getJournaltypeid();
+		return getTypeid();
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class JournalsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.n
 	 */
 	@Override
 	public JournalsRecord value1(java.lang.Integer value) {
-		setJournalid(value);
+		setId(value);
 		return this;
 	}
 
@@ -149,7 +149,7 @@ public class JournalsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.n
 	 */
 	@Override
 	public JournalsRecord value2(java.lang.Integer value) {
-		setNamedentityid(value);
+		setNedid(value);
 		return this;
 	}
 
@@ -158,7 +158,7 @@ public class JournalsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.n
 	 */
 	@Override
 	public JournalsRecord value3(java.lang.Integer value) {
-		setJournaltypeid(value);
+		setTypeid(value);
 		return this;
 	}
 
@@ -184,11 +184,11 @@ public class JournalsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.n
 	/**
 	 * Create a detached, initialised JournalsRecord
 	 */
-	public JournalsRecord(java.lang.Integer journalid, java.lang.Integer namedentityid, java.lang.Integer journaltypeid) {
+	public JournalsRecord(java.lang.Integer id, java.lang.Integer nedid, java.lang.Integer typeid) {
 		super(org.plos.namedentity.persist.db.namedentities.tables.Journals.JOURNALS);
 
-		setValue(0, journalid);
-		setValue(1, namedentityid);
-		setValue(2, journaltypeid);
+		setValue(0, id);
+		setValue(1, nedid);
+		setValue(2, typeid);
 	}
 }

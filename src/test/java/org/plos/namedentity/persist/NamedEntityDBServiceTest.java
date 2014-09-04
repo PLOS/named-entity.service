@@ -63,7 +63,7 @@ public class NamedEntityDBServiceTest {
     Result<Record2<String,String>> result = context
       .select(t.DESCRIPTION, v.SHORTDESCRIPTION)
       .from(t)
-      .join(v).on(v.TYPEID.equal(t.TYPEID))
+      .join(v).on(v.TYPEID.equal(t.ID))
       .fetch();
 
     assertTrue(result.size() >= 76);
@@ -77,7 +77,7 @@ public class NamedEntityDBServiceTest {
     try {
       // This should raise a unique constraint violation exception 
       context.insertInto(TYPEDESCRIPTIONS)
-             .set(TYPEDESCRIPTIONS.TYPEID, 1)
+             .set(TYPEDESCRIPTIONS.ID, 1)
              .set(TYPEDESCRIPTIONS.DESCRIPTION, "Type Class (dupe)")
              .execute();
 
@@ -118,8 +118,8 @@ public class NamedEntityDBServiceTest {
     // CREATE Work Email
 
     Email workEmail = new Email();
-    workEmail.setNamedentityid(1);
-    workEmail.setEmailtypeid(nedDBSvc.findTypeValue(emailTypeClassId, "Work"));
+    workEmail.setNedid(1);
+    workEmail.setTypeid(nedDBSvc.findTypeValue(emailTypeClassId, "Work"));
 
     try {
       Integer pkid = nedDBSvc.create( workEmail );
@@ -169,7 +169,7 @@ public class NamedEntityDBServiceTest {
     // it doesn't have any values associated with it (ie, has no globaltypes).
 
     Typedescription typeDescription = new Typedescription();
-    typeDescription.setTypeid(newTypeClassId);
+    typeDescription.setId(newTypeClassId);
 
     assertTrue( nedDBSvc.delete(typeDescription) );
 
@@ -177,7 +177,7 @@ public class NamedEntityDBServiceTest {
     // raise a foreign key constraint exception.
 
     try {
-      typeDescription.setTypeid(1);
+      typeDescription.setId(1);
       nedDBSvc.delete(typeDescription);
       fail();
     }
@@ -196,7 +196,7 @@ public class NamedEntityDBServiceTest {
     newGlobaltype.setLastmodified(new Timestamp(new Date().getTime()));
     newGlobaltype.setCreated(new Timestamp(new Date().getTime()));
 
-    assertNull(newGlobaltype.getGlobaltypeid());
+    assertNull(newGlobaltype.getId());
     assertNotNull(newGlobaltype.getTypeid());
     assertNotNull(newGlobaltype.getCreated());
     assertNotNull(newGlobaltype.getLastmodified());
@@ -230,7 +230,7 @@ public class NamedEntityDBServiceTest {
 
     // DELETE
     Globaltype typeValueToDelete = new Globaltype();
-    typeValueToDelete.setGlobaltypeid(newGlobalTypeId);
+    typeValueToDelete.setId(newGlobalTypeId);
 
     assertTrue( nedDBSvc.delete(typeValueToDelete) );
 
@@ -245,13 +245,13 @@ public class NamedEntityDBServiceTest {
     // CREATE Work Email
 
     Email workEmail = new Email();
-    workEmail.setNamedentityid(1);
-    workEmail.setEmailtypeid(nedDBSvc.findTypeValue(emailTypeClassId, "Work"));
+    workEmail.setNedid(1);
+    workEmail.setTypeid(nedDBSvc.findTypeValue(emailTypeClassId, "Work"));
     workEmail.setEmailaddress("walter.work@foo.com");
 
-    assertNull(workEmail.getEmailid());
-    assertNotNull(workEmail.getNamedentityid());
-    assertNotNull(workEmail.getEmailtypeid());
+    assertNull(workEmail.getId());
+    assertNotNull(workEmail.getNedid());
+    assertNotNull(workEmail.getTypeid());
     assertEquals(Byte.valueOf((byte)0), workEmail.getIsprimary());
     assertEquals(Byte.valueOf((byte)1), workEmail.getIsactive());
 
@@ -273,13 +273,13 @@ public class NamedEntityDBServiceTest {
     // CREATE Home Email
 
     Email homeEmail = new Email();
-    homeEmail.setNamedentityid(1);
-    homeEmail.setEmailtypeid(nedDBSvc.findTypeValue(emailTypeClassId, "Personal"));
+    homeEmail.setNedid(1);
+    homeEmail.setTypeid(nedDBSvc.findTypeValue(emailTypeClassId, "Personal"));
     homeEmail.setEmailaddress("walter.home@foo.com");
 
-    assertNull(homeEmail.getEmailid());
-    assertNotNull(homeEmail.getNamedentityid());
-    assertNotNull(homeEmail.getEmailtypeid());
+    assertNull(homeEmail.getId());
+    assertNotNull(homeEmail.getNedid());
+    assertNotNull(homeEmail.getTypeid());
     assertEquals(Byte.valueOf((byte)0), homeEmail.getIsprimary());
     assertEquals(Byte.valueOf((byte)1), homeEmail.getIsactive());
 
@@ -302,7 +302,7 @@ public class NamedEntityDBServiceTest {
     // FIND BY ATTRIBUTE (Lookup email addresses for an individual)
 
     Email emailSearchByIndividual = new Email();
-    emailSearchByIndividual.setNamedentityid(1);
+    emailSearchByIndividual.setNedid(1);
     List<Email> foundEmails2 = nedDBSvc.findByAttribute(emailSearchByIndividual);
     assertEquals(2, foundEmails2.size());
 
@@ -313,10 +313,10 @@ public class NamedEntityDBServiceTest {
     // FIND BY PRIMARY KEY
 
     for (Email email : allEmailsInDB) {
-      assertNotNull( nedDBSvc.findResolvedEntityByKey(email.getEmailid(), Email.class) );
+      assertNotNull( nedDBSvc.findResolvedEntityByKey(email.getId(), Email.class) );
     }
     // FIND BY JOIN-QUERY 
-    List<Email> emails = nedDBSvc.findResolvedEntities(foundEmails2.get(0).getNamedentityid(), Email.class);
+    List<Email> emails = nedDBSvc.findResolvedEntities(foundEmails2.get(0).getNedid(), Email.class);
 
 
     assertTrue( emails.size() > 0 );
@@ -329,7 +329,7 @@ public class NamedEntityDBServiceTest {
     // DELETE
 
     Email emailToDelete = new Email();
-    emailToDelete.setEmailid(workEmailId);
+    emailToDelete.setId(workEmailId);
 
     assertTrue( nedDBSvc.delete(emailToDelete) );
   }
@@ -352,7 +352,7 @@ public class NamedEntityDBServiceTest {
     Integer commMethodTypeId = nedDBSvc.findTypeValue(commMethodsTypeClassId, "Email") ; assertNotNull(commMethodsTypeClassId) ;
 
     Individual individual = new Individual();
-    individual.setNamedentityid(nedId);
+    individual.setNedid(nedId);
     individual.setFirstname("firstname");
     individual.setMiddlename("middlename");
     individual.setLastname("lastname");
@@ -393,7 +393,7 @@ public class NamedEntityDBServiceTest {
     // DELETE
 
     Individual individualToDelete = new Individual();
-    individualToDelete.setNamedentityid(individualId);
+    individualToDelete.setNedid(individualId);
 
     assertTrue( nedDBSvc.delete(individualToDelete) );
   }
@@ -409,10 +409,10 @@ public class NamedEntityDBServiceTest {
     Integer organizationTypeId = nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Organization Types"), "University");
 
     Organization organization = new Organization();
-    organization.setNamedentityid(nedId);
-    organization.setOrganizationtypeid(organizationTypeId);
-    organization.setOrganizationfamiliarname("familiarname");
-    organization.setOrganizationlegalname("legalname");
+    organization.setNedid(nedId);
+    organization.setTypeid(organizationTypeId);
+    organization.setFamiliarname("familiarname");
+    organization.setLegalname("legalname");
     organization.setIsactive((byte)1);
     organization.setIsvisible((byte)1);
 
@@ -421,7 +421,7 @@ public class NamedEntityDBServiceTest {
 
     // UPDATE
     Organization savedEntity = nedDBSvc.findById(organizationId, Organization.class);
-    savedEntity.setOrganizationlegalname("legalname2");
+    savedEntity.setLegalname("legalname2");
     assertTrue(nedDBSvc.update(savedEntity));
 
     // Get another instance of same individual record
@@ -438,13 +438,13 @@ public class NamedEntityDBServiceTest {
     Organization entity = nedDBSvc.findResolvedEntity(organizationId, Organization.class);
     assertNotNull( entity );
 
-    entity.setOrganizationtypeid(organizationTypeId);
+    entity.setTypeid(organizationTypeId);
     assertEquals(entity, savedEntity2);
 
     // DELETE
 
     Organization entityToDelete = new Organization();
-    entityToDelete.setNamedentityid(organizationId);
+    entityToDelete.setNedid(organizationId);
 
     assertTrue( nedDBSvc.delete(entityToDelete) );
   }
@@ -464,14 +464,14 @@ public class NamedEntityDBServiceTest {
     assertNotNull(usaCountryCodeTypeId); 
 
     Phonenumber mobilePhone = new Phonenumber();
-    mobilePhone.setNamedentityid(1);
-    mobilePhone.setPhonenumbertypeid(mobilePhoneTypeId);
+    mobilePhone.setNedid(1);
+    mobilePhone.setTypeid(mobilePhoneTypeId);
     mobilePhone.setCountrycodetypeid(usaCountryCodeTypeId);
     mobilePhone.setPhonenumber("650-123-4567");
     mobilePhone.setIsprimary(true);
 
-    assertNull(mobilePhone.getPhonenumberid());
-    assertNotNull(mobilePhone.getNamedentityid());
+    assertNull(mobilePhone.getId());
+    assertNotNull(mobilePhone.getNedid());
     assertTrue(mobilePhone.getIsprimary());
 
     Integer mobilePhoneId = nedDBSvc.create( mobilePhone );
@@ -491,14 +491,14 @@ public class NamedEntityDBServiceTest {
     // CREATE (Office Phone)
 
     Phonenumber officePhone = new Phonenumber();
-    officePhone.setNamedentityid(1);
-    officePhone.setPhonenumbertypeid(officePhoneTypeId);
+    officePhone.setNedid(1);
+    officePhone.setTypeid(officePhoneTypeId);
     officePhone.setCountrycodetypeid(usaCountryCodeTypeId);
     officePhone.setPhonenumber("650-222-9876");
     officePhone.setIsprimary(false);
 
-    assertNull(officePhone.getPhonenumberid());
-    assertNotNull(officePhone.getNamedentityid());
+    assertNull(officePhone.getId());
+    assertNotNull(officePhone.getNedid());
     assertTrue(officePhone.getIsactive());
 
     Integer officePhoneId = nedDBSvc.create( officePhone );
@@ -514,7 +514,7 @@ public class NamedEntityDBServiceTest {
     // FIND BY ATTRIBUTE (Lookup phone numbers for an individual)
 
     Phonenumber phoneSearchByIndividual = new Phonenumber();
-    phoneSearchByIndividual.setNamedentityid(1);
+    phoneSearchByIndividual.setNedid(1);
     List<Phonenumber> foundPhones = nedDBSvc.findByAttribute(phoneSearchByIndividual);
     assertEquals(2, foundPhones.size());
 
@@ -524,17 +524,17 @@ public class NamedEntityDBServiceTest {
 
     // FIND BY JOIN-QUERY 
 
-    List<Phonenumber> phonenumbers = nedDBSvc.findResolvedEntities(foundPhones.get(0).getNamedentityid(), Phonenumber.class);
+    List<Phonenumber> phonenumbers = nedDBSvc.findResolvedEntities(foundPhones.get(0).getNedid(), Phonenumber.class);
     assertTrue( phonenumbers.size() > 0 );
 
     // DELETE
 
     Phonenumber phoneToDelete = new Phonenumber();
 
-    phoneToDelete.setPhonenumberid(mobilePhoneId);
+    phoneToDelete.setId(mobilePhoneId);
     assertTrue( nedDBSvc.delete(phoneToDelete) );
 
-    phoneToDelete.setPhonenumberid(officePhoneId);
+    phoneToDelete.setId(officePhoneId);
     assertTrue( nedDBSvc.delete(phoneToDelete) );
   }
 
@@ -552,8 +552,8 @@ public class NamedEntityDBServiceTest {
     Integer stateCodeTypeId     = nedDBSvc.findTypeValue(stateCodeTypeClassId, "CA")         ; assertNotNull(stateCodeTypeId)    ;
 
     Address address = new Address();
-    address.setNamedentityid(1);
-    address.setAddresstypeid(officeAddressTypeId);
+    address.setNedid(1);
+    address.setTypeid(officeAddressTypeId);
     address.setAddressline1("addressline1");
     address.setAddressline2("addressline2");
     address.setAddressline3("addressline3");
@@ -563,8 +563,8 @@ public class NamedEntityDBServiceTest {
     address.setPostalcode("94501");
     address.setIsprimary((byte)1);
 
-    assertNull(address.getAddressid());
-    assertNotNull(address.getNamedentityid());
+    assertNull(address.getId());
+    assertNotNull(address.getNedid());
     assertEquals(Byte.valueOf((byte)1), address.getIsprimary());
     assertEquals(Byte.valueOf((byte)1), address.getIsactive());
 
@@ -589,14 +589,14 @@ public class NamedEntityDBServiceTest {
 
     // FIND BY JOIN-QUERY 
 
-    List<Address> addresses = nedDBSvc.findResolvedEntities(savedAddress.getNamedentityid(), Address.class);
+    List<Address> addresses = nedDBSvc.findResolvedEntities(savedAddress.getNedid(), Address.class);
     assertTrue( addresses.size() > 0 );
             
     // DELETE
 
     Address addressToDelete = new Address();
 
-    addressToDelete.setAddressid(addressId);
+    addressToDelete.setId(addressId);
     assertTrue( nedDBSvc.delete(addressToDelete) );
   }
 
@@ -612,15 +612,15 @@ public class NamedEntityDBServiceTest {
     Integer roleTypeId   = nedDBSvc.findTypeValue(roleTypeClassId, "Author")             ; assertNotNull(roleTypeId)  ;
 
     Role authorRole = new Role();
-    authorRole.setNamedentityid(1);
+    authorRole.setNedid(1);
     authorRole.setSourceapplicationtypeid(srcAppTypeId);
-    authorRole.setRoletypeid(roleTypeId);
+    authorRole.setTypeid(roleTypeId);
     authorRole.setStartdate(new Timestamp(new Date().getTime()));
     authorRole.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
     authorRole.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
 
-    assertNull(authorRole.getRoleid());
-    assertNotNull(authorRole.getNamedentityid());
+    assertNull(authorRole.getId());
+    assertNotNull(authorRole.getNedid());
 
     Integer authorId = nedDBSvc.create( authorRole );
     assertNotNull(authorId);
@@ -643,14 +643,14 @@ public class NamedEntityDBServiceTest {
 
     // FIND BY JOIN-QUERY 
 
-    List<Role> roles = nedDBSvc.findResolvedEntities(savedRole.getNamedentityid(), Role.class);
+    List<Role> roles = nedDBSvc.findResolvedEntities(savedRole.getNedid(), Role.class);
     Role role = roles.get(0);
-    assertEquals("Author", role.getRoletype());
+    assertEquals("Author", role.getType());
               
     // DELETE
 
     Role roleToDelete = new Role();
-    roleToDelete.setRoleid(authorId);
+    roleToDelete.setId(authorId);
     assertTrue( nedDBSvc.delete(roleToDelete) );
   }
 
@@ -680,12 +680,12 @@ public class NamedEntityDBServiceTest {
       assertNotNull(individualId);
 
       Uniqueidentifier uidEntity1 = new Uniqueidentifier();
-      uidEntity1.setNamedentityid(individualId);
-      uidEntity1.setUniqueidentifiertypeid(uidId);
+      uidEntity1.setNedid(individualId);
+      uidEntity1.setTypeid(uidId);
       uidEntity1.setUniqueidentifier(ORCID_ID);
 
-      assertNull(uidEntity1.getUniqueidentifiersid());
-      assertNotNull(uidEntity1.getNamedentityid());
+      assertNull(uidEntity1.getId());
+      assertNotNull(uidEntity1.getNedid());
 
       Integer uidId1 = nedDBSvc.create( uidEntity1 );
       assertNotNull(uidId1);
@@ -711,7 +711,7 @@ public class NamedEntityDBServiceTest {
 
       // FIND BY JOIN-QUERY 
 
-      List<Uniqueidentifier> uids = nedDBSvc.findResolvedEntities(savedUid.getNamedentityid(), Uniqueidentifier.class);
+      List<Uniqueidentifier> uids = nedDBSvc.findResolvedEntities(savedUid.getNedid(), Uniqueidentifier.class);
       Uniqueidentifier uid = uids.get(0);
       assertEquals(ORCID_ID, uid.getUniqueidentifier());
     }
@@ -723,7 +723,7 @@ public class NamedEntityDBServiceTest {
 
     for (Uniqueidentifier uid : allUidsInDb) {
       Uniqueidentifier uidToDelete = new Uniqueidentifier();
-      uidToDelete.setUniqueidentifiersid(uid.getUniqueidentifiersid());
+      uidToDelete.setId(uid.getId());
       assertTrue( nedDBSvc.delete(uidToDelete) );
     }
   }

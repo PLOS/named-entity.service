@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Globaltypes extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord> {
 
-	private static final long serialVersionUID = -1733540344;
+	private static final long serialVersionUID = -336408117;
 
 	/**
 	 * The singleton instance of <code>NAMEDENTITIES.GLOBALTYPES</code>
@@ -27,9 +27,9 @@ public class Globaltypes extends org.jooq.impl.TableImpl<org.plos.namedentity.pe
 	}
 
 	/**
-	 * The column <code>NAMEDENTITIES.GLOBALTYPES.GLOBALTYPEID</code>.
+	 * The column <code>NAMEDENTITIES.GLOBALTYPES.ID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.lang.Integer> GLOBALTYPEID = createField("GLOBALTYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>NAMEDENTITIES.GLOBALTYPES.TYPEID</code>.

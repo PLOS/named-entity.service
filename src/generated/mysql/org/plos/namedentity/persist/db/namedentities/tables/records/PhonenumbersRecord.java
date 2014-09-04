@@ -11,47 +11,47 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PhonenumbersRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord> implements org.jooq.Record8<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.Byte, java.lang.Byte> {
 
-	private static final long serialVersionUID = 1378096589;
+	private static final long serialVersionUID = 546948766;
 
 	/**
-	 * Setter for <code>namedEntities.phoneNumbers.phoneNumberId</code>.
+	 * Setter for <code>namedEntities.phoneNumbers.id</code>.
 	 */
-	public void setPhonenumberid(java.lang.Integer value) {
+	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedEntities.phoneNumbers.phoneNumberId</code>.
+	 * Getter for <code>namedEntities.phoneNumbers.id</code>.
 	 */
-	public java.lang.Integer getPhonenumberid() {
+	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedEntities.phoneNumbers.namedEntityId</code>.
+	 * Setter for <code>namedEntities.phoneNumbers.nedId</code>.
 	 */
-	public void setNamedentityid(java.lang.Integer value) {
+	public void setNedid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedEntities.phoneNumbers.namedEntityId</code>.
+	 * Getter for <code>namedEntities.phoneNumbers.nedId</code>.
 	 */
-	public java.lang.Integer getNamedentityid() {
+	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedEntities.phoneNumbers.phoneNumberTypeId</code>.
+	 * Setter for <code>namedEntities.phoneNumbers.typeId</code>.
 	 */
-	public void setPhonenumbertypeid(java.lang.Integer value) {
+	public void setTypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedEntities.phoneNumbers.phoneNumberTypeId</code>.
+	 * Getter for <code>namedEntities.phoneNumbers.typeId</code>.
 	 */
-	public java.lang.Integer getPhonenumbertypeid() {
+	public java.lang.Integer getTypeid() {
 		return (java.lang.Integer) getValue(2);
 	}
 
@@ -162,7 +162,7 @@ public class PhonenumbersRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Phonenumbers.PHONENUMBERS.PHONENUMBERID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Phonenumbers.PHONENUMBERS.ID;
 	}
 
 	/**
@@ -170,7 +170,7 @@ public class PhonenumbersRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Phonenumbers.PHONENUMBERS.NAMEDENTITYID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Phonenumbers.PHONENUMBERS.NEDID;
 	}
 
 	/**
@@ -178,7 +178,7 @@ public class PhonenumbersRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field3() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Phonenumbers.PHONENUMBERS.PHONENUMBERTYPEID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Phonenumbers.PHONENUMBERS.TYPEID;
 	}
 
 	/**
@@ -226,7 +226,7 @@ public class PhonenumbersRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	 */
 	@Override
 	public java.lang.Integer value1() {
-		return getPhonenumberid();
+		return getId();
 	}
 
 	/**
@@ -234,7 +234,7 @@ public class PhonenumbersRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	 */
 	@Override
 	public java.lang.Integer value2() {
-		return getNamedentityid();
+		return getNedid();
 	}
 
 	/**
@@ -242,7 +242,7 @@ public class PhonenumbersRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	 */
 	@Override
 	public java.lang.Integer value3() {
-		return getPhonenumbertypeid();
+		return getTypeid();
 	}
 
 	/**
@@ -290,7 +290,7 @@ public class PhonenumbersRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	 */
 	@Override
 	public PhonenumbersRecord value1(java.lang.Integer value) {
-		setPhonenumberid(value);
+		setId(value);
 		return this;
 	}
 
@@ -299,7 +299,7 @@ public class PhonenumbersRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	 */
 	@Override
 	public PhonenumbersRecord value2(java.lang.Integer value) {
-		setNamedentityid(value);
+		setNedid(value);
 		return this;
 	}
 
@@ -308,7 +308,7 @@ public class PhonenumbersRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	 */
 	@Override
 	public PhonenumbersRecord value3(java.lang.Integer value) {
-		setPhonenumbertypeid(value);
+		setTypeid(value);
 		return this;
 	}
 
@@ -379,12 +379,12 @@ public class PhonenumbersRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	/**
 	 * Create a detached, initialised PhonenumbersRecord
 	 */
-	public PhonenumbersRecord(java.lang.Integer phonenumberid, java.lang.Integer namedentityid, java.lang.Integer phonenumbertypeid, java.lang.Integer countrycodetypeid, java.lang.String phonenumber, java.lang.String extension, java.lang.Byte isprimary, java.lang.Byte isactive) {
+	public PhonenumbersRecord(java.lang.Integer id, java.lang.Integer nedid, java.lang.Integer typeid, java.lang.Integer countrycodetypeid, java.lang.String phonenumber, java.lang.String extension, java.lang.Byte isprimary, java.lang.Byte isactive) {
 		super(org.plos.namedentity.persist.db.namedentities.tables.Phonenumbers.PHONENUMBERS);
 
-		setValue(0, phonenumberid);
-		setValue(1, namedentityid);
-		setValue(2, phonenumbertypeid);
+		setValue(0, id);
+		setValue(1, nedid);
+		setValue(2, typeid);
 		setValue(3, countrycodetypeid);
 		setValue(4, phonenumber);
 		setValue(5, extension);

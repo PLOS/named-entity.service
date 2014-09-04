@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Uniqueidentifiers extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord> {
 
-	private static final long serialVersionUID = -2094359707;
+	private static final long serialVersionUID = 1414694627;
 
 	/**
 	 * The singleton instance of <code>NAMEDENTITIES.UNIQUEIDENTIFIERS</code>
@@ -27,19 +27,19 @@ public class Uniqueidentifiers extends org.jooq.impl.TableImpl<org.plos.namedent
 	}
 
 	/**
-	 * The column <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.UNIQUEIDENTIFIERSID</code>.
+	 * The column <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.ID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, java.lang.Integer> UNIQUEIDENTIFIERSID = createField("UNIQUEIDENTIFIERSID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.NAMEDENTITYID</code>.
+	 * The column <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.NEDID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, java.lang.Integer> NAMEDENTITYID = createField("NAMEDENTITYID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, java.lang.Integer> NEDID = createField("NEDID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.UNIQUEIDENTIFIERTYPEID</code>.
+	 * The column <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.TYPEID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, java.lang.Integer> UNIQUEIDENTIFIERTYPEID = createField("UNIQUEIDENTIFIERTYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, java.lang.Integer> TYPEID = createField("TYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.UNIQUEIDENTIFIER</code>.

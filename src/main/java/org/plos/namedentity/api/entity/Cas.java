@@ -19,35 +19,35 @@ package org.plos.namedentity.api.entity;
 /**
  * JOOQ generated class(pojo=true).
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Cas extends Entity {
 
-  private java.lang.Integer casid;
-  private java.lang.Integer namedentityid;
-  private java.lang.Integer sourceapplicationtypeid;
+  private Integer id;
+  private Integer nedid;
+  private Integer sourceapplicationtypeid;
 
 
-  public java.lang.Integer getCasid() {
-    return this.casid;
+  public Integer getId() {
+    return this.id;
   }
 
-  public void setCasid(java.lang.Integer casid) {
-    this.casid = casid;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
-  public java.lang.Integer getNamedentityid() {
-    return this.namedentityid;
+  public Integer getNedid() {
+    return this.nedid;
   }
 
-  public void setNamedentityid(java.lang.Integer namedentityid) {
-    this.namedentityid = namedentityid;
+  public void setNedid(Integer nedid) {
+    this.nedid = nedid;
   }
 
-  public java.lang.Integer getSourceapplicationtypeid() {
+  public Integer getSourceapplicationtypeid() {
     return this.sourceapplicationtypeid;
   }
 
-  public void setSourceapplicationtypeid(java.lang.Integer sourceapplicationtypeid) {
+  public void setSourceapplicationtypeid(Integer sourceapplicationtypeid) {
     this.sourceapplicationtypeid = sourceapplicationtypeid;
   }
 }

@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Roles extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord> {
 
-	private static final long serialVersionUID = -1321229915;
+	private static final long serialVersionUID = -1666991016;
 
 	/**
 	 * The singleton instance of <code>NAMEDENTITIES.ROLES</code>
@@ -27,24 +27,24 @@ public class Roles extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.
 	}
 
 	/**
-	 * The column <code>NAMEDENTITIES.ROLES.ROLEID</code>.
+	 * The column <code>NAMEDENTITIES.ROLES.ID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.lang.Integer> ROLEID = createField("ROLEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>NAMEDENTITIES.ROLES.NAMEDENTITYID</code>.
+	 * The column <code>NAMEDENTITIES.ROLES.NEDID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.lang.Integer> NAMEDENTITYID = createField("NAMEDENTITYID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.lang.Integer> NEDID = createField("NEDID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
+	 * The column <code>NAMEDENTITIES.ROLES.TYPEID</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.lang.Integer> TYPEID = createField("TYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>NAMEDENTITIES.ROLES.SOURCEAPPLICATIONTYPEID</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.lang.Integer> SOURCEAPPLICATIONTYPEID = createField("SOURCEAPPLICATIONTYPEID", org.jooq.impl.SQLDataType.INTEGER, this, "");
-
-	/**
-	 * The column <code>NAMEDENTITIES.ROLES.ROLETYPEID</code>.
-	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.lang.Integer> ROLETYPEID = createField("ROLETYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>NAMEDENTITIES.ROLES.STARTDATE</code>.
@@ -127,7 +127,7 @@ public class Roles extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_4A8, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_4A89);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_4A8, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_4A89, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_4A896);
 	}
 
 	/**

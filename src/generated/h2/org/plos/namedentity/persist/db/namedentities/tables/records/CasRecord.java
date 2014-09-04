@@ -11,33 +11,33 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CasRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.CasRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1282144251;
+	private static final long serialVersionUID = -1644210121;
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.CAS.CASID</code>.
+	 * Setter for <code>NAMEDENTITIES.CAS.ID</code>.
 	 */
-	public void setCasid(java.lang.Integer value) {
+	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.CAS.CASID</code>.
+	 * Getter for <code>NAMEDENTITIES.CAS.ID</code>.
 	 */
-	public java.lang.Integer getCasid() {
+	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.CAS.NAMEDENTITYID</code>.
+	 * Setter for <code>NAMEDENTITIES.CAS.NEDID</code>.
 	 */
-	public void setNamedentityid(java.lang.Integer value) {
+	public void setNedid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.CAS.NAMEDENTITYID</code>.
+	 * Getter for <code>NAMEDENTITIES.CAS.NEDID</code>.
 	 */
-	public java.lang.Integer getNamedentityid() {
+	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
@@ -92,7 +92,7 @@ public class CasRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namede
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Cas.CAS.CASID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Cas.CAS.ID;
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class CasRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namede
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Cas.CAS.NAMEDENTITYID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Cas.CAS.NEDID;
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class CasRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namede
 	 */
 	@Override
 	public java.lang.Integer value1() {
-		return getCasid();
+		return getId();
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class CasRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namede
 	 */
 	@Override
 	public java.lang.Integer value2() {
-		return getNamedentityid();
+		return getNedid();
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class CasRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namede
 	 */
 	@Override
 	public CasRecord value1(java.lang.Integer value) {
-		setCasid(value);
+		setId(value);
 		return this;
 	}
 
@@ -149,7 +149,7 @@ public class CasRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namede
 	 */
 	@Override
 	public CasRecord value2(java.lang.Integer value) {
-		setNamedentityid(value);
+		setNedid(value);
 		return this;
 	}
 
@@ -184,11 +184,11 @@ public class CasRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namede
 	/**
 	 * Create a detached, initialised CasRecord
 	 */
-	public CasRecord(java.lang.Integer casid, java.lang.Integer namedentityid, java.lang.Integer sourceapplicationtypeid) {
+	public CasRecord(java.lang.Integer id, java.lang.Integer nedid, java.lang.Integer sourceapplicationtypeid) {
 		super(org.plos.namedentity.persist.db.namedentities.tables.Cas.CAS);
 
-		setValue(0, casid);
-		setValue(1, namedentityid);
+		setValue(0, id);
+		setValue(1, nedid);
 		setValue(2, sourceapplicationtypeid);
 	}
 }

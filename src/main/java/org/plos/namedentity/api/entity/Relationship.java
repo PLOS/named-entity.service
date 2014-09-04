@@ -24,11 +24,11 @@ import java.sql.Timestamp;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Relationship extends Entity {
 
-  private Integer   relationshipid;
+  private Integer   id;
   private Integer   masternamedentityid;
   private Integer   childnamedentityid;
-  private Integer   relationshiptypeid;
-  private String    relationshiptype;
+  private Integer   typeid;
+  private String    type;
   private String    title;
   private Timestamp startdate;
   private Timestamp enddate;
@@ -37,12 +37,12 @@ public class Relationship extends Entity {
   private Integer   createdby;
   private Integer   lastmodifiedby;
 
-  public java.lang.Integer getRelationshipid() {
-    return this.relationshipid;
+  public java.lang.Integer getId() {
+    return this.id;
   }
 
-  public void setRelationshipid(java.lang.Integer relationshipid) {
-    this.relationshipid = relationshipid;
+  public void setId(java.lang.Integer id) {
+    this.id = id;
   }
 
   public java.lang.Integer getMasternamedentityid() {
@@ -61,12 +61,12 @@ public class Relationship extends Entity {
     this.childnamedentityid = childnamedentityid;
   }
 
-  public java.lang.Integer getRelationshiptypeid() {
-    return this.relationshiptypeid;
+  public java.lang.Integer getTypeid() {
+    return this.typeid;
   }
 
-  public void setRelationshiptypeid(java.lang.Integer relationshiptypeid) {
-    this.relationshiptypeid = relationshiptypeid;
+  public void setTypeid(java.lang.Integer typeid) {
+    this.typeid = typeid;
   }
 
   public java.sql.Timestamp getStartdate() {
@@ -117,11 +117,11 @@ public class Relationship extends Entity {
     this.lastmodifiedby = lastmodifiedby;
   }
   
-  public String getRelationshiptype() {
-      return relationshiptype;
+  public String getType() {
+      return type;
   }
   
-  public void setRelationshiptype(String relationshiptype) {
-      this.relationshiptype = relationshiptype;
+  public void setType(String type) {
+      this.type = type;
   }
 }

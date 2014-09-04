@@ -26,7 +26,7 @@ import java.util.Objects;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Individual extends Entity {
 
-  private Integer namedentityid;
+  private Integer nedid;
   private String  firstname;
   private String  middlename;
   private String  lastname;
@@ -38,7 +38,7 @@ public class Individual extends Entity {
   private String  namesuffix;
   private Integer namesuffixtypeid;
 
-  private String  displayname;
+  private String displayname;
 
   private String  preferredlanguage;
   private Integer preferredlanguagetypeid;
@@ -46,19 +46,23 @@ public class Individual extends Entity {
   private String  preferredcommunication;
   private Integer preferredcommunicationmethodtypeid;
 
-  private byte[]  photoimage;
+  private byte[] photoimage;
 
-  private Byte    isactive = 1;
-  private Byte    isvisible = 1;
+  private Byte isactive  = 1;
+  private Byte isvisible = 1;
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) { return true; }
+    if (this == o) {
+      return true;
+    }
 
-    if (o == null || this.getClass() != o.getClass()) { return false; }
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
 
     Individual entity = (Individual) o;
-    return Objects.equals(this.namedentityid, entity.namedentityid)
+    return Objects.equals(this.nedid, entity.nedid)
         && Objects.equals(this.firstname, entity.firstname)
         && Objects.equals(this.middlename, entity.middlename)
         && Objects.equals(this.lastname, entity.lastname);
@@ -66,7 +70,7 @@ public class Individual extends Entity {
 
   @Override
   public int hashCode() {
-    return Objects.hash(namedentityid, firstname, middlename, lastname);
+    return Objects.hash(nedid, firstname, middlename, lastname);
   }
 
   public Byte getIsactive() {
@@ -117,12 +121,12 @@ public class Individual extends Entity {
     this.preferredcommunication = preferredcommunication;
   }
 
-  public Integer getNamedentityid() {
-    return this.namedentityid;
+  public Integer getNedid() {
+    return this.nedid;
   }
 
-  public void setNamedentityid(Integer namedentityid) {
-    this.namedentityid = namedentityid;
+  public void setNedid(Integer nedid) {
+    this.nedid = nedid;
   }
 
   public String getFirstname() {

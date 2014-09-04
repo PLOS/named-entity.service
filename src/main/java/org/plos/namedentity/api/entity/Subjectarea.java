@@ -22,31 +22,31 @@ package org.plos.namedentity.api.entity;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Subjectarea extends Entity {
 
-  private Integer subjectareaid;
-  private Integer namedentityid;
-  private Integer subjectareatypeid;
+  private Integer id;
+  private Integer nedid;
+  private Integer typeid;
 
-  public Integer getSubjectareaid() {
-    return this.subjectareaid;
+  public Integer getId() {
+    return this.id;
   }
 
-  public void setSubjectareaid(Integer subjectareaid) {
-    this.subjectareaid = subjectareaid;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
-  public Integer getNamedentityid() {
-    return this.namedentityid;
+  public Integer getNedid() {
+    return this.nedid;
   }
 
-  public void setNamedentityid(Integer namedentityid) {
-    this.namedentityid = namedentityid;
+  public void setNedid(Integer nedid) {
+    this.nedid = nedid;
   }
 
-  public Integer getSubjectareatypeid() {
-    return this.subjectareatypeid;
+  public Integer getTypeid() {
+    return this.typeid;
   }
 
-  public void setSubjectareatypeid(Integer subjectareatypeid) {
-    this.subjectareatypeid = subjectareatypeid;
+  public void setTypeid(Integer typeid) {
+    this.typeid = typeid;
   }
 }

@@ -25,40 +25,40 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Degree extends Entity {
 
-  private Integer degreeid;
-  private Integer namedentityid;
-  private Integer degreetypeid;
-  private String  degreetype;
+  private Integer id;
+  private Integer nedid;
+  private Integer typeid;
+  private String  type;
 
-  public String getDegreetype() {
-    return degreetype;
+  public String getType() {
+    return type;
   }
 
-  public void setDegreetype(String degreetype) {
-    this.degreetype = degreetype;
+  public void setType(String type) {
+    this.type = type;
   }
 
-  public Integer getDegreeid() {
-    return this.degreeid;
+  public Integer getId() {
+    return this.id;
   }
 
-  public void setDegreeid(Integer degreeid) {
-    this.degreeid = degreeid;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
-  public Integer getNamedentityid() {
-    return this.namedentityid;
+  public Integer getNedid() {
+    return this.nedid;
   }
 
-  public void setNamedentityid(Integer namedentityid) {
-    this.namedentityid = namedentityid;
+  public void setNedid(Integer nedid) {
+    this.nedid = nedid;
   }
 
-  public Integer getDegreetypeid() {
-    return this.degreetypeid;
+  public Integer getTypeid() {
+    return this.typeid;
   }
 
-  public void setDegreetypeid(Integer degreetypeid) {
-    this.degreetypeid = degreetypeid;
+  public void setTypeid(Integer typeid) {
+    this.typeid = typeid;
   }
 }

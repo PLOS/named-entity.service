@@ -11,47 +11,47 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DegreesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1954662785;
+	private static final long serialVersionUID = 126954748;
 
 	/**
-	 * Setter for <code>namedEntities.degrees.degreeId</code>.
+	 * Setter for <code>namedEntities.degrees.id</code>.
 	 */
-	public void setDegreeid(java.lang.Integer value) {
+	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedEntities.degrees.degreeId</code>.
+	 * Getter for <code>namedEntities.degrees.id</code>.
 	 */
-	public java.lang.Integer getDegreeid() {
+	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedEntities.degrees.namedEntityId</code>.
+	 * Setter for <code>namedEntities.degrees.nedId</code>.
 	 */
-	public void setNamedentityid(java.lang.Integer value) {
+	public void setNedid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedEntities.degrees.namedEntityId</code>.
+	 * Getter for <code>namedEntities.degrees.nedId</code>.
 	 */
-	public java.lang.Integer getNamedentityid() {
+	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedEntities.degrees.degreeTypeId</code>.
+	 * Setter for <code>namedEntities.degrees.typeId</code>.
 	 */
-	public void setDegreetypeid(java.lang.Integer value) {
+	public void setTypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedEntities.degrees.degreeTypeId</code>.
+	 * Getter for <code>namedEntities.degrees.typeId</code>.
 	 */
-	public java.lang.Integer getDegreetypeid() {
+	public java.lang.Integer getTypeid() {
 		return (java.lang.Integer) getValue(2);
 	}
 
@@ -92,7 +92,7 @@ public class DegreesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.na
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Degrees.DEGREES.DEGREEID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Degrees.DEGREES.ID;
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class DegreesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.na
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Degrees.DEGREES.NAMEDENTITYID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Degrees.DEGREES.NEDID;
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class DegreesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.na
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field3() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Degrees.DEGREES.DEGREETYPEID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Degrees.DEGREES.TYPEID;
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class DegreesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.na
 	 */
 	@Override
 	public java.lang.Integer value1() {
-		return getDegreeid();
+		return getId();
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class DegreesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.na
 	 */
 	@Override
 	public java.lang.Integer value2() {
-		return getNamedentityid();
+		return getNedid();
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class DegreesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.na
 	 */
 	@Override
 	public java.lang.Integer value3() {
-		return getDegreetypeid();
+		return getTypeid();
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class DegreesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.na
 	 */
 	@Override
 	public DegreesRecord value1(java.lang.Integer value) {
-		setDegreeid(value);
+		setId(value);
 		return this;
 	}
 
@@ -149,7 +149,7 @@ public class DegreesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.na
 	 */
 	@Override
 	public DegreesRecord value2(java.lang.Integer value) {
-		setNamedentityid(value);
+		setNedid(value);
 		return this;
 	}
 
@@ -158,7 +158,7 @@ public class DegreesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.na
 	 */
 	@Override
 	public DegreesRecord value3(java.lang.Integer value) {
-		setDegreetypeid(value);
+		setTypeid(value);
 		return this;
 	}
 
@@ -184,11 +184,11 @@ public class DegreesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.na
 	/**
 	 * Create a detached, initialised DegreesRecord
 	 */
-	public DegreesRecord(java.lang.Integer degreeid, java.lang.Integer namedentityid, java.lang.Integer degreetypeid) {
+	public DegreesRecord(java.lang.Integer id, java.lang.Integer nedid, java.lang.Integer typeid) {
 		super(org.plos.namedentity.persist.db.namedentities.tables.Degrees.DEGREES);
 
-		setValue(0, degreeid);
-		setValue(1, namedentityid);
-		setValue(2, degreetypeid);
+		setValue(0, id);
+		setValue(1, nedid);
+		setValue(2, typeid);
 	}
 }

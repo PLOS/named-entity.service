@@ -11,61 +11,61 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RelationshipsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Timestamp, java.sql.Timestamp, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1586302207;
+	private static final long serialVersionUID = -904463311;
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.RELATIONSHIPS.RELATIONSHIPID</code>.
+	 * Setter for <code>NAMEDENTITIES.RELATIONSHIPS.ID</code>.
 	 */
-	public void setRelationshipid(java.lang.Integer value) {
+	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.RELATIONSHIPS.RELATIONSHIPID</code>.
+	 * Getter for <code>NAMEDENTITIES.RELATIONSHIPS.ID</code>.
 	 */
-	public java.lang.Integer getRelationshipid() {
+	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
+	}
+
+	/**
+	 * Setter for <code>NAMEDENTITIES.RELATIONSHIPS.TYPEID</code>.
+	 */
+	public void setTypeid(java.lang.Integer value) {
+		setValue(1, value);
+	}
+
+	/**
+	 * Getter for <code>NAMEDENTITIES.RELATIONSHIPS.TYPEID</code>.
+	 */
+	public java.lang.Integer getTypeid() {
+		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>NAMEDENTITIES.RELATIONSHIPS.MASTERNAMEDENTITYID</code>.
 	 */
 	public void setMasternamedentityid(java.lang.Integer value) {
-		setValue(1, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>NAMEDENTITIES.RELATIONSHIPS.MASTERNAMEDENTITYID</code>.
 	 */
 	public java.lang.Integer getMasternamedentityid() {
-		return (java.lang.Integer) getValue(1);
+		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>NAMEDENTITIES.RELATIONSHIPS.CHILDNAMEDENTITYID</code>.
 	 */
 	public void setChildnamedentityid(java.lang.Integer value) {
-		setValue(2, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>NAMEDENTITIES.RELATIONSHIPS.CHILDNAMEDENTITYID</code>.
 	 */
 	public java.lang.Integer getChildnamedentityid() {
-		return (java.lang.Integer) getValue(2);
-	}
-
-	/**
-	 * Setter for <code>NAMEDENTITIES.RELATIONSHIPS.RELATIONSHIPTYPEID</code>.
-	 */
-	public void setRelationshiptypeid(java.lang.Integer value) {
-		setValue(3, value);
-	}
-
-	/**
-	 * Getter for <code>NAMEDENTITIES.RELATIONSHIPS.RELATIONSHIPTYPEID</code>.
-	 */
-	public java.lang.Integer getRelationshiptypeid() {
 		return (java.lang.Integer) getValue(3);
 	}
 
@@ -204,7 +204,7 @@ public class RelationshipsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Relationships.RELATIONSHIPS.RELATIONSHIPID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Relationships.RELATIONSHIPS.ID;
 	}
 
 	/**
@@ -212,7 +212,7 @@ public class RelationshipsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Relationships.RELATIONSHIPS.MASTERNAMEDENTITYID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Relationships.RELATIONSHIPS.TYPEID;
 	}
 
 	/**
@@ -220,7 +220,7 @@ public class RelationshipsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field3() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Relationships.RELATIONSHIPS.CHILDNAMEDENTITYID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Relationships.RELATIONSHIPS.MASTERNAMEDENTITYID;
 	}
 
 	/**
@@ -228,7 +228,7 @@ public class RelationshipsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field4() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Relationships.RELATIONSHIPS.RELATIONSHIPTYPEID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Relationships.RELATIONSHIPS.CHILDNAMEDENTITYID;
 	}
 
 	/**
@@ -292,7 +292,7 @@ public class RelationshipsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public java.lang.Integer value1() {
-		return getRelationshipid();
+		return getId();
 	}
 
 	/**
@@ -300,7 +300,7 @@ public class RelationshipsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public java.lang.Integer value2() {
-		return getMasternamedentityid();
+		return getTypeid();
 	}
 
 	/**
@@ -308,7 +308,7 @@ public class RelationshipsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public java.lang.Integer value3() {
-		return getChildnamedentityid();
+		return getMasternamedentityid();
 	}
 
 	/**
@@ -316,7 +316,7 @@ public class RelationshipsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public java.lang.Integer value4() {
-		return getRelationshiptypeid();
+		return getChildnamedentityid();
 	}
 
 	/**
@@ -380,7 +380,7 @@ public class RelationshipsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public RelationshipsRecord value1(java.lang.Integer value) {
-		setRelationshipid(value);
+		setId(value);
 		return this;
 	}
 
@@ -389,7 +389,7 @@ public class RelationshipsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public RelationshipsRecord value2(java.lang.Integer value) {
-		setMasternamedentityid(value);
+		setTypeid(value);
 		return this;
 	}
 
@@ -398,7 +398,7 @@ public class RelationshipsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public RelationshipsRecord value3(java.lang.Integer value) {
-		setChildnamedentityid(value);
+		setMasternamedentityid(value);
 		return this;
 	}
 
@@ -407,7 +407,7 @@ public class RelationshipsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	 */
 	@Override
 	public RelationshipsRecord value4(java.lang.Integer value) {
-		setRelationshiptypeid(value);
+		setChildnamedentityid(value);
 		return this;
 	}
 
@@ -496,13 +496,13 @@ public class RelationshipsRecord extends org.jooq.impl.UpdatableRecordImpl<org.p
 	/**
 	 * Create a detached, initialised RelationshipsRecord
 	 */
-	public RelationshipsRecord(java.lang.Integer relationshipid, java.lang.Integer masternamedentityid, java.lang.Integer childnamedentityid, java.lang.Integer relationshiptypeid, java.lang.String title, java.sql.Timestamp startdate, java.sql.Timestamp enddate, java.sql.Timestamp created, java.sql.Timestamp lastmodified, java.lang.Integer createdby, java.lang.Integer lastmodifiedby) {
+	public RelationshipsRecord(java.lang.Integer id, java.lang.Integer typeid, java.lang.Integer masternamedentityid, java.lang.Integer childnamedentityid, java.lang.String title, java.sql.Timestamp startdate, java.sql.Timestamp enddate, java.sql.Timestamp created, java.sql.Timestamp lastmodified, java.lang.Integer createdby, java.lang.Integer lastmodifiedby) {
 		super(org.plos.namedentity.persist.db.namedentities.tables.Relationships.RELATIONSHIPS);
 
-		setValue(0, relationshipid);
-		setValue(1, masternamedentityid);
-		setValue(2, childnamedentityid);
-		setValue(3, relationshiptypeid);
+		setValue(0, id);
+		setValue(1, typeid);
+		setValue(2, masternamedentityid);
+		setValue(3, childnamedentityid);
 		setValue(4, title);
 		setValue(5, startdate);
 		setValue(6, enddate);

@@ -39,43 +39,43 @@ public class OrganizationComposite implements Validatable {
   }
 
   public Integer getNamedentityid() {
-    return this.organization.getNamedentityid();
+    return this.organization.getNedid();
   }
 
   public void setNamedentityid(Integer namedentityid) {
-    this.organization.setNamedentityid(namedentityid);
+    this.organization.setNedid(namedentityid);
   }
 
   public Integer getOrganizationtypeid() {
-    return this.organization.getOrganizationtypeid();
+    return this.organization.getTypeid();
   }
 
   public void setOrganizationtypeid(Integer organizationtypeid) {
-    this.organization.setOrganizationtypeid(organizationtypeid);
+    this.organization.setTypeid(organizationtypeid);
   }
 
   public String getOrganizationfamiliarname() {
-    return this.organization.getOrganizationfamiliarname();
+    return this.organization.getFamiliarname();
   }
 
   public void setOrganizationfamiliarname(String organizationfamiliarname) {
-    this.organization.setOrganizationfamiliarname(organizationfamiliarname);
+    this.organization.setFamiliarname(organizationfamiliarname);
   }
 
   public String getOrganizationlegalname() {
-    return this.organization.getOrganizationlegalname();
+    return this.organization.getLegalname();
   }
 
   public void setOrganizationlegalname(String organizationlegalname) {
-    this.organization.setOrganizationlegalname(organizationlegalname);
+    this.organization.setLegalname(organizationlegalname);
   }
 
   public Integer getOrganizationmaincontactid() {
-    return this.organization.getOrganizationmaincontactid();
+    return this.organization.getMaincontactid();
   }
 
   public void setOrganizationmaincontactid(Integer organizationmaincontactid) {
-    this.organization.setOrganizationtypeid(organizationmaincontactid);
+    this.organization.setTypeid(organizationmaincontactid);
   }
 
   public Byte getIsactive() {
@@ -95,11 +95,11 @@ public class OrganizationComposite implements Validatable {
   }
 
   public String getOrganizationtype() {
-    return this.organization.getOrganizationtype();
+    return this.organization.getType();
   }
 
   public void setOrganizationtype(String organizationtype) {
-    this.organization.setOrganizationtype(organizationtype);
+    this.organization.setType(organizationtype);
   }
 
   public List<Address> getAddresses() {

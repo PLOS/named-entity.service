@@ -26,53 +26,53 @@ import java.util.Objects;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Organization extends Entity {
 
-  private Integer namedentityid;
-  private Integer organizationtypeid;
-  private String  organizationtype;
-  private String  organizationfamiliarname;
-  private String  organizationlegalname;
-  private Integer organizationmaincontactid;
-  private Byte    isactive = 1;
-  private Byte    isvisible = 1;
+  private Integer nedid;
+  private Integer typeid;
+  private String  type;
+  private String  familiarname;
+  private String  legalname;
+  private Integer maincontactid;
+  private Byte isactive  = 1;
+  private Byte isvisible = 1;
 
-  public Integer getNamedentityid() {
-    return this.namedentityid;
+  public Integer getNedid() {
+    return this.nedid;
   }
 
-  public void setNamedentityid(Integer namedentityid) {
-    this.namedentityid = namedentityid;
+  public void setNedid(Integer nedid) {
+    this.nedid = nedid;
   }
 
-  public Integer getOrganizationtypeid() {
-    return this.organizationtypeid;
+  public Integer getTypeid() {
+    return this.typeid;
   }
 
-  public void setOrganizationtypeid(Integer organizationtypeid) {
-    this.organizationtypeid = organizationtypeid;
+  public void setTypeid(Integer typeid) {
+    this.typeid = typeid;
   }
 
-  public String getOrganizationfamiliarname() {
-    return this.organizationfamiliarname;
+  public String getFamiliarname() {
+    return this.familiarname;
   }
 
-  public void setOrganizationfamiliarname(String organizationfamiliarname) {
-    this.organizationfamiliarname = organizationfamiliarname;
+  public void setFamiliarname(String familiarname) {
+    this.familiarname = familiarname;
   }
 
-  public String getOrganizationlegalname() {
-    return this.organizationlegalname;
+  public String getLegalname() {
+    return this.legalname;
   }
 
-  public void setOrganizationlegalname(String organizationlegalname) {
-    this.organizationlegalname = organizationlegalname;
+  public void setLegalname(String legalname) {
+    this.legalname = legalname;
   }
 
-  public Integer getOrganizationmaincontactid() {
-    return this.organizationmaincontactid;
+  public Integer getMaincontactid() {
+    return this.maincontactid;
   }
 
-  public void setOrganizationmaincontactid(Integer organizationmaincontactid) {
-    this.organizationmaincontactid = organizationmaincontactid;
+  public void setMaincontactid(Integer maincontactid) {
+    this.maincontactid = maincontactid;
   }
 
   public Byte getIsactive() {
@@ -91,12 +91,12 @@ public class Organization extends Entity {
     this.isvisible = isvisible;
   }
 
-  public String getOrganizationtype() {
-    return organizationtype;
+  public String getType() {
+    return type;
   }
 
-  public void setOrganizationtype(String organizationtype) {
-    this.organizationtype = organizationtype;
+  public void setType(String type) {
+    this.type = type;
   }
 
   @Override
@@ -106,17 +106,17 @@ public class Organization extends Entity {
 
     Organization that = (Organization) o;
 
-    return Objects.equals(this.namedentityid, that.namedentityid)
+    return Objects.equals(this.nedid, that.nedid)
         && Objects.equals(this.isactive, that.isactive)
         && Objects.equals(this.isvisible, that.isvisible)
-        && Objects.equals(this.organizationfamiliarname, that.organizationfamiliarname)
-        && Objects.equals(this.organizationlegalname, that.organizationlegalname)
-        && Objects.equals(this.organizationmaincontactid, that.organizationmaincontactid)
-        && Objects.equals(this.organizationtypeid, that.organizationtypeid);
+        && Objects.equals(this.familiarname, that.familiarname)
+        && Objects.equals(this.legalname, that.legalname)
+        && Objects.equals(this.maincontactid, that.maincontactid)
+        && Objects.equals(this.typeid, that.typeid);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.namedentityid, this.isactive, this.isvisible,this.organizationfamiliarname, this.organizationlegalname, this.organizationmaincontactid,this.organizationtypeid);
+    return Objects.hash(this.nedid, this.isactive, this.isvisible,this.familiarname, this.legalname, this.maincontactid,this.typeid);
   }
 }

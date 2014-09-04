@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Relationships extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord> {
 
-	private static final long serialVersionUID = 1131403397;
+	private static final long serialVersionUID = -656910047;
 
 	/**
 	 * The singleton instance of <code>namedEntities.relationships</code>
@@ -27,9 +27,14 @@ public class Relationships extends org.jooq.impl.TableImpl<org.plos.namedentity.
 	}
 
 	/**
-	 * The column <code>namedEntities.relationships.relationshipId</code>.
+	 * The column <code>namedEntities.relationships.id</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> RELATIONSHIPID = createField("relationshipId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
+	 * The column <code>namedEntities.relationships.typeId</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> TYPEID = createField("typeId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>namedEntities.relationships.masterNamedEntityId</code>.
@@ -40,11 +45,6 @@ public class Relationships extends org.jooq.impl.TableImpl<org.plos.namedentity.
 	 * The column <code>namedEntities.relationships.childNamedEntityId</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> CHILDNAMEDENTITYID = createField("childNamedEntityId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
-	/**
-	 * The column <code>namedEntities.relationships.relationshipTypeId</code>.
-	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> RELATIONSHIPTYPEID = createField("relationshipTypeId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>namedEntities.relationships.title</code>.

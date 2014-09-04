@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UrlsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 1034928016;
+	private static final long serialVersionUID = 779955011;
 
 	/**
 	 * Setter for <code>NAMEDENTITIES.URLS.ID</code>.
@@ -28,16 +28,16 @@ public class UrlsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.named
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.URLS.NAMEDENTITYID</code>.
+	 * Setter for <code>NAMEDENTITIES.URLS.NEDID</code>.
 	 */
-	public void setNamedentityid(java.lang.Integer value) {
+	public void setNedid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.URLS.NAMEDENTITYID</code>.
+	 * Getter for <code>NAMEDENTITIES.URLS.NEDID</code>.
 	 */
-	public java.lang.Integer getNamedentityid() {
+	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
@@ -100,7 +100,7 @@ public class UrlsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.named
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Urls.URLS.NAMEDENTITYID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Urls.URLS.NEDID;
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class UrlsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.named
 	 */
 	@Override
 	public java.lang.Integer value2() {
-		return getNamedentityid();
+		return getNedid();
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class UrlsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.named
 	 */
 	@Override
 	public UrlsRecord value2(java.lang.Integer value) {
-		setNamedentityid(value);
+		setNedid(value);
 		return this;
 	}
 
@@ -184,11 +184,11 @@ public class UrlsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.named
 	/**
 	 * Create a detached, initialised UrlsRecord
 	 */
-	public UrlsRecord(java.lang.Integer id, java.lang.Integer namedentityid, java.lang.String url) {
+	public UrlsRecord(java.lang.Integer id, java.lang.Integer nedid, java.lang.String url) {
 		super(org.plos.namedentity.persist.db.namedentities.tables.Urls.URLS);
 
 		setValue(0, id);
-		setValue(1, namedentityid);
+		setValue(1, nedid);
 		setValue(2, url);
 	}
 }

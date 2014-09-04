@@ -27,22 +27,22 @@ import java.util.Objects;
 @XmlRootElement
 public class Globaltype extends Entity {
 
-  private Integer  globaltypeid;
-  private Integer  typeid;
-  private String   shortdescription;
-  private String   longdescription;
-  private String   typecode;
-  private Timestamp created;// = new Timestamp(new Date().getTime());
-  private Timestamp lastmodified;// = new Timestamp(new Date().getTime());
-  private Integer  createdby;
-  private Integer  lastmodifiedby;
+  private Integer   id;
+  private Integer   typeid;
+  private String    shortdescription;
+  private String    longdescription;
+  private String    typecode;
+  private Timestamp created;
+  private Timestamp lastmodified;
+  private Integer   createdby;
+  private Integer   lastmodifiedby;
 
-  public Integer getGlobaltypeid() {
-    return this.globaltypeid;
+  public Integer getId() {
+    return this.id;
   }
 
-  public void setGlobaltypeid(Integer globaltypeid) {
-    this.globaltypeid = globaltypeid;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public Integer getTypeid() {
@@ -111,12 +111,16 @@ public class Globaltype extends Entity {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) { return true; }
+    if (this == o) {
+      return true;
+    }
 
-    if (o == null || this.getClass() != o.getClass()) { return false; }
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
 
     Globaltype entity = (Globaltype) o;
-    return Objects.equals(this.globaltypeid, entity.globaltypeid)
+    return Objects.equals(this.id, entity.id)
         && Objects.equals(this.typeid, entity.typeid)
         && Objects.equals(this.shortdescription, entity.shortdescription)
         && Objects.equals(this.longdescription, entity.longdescription)
@@ -129,7 +133,7 @@ public class Globaltype extends Entity {
 
   @Override
   public int hashCode() {
-    return Objects.hash(globaltypeid, typeid, shortdescription, longdescription, 
-      typecode, created, lastmodified, createdby, lastmodifiedby);
+    return Objects.hash(id, typeid, shortdescription, longdescription,
+        typecode, created, lastmodified, createdby, lastmodifiedby);
   }
 }
