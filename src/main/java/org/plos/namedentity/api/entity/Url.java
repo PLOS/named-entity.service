@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Url extends Entity {
 
   private Integer id;
-  private Integer namedEntityId;
+  private Integer namedentityid;
   private String  url;
 
   private static UrlValidator urlValidator = UrlValidator.getInstance();
@@ -17,19 +17,19 @@ public class Url extends Entity {
   @Override
   public void validate() {
     if (url != null && !urlValidator.isValid(url))
-      throw new NedValidationException("URL not valid");
+      throw new NedValidationException("URL not valid ("+url+")");
   }
 
   public Integer getId() {
     return id;
   }
 
-  public Integer getNamedEntityId() {
-    return namedEntityId;
+  public Integer getNamedentityid() {
+    return namedentityid;
   }
 
-  public void setNamedEntityId(Integer namedEntityId) {
-    this.namedEntityId = namedEntityId;
+  public void setNamedentityid(Integer namedentityid) {
+    this.namedentityid = namedentityid;
   }
 
   public String getUrl() {

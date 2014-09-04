@@ -210,18 +210,17 @@ public class NamedEntityServiceTest {
       // make sure foreign keys are resolved for sub entities
       assertNotNull(responseComposite.getEmails().get(0).getEmailid());
     }
-    catch (NedValidationException e) {
-      fail();
+    catch (Exception e) {
+      fail(e.getMessage());
     }
-    finally {
-      Email emailSearchCriteria = new Email();
-      emailSearchCriteria.setEmailaddress("fu.manchu.work@foo.com");
-      List<Email> emailSearchResult = crudService.findByAttribute(emailSearchCriteria);
-      assertEquals(1, emailSearchResult.size());
 
-      nedId = emailSearchResult.get(0).getNamedentityid();
-      assertNotNull( nedId );
-    }
+    Email emailSearchCriteria = new Email();
+    emailSearchCriteria.setEmailaddress("fu.manchu.work@foo.com");
+    List<Email> emailSearchResult = crudService.findByAttribute(emailSearchCriteria);
+    assertEquals(1, emailSearchResult.size());
+
+    nedId = emailSearchResult.get(0).getNamedentityid();
+    assertNotNull( nedId );
 
     // Test "By NedId" Finders
 

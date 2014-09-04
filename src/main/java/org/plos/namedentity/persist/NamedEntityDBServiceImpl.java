@@ -26,15 +26,7 @@ import org.jooq.UpdatableRecord;
 import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.*;
-import org.plos.namedentity.persist.db.namedentities.tables.Addresses;
-import org.plos.namedentity.persist.db.namedentities.tables.Degrees;
-import org.plos.namedentity.persist.db.namedentities.tables.Emails;
-import org.plos.namedentity.persist.db.namedentities.tables.Globaltypes;
-import org.plos.namedentity.persist.db.namedentities.tables.Individuals;
-import org.plos.namedentity.persist.db.namedentities.tables.Organizations;
-import org.plos.namedentity.persist.db.namedentities.tables.Phonenumbers;
-import org.plos.namedentity.persist.db.namedentities.tables.Roles;
-import org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers;
+import org.plos.namedentity.persist.db.namedentities.tables.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -270,6 +262,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       return (List<T>)findUniqueIdsByNedId(nedId);
     if (cname.equals(Degree.class.getCanonicalName()))
       return (List<T>)findDegreesByNedId(nedId);
+    if (cname.equals(Url.class.getCanonicalName()))
+      return (List<T>)findUrlsByNedId(nedId);
 
     throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
 
@@ -515,6 +509,18 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .into(Degree.class);
   }
 
+  private List<Url> findUrlsByNedId(Integer nedId) {
+
+    Urls        u   = URLS.as("u");
+
+    return this.context
+        .select(u.URL)
+        .from(u)
+        .where(u.NAMEDENTITYID.equal(nedId))
+        .fetch()
+        .into(Url.class);
+  }
+
   private List<Role> findRolesByNedId(Integer nedId) {
 /*
         SELECT gt1.shortDescription sourceapplicationtype,
@@ -655,6 +661,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     entityTableMap.put(Uniqueidentifier.class, new TablePkPair(UNIQUEIDENTIFIERS, UNIQUEIDENTIFIERS.UNIQUEIDENTIFIERSID));
     entityTableMap.put(Organization.class, new TablePkPair(ORGANIZATIONS, ORGANIZATIONS.NAMEDENTITYID));
     entityTableMap.put(Degree.class, new TablePkPair(DEGREES, DEGREES.DEGREEID));
+    entityTableMap.put(Url.class, new TablePkPair(URLS, URLS.ID));
   }
   private static Table table(Class key) {
     return entityTableMap.get(key).table();

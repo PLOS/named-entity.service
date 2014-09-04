@@ -17,15 +17,7 @@
 package org.plos.namedentity.service;
 
 import org.plos.namedentity.api.IndividualComposite;
-import org.plos.namedentity.api.entity.Address;
-import org.plos.namedentity.api.entity.Degree;
-import org.plos.namedentity.api.entity.Email;
-import org.plos.namedentity.api.entity.Entity;
-import org.plos.namedentity.api.entity.Individual;
-import org.plos.namedentity.api.entity.Organization;
-import org.plos.namedentity.api.entity.Phonenumber;
-import org.plos.namedentity.api.entity.Role;
-import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.persist.NamedEntityDBService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -162,6 +154,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     composite.setDegrees(findResolvedEntities(nedId, Degree.class));
 
+    composite.setUrls(findResolvedEntities(nedId, Url.class));
+
     composite.setRoles(findResolvedEntities(nedId, Role.class));
 
     composite.setUniqueidentifiers(findResolvedEntities(nedId, Uniqueidentifier.class));
@@ -205,6 +199,14 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       for (Degree degree : degrees) {
         degree.setNamedentityid(nedId);
         nedDBSvc.create(resolveDegree(degree));
+      }
+    }
+
+    List<Url> urls = composite.getUrls();
+    if (urls != null) {
+      for (Url url : urls) {
+        url.setNamedentityid(nedId);
+        nedDBSvc.create(url);
       }
     }
 

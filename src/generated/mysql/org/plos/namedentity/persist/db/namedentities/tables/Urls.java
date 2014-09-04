@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Urls extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord> {
 
-	private static final long serialVersionUID = -1448420452;
+	private static final long serialVersionUID = 1753091586;
 
 	/**
 	 * The singleton instance of <code>namedEntities.urls</code>
@@ -37,9 +37,9 @@ public class Urls extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.d
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord, java.lang.Integer> NAMEDENTITYID = createField("namedEntityId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedEntities.urls.urlTypeId</code>.
+	 * The column <code>namedEntities.urls.url</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord, java.lang.Integer> URLTYPEID = createField("urlTypeId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord, java.lang.String> URL = createField("url", org.jooq.impl.SQLDataType.CLOB.length(65535), this, "");
 
 	/**
 	 * Create a <code>namedEntities.urls</code> table reference
@@ -92,7 +92,7 @@ public class Urls extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.d
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.URLS_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.URLS_IBFK_2);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.URLS_IBFK_1);
 	}
 
 	/**
