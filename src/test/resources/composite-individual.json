@@ -8,13 +8,13 @@
          "extension" : "x012",
          "isprimary" : "true",
          "phonenumber" : "650-123-4567",
-         "phonenumbertype" : "Office",
+         "type" : "Office",
          "countrycodetype" : "01"
       },
       {
          "isprimary" : "false",
          "phonenumber" : "650-111-2222",
-         "phonenumbertype" : "Mobile",
+         "type" : "Mobile",
          "countrycodetype" : "01"
       }
    ],
@@ -34,21 +34,21 @@
    "emails" : [
       {
          "isprimary" : "false",
-         "emailtype" : "Personal",
+         "type" : "Personal",
          "emailaddress" : "jane.q.doe.personal@foo.com"
       },
       {
          "isprimary" : "true",
-         "emailtype" : "Work",
+         "type" : "Work",
          "emailaddress" : "jane.q.doe.work@foo.com"
       }
    ],
    "degrees" : [
       {
-        "degreetype":"MD"
+        "type":"MD"
       },
       {
-        "degreetype":"PhD"
+        "type":"PhD"
       }
    ],
    "nameprefix" : "Mrs.",
@@ -58,11 +58,11 @@
    },
    "uniqueidentifiers" : [
       {
-         "uniqueidentifiertype" : "ORCID",
+         "type" : "ORCID",
          "uniqueidentifier" : "0000-0002-9430-319X"
       },
       {
-         "uniqueidentifiertype" : "Editorial Manager",
+         "type" : "Editorial Manager",
          "uniqueidentifier" : "PONE-579386"
       }
    ]

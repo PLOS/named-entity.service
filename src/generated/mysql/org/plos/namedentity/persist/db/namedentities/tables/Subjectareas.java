@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Subjectareas extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord> {
 
-	private static final long serialVersionUID = -574211799;
+	private static final long serialVersionUID = -426084486;
 
 	/**
 	 * The singleton instance of <code>namedEntities.subjectAreas</code>
@@ -27,19 +27,19 @@ public class Subjectareas extends org.jooq.impl.TableImpl<org.plos.namedentity.p
 	}
 
 	/**
-	 * The column <code>namedEntities.subjectAreas.subjectAreaId</code>.
+	 * The column <code>namedEntities.subjectAreas.id</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord, java.lang.Integer> SUBJECTAREAID = createField("subjectAreaId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedEntities.subjectAreas.namedEntityId</code>.
+	 * The column <code>namedEntities.subjectAreas.nedId</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord, java.lang.Integer> NAMEDENTITYID = createField("namedEntityId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord, java.lang.Integer> NEDID = createField("nedId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedEntities.subjectAreas.subjectAreaTypeId</code>.
+	 * The column <code>namedEntities.subjectAreas.typeId</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord, java.lang.Integer> SUBJECTAREATYPEID = createField("subjectAreaTypeId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord, java.lang.Integer> TYPEID = createField("typeId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>namedEntities.subjectAreas</code> table reference

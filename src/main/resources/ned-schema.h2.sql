@@ -9,42 +9,42 @@ CREATE SCHEMA IF NOT EXISTS namedEntities;
 
 DROP TABLE IF EXISTS namedEntities.typeDescriptions;
 CREATE TABLE IF NOT EXISTS namedEntities.typeDescriptions (
-    typeId INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
     description TEXT NOT NULL,
     howUsed TEXT NULL,
-    PRIMARY KEY (typeId)
+    PRIMARY KEY (id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.globalTypes;
 CREATE TABLE IF NOT EXISTS namedEntities.globalTypes (
-    globalTypeId INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
     typeId INT NOT NULL,
     shortDescription TEXT NOT NULL,
     longDescription TEXT NULL,
-    typeCode VARCHAR(4) NOT NULL,
+    typeCode TEXT NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     createdBy INT NULL,
     lastModifiedBy INT NULL,
-    PRIMARY KEY (globalTypeId),
-    FOREIGN KEY (typeId) REFERENCES typeDescriptions(typeId)
+    PRIMARY KEY (id),
+    FOREIGN KEY (typeId) REFERENCES typeDescriptions(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.namedEntityIdentifiers;
 CREATE TABLE IF NOT EXISTS namedEntities.namedEntityIdentifiers (
-    namedEntityId INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
     typeId INT NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     createdBy INT NULL,
     lastModifiedBy INT NULL,
-    PRIMARY KEY (namedEntityId),
-    FOREIGN KEY (typeId) REFERENCES globalTypes(globalTypeId)
+    PRIMARY KEY (id),
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.individuals;
 CREATE TABLE IF NOT EXISTS namedEntities.individuals (
-    namedEntityId INT NOT NULL,
+    nedId INT NOT NULL,
     firstName TEXT NOT NULL,
     middleName TEXT NULL,
     lastName TEXT NOT NULL,
@@ -55,184 +55,184 @@ CREATE TABLE IF NOT EXISTS namedEntities.individuals (
     preferredLanguageTypeId INT NULL,
     preferredCommunicationMethodTypeId INT NULL,
     photoImage VARBINARY(255) NULL,
-    url TEXT NULL,
     isActive TINYINT(1) NOT NULL,
     isVisible TINYINT(1) NOT NULL,
-    PRIMARY KEY (namedEntityId),
-    FOREIGN KEY (namePrefixTypeId) REFERENCES globalTypes(globalTypeId),
-    FOREIGN KEY (nameSuffixTypeId) REFERENCES globalTypes(globalTypeId),
-    FOREIGN KEY (preferredLanguageTypeId) REFERENCES globalTypes(globalTypeId),
-    FOREIGN KEY (preferredCommunicationMethodTypeId) REFERENCES globalTypes(globalTypeId)
+    PRIMARY KEY (nedId),
+    FOREIGN KEY (namePrefixTypeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (nameSuffixTypeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (preferredLanguageTypeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (preferredCommunicationMethodTypeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.organizations;
 CREATE TABLE IF NOT EXISTS namedEntities.organizations (
-    namedEntityId INT NOT NULL,
-    organizationTypeId INT NULL,
-    organizationFamiliarName TEXT NULL,
-    organizationLegalName TEXT NULL,
-    organizationMainContactId INT NULL,
+    nedId INT NOT NULL,
+    typeId INT NULL,
+    familiarName TEXT NULL,
+    legalName TEXT NULL,
+    mainContactId INT NULL,
     isActive TINYINT(1) NOT NULL,
     isVisible TINYINT(1) NOT NULL,
-    url TEXT NULL,
-    PRIMARY KEY (namedEntityId),
-    FOREIGN KEY (organizationTypeId) REFERENCES globalTypes(globalTypeId)
+    PRIMARY KEY (nedId),
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (mainContactId) REFERENCES individuals(nedId)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.addresses;
 CREATE TABLE IF NOT EXISTS namedEntities.addresses (
-    addressId INT NOT NULL AUTO_INCREMENT,
-    namedEntityId INT NOT NULL,
-    addressTypeId INT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
+    nedId INT NOT NULL,
+    typeId INT NULL,
     addressLine1 TEXT NULL,
     addressLine2 TEXT NULL,
     addressLine3 TEXT NULL,
     city TEXT NULL,
     stateCodeTypeId INT NULL,  
     countryCodeTypeId INT NOT NULL,
-    postalCode VARCHAR(16) NULL,
+    postalCode TEXT NULL,
     mainContactNamedEntityId INT NULL,
     latitude INT NULL,
     longitude INT NULL,
     isPrimary TINYINT(1) NOT NULL,
     isActive TINYINT(1) NOT NULL,
-    PRIMARY KEY (addressId),
-    FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId)
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.emails;
 CREATE TABLE IF NOT EXISTS namedEntities.emails (
-    emailId INT NOT NULL AUTO_INCREMENT,
-    namedEntityId INT NOT NULL,
-    emailTypeId INT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
+    nedId INT NOT NULL,
+    typeId INT NULL,
     emailAddress TEXT NOT NULL,
     isPrimary TINYINT(1) NOT NULL,
     isActive TINYINT(1) NOT NULL,
-    PRIMARY KEY (emailId),
-    FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId),
-    FOREIGN KEY (emailTypeId) REFERENCES globalTypes(globalTypeId)
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.phoneNumbers;
 CREATE TABLE IF NOT EXISTS namedEntities.phoneNumbers (
-    phoneNumberId INT NOT NULL AUTO_INCREMENT,
-    namedEntityId INT NOT NULL,
-    phoneNumberTypeId INT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
+    nedId INT NOT NULL,
+    typeId INT NULL,
     countryCodeTypeId INT NULL,
     phoneNumber TEXT NOT NULL,
     extension TEXT NULL,
     isPrimary TINYINT(1) NOT NULL,
     isActive TINYINT(1) NOT NULL,
-    PRIMARY KEY (phoneNumberId),
-    FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId),
-    FOREIGN KEY (phoneNumberTypeId) REFERENCES globalTypes(globalTypeId),
-    FOREIGN KEY (countryCodeTypeId) REFERENCES globalTypes(globalTypeId)
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (countryCodeTypeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.roles;
 CREATE TABLE IF NOT EXISTS namedEntities.roles (
-    roleId INT NOT NULL AUTO_INCREMENT,
-    namedEntityId INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
+    nedId INT NOT NULL,
+    typeID INT NOT NULL,
     sourceApplicationTypeId INT NULL,
-    roleTypeID INT NOT NULL,
     startDate TIMESTAMP NULL,
     endDate TIMESTAMP NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     createdBy INT NULL,
     lastModifiedBy INT NULL,
-    PRIMARY KEY (roleId),
-    FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId),
-    FOREIGN KEY (sourceApplicationTypeId) REFERENCES globalTypes(globalTypeId)
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (sourceApplicationTypeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.relationships;
 CREATE TABLE IF NOT EXISTS namedEntities.relationships (
-    relationshipId INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
+    typeId INT NOT NULL,
     masterNamedEntityId INT NOT NULL,
     childNamedEntityId INT NOT NULL,
-    relationshipTypeId INT NOT NULL,
+    title TEXT NULL,
     startDate TIMESTAMP NULL,
     endDate TIMESTAMP NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     createdBy INT NULL,
     lastModifiedBy INT NULL,
-    PRIMARY KEY (relationshipId),
-    FOREIGN KEY (relationshipTypeId) REFERENCES globalTypes(globalTypeId)
+    PRIMARY KEY (id),
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.sourceFields;
 CREATE TABLE IF NOT EXISTS namedEntities.sourceFields (
-    sourceFieldId INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
     sourceTable TEXT NOT NULL,
     sourceField TEXT NOT NULL,
-    PRIMARY KEY (sourceFieldId)
+    PRIMARY KEY (id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.auditTrail;
 CREATE TABLE IF NOT EXISTS namedEntities.auditTrail (
-    auditTrailId INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
     sourceFieldId INT NOT NULL,
     rowNumber INT NULL,
     oldValue TEXT NOT NULL,
     newValue TEXT NOT NULL,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     lastModifiedBy INT NULL,
-    PRIMARY KEY (auditTrailId),
-    FOREIGN KEY (sourceFieldId) REFERENCES sourceFields(sourceFieldId)
+    PRIMARY KEY (id),
+    FOREIGN KEY (sourceFieldId) REFERENCES sourceFields(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.subjectAreas;
 CREATE TABLE IF NOT EXISTS namedEntities.subjectAreas (
-    subjectAreaId INT NOT NULL AUTO_INCREMENT,
-    namedEntityId INT NOT NULL,
-    subjectAreaTypeId INT NOT NULL,
-    PRIMARY KEY (subjectAreaId),
-    FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId),
-    FOREIGN KEY (subjectAreaTypeId) REFERENCES globalTypes(globalTypeId)
-)   ENGINE=INNODB;
-
--- merge with unique identifiers?
-DROP TABLE IF EXISTS namedEntities.cas;
-CREATE TABLE IF NOT EXISTS namedEntities.cas (
-    casId INT NOT NULL,
-    namedEntityId INT NOT NULL,
-    sourceApplicationTypeId INT NULL,
-    PRIMARY KEY (casId),
-    FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId),
-    FOREIGN KEY (sourceApplicationTypeId) REFERENCES globalTypes(globalTypeId)
+    id INT NOT NULL AUTO_INCREMENT,
+    nedId INT NOT NULL,
+    typeId INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.journals;
 CREATE TABLE IF NOT EXISTS namedEntities.journals (
-    journalId INT NOT NULL AUTO_INCREMENT,
-    namedEntityId INT NOT NULL,
-    journalTypeId INT NOT NULL,
-    PRIMARY KEY (journalId),
-    FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId),
-    FOREIGN KEY (journalTypeId) REFERENCES globalTypes(globalTypeId)
+    id INT NOT NULL AUTO_INCREMENT,
+    nedId INT NOT NULL,
+    typeId INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.degrees;
 CREATE TABLE IF NOT EXISTS namedEntities.degrees (
-    degreeId INT NOT NULL AUTO_INCREMENT,
-    namedEntityId INT NOT NULL,
-    degreeTypeId INT NOT NULL,
-    PRIMARY KEY (degreeId),
-    FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId),
-    FOREIGN KEY (degreeTypeId) REFERENCES globalTypes(globalTypeId)
+    id INT NOT NULL AUTO_INCREMENT,
+    nedId INT NOT NULL,
+    typeId INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id)
+)   ENGINE=INNODB;
+
+DROP TABLE IF EXISTS namedEntities.urls;
+CREATE TABLE IF NOT EXISTS namedEntities.urls (
+    id INT NOT NULL AUTO_INCREMENT,
+    nedId INT NOT NULL,
+    url TEXT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.uniqueIdentifiers;
 CREATE TABLE IF NOT EXISTS namedEntities.uniqueIdentifiers (
-    uniqueIdentifiersId INT NOT NULL AUTO_INCREMENT,
-    namedEntityId INT NOT NULL,
-    uniqueIdentifierTypeId INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
+    nedId INT NOT NULL,
+    typeId INT NOT NULL,
     uniqueIdentifier TEXT NOT NULL,
-    PRIMARY KEY (uniqueIdentifiersId),
-    FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId),
-    FOREIGN KEY (uniqueIdentifierTypeId) REFERENCES globalTypes(globalTypeId)
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
 /* ------------------------------------------------------------------------- */
@@ -272,7 +272,7 @@ INSERT INTO namedEntities.globalTypes VALUES (6,3,'University',NULL,'UNIV','2014
 INSERT INTO namedEntities.globalTypes VALUES (7,3,'Department',NULL,'DEPT','2014-03-23 20:37:26','2014-03-23 20:37:26',1,1);
 INSERT INTO namedEntities.globalTypes VALUES (8,4,'Author',NULL,'AUTH','2014-03-23 20:44:32','2014-03-23 20:44:32',1,1);
 INSERT INTO namedEntities.globalTypes VALUES (9,4,'Co-Author',NULL,'COAU','2014-03-23 20:44:57','2014-03-23 20:44:57',1,1);
-INSERT INTO namedEntities.globalTypes VALUES (10,4,'Academic Editor',NULL,'AE','2014-03-23 20:45:37','2014-03-23 20:45:37',1,1);
+INSERT INTO namedEntities.globalTypes VALUES (10,4,'Academic Editor (PLOS ONE)',NULL,'AE_PLOSONE','2014-03-23 20:45:37','2014-03-23 20:45:37',1,1);
 INSERT INTO namedEntities.globalTypes VALUES (11,4,'Reviewer',NULL,'REV','2014-03-23 20:46:08','2014-03-23 20:46:08',1,1);
 INSERT INTO namedEntities.globalTypes VALUES (12,5,'Mr.',NULL,'MR','2014-03-23 20:47:09','2014-03-23 20:47:09',1,1);
 INSERT INTO namedEntities.globalTypes VALUES (13,5,'Mrs.',NULL,'MRS','2014-03-23 20:47:26','2014-03-23 20:47:26',1,1);
@@ -342,4 +342,4 @@ INSERT INTO namedEntities.globalTypes VALUES (76,17,'CAS',NULL,'CAS','2014-03-23
 INSERT INTO namedEntities.globalTypes VALUES (77,17,'Salesforce',NULL,'SF','2014-03-23 20:34:40','2014-03-23 20:34:40',1,1);
 
 INSERT INTO namedEntities.namedEntityIdentifiers VALUES (1, 1, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, NULL, NULL);
-INSERT INTO namedEntities.individuals VALUES (1, 'NED', NULL, 'NED', NULL, NULL, NULL, 'NED', NULL, NULL, NULL, NULL, 1,  1);
+INSERT INTO namedEntities.individuals VALUES (1, 'NED', NULL, 'NED', NULL, NULL, NULL, 'NED', NULL, NULL, NULL, 1,  1);

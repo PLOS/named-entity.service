@@ -22,18 +22,16 @@ package org.plos.namedentity.api.entity;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sourcefield extends Entity {
 
-  private static final long serialVersionUID = -2013224879;
-
-  private Integer sourcefieldid;
+  private Integer id;
   private String  sourcetable;
   private String  sourcefield;
 
-  public Integer getSourcefieldid() {
-    return this.sourcefieldid;
+  public Integer getId() {
+    return this.id;
   }
 
-  public void setSourcefieldid(Integer sourcefieldid) {
-    this.sourcefieldid = sourcefieldid;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public String getSourcetable() {

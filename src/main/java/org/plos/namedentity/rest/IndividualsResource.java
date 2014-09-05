@@ -68,7 +68,7 @@ public class IndividualsResource extends BaseResource {
 
     try {
 
-      entity.setNamedentityid(nedId);  // TODO: check if path var=payload for id?
+      entity.setNedid(nedId);  // TODO: check if path var=payload for id?
 
       namedEntityService.resolveValuesToIds(entity);
 
@@ -146,7 +146,6 @@ public class IndividualsResource extends BaseResource {
   public Response updateEmail(@PathParam("nedId") int nedId, 
                               @PathParam("emailId") int emailId, 
                               Email emailEntity) {
-
     return updateEmail(nedId, emailId, emailEntity, Individual.class);
   }
 

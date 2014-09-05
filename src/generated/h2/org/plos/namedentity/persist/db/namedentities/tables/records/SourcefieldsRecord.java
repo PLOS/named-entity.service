@@ -11,19 +11,19 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SourcefieldsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.SourcefieldsRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 218845176;
+	private static final long serialVersionUID = -2122223479;
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.SOURCEFIELDS.SOURCEFIELDID</code>.
+	 * Setter for <code>NAMEDENTITIES.SOURCEFIELDS.ID</code>.
 	 */
-	public void setSourcefieldid(java.lang.Integer value) {
+	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.SOURCEFIELDS.SOURCEFIELDID</code>.
+	 * Getter for <code>NAMEDENTITIES.SOURCEFIELDS.ID</code>.
 	 */
-	public java.lang.Integer getSourcefieldid() {
+	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
@@ -92,7 +92,7 @@ public class SourcefieldsRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Sourcefields.SOURCEFIELDS.SOURCEFIELDID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Sourcefields.SOURCEFIELDS.ID;
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class SourcefieldsRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	 */
 	@Override
 	public java.lang.Integer value1() {
-		return getSourcefieldid();
+		return getId();
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class SourcefieldsRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	 */
 	@Override
 	public SourcefieldsRecord value1(java.lang.Integer value) {
-		setSourcefieldid(value);
+		setId(value);
 		return this;
 	}
 
@@ -184,10 +184,10 @@ public class SourcefieldsRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	/**
 	 * Create a detached, initialised SourcefieldsRecord
 	 */
-	public SourcefieldsRecord(java.lang.Integer sourcefieldid, java.lang.String sourcetable, java.lang.String sourcefield) {
+	public SourcefieldsRecord(java.lang.Integer id, java.lang.String sourcetable, java.lang.String sourcefield) {
 		super(org.plos.namedentity.persist.db.namedentities.tables.Sourcefields.SOURCEFIELDS);
 
-		setValue(0, sourcefieldid);
+		setValue(0, id);
 		setValue(1, sourcetable);
 		setValue(2, sourcefield);
 	}

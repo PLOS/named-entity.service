@@ -11,19 +11,19 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class GlobaltypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord> implements org.jooq.Record9<java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 143289228;
+	private static final long serialVersionUID = 670978723;
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.GLOBALTYPES.GLOBALTYPEID</code>.
+	 * Setter for <code>NAMEDENTITIES.GLOBALTYPES.ID</code>.
 	 */
-	public void setGlobaltypeid(java.lang.Integer value) {
+	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.GLOBALTYPES.GLOBALTYPEID</code>.
+	 * Getter for <code>NAMEDENTITIES.GLOBALTYPES.ID</code>.
 	 */
-	public java.lang.Integer getGlobaltypeid() {
+	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
@@ -176,7 +176,7 @@ public class GlobaltypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plo
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Globaltypes.GLOBALTYPES.GLOBALTYPEID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Globaltypes.GLOBALTYPES.ID;
 	}
 
 	/**
@@ -248,7 +248,7 @@ public class GlobaltypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plo
 	 */
 	@Override
 	public java.lang.Integer value1() {
-		return getGlobaltypeid();
+		return getId();
 	}
 
 	/**
@@ -320,7 +320,7 @@ public class GlobaltypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plo
 	 */
 	@Override
 	public GlobaltypesRecord value1(java.lang.Integer value) {
-		setGlobaltypeid(value);
+		setId(value);
 		return this;
 	}
 
@@ -418,10 +418,10 @@ public class GlobaltypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plo
 	/**
 	 * Create a detached, initialised GlobaltypesRecord
 	 */
-	public GlobaltypesRecord(java.lang.Integer globaltypeid, java.lang.Integer typeid, java.lang.String shortdescription, java.lang.String longdescription, java.lang.String typecode, java.sql.Timestamp created, java.sql.Timestamp lastmodified, java.lang.Integer createdby, java.lang.Integer lastmodifiedby) {
+	public GlobaltypesRecord(java.lang.Integer id, java.lang.Integer typeid, java.lang.String shortdescription, java.lang.String longdescription, java.lang.String typecode, java.sql.Timestamp created, java.sql.Timestamp lastmodified, java.lang.Integer createdby, java.lang.Integer lastmodifiedby) {
 		super(org.plos.namedentity.persist.db.namedentities.tables.Globaltypes.GLOBALTYPES);
 
-		setValue(0, globaltypeid);
+		setValue(0, id);
 		setValue(1, typeid);
 		setValue(2, shortdescription);
 		setValue(3, longdescription);

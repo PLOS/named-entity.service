@@ -54,7 +54,7 @@ public interface NamedEntityService {
    * Finds entity by primary key. Type id references in entity are replaced by
    * equivalent type names (ie, "resolved").
    *
-   * @param nedId  primary key of entity
+   * @param pk     primary key of entity
    * @param clazz  entity class to lookup by key 
    *
    * @return       entity with specified primary key

@@ -11,19 +11,19 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TypedescriptionsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.TypedescriptionsRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -1662392190;
+	private static final long serialVersionUID = -373665132;
 
 	/**
-	 * Setter for <code>namedEntities.typeDescriptions.typeId</code>.
+	 * Setter for <code>namedEntities.typeDescriptions.id</code>.
 	 */
-	public void setTypeid(java.lang.Integer value) {
+	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedEntities.typeDescriptions.typeId</code>.
+	 * Getter for <code>namedEntities.typeDescriptions.id</code>.
 	 */
-	public java.lang.Integer getTypeid() {
+	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
@@ -92,7 +92,7 @@ public class TypedescriptionsRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions.TYPEDESCRIPTIONS.TYPEID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions.TYPEDESCRIPTIONS.ID;
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class TypedescriptionsRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	@Override
 	public java.lang.Integer value1() {
-		return getTypeid();
+		return getId();
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class TypedescriptionsRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	@Override
 	public TypedescriptionsRecord value1(java.lang.Integer value) {
-		setTypeid(value);
+		setId(value);
 		return this;
 	}
 
@@ -184,10 +184,10 @@ public class TypedescriptionsRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	/**
 	 * Create a detached, initialised TypedescriptionsRecord
 	 */
-	public TypedescriptionsRecord(java.lang.Integer typeid, java.lang.String description, java.lang.String howused) {
+	public TypedescriptionsRecord(java.lang.Integer id, java.lang.String description, java.lang.String howused) {
 		super(org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions.TYPEDESCRIPTIONS);
 
-		setValue(0, typeid);
+		setValue(0, id);
 		setValue(1, description);
 		setValue(2, howused);
 	}

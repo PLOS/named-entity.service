@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Namedentityidentifiers extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.NamedentityidentifiersRecord> {
 
-	private static final long serialVersionUID = -1546262085;
+	private static final long serialVersionUID = 243497457;
 
 	/**
 	 * The singleton instance of <code>namedEntities.namedEntityIdentifiers</code>
@@ -27,9 +27,9 @@ public class Namedentityidentifiers extends org.jooq.impl.TableImpl<org.plos.nam
 	}
 
 	/**
-	 * The column <code>namedEntities.namedEntityIdentifiers.namedEntityId</code>.
+	 * The column <code>namedEntities.namedEntityIdentifiers.id</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.NamedentityidentifiersRecord, java.lang.Integer> NAMEDENTITYID = createField("namedEntityId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.NamedentityidentifiersRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>namedEntities.namedEntityIdentifiers.typeId</code>.

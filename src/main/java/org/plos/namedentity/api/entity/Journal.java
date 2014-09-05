@@ -19,36 +19,34 @@ package org.plos.namedentity.api.entity;
 /**
  * Modified JOOQ generated class(pojo=true).
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Journal extends Entity {
 
-  private static final long serialVersionUID = 254575195;
+  private Integer id;
+  private Integer nedid;
+  private Integer typeid;
 
-  private java.lang.Integer journalid;
-  private java.lang.Integer namedentityid;
-  private java.lang.Integer journaltypeid;
-
-  public java.lang.Integer getJournalid() {
-    return this.journalid;
+  public Integer getId() {
+    return this.id;
   }
 
-  public void setJournalid(java.lang.Integer journalid) {
-    this.journalid = journalid;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
-  public java.lang.Integer getNamedentityid() {
-    return this.namedentityid;
+  public Integer getNedid() {
+    return this.nedid;
   }
 
-  public void setNamedentityid(java.lang.Integer namedentityid) {
-    this.namedentityid = namedentityid;
+  public void setNedid(Integer nedid) {
+    this.nedid = nedid;
   }
 
-  public java.lang.Integer getJournaltypeid() {
-    return this.journaltypeid;
+  public Integer getTypeid() {
+    return this.typeid;
   }
 
-  public void setJournaltypeid(java.lang.Integer journaltypeid) {
-    this.journaltypeid = journaltypeid;
+  public void setTypeid(Integer typeid) {
+    this.typeid = typeid;
   }
 }

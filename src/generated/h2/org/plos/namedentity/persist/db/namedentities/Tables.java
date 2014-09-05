@@ -79,11 +79,6 @@ public class Tables {
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Subjectareas SUBJECTAREAS = org.plos.namedentity.persist.db.namedentities.tables.Subjectareas.SUBJECTAREAS;
 
 	/**
-	 * The table NAMEDENTITIES.CAS
-	 */
-	public static final org.plos.namedentity.persist.db.namedentities.tables.Cas CAS = org.plos.namedentity.persist.db.namedentities.tables.Cas.CAS;
-
-	/**
 	 * The table NAMEDENTITIES.JOURNALS
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Journals JOURNALS = org.plos.namedentity.persist.db.namedentities.tables.Journals.JOURNALS;
@@ -92,6 +87,11 @@ public class Tables {
 	 * The table NAMEDENTITIES.DEGREES
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Degrees DEGREES = org.plos.namedentity.persist.db.namedentities.tables.Degrees.DEGREES;
+
+	/**
+	 * The table NAMEDENTITIES.URLS
+	 */
+	public static final org.plos.namedentity.persist.db.namedentities.tables.Urls URLS = org.plos.namedentity.persist.db.namedentities.tables.Urls.URLS;
 
 	/**
 	 * The table NAMEDENTITIES.UNIQUEIDENTIFIERS

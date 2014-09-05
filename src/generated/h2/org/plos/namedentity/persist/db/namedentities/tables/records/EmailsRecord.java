@@ -11,47 +11,47 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class EmailsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Byte, java.lang.Byte> {
 
-	private static final long serialVersionUID = -1002831828;
+	private static final long serialVersionUID = -1460263633;
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.EMAILS.EMAILID</code>.
+	 * Setter for <code>NAMEDENTITIES.EMAILS.ID</code>.
 	 */
-	public void setEmailid(java.lang.Integer value) {
+	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.EMAILS.EMAILID</code>.
+	 * Getter for <code>NAMEDENTITIES.EMAILS.ID</code>.
 	 */
-	public java.lang.Integer getEmailid() {
+	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.EMAILS.NAMEDENTITYID</code>.
+	 * Setter for <code>NAMEDENTITIES.EMAILS.NEDID</code>.
 	 */
-	public void setNamedentityid(java.lang.Integer value) {
+	public void setNedid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.EMAILS.NAMEDENTITYID</code>.
+	 * Getter for <code>NAMEDENTITIES.EMAILS.NEDID</code>.
 	 */
-	public java.lang.Integer getNamedentityid() {
+	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.EMAILS.EMAILTYPEID</code>.
+	 * Setter for <code>NAMEDENTITIES.EMAILS.TYPEID</code>.
 	 */
-	public void setEmailtypeid(java.lang.Integer value) {
+	public void setTypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.EMAILS.EMAILTYPEID</code>.
+	 * Getter for <code>NAMEDENTITIES.EMAILS.TYPEID</code>.
 	 */
-	public java.lang.Integer getEmailtypeid() {
+	public java.lang.Integer getTypeid() {
 		return (java.lang.Integer) getValue(2);
 	}
 
@@ -134,7 +134,7 @@ public class EmailsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.nam
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Emails.EMAILS.EMAILID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Emails.EMAILS.ID;
 	}
 
 	/**
@@ -142,7 +142,7 @@ public class EmailsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.nam
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Emails.EMAILS.NAMEDENTITYID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Emails.EMAILS.NEDID;
 	}
 
 	/**
@@ -150,7 +150,7 @@ public class EmailsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.nam
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field3() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Emails.EMAILS.EMAILTYPEID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Emails.EMAILS.TYPEID;
 	}
 
 	/**
@@ -182,7 +182,7 @@ public class EmailsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.nam
 	 */
 	@Override
 	public java.lang.Integer value1() {
-		return getEmailid();
+		return getId();
 	}
 
 	/**
@@ -190,7 +190,7 @@ public class EmailsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.nam
 	 */
 	@Override
 	public java.lang.Integer value2() {
-		return getNamedentityid();
+		return getNedid();
 	}
 
 	/**
@@ -198,7 +198,7 @@ public class EmailsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.nam
 	 */
 	@Override
 	public java.lang.Integer value3() {
-		return getEmailtypeid();
+		return getTypeid();
 	}
 
 	/**
@@ -230,7 +230,7 @@ public class EmailsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.nam
 	 */
 	@Override
 	public EmailsRecord value1(java.lang.Integer value) {
-		setEmailid(value);
+		setId(value);
 		return this;
 	}
 
@@ -239,7 +239,7 @@ public class EmailsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.nam
 	 */
 	@Override
 	public EmailsRecord value2(java.lang.Integer value) {
-		setNamedentityid(value);
+		setNedid(value);
 		return this;
 	}
 
@@ -248,7 +248,7 @@ public class EmailsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.nam
 	 */
 	@Override
 	public EmailsRecord value3(java.lang.Integer value) {
-		setEmailtypeid(value);
+		setTypeid(value);
 		return this;
 	}
 
@@ -301,12 +301,12 @@ public class EmailsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.nam
 	/**
 	 * Create a detached, initialised EmailsRecord
 	 */
-	public EmailsRecord(java.lang.Integer emailid, java.lang.Integer namedentityid, java.lang.Integer emailtypeid, java.lang.String emailaddress, java.lang.Byte isprimary, java.lang.Byte isactive) {
+	public EmailsRecord(java.lang.Integer id, java.lang.Integer nedid, java.lang.Integer typeid, java.lang.String emailaddress, java.lang.Byte isprimary, java.lang.Byte isactive) {
 		super(org.plos.namedentity.persist.db.namedentities.tables.Emails.EMAILS);
 
-		setValue(0, emailid);
-		setValue(1, namedentityid);
-		setValue(2, emailtypeid);
+		setValue(0, id);
+		setValue(1, nedid);
+		setValue(2, typeid);
 		setValue(3, emailaddress);
 		setValue(4, isprimary);
 		setValue(5, isactive);

@@ -2,9 +2,10 @@ package org.plos.namedentity.api.entity;
 
 import org.plos.namedentity.validate.Validatable;
 
-import java.io.Serializable;
+import javax.xml.bind.annotation.XmlTransient;
 
-public abstract class Entity implements Validatable, Serializable {
+@XmlTransient
+public abstract class Entity implements Validatable {
 
   @Override
   public void validate() {

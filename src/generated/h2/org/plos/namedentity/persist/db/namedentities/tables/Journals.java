@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Journals extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord> {
 
-	private static final long serialVersionUID = 349374609;
+	private static final long serialVersionUID = -1853251770;
 
 	/**
 	 * The singleton instance of <code>NAMEDENTITIES.JOURNALS</code>
@@ -27,19 +27,19 @@ public class Journals extends org.jooq.impl.TableImpl<org.plos.namedentity.persi
 	}
 
 	/**
-	 * The column <code>NAMEDENTITIES.JOURNALS.JOURNALID</code>.
+	 * The column <code>NAMEDENTITIES.JOURNALS.ID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord, java.lang.Integer> JOURNALID = createField("JOURNALID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>NAMEDENTITIES.JOURNALS.NAMEDENTITYID</code>.
+	 * The column <code>NAMEDENTITIES.JOURNALS.NEDID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord, java.lang.Integer> NAMEDENTITYID = createField("NAMEDENTITYID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord, java.lang.Integer> NEDID = createField("NEDID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>NAMEDENTITIES.JOURNALS.JOURNALTYPEID</code>.
+	 * The column <code>NAMEDENTITIES.JOURNALS.TYPEID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord, java.lang.Integer> JOURNALTYPEID = createField("JOURNALTYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord, java.lang.Integer> TYPEID = createField("TYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>NAMEDENTITIES.JOURNALS</code> table reference

@@ -51,14 +51,15 @@ public class BaseResource {
 
       namedEntityService.findResolvedEntity(nedId, clazz);
 
-      emailEntity.setNamedentityid(nedId);
+      emailEntity.setNedid(nedId);
 
       namedEntityService.resolveValuesToIds(emailEntity);
 
       Integer emailId = crudService.create(emailEntity);
 
       return Response.status(Response.Status.OK).entity(
-          namedEntityService.findResolvedEntityByKey(emailId, Email.class)).build();
+          namedEntityService.findResolvedEntityByKey(emailId, Email.class)
+                                                       ).build();
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
     } catch (NedValidationException e) {
@@ -74,7 +75,7 @@ public class BaseResource {
 
       namedEntityService.findResolvedEntity(nedId, clazz);
 
-      emailEntity.setNamedentityid(nedId);
+      emailEntity.setNedid(nedId);
 
       namedEntityService.resolveValuesToIds(emailEntity);
 
@@ -121,7 +122,7 @@ public class BaseResource {
       List<Email> emails = namedEntityService.findResolvedEntities(nedId, Email.class);
 
       for (Email email : emails)
-        if (email.getEmailid().equals(emailId))
+        if (email.getId().equals(emailId))
           return Response.status(Response.Status.OK).entity(email).build();
 
       return entityNotFound("Email not found");
@@ -161,7 +162,7 @@ public class BaseResource {
       // verify parent entity exists. throw a 404 if not found.
       namedEntityService.findResolvedEntity(nedId, clazz);
 
-      addressEntity.setNamedentityid(nedId);
+      addressEntity.setNedid(nedId);
 
       namedEntityService.resolveValuesToIds(addressEntity);
 
@@ -184,7 +185,7 @@ public class BaseResource {
       // verify parent entity exists. throw a 404 if not found.
       namedEntityService.findResolvedEntity(nedId, clazz);
 
-      addressEntity.setNamedentityid(nedId);
+      addressEntity.setNedid(nedId);
 
       namedEntityService.resolveValuesToIds(addressEntity);
 
@@ -229,7 +230,7 @@ public class BaseResource {
       List<Address> addresses = namedEntityService.findResolvedEntities(nedId, Address.class);
 
       for (Address address : addresses)
-        if (address.getAddressid().equals(addressId))
+        if (address.getId().equals(addressId))
           return Response.status(Response.Status.OK).entity(address).build();
 
       return entityNotFound("Address not found");

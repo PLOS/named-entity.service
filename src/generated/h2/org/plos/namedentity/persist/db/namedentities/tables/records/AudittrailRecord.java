@@ -11,19 +11,19 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AudittrailRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord> implements org.jooq.Record7<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.sql.Timestamp, java.lang.Integer> {
 
-	private static final long serialVersionUID = -587048721;
+	private static final long serialVersionUID = -992066908;
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.AUDITTRAIL.AUDITTRAILID</code>.
+	 * Setter for <code>NAMEDENTITIES.AUDITTRAIL.ID</code>.
 	 */
-	public void setAudittrailid(java.lang.Integer value) {
+	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.AUDITTRAIL.AUDITTRAILID</code>.
+	 * Getter for <code>NAMEDENTITIES.AUDITTRAIL.ID</code>.
 	 */
-	public java.lang.Integer getAudittrailid() {
+	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
@@ -148,7 +148,7 @@ public class AudittrailRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Audittrail.AUDITTRAIL.AUDITTRAILID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Audittrail.AUDITTRAIL.ID;
 	}
 
 	/**
@@ -204,7 +204,7 @@ public class AudittrailRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos
 	 */
 	@Override
 	public java.lang.Integer value1() {
-		return getAudittrailid();
+		return getId();
 	}
 
 	/**
@@ -260,7 +260,7 @@ public class AudittrailRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos
 	 */
 	@Override
 	public AudittrailRecord value1(java.lang.Integer value) {
-		setAudittrailid(value);
+		setId(value);
 		return this;
 	}
 
@@ -340,10 +340,10 @@ public class AudittrailRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos
 	/**
 	 * Create a detached, initialised AudittrailRecord
 	 */
-	public AudittrailRecord(java.lang.Integer audittrailid, java.lang.Integer sourcefieldid, java.lang.Integer rownumber, java.lang.String oldvalue, java.lang.String newvalue, java.sql.Timestamp lastmodified, java.lang.Integer lastmodifiedby) {
+	public AudittrailRecord(java.lang.Integer id, java.lang.Integer sourcefieldid, java.lang.Integer rownumber, java.lang.String oldvalue, java.lang.String newvalue, java.sql.Timestamp lastmodified, java.lang.Integer lastmodifiedby) {
 		super(org.plos.namedentity.persist.db.namedentities.tables.Audittrail.AUDITTRAIL);
 
-		setValue(0, audittrailid);
+		setValue(0, id);
 		setValue(1, sourcefieldid);
 		setValue(2, rownumber);
 		setValue(3, oldvalue);

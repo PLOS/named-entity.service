@@ -25,21 +25,19 @@ import java.util.Objects;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Role extends Entity {
 
-  private static final long serialVersionUID = 315701916;
-
-  private Integer   roleid;
-  private Integer   namedentityid;
+  private Integer   id;
+  private Integer   nedid;
   private Integer   sourceapplicationtypeid;
-  private Integer   roletypeid;
+  private Integer   typeid;
+  private String    type;
   private Timestamp startdate;
   private Timestamp enddate;
   private Timestamp created;
   private Timestamp lastmodified;
   private Integer   createdby;
-  private Integer   lastmodifiedby;
 
-  private String sourceapplicationtype;
-  private String roletype;
+  private Integer lastmodifiedby;
+  private String  sourceapplicationtype;
 
   public String getSourceapplicationtype() {
     return sourceapplicationtype;
@@ -49,28 +47,28 @@ public class Role extends Entity {
     this.sourceapplicationtype = sourceapplicationtype;
   }
 
-  public String getRoletype() {
-    return roletype;
+  public String getType() {
+    return type;
   }
 
-  public void setRoletype(String roletype) {
-    this.roletype = roletype;
+  public void setType(String type) {
+    this.type = type;
   }
 
-  public Integer getRoleid() {
-    return this.roleid;
+  public Integer getId() {
+    return this.id;
   }
 
-  public void setRoleid(Integer roleid) {
-    this.roleid = roleid;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
-  public Integer getNamedentityid() {
-    return this.namedentityid;
+  public Integer getNedid() {
+    return this.nedid;
   }
 
-  public void setNamedentityid(Integer namedentityid) {
-    this.namedentityid = namedentityid;
+  public void setNedid(Integer nedid) {
+    this.nedid = nedid;
   }
 
   public Integer getSourceapplicationtypeid() {
@@ -81,12 +79,12 @@ public class Role extends Entity {
     this.sourceapplicationtypeid = sourceapplicationtypeid;
   }
 
-  public Integer getRoletypeid() {
-    return this.roletypeid;
+  public Integer getTypeid() {
+    return this.typeid;
   }
 
-  public void setRoletypeid(Integer roletypeid) {
-    this.roletypeid = roletypeid;
+  public void setTypeid(Integer typeid) {
+    this.typeid = typeid;
   }
 
   public java.sql.Timestamp getStartdate() {
@@ -145,13 +143,13 @@ public class Role extends Entity {
     if (o == null || this.getClass() != o.getClass()) { return false; }
 
     Role entity = (Role) o;
-    return Objects.equals(this.roleid, entity.roleid)
-        && Objects.equals(this.namedentityid, entity.namedentityid)
-        && Objects.equals(this.roletypeid, entity.roletypeid);
+    return Objects.equals(this.id, entity.id)
+        && Objects.equals(this.nedid, entity.nedid)
+        && Objects.equals(this.typeid, entity.typeid);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(roleid, namedentityid, roletypeid);
+    return Objects.hash(id, nedid, typeid);
   }
 }

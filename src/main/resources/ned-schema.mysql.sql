@@ -9,42 +9,42 @@ CREATE SCHEMA IF NOT EXISTS namedEntities
 
 DROP TABLE IF EXISTS namedEntities.typeDescriptions;
 CREATE TABLE IF NOT EXISTS namedEntities.typeDescriptions (
-    typeId INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
     description TEXT NOT NULL,
     howUsed TEXT NULL,
-    PRIMARY KEY (typeId)
+    PRIMARY KEY (id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.globalTypes;
 CREATE TABLE IF NOT EXISTS namedEntities.globalTypes (
-    globalTypeId INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
     typeId INT NOT NULL,
     shortDescription TEXT NOT NULL,
     longDescription TEXT NULL,
-    typeCode VARCHAR(4) NOT NULL,
+    typeCode TEXT NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT 0,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     createdBy INT NULL,
     lastModifiedBy INT NULL,
-    PRIMARY KEY (globalTypeId),
-    FOREIGN KEY (typeId) REFERENCES typeDescriptions(typeId)
+    PRIMARY KEY (id),
+    FOREIGN KEY (typeId) REFERENCES typeDescriptions(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.namedEntityIdentifiers;
 CREATE TABLE IF NOT EXISTS namedEntities.namedEntityIdentifiers (
-    namedEntityId INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
     typeId INT NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT 0,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     createdBy INT NULL,
     lastModifiedBy INT NULL,
-    PRIMARY KEY (namedEntityId),
-    FOREIGN KEY (typeId) REFERENCES globalTypes(globalTypeId)
+    PRIMARY KEY (id),
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.individuals;
 CREATE TABLE IF NOT EXISTS namedEntities.individuals (
-    namedEntityId INT NOT NULL,
+    nedId INT NOT NULL,
     firstName TEXT NOT NULL,
     middleName TEXT NULL,
     lastName TEXT NOT NULL,
@@ -55,184 +55,184 @@ CREATE TABLE IF NOT EXISTS namedEntities.individuals (
     preferredLanguageTypeId INT NULL,
     preferredCommunicationMethodTypeId INT NULL,
     photoImage VARBINARY(255) NULL,
-    url TEXT NULL,
     isActive TINYINT(1) NOT NULL,
     isVisible TINYINT(1) NOT NULL,
-    PRIMARY KEY (namedEntityId),
-    FOREIGN KEY (namePrefixTypeId) REFERENCES globalTypes(globalTypeId),
-    FOREIGN KEY (nameSuffixTypeId) REFERENCES globalTypes(globalTypeId),
-    FOREIGN KEY (preferredLanguageTypeId) REFERENCES globalTypes(globalTypeId),
-    FOREIGN KEY (preferredCommunicationMethodTypeId) REFERENCES globalTypes(globalTypeId)
+    PRIMARY KEY (nedId),
+    FOREIGN KEY (namePrefixTypeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (nameSuffixTypeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (preferredLanguageTypeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (preferredCommunicationMethodTypeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.organizations;
 CREATE TABLE IF NOT EXISTS namedEntities.organizations (
-    namedEntityId INT NOT NULL,
-    organizationTypeId INT NULL,
-    organizationFamiliarName TEXT NULL,
-    organizationLegalName TEXT NULL,
-    organizationMainContactId INT NULL,
+    nedId INT NOT NULL,
+    typeId INT NULL,
+    familiarName TEXT NULL,
+    legalName TEXT NULL,
+    mainContactId INT NULL,
     isActive TINYINT(1) NOT NULL,
     isVisible TINYINT(1) NOT NULL,
-    url TEXT NULL,
-    PRIMARY KEY (namedEntityId),
-    FOREIGN KEY (organizationTypeId) REFERENCES globalTypes(globalTypeId)
+    PRIMARY KEY (nedId),
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (mainContactId) REFERENCES individuals(nedId)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.addresses;
 CREATE TABLE IF NOT EXISTS namedEntities.addresses (
-    addressId INT NOT NULL AUTO_INCREMENT,
-    namedEntityId INT NOT NULL,
-    addressTypeId INT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
+    nedId INT NOT NULL,
+    typeId INT NULL,
     addressLine1 TEXT NULL,
     addressLine2 TEXT NULL,
     addressLine3 TEXT NULL,
     city TEXT NULL,
     stateCodeTypeId INT NULL,  
     countryCodeTypeId INT NOT NULL,
-    postalCode VARCHAR(16) NULL,
+    postalCode TEXT NULL,
     mainContactNamedEntityId INT NULL,
     latitude INT NULL,
     longitude INT NULL,
     isPrimary TINYINT(1) NOT NULL,
     isActive TINYINT(1) NOT NULL,
-    PRIMARY KEY (addressId),
-    FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId)
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.emails;
 CREATE TABLE IF NOT EXISTS namedEntities.emails (
-    emailId INT NOT NULL AUTO_INCREMENT,
-    namedEntityId INT NOT NULL,
-    emailTypeId INT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
+    nedId INT NOT NULL,
+    typeId INT NULL,
     emailAddress TEXT NOT NULL,
     isPrimary TINYINT(1) NOT NULL,
     isActive TINYINT(1) NOT NULL,
-    PRIMARY KEY (emailId),
-    FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId),
-    FOREIGN KEY (emailTypeId) REFERENCES globalTypes(globalTypeId)
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.phoneNumbers;
 CREATE TABLE IF NOT EXISTS namedEntities.phoneNumbers (
-    phoneNumberId INT NOT NULL AUTO_INCREMENT,
-    namedEntityId INT NOT NULL,
-    phoneNumberTypeId INT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
+    nedId INT NOT NULL,
+    typeId INT NULL,
     countryCodeTypeId INT NULL,
     phoneNumber TEXT NOT NULL,
     extension TEXT NULL,
     isPrimary TINYINT(1) NOT NULL,
     isActive TINYINT(1) NOT NULL,
-    PRIMARY KEY (phoneNumberId),
-    FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId),
-    FOREIGN KEY (phoneNumberTypeId) REFERENCES globalTypes(globalTypeId),
-    FOREIGN KEY (countryCodeTypeId) REFERENCES globalTypes(globalTypeId)
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (countryCodeTypeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.roles;
 CREATE TABLE IF NOT EXISTS namedEntities.roles (
-    roleId INT NOT NULL AUTO_INCREMENT,
-    namedEntityId INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
+    nedId INT NOT NULL,
+    typeID INT NOT NULL,
     sourceApplicationTypeId INT NULL,
-    roleTypeID INT NOT NULL,
     startDate TIMESTAMP NULL,
     endDate TIMESTAMP NULL,
     created TIMESTAMP NOT NULL DEFAULT 0,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     createdBy INT NULL,
     lastModifiedBy INT NULL,
-    PRIMARY KEY (roleId),
-    FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId),
-    FOREIGN KEY (sourceApplicationTypeId) REFERENCES globalTypes(globalTypeId)
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (sourceApplicationTypeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.relationships;
 CREATE TABLE IF NOT EXISTS namedEntities.relationships (
-    relationshipId INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
+    typeId INT NOT NULL,
     masterNamedEntityId INT NOT NULL,
     childNamedEntityId INT NOT NULL,
-    relationshipTypeId INT NOT NULL,
+    title TEXT NULL,
     startDate TIMESTAMP NULL,
     endDate TIMESTAMP NULL,
     created TIMESTAMP NOT NULL DEFAULT 0,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     createdBy INT NULL,
     lastModifiedBy INT NULL,
-    PRIMARY KEY (relationshipId),
-    FOREIGN KEY (relationshipTypeId) REFERENCES globalTypes(globalTypeId)
+    PRIMARY KEY (id),
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.sourceFields;
 CREATE TABLE IF NOT EXISTS namedEntities.sourceFields (
-    sourceFieldId INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
     sourceTable TEXT NOT NULL,
     sourceField TEXT NOT NULL,
-    PRIMARY KEY (sourceFieldId)
+    PRIMARY KEY (id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.auditTrail;
 CREATE TABLE IF NOT EXISTS namedEntities.auditTrail (
-    auditTrailId INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
     sourceFieldId INT NOT NULL,
     rowNumber INT NULL,
     oldValue TEXT NOT NULL,
     newValue TEXT NOT NULL,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     lastModifiedBy INT NULL,
-    PRIMARY KEY (auditTrailId),
-    FOREIGN KEY (sourceFieldId) REFERENCES sourceFields(sourceFieldId)
+    PRIMARY KEY (id),
+    FOREIGN KEY (sourceFieldId) REFERENCES sourceFields(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.subjectAreas;
 CREATE TABLE IF NOT EXISTS namedEntities.subjectAreas (
-    subjectAreaId INT NOT NULL AUTO_INCREMENT,
-    namedEntityId INT NOT NULL,
-    subjectAreaTypeId INT NOT NULL,
-    PRIMARY KEY (subjectAreaId),
-    FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId),
-    FOREIGN KEY (subjectAreaTypeId) REFERENCES globalTypes(globalTypeId)
-)   ENGINE=INNODB;
-
--- merge with unique identifiers?
-DROP TABLE IF EXISTS namedEntities.cas;
-CREATE TABLE IF NOT EXISTS namedEntities.cas (
-    casId INT NOT NULL,
-    namedEntityId INT NOT NULL,
-    sourceApplicationTypeId INT NULL,
-    PRIMARY KEY (casId),
-    FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId),
-    FOREIGN KEY (sourceApplicationTypeId) REFERENCES globalTypes(globalTypeId)
+    id INT NOT NULL AUTO_INCREMENT,
+    nedId INT NOT NULL,
+    typeId INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.journals;
 CREATE TABLE IF NOT EXISTS namedEntities.journals (
-    journalId INT NOT NULL AUTO_INCREMENT,
-    namedEntityId INT NOT NULL,
-    journalTypeId INT NOT NULL,
-    PRIMARY KEY (journalId),
-    FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId),
-    FOREIGN KEY (journalTypeId) REFERENCES globalTypes(globalTypeId)
+    id INT NOT NULL AUTO_INCREMENT,
+    nedId INT NOT NULL,
+    typeId INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.degrees;
 CREATE TABLE IF NOT EXISTS namedEntities.degrees (
-    degreeId INT NOT NULL AUTO_INCREMENT,
-    namedEntityId INT NOT NULL,
-    degreeTypeId INT NOT NULL,
-    PRIMARY KEY (degreeId),
-    FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId),
-    FOREIGN KEY (degreeTypeId) REFERENCES globalTypes(globalTypeId)
+    id INT NOT NULL AUTO_INCREMENT,
+    nedId INT NOT NULL,
+    typeId INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id)
+)   ENGINE=INNODB;
+
+DROP TABLE IF EXISTS namedEntities.urls;
+CREATE TABLE IF NOT EXISTS namedEntities.urls (
+    id INT NOT NULL AUTO_INCREMENT,
+    nedId INT NOT NULL,
+    url TEXT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.uniqueIdentifiers;
 CREATE TABLE IF NOT EXISTS namedEntities.uniqueIdentifiers (
-    uniqueIdentifiersId INT NOT NULL AUTO_INCREMENT,
-    namedEntityId INT NOT NULL,
-    uniqueIdentifierTypeId INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
+    nedId INT NOT NULL,
+    typeId INT NOT NULL,
     uniqueIdentifier TEXT NOT NULL,
-    PRIMARY KEY (uniqueIdentifiersId),
-    FOREIGN KEY (namedEntityId) REFERENCES namedEntityIdentifiers(namedEntityId),
-    FOREIGN KEY (uniqueIdentifierTypeId) REFERENCES globalTypes(globalTypeId)
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
 
@@ -240,35 +240,35 @@ USE namedEntities;
 
 /* Named Party Types */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Named Party Types','Individual, Organization');
-SELECT typeId INTO @typeIdVar FROM typeDescriptions WHERE description='Named Party Types';
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Named Party Types';
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Individual', NULL, 'IND', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Organization', NULL, 'ORG', CURRENT_TIMESTAMP);
 
 /* Source Applications */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Source Applications','Editorial Manager, Ambra, etc');
-SELECT typeId INTO @typeIdVar FROM typeDescriptions WHERE description='Source Applications';
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Source Applications';
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Editorial Manager', NULL, 'EM', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Ambra', NULL, 'AMB', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Named Party DB', NULL, 'NPDB', CURRENT_TIMESTAMP);
 
 /* Organization Types */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Organization Types','University, Department, etc');
-SELECT typeId INTO @typeIdVar FROM typeDescriptions WHERE description='Organization Types';
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Organization Types';
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Research Hospital', NULL, 'HOSP', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'University', NULL, 'UNIV', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Department', NULL, 'DEPT', CURRENT_TIMESTAMP);
 
 /* Roles */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Roles','Academic Editor, Author, etc');
-SELECT typeId INTO @typeIdVar FROM typeDescriptions WHERE description='Roles';
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Roles';
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Author', NULL, 'AUTH', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Co-Author', NULL, 'COAU', CURRENT_TIMESTAMP);
-INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Academic Editor', NULL, 'AE', CURRENT_TIMESTAMP);
+INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Academic Editor (PLOS ONE)', NULL, 'AE_PLOSONE', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'NP System Administrator', NULL, 'SANP', CURRENT_TIMESTAMP);
 
 /* Named Party Prefixes */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Named Party Prefixes','Ms, Dr, etc');
-SELECT typeId INTO @typeIdVar FROM typeDescriptions WHERE description='Named Party Prefixes';
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Named Party Prefixes';
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Mr.', NULL, 'MR', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Mrs.', NULL, 'MRS', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Dr.', NULL, 'DR', CURRENT_TIMESTAMP);
@@ -277,13 +277,13 @@ INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,create
 
 /* Named Party Suffixes */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Named Party Suffixes','II, III, Jr, etc');
-SELECT typeId INTO @typeIdVar FROM typeDescriptions WHERE description='Named Party Suffixes';
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Named Party Suffixes';
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'III', NULL, 'III', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'II', NULL, 'II', CURRENT_TIMESTAMP);
 
 /* Languages */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Languages','English, Mandarin, etc');
-SELECT typeId INTO @typeIdVar FROM typeDescriptions WHERE description='Languages';
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Languages';
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'English', NULL, 'ENG', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Mandarin', NULL, 'MAN', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Italian', NULL, 'ITAL', CURRENT_TIMESTAMP);
@@ -292,33 +292,33 @@ INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,create
 
 /* Communication Methods */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Communication Methods','Phone, Email, etc');
-SELECT typeId INTO @typeIdVar FROM typeDescriptions WHERE description='Communication Methods';
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Communication Methods';
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Phone', NULL, 'PH', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Email', NULL, 'EMAI', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Fax', NULL, 'FAX', CURRENT_TIMESTAMP);
 
 /* Telephone Number Types */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Telephone Number Types','Home, Mobile, etc');
-SELECT typeId INTO @typeIdVar FROM typeDescriptions WHERE description='Telephone Number Types';
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Telephone Number Types';
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Home', NULL, 'HOME', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Office', NULL, 'OFF', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Mobile', NULL, 'CELL', CURRENT_TIMESTAMP);
 
 /* Email Address Types */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Email Address Types','Home, Work, etc');
-SELECT typeId INTO @typeIdVar FROM typeDescriptions WHERE description='Email Address Types';
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Email Address Types';
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Personal', NULL, 'PERS', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Work', NULL, 'WORK', CURRENT_TIMESTAMP);
 
 /* Physical Address Types */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Physical Address Types','Home, Work, etc');
-SELECT typeId INTO @typeIdVar FROM typeDescriptions WHERE description='Physical Address Types';
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Physical Address Types';
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Office', NULL, 'WORK', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Home', NULL, 'HOME', CURRENT_TIMESTAMP);
 
 /* Relationship Types */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Relationship Types','AE/Author, Manager/Subordinate, etc');
-SELECT typeId INTO @typeIdVar FROM typeDescriptions WHERE description='Relationship Types';
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Relationship Types';
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Manager-Subordinate', NULL, 'MGR', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'AE-Author', NULL, 'AEAU', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Organization-Author', NULL, 'ORAU', CURRENT_TIMESTAMP);
@@ -326,7 +326,7 @@ INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,create
 
 /* Country Codes for Phone Numbers */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Country Codes for Phone Numbers','01, 44, etc');
-SELECT typeId INTO @typeIdVar FROM typeDescriptions WHERE description='Country Codes for Phone Numbers';
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Country Codes for Phone Numbers';
 INSERT INTO globalTypes (typeId, longDescription, typeCode, shortDescription, created) VALUES (@typeIdVar,'Afghanistan','AF','93',CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId, longDescription, typeCode, shortDescription, created) VALUES (@typeIdVar,'Albania','AL','355',CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId, longDescription, typeCode, shortDescription, created) VALUES (@typeIdVar,'Algeria','DZ','213',CURRENT_TIMESTAMP);
@@ -561,20 +561,20 @@ INSERT INTO globalTypes (typeId, longDescription, typeCode, shortDescription, cr
 
 /* Subject Areas */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Subject Areas','Cancer, Urology, etc');
-SELECT typeId INTO @typeIdVar FROM typeDescriptions WHERE description='Subject Areas';
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Subject Areas';
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Urology', NULL, 'URO', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Oncology', NULL, 'ONC', CURRENT_TIMESTAMP);
 
 /* Journal Types */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Journal Types','PLOSOne, PLOS Biology, etc');
-SELECT typeId INTO @typeIdVar FROM typeDescriptions WHERE description='Journal Types';
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Journal Types';
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'PLOSOne', NULL, 'PL1', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'PLOS Genetics', NULL, 'PLGE', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'PLOS Biology', NULL, 'PLBI', CURRENT_TIMESTAMP);
 
 /* Country Types */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Country Types','United States, Canada, etc');
-SELECT typeId INTO @typeIdVar FROM typeDescriptions WHERE description='Country Types';
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Country Types';
 INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'ANDORRA', 'AD', CURRENT_TIMESTAMP );
 INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'UNITED ARAB EMIRATES','AE', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'AFGHANISTAN','AF', CURRENT_TIMESTAMP);
@@ -856,7 +856,7 @@ INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@t
 
 /* Unique Identifier Types */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Unique Identifier Types','Ringgold, ORCID, etc');
-SELECT typeId INTO @typeIdVar FROM typeDescriptions WHERE description='Unique Identifier Types';
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Unique Identifier Types';
 INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'Ringgold','RG', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'ORCID','ORC', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'Editorial Manager','EM', CURRENT_TIMESTAMP);
@@ -865,7 +865,7 @@ INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@t
 
 /* State and Province Codes */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('State and Province Codes','CA, ONT, etc');
-SELECT typeId INTO @typeIdVar FROM typeDescriptions WHERE description='State and Province Codes';
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='State and Province Codes';
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar,'CA','California','CA',CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar,'NY','New York','NY',CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar,'ONT','Ontario','ONT',CURRENT_TIMESTAMP);
@@ -880,6 +880,6 @@ INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,create
 
 /* Degrees */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Degrees','MD, PhD, etc');
-SELECT typeId INTO @typeIdVar FROM typeDescriptions WHERE description='Degrees';
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Degrees';
 INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'PhD','PHD', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'MD','MD', CURRENT_TIMESTAMP);

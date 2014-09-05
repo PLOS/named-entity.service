@@ -11,47 +11,47 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UniqueidentifiersRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord> implements org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 192590312;
+	private static final long serialVersionUID = -265842912;
 
 	/**
-	 * Setter for <code>namedEntities.uniqueIdentifiers.uniqueIdentifiersId</code>.
+	 * Setter for <code>namedEntities.uniqueIdentifiers.id</code>.
 	 */
-	public void setUniqueidentifiersid(java.lang.Integer value) {
+	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedEntities.uniqueIdentifiers.uniqueIdentifiersId</code>.
+	 * Getter for <code>namedEntities.uniqueIdentifiers.id</code>.
 	 */
-	public java.lang.Integer getUniqueidentifiersid() {
+	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedEntities.uniqueIdentifiers.namedEntityId</code>.
+	 * Setter for <code>namedEntities.uniqueIdentifiers.nedId</code>.
 	 */
-	public void setNamedentityid(java.lang.Integer value) {
+	public void setNedid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedEntities.uniqueIdentifiers.namedEntityId</code>.
+	 * Getter for <code>namedEntities.uniqueIdentifiers.nedId</code>.
 	 */
-	public java.lang.Integer getNamedentityid() {
+	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedEntities.uniqueIdentifiers.uniqueIdentifierTypeId</code>.
+	 * Setter for <code>namedEntities.uniqueIdentifiers.typeId</code>.
 	 */
-	public void setUniqueidentifiertypeid(java.lang.Integer value) {
+	public void setTypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedEntities.uniqueIdentifiers.uniqueIdentifierTypeId</code>.
+	 * Getter for <code>namedEntities.uniqueIdentifiers.typeId</code>.
 	 */
-	public java.lang.Integer getUniqueidentifiertypeid() {
+	public java.lang.Integer getTypeid() {
 		return (java.lang.Integer) getValue(2);
 	}
 
@@ -106,7 +106,7 @@ public class UniqueidentifiersRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS.UNIQUEIDENTIFIERSID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS.ID;
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class UniqueidentifiersRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS.NAMEDENTITYID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS.NEDID;
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class UniqueidentifiersRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field3() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS.UNIQUEIDENTIFIERTYPEID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS.TYPEID;
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class UniqueidentifiersRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public java.lang.Integer value1() {
-		return getUniqueidentifiersid();
+		return getId();
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class UniqueidentifiersRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public java.lang.Integer value2() {
-		return getNamedentityid();
+		return getNedid();
 	}
 
 	/**
@@ -154,7 +154,7 @@ public class UniqueidentifiersRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public java.lang.Integer value3() {
-		return getUniqueidentifiertypeid();
+		return getTypeid();
 	}
 
 	/**
@@ -170,7 +170,7 @@ public class UniqueidentifiersRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public UniqueidentifiersRecord value1(java.lang.Integer value) {
-		setUniqueidentifiersid(value);
+		setId(value);
 		return this;
 	}
 
@@ -179,7 +179,7 @@ public class UniqueidentifiersRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public UniqueidentifiersRecord value2(java.lang.Integer value) {
-		setNamedentityid(value);
+		setNedid(value);
 		return this;
 	}
 
@@ -188,7 +188,7 @@ public class UniqueidentifiersRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public UniqueidentifiersRecord value3(java.lang.Integer value) {
-		setUniqueidentifiertypeid(value);
+		setTypeid(value);
 		return this;
 	}
 
@@ -223,12 +223,12 @@ public class UniqueidentifiersRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * Create a detached, initialised UniqueidentifiersRecord
 	 */
-	public UniqueidentifiersRecord(java.lang.Integer uniqueidentifiersid, java.lang.Integer namedentityid, java.lang.Integer uniqueidentifiertypeid, java.lang.String uniqueidentifier) {
+	public UniqueidentifiersRecord(java.lang.Integer id, java.lang.Integer nedid, java.lang.Integer typeid, java.lang.String uniqueidentifier) {
 		super(org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS);
 
-		setValue(0, uniqueidentifiersid);
-		setValue(1, namedentityid);
-		setValue(2, uniqueidentifiertypeid);
+		setValue(0, id);
+		setValue(1, nedid);
+		setValue(2, typeid);
 		setValue(3, uniqueidentifier);
 	}
 }

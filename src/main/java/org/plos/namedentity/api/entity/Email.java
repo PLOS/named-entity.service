@@ -29,19 +29,17 @@ import java.util.Objects;
 @XmlRootElement
 public class Email extends Entity {
 
-  private static final long serialVersionUID = -945009318;
-
   private static EmailValidator emailValidator = EmailValidator.getInstance();
 
-  private Integer emailid;
-  private Integer namedentityid;
+  private Integer id;
+  private Integer nedid;
 
-  private Integer emailtypeid;
-  private String  emailtype;
+  private Integer typeid;
+  private String  type;
 
-  private String  emailaddress;
-  private Byte    isprimary = 0;  // TODO: change Byte to Bool
-  private Byte    isactive = 1;
+  private String emailaddress;
+  private Byte isprimary = 0;  // TODO: change Byte to Bool
+  private Byte isactive  = 1;
 
   @Override
   public void validate() {
@@ -53,15 +51,19 @@ public class Email extends Entity {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) { return true; }
+    if (this == o) {
+      return true;
+    }
 
-    if (o == null || this.getClass() != o.getClass()) { return false; }
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
 
     Email entity = (Email) o;
-    return Objects.equals(this.emailid, entity.emailid)
-        && Objects.equals(this.namedentityid, entity.namedentityid)
-        && Objects.equals(this.emailtypeid, entity.emailtypeid)
-        && Objects.equals(this.emailtype, entity.emailtype)
+    return Objects.equals(this.id, entity.id)
+        && Objects.equals(this.nedid, entity.nedid)
+        && Objects.equals(this.typeid, entity.typeid)
+        && Objects.equals(this.type, entity.type)
         && Objects.equals(this.emailaddress, entity.emailaddress)
         && Objects.equals(this.isprimary, entity.isprimary)
         && Objects.equals(this.isactive, entity.isactive);
@@ -70,32 +72,32 @@ public class Email extends Entity {
   @Override
   public int hashCode() {
     return Objects.hash(
-        emailid, namedentityid, emailtypeid, emailtype, emailaddress, isprimary, isactive);
+        id, nedid, typeid, type, emailaddress, isprimary, isactive);
   }
 
 
-  public java.lang.Integer getEmailid() {
-    return this.emailid;
+  public java.lang.Integer getId() {
+    return this.id;
   }
 
-  public void setEmailid(java.lang.Integer emailid) {
-    this.emailid = emailid;
+  public void setId(java.lang.Integer id) {
+    this.id = id;
   }
 
-  public java.lang.Integer getNamedentityid() {
-    return this.namedentityid;
+  public java.lang.Integer getNedid() {
+    return this.nedid;
   }
 
-  public void setNamedentityid(java.lang.Integer namedentityid) {
-    this.namedentityid = namedentityid;
+  public void setNedid(java.lang.Integer nedid) {
+    this.nedid = nedid;
   }
 
-  public java.lang.Integer getEmailtypeid() {
-    return this.emailtypeid;
+  public java.lang.Integer getTypeid() {
+    return this.typeid;
   }
 
-  public void setEmailtypeid(java.lang.Integer emailtypeid) {
-    this.emailtypeid = emailtypeid;
+  public void setTypeid(java.lang.Integer typeid) {
+    this.typeid = typeid;
   }
 
   public java.lang.String getEmailaddress() {
@@ -122,12 +124,12 @@ public class Email extends Entity {
     this.isactive = isactive;
   }
 
-  public String getEmailtype() {
-      return emailtype;
+  public String getType() {
+      return type;
   }
   
-  public void setEmailtype(String emailtype) {
-      this.emailtype = emailtype;
+  public void setType(String type) {
+      this.type = type;
   }
 
 }
