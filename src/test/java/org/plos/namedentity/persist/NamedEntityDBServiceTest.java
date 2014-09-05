@@ -617,6 +617,7 @@ public class NamedEntityDBServiceTest {
     Role savedRole2 = nedDBSvc.findById(authorId, Role.class);
     assertEquals(savedRole, savedRole2);
     assertEquals(savedRole.getStartdate(), savedRole2.getStartdate());
+    assertEquals(savedRole.getEnddate(), savedRole2.getEnddate());
 
     // FIND ALL Roles 
 

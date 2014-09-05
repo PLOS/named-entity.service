@@ -16,29 +16,48 @@
  */
 package org.plos.namedentity.rest;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.mockito.Mockito;
-import org.plos.namedentity.api.EntityNotFoundException;
-import org.plos.namedentity.api.IndividualComposite;
-import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.entity.*;
-import org.plos.namedentity.service.CrudService;
-import org.plos.namedentity.service.NamedEntityService;
-import org.springframework.context.annotation.Bean;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.when;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
+
+import org.mockito.Mockito;
+import org.plos.namedentity.api.EntityNotFoundException;
+import org.plos.namedentity.api.IndividualComposite;
+import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.entity.Address;
+import org.plos.namedentity.api.entity.Degree;
+import org.plos.namedentity.api.entity.Email;
+import org.plos.namedentity.api.entity.Globaltype;
+import org.plos.namedentity.api.entity.Individual;
+import org.plos.namedentity.api.entity.Organization;
+import org.plos.namedentity.api.entity.Phonenumber;
+import org.plos.namedentity.api.entity.Role;
+import org.plos.namedentity.api.entity.Typedescription;
+import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.service.CrudService;
+import org.plos.namedentity.service.NamedEntityService;
+
+import org.springframework.context.annotation.Bean;
+import org.codehaus.jackson.map.ObjectMapper;
+//import org.springframework.context.annotation.Bean;
+//import org.codehaus.jackson.map.ObjectMapper;
 
 public class TestSpringConfig {
 
@@ -345,6 +364,18 @@ public class TestSpringConfig {
   static private void mockNamedEntityServiceForRoles(NamedEntityService mockNamedEntityService) {
     try {
       String rolesJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "role.json")));
+
+      Map<String,Object> properties = new HashMap<String,Object>(1);
+      properties.put("eclipselink.media-type", "application/json");
+      //System.setProperty(JAXBContext.JAXB_CONTEXT_FACTORY, "org.eclipse.persistence.jaxb.JAXBContextFactory");
+      //JAXBContext jc = JAXBContext.newInstance(Role.class);
+      JAXBContext jc = JAXBContext.newInstance(new Class[]{ Role.class }, properties);
+
+      Unmarshaller u = jc.createUnmarshaller();
+      //u.setProperty("eclipselink.media-type", "application/json");
+
+      Object o = u.unmarshal( new StreamSource(new StringReader(rolesJson)) );
+
       Role role = mapper.readValue(rolesJson, Role.class);
 
       role.setRoleid(1);
@@ -358,6 +389,9 @@ public class TestSpringConfig {
 
       when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(Role.class)))
         .thenReturn( roles );
+    }
+    catch (JAXBException je) {
+      throw new RuntimeException(je);
     }
     catch (IOException e) {
       throw new RuntimeException(String.format(

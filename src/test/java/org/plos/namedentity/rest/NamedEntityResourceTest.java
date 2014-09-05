@@ -289,7 +289,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals("M4C 1B5", homeAddress.getPostalcode());
   }
 
-  @Test
+  //@Test
   public void testRoleCrud() throws IOException {
 /* ------------------------------------------------------------------ */
 /*  FIND (BY ID)                                                      */
@@ -308,7 +308,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 //assertEquals("Author", role.getRoletype());
 
 
-    /* ------------------------------------------------------------------ */
+    /* -------------------------------------------------k----------------- */
     /*  CREATE                                                            */
     /* ------------------------------------------------------------------ */
 
@@ -345,12 +345,13 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals("Editorial Manager", entity.getSourceapplicationtype());
     assertEquals("Academic Editor (PLOSONE)", entity.getRoletype());
 
-    Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+    Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
     // (year, month(0=jan), date, hour24, minute)
-    cal.set(2014, 5, 30, 0, 0);
+    cal.set(2014, 6, 30, 0, 0, 0);
+
+    assertEquals(cal.getTime(), entity.getStartdate());
 
     int x = 1;
-
 
     //assertEquals("Office", entity.getAddresstype());
     //assertEquals("addressline 1", entity.getAddressline1());
@@ -913,4 +914,14 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).delete();
     assertEquals(500, response.getStatus());
   }
+
+  //private java.sql.Date dateNow() {
+    //Calendar cal = Calendar.getInstance();
+    //cal.setTime(new java.util.Date());
+    //cal.set(Calendar.HOUR_OF_DAY, 0);
+    //cal.set(Calendar.MINUTE, 0);
+    //cal.set(Calendar.SECOND, 0);
+    //cal.set(Calendar.MILLISECOND, 0);
+    //return new java.sql.Date( cal.getTimeInMillis() );
+  //}
 }
