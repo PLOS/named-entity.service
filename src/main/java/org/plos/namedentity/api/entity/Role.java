@@ -29,15 +29,15 @@ public class Role extends Entity {
   private Integer   nedid;
   private Integer   sourceapplicationtypeid;
   private Integer   typeid;
+  private String    type;
   private Timestamp startdate;
   private Timestamp enddate;
   private Timestamp created;
   private Timestamp lastmodified;
   private Integer   createdby;
-  private Integer   lastmodifiedby;
 
-  private String sourceapplicationtype;
-  private String typename;
+  private Integer lastmodifiedby;
+  private String  sourceapplicationtype;
 
   public String getSourceapplicationtype() {
     return sourceapplicationtype;
@@ -47,12 +47,12 @@ public class Role extends Entity {
     this.sourceapplicationtype = sourceapplicationtype;
   }
 
-  public String getTypename() {
-    return typename;
+  public String getType() {
+    return type;
   }
 
-  public void setTypename(String typename) {
-    this.typename = typename;
+  public void setType(String type) {
+    this.type = type;
   }
 
   public Integer getId() {

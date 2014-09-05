@@ -95,11 +95,11 @@ public class OrganizationComposite implements Validatable {
   }
 
   public String getOrganizationtype() {
-    return this.organization.getTypename();
+    return this.organization.getType();
   }
 
   public void setOrganizationtype(String organizationtype) {
-    this.organization.setTypename(organizationtype);
+    this.organization.setType(organizationtype);
   }
 
   public List<Address> getAddresses() {

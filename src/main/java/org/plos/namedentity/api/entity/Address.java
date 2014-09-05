@@ -31,7 +31,7 @@ public class Address extends Entity {
   private Integer nedid;
 
   private Integer typeid;
-  private String  typename;
+  private String  type;
 
   private String addressline1;
   private String addressline2;
@@ -174,47 +174,51 @@ public class Address extends Entity {
     this.isactive = isactive;
   }
 
-  public String getTypename() {
-      return typename;
+  public String getType() {
+    return type;
   }
 
-  public void setTypename(String typename) {
-      this.typename = typename;
+  public void setType(String type) {
+    this.type = type;
   }
-  
+
   public String getStatecodetype() {
-      return statecodetype;
+    return statecodetype;
   }
 
   public void setStatecodetype(String statecodetype) {
-      this.statecodetype = statecodetype;
+    this.statecodetype = statecodetype;
   }
-  
+
   public String getCountrycodetype() {
-      return countrycodetype;
+    return countrycodetype;
   }
 
   public void setCountrycodetype(String countrycodetype) {
-      this.countrycodetype = countrycodetype;
+    this.countrycodetype = countrycodetype;
   }
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) { return true; }
+    if (this == o) {
+      return true;
+    }
 
-    if (o == null || this.getClass() != o.getClass()) { return false; }
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
 
     Address entity = (Address) o;
-    return    Objects.equals(this.id, entity.id)
-           && Objects.equals(this.nedid, entity.nedid)
-           && Objects.equals(this.typeid, entity.typeid)
-           && Objects.equals(this.typename, entity.typename)
-           && Objects.equals(this.addressline1, entity.addressline1)
-           && Objects.equals(this.city, entity.city)
-           && Objects.equals(this.statecodetypeid, entity.statecodetypeid)
-           && Objects.equals(this.statecodetype, entity.statecodetype)
-           && Objects.equals(this.countrycodetypeid, entity.countrycodetypeid)
-           && Objects.equals(this.countrycodetype, entity.countrycodetype);
+    return Objects.equals(this.id, entity.id)
+        && Objects.equals(this.nedid, entity.nedid)
+        && Objects.equals(this.typeid, entity.typeid)
+        && Objects.equals(this.type, entity.type)
+        && Objects.equals(this.addressline1, entity.addressline1)
+        && Objects.equals(this.city, entity.city)
+        && Objects.equals(this.statecodetypeid, entity.statecodetypeid)
+        && Objects.equals(this.statecodetype, entity.statecodetype)
+        && Objects.equals(this.countrycodetypeid, entity.countrycodetypeid)
+        && Objects.equals(this.countrycodetype, entity.countrycodetype);
   }
 
   @Override

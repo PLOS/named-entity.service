@@ -27,22 +27,22 @@ public class Phonenumber extends Entity {
   private Integer id;
   private Integer nedid;
   private Integer typeid;
+  private String  type;
   private Integer countrycodetypeid;
-  private String  phonenumber;
-  private String  extension;
+  private String  countrycodetype;
+
+  private String phonenumber;
+  private String extension;
 
   private Boolean isprimary;
   private Boolean isactive = true;
 
-  private String typename;
-  private String countrycodetype;
-
-  public String getTypename() {
-    return typename;
+  public String getType() {
+    return type;
   }
 
-  public void setTypename(String typename) {
-    this.typename = typename;
+  public void setType(String type) {
+    this.type = type;
   }
 
   public String getCountrycodetype() {
@@ -119,9 +119,13 @@ public class Phonenumber extends Entity {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) { return true; }
+    if (this == o) {
+      return true;
+    }
 
-    if (o == null || this.getClass() != o.getClass()) { return false; }
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
 
     Phonenumber entity = (Phonenumber) o;
     return Objects.equals(this.id, entity.id)

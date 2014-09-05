@@ -220,7 +220,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     Address entity = mapper.readValue(responseJson, Address.class);
     assertEquals(Integer.valueOf(1), entity.getId());
     assertEquals(Integer.valueOf(1), entity.getNedid());
-    assertEquals("Office", entity.getTypename());
+    assertEquals("Office", entity.getType());
     assertEquals("addressline 1", entity.getAddressline1());
     assertEquals("addressline 2", entity.getAddressline2());
     assertEquals("addressline 3", entity.getAddressline3());
@@ -273,13 +273,13 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(2, addresses.length);
 
     Address officeAddress = addresses[0];
-    assertEquals("Office", officeAddress.getTypename());
+    assertEquals("Office", officeAddress.getType());
     assertEquals("addressline 1", officeAddress.getAddressline1());
     assertEquals("CA", officeAddress.getStatecodetype());
     assertEquals("12345", officeAddress.getPostalcode());
 
     Address homeAddress = addresses[1];
-    assertEquals("Home", homeAddress.getTypename());
+    assertEquals("Home", homeAddress.getType());
     assertEquals("addressline 1.2", homeAddress.getAddressline1());
     assertEquals("ONT", homeAddress.getStatecodetype());
     assertEquals("M4C 1B5", homeAddress.getPostalcode());
@@ -304,7 +304,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     Email entity = mapper.readValue(jsonPayload, Email.class);
     assertEquals(Integer.valueOf(1), entity.getId());
     assertEquals(Integer.valueOf(1), entity.getNedid());
-    assertEquals("Work", entity.getTypename());
+    assertEquals("Work", entity.getType());
     assertEquals("foo.bar.personal@gmail.com", entity.getEmailaddress());
     assertEquals(Byte.valueOf((byte)1), entity.getIsprimary());
     assertEquals(Byte.valueOf((byte)1), entity.getIsactive());
@@ -356,7 +356,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(2, emails.length);
 
     Email workEmail = emails[0];
-    assertEquals("Work", workEmail.getTypename());
+    assertEquals("Work", workEmail.getType());
     assertEquals("fu.manchu.work@foo.com", workEmail.getEmailaddress());
     assertTrue(workEmail.getIsprimary() == 1);
 
@@ -417,7 +417,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(1, degrees.length);
 
     Degree degree = degrees[0];
-    assertEquals("Super Doctor", degree.getTypename());
+    assertEquals("Super Doctor", degree.getType());
 
     //TODO - CREATE, UPDATE, DELETE
   }
@@ -439,7 +439,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(3, phonenumbers.length);
 
     Phonenumber officePhone = phonenumbers[0];
-    assertEquals("Office", officePhone.getTypename());
+    assertEquals("Office", officePhone.getType());
     assertEquals("123-456-7890", officePhone.getPhonenumber());
 
     //TODO - CREATE, UPDATE, DELETE
@@ -462,7 +462,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(1, roles.length);
 
     Role role = roles[0];
-    assertEquals("Author", role.getTypename());
+    assertEquals("Author", role.getType());
 
     //TODO - CREATE, UPDATE, DELETE
   }
@@ -484,7 +484,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(2, xrefs.length);
 
     for (Uniqueidentifier xref : xrefs) {
-      assertEquals("ORCID", xref.getTypename());
+      assertEquals("ORCID", xref.getType());
     }
 
     /* ------------------------------------------------------------------ */

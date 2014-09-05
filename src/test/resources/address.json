@@ -1,5 +1,5 @@
 {
-    "typename"     : "Office",
+    "type"     : "Office",
     "addressline1"    : "addressline 1",
     "addressline2"    : "addressline 2",
     "addressline3"    : "addressline 3",

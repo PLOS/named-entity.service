@@ -27,15 +27,15 @@ public class Uniqueidentifier extends Entity {
   private Integer id;
   private Integer nedid;
   private Integer typeid;
-  private String  typename;
+  private String  type;
   private String  uniqueidentifier;
 
-  public String getTypename() {
-    return typename;
+  public String getType() {
+    return type;
   }
 
-  public void setTypename(String typename) {
-    this.typename = typename;
+  public void setType(String type) {
+    this.type = type;
   }
 
   public Integer getId() {
