@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS namedEntities.globalTypes (
     typeId INT NOT NULL,
     shortDescription TEXT NOT NULL,
     longDescription TEXT NULL,
-    typeCode VARCHAR(4) NOT NULL,
+    typeCode TEXT NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT 0,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     createdBy INT NULL,
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS namedEntities.addresses (
     city TEXT NULL,
     stateCodeTypeId INT NULL,  
     countryCodeTypeId INT NOT NULL,
-    postalCode VARCHAR(16) NULL,
+    postalCode TEXT NULL,
     mainContactNamedEntityId INT NULL,
     latitude INT NULL,
     longitude INT NULL,
@@ -263,7 +263,7 @@ INSERT INTO typeDescriptions(description, howUsed) VALUES ('Roles','Academic Edi
 SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Roles';
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Author', NULL, 'AUTH', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Co-Author', NULL, 'COAU', CURRENT_TIMESTAMP);
-INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Academic Editor', NULL, 'AE', CURRENT_TIMESTAMP);
+INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Academic Editor (PLOS ONE)', NULL, 'AE_PLOSONE', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'NP System Administrator', NULL, 'SANP', CURRENT_TIMESTAMP);
 
 /* Named Party Prefixes */

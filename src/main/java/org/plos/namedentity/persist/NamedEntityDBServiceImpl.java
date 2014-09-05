@@ -395,7 +395,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         gt2.SHORTDESCRIPTION.as("namesuffix"),
         gt3.SHORTDESCRIPTION.as("preferredlanguage"), 
         gt4.SHORTDESCRIPTION.as("preferredcommunication"),
-//        gt5.SHORTDESCRIPTION.as("uniqueidentifiertype"),
+        gt5.SHORTDESCRIPTION.as("uniqueidentifiertype"),
         u.UNIQUEIDENTIFIER)
       .from(i)
       .leftOuterJoin(gt1).on(i.NAMEPREFIXTYPEID.equal(gt1.ID))

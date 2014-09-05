@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Roles extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord> {
 
-	private static final long serialVersionUID = 774976221;
+	private static final long serialVersionUID = -1094399941;
 
 	/**
 	 * The singleton instance of <code>namedEntities.roles</code>
@@ -127,7 +127,7 @@ public class Roles extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_3, org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_2);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_2, org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_3);
 	}
 
 	/**
