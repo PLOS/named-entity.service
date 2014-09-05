@@ -645,7 +645,7 @@ public class NamedEntityDBServiceTest {
 
     List<Role> roles = nedDBSvc.findResolvedEntities(savedRole.getNedid(), Role.class);
     Role role = roles.get(0);
-    assertEquals("Author", role.getType());
+    assertEquals("Author", role.getTypename());
               
     // DELETE
 

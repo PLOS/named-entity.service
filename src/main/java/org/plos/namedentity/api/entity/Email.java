@@ -35,7 +35,7 @@ public class Email extends Entity {
   private Integer nedid;
 
   private Integer typeid;
-  private String  type;
+  private String  typename;
 
   private String emailaddress;
   private Byte isprimary = 0;  // TODO: change Byte to Bool
@@ -63,7 +63,7 @@ public class Email extends Entity {
     return Objects.equals(this.id, entity.id)
         && Objects.equals(this.nedid, entity.nedid)
         && Objects.equals(this.typeid, entity.typeid)
-        && Objects.equals(this.type, entity.type)
+        && Objects.equals(this.typename, entity.typename)
         && Objects.equals(this.emailaddress, entity.emailaddress)
         && Objects.equals(this.isprimary, entity.isprimary)
         && Objects.equals(this.isactive, entity.isactive);
@@ -72,7 +72,7 @@ public class Email extends Entity {
   @Override
   public int hashCode() {
     return Objects.hash(
-        id, nedid, typeid, type, emailaddress, isprimary, isactive);
+        id, nedid, typeid, typename, emailaddress, isprimary, isactive);
   }
 
 
@@ -124,12 +124,12 @@ public class Email extends Entity {
     this.isactive = isactive;
   }
 
-  public String getType() {
-      return type;
+  public String getTypename() {
+      return typename;
   }
   
-  public void setType(String type) {
-      this.type = type;
+  public void setTypename(String typename) {
+      this.typename = typename;
   }
 
 }

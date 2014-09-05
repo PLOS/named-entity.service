@@ -90,13 +90,13 @@ public class NamedEntityServiceTest {
     List<Email> emails = new ArrayList<>();
 
     Email workEmail = new Email();
-    workEmail.setType("Work");
+    workEmail.setTypename("Work");
     workEmail.setEmailaddress("fu.manchu.work@foo.com");
     workEmail.setIsprimary((byte)1);
     emails.add( workEmail );
 
     Email personalEmail = new Email();
-    personalEmail.setType("Personal");
+    personalEmail.setTypename("Personal");
     personalEmail.setEmailaddress("fu.manchu.home@foo.com");
     personalEmail.setIsprimary((byte)0);
     emails.add( personalEmail );
@@ -110,21 +110,21 @@ public class NamedEntityServiceTest {
     List<Phonenumber> phonenumbers = new ArrayList<>();
 
     Phonenumber officePhone = new Phonenumber();
-    officePhone.setType("Office");
+    officePhone.setTypename("Office");
     officePhone.setCountrycodetype("01");
     officePhone.setPhonenumber("123-456-7890");
     officePhone.setIsprimary(true);
     phonenumbers.add( officePhone );
 
     Phonenumber mobilePhone = new Phonenumber();
-    mobilePhone.setType("Mobile");
+    mobilePhone.setTypename("Mobile");
     mobilePhone.setCountrycodetype("01");
     mobilePhone.setPhonenumber("123-444-0011");
     mobilePhone.setIsprimary(false);
     phonenumbers.add( mobilePhone );
 
     Phonenumber homePhone = new Phonenumber();
-    homePhone.setType("Home");
+    homePhone.setTypename("Home");
     homePhone.setCountrycodetype("01");
     homePhone.setPhonenumber("123-555-6666");
     homePhone.setIsprimary(false);
@@ -139,7 +139,7 @@ public class NamedEntityServiceTest {
     List<Address> addresses = new ArrayList<>();
 
     Address officeAddress = new Address();
-    officeAddress.setAddresstype("Office");
+    officeAddress.setTypename("Office");
     officeAddress.setAddressline1("addressline1");
     officeAddress.setAddressline2("addressline2");
     officeAddress.setCity("city");
@@ -158,7 +158,7 @@ public class NamedEntityServiceTest {
     List<Degree> degrees = new ArrayList<>();
 
     Degree degree = new Degree();
-    degree.setType("MD");
+    degree.setTypename("MD");
     degrees.add(degree);
 
     composite.setDegrees( degrees );
@@ -170,7 +170,7 @@ public class NamedEntityServiceTest {
     List<Uniqueidentifier> uids = new ArrayList<>();
 
     Uniqueidentifier uidEntity = new Uniqueidentifier();
-    uidEntity.setType("ORCID");
+    uidEntity.setTypename("ORCID");
     uidEntity.setUniqueidentifier("0000-0001-9430-319X");
     uids.add( uidEntity );
 
@@ -269,7 +269,7 @@ public class NamedEntityServiceTest {
     List<Email> emails = new ArrayList<>();
 
     Email workEmail = new Email();
-    workEmail.setType("Work");
+    workEmail.setTypename("Work");
     workEmail.setEmailaddress("invalid@email");
     workEmail.setIsprimary((byte)1);
     emails.add( workEmail );
@@ -298,7 +298,7 @@ public class NamedEntityServiceTest {
 
     Email emailEntity = new Email();
     emailEntity.setNedid(1);
-    emailEntity.setType("Work");
+    emailEntity.setTypename("Work");
     emailEntity.setEmailaddress("bill@microsoft.com");
     emailEntity.setIsprimary((byte)1);
 
@@ -306,7 +306,7 @@ public class NamedEntityServiceTest {
     assertNotNull( createEmailId );
 
     Email savedEntity = namedEntityService.findResolvedEntityByKey(createEmailId, Email.class);
-    assertNull( savedEntity.getType() );
+    assertNull( savedEntity.getTypename() );
 
     // try again but this time use type resolver. remember that type names are
     // resolved by joins when querying database -- need foreign key to get name.
@@ -317,7 +317,7 @@ public class NamedEntityServiceTest {
     assertNotNull( createEmailId2 );
 
     Email savedEntity2 = namedEntityService.findResolvedEntityByKey(createEmailId2, Email.class);
-    assertNotNull( savedEntity2.getType() );
+    assertNotNull( savedEntity2.getTypename() );
 
     // UPDATE email entity. Scrub appropriate attributes from current instance
     // and reuse. Again, we don't expect for email type to persist.
@@ -326,7 +326,7 @@ public class NamedEntityServiceTest {
     assertTrue( crudService.update(emailEntity) );
 
     Email savedEntity3 = namedEntityService.findResolvedEntityByKey(createEmailId, Email.class);
-    assertNull( savedEntity3.getType() );
+    assertNull( savedEntity3.getTypename() );
 
     // try again with type resolver.
 
@@ -335,7 +335,7 @@ public class NamedEntityServiceTest {
     assertTrue( crudService.update(emailEntity) );
 
     Email savedEntity4 = namedEntityService.findResolvedEntityByKey(createEmailId, Email.class);
-    assertNotNull( savedEntity4.getType() );
+    assertNotNull( savedEntity4.getTypename() );
 
     // DELETE.
 
@@ -352,7 +352,7 @@ public class NamedEntityServiceTest {
 
     Address addressEntity = new Address();
     addressEntity.setNedid(1);
-    addressEntity.setAddresstype("Office");
+    addressEntity.setTypename("Office");
     addressEntity.setAddressline1("addressline 1");
     addressEntity.setAddressline2("addressline 2");
     addressEntity.setAddressline3("addressline 3");
@@ -376,7 +376,7 @@ public class NamedEntityServiceTest {
     assertNotNull( createAddressId2 );
 
     Address savedEntity2 = namedEntityService.findResolvedEntityByKey(createAddressId2, Address.class);
-    assertNotNull( savedEntity2.getAddresstype() );
+    assertNotNull( savedEntity2.getTypename() );
 
     // UPDATE address entity. Scrub appropriate attributes from current instance
     // and reuse. Again, we don't expect for address type to persist.
@@ -398,7 +398,7 @@ public class NamedEntityServiceTest {
     assertTrue( crudService.update(namedEntityService.resolveValuesToIds(addressEntity)) );
 
     Address savedEntity4 = namedEntityService.findResolvedEntityByKey(createAddressId2, Address.class);
-    assertNotNull( savedEntity4.getAddresstype() );
+    assertNotNull( savedEntity4.getTypename() );
 
     // DELETE.
 
@@ -425,7 +425,7 @@ public class NamedEntityServiceTest {
 
     List<Role> roles = new ArrayList<>();
     Role author = new Role();
-    author.setType("Author");
+    author.setTypename("Author");
     author.setStartdate(new Timestamp(1401408000));  // "2014-05-30"
 
     author.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));

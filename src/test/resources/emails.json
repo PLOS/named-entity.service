@@ -1,5 +1,5 @@
 {
     "isprimary" : "false",
-    "emailtype" : "Personal",
+    "typename" : "Personal",
     "emailaddress" : "jane.q.doe.personal@foo.com"
 }

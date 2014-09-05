@@ -31,7 +31,7 @@ public class Address extends Entity {
   private Integer nedid;
 
   private Integer typeid;
-  private String  addresstype;
+  private String  typename;
 
   private String addressline1;
   private String addressline2;
@@ -174,12 +174,12 @@ public class Address extends Entity {
     this.isactive = isactive;
   }
 
-  public String getAddresstype() {
-      return addresstype;
+  public String getTypename() {
+      return typename;
   }
 
-  public void setAddresstype(String addresstype) {
-      this.addresstype = addresstype;
+  public void setTypename(String typename) {
+      this.typename = typename;
   }
   
   public String getStatecodetype() {
@@ -208,7 +208,7 @@ public class Address extends Entity {
     return    Objects.equals(this.id, entity.id)
            && Objects.equals(this.nedid, entity.nedid)
            && Objects.equals(this.typeid, entity.typeid)
-           && Objects.equals(this.addresstype, entity.addresstype)
+           && Objects.equals(this.typename, entity.typename)
            && Objects.equals(this.addressline1, entity.addressline1)
            && Objects.equals(this.city, entity.city)
            && Objects.equals(this.statecodetypeid, entity.statecodetypeid)

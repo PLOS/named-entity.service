@@ -34,15 +34,15 @@ public class Phonenumber extends Entity {
   private Boolean isprimary;
   private Boolean isactive = true;
 
-  private String type;
+  private String typename;
   private String countrycodetype;
 
-  public String getType() {
-    return type;
+  public String getTypename() {
+    return typename;
   }
 
-  public void setType(String type) {
-    this.type = type;
+  public void setTypename(String typename) {
+    this.typename = typename;
   }
 
   public String getCountrycodetype() {

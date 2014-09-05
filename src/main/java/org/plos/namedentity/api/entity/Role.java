@@ -37,7 +37,7 @@ public class Role extends Entity {
   private Integer   lastmodifiedby;
 
   private String sourceapplicationtype;
-  private String type;
+  private String typename;
 
   public String getSourceapplicationtype() {
     return sourceapplicationtype;
@@ -47,12 +47,12 @@ public class Role extends Entity {
     this.sourceapplicationtype = sourceapplicationtype;
   }
 
-  public String getType() {
-    return type;
+  public String getTypename() {
+    return typename;
   }
 
-  public void setType(String type) {
-    this.type = type;
+  public void setTypename(String typename) {
+    this.typename = typename;
   }
 
   public Integer getId() {

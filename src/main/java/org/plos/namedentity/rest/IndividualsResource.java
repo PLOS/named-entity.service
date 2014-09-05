@@ -137,7 +137,10 @@ public class IndividualsResource extends BaseResource {
   @ApiOperation(value = "Create email", response = Email.class)
   public Response createEmail(@PathParam("nedId") int nedId,
                               Email emailEntity) {
-    return createEmail(nedId, emailEntity, Individual.class);
+
+    Response response = createEmail(nedId, emailEntity, Individual.class);
+
+    return response;
   }
 
   @POST
@@ -161,6 +164,7 @@ public class IndividualsResource extends BaseResource {
   @GET
   @Path("/{nedId}/emails/{emailId}")
   @ApiOperation(value = "Read email", response = Email.class)
+  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   public Response getEmail(@PathParam("nedId") int nedId,
                            @PathParam("emailId") int emailId) {
     return getEmail(nedId, emailId, Individual.class);

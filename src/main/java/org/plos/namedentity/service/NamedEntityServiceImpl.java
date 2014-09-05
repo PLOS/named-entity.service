@@ -81,8 +81,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   private Address resolveAddress(Address entity) {
 
-    if (entity.getAddresstype() != null)
-      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Physical Address Types"), entity.getAddresstype()));
+    if (entity.getTypename() != null)
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Physical Address Types"), entity.getTypename()));
 
     if (entity.getCountrycodetype() != null)
       entity.setCountrycodetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Country Types"), entity.getCountrycodetype()));
@@ -95,8 +95,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   private Phonenumber resolvePhonenumber(Phonenumber entity) {
 
-    if (entity.getType() != null)
-      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Telephone Number Types"), entity.getType()));
+    if (entity.getTypename() != null)
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Telephone Number Types"), entity.getTypename()));
 
     if (entity.getCountrycodetype() != null)
       entity.setCountrycodetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Country Codes for Phone Numbers"), entity.getCountrycodetype()));
@@ -106,16 +106,16 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   private Email resolveEmail(Email entity) {
 
-    if (entity.getType() != null)
-      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Email Address Types"), entity.getType()));
+    if (entity.getTypename() != null)
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Email Address Types"), entity.getTypename()));
 
     return entity;
   }
 
   private Degree resolveDegree(Degree entity) {
 
-    if (entity.getType() != null)
-      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Degrees"), entity.getType()));
+    if (entity.getTypename() != null)
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Degrees"), entity.getTypename()));
 
     return entity;
   }
@@ -125,16 +125,16 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     if (entity.getSourceapplicationtype() != null)
       entity.setSourceapplicationtypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSourceapplicationtype()));
 
-    if (entity.getType() != null)
-      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Roles"), entity.getType()));
+    if (entity.getTypename() != null)
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Roles"), entity.getTypename()));
 
     return entity;
   }
 
   private Uniqueidentifier resolveReference(Uniqueidentifier entity) {
 
-    if (entity.getType() != null)
-      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Unique Identifier Types"), entity.getType()));
+    if (entity.getTypename() != null)
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Unique Identifier Types"), entity.getTypename()));
 
     return entity;
   }

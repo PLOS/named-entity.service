@@ -57,8 +57,10 @@ public class BaseResource {
 
       Integer emailId = crudService.create(emailEntity);
 
+      Email e = namedEntityService.findResolvedEntityByKey(emailId, Email.class);
+
       return Response.status(Response.Status.OK).entity(
-          namedEntityService.findResolvedEntityByKey(emailId, Email.class)).build();
+          e).build();
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
     } catch (NedValidationException e) {

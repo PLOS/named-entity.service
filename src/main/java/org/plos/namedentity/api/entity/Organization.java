@@ -28,7 +28,7 @@ public class Organization extends Entity {
 
   private Integer nedid;
   private Integer typeid;
-  private String  type;
+  private String  typename;
   private String  familiarname;
   private String  legalname;
   private Integer maincontactid;
@@ -91,12 +91,12 @@ public class Organization extends Entity {
     this.isvisible = isvisible;
   }
 
-  public String getType() {
-    return type;
+  public String getTypename() {
+    return typename;
   }
 
-  public void setType(String type) {
-    this.type = type;
+  public void setTypename(String typename) {
+    this.typename = typename;
   }
 
   @Override

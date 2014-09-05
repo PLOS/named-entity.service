@@ -186,7 +186,7 @@ public class TestSpringConfig {
     Email workEmail = new Email();
     workEmail.setNedid(1);
     workEmail.setId(1);
-    workEmail.setType("Work");
+    workEmail.setTypename("Work");
     workEmail.setEmailaddress("fu.manchu.work@foo.com");
     workEmail.setIsprimary((byte)1);
     emails.add( workEmail );
@@ -194,7 +194,7 @@ public class TestSpringConfig {
     Email personalEmail = new Email();
     personalEmail.setNedid(1);
     personalEmail.setId(2);
-    personalEmail.setType("Personal");
+    personalEmail.setTypename("Personal");
     personalEmail.setEmailaddress("fu.manchu.home@foo.com");
     personalEmail.setIsprimary((byte)0);
     emails.add( personalEmail );
@@ -208,7 +208,7 @@ public class TestSpringConfig {
     Email workEmail = new Email();
     workEmail.setNedid(2);
     workEmail.setId(5);
-    workEmail.setType("Work");
+    workEmail.setTypename("Work");
     workEmail.setEmailaddress("bill@microsoft.com");
     workEmail.setIsprimary((byte)1);
     emails.add( workEmail );
@@ -220,7 +220,7 @@ public class TestSpringConfig {
     List<Degree> entities = new ArrayList<>();
 
     Degree entity = new Degree();
-    entity.setType("Super Doctor");
+    entity.setTypename("Super Doctor");
     entities.add( entity );
 
     return entities;
@@ -231,7 +231,7 @@ public class TestSpringConfig {
 
     Phonenumber officePhone = new Phonenumber();
     officePhone.setId(1);
-    officePhone.setType("Office");
+    officePhone.setTypename("Office");
     officePhone.setCountrycodetype("01");
     officePhone.setPhonenumber("123-456-7890");
     officePhone.setIsprimary(true);
@@ -239,7 +239,7 @@ public class TestSpringConfig {
 
     Phonenumber mobilePhone = new Phonenumber();
     officePhone.setId(2);
-    mobilePhone.setType("Mobile");
+    mobilePhone.setTypename("Mobile");
     mobilePhone.setCountrycodetype("01");
     mobilePhone.setPhonenumber("123-444-0011");
     mobilePhone.setIsprimary(false);
@@ -247,7 +247,7 @@ public class TestSpringConfig {
 
     Phonenumber homePhone = new Phonenumber();
     officePhone.setId(3);
-    homePhone.setType("Home");
+    homePhone.setTypename("Home");
     homePhone.setCountrycodetype("01");
     homePhone.setPhonenumber("123-555-6666");
     homePhone.setIsprimary(false);
@@ -261,7 +261,7 @@ public class TestSpringConfig {
 
     Role author = new Role();
     author.setId(1);
-    author.setType("Author");
+    author.setTypename("Author");
     author.setStartdate(new Timestamp(1401408000)); // "2014-05-30"
     roles.add( author );
 
@@ -294,7 +294,7 @@ public class TestSpringConfig {
       uid.setId(i);
       uid.setNedid(1);
       uid.setUniqueidentifier("0000-0002-9430-319"+i);
-      uid.setType("ORCID");
+      uid.setTypename("ORCID");
 
       uids.add(uid);
     }
@@ -324,7 +324,7 @@ public class TestSpringConfig {
     emailEntity.setEmailaddress("foo.bar.personal@gmail.com");
     emailEntity.setIsprimary((byte)1);
     emailEntity.setIsactive((byte)1);
-    emailEntity.setType("Work");
+    emailEntity.setTypename("Work");
 
     when(mockNamedEntityService.findResolvedEntityByKey(eq(emailEntity.getId()), eq(Email.class)))
         .thenReturn( emailEntity );

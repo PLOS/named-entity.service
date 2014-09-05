@@ -195,17 +195,6 @@ CREATE TABLE IF NOT EXISTS namedEntities.subjectAreas (
     FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
--- merge with unique identifiers?
-DROP TABLE IF EXISTS namedEntities.cas;
-CREATE TABLE IF NOT EXISTS namedEntities.cas (
-    id INT NOT NULL,
-    nedId INT NOT NULL,
-    sourceApplicationTypeId INT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
-    FOREIGN KEY (sourceApplicationTypeId) REFERENCES globalTypes(id)
-)   ENGINE=INNODB;
-
 DROP TABLE IF EXISTS namedEntities.journals;
 CREATE TABLE IF NOT EXISTS namedEntities.journals (
     id INT NOT NULL AUTO_INCREMENT,

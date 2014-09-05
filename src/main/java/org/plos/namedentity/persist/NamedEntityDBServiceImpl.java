@@ -326,7 +326,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .select(
             o.NEDID, o.FAMILIARNAME,
             o.LEGALNAME, o.ISACTIVE, o.ISVISIBLE,
-            gt1.SHORTDESCRIPTION.as("organizationtype"))
+            gt1.SHORTDESCRIPTION.as("typename"))
         .from(o)
         .leftOuterJoin(gt1).on(o.TYPEID.equal(gt1.ID))
         .where(o.NEDID.equal(nedId)).fetchOne();
@@ -348,7 +348,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .select(
             o.NEDID, o.FAMILIARNAME,
             o.LEGALNAME, o.ISACTIVE, o.ISVISIBLE,
-            gt1.SHORTDESCRIPTION.as("organizationtype"))
+            gt1.SHORTDESCRIPTION.as("typename"))
         .from(o)
         .leftOuterJoin(gt1).on(o.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(u.TYPEID.equal(gt2.ID)).and(gt2.SHORTDESCRIPTION.equal(srcType))
@@ -395,7 +395,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         gt2.SHORTDESCRIPTION.as("namesuffix"),
         gt3.SHORTDESCRIPTION.as("preferredlanguage"), 
         gt4.SHORTDESCRIPTION.as("preferredcommunication"),
-        gt5.SHORTDESCRIPTION.as("uniqueidentifiertype"),
+//        gt5.SHORTDESCRIPTION.as("uniqueidentifiertype"),
         u.UNIQUEIDENTIFIER)
       .from(i)
       .leftOuterJoin(gt1).on(i.NAMEPREFIXTYPEID.equal(gt1.ID))
@@ -431,7 +431,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         a.ID,
         a.ADDRESSLINE1, a.ADDRESSLINE2, a.ADDRESSLINE3, a.CITY, 
         a.POSTALCODE, a.ISPRIMARY,
-        gt1.SHORTDESCRIPTION.as("addresstype"),                 
+        gt1.SHORTDESCRIPTION.as("typename"),
         gt2.SHORTDESCRIPTION.as("statecodetype"),
         gt3.SHORTDESCRIPTION.as("countrycodetype"))
       .from(a)
@@ -457,7 +457,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       .select(
         e.ID,
         e.EMAILADDRESS, e.ISPRIMARY, 
-        gt1.SHORTDESCRIPTION.as("emailtype"))
+        gt1.SHORTDESCRIPTION.as("typename"))
       .from(e)
       .leftOuterJoin(gt1).on(e.TYPEID.equal(gt1.ID))
       .where(e.NEDID.equal(nedId))
@@ -483,7 +483,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       .select(
         p.ID,
         p.PHONENUMBER, p.EXTENSION, p.ISPRIMARY,
-        gt1.SHORTDESCRIPTION.as("phonenumbertype"),                 
+        gt1.SHORTDESCRIPTION.as("typename"),
         gt2.SHORTDESCRIPTION.as("countrycodetype"))
       .from(p)
       .leftOuterJoin(gt1).on(p.TYPEID.equal(gt1.ID))
@@ -501,7 +501,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     return this.context
         .select(
             d.ID,
-            gt1.SHORTDESCRIPTION.as("degreetype"))
+            gt1.SHORTDESCRIPTION.as("typename"))
         .from(d)
         .leftOuterJoin(gt1).on(d.TYPEID.equal(gt1.ID))
         .where(d.NEDID.equal(nedId))
@@ -540,7 +540,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         r.ID,
         r.STARTDATE, r.ENDDATE,
         gt1.SHORTDESCRIPTION.as("sourceapplicationtype"),                 
-        gt2.SHORTDESCRIPTION.as("roletype"))
+        gt2.SHORTDESCRIPTION.as("typename"))
       .from(r)
       .leftOuterJoin(gt1).on(r.SOURCEAPPLICATIONTYPEID.equal(gt1.ID))
       .leftOuterJoin(gt2).on(r.TYPEID.equal(gt2.ID))
@@ -563,7 +563,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     return this.context
       .select(
         uid.ID,
-        uid.UNIQUEIDENTIFIER, gt.SHORTDESCRIPTION.as("uniqueidentifiertype"))
+        uid.UNIQUEIDENTIFIER, gt.SHORTDESCRIPTION.as("typename"))
       .from(uid)
       .leftOuterJoin(gt).on(uid.TYPEID.equal(gt.ID))
       .where(uid.NEDID.equal(nedId))
@@ -574,13 +574,13 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   private Email findEmailByPrimaryKey(Integer emailId) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
-    Globaltypes gt2 = GLOBALTYPES.as("gt2");
+    //Globaltypes gt2 = GLOBALTYPES.as("gt2");
     Emails        e = EMAILS.as("e");
 
     Record record = this.context
       .select(
         e.ID, e.NEDID,
-        gt1.SHORTDESCRIPTION.as("emailType"),
+        gt1.SHORTDESCRIPTION.as("typename"),
         e.EMAILADDRESS, e.ISPRIMARY, e.ISACTIVE)
       .from(e)
       .leftOuterJoin(gt1).on(e.TYPEID.equal(gt1.ID))
@@ -604,7 +604,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         a.ID,
         a.ADDRESSLINE1, a.ADDRESSLINE2, a.ADDRESSLINE3, a.CITY, 
         a.POSTALCODE, a.ISPRIMARY,
-        gt1.SHORTDESCRIPTION.as("addresstype"),                 
+        gt1.SHORTDESCRIPTION.as("typename"),
         gt2.SHORTDESCRIPTION.as("statecodetype"),
         gt3.SHORTDESCRIPTION.as("countrycodetype"))
       .from(a)

@@ -220,7 +220,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     Address entity = mapper.readValue(responseJson, Address.class);
     assertEquals(Integer.valueOf(1), entity.getId());
     assertEquals(Integer.valueOf(1), entity.getNedid());
-    assertEquals("Office", entity.getAddresstype());
+    assertEquals("Office", entity.getTypename());
     assertEquals("addressline 1", entity.getAddressline1());
     assertEquals("addressline 2", entity.getAddressline2());
     assertEquals("addressline 3", entity.getAddressline3());
@@ -273,13 +273,13 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(2, addresses.length);
 
     Address officeAddress = addresses[0];
-    assertEquals("Office", officeAddress.getAddresstype());
+    assertEquals("Office", officeAddress.getTypename());
     assertEquals("addressline 1", officeAddress.getAddressline1());
     assertEquals("CA", officeAddress.getStatecodetype());
     assertEquals("12345", officeAddress.getPostalcode());
 
     Address homeAddress = addresses[1];
-    assertEquals("Home", homeAddress.getAddresstype());
+    assertEquals("Home", homeAddress.getTypename());
     assertEquals("addressline 1.2", homeAddress.getAddressline1());
     assertEquals("ONT", homeAddress.getStatecodetype());
     assertEquals("M4C 1B5", homeAddress.getPostalcode());
@@ -304,7 +304,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     Email entity = mapper.readValue(jsonPayload, Email.class);
     assertEquals(Integer.valueOf(1), entity.getId());
     assertEquals(Integer.valueOf(1), entity.getNedid());
-    assertEquals("Work", entity.getType());
+    assertEquals("Work", entity.getTypename());
     assertEquals("foo.bar.personal@gmail.com", entity.getEmailaddress());
     assertEquals(Byte.valueOf((byte)1), entity.getIsprimary());
     assertEquals(Byte.valueOf((byte)1), entity.getIsactive());
@@ -313,8 +313,13 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
+
+    String jsonString = mapper.writeValueAsString(entity);
+
+    Entity<String> eString = Entity.json(jsonString);
+
     response = target(INDIV_EMAIL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                  .post(Entity.json(mapper.writeValueAsString(entity)));
+                  .post(eString);
 
     assertEquals(200, response.getStatus());
 
@@ -351,7 +356,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(2, emails.length);
 
     Email workEmail = emails[0];
-    assertEquals("Work", workEmail.getType());
+    assertEquals("Work", workEmail.getTypename());
     assertEquals("fu.manchu.work@foo.com", workEmail.getEmailaddress());
     assertTrue(workEmail.getIsprimary() == 1);
 
@@ -412,7 +417,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(1, degrees.length);
 
     Degree degree = degrees[0];
-    assertEquals("Super Doctor", degree.getType());
+    assertEquals("Super Doctor", degree.getTypename());
 
     //TODO - CREATE, UPDATE, DELETE
   }
@@ -434,7 +439,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(3, phonenumbers.length);
 
     Phonenumber officePhone = phonenumbers[0];
-    assertEquals("Office", officePhone.getType());
+    assertEquals("Office", officePhone.getTypename());
     assertEquals("123-456-7890", officePhone.getPhonenumber());
 
     //TODO - CREATE, UPDATE, DELETE
@@ -457,7 +462,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(1, roles.length);
 
     Role role = roles[0];
-    assertEquals("Author", role.getType());
+    assertEquals("Author", role.getTypename());
 
     //TODO - CREATE, UPDATE, DELETE
   }
@@ -479,7 +484,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(2, xrefs.length);
 
     for (Uniqueidentifier xref : xrefs) {
-      assertEquals("ORCID", xref.getType());
+      assertEquals("ORCID", xref.getTypename());
     }
 
     /* ------------------------------------------------------------------ */

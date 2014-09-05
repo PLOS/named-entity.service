@@ -28,7 +28,7 @@ public class Relationship extends Entity {
   private Integer   masternamedentityid;
   private Integer   childnamedentityid;
   private Integer   typeid;
-  private String    type;
+  private String    typename;
   private String    title;
   private Timestamp startdate;
   private Timestamp enddate;
@@ -117,11 +117,11 @@ public class Relationship extends Entity {
     this.lastmodifiedby = lastmodifiedby;
   }
   
-  public String getType() {
-      return type;
+  public String getTypename() {
+      return typename;
   }
   
-  public void setType(String type) {
-      this.type = type;
+  public void setTypename(String typename) {
+      this.typename = typename;
   }
 }

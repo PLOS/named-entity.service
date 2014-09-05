@@ -89,7 +89,7 @@ public class CrudServiceTest {
     // Create
     Email email = new Email();
     email.setNedid(nedId);
-    email.setType("Work");
+    email.setTypename("Work");
     email.setEmailaddress("bill@microsoft");
 
     try {
@@ -123,7 +123,7 @@ public class CrudServiceTest {
     // Create
     Email email = new Email();
     email.setNedid(nedId);
-    email.setType("Work");
+    email.setTypename("Work");
 
     try {
       crudService.create(email);
@@ -319,7 +319,7 @@ public class CrudServiceTest {
 
     Address newAddress = new Address();
     newAddress.setNedid(1);
-    newAddress.setAddresstype("Office");
+    newAddress.setTypename("Office");
     newAddress.setAddressline1("addressline 1");
     newAddress.setAddressline2("addressline 2");
     newAddress.setAddressline3("addressline 3");
