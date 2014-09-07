@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlTransient;
 // Base class for entities which have a parent. PhoneNumber and Email entities
 // are examples.
 
+@XmlTransient
 public abstract class ChildEntity extends Entity {
 
   @XmlTransient
@@ -16,6 +17,9 @@ public abstract class ChildEntity extends Entity {
     }
     else if (this instanceof Address) {
       return ((Address)this).getAddressid();
+    }
+    else if (this instanceof Role) {
+      return ((Role)this).getRoleid();
     }
     throw new UnsupportedOperationException(
       "Unable to lookup primary key for " + this.getClass().getSimpleName());

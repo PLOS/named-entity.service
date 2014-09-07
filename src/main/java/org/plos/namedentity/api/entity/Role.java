@@ -16,9 +16,13 @@
  */
 package org.plos.namedentity.api.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Timestamp;
 import java.util.Objects;
+
+import org.plos.namedentity.api.adapter.DateAdapter;
+
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * Modified JOOQ generated class(pojo=true).
@@ -94,19 +98,23 @@ public class Role extends ChildEntity {
     this.roletypeid = roletypeid;
   }
 
-  public java.sql.Date getStartdate() {
+  @XmlJavaTypeAdapter(DateAdapter.class)
+  public Date getStartdate() {
     return this.startdate;
   }
 
-  public void setStartdate(java.sql.Date startdate) {
+  @XmlJavaTypeAdapter(DateAdapter.class)
+  public void setStartdate(Date startdate) {
     this.startdate = startdate;
   }
 
-  public java.sql.Date getEnddate() {
+  @XmlJavaTypeAdapter(DateAdapter.class)
+  public Date getEnddate() {
     return this.enddate;
   }
 
-  public void setEnddate(java.sql.Date enddate) {
+  @XmlJavaTypeAdapter(DateAdapter.class)
+  public void setEnddate(Date enddate) {
     this.enddate = enddate;
   }
 

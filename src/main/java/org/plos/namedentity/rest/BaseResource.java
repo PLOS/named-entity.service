@@ -25,6 +25,7 @@ import org.plos.namedentity.api.entity.ParentEntity;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Phonenumber;
+import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.service.CrudService;
 import org.plos.namedentity.service.NamedEntityService;
@@ -181,6 +182,12 @@ public class BaseResource {
         return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<Phonenumber>>(
             namedEntityService.findResolvedEntities(nedId, Phonenumber.class)
+          ){}).build();
+      }
+      else if (cname.equals(Role.class.getCanonicalName())) {
+        return Response.status(Response.Status.OK).entity(
+          new GenericEntity<List<Role>>(
+            namedEntityService.findResolvedEntities(nedId, Role.class)
           ){}).build();
       }
       else if (cname.equals(Uniqueidentifier.class.getCanonicalName())) {

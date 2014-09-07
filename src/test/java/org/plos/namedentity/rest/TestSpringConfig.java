@@ -32,11 +32,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonReader;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 
+import org.eclipse.persistence.jaxb.JAXBContextProperties;
+import org.eclipse.persistence.oxm.json.JsonStructureSource;
 import org.mockito.Mockito;
 import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.IndividualComposite;
@@ -53,17 +58,11 @@ import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.service.CrudService;
 import org.plos.namedentity.service.NamedEntityService;
-
 import org.springframework.context.annotation.Bean;
-import org.codehaus.jackson.map.ObjectMapper;
-//import org.springframework.context.annotation.Bean;
-//import org.codehaus.jackson.map.ObjectMapper;
 
 public class TestSpringConfig {
 
   private static final String TEST_RESOURCE_PATH = "src/test/resources/";
-
-  private static ObjectMapper mapper = new ObjectMapper();
 
   @Bean @SuppressWarnings("unchecked")
   static public CrudService crudService() {
@@ -337,23 +336,39 @@ public class TestSpringConfig {
     when(mockCrudService.create(isA(Role.class))).thenReturn(1);
   }
 
+  @SuppressWarnings("unchecked")
   static private void mockNamedEntityServiceForAddresses(NamedEntityService mockNamedEntityService) {
     try {
       String addressesJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "addresses.json")));
-      Address[] addresses = mapper.readValue(addressesJson, Address[].class);
 
-      for (int i = 0; i < addresses.length; i++) {
-        addresses[i].setAddressid(i+1);   // db assigned primary key (1-based)
-        addresses[i].setNamedentityid(1);
-        addresses[i].setIsprimary((byte)1);
-        addresses[i].setIsactive((byte)1);
+      JAXBContext jc = jsonJaxbContext(Address.class);
+      Unmarshaller unmarshaller = jc.createUnmarshaller();
+
+      // parse json
+      JsonReader jsonReader = Json.createReader(new StringReader(addressesJson));
+
+      // unmarshal root level json array
+      JsonArray addressesArray = jsonReader.readArray();
+      JsonStructureSource arraySource = new JsonStructureSource(addressesArray);
+
+      List<Address> addresses = (List<Address>) unmarshaller.unmarshal(arraySource, Address.class).getValue();
+
+      for (int i = 0; i < addresses.size(); i++) {
+        Address address = addresses.get(i);
+        address.setAddressid(i+1);   // db assigned primary key (1-based)
+        address.setNamedentityid(1);
+        address.setIsprimary((byte)1);
+        address.setIsactive((byte)1);
       }
 
-      when(mockNamedEntityService.findResolvedEntityByKey(eq(addresses[0].getAddressid()), eq(Address.class)))
-        .thenReturn( addresses[0] );
+      when(mockNamedEntityService.findResolvedEntityByKey(eq(addresses.get(0).getAddressid()), eq(Address.class)))
+        .thenReturn( addresses.get(0) );
 
       when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(Address.class)))
-        .thenReturn( Arrays.asList(addresses) );
+        .thenReturn( addresses );
+    }
+    catch (JAXBException je) {
+      throw new RuntimeException(je);
     }
     catch (IOException e) {
       throw new RuntimeException(String.format(
@@ -365,18 +380,9 @@ public class TestSpringConfig {
     try {
       String rolesJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "role.json")));
 
-      Map<String,Object> properties = new HashMap<String,Object>(1);
-      properties.put("eclipselink.media-type", "application/json");
-      //System.setProperty(JAXBContext.JAXB_CONTEXT_FACTORY, "org.eclipse.persistence.jaxb.JAXBContextFactory");
-      //JAXBContext jc = JAXBContext.newInstance(Role.class);
-      JAXBContext jc = JAXBContext.newInstance(new Class[]{ Role.class }, properties);
-
-      Unmarshaller u = jc.createUnmarshaller();
-      //u.setProperty("eclipselink.media-type", "application/json");
-
-      Object o = u.unmarshal( new StreamSource(new StringReader(rolesJson)) );
-
-      Role role = mapper.readValue(rolesJson, Role.class);
+      JAXBContext jc = jsonJaxbContext(Role.class);
+      Unmarshaller unmarshaller = jc.createUnmarshaller();
+      Role role = unmarshaller.unmarshal(new StreamSource(new StringReader(rolesJson)), Role.class).getValue();
 
       role.setRoleid(1);
       role.setNamedentityid(1);
@@ -459,5 +465,12 @@ public class TestSpringConfig {
     }
 
     when(mockCrudService.findByAttribute(isA(Globaltype.class))).thenReturn(typeValuesForTypeClass);
+  }
+
+  static private <T> JAXBContext jsonJaxbContext(Class<T> clazz) throws JAXBException {
+    Map<String,Object> properties = new HashMap<String,Object>(2);
+    properties.put(JAXBContextProperties.MEDIA_TYPE, "application/json");
+    properties.put(JAXBContextProperties.JSON_INCLUDE_ROOT, false); 
+    return JAXBContext.newInstance(new Class[] {clazz}, properties);
   }
 }

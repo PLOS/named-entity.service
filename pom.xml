@@ -113,16 +113,22 @@
       <version>${org.glassfish.jersey-version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>org.glassfish.jersey.media</groupId>
-      <artifactId>jersey-media-moxy</artifactId>
-      <version>${org.glassfish.jersey-version}</version>
-    </dependency>
-
+    <!-- moxy (jaxb jsr-222) -->
     <dependency>
       <groupId>org.eclipse.persistence</groupId>
       <artifactId>eclipselink</artifactId>
-      <version>2.5.1</version>
+      <version>2.6.0-M3</version>
+    </dependency>
+    <!-- json api (jsr-353) -->
+    <dependency>
+      <groupId>javax.json</groupId>
+      <artifactId>javax.json-api</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish</groupId>
+      <artifactId>javax.json</artifactId>
+      <version>1.0.4</version>
     </dependency>
 
     <dependency>
