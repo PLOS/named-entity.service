@@ -27,31 +27,17 @@ public class DateAdapter extends XmlAdapter<String, Date> {
   private SimpleDateFormat dateFormat;
 
   public DateAdapter() {
-    //this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    //this.dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     this.dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
     this.dateFormat.setTimeZone( TimeZone.getTimeZone("UTC") );
   }
        
   @Override
   public String marshal(Date date) throws Exception {
-    try {
-      return dateFormat.format(date);
-    }
-    catch (Exception e) {
-      e.printStackTrace();
-      throw e;
-    }
+    return dateFormat.format(date);
   }
 
   @Override
   public Date unmarshal(String string) throws Exception {
-    try {
-      return dateFormat.parse(string);
-    }
-    catch (Exception e) {
-      e.printStackTrace();
-      throw e;
-    }
+    return dateFormat.parse(string);
   }
 }
