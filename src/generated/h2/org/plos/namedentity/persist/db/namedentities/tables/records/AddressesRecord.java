@@ -11,213 +11,213 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.AddressesRecord> implements org.jooq.Record15<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Byte, java.lang.Byte> {
 
-	private static final long serialVersionUID = 2071068390;
+	private static final long serialVersionUID = -1914269943;
 
 	/**
-	 * Setter for <code>namedentities.addresses.addressid</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.ID</code>.
 	 */
-	public void setAddressid(java.lang.Integer value) {
+	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.addressid</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.ID</code>.
 	 */
-	public java.lang.Integer getAddressid() {
+	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.namedentityid</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.NEDID</code>.
 	 */
-	public void setNamedentityid(java.lang.Integer value) {
+	public void setNedid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.namedentityid</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.NEDID</code>.
 	 */
-	public java.lang.Integer getNamedentityid() {
+	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.addresstypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.TYPEID</code>.
 	 */
-	public void setAddresstypeid(java.lang.Integer value) {
+	public void setTypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.addresstypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.TYPEID</code>.
 	 */
-	public java.lang.Integer getAddresstypeid() {
+	public java.lang.Integer getTypeid() {
 		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.addressline1</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.ADDRESSLINE1</code>.
 	 */
 	public void setAddressline1(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.addressline1</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.ADDRESSLINE1</code>.
 	 */
 	public java.lang.String getAddressline1() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.addressline2</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.ADDRESSLINE2</code>.
 	 */
 	public void setAddressline2(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.addressline2</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.ADDRESSLINE2</code>.
 	 */
 	public java.lang.String getAddressline2() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.addressline3</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.ADDRESSLINE3</code>.
 	 */
 	public void setAddressline3(java.lang.String value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.addressline3</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.ADDRESSLINE3</code>.
 	 */
 	public java.lang.String getAddressline3() {
 		return (java.lang.String) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.city</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.CITY</code>.
 	 */
 	public void setCity(java.lang.String value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.city</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.CITY</code>.
 	 */
 	public java.lang.String getCity() {
 		return (java.lang.String) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.statecodetypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.STATECODETYPEID</code>.
 	 */
 	public void setStatecodetypeid(java.lang.Integer value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.statecodetypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.STATECODETYPEID</code>.
 	 */
 	public java.lang.Integer getStatecodetypeid() {
 		return (java.lang.Integer) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.countrycodetypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.COUNTRYCODETYPEID</code>.
 	 */
 	public void setCountrycodetypeid(java.lang.Integer value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.countrycodetypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.COUNTRYCODETYPEID</code>.
 	 */
 	public java.lang.Integer getCountrycodetypeid() {
 		return (java.lang.Integer) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.postalcode</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.POSTALCODE</code>.
 	 */
 	public void setPostalcode(java.lang.String value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.postalcode</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.POSTALCODE</code>.
 	 */
 	public java.lang.String getPostalcode() {
 		return (java.lang.String) getValue(9);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.maincontactnamedentityid</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.MAINCONTACTNAMEDENTITYID</code>.
 	 */
 	public void setMaincontactnamedentityid(java.lang.Integer value) {
 		setValue(10, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.maincontactnamedentityid</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.MAINCONTACTNAMEDENTITYID</code>.
 	 */
 	public java.lang.Integer getMaincontactnamedentityid() {
 		return (java.lang.Integer) getValue(10);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.latitude</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.LATITUDE</code>.
 	 */
 	public void setLatitude(java.lang.Integer value) {
 		setValue(11, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.latitude</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.LATITUDE</code>.
 	 */
 	public java.lang.Integer getLatitude() {
 		return (java.lang.Integer) getValue(11);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.longitude</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.LONGITUDE</code>.
 	 */
 	public void setLongitude(java.lang.Integer value) {
 		setValue(12, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.longitude</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.LONGITUDE</code>.
 	 */
 	public java.lang.Integer getLongitude() {
 		return (java.lang.Integer) getValue(12);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.isprimary</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.ISPRIMARY</code>.
 	 */
 	public void setIsprimary(java.lang.Byte value) {
 		setValue(13, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.isprimary</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.ISPRIMARY</code>.
 	 */
 	public java.lang.Byte getIsprimary() {
 		return (java.lang.Byte) getValue(13);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.isactive</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.ISACTIVE</code>.
 	 */
 	public void setIsactive(java.lang.Byte value) {
 		setValue(14, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.isactive</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.ISACTIVE</code>.
 	 */
 	public java.lang.Byte getIsactive() {
 		return (java.lang.Byte) getValue(14);
@@ -260,7 +260,7 @@ public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Addresses.ADDRESSES.ADDRESSID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Addresses.ADDRESSES.ID;
 	}
 
 	/**
@@ -268,7 +268,7 @@ public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Addresses.ADDRESSES.NAMEDENTITYID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Addresses.ADDRESSES.NEDID;
 	}
 
 	/**
@@ -276,7 +276,7 @@ public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field3() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Addresses.ADDRESSES.ADDRESSTYPEID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Addresses.ADDRESSES.TYPEID;
 	}
 
 	/**
@@ -380,7 +380,7 @@ public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.
 	 */
 	@Override
 	public java.lang.Integer value1() {
-		return getAddressid();
+		return getId();
 	}
 
 	/**
@@ -388,7 +388,7 @@ public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.
 	 */
 	@Override
 	public java.lang.Integer value2() {
-		return getNamedentityid();
+		return getNedid();
 	}
 
 	/**
@@ -396,7 +396,7 @@ public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.
 	 */
 	@Override
 	public java.lang.Integer value3() {
-		return getAddresstypeid();
+		return getTypeid();
 	}
 
 	/**
@@ -500,7 +500,7 @@ public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.
 	 */
 	@Override
 	public AddressesRecord value1(java.lang.Integer value) {
-		setAddressid(value);
+		setId(value);
 		return this;
 	}
 
@@ -509,7 +509,7 @@ public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.
 	 */
 	@Override
 	public AddressesRecord value2(java.lang.Integer value) {
-		setNamedentityid(value);
+		setNedid(value);
 		return this;
 	}
 
@@ -518,7 +518,7 @@ public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.
 	 */
 	@Override
 	public AddressesRecord value3(java.lang.Integer value) {
-		setAddresstypeid(value);
+		setTypeid(value);
 		return this;
 	}
 
@@ -652,12 +652,12 @@ public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.
 	/**
 	 * Create a detached, initialised AddressesRecord
 	 */
-	public AddressesRecord(java.lang.Integer addressid, java.lang.Integer namedentityid, java.lang.Integer addresstypeid, java.lang.String addressline1, java.lang.String addressline2, java.lang.String addressline3, java.lang.String city, java.lang.Integer statecodetypeid, java.lang.Integer countrycodetypeid, java.lang.String postalcode, java.lang.Integer maincontactnamedentityid, java.lang.Integer latitude, java.lang.Integer longitude, java.lang.Byte isprimary, java.lang.Byte isactive) {
+	public AddressesRecord(java.lang.Integer id, java.lang.Integer nedid, java.lang.Integer typeid, java.lang.String addressline1, java.lang.String addressline2, java.lang.String addressline3, java.lang.String city, java.lang.Integer statecodetypeid, java.lang.Integer countrycodetypeid, java.lang.String postalcode, java.lang.Integer maincontactnamedentityid, java.lang.Integer latitude, java.lang.Integer longitude, java.lang.Byte isprimary, java.lang.Byte isactive) {
 		super(org.plos.namedentity.persist.db.namedentities.tables.Addresses.ADDRESSES);
 
-		setValue(0, addressid);
-		setValue(1, namedentityid);
-		setValue(2, addresstypeid);
+		setValue(0, id);
+		setValue(1, nedid);
+		setValue(2, typeid);
 		setValue(3, addressline1);
 		setValue(4, addressline2);
 		setValue(5, addressline3);

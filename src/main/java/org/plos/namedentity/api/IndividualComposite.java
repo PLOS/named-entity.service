@@ -23,6 +23,7 @@ import org.plos.namedentity.api.entity.Individual;
 import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.api.entity.Url;
 import org.plos.namedentity.validate.Validatable;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -39,6 +40,7 @@ public class IndividualComposite implements Validatable {
   private List<Phonenumber>      phonenumbers;
   private List<Uniqueidentifier> uniqueidentifiers;
   private List<Degree>           degrees;
+  private List<Url>              urls;
 
   public IndividualComposite() {
     this.individual = new Individual();
@@ -53,17 +55,36 @@ public class IndividualComposite implements Validatable {
     if (emails == null || emails.size() == 0)
       throw new NedValidationException("Emails can not be empty");
 
-    // TODO: determine exactly which lists are required
-
     individual.validate();
 
-    for (Role role : roles)                      role.validate();
-//    for (Address address : addresses)            address.validate();
-    for (Email email : emails)                   email.validate();
-//    for (Phonenumber p : phonenumbers)           p.validate();
-//    for (Uniqueidentifier u: uniqueidentifiers)  u.validate();
-//    for (Degree degree : degrees)                degree.validate();
+    // TODO: determine exactly which lists are required
 
+    for (Role role : roles)                       role.validate();
+    for (Email email : emails)                    email.validate();
+
+    if (addresses != null)
+      for (Address address : addresses)           address.validate();
+
+    if (phonenumbers != null)
+      for (Phonenumber p : phonenumbers)          p.validate();
+
+    if (uniqueidentifiers != null)
+      for (Uniqueidentifier u: uniqueidentifiers) u.validate();
+
+    if (degrees != null)
+      for (Degree degree : degrees)               degree.validate();
+
+    if (urls != null)
+      for (Url url : urls)                        url.validate();
+
+  }
+
+  public List<Url> getUrls() {
+    return urls;
+  }
+
+  public void setUrls(List<Url> urls) {
+    this.urls = urls;
   }
 
   public List<Degree> getDegrees() {
@@ -84,11 +105,11 @@ public class IndividualComposite implements Validatable {
   }
 
   public Integer getNamedentityid() {
-    return this.individual.getNamedentityid();
+    return this.individual.getNedid();
   }
 
   public void setNamedentityid(Integer namedentityid) {
-    this.individual.setNamedentityid(namedentityid);
+    this.individual.setNedid(namedentityid);
   }
 
   public String getFirstname() {

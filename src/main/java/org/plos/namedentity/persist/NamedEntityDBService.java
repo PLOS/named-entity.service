@@ -16,18 +16,33 @@
  */
 package org.plos.namedentity.persist;
 
+import org.plos.namedentity.api.entity.Entity;
+
 import java.util.List;
 
 public interface NamedEntityDBService {
 
   //TODO - replace typecode string with enum?
-  public Integer newNamedEntityId(String typeCode);
+  Integer newNamedEntityId(String typeCode);
 
-  public <T> Integer create(T t);
-  public <T> boolean update(T t);
-  public <T> boolean delete(T t);
+  <T> Integer create(T t);
+  <T> boolean update(T t);
+  <T> boolean delete(T t);
 
-  public <T> List<T> findAll(Class<T> clazz);
-  public <T> T       findById(Integer id, Class<T> clazz);
-  public <T> List<T> findByAttribute(T t);
+  <T> List<T> findAll(Class<T> clazz);
+  <T> T       findById(Integer id, Class<T> clazz);
+  <T> List<T> findByAttribute(T t);
+
+  <T extends Entity> List<T> findResolvedEntityByUid(String srcType, String uid, Class<T> clazz);
+
+  <T extends Entity> T findResolvedEntityByKey(Integer pk, Class<T> clazz);
+
+  <T extends Entity> T findResolvedEntity(Integer nedId, Class<T> clazz);
+
+  <T extends Entity> List<T> findResolvedEntities(Integer nedId, Class<T> clazz);
+
+  Integer findTypeClass(String description);
+
+  Integer findTypeValue(Integer typeClassId, String name);
+
 }

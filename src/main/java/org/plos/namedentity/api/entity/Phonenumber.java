@@ -24,52 +24,25 @@ import java.util.Objects;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Phonenumber extends ChildEntity {
 
-  private static final long serialVersionUID = -1728456967;
-
-  private Integer phonenumberid;
-  private Integer namedentityid;
-  private Integer phonenumbertypeid;
+  private Integer id;
+  private Integer nedid;
+  private Integer typeid;
+  private String  type;
   private Integer countrycodetypeid;
-  private String  phonenumber;
-  private String  extension;
-  private Boolean isprimary;
-  private Boolean isactive;
-
-  private String  phonenumbertype;
   private String  countrycodetype;
 
-  public Phonenumber() {
-    isactive = true;
-    isprimary = true;
-//    this(null,null,null,null,null,null,null,null);
+  private String phonenumber;
+  private String extension;
+
+  private Boolean isprimary;
+  private Boolean isactive = true;
+
+  public String getType() {
+    return type;
   }
 
-//  public PhonenumberEntity(
-//    Integer phonenumberid,
-//    Integer namedentityid,
-//    Integer phonenumbertypeid,
-//    Integer countrycodetypeid,
-//    String  phonenumber,
-//    String  extension,
-//    Byte    isprimary,
-//    Byte    isactive
-//  ) {
-//    this.phonenumberid     = phonenumberid;
-//    this.namedentityid     = namedentityid;
-//    this.phonenumbertypeid = phonenumbertypeid;
-//    this.countrycodetypeid = countrycodetypeid;
-//    this.phonenumber       = phonenumber;
-//    this.extension         = extension;
-//    this.isprimary         = (isprimary != null ? isprimary : (byte)1);
-//    this.isactive          = (isactive != null ? isactive : (byte)1);
-//  }
-
-  public String getPhonenumbertype() {
-    return phonenumbertype;
-  }
-
-  public void setPhonenumbertype(String phonenumbertype) {
-    this.phonenumbertype = phonenumbertype;
+  public void setType(String type) {
+    this.type = type;
   }
 
   public String getCountrycodetype() {
@@ -80,28 +53,28 @@ public class Phonenumber extends ChildEntity {
     this.countrycodetype = countrycodetype;
   }
 
-  public Integer getPhonenumberid() {
-    return this.phonenumberid;
+  public Integer getId() {
+    return this.id;
   }
 
-  public void setPhonenumberid(Integer phonenumberid) {
-    this.phonenumberid = phonenumberid;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
-  public Integer getNamedentityid() {
-    return this.namedentityid;
+  public Integer getNedid() {
+    return this.nedid;
   }
 
-  public void setNamedentityid(Integer namedentityid) {
-    this.namedentityid = namedentityid;
+  public void setNedid(Integer nedid) {
+    this.nedid = nedid;
   }
 
-  public Integer getPhonenumbertypeid() {
-    return this.phonenumbertypeid;
+  public Integer getTypeid() {
+    return this.typeid;
   }
 
-  public void setPhonenumbertypeid(Integer phonenumbertypeid) {
-    this.phonenumbertypeid = phonenumbertypeid;
+  public void setTypeid(Integer typeid) {
+    this.typeid = typeid;
   }
 
   public Integer getCountrycodetypeid() {
@@ -146,18 +119,22 @@ public class Phonenumber extends ChildEntity {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) { return true; }
+    if (this == o) {
+      return true;
+    }
 
-    if (o == null || this.getClass() != o.getClass()) { return false; }
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
 
     Phonenumber entity = (Phonenumber) o;
-    return Objects.equals(this.phonenumberid, entity.phonenumberid)
-        && Objects.equals(this.namedentityid, entity.namedentityid)
+    return Objects.equals(this.id, entity.id)
+        && Objects.equals(this.nedid, entity.nedid)
         && Objects.equals(this.phonenumber, entity.phonenumber);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(phonenumberid, namedentityid, phonenumber);
+    return Objects.hash(id, nedid, phonenumber);
   }
 }

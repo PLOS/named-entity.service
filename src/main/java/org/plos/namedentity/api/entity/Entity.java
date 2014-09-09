@@ -4,10 +4,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import org.plos.namedentity.validate.Validatable;
 
-import java.io.Serializable;
+import javax.xml.bind.annotation.XmlTransient;
 
 @XmlTransient
-public abstract class Entity implements Validatable, Serializable {
+public abstract class Entity implements Validatable {
 
   @Override
   public void validate() {

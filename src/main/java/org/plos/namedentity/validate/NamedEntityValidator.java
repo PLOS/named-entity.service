@@ -17,7 +17,9 @@
 package org.plos.namedentity.validate;
 
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.plos.namedentity.api.NedValidationException;
 import org.springframework.core.Ordered;
+import org.springframework.dao.DataIntegrityViolationException;
 
 public class NamedEntityValidator implements Ordered {
 
@@ -42,7 +44,13 @@ public class NamedEntityValidator implements Ordered {
     /*  METHOD EXECUTION                                                  */
     /* ------------------------------------------------------------------ */
 
-    Object returnValue = call.proceed();
+    Object returnValue;
+
+    try {
+      returnValue = call.proceed();
+    } catch (DataIntegrityViolationException e) {
+      throw new NedValidationException("validation exception", e);
+    }
 
     /* ------------------------------------------------------------------ */
     /*  AFTER-VALIDATION                                                  */

@@ -24,11 +24,6 @@ public class Tables {
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Audittrail AUDITTRAIL = org.plos.namedentity.persist.db.namedentities.tables.Audittrail.AUDITTRAIL;
 
 	/**
-	 * The table namedEntities.cas
-	 */
-	public static final org.plos.namedentity.persist.db.namedentities.tables.Cas CAS = org.plos.namedentity.persist.db.namedentities.tables.Cas.CAS;
-
-	/**
 	 * The table namedEntities.degrees
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Degrees DEGREES = org.plos.namedentity.persist.db.namedentities.tables.Degrees.DEGREES;
@@ -97,4 +92,9 @@ public class Tables {
 	 * The table namedEntities.uniqueIdentifiers
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers UNIQUEIDENTIFIERS = org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS;
+
+	/**
+	 * The table namedEntities.urls
+	 */
+	public static final org.plos.namedentity.persist.db.namedentities.tables.Urls URLS = org.plos.namedentity.persist.db.namedentities.tables.Urls.URLS;
 }

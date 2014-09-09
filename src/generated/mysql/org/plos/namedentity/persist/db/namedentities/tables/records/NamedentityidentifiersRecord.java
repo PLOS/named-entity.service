@@ -11,19 +11,19 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class NamedentityidentifiersRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.NamedentityidentifiersRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1930091609;
+	private static final long serialVersionUID = 244696907;
 
 	/**
-	 * Setter for <code>namedEntities.namedEntityIdentifiers.namedEntityId</code>.
+	 * Setter for <code>namedEntities.namedEntityIdentifiers.id</code>.
 	 */
-	public void setNamedentityid(java.lang.Integer value) {
+	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedEntities.namedEntityIdentifiers.namedEntityId</code>.
+	 * Getter for <code>namedEntities.namedEntityIdentifiers.id</code>.
 	 */
-	public java.lang.Integer getNamedentityid() {
+	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
@@ -134,7 +134,7 @@ public class NamedentityidentifiersRecord extends org.jooq.impl.UpdatableRecordI
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Namedentityidentifiers.NAMEDENTITYIDENTIFIERS.NAMEDENTITYID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Namedentityidentifiers.NAMEDENTITYIDENTIFIERS.ID;
 	}
 
 	/**
@@ -182,7 +182,7 @@ public class NamedentityidentifiersRecord extends org.jooq.impl.UpdatableRecordI
 	 */
 	@Override
 	public java.lang.Integer value1() {
-		return getNamedentityid();
+		return getId();
 	}
 
 	/**
@@ -230,7 +230,7 @@ public class NamedentityidentifiersRecord extends org.jooq.impl.UpdatableRecordI
 	 */
 	@Override
 	public NamedentityidentifiersRecord value1(java.lang.Integer value) {
-		setNamedentityid(value);
+		setId(value);
 		return this;
 	}
 
@@ -301,10 +301,10 @@ public class NamedentityidentifiersRecord extends org.jooq.impl.UpdatableRecordI
 	/**
 	 * Create a detached, initialised NamedentityidentifiersRecord
 	 */
-	public NamedentityidentifiersRecord(java.lang.Integer namedentityid, java.lang.Integer typeid, java.sql.Timestamp created, java.sql.Timestamp lastmodified, java.lang.Integer createdby, java.lang.Integer lastmodifiedby) {
+	public NamedentityidentifiersRecord(java.lang.Integer id, java.lang.Integer typeid, java.sql.Timestamp created, java.sql.Timestamp lastmodified, java.lang.Integer createdby, java.lang.Integer lastmodifiedby) {
 		super(org.plos.namedentity.persist.db.namedentities.tables.Namedentityidentifiers.NAMEDENTITYIDENTIFIERS);
 
-		setValue(0, namedentityid);
+		setValue(0, id);
 		setValue(1, typeid);
 		setValue(2, created);
 		setValue(3, lastmodified);

@@ -16,8 +16,12 @@
  */
 package org.plos.namedentity.api.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Timestamp;
+
+import org.plos.namedentity.api.adapter.DateAdapter;
+
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * Modified JOOQ generated class(pojo=true).
@@ -25,54 +29,30 @@ import java.sql.Timestamp;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Relationship extends Entity {
 
-  private static final long serialVersionUID = 1494801838;
-
-  private Integer   relationshipid;
+  private Integer   id;
   private Integer   masternamedentityid;
   private Integer   childnamedentityid;
-  private Integer   relationshiptypeid;
-  private String    relationshiptype;
+  private Integer   typeid;
+  private String    type;
+  private String    title;
+
+  @XmlJavaTypeAdapter(DateAdapter.class)
   private Date      startdate;
+
+  @XmlJavaTypeAdapter(DateAdapter.class)
   private Date      enddate;
+
   private Timestamp created;
   private Timestamp lastmodified;
   private Integer   createdby;
   private Integer   lastmodifiedby;
 
-  public Relationship() {}
-
-  public Relationship(
-      Integer   relationshipid,
-      Integer   masternamedentityid,
-      Integer   childnamedentityid,
-      Integer   relationshiptypeid,
-      String    relationshiptype,
-      Date      startdate,
-      Date      enddate,
-      Timestamp created,
-      Timestamp lastmodified,
-      Integer   createdby,
-      Integer   lastmodifiedby
-                     ) {
-    this.relationshipid      = relationshipid;
-    this.masternamedentityid = masternamedentityid;
-    this.childnamedentityid  = childnamedentityid;
-    this.relationshiptypeid  = relationshiptypeid;
-    this.relationshiptype    = relationshiptype;
-    this.startdate           = startdate;
-    this.enddate             = enddate;
-    this.created             = created;
-    this.lastmodified        = lastmodified;
-    this.createdby           = createdby;
-    this.lastmodifiedby      = lastmodifiedby;
+  public java.lang.Integer getId() {
+    return this.id;
   }
 
-  public java.lang.Integer getRelationshipid() {
-    return this.relationshipid;
-  }
-
-  public void setRelationshipid(java.lang.Integer relationshipid) {
-    this.relationshipid = relationshipid;
+  public void setId(java.lang.Integer id) {
+    this.id = id;
   }
 
   public java.lang.Integer getMasternamedentityid() {
@@ -91,27 +71,27 @@ public class Relationship extends Entity {
     this.childnamedentityid = childnamedentityid;
   }
 
-  public java.lang.Integer getRelationshiptypeid() {
-    return this.relationshiptypeid;
+  public java.lang.Integer getTypeid() {
+    return this.typeid;
   }
 
-  public void setRelationshiptypeid(java.lang.Integer relationshiptypeid) {
-    this.relationshiptypeid = relationshiptypeid;
+  public void setTypeid(java.lang.Integer typeid) {
+    this.typeid = typeid;
   }
 
-  public java.sql.Date getStartdate() {
+  public Date getStartdate() {
     return this.startdate;
   }
 
-  public void setStartdate(java.sql.Date startdate) {
+  public void setStartdate(Date startdate) {
     this.startdate = startdate;
   }
 
-  public java.sql.Date getEnddate() {
+  public Date getEnddate() {
     return this.enddate;
   }
 
-  public void setEnddate(java.sql.Date enddate) {
+  public void setEnddate(Date enddate) {
     this.enddate = enddate;
   }
 
@@ -147,11 +127,11 @@ public class Relationship extends Entity {
     this.lastmodifiedby = lastmodifiedby;
   }
   
-  public String getRelationshiptype() {
-      return relationshiptype;
+  public String getType() {
+      return type;
   }
   
-  public void setRelationshiptype(String relationshiptype) {
-      this.relationshiptype = relationshiptype;
+  public void setType(String type) {
+      this.type = type;
   }
 }

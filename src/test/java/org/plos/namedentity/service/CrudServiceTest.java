@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -53,18 +54,19 @@ public class CrudServiceTest {
   public void testIndividualCRUD() {
 
     // CREATE
-    Individual entity = new Individual();
-    entity.setFirstname("somefirstname");
-
-    Integer pkId = crudService.create(entity);
+    Individual individual = new Individual();
+    individual.setFirstname("firstname");
+    individual.setLastname("lastname");
+    individual.setDisplayname("displayname");
+    Integer pkId = crudService.create(individual);
     assertNotNull(pkId);
 
     // READ
     Individual readEntity = crudService.findById(pkId, Individual.class);
     assertNotNull(readEntity);
-    assertEquals("somefirstname", readEntity.getFirstname());
+    assertEquals("firstname", readEntity.getFirstname());
     assertEquals(null, readEntity.getMiddlename());
-    assertEquals(pkId, readEntity.getNamedentityid());
+    assertEquals(pkId, readEntity.getNedid());
 
     // UPDATE
     readEntity.setMiddlename("somemiddlename");
@@ -80,14 +82,16 @@ public class CrudServiceTest {
   @Test
   public void testIndividualInvalidEmail() {
 
-    Individual entity = new Individual();
-    entity.setFirstname("somefirstname");
-    Integer nedId = crudService.create(entity);
+    Individual individual = new Individual();
+    individual.setFirstname("firstname");
+    individual.setLastname("lastname");
+    individual.setDisplayname("displayname");
+    Integer nedId = crudService.create(individual);
 
     // Create
     Email email = new Email();
-    email.setNamedentityid(nedId);
-    email.setEmailtype("Work");
+    email.setNedid(nedId);
+    email.setType("Work");
     email.setEmailaddress("bill@microsoft");
 
     try {
@@ -110,27 +114,21 @@ public class CrudServiceTest {
   }
 
   @Test
-  public void testIndividualInvalidUrl() {
+  public void testNonNullConstraint() {
 
-    Individual entity = new Individual();
-    entity.setFirstname("somefirstname");
-    entity.setUrl("httpXX://billgates.plos.org");
+    Individual individual = new Individual();
+    individual.setFirstname("firstname");
+    individual.setLastname("lastname");
+    individual.setDisplayname("displayname");
+    Integer nedId = crudService.create(individual);
 
     // Create
-    try {
-      crudService.create(entity);
-      fail();
-    } catch (NedValidationException expected) {
-    }
-
-    // Update
-    entity.setUrl("http://billgates.plos.org/abc");
-    crudService.create(entity);
-
-    entity.setUrl("httpXX://billgates.plos.org/abc");
+    Email email = new Email();
+    email.setNedid(nedId);
+    email.setType("Work");
 
     try {
-      crudService.create(entity);
+      crudService.create(email);
       fail();
     } catch (NedValidationException expected) {
     }
@@ -150,7 +148,7 @@ public class CrudServiceTest {
 
     Typedescription savedType = crudService.findById(pkId, Typedescription.class);
     assertNotNull(savedType);
-    assertEquals(pkId, savedType.getTypeid());
+    assertEquals(pkId, savedType.getId());
 
     // UPDATE
 
@@ -168,7 +166,7 @@ public class CrudServiceTest {
 
     try {
       Typedescription typeClassWithKids = new Typedescription();
-      typeClassWithKids.setTypeid(1);
+      typeClassWithKids.setId(1);
       crudService.delete(typeClassWithKids);
       fail();
     } catch (org.springframework.dao.DataAccessException expected) {
@@ -177,7 +175,7 @@ public class CrudServiceTest {
     // FIND By Id
     Typedescription typeClass1 = crudService.findById(1, Typedescription.class);
     assertNotNull(typeClass1);
-    assertEquals(Integer.valueOf(1), typeClass1.getTypeid());
+    assertEquals(Integer.valueOf(1), typeClass1.getId());
 
     // FIND All
     List<Typedescription> typeClasses = crudService.findAll(Typedescription.class);
@@ -195,6 +193,8 @@ public class CrudServiceTest {
     newTypeVal.setShortdescription("type value abc");
     newTypeVal.setLongdescription("longdescription");
     newTypeVal.setTypecode("abc");
+    newTypeVal.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    newTypeVal.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
 
     Integer pkId = crudService.create(newTypeVal);
     assertNotNull( pkId );
@@ -203,7 +203,7 @@ public class CrudServiceTest {
     
     Globaltype savedTypeVal = crudService.findById(pkId, Globaltype.class);
     assertNotNull( savedTypeVal );
-    assertEquals(pkId, savedTypeVal.getGlobaltypeid());
+    assertEquals(pkId, savedTypeVal.getId());
 
     // UPDATE
 
@@ -222,7 +222,7 @@ public class CrudServiceTest {
 
     Globaltype typeVal1 = crudService.findById(1, Globaltype.class);
     assertNotNull(typeVal1);
-    assertEquals(Integer.valueOf(1), typeVal1.getGlobaltypeid());
+    assertEquals(Integer.valueOf(1), typeVal1.getId());
 
     // FIND All
 
@@ -257,14 +257,14 @@ public class CrudServiceTest {
     List<Globaltype> globalTypesResult = crudService.findByAttribute(globalTypesearchCriteria);
     assertEquals(1, globalTypesResult.size());
 
-    Integer emailTypeId = globalTypesResult.get(0).getGlobaltypeid(); 
+    Integer emailTypeId = globalTypesResult.get(0).getId();
     assertNotNull( emailTypeId );
 
     // create pojo
 
     Email newEmail = new Email();
-    newEmail.setNamedentityid(1);
-    newEmail.setEmailtypeid(emailTypeId);
+    newEmail.setNedid(1);
+    newEmail.setTypeid(emailTypeId);
     newEmail.setEmailaddress("walter@foo.com");
 
     // save record
@@ -274,8 +274,8 @@ public class CrudServiceTest {
 
     Email savedEmail = crudService.findById(pkId, Email.class);
     assertNotNull( savedEmail );
-    assertEquals(pkId, savedEmail.getEmailid());
-    assertEquals(emailTypeId, savedEmail.getEmailtypeid());
+    assertEquals(pkId, savedEmail.getId());
+    assertEquals(emailTypeId, savedEmail.getTypeid());
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */
@@ -320,10 +320,12 @@ public class CrudServiceTest {
     /* ------------------------------------------------------------------ */
 
     Role newRole = new Role();
-    newRole.setNamedentityid(1);
+    newRole.setNedid(1);
     newRole.setSourceapplicationtype("Editorial Manager");
-    newRole.setRoletype("Academic Editor (PLOSONE)");
+    newRole.setType("Academic Editor (PLOS ONE)");
     newRole.setStartdate( dateNow() );
+    newRole.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    newRole.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
 
     // save record
 
@@ -332,9 +334,9 @@ public class CrudServiceTest {
 
     Role savedRole = crudService.findById(pkId, Role.class);
     assertNotNull( savedRole );
-    assertEquals(pkId, savedRole.getRoleid());
+    assertEquals(pkId, savedRole.getId());
     assertNotNull( savedRole.getSourceapplicationtypeid() );
-    assertNotNull( savedRole.getRoletypeid() );
+    assertNotNull( savedRole.getTypeid() );
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */
@@ -368,8 +370,8 @@ public class CrudServiceTest {
     /* ------------------------------------------------------------------ */
 
     Address newAddress = new Address();
-    newAddress.setNamedentityid(1);
-    newAddress.setAddresstype("Office");
+    newAddress.setNedid(1);
+    newAddress.setType("Office");
     newAddress.setAddressline1("addressline 1");
     newAddress.setAddressline2("addressline 2");
     newAddress.setAddressline3("addressline 3");
@@ -389,8 +391,8 @@ public class CrudServiceTest {
 
     Address savedAddress = crudService.findById(pkId, Address.class);
     assertNotNull( savedAddress );
-    assertEquals(pkId, savedAddress.getAddressid());
-    assertNotNull( savedAddress.getAddresstypeid() );
+    assertEquals(pkId, savedAddress.getId());
+    assertNotNull( savedAddress.getTypeid() );
     assertNotNull( savedAddress.getStatecodetypeid() );
 
     /* ------------------------------------------------------------------ */
@@ -430,7 +432,7 @@ public class CrudServiceTest {
     List<Globaltype> globalTypesResult = crudService.findByAttribute(globalTypesearchCriteria);
     assertEquals(1, globalTypesResult.size());
 
-    Integer orcidTypeId = globalTypesResult.get(0).getGlobaltypeid(); 
+    Integer orcidTypeId = globalTypesResult.get(0).getId();
     assertNotNull( orcidTypeId );
     
     /* ------------------------------------------------------------------ */
@@ -438,8 +440,8 @@ public class CrudServiceTest {
     /* ------------------------------------------------------------------ */
 
     Uniqueidentifier uidEntity = new Uniqueidentifier();
-    uidEntity.setNamedentityid(1);
-    uidEntity.setUniqueidentifiertypeid(orcidTypeId);
+    uidEntity.setNedid(1);
+    uidEntity.setTypeid(orcidTypeId);
     uidEntity.setUniqueidentifier(ORCID_ID1);
 
     // save record
@@ -449,8 +451,8 @@ public class CrudServiceTest {
 
     Uniqueidentifier savedUid = crudService.findById(pkId, Uniqueidentifier.class);
     assertNotNull( savedUid );
-    assertEquals(pkId, savedUid.getUniqueidentifiersid());
-    assertEquals(orcidTypeId, savedUid.getUniqueidentifiertypeid());
+    assertEquals(pkId, savedUid.getId());
+    assertEquals(orcidTypeId, savedUid.getTypeid());
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */

@@ -11,10 +11,10 @@ package org.plos.namedentity.persist.db.information_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sequences extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord> {
 
-	private static final long serialVersionUID = -1629870316;
+	private static final long serialVersionUID = 1432314612;
 
 	/**
-	 * The singleton instance of <code>information_schema.sequences</code>
+	 * The singleton instance of <code>INFORMATION_SCHEMA.SEQUENCES</code>
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Sequences SEQUENCES = new org.plos.namedentity.persist.db.information_schema.tables.Sequences();
 
@@ -27,74 +27,74 @@ public class Sequences extends org.jooq.impl.TableImpl<org.plos.namedentity.pers
 	}
 
 	/**
-	 * The column <code>information_schema.sequences.sequence_catalog</code>.
+	 * The column <code>INFORMATION_SCHEMA.SEQUENCES.SEQUENCE_CATALOG</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.String> SEQUENCE_CATALOG = createField("sequence_catalog", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.String> SEQUENCE_CATALOG = createField("SEQUENCE_CATALOG", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.sequences.sequence_schema</code>.
+	 * The column <code>INFORMATION_SCHEMA.SEQUENCES.SEQUENCE_SCHEMA</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.String> SEQUENCE_SCHEMA = createField("sequence_schema", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.String> SEQUENCE_SCHEMA = createField("SEQUENCE_SCHEMA", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.sequences.sequence_name</code>.
+	 * The column <code>INFORMATION_SCHEMA.SEQUENCES.SEQUENCE_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.String> SEQUENCE_NAME = createField("sequence_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.String> SEQUENCE_NAME = createField("SEQUENCE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.sequences.current_value</code>.
+	 * The column <code>INFORMATION_SCHEMA.SEQUENCES.CURRENT_VALUE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.Long> CURRENT_VALUE = createField("current_value", org.jooq.impl.SQLDataType.BIGINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.Long> CURRENT_VALUE = createField("CURRENT_VALUE", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
 	/**
-	 * The column <code>information_schema.sequences.increment</code>.
+	 * The column <code>INFORMATION_SCHEMA.SEQUENCES.INCREMENT</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.Long> INCREMENT = createField("increment", org.jooq.impl.SQLDataType.BIGINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.Long> INCREMENT = createField("INCREMENT", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
 	/**
-	 * The column <code>information_schema.sequences.is_generated</code>.
+	 * The column <code>INFORMATION_SCHEMA.SEQUENCES.IS_GENERATED</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.Boolean> IS_GENERATED = createField("is_generated", org.jooq.impl.SQLDataType.BOOLEAN, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.Boolean> IS_GENERATED = createField("IS_GENERATED", org.jooq.impl.SQLDataType.BOOLEAN, this, "");
 
 	/**
-	 * The column <code>information_schema.sequences.remarks</code>.
+	 * The column <code>INFORMATION_SCHEMA.SEQUENCES.REMARKS</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.String> REMARKS = createField("remarks", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.String> REMARKS = createField("REMARKS", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.sequences.cache</code>.
+	 * The column <code>INFORMATION_SCHEMA.SEQUENCES.CACHE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.Long> CACHE = createField("cache", org.jooq.impl.SQLDataType.BIGINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.Long> CACHE = createField("CACHE", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
 	/**
-	 * The column <code>information_schema.sequences.min_value</code>.
+	 * The column <code>INFORMATION_SCHEMA.SEQUENCES.MIN_VALUE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.Long> MIN_VALUE = createField("min_value", org.jooq.impl.SQLDataType.BIGINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.Long> MIN_VALUE = createField("MIN_VALUE", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
 	/**
-	 * The column <code>information_schema.sequences.max_value</code>.
+	 * The column <code>INFORMATION_SCHEMA.SEQUENCES.MAX_VALUE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.Long> MAX_VALUE = createField("max_value", org.jooq.impl.SQLDataType.BIGINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.Long> MAX_VALUE = createField("MAX_VALUE", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
 	/**
-	 * The column <code>information_schema.sequences.is_cycle</code>.
+	 * The column <code>INFORMATION_SCHEMA.SEQUENCES.IS_CYCLE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.Boolean> IS_CYCLE = createField("is_cycle", org.jooq.impl.SQLDataType.BOOLEAN, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.Boolean> IS_CYCLE = createField("IS_CYCLE", org.jooq.impl.SQLDataType.BOOLEAN, this, "");
 
 	/**
-	 * The column <code>information_schema.sequences.id</code>.
+	 * The column <code>INFORMATION_SCHEMA.SEQUENCES.ID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * Create a <code>information_schema.sequences</code> table reference
+	 * Create a <code>INFORMATION_SCHEMA.SEQUENCES</code> table reference
 	 */
 	public Sequences() {
-		this("sequences", null);
+		this("SEQUENCES", null);
 	}
 
 	/**
-	 * Create an aliased <code>information_schema.sequences</code> table reference
+	 * Create an aliased <code>INFORMATION_SCHEMA.SEQUENCES</code> table reference
 	 */
 	public Sequences(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.information_schema.tables.Sequences.SEQUENCES);

@@ -11,129 +11,129 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class GlobaltypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord> implements org.jooq.Record9<java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1845351476;
+	private static final long serialVersionUID = 670978723;
 
 	/**
-	 * Setter for <code>namedentities.globaltypes.globaltypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.GLOBALTYPES.ID</code>.
 	 */
-	public void setGlobaltypeid(java.lang.Integer value) {
+	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.globaltypes.globaltypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.GLOBALTYPES.ID</code>.
 	 */
-	public java.lang.Integer getGlobaltypeid() {
+	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.globaltypes.typeid</code>.
+	 * Setter for <code>NAMEDENTITIES.GLOBALTYPES.TYPEID</code>.
 	 */
 	public void setTypeid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.globaltypes.typeid</code>.
+	 * Getter for <code>NAMEDENTITIES.GLOBALTYPES.TYPEID</code>.
 	 */
 	public java.lang.Integer getTypeid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.globaltypes.shortdescription</code>.
+	 * Setter for <code>NAMEDENTITIES.GLOBALTYPES.SHORTDESCRIPTION</code>.
 	 */
 	public void setShortdescription(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.globaltypes.shortdescription</code>.
+	 * Getter for <code>NAMEDENTITIES.GLOBALTYPES.SHORTDESCRIPTION</code>.
 	 */
 	public java.lang.String getShortdescription() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>namedentities.globaltypes.longdescription</code>.
+	 * Setter for <code>NAMEDENTITIES.GLOBALTYPES.LONGDESCRIPTION</code>.
 	 */
 	public void setLongdescription(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.globaltypes.longdescription</code>.
+	 * Getter for <code>NAMEDENTITIES.GLOBALTYPES.LONGDESCRIPTION</code>.
 	 */
 	public java.lang.String getLongdescription() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>namedentities.globaltypes.typecode</code>.
+	 * Setter for <code>NAMEDENTITIES.GLOBALTYPES.TYPECODE</code>.
 	 */
 	public void setTypecode(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.globaltypes.typecode</code>.
+	 * Getter for <code>NAMEDENTITIES.GLOBALTYPES.TYPECODE</code>.
 	 */
 	public java.lang.String getTypecode() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>namedentities.globaltypes.created</code>.
+	 * Setter for <code>NAMEDENTITIES.GLOBALTYPES.CREATED</code>.
 	 */
 	public void setCreated(java.sql.Timestamp value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.globaltypes.created</code>.
+	 * Getter for <code>NAMEDENTITIES.GLOBALTYPES.CREATED</code>.
 	 */
 	public java.sql.Timestamp getCreated() {
 		return (java.sql.Timestamp) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>namedentities.globaltypes.lastmodified</code>.
+	 * Setter for <code>NAMEDENTITIES.GLOBALTYPES.LASTMODIFIED</code>.
 	 */
 	public void setLastmodified(java.sql.Timestamp value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.globaltypes.lastmodified</code>.
+	 * Getter for <code>NAMEDENTITIES.GLOBALTYPES.LASTMODIFIED</code>.
 	 */
 	public java.sql.Timestamp getLastmodified() {
 		return (java.sql.Timestamp) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>namedentities.globaltypes.createdby</code>.
+	 * Setter for <code>NAMEDENTITIES.GLOBALTYPES.CREATEDBY</code>.
 	 */
 	public void setCreatedby(java.lang.Integer value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.globaltypes.createdby</code>.
+	 * Getter for <code>NAMEDENTITIES.GLOBALTYPES.CREATEDBY</code>.
 	 */
 	public java.lang.Integer getCreatedby() {
 		return (java.lang.Integer) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>namedentities.globaltypes.lastmodifiedby</code>.
+	 * Setter for <code>NAMEDENTITIES.GLOBALTYPES.LASTMODIFIEDBY</code>.
 	 */
 	public void setLastmodifiedby(java.lang.Integer value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.globaltypes.lastmodifiedby</code>.
+	 * Getter for <code>NAMEDENTITIES.GLOBALTYPES.LASTMODIFIEDBY</code>.
 	 */
 	public java.lang.Integer getLastmodifiedby() {
 		return (java.lang.Integer) getValue(8);
@@ -176,7 +176,7 @@ public class GlobaltypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plo
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Globaltypes.GLOBALTYPES.GLOBALTYPEID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Globaltypes.GLOBALTYPES.ID;
 	}
 
 	/**
@@ -248,7 +248,7 @@ public class GlobaltypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plo
 	 */
 	@Override
 	public java.lang.Integer value1() {
-		return getGlobaltypeid();
+		return getId();
 	}
 
 	/**
@@ -320,7 +320,7 @@ public class GlobaltypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plo
 	 */
 	@Override
 	public GlobaltypesRecord value1(java.lang.Integer value) {
-		setGlobaltypeid(value);
+		setId(value);
 		return this;
 	}
 
@@ -418,10 +418,10 @@ public class GlobaltypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plo
 	/**
 	 * Create a detached, initialised GlobaltypesRecord
 	 */
-	public GlobaltypesRecord(java.lang.Integer globaltypeid, java.lang.Integer typeid, java.lang.String shortdescription, java.lang.String longdescription, java.lang.String typecode, java.sql.Timestamp created, java.sql.Timestamp lastmodified, java.lang.Integer createdby, java.lang.Integer lastmodifiedby) {
+	public GlobaltypesRecord(java.lang.Integer id, java.lang.Integer typeid, java.lang.String shortdescription, java.lang.String longdescription, java.lang.String typecode, java.sql.Timestamp created, java.sql.Timestamp lastmodified, java.lang.Integer createdby, java.lang.Integer lastmodifiedby) {
 		super(org.plos.namedentity.persist.db.namedentities.tables.Globaltypes.GLOBALTYPES);
 
-		setValue(0, globaltypeid);
+		setValue(0, id);
 		setValue(1, typeid);
 		setValue(2, shortdescription);
 		setValue(3, longdescription);

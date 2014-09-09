@@ -11,47 +11,47 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SubjectareasRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1310881691;
+	private static final long serialVersionUID = 181445338;
 
 	/**
-	 * Setter for <code>namedentities.subjectareas.subjectareaid</code>.
+	 * Setter for <code>NAMEDENTITIES.SUBJECTAREAS.ID</code>.
 	 */
-	public void setSubjectareaid(java.lang.Integer value) {
+	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.subjectareas.subjectareaid</code>.
+	 * Getter for <code>NAMEDENTITIES.SUBJECTAREAS.ID</code>.
 	 */
-	public java.lang.Integer getSubjectareaid() {
+	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.subjectareas.namedentityid</code>.
+	 * Setter for <code>NAMEDENTITIES.SUBJECTAREAS.NEDID</code>.
 	 */
-	public void setNamedentityid(java.lang.Integer value) {
+	public void setNedid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.subjectareas.namedentityid</code>.
+	 * Getter for <code>NAMEDENTITIES.SUBJECTAREAS.NEDID</code>.
 	 */
-	public java.lang.Integer getNamedentityid() {
+	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.subjectareas.subjectareatypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.SUBJECTAREAS.TYPEID</code>.
 	 */
-	public void setSubjectareatypeid(java.lang.Integer value) {
+	public void setTypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.subjectareas.subjectareatypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.SUBJECTAREAS.TYPEID</code>.
 	 */
-	public java.lang.Integer getSubjectareatypeid() {
+	public java.lang.Integer getTypeid() {
 		return (java.lang.Integer) getValue(2);
 	}
 
@@ -92,7 +92,7 @@ public class SubjectareasRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Subjectareas.SUBJECTAREAS.SUBJECTAREAID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Subjectareas.SUBJECTAREAS.ID;
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class SubjectareasRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Subjectareas.SUBJECTAREAS.NAMEDENTITYID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Subjectareas.SUBJECTAREAS.NEDID;
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class SubjectareasRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field3() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Subjectareas.SUBJECTAREAS.SUBJECTAREATYPEID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Subjectareas.SUBJECTAREAS.TYPEID;
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class SubjectareasRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	 */
 	@Override
 	public java.lang.Integer value1() {
-		return getSubjectareaid();
+		return getId();
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class SubjectareasRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	 */
 	@Override
 	public java.lang.Integer value2() {
-		return getNamedentityid();
+		return getNedid();
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class SubjectareasRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	 */
 	@Override
 	public java.lang.Integer value3() {
-		return getSubjectareatypeid();
+		return getTypeid();
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class SubjectareasRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	 */
 	@Override
 	public SubjectareasRecord value1(java.lang.Integer value) {
-		setSubjectareaid(value);
+		setId(value);
 		return this;
 	}
 
@@ -149,7 +149,7 @@ public class SubjectareasRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	 */
 	@Override
 	public SubjectareasRecord value2(java.lang.Integer value) {
-		setNamedentityid(value);
+		setNedid(value);
 		return this;
 	}
 
@@ -158,7 +158,7 @@ public class SubjectareasRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	 */
 	@Override
 	public SubjectareasRecord value3(java.lang.Integer value) {
-		setSubjectareatypeid(value);
+		setTypeid(value);
 		return this;
 	}
 
@@ -184,11 +184,11 @@ public class SubjectareasRecord extends org.jooq.impl.UpdatableRecordImpl<org.pl
 	/**
 	 * Create a detached, initialised SubjectareasRecord
 	 */
-	public SubjectareasRecord(java.lang.Integer subjectareaid, java.lang.Integer namedentityid, java.lang.Integer subjectareatypeid) {
+	public SubjectareasRecord(java.lang.Integer id, java.lang.Integer nedid, java.lang.Integer typeid) {
 		super(org.plos.namedentity.persist.db.namedentities.tables.Subjectareas.SUBJECTAREAS);
 
-		setValue(0, subjectareaid);
-		setValue(1, namedentityid);
-		setValue(2, subjectareatypeid);
+		setValue(0, id);
+		setValue(1, nedid);
+		setValue(2, typeid);
 	}
 }

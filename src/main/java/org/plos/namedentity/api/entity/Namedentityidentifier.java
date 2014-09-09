@@ -16,52 +16,34 @@
  */
 package org.plos.namedentity.api.entity;
 
+import java.sql.Timestamp;
+
 /**
  * Modified JOOQ generated class(pojo=true).
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Namedentityidentifier extends Entity {
 
-  private static final long serialVersionUID = -1205876651;
+  private Integer   id;
+  private Integer   typeid;
+  private Timestamp created;
+  private Timestamp lastmodified;
+  private Integer   createdby;
+  private Integer   lastmodifiedby;
 
-  private java.lang.Integer  namedentityid;
-  private java.lang.Integer  typeid;
-  private java.sql.Timestamp created;
-  private java.sql.Timestamp lastmodified;
-  private java.lang.Integer  createdby;
-  private java.lang.Integer  lastmodifiedby;
-
-  public Namedentityidentifier() {}
-
-  public Namedentityidentifier(
-      java.lang.Integer namedentityid,
-      java.lang.Integer typeid,
-      java.sql.Timestamp created,
-      java.sql.Timestamp lastmodified,
-      java.lang.Integer createdby,
-      java.lang.Integer lastmodifiedby
-                              ) {
-    this.namedentityid  = namedentityid;
-    this.typeid         = typeid;
-    this.created        = created;
-    this.lastmodified   = lastmodified;
-    this.createdby      = createdby;
-    this.lastmodifiedby = lastmodifiedby;
+  public Integer getId() {
+    return this.id;
   }
 
-  public java.lang.Integer getNamedentityid() {
-    return this.namedentityid;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
-  public void setNamedentityid(java.lang.Integer namedentityid) {
-    this.namedentityid = namedentityid;
-  }
-
-  public java.lang.Integer getTypeid() {
+  public Integer getTypeid() {
     return this.typeid;
   }
 
-  public void setTypeid(java.lang.Integer typeid) {
+  public void setTypeid(Integer typeid) {
     this.typeid = typeid;
   }
 
@@ -81,19 +63,19 @@ public class Namedentityidentifier extends Entity {
     this.lastmodified = lastmodified;
   }
 
-  public java.lang.Integer getCreatedby() {
+  public Integer getCreatedby() {
     return this.createdby;
   }
 
-  public void setCreatedby(java.lang.Integer createdby) {
+  public void setCreatedby(Integer createdby) {
     this.createdby = createdby;
   }
 
-  public java.lang.Integer getLastmodifiedby() {
+  public Integer getLastmodifiedby() {
     return this.lastmodifiedby;
   }
 
-  public void setLastmodifiedby(java.lang.Integer lastmodifiedby) {
+  public void setLastmodifiedby(Integer lastmodifiedby) {
     this.lastmodifiedby = lastmodifiedby;
   }
 }

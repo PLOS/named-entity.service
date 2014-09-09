@@ -8,22 +8,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlTransient
 public abstract class ChildEntity extends Entity {
 
-  @XmlTransient
-  public Integer getPrimaryid() {
-    // TODO - won't need to do instanceof after all entities has same primary
-    // key name. until then throw an exception if we haven't handled it.
-    if (this instanceof Email) {
-      return ((Email)this).getEmailid();
-    }
-    else if (this instanceof Address) {
-      return ((Address)this).getAddressid();
-    }
-    else if (this instanceof Role) {
-      return ((Role)this).getRoleid();
-    }
-    throw new UnsupportedOperationException(
-      "Unable to lookup primary key for " + this.getClass().getSimpleName());
-  }
-
-  public abstract void setNamedentityid(Integer namedentityid);
+  public abstract void    setNedid(Integer nedid);
+  public abstract Integer getId();
 }

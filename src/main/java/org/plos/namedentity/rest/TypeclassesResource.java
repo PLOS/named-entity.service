@@ -69,7 +69,7 @@ public class TypeclassesResource extends BaseResource {
       crudService.update(typeDescription);
 
       return Response.status(Response.Status.OK).entity(
-          crudService.findById(typeDescription.getTypeid(),
+          crudService.findById(typeDescription.getId(),
               Typedescription.class)).build();
     } catch (NedValidationException e) {
       return validationError(e, "Unable to update Type Class");
@@ -84,7 +84,7 @@ public class TypeclassesResource extends BaseResource {
   public Response delete(@PathParam("id") int id) {
     try {
       Typedescription entity = new Typedescription();
-      entity.setTypeid(id);
+      entity.setId(id);
       crudService.delete(entity);
       return Response.status(Response.Status.NO_CONTENT).build();
     } catch (Exception e) {
@@ -161,7 +161,7 @@ public class TypeclassesResource extends BaseResource {
 
       crudService.update( globalType ); // TODO: handle 404 not_found?
       Globaltype entity = crudService.findById(
-          globalType.getGlobaltypeid(), Globaltype.class);
+          globalType.getId(), Globaltype.class);
       return Response.status(Response.Status.OK).entity( entity ).build();
     }
     catch(NedValidationException e) {
@@ -179,7 +179,7 @@ public class TypeclassesResource extends BaseResource {
                                    @PathParam("typevalueid") int typeValueId) {
     try {
       Globaltype entity = new Globaltype();
-      entity.setGlobaltypeid(typeValueId);
+      entity.setId(typeValueId);
       crudService.delete(entity);
       return Response.status(Response.Status.NO_CONTENT).build();
     }

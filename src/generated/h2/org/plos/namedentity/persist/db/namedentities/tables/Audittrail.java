@@ -11,10 +11,10 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Audittrail extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord> {
 
-	private static final long serialVersionUID = 1605699305;
+	private static final long serialVersionUID = -633026713;
 
 	/**
-	 * The singleton instance of <code>namedentities.audittrail</code>
+	 * The singleton instance of <code>NAMEDENTITIES.AUDITTRAIL</code>
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Audittrail AUDITTRAIL = new org.plos.namedentity.persist.db.namedentities.tables.Audittrail();
 
@@ -27,49 +27,49 @@ public class Audittrail extends org.jooq.impl.TableImpl<org.plos.namedentity.per
 	}
 
 	/**
-	 * The column <code>namedentities.audittrail.audittrailid</code>.
+	 * The column <code>NAMEDENTITIES.AUDITTRAIL.ID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord, java.lang.Integer> AUDITTRAILID = createField("audittrailid", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>namedentities.audittrail.sourcefieldid</code>.
+	 * The column <code>NAMEDENTITIES.AUDITTRAIL.SOURCEFIELDID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord, java.lang.Integer> SOURCEFIELDID = createField("sourcefieldid", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord, java.lang.Integer> SOURCEFIELDID = createField("SOURCEFIELDID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.audittrail.rownumber</code>.
+	 * The column <code>NAMEDENTITIES.AUDITTRAIL.ROWNUMBER</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord, java.lang.Integer> ROWNUMBER = createField("rownumber", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord, java.lang.Integer> ROWNUMBER = createField("ROWNUMBER", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>namedentities.audittrail.oldvalue</code>.
+	 * The column <code>NAMEDENTITIES.AUDITTRAIL.OLDVALUE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord, java.lang.String> OLDVALUE = createField("oldvalue", org.jooq.impl.SQLDataType.VARCHAR.length(45), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord, java.lang.String> OLDVALUE = createField("OLDVALUE", org.jooq.impl.SQLDataType.CLOB.length(2147483647).nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.audittrail.newvalue</code>.
+	 * The column <code>NAMEDENTITIES.AUDITTRAIL.NEWVALUE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord, java.lang.String> NEWVALUE = createField("newvalue", org.jooq.impl.SQLDataType.VARCHAR.length(45), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord, java.lang.String> NEWVALUE = createField("NEWVALUE", org.jooq.impl.SQLDataType.CLOB.length(2147483647).nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.audittrail.lastmodified</code>.
+	 * The column <code>NAMEDENTITIES.AUDITTRAIL.LASTMODIFIED</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord, java.sql.Timestamp> LASTMODIFIED = createField("lastmodified", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord, java.sql.Timestamp> LASTMODIFIED = createField("LASTMODIFIED", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>namedentities.audittrail.lastmodifiedby</code>.
+	 * The column <code>NAMEDENTITIES.AUDITTRAIL.LASTMODIFIEDBY</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord, java.lang.Integer> LASTMODIFIEDBY = createField("lastmodifiedby", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord, java.lang.Integer> LASTMODIFIEDBY = createField("LASTMODIFIEDBY", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * Create a <code>namedentities.audittrail</code> table reference
+	 * Create a <code>NAMEDENTITIES.AUDITTRAIL</code> table reference
 	 */
 	public Audittrail() {
-		this("audittrail", null);
+		this("AUDITTRAIL", null);
 	}
 
 	/**
-	 * Create an aliased <code>namedentities.audittrail</code> table reference
+	 * Create an aliased <code>NAMEDENTITIES.AUDITTRAIL</code> table reference
 	 */
 	public Audittrail(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.namedentities.tables.Audittrail.AUDITTRAIL);

@@ -1,6 +1,6 @@
 [
     {
-        "addresstype"     : "Office",
+        "type"     : "Office",
         "addressline1"    : "addressline 1",
         "addressline2"    : "addressline 2",
         "addressline3"    : "addressline 3",
@@ -9,7 +9,7 @@
         "countrycodetype" : "United States",
         "postalcode"      : "12345"
     }, {
-        "addresstype"     : "Home",
+        "type"     : "Home",
         "addressline1"    : "addressline 1.2",
         "addressline2"    : "addressline 2.2",
         "addressline3"    : "addressline 3.2",

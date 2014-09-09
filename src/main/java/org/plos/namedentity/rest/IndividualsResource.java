@@ -70,7 +70,7 @@ public class IndividualsResource extends BaseResource {
 
     try {
 
-      entity.setNamedentityid(nedId);  // TODO: check if path var=payload for id?
+      entity.setNedid(nedId);  // TODO: check if path var=payload for id?
 
       namedEntityService.resolveValuesToIds(entity);
 

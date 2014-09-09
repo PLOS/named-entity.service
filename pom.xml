@@ -16,7 +16,6 @@
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
     <buildDate>${maven.build.timestamp}</buildDate>
     <h2db.version>1.4.180</h2db.version>
-    <jackson.version>1.9.12</jackson.version>
     <mysql.connector.version>5.1.30</mysql.connector.version> 
     <org.glassfish.jersey-version>2.11</org.glassfish.jersey-version>
     <org.hamcrest.version>1.3</org.hamcrest.version>
@@ -92,21 +91,6 @@
       <artifactId>jersey-container-servlet</artifactId>
       <version>${org.glassfish.jersey-version}</version>
     </dependency>
-
-    <dependency>
-      <groupId>org.codehaus.jackson</groupId>
-      <artifactId>jackson-mapper-asl</artifactId>
-      <version>${jackson.version}</version>
-      <scope>compile</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.codehaus.jackson</groupId>
-      <artifactId>jackson-jaxrs</artifactId>
-      <version>${jackson.version}</version>
-      <scope>compile</scope>
-    </dependency>
-
     <dependency>
       <groupId>org.glassfish.jersey.ext</groupId>
       <artifactId>jersey-spring3</artifactId>

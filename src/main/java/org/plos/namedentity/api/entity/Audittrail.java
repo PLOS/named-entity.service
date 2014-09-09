@@ -16,79 +16,59 @@
  */
 package org.plos.namedentity.api.entity;
 
+import java.sql.Timestamp;
+
 /**
  * JOOQ generated class(pojo=true).
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Audittrail extends Entity {
 
-  private static final long serialVersionUID = -508010656;
+  private Integer   id;
+  private Integer   sourcefieldid;
+  private Integer   rownumber;
+  private String    oldvalue;
+  private String    newvalue;
+  private Timestamp lastmodified;
+  private Integer   lastmodifiedby;
 
-  private java.lang.Integer  audittrailid;
-  private java.lang.Integer  sourcefieldid;
-  private java.lang.Integer  rownumber;
-  private java.lang.String   oldvalue;
-  private java.lang.String   newvalue;
-  private java.sql.Timestamp lastmodified;
-  private java.lang.Integer  lastmodifiedby;
-
-  public Audittrail() {}
-
-  public Audittrail(
-      java.lang.Integer audittrailid,
-      java.lang.Integer sourcefieldid,
-      java.lang.Integer rownumber,
-      java.lang.String oldvalue,
-      java.lang.String newvalue,
-      java.sql.Timestamp lastmodified,
-      java.lang.Integer lastmodifiedby
-                   ) {
-    this.audittrailid   = audittrailid;
-    this.sourcefieldid  = sourcefieldid;
-    this.rownumber      = rownumber;
-    this.oldvalue       = oldvalue;
-    this.newvalue       = newvalue;
-    this.lastmodified   = lastmodified;
-    this.lastmodifiedby = lastmodifiedby;
+  public Integer getId() {
+    return this.id;
   }
 
-  public java.lang.Integer getAudittrailid() {
-    return this.audittrailid;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
-  public void setAudittrailid(java.lang.Integer audittrailid) {
-    this.audittrailid = audittrailid;
-  }
-
-  public java.lang.Integer getSourcefieldid() {
+  public Integer getSourcefieldid() {
     return this.sourcefieldid;
   }
 
-  public void setSourcefieldid(java.lang.Integer sourcefieldid) {
+  public void setSourcefieldid(Integer sourcefieldid) {
     this.sourcefieldid = sourcefieldid;
   }
 
-  public java.lang.Integer getRownumber() {
+  public Integer getRownumber() {
     return this.rownumber;
   }
 
-  public void setRownumber(java.lang.Integer rownumber) {
+  public void setRownumber(Integer rownumber) {
     this.rownumber = rownumber;
   }
 
-  public java.lang.String getOldvalue() {
+  public String getOldvalue() {
     return this.oldvalue;
   }
 
-  public void setOldvalue(java.lang.String oldvalue) {
+  public void setOldvalue(String oldvalue) {
     this.oldvalue = oldvalue;
   }
 
-  public java.lang.String getNewvalue() {
+  public String getNewvalue() {
     return this.newvalue;
   }
 
-  public void setNewvalue(java.lang.String newvalue) {
+  public void setNewvalue(String newvalue) {
     this.newvalue = newvalue;
   }
 
@@ -100,11 +80,11 @@ public class Audittrail extends Entity {
     this.lastmodified = lastmodified;
   }
 
-  public java.lang.Integer getLastmodifiedby() {
+  public Integer getLastmodifiedby() {
     return this.lastmodifiedby;
   }
 
-  public void setLastmodifiedby(java.lang.Integer lastmodifiedby) {
+  public void setLastmodifiedby(Integer lastmodifiedby) {
     this.lastmodifiedby = lastmodifiedby;
   }
 }

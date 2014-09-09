@@ -11,10 +11,10 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Globaltypes extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord> {
 
-	private static final long serialVersionUID = -366938524;
+	private static final long serialVersionUID = 1724208466;
 
 	/**
-	 * The singleton instance of <code>namedentities.globaltypes</code>
+	 * The singleton instance of <code>NAMEDENTITIES.GLOBALTYPES</code>
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Globaltypes GLOBALTYPES = new org.plos.namedentity.persist.db.namedentities.tables.Globaltypes();
 
@@ -27,59 +27,59 @@ public class Globaltypes extends org.jooq.impl.TableImpl<org.plos.namedentity.pe
 	}
 
 	/**
-	 * The column <code>namedentities.globaltypes.globaltypeid</code>.
+	 * The column <code>NAMEDENTITIES.GLOBALTYPES.ID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.lang.Integer> GLOBALTYPEID = createField("globaltypeid", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>namedentities.globaltypes.typeid</code>.
+	 * The column <code>NAMEDENTITIES.GLOBALTYPES.TYPEID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.lang.Integer> TYPEID = createField("typeid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.lang.Integer> TYPEID = createField("TYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.globaltypes.shortdescription</code>.
+	 * The column <code>NAMEDENTITIES.GLOBALTYPES.SHORTDESCRIPTION</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.lang.String> SHORTDESCRIPTION = createField("shortdescription", org.jooq.impl.SQLDataType.VARCHAR.length(32), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.lang.String> SHORTDESCRIPTION = createField("SHORTDESCRIPTION", org.jooq.impl.SQLDataType.CLOB.length(2147483647).nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.globaltypes.longdescription</code>.
+	 * The column <code>NAMEDENTITIES.GLOBALTYPES.LONGDESCRIPTION</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.lang.String> LONGDESCRIPTION = createField("longdescription", org.jooq.impl.SQLDataType.VARCHAR.length(128), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.lang.String> LONGDESCRIPTION = createField("LONGDESCRIPTION", org.jooq.impl.SQLDataType.CLOB.length(2147483647), this, "");
 
 	/**
-	 * The column <code>namedentities.globaltypes.typecode</code>.
+	 * The column <code>NAMEDENTITIES.GLOBALTYPES.TYPECODE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.lang.String> TYPECODE = createField("typecode", org.jooq.impl.SQLDataType.VARCHAR.length(4), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.lang.String> TYPECODE = createField("TYPECODE", org.jooq.impl.SQLDataType.CLOB.length(2147483647).nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.globaltypes.created</code>.
+	 * The column <code>NAMEDENTITIES.GLOBALTYPES.CREATED</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.sql.Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.sql.Timestamp> CREATED = createField("CREATED", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>namedentities.globaltypes.lastmodified</code>.
+	 * The column <code>NAMEDENTITIES.GLOBALTYPES.LASTMODIFIED</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.sql.Timestamp> LASTMODIFIED = createField("lastmodified", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.sql.Timestamp> LASTMODIFIED = createField("LASTMODIFIED", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>namedentities.globaltypes.createdby</code>.
+	 * The column <code>NAMEDENTITIES.GLOBALTYPES.CREATEDBY</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.lang.Integer> CREATEDBY = createField("createdby", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.lang.Integer> CREATEDBY = createField("CREATEDBY", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>namedentities.globaltypes.lastmodifiedby</code>.
+	 * The column <code>NAMEDENTITIES.GLOBALTYPES.LASTMODIFIEDBY</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.lang.Integer> LASTMODIFIEDBY = createField("lastmodifiedby", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord, java.lang.Integer> LASTMODIFIEDBY = createField("LASTMODIFIEDBY", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * Create a <code>namedentities.globaltypes</code> table reference
+	 * Create a <code>NAMEDENTITIES.GLOBALTYPES</code> table reference
 	 */
 	public Globaltypes() {
-		this("globaltypes", null);
+		this("GLOBALTYPES", null);
 	}
 
 	/**
-	 * Create an aliased <code>namedentities.globaltypes</code> table reference
+	 * Create an aliased <code>NAMEDENTITIES.GLOBALTYPES</code> table reference
 	 */
 	public Globaltypes(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.namedentities.tables.Globaltypes.GLOBALTYPES);

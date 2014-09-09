@@ -11,47 +11,47 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.AddressesRecord> implements org.jooq.Record15<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Byte, java.lang.Byte> {
 
-	private static final long serialVersionUID = 571607782;
+	private static final long serialVersionUID = 720429385;
 
 	/**
-	 * Setter for <code>namedEntities.addresses.addressId</code>.
+	 * Setter for <code>namedEntities.addresses.id</code>.
 	 */
-	public void setAddressid(java.lang.Integer value) {
+	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedEntities.addresses.addressId</code>.
+	 * Getter for <code>namedEntities.addresses.id</code>.
 	 */
-	public java.lang.Integer getAddressid() {
+	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedEntities.addresses.namedEntityId</code>.
+	 * Setter for <code>namedEntities.addresses.nedId</code>.
 	 */
-	public void setNamedentityid(java.lang.Integer value) {
+	public void setNedid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedEntities.addresses.namedEntityId</code>.
+	 * Getter for <code>namedEntities.addresses.nedId</code>.
 	 */
-	public java.lang.Integer getNamedentityid() {
+	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedEntities.addresses.addressTypeId</code>.
+	 * Setter for <code>namedEntities.addresses.typeId</code>.
 	 */
-	public void setAddresstypeid(java.lang.Integer value) {
+	public void setTypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedEntities.addresses.addressTypeId</code>.
+	 * Getter for <code>namedEntities.addresses.typeId</code>.
 	 */
-	public java.lang.Integer getAddresstypeid() {
+	public java.lang.Integer getTypeid() {
 		return (java.lang.Integer) getValue(2);
 	}
 
@@ -260,7 +260,7 @@ public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Addresses.ADDRESSES.ADDRESSID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Addresses.ADDRESSES.ID;
 	}
 
 	/**
@@ -268,7 +268,7 @@ public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Addresses.ADDRESSES.NAMEDENTITYID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Addresses.ADDRESSES.NEDID;
 	}
 
 	/**
@@ -276,7 +276,7 @@ public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.Integer> field3() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Addresses.ADDRESSES.ADDRESSTYPEID;
+		return org.plos.namedentity.persist.db.namedentities.tables.Addresses.ADDRESSES.TYPEID;
 	}
 
 	/**
@@ -380,7 +380,7 @@ public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.
 	 */
 	@Override
 	public java.lang.Integer value1() {
-		return getAddressid();
+		return getId();
 	}
 
 	/**
@@ -388,7 +388,7 @@ public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.
 	 */
 	@Override
 	public java.lang.Integer value2() {
-		return getNamedentityid();
+		return getNedid();
 	}
 
 	/**
@@ -396,7 +396,7 @@ public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.
 	 */
 	@Override
 	public java.lang.Integer value3() {
-		return getAddresstypeid();
+		return getTypeid();
 	}
 
 	/**
@@ -500,7 +500,7 @@ public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.
 	 */
 	@Override
 	public AddressesRecord value1(java.lang.Integer value) {
-		setAddressid(value);
+		setId(value);
 		return this;
 	}
 
@@ -509,7 +509,7 @@ public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.
 	 */
 	@Override
 	public AddressesRecord value2(java.lang.Integer value) {
-		setNamedentityid(value);
+		setNedid(value);
 		return this;
 	}
 
@@ -518,7 +518,7 @@ public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.
 	 */
 	@Override
 	public AddressesRecord value3(java.lang.Integer value) {
-		setAddresstypeid(value);
+		setTypeid(value);
 		return this;
 	}
 
@@ -652,12 +652,12 @@ public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.
 	/**
 	 * Create a detached, initialised AddressesRecord
 	 */
-	public AddressesRecord(java.lang.Integer addressid, java.lang.Integer namedentityid, java.lang.Integer addresstypeid, java.lang.String addressline1, java.lang.String addressline2, java.lang.String addressline3, java.lang.String city, java.lang.Integer statecodetypeid, java.lang.Integer countrycodetypeid, java.lang.String postalcode, java.lang.Integer maincontactnamedentityid, java.lang.Integer latitude, java.lang.Integer longitude, java.lang.Byte isprimary, java.lang.Byte isactive) {
+	public AddressesRecord(java.lang.Integer id, java.lang.Integer nedid, java.lang.Integer typeid, java.lang.String addressline1, java.lang.String addressline2, java.lang.String addressline3, java.lang.String city, java.lang.Integer statecodetypeid, java.lang.Integer countrycodetypeid, java.lang.String postalcode, java.lang.Integer maincontactnamedentityid, java.lang.Integer latitude, java.lang.Integer longitude, java.lang.Byte isprimary, java.lang.Byte isactive) {
 		super(org.plos.namedentity.persist.db.namedentities.tables.Addresses.ADDRESSES);
 
-		setValue(0, addressid);
-		setValue(1, namedentityid);
-		setValue(2, addresstypeid);
+		setValue(0, id);
+		setValue(1, nedid);
+		setValue(2, typeid);
 		setValue(3, addressline1);
 		setValue(4, addressline2);
 		setValue(5, addressline3);

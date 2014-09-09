@@ -17,10 +17,8 @@
 package org.plos.namedentity.service;
 
 import org.plos.namedentity.api.IndividualComposite;
-import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.persist.NamedEntityDBService;
-import org.plos.namedentity.persist.NamedEntityQueries;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
@@ -55,26 +53,26 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   private Individual resolveIndividual(Individual entity) {
 
     if (entity.getNameprefix() != null) {
-      Integer prefixTypeClassId = findTypeClassStartWith("Named Party Prefixes");
-      Integer prefixTypeId = findTypeValueByName(prefixTypeClassId, entity.getNameprefix());
+      Integer prefixTypeClassId = nedDBSvc.findTypeClass("Named Party Prefixes");
+      Integer prefixTypeId =nedDBSvc.findTypeValue(prefixTypeClassId, entity.getNameprefix());
       entity.setNameprefixtypeid(prefixTypeId);
     }
 
     if (entity.getNamesuffix() != null) {
-      Integer suffixTypeClassId = findTypeClassStartWith("Named Party Suffixes");
-      Integer suffixTypeId      = findTypeValueByName(suffixTypeClassId, entity.getNamesuffix());
+      Integer suffixTypeClassId = nedDBSvc.findTypeClass("Named Party Suffixes");
+      Integer suffixTypeId      = nedDBSvc.findTypeValue(suffixTypeClassId, entity.getNamesuffix());
       entity.setNamesuffixtypeid(suffixTypeId);
     }
 
     if (entity.getPreferredlanguage() != null) {
-      Integer langTypeClassId = findTypeClassStartWith("Languages");
-      Integer langTypeId      = findTypeValueByName(langTypeClassId, entity.getPreferredlanguage());
+      Integer langTypeClassId = nedDBSvc.findTypeClass("Languages");
+      Integer langTypeId      = nedDBSvc.findTypeValue(langTypeClassId, entity.getPreferredlanguage());
       entity.setPreferredlanguagetypeid(langTypeId);
     }
 
     if (entity.getPreferredcommunication() != null) {
-      Integer commMethodsTypeClassId = findTypeClassStartWith("Communication Methods");
-      Integer commMethodTypeId = findTypeValueByName(commMethodsTypeClassId, entity.getPreferredcommunication());
+      Integer commMethodsTypeClassId = nedDBSvc.findTypeClass("Communication Methods");
+      Integer commMethodTypeId = nedDBSvc.findTypeValue(commMethodsTypeClassId, entity.getPreferredcommunication());
       entity.setPreferredcommunicationmethodtypeid(commMethodTypeId);
     }
 
@@ -83,41 +81,41 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   private Address resolveAddress(Address entity) {
 
-    if (entity.getAddresstype() != null)
-      entity.setAddresstypeid(findTypeValueByName(findTypeClassStartWith("Physical Address Types"), entity.getAddresstype()));
+    if (entity.getType() != null)
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Physical Address Types"), entity.getType()));
 
     if (entity.getCountrycodetype() != null)
-      entity.setCountrycodetypeid(findTypeValueByName(findTypeClassStartWith("Country Types"), entity.getCountrycodetype()));
+      entity.setCountrycodetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Country Types"), entity.getCountrycodetype()));
 
     if (entity.getStatecodetype() != null)
-      entity.setStatecodetypeid(findTypeValueByName(findTypeClassStartWith("State and Province Codes"), entity.getStatecodetype()));
+      entity.setStatecodetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("State and Province Codes"), entity.getStatecodetype()));
 
     return entity;
   }
 
   private Phonenumber resolvePhonenumber(Phonenumber entity) {
 
-    if (entity.getPhonenumbertype() != null)
-      entity.setPhonenumbertypeid(findTypeValueByName(findTypeClassStartWith("Telephone Number Types"), entity.getPhonenumbertype()));
+    if (entity.getType() != null)
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Telephone Number Types"), entity.getType()));
 
     if (entity.getCountrycodetype() != null)
-      entity.setCountrycodetypeid(findTypeValueByName(findTypeClassStartWith("Country Codes for Phone Numbers"), entity.getCountrycodetype()));
+      entity.setCountrycodetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Country Codes for Phone Numbers"), entity.getCountrycodetype()));
 
     return entity;
   }
 
   private Email resolveEmail(Email entity) {
 
-    if (entity.getEmailtype() != null)
-      entity.setEmailtypeid(findTypeValueByName(findTypeClassStartWith("Email Address Types"), entity.getEmailtype()));
+    if (entity.getType() != null)
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Email Address Types"), entity.getType()));
 
     return entity;
   }
 
   private Degree resolveDegree(Degree entity) {
 
-    if (entity.getDegreetype() != null)
-      entity.setDegreetypeid(findTypeValueByName(findTypeClassStartWith("Degrees"), entity.getDegreetype()));
+    if (entity.getType() != null)
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Degrees"), entity.getType()));
 
     return entity;
   }
@@ -125,18 +123,18 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   private Role resolveRole(Role entity) {
 
     if (entity.getSourceapplicationtype() != null)
-      entity.setSourceapplicationtypeid(findTypeValueByName(findTypeClassStartWith("Source Applications"), entity.getSourceapplicationtype()));
+      entity.setSourceapplicationtypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSourceapplicationtype()));
 
-    if (entity.getRoletype() != null)
-      entity.setRoletypeid(findTypeValueByName(findTypeClassStartWith("Roles"), entity.getRoletype()));
+    if (entity.getType() != null)
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Roles"), entity.getType()));
 
     return entity;
   }
 
   private Uniqueidentifier resolveReference(Uniqueidentifier entity) {
 
-    if (entity.getUniqueidentifiertype() != null)
-      entity.setUniqueidentifiertypeid(findTypeValueByName(findTypeClassStartWith("Unique Identifier Types"), entity.getUniqueidentifiertype()));
+    if (entity.getType() != null)
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Unique Identifier Types"), entity.getType()));
 
     return entity;
   }
@@ -156,6 +154,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     composite.setDegrees(findResolvedEntities(nedId, Degree.class));
 
+    composite.setUrls(findResolvedEntities(nedId, Url.class));
+
     composite.setRoles(findResolvedEntities(nedId, Role.class));
 
     composite.setUniqueidentifiers(findResolvedEntities(nedId, Uniqueidentifier.class));
@@ -174,14 +174,14 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     List<Address> addresses = composite.getAddresses();
     if (composite.getAddresses() != null) {
       for (Address address : addresses) {
-        address.setNamedentityid(nedId);
+        address.setNedid(nedId);
         nedDBSvc.create(resolveAddress(address));
       }
     }
     List<Phonenumber> phonenumbers = composite.getPhonenumbers();
     if (composite.getPhonenumbers() != null) {
       for (Phonenumber phonenumber : phonenumbers) {
-        phonenumber.setNamedentityid(nedId);
+        phonenumber.setNedid(nedId);
         nedDBSvc.create(resolvePhonenumber(phonenumber));
       }
     }
@@ -189,7 +189,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     List<Email> emails = composite.getEmails();
     if (composite.getEmails() != null) {
       for (Email email : emails) {
-        email.setNamedentityid(nedId);
+        email.setNedid(nedId);
         nedDBSvc.create(resolveEmail(email));
       }
     }
@@ -197,15 +197,23 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     List<Degree> degrees = composite.getDegrees();
     if (degrees != null) {
       for (Degree degree : degrees) {
-        degree.setNamedentityid(nedId);
+        degree.setNedid(nedId);
         nedDBSvc.create(resolveDegree(degree));
+      }
+    }
+
+    List<Url> urls = composite.getUrls();
+    if (urls != null) {
+      for (Url url : urls) {
+        url.setNedid(nedId);
+        nedDBSvc.create(url);
       }
     }
 
     List<Role> roles = composite.getRoles();
     if (roles != null) {
       for (Role role : roles) {
-        role.setNamedentityid(nedId);
+        role.setNedid(nedId);
         nedDBSvc.create(resolveRole(role));
       }
     }
@@ -213,7 +221,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     List<Uniqueidentifier> uids = composite.getUniqueidentifiers();
     if (composite.getUniqueidentifiers() != null) {
       for (Uniqueidentifier uid : uids) {
-        uid.setNamedentityid(nedId);
+        uid.setNedid(nedId);
         nedDBSvc.create(resolveReference(uid));
       }
     }
@@ -223,27 +231,27 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   @Override
   public <T extends Entity> T findResolvedEntity(Integer nedId, Class<T> clazz) {
-    return ((NamedEntityQueries)nedDBSvc).findResolvedEntity(nedId, clazz);
+    return nedDBSvc.findResolvedEntity(nedId, clazz);
   }
 
   @Override
   public <T extends Entity> List<T> findResolvedEntities(Integer nedId, Class<T> clazz) {
-    return ((NamedEntityQueries)nedDBSvc).findResolvedEntities(nedId, clazz);
+    return nedDBSvc.findResolvedEntities(nedId, clazz);
   }
 
   @Override
   public <T extends Entity> T findResolvedEntityByKey(Integer pk, Class<T> clazz) {
-    return ((NamedEntityQueries)nedDBSvc).findResolvedEntityByKey(pk, clazz);
+    return nedDBSvc.findResolvedEntityByKey(pk, clazz);
   }
 
   @Override
   public <T extends Entity> List<T> findResolvedEntityByUid(String srcType, String uid, Class<T> clazz) {
-    return ((NamedEntityQueries)nedDBSvc).findResolvedEntityByUid(srcType, uid, clazz);
+    return nedDBSvc.findResolvedEntityByUid(srcType, uid, clazz);
   }
 
   @Override @Transactional
   public Organization createOrganization(Organization entity) {
-    return ((NamedEntityQueries)nedDBSvc).findResolvedEntity(nedDBSvc.create(entity), Organization.class);
+    return nedDBSvc.findResolvedEntity(nedDBSvc.create(entity), Organization.class);
   }
     
   public NamedEntityDBService getNamedEntityDBService() {
@@ -252,27 +260,5 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     
   public void setNamedEntityDBService(NamedEntityDBService nedDBSvc) {
     this.nedDBSvc = nedDBSvc;
-  }
-
-  //TODO - cache type classes and values.
-   
-  private Integer findTypeClassStartWith(String prefix) {
-    for(Typedescription typeClass : nedDBSvc.findAll(Typedescription.class)) {
-      if (typeClass.getDescription().startsWith(prefix)) {
-        return typeClass.getTypeid();
-      }
-    }
-    throw new NedValidationException("No type class found which begins with " + prefix);
-  }
-
-  private Integer findTypeValueByName(Integer typeClassId, String name) {
-    for(Globaltype typeValue : nedDBSvc.findAll(Globaltype.class)) {
-      if (typeClassId.equals(typeValue.getTypeid()) &&
-          typeValue.getShortdescription().equalsIgnoreCase(name))
-      {
-        return typeValue.getGlobaltypeid();
-      }
-    }
-    throw new NedValidationException("No type value found with short description =  " + name);
   }
 }

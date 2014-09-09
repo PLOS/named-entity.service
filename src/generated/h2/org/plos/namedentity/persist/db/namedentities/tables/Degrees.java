@@ -11,10 +11,10 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Degrees extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord> {
 
-	private static final long serialVersionUID = -1097390394;
+	private static final long serialVersionUID = 740811894;
 
 	/**
-	 * The singleton instance of <code>namedentities.degrees</code>
+	 * The singleton instance of <code>NAMEDENTITIES.DEGREES</code>
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Degrees DEGREES = new org.plos.namedentity.persist.db.namedentities.tables.Degrees();
 
@@ -27,29 +27,29 @@ public class Degrees extends org.jooq.impl.TableImpl<org.plos.namedentity.persis
 	}
 
 	/**
-	 * The column <code>namedentities.degrees.degreeid</code>.
+	 * The column <code>NAMEDENTITIES.DEGREES.ID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> DEGREEID = createField("degreeid", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>namedentities.degrees.namedentityid</code>.
+	 * The column <code>NAMEDENTITIES.DEGREES.NEDID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> NAMEDENTITYID = createField("namedentityid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> NEDID = createField("NEDID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.degrees.degreetypeid</code>.
+	 * The column <code>NAMEDENTITIES.DEGREES.TYPEID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> DEGREETYPEID = createField("degreetypeid", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> TYPEID = createField("TYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * Create a <code>namedentities.degrees</code> table reference
+	 * Create a <code>NAMEDENTITIES.DEGREES</code> table reference
 	 */
 	public Degrees() {
-		this("degrees", null);
+		this("DEGREES", null);
 	}
 
 	/**
-	 * Create an aliased <code>namedentities.degrees</code> table reference
+	 * Create an aliased <code>NAMEDENTITIES.DEGREES</code> table reference
 	 */
 	public Degrees(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.namedentities.tables.Degrees.DEGREES);

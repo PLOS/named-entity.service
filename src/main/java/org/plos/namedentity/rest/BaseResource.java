@@ -53,7 +53,7 @@ public class BaseResource {
       // make sure ned id is valid for entity type (ie, is owner).throw a 404 if not found.
       namedEntityService.findResolvedEntity(nedId, parent);
 
-      entity.setNamedentityid(nedId);
+      entity.setNedid(nedId);
 
       namedEntityService.resolveValuesToIds(entity);
 
@@ -77,7 +77,7 @@ public class BaseResource {
       // make sure ned id is valid for entity type (ie, is owner).throw a 404 if not found.
       namedEntityService.findResolvedEntity(nedId, parent);
 
-      entity.setNamedentityid(nedId);
+      entity.setNedid(nedId);
 
       namedEntityService.resolveValuesToIds(entity);
 
@@ -127,7 +127,7 @@ public class BaseResource {
       List<S> entities = namedEntityService.findResolvedEntities(nedId, child);
 
       for (ChildEntity entity : entities)
-        if (entity.getPrimaryid().equals(pkId))
+        if (entity.getId().equals(pkId))
           return Response.status(Response.Status.OK).entity(entity).build();
 
       return entityNotFound(child.getSimpleName() + " not found");

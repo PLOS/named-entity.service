@@ -11,10 +11,10 @@ package org.plos.namedentity.persist.db.information_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CrossReferences extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord> {
 
-	private static final long serialVersionUID = -1265460108;
+	private static final long serialVersionUID = 779644052;
 
 	/**
-	 * The singleton instance of <code>information_schema.cross_references</code>
+	 * The singleton instance of <code>INFORMATION_SCHEMA.CROSS_REFERENCES</code>
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.CrossReferences CROSS_REFERENCES = new org.plos.namedentity.persist.db.information_schema.tables.CrossReferences();
 
@@ -27,84 +27,84 @@ public class CrossReferences extends org.jooq.impl.TableImpl<org.plos.namedentit
 	}
 
 	/**
-	 * The column <code>information_schema.cross_references.pktable_catalog</code>.
+	 * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PKTABLE_CATALOG</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.String> PKTABLE_CATALOG = createField("pktable_catalog", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.String> PKTABLE_CATALOG = createField("PKTABLE_CATALOG", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.cross_references.pktable_schema</code>.
+	 * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PKTABLE_SCHEMA</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.String> PKTABLE_SCHEMA = createField("pktable_schema", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.String> PKTABLE_SCHEMA = createField("PKTABLE_SCHEMA", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.cross_references.pktable_name</code>.
+	 * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PKTABLE_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.String> PKTABLE_NAME = createField("pktable_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.String> PKTABLE_NAME = createField("PKTABLE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.cross_references.pkcolumn_name</code>.
+	 * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PKCOLUMN_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.String> PKCOLUMN_NAME = createField("pkcolumn_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.String> PKCOLUMN_NAME = createField("PKCOLUMN_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.cross_references.fktable_catalog</code>.
+	 * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FKTABLE_CATALOG</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.String> FKTABLE_CATALOG = createField("fktable_catalog", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.String> FKTABLE_CATALOG = createField("FKTABLE_CATALOG", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.cross_references.fktable_schema</code>.
+	 * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FKTABLE_SCHEMA</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.String> FKTABLE_SCHEMA = createField("fktable_schema", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.String> FKTABLE_SCHEMA = createField("FKTABLE_SCHEMA", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.cross_references.fktable_name</code>.
+	 * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FKTABLE_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.String> FKTABLE_NAME = createField("fktable_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.String> FKTABLE_NAME = createField("FKTABLE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.cross_references.fkcolumn_name</code>.
+	 * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FKCOLUMN_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.String> FKCOLUMN_NAME = createField("fkcolumn_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.String> FKCOLUMN_NAME = createField("FKCOLUMN_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.cross_references.ordinal_position</code>.
+	 * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.ORDINAL_POSITION</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.Short> ORDINAL_POSITION = createField("ordinal_position", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.Short> ORDINAL_POSITION = createField("ORDINAL_POSITION", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
-	 * The column <code>information_schema.cross_references.update_rule</code>.
+	 * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.UPDATE_RULE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.Short> UPDATE_RULE = createField("update_rule", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.Short> UPDATE_RULE = createField("UPDATE_RULE", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
-	 * The column <code>information_schema.cross_references.delete_rule</code>.
+	 * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.DELETE_RULE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.Short> DELETE_RULE = createField("delete_rule", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.Short> DELETE_RULE = createField("DELETE_RULE", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
-	 * The column <code>information_schema.cross_references.fk_name</code>.
+	 * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FK_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.String> FK_NAME = createField("fk_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.String> FK_NAME = createField("FK_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.cross_references.pk_name</code>.
+	 * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PK_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.String> PK_NAME = createField("pk_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.String> PK_NAME = createField("PK_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.cross_references.deferrability</code>.
+	 * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.DEFERRABILITY</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.Short> DEFERRABILITY = createField("deferrability", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord, java.lang.Short> DEFERRABILITY = createField("DEFERRABILITY", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
-	 * Create a <code>information_schema.cross_references</code> table reference
+	 * Create a <code>INFORMATION_SCHEMA.CROSS_REFERENCES</code> table reference
 	 */
 	public CrossReferences() {
-		this("cross_references", null);
+		this("CROSS_REFERENCES", null);
 	}
 
 	/**
-	 * Create an aliased <code>information_schema.cross_references</code> table reference
+	 * Create an aliased <code>INFORMATION_SCHEMA.CROSS_REFERENCES</code> table reference
 	 */
 	public CrossReferences(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.information_schema.tables.CrossReferences.CROSS_REFERENCES);

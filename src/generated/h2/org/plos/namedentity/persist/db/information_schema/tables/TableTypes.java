@@ -11,10 +11,10 @@ package org.plos.namedentity.persist.db.information_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TableTypes extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.information_schema.tables.records.TableTypesRecord> {
 
-	private static final long serialVersionUID = 1278087438;
+	private static final long serialVersionUID = -199509682;
 
 	/**
-	 * The singleton instance of <code>information_schema.table_types</code>
+	 * The singleton instance of <code>INFORMATION_SCHEMA.TABLE_TYPES</code>
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.TableTypes TABLE_TYPES = new org.plos.namedentity.persist.db.information_schema.tables.TableTypes();
 
@@ -27,19 +27,19 @@ public class TableTypes extends org.jooq.impl.TableImpl<org.plos.namedentity.per
 	}
 
 	/**
-	 * The column <code>information_schema.table_types.type</code>.
+	 * The column <code>INFORMATION_SCHEMA.TABLE_TYPES.TYPE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TableTypesRecord, java.lang.String> TYPE = createField("type", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TableTypesRecord, java.lang.String> TYPE = createField("TYPE", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * Create a <code>information_schema.table_types</code> table reference
+	 * Create a <code>INFORMATION_SCHEMA.TABLE_TYPES</code> table reference
 	 */
 	public TableTypes() {
-		this("table_types", null);
+		this("TABLE_TYPES", null);
 	}
 
 	/**
-	 * Create an aliased <code>information_schema.table_types</code> table reference
+	 * Create an aliased <code>INFORMATION_SCHEMA.TABLE_TYPES</code> table reference
 	 */
 	public TableTypes(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.information_schema.tables.TableTypes.TABLE_TYPES);
