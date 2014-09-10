@@ -22,7 +22,7 @@ import java.util.Objects;
  * Modified JOOQ generated class(pojo=true).
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class Uniqueidentifier extends Entity {
+public class Uniqueidentifier extends ChildEntity {
 
   private Integer id;
   private Integer nedid;

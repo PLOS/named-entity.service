@@ -24,7 +24,7 @@ import java.util.Objects;
  */
 @XmlRootElement
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class Organization extends Entity {
+public class Organization extends ParentEntity {
 
   private Integer nedid;
   private Integer typeid;

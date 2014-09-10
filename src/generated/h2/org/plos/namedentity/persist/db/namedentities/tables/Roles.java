@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Roles extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord> {
 
-	private static final long serialVersionUID = -1666991016;
+	private static final long serialVersionUID = -898669608;
 
 	/**
 	 * The singleton instance of <code>NAMEDENTITIES.ROLES</code>
@@ -49,12 +49,12 @@ public class Roles extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.
 	/**
 	 * The column <code>NAMEDENTITIES.ROLES.STARTDATE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.sql.Timestamp> STARTDATE = createField("STARTDATE", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.sql.Date> STARTDATE = createField("STARTDATE", org.jooq.impl.SQLDataType.DATE, this, "");
 
 	/**
 	 * The column <code>NAMEDENTITIES.ROLES.ENDDATE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.sql.Timestamp> ENDDATE = createField("ENDDATE", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.sql.Date> ENDDATE = createField("ENDDATE", org.jooq.impl.SQLDataType.DATE, this, "");
 
 	/**
 	 * The column <code>NAMEDENTITIES.ROLES.CREATED</code>.

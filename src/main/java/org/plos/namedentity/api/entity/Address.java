@@ -25,7 +25,7 @@ import java.util.Objects;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @XmlRootElement
-public class Address extends Entity {
+public class Address extends ChildEntity {
 
   private Integer id;
   private Integer nedid;

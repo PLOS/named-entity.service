@@ -27,7 +27,7 @@ import java.util.Objects;
  */
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @XmlRootElement
-public class Email extends Entity {
+public class Email extends ChildEntity {
 
   private static EmailValidator emailValidator = EmailValidator.getInstance();
 

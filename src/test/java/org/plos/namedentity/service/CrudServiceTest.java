@@ -23,6 +23,7 @@ import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
 import org.plos.namedentity.api.entity.Individual;
+import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -311,6 +313,56 @@ public class CrudServiceTest {
   }
 
   @Test
+  public void testRolesCRUD() {
+
+    /* ------------------------------------------------------------------ */
+    /*  CREATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    Role newRole = new Role();
+    newRole.setNedid(1);
+    newRole.setSourceapplicationtype("Editorial Manager");
+    newRole.setType("Academic Editor (PLOS ONE)");
+    newRole.setStartdate( dateNow() );
+    newRole.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    newRole.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
+
+    // save record
+
+    Integer pkId = crudService.create( namedEntityService.resolveValuesToIds(newRole) );
+    assertNotNull( pkId );
+
+    Role savedRole = crudService.findById(pkId, Role.class);
+    assertNotNull( savedRole );
+    assertEquals(pkId, savedRole.getId());
+    assertNotNull( savedRole.getSourceapplicationtypeid() );
+    assertNotNull( savedRole.getTypeid() );
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    savedRole.setEnddate( dateNow() );
+    assertTrue( crudService.update(savedRole) );
+    Role savedRole2 = crudService.findById(pkId, Role.class);
+    assertEquals(savedRole, savedRole2);
+
+    /* ------------------------------------------------------------------ */
+    /*  FINDERS                                                           */
+    /* ------------------------------------------------------------------ */
+
+    List<Role> allRoles = crudService.findAll(Role.class);
+    assertNotNull(allRoles);
+    assertTrue(allRoles.contains(savedRole2));
+
+    /* ------------------------------------------------------------------ */
+    /*  DELETE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    assertTrue( crudService.delete(savedRole) );
+  }
+
+  @Test
   public void testAddressesCRUD() {
 
     /* ------------------------------------------------------------------ */
@@ -429,5 +481,15 @@ public class CrudServiceTest {
     /* ------------------------------------------------------------------ */
 
     assertTrue( crudService.delete(savedUid) );
+  }
+
+  private java.sql.Date dateNow() {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(new java.util.Date());
+    cal.set(Calendar.HOUR_OF_DAY, 0);
+    cal.set(Calendar.MINUTE, 0);
+    cal.set(Calendar.SECOND, 0);
+    cal.set(Calendar.MILLISECOND, 0);
+    return new java.sql.Date( cal.getTimeInMillis() );
   }
 }

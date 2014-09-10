@@ -24,7 +24,7 @@ import java.util.Objects;
  */
 @XmlRootElement
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class Individual extends Entity {
+public class Individual extends ParentEntity {
 
   private Integer nedid;
   private String  firstname;

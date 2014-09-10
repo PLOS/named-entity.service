@@ -16,7 +16,6 @@
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
     <buildDate>${maven.build.timestamp}</buildDate>
     <h2db.version>1.4.180</h2db.version>
-    <jackson.version>1.9.12</jackson.version>
     <mysql.connector.version>5.1.30</mysql.connector.version> 
     <org.glassfish.jersey-version>2.11</org.glassfish.jersey-version>
     <org.hamcrest.version>1.3</org.hamcrest.version>
@@ -92,31 +91,28 @@
       <artifactId>jersey-container-servlet</artifactId>
       <version>${org.glassfish.jersey-version}</version>
     </dependency>
-
-    <dependency>
-      <groupId>org.codehaus.jackson</groupId>
-      <artifactId>jackson-mapper-asl</artifactId>
-      <version>${jackson.version}</version>
-      <scope>compile</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.codehaus.jackson</groupId>
-      <artifactId>jackson-jaxrs</artifactId>
-      <version>${jackson.version}</version>
-      <scope>compile</scope>
-    </dependency>
-
     <dependency>
       <groupId>org.glassfish.jersey.ext</groupId>
       <artifactId>jersey-spring3</artifactId>
       <version>${org.glassfish.jersey-version}</version>
     </dependency>
 
+    <!-- moxy (jaxb jsr-222) -->
     <dependency>
-      <groupId>org.glassfish.jersey.media</groupId>
-      <artifactId>jersey-media-moxy</artifactId>
-      <version>${org.glassfish.jersey-version}</version>
+      <groupId>org.eclipse.persistence</groupId>
+      <artifactId>eclipselink</artifactId>
+      <version>2.6.0-M3</version>
+    </dependency>
+    <!-- json api (jsr-353) -->
+    <dependency>
+      <groupId>javax.json</groupId>
+      <artifactId>javax.json-api</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish</groupId>
+      <artifactId>javax.json</artifactId>
+      <version>1.0.4</version>
     </dependency>
 
     <dependency>
@@ -337,7 +333,6 @@
                 <name>org.jooq.util.mysql.MySQLDatabase</name>
                 <includes>.*</includes>
                 <excludes/>
-                <dateAsTimestamp>true</dateAsTimestamp>
                 <inputSchema>namedEntities</inputSchema>
               </database>
               <generate>
@@ -476,7 +471,6 @@
                   <name>org.jooq.util.h2.H2Database</name>
                   <includes>.*</includes>
                   <excludes/>
-                  <dateAsTimestamp>true</dateAsTimestamp>
                   <!--<inputSchema>namedEntities</inputSchema>-->
                 </database>
                 <generate>

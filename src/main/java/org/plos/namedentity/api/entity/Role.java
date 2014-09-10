@@ -16,28 +16,37 @@
  */
 package org.plos.namedentity.api.entity;
 
+import java.util.Date;
 import java.sql.Timestamp;
 import java.util.Objects;
+
+import org.plos.namedentity.api.adapter.DateAdapter;
+
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * Modified JOOQ generated class(pojo=true).
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class Role extends Entity {
+public class Role extends ChildEntity {
 
   private Integer   id;
   private Integer   nedid;
+
   private Integer   sourceapplicationtypeid;
+  private String    sourceapplicationtype;
+
   private Integer   typeid;
   private String    type;
-  private Timestamp startdate;
-  private Timestamp enddate;
+
+  private Date      startdate;
+  private Date      enddate;
+
   private Timestamp created;
-  private Timestamp lastmodified;
   private Integer   createdby;
 
-  private Integer lastmodifiedby;
-  private String  sourceapplicationtype;
+  private Timestamp lastmodified;
+  private Integer   lastmodifiedby;
 
   public String getSourceapplicationtype() {
     return sourceapplicationtype;
@@ -87,19 +96,23 @@ public class Role extends Entity {
     this.typeid = typeid;
   }
 
-  public java.sql.Timestamp getStartdate() {
+  @XmlJavaTypeAdapter(DateAdapter.class)
+  public Date getStartdate() {
     return this.startdate;
   }
 
-  public void setStartdate(java.sql.Timestamp startdate) {
+  @XmlJavaTypeAdapter(DateAdapter.class)
+  public void setStartdate(Date startdate) {
     this.startdate = startdate;
   }
 
-  public java.sql.Timestamp getEnddate() {
+  @XmlJavaTypeAdapter(DateAdapter.class)
+  public Date getEnddate() {
     return this.enddate;
   }
 
-  public void setEnddate(java.sql.Timestamp enddate) {
+  @XmlJavaTypeAdapter(DateAdapter.class)
+  public void setEnddate(Date enddate) {
     this.enddate = enddate;
   }
 

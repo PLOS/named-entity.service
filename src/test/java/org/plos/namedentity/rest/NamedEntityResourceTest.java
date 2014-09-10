@@ -16,25 +16,50 @@
  */
 package org.plos.namedentity.rest;
 
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.junit.Before;
-import org.junit.Test;
-import org.plos.namedentity.api.IndividualComposite;
-import org.plos.namedentity.api.entity.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonReader;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
+
+import org.eclipse.persistence.jaxb.JAXBContextProperties;
+import org.eclipse.persistence.oxm.json.JsonStructureSource;
+import org.junit.Test;
+import org.plos.namedentity.api.IndividualComposite;
+import org.plos.namedentity.api.entity.Address;
+import org.plos.namedentity.api.entity.Degree;
+import org.plos.namedentity.api.entity.Email;
+import org.plos.namedentity.api.entity.Globaltype;
+import org.plos.namedentity.api.entity.Individual;
+import org.plos.namedentity.api.entity.Organization;
+import org.plos.namedentity.api.entity.Phonenumber;
+import org.plos.namedentity.api.entity.Role;
+import org.plos.namedentity.api.entity.Typedescription;
+import org.plos.namedentity.api.entity.Uniqueidentifier;
 
 public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
@@ -52,14 +77,6 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   private static final String INDIV_DEGREE_URI  = INDIVIDUAL_URI + "/1/degrees";
 
   private static final String ORGANIZATION_URI= "/organizations";
-
-  private ObjectMapper mapper;
-
-  @Before
-  public void setup() {
-    this.mapper = new ObjectMapper();
-    mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-  }
 
   @Test
   public void testOrganizationCrud() throws Exception {
@@ -81,7 +98,9 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    Organization entity = mapper.readValue(jsonPayload, Organization.class);
+    Unmarshaller unmarshaller = jsonUnmarshaller(Organization.class);
+    Organization entity       = unmarshalEntity(jsonPayload, Organization.class, unmarshaller);
+
     assertEquals(Integer.valueOf(2), entity.getNedid());
     assertEquals("familiarname", entity.getFamiliarname());
     assertEquals("legalname", entity.getLegalname());
@@ -96,13 +115,12 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     jsonPayload = response.readEntity(String.class);
 
-    entity = mapper.readValue(jsonPayload, Organization.class);
+    entity = unmarshalEntity(jsonPayload, Organization.class, unmarshaller);
     assertEquals(Integer.valueOf(2), entity.getNedid());
     assertEquals("familiarname", entity.getFamiliarname());
     assertEquals("legalname", entity.getLegalname());
     assertEquals(new Byte((byte)0), entity.getIsactive());
     assertEquals(new Byte((byte)1), entity.getIsvisible());
-
     
     // TODO: LIST, DELETE, UPDATE
   }
@@ -122,7 +140,9 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    IndividualComposite composite = mapper.readValue(jsonPayload, IndividualComposite.class);
+    Unmarshaller unmarshaller     = jsonUnmarshaller(IndividualComposite.class);
+    IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
+
     assertEquals(Integer.valueOf(1), composite.getNamedentityid());
     assertEquals("firstname", composite.getFirstname());
     assertEquals("middlename", composite.getMiddlename());
@@ -159,7 +179,9 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    IndividualComposite composite = mapper.readValue(jsonPayload, IndividualComposite.class);
+    Unmarshaller unmarshaller     = jsonUnmarshaller(IndividualComposite.class);
+    IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
+
     assertEquals(Integer.valueOf(1), composite.getNamedentityid());
     assertEquals("firstname", composite.getFirstname());
     assertEquals("middlename", composite.getMiddlename());
@@ -169,7 +191,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   }
 
   @Test
-  public void testIndividualFinders() throws IOException {
+  public void testIndividualFinders() throws IOException, JAXBException {
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY ID)                                                      */
@@ -181,7 +203,9 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    Individual entity = mapper.readValue(jsonPayload, Individual.class);
+    Unmarshaller unmarshaller = jsonUnmarshaller(Individual.class);
+    Individual entity         = unmarshalEntity(jsonPayload, Individual.class, unmarshaller);
+
     assertEquals(Integer.valueOf(1), entity.getNedid());
     assertEquals("firstname", entity.getFirstname());
     assertEquals("middlename", entity.getMiddlename());
@@ -197,12 +221,12 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(200, response.getStatus());
     jsonPayload = response.readEntity(String.class);
 
-    Individual[] individualEntityArray = mapper.readValue(jsonPayload, Individual[].class);
-    assertEquals(3, individualEntityArray.length);
+    List<Individual> individuals = unmarshalEntities(jsonPayload, Individual.class, unmarshaller);
+    assertEquals(3, individuals.size());
   }
 
   @Test
-  public void testAddressCrud() throws IOException {
+  public void testAddressCrud() throws IOException, JAXBException {
 
     /* ------------------------------------------------------------------ */
     /*  CREATE                                                            */
@@ -217,7 +241,10 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String responseJson = response.readEntity(String.class);
 
-    Address entity = mapper.readValue(responseJson, Address.class);
+    Unmarshaller unmarshaller = jsonUnmarshaller(Address.class);
+
+    Address entity = unmarshalEntity(responseJson, Address.class, unmarshaller);
+
     assertEquals(Integer.valueOf(1), entity.getId());
     assertEquals(Integer.valueOf(1), entity.getNedid());
     assertEquals("Office", entity.getType());
@@ -236,7 +263,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /* ------------------------------------------------------------------ */
 
     response = target(INDIV_ADDR_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(mapper.writeValueAsString(entity)));
+                .post(Entity.json(writeValueAsString(entity)));
 
     assertEquals(200, response.getStatus());
 
@@ -256,7 +283,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     responseJson = response.readEntity(String.class);
 
-    Address address = mapper.readValue(responseJson, Address.class);
+    Address address = unmarshalEntity(responseJson, Address.class, unmarshaller);
     assertNotNull( address );
 
     /* ------------------------------------------------------------------ */
@@ -269,16 +296,16 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     responseJson = response.readEntity(String.class);
 
-    Address[] addresses = mapper.readValue(responseJson, Address[].class);
-    assertEquals(2, addresses.length);
+    List<Address> addresses = unmarshalEntities(responseJson, Address.class, unmarshaller);
+    assertEquals(2, addresses.size());
 
-    Address officeAddress = addresses[0];
+    Address officeAddress = addresses.get(0);
     assertEquals("Office", officeAddress.getType());
     assertEquals("addressline 1", officeAddress.getAddressline1());
     assertEquals("CA", officeAddress.getStatecodetype());
     assertEquals("12345", officeAddress.getPostalcode());
 
-    Address homeAddress = addresses[1];
+    Address homeAddress = addresses.get(1);
     assertEquals("Home", homeAddress.getType());
     assertEquals("addressline 1.2", homeAddress.getAddressline1());
     assertEquals("ONT", homeAddress.getStatecodetype());
@@ -286,7 +313,84 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   }
 
   @Test
-  public void testEmailCrud() throws IOException {
+  public void testRoleCrud() throws IOException, JAXBException {
+
+    Date START_DATE = gmtDate(2014,6,30);  // Jun 30, 2014 00:00:00 GMT
+
+    /* ------------------------------------------------------------------ */
+    /*  CREATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    String requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "role.json")));
+  
+    Response response = target(INDIV_ROLE_URI).request(MediaType.APPLICATION_JSON_TYPE)
+                          .post(Entity.json(requestJson));
+
+    assertEquals(200, response.getStatus());
+
+    String responseJson = response.readEntity(String.class);
+
+    Unmarshaller unmarshaller = jsonUnmarshaller(Role.class);
+    Role entity               = unmarshalEntity(responseJson, Role.class, unmarshaller);
+
+    assertEquals(Integer.valueOf(1), entity.getId());
+    assertEquals(Integer.valueOf(1), entity.getNedid());
+    assertEquals("Editorial Manager", entity.getSourceapplicationtype());
+    assertEquals("Academic Editor (PLOS ONE)", entity.getType());
+
+    assertEquals(START_DATE, entity.getStartdate());
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    response = target(INDIV_ROLE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
+                .post(Entity.json(writeValueAsString(entity)));
+
+    assertEquals(200, response.getStatus());
+
+    /* ------------------------------------------------------------------ */
+    /*  DELETE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    response = target(INDIV_ROLE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).delete();
+    assertEquals(204, response.getStatus());
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY ROLE ID (PK))                                            */
+    /* ------------------------------------------------------------------ */
+
+    response = target(INDIV_ROLE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
+    assertEquals(200, response.getStatus());
+
+    responseJson = response.readEntity(String.class);
+
+    Role role = unmarshalEntity(responseJson, Role.class, unmarshaller);
+    assertNotNull( role );
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY NED ID)                                                  */
+    /* ------------------------------------------------------------------ */
+
+    response = target(INDIV_ROLE_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(200, response.getStatus());
+
+    responseJson = response.readEntity(String.class);
+
+    List<Role> roles = unmarshalEntities(responseJson, Role.class, unmarshaller);
+    assertEquals(1, roles.size());
+
+    role = roles.get(0);
+    assertEquals(Integer.valueOf(1), role.getId());
+    assertEquals(Integer.valueOf(1), role.getNedid());
+    assertEquals("Editorial Manager", role.getSourceapplicationtype());
+    assertEquals("Academic Editor (PLOS ONE)", role.getType());
+    assertEquals(START_DATE, role.getStartdate());
+  }
+
+  @Test
+  public void testEmailCrud() throws IOException, JAXBException {
 
     /* ------------------------------------------------------------------ */
     /*  CREATE                                                            */
@@ -301,7 +405,9 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    Email entity = mapper.readValue(jsonPayload, Email.class);
+    Unmarshaller unmarshaller = jsonUnmarshaller(Email.class);
+    Email entity              = unmarshalEntity(jsonPayload, Email.class, unmarshaller);
+
     assertEquals(Integer.valueOf(1), entity.getId());
     assertEquals(Integer.valueOf(1), entity.getNedid());
     assertEquals("Work", entity.getType());
@@ -313,13 +419,8 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
-
-    String jsonString = mapper.writeValueAsString(entity);
-
-    Entity<String> eString = Entity.json(jsonString);
-
     response = target(INDIV_EMAIL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                  .post(eString);
+                  .post(Entity.json(writeValueAsString(entity)));
 
     assertEquals(200, response.getStatus());
 
@@ -339,7 +440,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     jsonPayload = response.readEntity(String.class);
 
-    Email email = mapper.readValue(jsonPayload, Email.class);
+    Email email = unmarshalEntity(jsonPayload, Email.class, unmarshaller);
     assertNotNull( email );
 
     /* ------------------------------------------------------------------ */
@@ -352,14 +453,13 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     jsonPayload = response.readEntity(String.class);
 
-    Email[] emails = mapper.readValue(jsonPayload, Email[].class);
-    assertEquals(2, emails.length);
+    List<Email> emails = unmarshalEntities(jsonPayload, Email.class, unmarshaller);
+    assertEquals(2, emails.size());
 
-    Email workEmail = emails[0];
+    Email workEmail = emails.get(0);
     assertEquals("Work", workEmail.getType());
     assertEquals("fu.manchu.work@foo.com", workEmail.getEmailaddress());
     assertTrue(workEmail.getIsprimary() == 1);
-
 
     /* ------------------------------------------------------------------ */
     /*  404 ERRORS                                                        */
@@ -401,7 +501,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   }
 
   @Test
-  public void testDegreeCrud() throws IOException {
+  public void testDegreeCrud() throws IOException, JAXBException {
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY ID)                                                      */
@@ -413,17 +513,18 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    Degree[] degrees = mapper.readValue(jsonPayload, Degree[].class);
-    assertEquals(1, degrees.length);
+    Unmarshaller unmarshaller = jsonUnmarshaller(Degree.class);
+    List<Degree> degrees      = unmarshalEntities(jsonPayload, Degree.class, unmarshaller);
+    assertEquals(1, degrees.size());
 
-    Degree degree = degrees[0];
+    Degree degree = degrees.get(0);
     assertEquals("Super Doctor", degree.getType());
 
     //TODO - CREATE, UPDATE, DELETE
   }
 
   @Test
-  public void testPhonenumberCrud() throws IOException {
+  public void testPhonenumberCrud() throws IOException, JAXBException {
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY ID)                                                      */
@@ -435,10 +536,11 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    Phonenumber[] phonenumbers = mapper.readValue(jsonPayload, Phonenumber[].class);
-    assertEquals(3, phonenumbers.length);
+    Unmarshaller unmarshaller      = jsonUnmarshaller(Phonenumber.class);
+    List<Phonenumber> phonenumbers = unmarshalEntities(jsonPayload, Phonenumber.class, unmarshaller);
+    assertEquals(3, phonenumbers.size());
 
-    Phonenumber officePhone = phonenumbers[0];
+    Phonenumber officePhone = phonenumbers.get(0);
     assertEquals("Office", officePhone.getType());
     assertEquals("123-456-7890", officePhone.getPhonenumber());
 
@@ -446,29 +548,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   }
 
   @Test
-  public void testRoleCrud() throws IOException {
-
-    /* ------------------------------------------------------------------ */
-    /*  FIND (BY ID)                                                      */
-    /* ------------------------------------------------------------------ */
-
-    Response response = target(INDIV_ROLE_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
-
-    assertEquals(200, response.getStatus());
-
-    String jsonPayload = response.readEntity(String.class);
-
-    Role[] roles = mapper.readValue(jsonPayload, Role[].class);
-    assertEquals(1, roles.length);
-
-    Role role = roles[0];
-    assertEquals("Author", role.getType());
-
-    //TODO - CREATE, UPDATE, DELETE
-  }
-
-  @Test
-  public void testExternalReferenceLookup() throws IOException {
+  public void testExternalReferenceLookup() throws IOException, JAXBException {
 
     /* ------------------------------------------------------------------ */
     /*  FIND EXTERNAL REFERENCES FOR INDIVIDUAL                           */
@@ -480,8 +560,9 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    Uniqueidentifier[] xrefs = mapper.readValue(jsonPayload, Uniqueidentifier[].class);
-    assertEquals(2, xrefs.length);
+    List<Uniqueidentifier> xrefs = unmarshalEntities(jsonPayload, Uniqueidentifier.class, 
+                                      jsonUnmarshaller(Uniqueidentifier.class));
+    assertEquals(2, xrefs.size());
 
     for (Uniqueidentifier xref : xrefs) {
       assertEquals("ORCID", xref.getType());
@@ -499,12 +580,13 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(200, response.getStatus());
     jsonPayload = response.readEntity(String.class);
 
-    Individual[] individualEntityArray = mapper.readValue(jsonPayload, Individual[].class);
-    assertEquals(3, individualEntityArray.length);
+    List<Individual> individuals = unmarshalEntities(jsonPayload, Individual.class, 
+                                      jsonUnmarshaller(Individual.class));
+    assertEquals(3, individuals.size());
   }
 
   @Test
-  public void testTypeDescriptionCrud() throws IOException {
+  public void testTypeDescriptionCrud() throws IOException, JAXBException {
 
     /* ------------------------------------------------------------------ */
     /*  CREATE                                                            */
@@ -527,7 +609,9 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    Typedescription newTypeClass = mapper.readValue(jsonPayload, Typedescription.class);
+    Unmarshaller unmarshaller    = jsonUnmarshaller(Typedescription.class);
+    Typedescription newTypeClass = unmarshalEntity(jsonPayload, Typedescription.class, unmarshaller);
+
     assertEquals(Integer.valueOf(1), newTypeClass.getId());
     assertEquals(NEW_TYPE_DESC, newTypeClass.getDescription());
     assertEquals(NEW_TYPE_USAGE, newTypeClass.getHowused());
@@ -562,7 +646,8 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     jsonPayload = response.readEntity(String.class);
 
-    Typedescription foundTypeClass = mapper.readValue(jsonPayload, Typedescription.class);
+    Typedescription foundTypeClass = unmarshalEntity(jsonPayload, Typedescription.class, unmarshaller);
+
     assertEquals(Integer.valueOf(1), foundTypeClass.getId());
     assertEquals(NEW_TYPE_DESC, foundTypeClass.getDescription());
     assertEquals(NEW_TYPE_USAGE, foundTypeClass.getHowused());
@@ -576,8 +661,10 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(200, response.getStatus());
     jsonPayload = response.readEntity(String.class);
 
-    Typedescription[] typeClassArray = mapper.readValue(jsonPayload, Typedescription[].class);
-    assertEquals(3, typeClassArray.length);
+    List<Typedescription> typedescriptions = unmarshalEntities(
+        jsonPayload, Typedescription.class, unmarshaller);
+
+    assertEquals(3, typedescriptions.size());
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */
@@ -592,11 +679,10 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     // marshal Type description pojo object to JSON String.
 
-    Writer writer = new StringWriter();
-    mapper.writeValue(writer, updatedTypeClass);
+    String jsonUpdatedTypeClass = writeValueAsString(updatedTypeClass);
 
     response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(writer.toString()));
+                .post(Entity.json(jsonUpdatedTypeClass));
 
     assertEquals(200, response.getStatus());
 
@@ -608,14 +694,14 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     // UPDATE #2 should raise a validation exception
 
     response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(writer.toString()));
+                .post(Entity.json(jsonUpdatedTypeClass));
 
     assertEquals(400, response.getStatus());
     
     // UPDATE #3 should raise a server-side exception
 
     response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(writer.toString()));
+                .post(Entity.json(jsonUpdatedTypeClass));
 
     assertEquals(500, response.getStatus());
 
@@ -631,7 +717,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   }
 
   @Test
-  public void testIndividualsCrud() throws Exception {
+  public void testIndividualsCrud() throws Exception, JAXBException {
 
     // CREATE, #1 expect success
 
@@ -650,7 +736,9 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    Individual entity = mapper.readValue(jsonPayload, Individual.class);
+    Unmarshaller unmarshaller = jsonUnmarshaller(Individual.class);
+    Individual entity         = unmarshalEntity(jsonPayload, Individual.class, unmarshaller);
+
     assertEquals(Integer.valueOf(1), entity.getNedid());
     assertEquals("firstname", entity.getFirstname());
     assertEquals("lastname", entity.getLastname());
@@ -662,7 +750,8 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     jsonPayload = response.readEntity(String.class);
 
-    entity = mapper.readValue(jsonPayload, Individual.class);
+    entity = unmarshalEntity(jsonPayload, Individual.class, unmarshaller);
+
     assertEquals(Integer.valueOf(1), entity.getNedid());
     assertEquals("firstname", entity.getFirstname());
     assertEquals("lastname", entity.getLastname());
@@ -681,7 +770,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   }
 
   @Test
-  public void testGlobalTypesCrud() throws IOException {
+  public void testGlobalTypesCrud() throws IOException, JAXBException {
 
     /* ------------------------------------------------------------------ */
     /*  CREATE                                                            */
@@ -706,7 +795,9 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    Globaltype newTypeVal = mapper.readValue(jsonPayload, Globaltype.class);
+    Unmarshaller unmarshaller = jsonUnmarshaller(Globaltype.class);
+    Globaltype newTypeVal     = unmarshalEntity(jsonPayload, Globaltype.class, unmarshaller);
+
     assertEquals(Integer.valueOf(1), newTypeVal.getId());
     assertEquals("Type Value #1 Short Description", newTypeVal.getShortdescription());
     assertEquals("TV1", newTypeVal.getTypecode());
@@ -741,7 +832,8 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     jsonPayload = response.readEntity(String.class);
 
-    Globaltype foundTypeVal = mapper.readValue(jsonPayload, Globaltype.class);
+    Globaltype foundTypeVal = unmarshalEntity(jsonPayload, Globaltype.class, unmarshaller);
+
     assertEquals(Integer.valueOf(1), foundTypeVal.getId());
     assertEquals(Integer.valueOf(1), foundTypeVal.getTypeid());
     assertEquals("Type Value #1 Short Description", foundTypeVal.getShortdescription());
@@ -756,10 +848,10 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(200, response.getStatus());
     jsonPayload = response.readEntity(String.class);
 
-    Globaltype[] typeValuesForTypeClassArray = mapper.readValue(jsonPayload, Globaltype[].class);
-    assertEquals(5, typeValuesForTypeClassArray.length);
+    List<Globaltype> typevaluesfortypeclass = unmarshalEntities(jsonPayload, Globaltype.class, unmarshaller);
+    assertEquals(5, typevaluesfortypeclass.size());
     for (int i = 0; i < 5; i++) {
-      assertEquals(Integer.valueOf(i+1), typeValuesForTypeClassArray[i].getId());
+      assertEquals(Integer.valueOf(i+1), typevaluesfortypeclass.get(i).getId());
     }
 
     /* ------------------------------------------------------------------ */
@@ -771,11 +863,10 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     // marshal Type value pojo object to JSON String.
 
-    Writer writer = new StringWriter();
-    mapper.writeValue(writer, updatedTypeVal);
+    String jsonUpdatedTypeVal = writeValueAsString(updatedTypeVal);
 
     response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(writer.toString()));
+                .post(Entity.json(jsonUpdatedTypeVal));
 
     assertEquals(200, response.getStatus());
 
@@ -787,14 +878,14 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     // UPDATE #2 should raise a validation exception
 
     response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(writer.toString()));
+                .post(Entity.json(jsonUpdatedTypeVal));
 
     assertEquals(400, response.getStatus());
     
     // UPDATE #3 should raise a server-side exception
 
     response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(writer.toString()));
+                .post(Entity.json(jsonUpdatedTypeVal));
 
     assertEquals(500, response.getStatus());
 
@@ -807,5 +898,51 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).delete();
     assertEquals(500, response.getStatus());
+  }
+
+  private <T> JAXBContext jsonJaxbContext(Class<T> clazz) throws JAXBException {
+    Map<String,Object> properties = new HashMap<String,Object>(2);
+    properties.put(JAXBContextProperties.MEDIA_TYPE, "application/json");
+    properties.put(JAXBContextProperties.JSON_INCLUDE_ROOT, false); 
+    return JAXBContext.newInstance(new Class[] {clazz}, properties);
+  }
+
+  private <T> Unmarshaller jsonUnmarshaller(Class<T> clazz) throws JAXBException {
+    JAXBContext jc = jsonJaxbContext(clazz); 
+    return jc.createUnmarshaller();
+  }
+
+  private <T> Marshaller jsonMarshaller(Class<T> clazz) throws JAXBException {
+    JAXBContext jc = jsonJaxbContext(clazz); 
+    return jc.createMarshaller();
+  }
+
+  private <T> T unmarshalEntity(String json, Class<T> clazz, Unmarshaller unmarshaller) 
+    throws JAXBException {
+    return unmarshaller.unmarshal(new StreamSource(new StringReader(json)), clazz).getValue();
+  }
+
+  @SuppressWarnings("unchecked")
+  private <T> List<T> unmarshalEntities(String json, Class<T> clazz, Unmarshaller unmarshaller) 
+    throws JAXBException {
+    JsonReader jsonReader = Json.createReader(new StringReader(json));
+    JsonArray jsonArray   = jsonReader.readArray();
+    JsonStructureSource arraySource = new JsonStructureSource(jsonArray);
+    return (List<T>) unmarshaller.unmarshal(arraySource, clazz).getValue();
+  }
+
+  private <T> String writeValueAsString(T t) throws JAXBException {
+    Writer writer = new StringWriter();
+    Marshaller marshaller = jsonMarshaller(t.getClass());
+    marshaller.marshal(t, writer);
+    return writer.toString();
+  }
+
+  private Date gmtDate(int year, int month, int day) {
+    Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
+    // calendar month is 0-based, so subtract one
+    cal.set(year, (month-1), day, 0, 0, 0);
+    cal.set(Calendar.MILLISECOND, 0);
+    return cal.getTime();
   }
 }

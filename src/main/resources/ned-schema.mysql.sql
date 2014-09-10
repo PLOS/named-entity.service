@@ -4,7 +4,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ALLOW_INVALID_DATES';
 
 DROP SCHEMA IF EXISTS namedEntities;
 
-CREATE SCHEMA IF NOT EXISTS namedEntities 
+CREATE SCHEMA IF NOT EXISTS namedEntities
     DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS namedEntities.typeDescriptions;
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS namedEntities.addresses (
     addressLine2 TEXT NULL,
     addressLine3 TEXT NULL,
     city TEXT NULL,
-    stateCodeTypeId INT NULL,  
+    stateCodeTypeId INT NULL,
     countryCodeTypeId INT NOT NULL,
     postalCode TEXT NULL,
     mainContactNamedEntityId INT NULL,
@@ -135,8 +135,8 @@ CREATE TABLE IF NOT EXISTS namedEntities.roles (
     nedId INT NOT NULL,
     typeID INT NOT NULL,
     sourceApplicationTypeId INT NULL,
-    startDate TIMESTAMP NULL,
-    endDate TIMESTAMP NULL,
+    startDate DATE NULL,
+    endDate DATE NULL,
     created TIMESTAMP NOT NULL DEFAULT 0,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     createdBy INT NULL,
@@ -154,8 +154,8 @@ CREATE TABLE IF NOT EXISTS namedEntities.relationships (
     masterNamedEntityId INT NOT NULL,
     childNamedEntityId INT NOT NULL,
     title TEXT NULL,
-    startDate TIMESTAMP NULL,
-    endDate TIMESTAMP NULL,
+    startDate DATE NULL,
+    endDate DATE NULL,
     created TIMESTAMP NOT NULL DEFAULT 0,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     createdBy INT NULL,

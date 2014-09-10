@@ -16,35 +16,53 @@
  */
 package org.plos.namedentity.rest;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.mockito.Mockito;
-import org.plos.namedentity.api.EntityNotFoundException;
-import org.plos.namedentity.api.IndividualComposite;
-import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.entity.*;
-import org.plos.namedentity.service.CrudService;
-import org.plos.namedentity.service.NamedEntityService;
-import org.springframework.context.annotation.Bean;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.when;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonReader;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
+
+import org.eclipse.persistence.jaxb.JAXBContextProperties;
+import org.eclipse.persistence.oxm.json.JsonStructureSource;
+import org.mockito.Mockito;
+import org.plos.namedentity.api.EntityNotFoundException;
+import org.plos.namedentity.api.IndividualComposite;
+import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.entity.Address;
+import org.plos.namedentity.api.entity.Degree;
+import org.plos.namedentity.api.entity.Email;
+import org.plos.namedentity.api.entity.Globaltype;
+import org.plos.namedentity.api.entity.Individual;
+import org.plos.namedentity.api.entity.Organization;
+import org.plos.namedentity.api.entity.Phonenumber;
+import org.plos.namedentity.api.entity.Role;
+import org.plos.namedentity.api.entity.Typedescription;
+import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.service.CrudService;
+import org.plos.namedentity.service.NamedEntityService;
+import org.springframework.context.annotation.Bean;
+
 public class TestSpringConfig {
 
   private static final String TEST_RESOURCE_PATH = "src/test/resources/";
-
-  private static ObjectMapper mapper = new ObjectMapper();
 
   @Bean @SuppressWarnings("unchecked")
   static public CrudService crudService() {
@@ -53,6 +71,7 @@ public class TestSpringConfig {
     mockCrudForTypes(mockCrudService);
     mockCrudForEmails(mockCrudService);
     mockCrudForAddresses(mockCrudService);
+    mockCrudForRoles(mockCrudService);
 
     // INDIVIDUALS
     Individual individualEntity = newIndividualEntity();
@@ -105,9 +124,6 @@ public class TestSpringConfig {
     when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(Phonenumber.class)))
       .thenReturn( newPhonenumberEntities() );
 
-    when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(Role.class)))
-      .thenReturn( newRoleEntities() );
-
     when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(Uniqueidentifier.class)))
       .thenReturn( newUidEntities() );
 
@@ -119,6 +135,7 @@ public class TestSpringConfig {
 
     mockNamedEntityServiceForEmails(mockNamedEntityService);
     mockNamedEntityServiceForAddresses(mockNamedEntityService);
+    mockNamedEntityServiceForRoles(mockNamedEntityService);
 
     return mockNamedEntityService;
   }
@@ -256,18 +273,6 @@ public class TestSpringConfig {
     return phonenumbers;
   }
 
-  static private List<Role> newRoleEntities() {
-    List<Role> roles = new ArrayList<>();
-
-    Role author = new Role();
-    author.setId(1);
-    author.setType("Author");
-    author.setStartdate(new Timestamp(1401408000)); // "2014-05-30"
-    roles.add( author );
-
-    return roles;
-  }
-
   static private List<Individual> newIndividualEntities() {
     List<Individual> individualEntities = new ArrayList<>();
 
@@ -334,27 +339,76 @@ public class TestSpringConfig {
     when(mockCrudService.create(isA(Address.class))).thenReturn(1);
   }
 
+  static private void mockCrudForRoles(CrudService mockCrudService) {
+    when(mockCrudService.create(isA(Role.class))).thenReturn(1);
+  }
+
+  @SuppressWarnings("unchecked")
   static private void mockNamedEntityServiceForAddresses(NamedEntityService mockNamedEntityService) {
     try {
       String addressesJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "addresses.json")));
-      Address[] addresses = mapper.readValue(addressesJson, Address[].class);
 
-      for (int i = 0; i < addresses.length; i++) {
-        addresses[i].setId(i + 1);   // db assigned primary key (1-based)
-        addresses[i].setNedid(1);
-        addresses[i].setIsprimary((byte)1);
-        addresses[i].setIsactive((byte)1);
+      JAXBContext jc = jsonJaxbContext(Address.class);
+      Unmarshaller unmarshaller = jc.createUnmarshaller();
+
+      // parse json
+      JsonReader jsonReader = Json.createReader(new StringReader(addressesJson));
+
+      // unmarshal root level json array
+      JsonArray addressesArray = jsonReader.readArray();
+      JsonStructureSource arraySource = new JsonStructureSource(addressesArray);
+
+      List<Address> addresses = (List<Address>) unmarshaller.unmarshal(arraySource, Address.class).getValue();
+
+      for (int i = 0; i < addresses.size(); i++) {
+        Address address = addresses.get(i);
+        address.setId(i+1);   // db assigned primary key (1-based)
+        address.setNedid(1);
+        address.setIsprimary((byte)1);
+        address.setIsactive((byte)1);
       }
 
-      when(mockNamedEntityService.findResolvedEntityByKey(eq(addresses[0].getId()), eq(Address.class)))
-        .thenReturn( addresses[0] );
+      when(mockNamedEntityService.findResolvedEntityByKey(eq(addresses.get(0).getId()), eq(Address.class)))
+        .thenReturn( addresses.get(0) );
 
       when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(Address.class)))
-        .thenReturn( Arrays.asList(addresses) );
+        .thenReturn( addresses );
+    }
+    catch (JAXBException je) {
+      throw new RuntimeException(je);
     }
     catch (IOException e) {
       throw new RuntimeException(String.format(
         "Problem reading addresses json file. Reason: %s", e.getMessage()));
+    }
+  }
+
+  static private void mockNamedEntityServiceForRoles(NamedEntityService mockNamedEntityService) {
+    try {
+      String rolesJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "role.json")));
+
+      JAXBContext jc = jsonJaxbContext(Role.class);
+      Unmarshaller unmarshaller = jc.createUnmarshaller();
+      Role role = unmarshaller.unmarshal(new StreamSource(new StringReader(rolesJson)), Role.class).getValue();
+
+      role.setId(1);
+      role.setNedid(1);
+
+      when(mockNamedEntityService.findResolvedEntityByKey(eq(role.getId()), eq(Role.class)))
+        .thenReturn( role );
+
+      List<Role> roles = new ArrayList<Role>();
+      roles.add(role);
+
+      when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(Role.class)))
+        .thenReturn( roles );
+    }
+    catch (JAXBException je) {
+      throw new RuntimeException(je);
+    }
+    catch (IOException e) {
+      throw new RuntimeException(String.format(
+        "Problem reading role json file. Reason: %s", e.getMessage()));
     }
   }
 
@@ -435,5 +489,12 @@ public class TestSpringConfig {
     }
 
     when(mockCrudService.findByAttribute(isA(Globaltype.class))).thenReturn(typeValuesForTypeClass);
+  }
+
+  static private <T> JAXBContext jsonJaxbContext(Class<T> clazz) throws JAXBException {
+    Map<String,Object> properties = new HashMap<String,Object>(2);
+    properties.put(JAXBContextProperties.MEDIA_TYPE, "application/json");
+    properties.put(JAXBContextProperties.JSON_INCLUDE_ROOT, false); 
+    return JAXBContext.newInstance(new Class[] {clazz}, properties);
   }
 }

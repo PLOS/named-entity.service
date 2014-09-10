@@ -22,7 +22,7 @@ import java.util.Objects;
  * Modified JOOQ generated class(pojo=true).
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class Phonenumber extends Entity {
+public class Phonenumber extends ChildEntity {
 
   private Integer id;
   private Integer nedid;
