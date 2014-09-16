@@ -19,13 +19,10 @@ package org.plos.namedentity.api.entity;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
-/**
- * Modified JOOQ generated class(pojo=true).
- */
 @XmlRootElement
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Individual extends Entity {
 
+  private Integer id;
   private Integer nedid;
   private String  firstname;
   private String  middlename;
@@ -48,8 +45,10 @@ public class Individual extends Entity {
 
   private byte[] photoimage;
 
-  private Byte isactive  = 1;
-  private Byte isvisible = 1;
+  private String  source;
+  private Integer sourcetypeid;
+
+  private Byte isactive = 1;
 
   @Override
   public boolean equals(Object o) {
@@ -73,20 +72,36 @@ public class Individual extends Entity {
     return Objects.hash(nedid, firstname, middlename, lastname);
   }
 
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  public String getSource() {
+    return source;
+  }
+
+  public void setSource(String source) {
+    this.source = source;
+  }
+
+  public Integer getSourcetypeid() {
+    return sourcetypeid;
+  }
+
+  public void setSourcetypeid(Integer sourcetypeid) {
+    this.sourcetypeid = sourcetypeid;
+  }
+
   public Byte getIsactive() {
     return isactive;
   }
 
   public void setIsactive(Byte isactive) {
     this.isactive = isactive;
-  }
-
-  public Byte getIsvisible() {
-    return isvisible;
-  }
-
-  public void setIsvisible(Byte isvisible) {
-    this.isvisible = isvisible;
   }
 
   public String getNameprefix() {

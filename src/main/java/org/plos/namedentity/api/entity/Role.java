@@ -16,18 +16,15 @@
  */
 package org.plos.namedentity.api.entity;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-/**
- * Modified JOOQ generated class(pojo=true).
- */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@XmlRootElement
 public class Role extends Entity {
 
   private Integer   id;
   private Integer   nedid;
-  private Integer   sourceapplicationtypeid;
   private Integer   typeid;
   private String    type;
   private Timestamp startdate;
@@ -35,16 +32,53 @@ public class Role extends Entity {
   private Timestamp created;
   private Timestamp lastmodified;
   private Integer   createdby;
+  private Integer   lastmodifiedby;
 
-  private Integer lastmodifiedby;
-  private String  sourceapplicationtype;
+  private String  applicationtype;
+  private Integer applicationtypeid;
 
-  public String getSourceapplicationtype() {
-    return sourceapplicationtype;
+  private String  source;
+  private Integer sourcetypeid;
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) { return true; }
+
+    if (o == null || this.getClass() != o.getClass()) { return false; }
+
+    Role entity = (Role) o;
+    return Objects.equals(this.id, entity.id)
+        && Objects.equals(this.nedid, entity.nedid)
+        && Objects.equals(this.typeid, entity.typeid);
   }
 
-  public void setSourceapplicationtype(String sourceapplicationtype) {
-    this.sourceapplicationtype = sourceapplicationtype;
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, nedid, typeid);
+  }
+
+  public String getApplicationtype() {
+    return applicationtype;
+  }
+
+  public void setApplicationtype(String applicationtype) {
+    this.applicationtype = applicationtype;
+  }
+
+  public String getSource() {
+    return source;
+  }
+
+  public void setSource(String source) {
+    this.source = source;
+  }
+
+  public Integer getSourcetypeid() {
+    return sourcetypeid;
+  }
+
+  public void setSourcetypeid(Integer sourcetypeid) {
+    this.sourcetypeid = sourcetypeid;
   }
 
   public String getType() {
@@ -71,12 +105,12 @@ public class Role extends Entity {
     this.nedid = nedid;
   }
 
-  public Integer getSourceapplicationtypeid() {
-    return this.sourceapplicationtypeid;
+  public Integer getApplicationtypeid() {
+    return this.applicationtypeid;
   }
 
-  public void setSourceapplicationtypeid(Integer sourceapplicationtypeid) {
-    this.sourceapplicationtypeid = sourceapplicationtypeid;
+  public void setApplicationtypeid(Integer applicationtypeid) {
+    this.applicationtypeid = applicationtypeid;
   }
 
   public Integer getTypeid() {
@@ -136,20 +170,4 @@ public class Role extends Entity {
     this.lastmodifiedby = lastmodifiedby;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) { return true; }
-
-    if (o == null || this.getClass() != o.getClass()) { return false; }
-
-    Role entity = (Role) o;
-    return Objects.equals(this.id, entity.id)
-        && Objects.equals(this.nedid, entity.nedid)
-        && Objects.equals(this.typeid, entity.typeid);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, nedid, typeid);
-  }
 }

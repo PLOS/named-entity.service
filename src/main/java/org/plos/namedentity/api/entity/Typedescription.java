@@ -19,16 +19,33 @@ package org.plos.namedentity.api.entity;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
-/**
- * Modified JOOQ generated class(pojo=true).
- */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @XmlRootElement
 public class Typedescription extends Entity {
 
   private Integer id;
   private String  description;
   private String  howused;
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
+
+    Typedescription entity = (Typedescription) o;
+    return Objects.equals(this.id, entity.id)
+        && Objects.equals(this.description, entity.description)
+        && Objects.equals(this.howused, entity.howused);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.id, this.description, this.howused);
+  }
 
   public Integer getId() {
     return this.id;
@@ -54,24 +71,5 @@ public class Typedescription extends Entity {
     this.howused = howused;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
 
-    if (o == null || this.getClass() != o.getClass()) {
-      return false;
-    }
-
-    Typedescription entity = (Typedescription) o;
-    return Objects.equals(this.id, entity.id)
-        && Objects.equals(this.description, entity.description)
-        && Objects.equals(this.howused, entity.howused);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(this.id, this.description, this.howused);
-  }
 }

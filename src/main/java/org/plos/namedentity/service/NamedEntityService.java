@@ -18,7 +18,6 @@ package org.plos.namedentity.service;
 
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.entity.Entity;
-import org.plos.namedentity.api.entity.Organization;
 
 import java.util.List;
 
@@ -30,7 +29,7 @@ public interface NamedEntityService {
 
   public IndividualComposite createIndividualComposite(IndividualComposite composite);
 
-  public Organization createOrganization(Organization entity);
+//  public Organization createOrganization(Organization entity);
 
   public IndividualComposite findIndividualComposite(Integer nedId);
 
@@ -60,20 +59,6 @@ public interface NamedEntityService {
    * @return       entity with specified primary key
    */
   public <T extends Entity> T findResolvedEntityByKey(Integer pk, Class<T> clazz);
-
-
-  /**
-   * Finds entities by ned id. Type id references in entity are replaced by
-   * equivalent type names (ie, "resolved"). It is assumed that ned id is the 
-   * primary key of the entity. This is currently only true for Individual and
-   * Organization entities.
-   *
-   * @param nedId  primary key of entity
-   * @param clazz  entity class to search by ned id
-   *
-   * @return       entity whose primary key is ned id 
-   */
-  public <T extends Entity> T findResolvedEntity(Integer nedId, Class<T> clazz);
 
 
   /**

@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Uniqueidentifiers extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord> {
 
-	private static final long serialVersionUID = 1414694627;
+	private static final long serialVersionUID = 1059807120;
 
 	/**
 	 * The singleton instance of <code>NAMEDENTITIES.UNIQUEIDENTIFIERS</code>
@@ -45,6 +45,11 @@ public class Uniqueidentifiers extends org.jooq.impl.TableImpl<org.plos.namedent
 	 * The column <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.UNIQUEIDENTIFIER</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, java.lang.String> UNIQUEIDENTIFIER = createField("UNIQUEIDENTIFIER", org.jooq.impl.SQLDataType.CLOB.length(2147483647).nullable(false), this, "");
+
+	/**
+	 * The column <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.SOURCETYPEID</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, java.lang.Integer> SOURCETYPEID = createField("SOURCETYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>NAMEDENTITIES.UNIQUEIDENTIFIERS</code> table reference
@@ -97,7 +102,7 @@ public class Uniqueidentifiers extends org.jooq.impl.TableImpl<org.plos.namedent
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_AF, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_AFD);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_AF, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_AFD9, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_AFD);
 	}
 
 	/**

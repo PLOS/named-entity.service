@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS namedEntities.globalTypes (
     shortDescription TEXT NOT NULL,
     longDescription TEXT NULL,
     typeCode TEXT NOT NULL,
-    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created TIMESTAMP NOT NULL DEFAULT 0,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     createdBy INT NULL,
     lastModifiedBy INT NULL,
@@ -34,7 +34,7 @@ DROP TABLE IF EXISTS namedEntities.namedEntityIdentifiers;
 CREATE TABLE IF NOT EXISTS namedEntities.namedEntityIdentifiers (
     id INT NOT NULL AUTO_INCREMENT,
     typeId INT NOT NULL,
-    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created TIMESTAMP NOT NULL DEFAULT 0,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     createdBy INT NULL,
     lastModifiedBy INT NULL,
@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS namedEntities.namedEntityIdentifiers (
 
 DROP TABLE IF EXISTS namedEntities.individuals;
 CREATE TABLE IF NOT EXISTS namedEntities.individuals (
+    id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
     firstName TEXT NOT NULL,
     middleName TEXT NULL,
@@ -51,13 +52,15 @@ CREATE TABLE IF NOT EXISTS namedEntities.individuals (
     nickName TEXT NULL,
     namePrefixTypeId INT NULL,
     nameSuffixTypeId INT NULL,
-    displayName TEXT NOT NULL,
+    displayName TEXT NULL,
     preferredLanguageTypeId INT NULL,
     preferredCommunicationMethodTypeId INT NULL,
     photoImage VARBINARY(255) NULL,
+    sourceTypeId INT NOT NULL,
     isActive TINYINT(1) NOT NULL,
-    isVisible TINYINT(1) NOT NULL,
-    PRIMARY KEY (nedId),
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (namePrefixTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (nameSuffixTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (preferredLanguageTypeId) REFERENCES globalTypes(id),
@@ -66,15 +69,18 @@ CREATE TABLE IF NOT EXISTS namedEntities.individuals (
 
 DROP TABLE IF EXISTS namedEntities.organizations;
 CREATE TABLE IF NOT EXISTS namedEntities.organizations (
+    id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
     typeId INT NULL,
     familiarName TEXT NULL,
     legalName TEXT NULL,
     mainContactId INT NULL,
+    sourceTypeId INT NOT NULL,
     isActive TINYINT(1) NOT NULL,
-    isVisible TINYINT(1) NOT NULL,
-    PRIMARY KEY (nedId),
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (mainContactId) REFERENCES individuals(nedId)
 )   ENGINE=INNODB;
 
@@ -93,10 +99,12 @@ CREATE TABLE IF NOT EXISTS namedEntities.addresses (
     mainContactNamedEntityId INT NULL,
     latitude INT NULL,
     longitude INT NULL,
+    sourceTypeId INT NOT NULL,
     isPrimary TINYINT(1) NOT NULL,
     isActive TINYINT(1) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
@@ -106,10 +114,12 @@ CREATE TABLE IF NOT EXISTS namedEntities.emails (
     nedId INT NOT NULL,
     typeId INT NULL,
     emailAddress TEXT NOT NULL,
+    sourceTypeId INT NOT NULL,
     isPrimary TINYINT(1) NOT NULL,
     isActive TINYINT(1) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
@@ -121,11 +131,13 @@ CREATE TABLE IF NOT EXISTS namedEntities.phoneNumbers (
     countryCodeTypeId INT NULL,
     phoneNumber TEXT NOT NULL,
     extension TEXT NULL,
+    sourceTypeId INT NOT NULL,
     isPrimary TINYINT(1) NOT NULL,
     isActive TINYINT(1) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (countryCodeTypeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
@@ -134,17 +146,19 @@ CREATE TABLE IF NOT EXISTS namedEntities.roles (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
     typeID INT NOT NULL,
-    sourceApplicationTypeId INT NULL,
+    applicationTypeId INT NULL,
     startDate TIMESTAMP NULL,
     endDate TIMESTAMP NULL,
-    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    sourceTypeId INT NOT NULL,
+    created TIMESTAMP NOT NULL DEFAULT 0,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     createdBy INT NULL,
     lastModifiedBy INT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id),
-    FOREIGN KEY (sourceApplicationTypeId) REFERENCES globalTypes(id)
+    FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (applicationTypeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.relationships;
@@ -156,7 +170,7 @@ CREATE TABLE IF NOT EXISTS namedEntities.relationships (
     title TEXT NULL,
     startDate TIMESTAMP NULL,
     endDate TIMESTAMP NULL,
-    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created TIMESTAMP NOT NULL DEFAULT 0,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     createdBy INT NULL,
     lastModifiedBy INT NULL,
@@ -210,8 +224,10 @@ CREATE TABLE IF NOT EXISTS namedEntities.degrees (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
     typeId INT NOT NULL,
+    sourceTypeId INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
@@ -220,7 +236,9 @@ CREATE TABLE IF NOT EXISTS namedEntities.urls (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
     url TEXT NOT NULL,
+    sourceTypeId INT NOT NULL,
     PRIMARY KEY (id),
+    FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id)
 )   ENGINE=INNODB;
 
@@ -230,8 +248,10 @@ CREATE TABLE IF NOT EXISTS namedEntities.uniqueIdentifiers (
     nedId INT NOT NULL,
     typeId INT NOT NULL,
     uniqueIdentifier TEXT NOT NULL,
+    sourceTypeId INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
@@ -240,7 +260,7 @@ CREATE TABLE IF NOT EXISTS namedEntities.uniqueIdentifiers (
 /* ------------------------------------------------------------------------- */
 
 INSERT INTO namedEntities.typeDescriptions VALUES (1,'Named Party Types','Individual, Organization');
-INSERT INTO namedEntities.typeDescriptions VALUES (2,'Source Applications','Editorial Manager, Ambra, etc');
+INSERT INTO namedEntities.typeDescriptions VALUES (2,'User Applications','Editorial Manager, Ambra, etc');
 INSERT INTO namedEntities.typeDescriptions VALUES (3,'Organization Types','University, Department, etc');
 INSERT INTO namedEntities.typeDescriptions VALUES (4,'Roles','Academic Editor, Author, etc');
 INSERT INTO namedEntities.typeDescriptions VALUES (5,'Named Party Prefixes','Ms, Dr, etc');
@@ -258,6 +278,7 @@ INSERT INTO namedEntities.typeDescriptions VALUES (16,'Country Types','United St
 INSERT INTO namedEntities.typeDescriptions VALUES (17,'Unique Identifier Types','Ringgold, ORCID, etc');
 INSERT INTO namedEntities.typeDescriptions VALUES (18,'State and Province Codes','CA, ONT, etc');
 INSERT INTO namedEntities.typeDescriptions VALUES (19,'Degrees','MD, PhD, etc');
+INSERT INTO namedEntities.typeDescriptions VALUES (20,'Source Applications','Editorial Manager, Ambra, etc');
 
 /* ------------------------------------------------------------------------- */
 /*  GLOBAL TYPES                                                             */
@@ -340,6 +361,8 @@ INSERT INTO namedEntities.globalTypes VALUES (74,16,'China',NULL,'CN','2014-03-2
 INSERT INTO namedEntities.globalTypes VALUES (75,17,'Editorial Manager',NULL,'EM','2014-03-23 20:34:40','2014-03-23 20:34:40',1,1);
 INSERT INTO namedEntities.globalTypes VALUES (76,17,'CAS',NULL,'CAS','2014-03-23 20:34:40','2014-03-23 20:34:40',1,1);
 INSERT INTO namedEntities.globalTypes VALUES (77,17,'Salesforce',NULL,'SF','2014-03-23 20:34:40','2014-03-23 20:34:40',1,1);
+INSERT INTO namedEntities.globalTypes VALUES (78,20,'Editorial Manager',NULL,'EM','2014-03-23 20:34:40','2014-03-23 20:34:40',1,1);
+INSERT INTO namedEntities.globalTypes VALUES (79,20,'Ambra',NULL,'AMB','2014-03-23 20:35:05','2014-03-23 20:35:05',1,1);
 
 INSERT INTO namedEntities.namedEntityIdentifiers VALUES (1, 1, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, NULL, NULL);
-INSERT INTO namedEntities.individuals VALUES (1, 'NED', NULL, 'NED', NULL, NULL, NULL, 'NED', NULL, NULL, NULL, 1,  1);
+INSERT INTO namedEntities.individuals VALUES (1, 1, 'NED', NULL, 'NED', NULL, NULL, NULL, 'NED', NULL, NULL, NULL, 78,  1);

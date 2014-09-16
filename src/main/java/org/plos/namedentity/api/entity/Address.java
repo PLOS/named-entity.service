@@ -20,10 +20,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import java.util.Objects;
 
-/**
- * Modified JOOQ generated class(pojo=true).
- */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @XmlRootElement
 public class Address extends Entity {
 
@@ -54,6 +50,17 @@ public class Address extends Entity {
   private Byte    isprimary;
   private Byte isactive = 1;
 
+  private String  source;
+  private Integer sourcetypeid;
+
+  public Integer getSourcetypeid() {
+    return sourcetypeid;
+  }
+
+  public void setSourcetypeid(Integer sourcetypeid) {
+    this.sourcetypeid = sourcetypeid;
+  }
+
   public java.lang.Integer getId() {
     return this.id;
   }
@@ -68,6 +75,14 @@ public class Address extends Entity {
 
   public void setNedid(java.lang.Integer nedid) {
     this.nedid = nedid;
+  }
+
+  public String getSource() {
+    return source;
+  }
+
+  public void setSource(String source) {
+    this.source = source;
   }
 
   public java.lang.Integer getTypeid() {

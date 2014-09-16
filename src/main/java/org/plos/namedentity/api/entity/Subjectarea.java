@@ -16,10 +16,6 @@
  */
 package org.plos.namedentity.api.entity;
 
-/**
- * Modified JOOQ generated class(pojo=true).
- */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Subjectarea extends Entity {
 
   private Integer id;

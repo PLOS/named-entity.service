@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Phonenumbers extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord> {
 
-	private static final long serialVersionUID = 2076898507;
+	private static final long serialVersionUID = -976976226;
 
 	/**
 	 * The singleton instance of <code>namedEntities.phoneNumbers</code>
@@ -55,6 +55,11 @@ public class Phonenumbers extends org.jooq.impl.TableImpl<org.plos.namedentity.p
 	 * The column <code>namedEntities.phoneNumbers.extension</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.String> EXTENSION = createField("extension", org.jooq.impl.SQLDataType.CLOB.length(65535), this, "");
+
+	/**
+	 * The column <code>namedEntities.phoneNumbers.sourceTypeId</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.Integer> SOURCETYPEID = createField("sourceTypeId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>namedEntities.phoneNumbers.isPrimary</code>.
@@ -117,7 +122,7 @@ public class Phonenumbers extends org.jooq.impl.TableImpl<org.plos.namedentity.p
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.PHONENUMBERS_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.PHONENUMBERS_IBFK_2, org.plos.namedentity.persist.db.namedentities.Keys.PHONENUMBERS_IBFK_3);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.PHONENUMBERS_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.PHONENUMBERS_IBFK_2, org.plos.namedentity.persist.db.namedentities.Keys.PHONENUMBERS_IBFK_4, org.plos.namedentity.persist.db.namedentities.Keys.PHONENUMBERS_IBFK_3);
 	}
 
 	/**

@@ -18,10 +18,6 @@ package org.plos.namedentity.api.entity;
 
 import java.sql.Timestamp;
 
-/**
- * Modified JOOQ generated class(pojo=true).
- */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Relationship extends Entity {
 
   private Integer   id;

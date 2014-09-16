@@ -19,13 +19,10 @@ package org.plos.namedentity.api.entity;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
-/**
- * Modified JOOQ generated class(pojo=true).
- */
 @XmlRootElement
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Organization extends Entity {
 
+  private Integer id;
   private Integer nedid;
   private Integer typeid;
   private String  type;
@@ -34,6 +31,32 @@ public class Organization extends Entity {
   private Integer maincontactid;
   private Byte isactive  = 1;
   private Byte isvisible = 1;
+  private String  source;
+  private Integer sourcetypeid;
+
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  public String getSource() {
+    return source;
+  }
+
+  public void setSource(String source) {
+    this.source = source;
+  }
+
+  public Integer getSourcetypeid() {
+    return sourcetypeid;
+  }
+
+  public void setSourcetypeid(Integer sourcetypeid) {
+    this.sourcetypeid = sourcetypeid;
+  }
 
   public Integer getNedid() {
     return this.nedid;

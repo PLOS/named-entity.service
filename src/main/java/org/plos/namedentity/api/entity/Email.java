@@ -22,10 +22,6 @@ import org.plos.namedentity.api.NedValidationException;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
-/**
- * Modified JOOQ generated class(pojo=true).
- */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @XmlRootElement
 public class Email extends Entity {
 
@@ -40,6 +36,9 @@ public class Email extends Entity {
   private String emailaddress;
   private Byte isprimary = 0;  // TODO: change Byte to Bool
   private Byte isactive  = 1;
+
+  private String  source;
+  private Integer sourcetypeid;
 
   @Override
   public void validate() {
@@ -90,6 +89,22 @@ public class Email extends Entity {
 
   public void setNedid(java.lang.Integer nedid) {
     this.nedid = nedid;
+  }
+
+  public String getSource() {
+    return source;
+  }
+
+  public void setSource(String source) {
+    this.source = source;
+  }
+
+  public Integer getSourcetypeid() {
+    return sourcetypeid;
+  }
+
+  public void setSourcetypeid(Integer sourcetypeid) {
+    this.sourcetypeid = sourcetypeid;
   }
 
   public java.lang.Integer getTypeid() {

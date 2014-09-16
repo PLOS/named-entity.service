@@ -18,12 +18,9 @@ package org.plos.namedentity.rest;
 
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
-import org.plos.namedentity.api.EntityNotFoundException;
-import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.Organization;
 
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.GenericEntity;
@@ -34,30 +31,30 @@ import java.util.List;
 @Api("/organizations")
 public class OrganizationsResource extends BaseResource {
 
-  @POST
-  @ApiOperation(value = "Create", response =  Organization.class)
-  public Response create(Organization object) {
-    try {
-      return Response.ok(namedEntityService.createOrganization(object)).build();
-    } catch (NedValidationException e) {
-      return validationError(e, "Unable to create organization");
-    } catch (Exception e) {
-      return serverError(e, "Unable to create organization");
-    }
-  }
-
-  @GET
-  @Path("/{nedId}")
-  @ApiOperation(value = "Read", response =  Organization.class)
-  public Response read(@PathParam("nedId") int nedId) {
-    try {
-      return Response.ok(namedEntityService.findResolvedEntity(nedId, Organization.class)).build();
-    } catch (EntityNotFoundException e) {
-      return entityNotFound(e);
-    } catch (Exception e) {
-      return serverError(e, "Find organization by id failed");
-    }
-  }
+//  @POST
+//  @ApiOperation(value = "Create", response =  Organization.class)
+//  public Response create(Organization object) {
+//    try {
+//      return Response.ok(namedEntityService.createOrganization(object)).build();
+//    } catch (NedValidationException e) {
+//      return validationError(e, "Unable to create organization");
+//    } catch (Exception e) {
+//      return serverError(e, "Unable to create organization");
+//    }
+//  }
+//
+//  @GET
+//  @Path("/{nedId}")
+//  @ApiOperation(value = "Read", response =  Organization.class)
+//  public Response read(@PathParam("nedId") int nedId) {
+//    try {
+//      return Response.ok(namedEntityService.findResolvedEntity(nedId, Organization.class)).build();
+//    } catch (EntityNotFoundException e) {
+//      return entityNotFound(e);
+//    } catch (Exception e) {
+//      return serverError(e, "Find organization by id failed");
+//    }
+//  }
 
   @GET
   @ApiOperation(value = "List")

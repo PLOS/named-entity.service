@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Degrees extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord> {
 
-	private static final long serialVersionUID = 1829573038;
+	private static final long serialVersionUID = -1161128341;
 
 	/**
 	 * The singleton instance of <code>namedEntities.degrees</code>
@@ -40,6 +40,11 @@ public class Degrees extends org.jooq.impl.TableImpl<org.plos.namedentity.persis
 	 * The column <code>namedEntities.degrees.typeId</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> TYPEID = createField("typeId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
+	 * The column <code>namedEntities.degrees.sourceTypeId</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> SOURCETYPEID = createField("sourceTypeId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>namedEntities.degrees</code> table reference
@@ -92,7 +97,7 @@ public class Degrees extends org.jooq.impl.TableImpl<org.plos.namedentity.persis
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.DEGREES_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.DEGREES_IBFK_2);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.DEGREES_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.DEGREES_IBFK_3, org.plos.namedentity.persist.db.namedentities.Keys.DEGREES_IBFK_2);
 	}
 
 	/**

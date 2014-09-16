@@ -27,6 +27,8 @@ public class Url extends Entity {
   private Integer id;
   private Integer nedid;
   private String  url;
+  private String  source;
+  private Integer sourcetypeid;
 
   private static UrlValidator urlValidator = UrlValidator.getInstance();
 
@@ -42,6 +44,22 @@ public class Url extends Entity {
 
   public Integer getNedid() {
     return nedid;
+  }
+
+  public String getSource() {
+    return source;
+  }
+
+  public void setSource(String source) {
+    this.source = source;
+  }
+
+  public Integer getSourcetypeid() {
+    return sourcetypeid;
+  }
+
+  public void setSourcetypeid(Integer sourcetypeid) {
+    this.sourcetypeid = sourcetypeid;
   }
 
   public void setNedid(Integer nedid) {

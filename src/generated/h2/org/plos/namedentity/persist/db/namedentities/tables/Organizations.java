@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Organizations extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord> {
 
-	private static final long serialVersionUID = -430691982;
+	private static final long serialVersionUID = 823109803;
 
 	/**
 	 * The singleton instance of <code>NAMEDENTITIES.ORGANIZATIONS</code>
@@ -25,6 +25,11 @@ public class Organizations extends org.jooq.impl.TableImpl<org.plos.namedentity.
 	public java.lang.Class<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord> getRecordType() {
 		return org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord.class;
 	}
+
+	/**
+	 * The column <code>NAMEDENTITIES.ORGANIZATIONS.ID</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>NAMEDENTITIES.ORGANIZATIONS.NEDID</code>.
@@ -52,14 +57,14 @@ public class Organizations extends org.jooq.impl.TableImpl<org.plos.namedentity.
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.Integer> MAINCONTACTID = createField("MAINCONTACTID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
+	 * The column <code>NAMEDENTITIES.ORGANIZATIONS.SOURCETYPEID</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.Integer> SOURCETYPEID = createField("SOURCETYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
 	 * The column <code>NAMEDENTITIES.ORGANIZATIONS.ISACTIVE</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.Byte> ISACTIVE = createField("ISACTIVE", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
-
-	/**
-	 * The column <code>NAMEDENTITIES.ORGANIZATIONS.ISVISIBLE</code>.
-	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.Byte> ISVISIBLE = createField("ISVISIBLE", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
 
 	/**
 	 * Create a <code>NAMEDENTITIES.ORGANIZATIONS</code> table reference
@@ -87,6 +92,14 @@ public class Organizations extends org.jooq.impl.TableImpl<org.plos.namedentity.
 	 * {@inheritDoc}
 	 */
 	@Override
+	public org.jooq.Identity<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.Integer> getIdentity() {
+		return org.plos.namedentity.persist.db.namedentities.Keys.IDENTITY_ORGANIZATIONS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord> getPrimaryKey() {
 		return org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_3C;
 	}
@@ -104,7 +117,7 @@ public class Organizations extends org.jooq.impl.TableImpl<org.plos.namedentity.
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_3C1, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_3C16);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_3C1, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_3C16, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_3C16D);
 	}
 
 	/**

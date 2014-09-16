@@ -18,7 +18,6 @@ package org.plos.namedentity.rest;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.mockito.Mockito;
-import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.*;
@@ -84,11 +83,13 @@ public class TestSpringConfig {
     when(mockNamedEntityService.findIndividualComposite(anyInt()))
         .thenReturn( individualComposite );
 
-    when(mockNamedEntityService.findResolvedEntity(anyInt(), eq(Individual.class)))
-        .thenThrow(new EntityNotFoundException("Not found"));
+    List<Individual> emptyIndividuals = new ArrayList<>();
 
-    when(mockNamedEntityService.findResolvedEntity(eq(individualEntity.getNedid()), eq(Individual.class)))
-      .thenReturn(individualEntity);
+    when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(Individual.class)))
+        .thenReturn(emptyIndividuals);
+
+    when(mockNamedEntityService.findResolvedEntities(eq(individualEntity.getNedid()), eq(Individual.class)))
+      .thenReturn(individualComposite.getIndividuals());
 
     when(mockNamedEntityService.findResolvedEntityByUid(anyString(), anyString(), eq(Individual.class)))
       .thenReturn( newIndividualEntities() );
@@ -111,11 +112,11 @@ public class TestSpringConfig {
     when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(Uniqueidentifier.class)))
       .thenReturn( newUidEntities() );
 
-    when(mockNamedEntityService.createOrganization(isA(Organization.class)))
-        .thenReturn(organizationEntity);
-
-    when(mockNamedEntityService.findResolvedEntity(eq(organizationEntity.getNedid()), eq(Organization.class)))
-        .thenReturn(organizationEntity);
+//    when(mockNamedEntityService.createOrganization(isA(Organization.class)))
+//        .thenReturn(organizationEntity);
+//
+//    when(mockNamedEntityService.findResolvedEntity(eq(organizationEntity.getNedid()), eq(Organization.class)))
+//        .thenReturn(organizationEntity);
 
     mockNamedEntityServiceForEmails(mockNamedEntityService);
     mockNamedEntityServiceForAddresses(mockNamedEntityService);
@@ -165,7 +166,10 @@ public class TestSpringConfig {
 
     composite.setEmails(new ArrayList<>(Arrays.asList(emailEntity)));
 
-    composite.setIndividual(entity);
+    List<Individual> individuals = new ArrayList<>();
+    individuals.add(entity);
+
+    composite.setIndividuals(individuals);
 
     return composite;
   }

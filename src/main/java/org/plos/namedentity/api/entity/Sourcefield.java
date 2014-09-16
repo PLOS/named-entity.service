@@ -16,10 +16,6 @@
  */
 package org.plos.namedentity.api.entity;
 
-/**
- * Modified JOOQ generated class(pojo=true).
- */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sourcefield extends Entity {
 
   private Integer id;

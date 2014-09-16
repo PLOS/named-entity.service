@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Emails extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord> {
 
-	private static final long serialVersionUID = 1371360203;
+	private static final long serialVersionUID = -1373929198;
 
 	/**
 	 * The singleton instance of <code>NAMEDENTITIES.EMAILS</code>
@@ -45,6 +45,11 @@ public class Emails extends org.jooq.impl.TableImpl<org.plos.namedentity.persist
 	 * The column <code>NAMEDENTITIES.EMAILS.EMAILADDRESS</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.String> EMAILADDRESS = createField("EMAILADDRESS", org.jooq.impl.SQLDataType.CLOB.length(2147483647).nullable(false), this, "");
+
+	/**
+	 * The column <code>NAMEDENTITIES.EMAILS.SOURCETYPEID</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Integer> SOURCETYPEID = createField("SOURCETYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>NAMEDENTITIES.EMAILS.ISPRIMARY</code>.
@@ -107,7 +112,7 @@ public class Emails extends org.jooq.impl.TableImpl<org.plos.namedentity.persist
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_7A, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_7A1);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_7A, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_7A1A, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_7A1);
 	}
 
 	/**

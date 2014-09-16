@@ -25,6 +25,7 @@ import org.plos.namedentity.api.entity.Globaltype;
 import org.plos.namedentity.api.entity.Individual;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.persist.NamedEntityDBService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -48,15 +49,23 @@ public class CrudServiceTest {
   @Autowired
   CrudService crudService;
 
+  @Autowired
+  NamedEntityDBService nedDBSvc;
+
   @Test
   public void testIndividualCRUD() {
 
+    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+
     // CREATE
     Individual individual = new Individual();
+    individual.setNedid(nedId);
     individual.setFirstname("firstname");
     individual.setLastname("lastname");
     individual.setDisplayname("displayname");
-    Integer pkId = crudService.create(individual);
+    individual.setSource("Editorial Manager");
+
+    Integer pkId = crudService.create(namedEntityService.resolveValuesToIds(individual));
     assertNotNull(pkId);
 
     // READ
@@ -64,7 +73,7 @@ public class CrudServiceTest {
     assertNotNull(readEntity);
     assertEquals("firstname", readEntity.getFirstname());
     assertEquals(null, readEntity.getMiddlename());
-    assertEquals(pkId, readEntity.getNedid());
+    assertEquals(pkId, readEntity.getId());
 
     // UPDATE
     readEntity.setMiddlename("somemiddlename");
@@ -80,17 +89,25 @@ public class CrudServiceTest {
   @Test
   public void testIndividualInvalidEmail() {
 
+    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+
     Individual individual = new Individual();
+    individual.setNedid(nedId);
     individual.setFirstname("firstname");
     individual.setLastname("lastname");
     individual.setDisplayname("displayname");
-    Integer nedId = crudService.create(individual);
+    individual.setSource("Editorial Manager");
+    namedEntityService.resolveValuesToIds(individual);
+
+    crudService.create(individual);
 
     // Create
     Email email = new Email();
     email.setNedid(nedId);
     email.setType("Work");
     email.setEmailaddress("bill@microsoft");
+    email.setSource("Editorial Manager");
+    namedEntityService.resolveValuesToIds(email);
 
     try {
       crudService.create(email);
@@ -114,16 +131,22 @@ public class CrudServiceTest {
   @Test
   public void testNonNullConstraint() {
 
+    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+
     Individual individual = new Individual();
+    individual.setNedid(nedId);
     individual.setFirstname("firstname");
     individual.setLastname("lastname");
     individual.setDisplayname("displayname");
-    Integer nedId = crudService.create(individual);
+    individual.setSource("Editorial Manager");
+    namedEntityService.resolveValuesToIds(individual);
+    crudService.create(individual);
 
     // Create
     Email email = new Email();
     email.setNedid(nedId);
     email.setType("Work");
+    email.setSource("Editorial Manager");
 
     try {
       crudService.create(email);
@@ -264,6 +287,8 @@ public class CrudServiceTest {
     newEmail.setNedid(1);
     newEmail.setTypeid(emailTypeId);
     newEmail.setEmailaddress("walter@foo.com");
+    newEmail.setSource("Editorial Manager");
+    namedEntityService.resolveValuesToIds(newEmail);
 
     // save record
 
@@ -331,6 +356,7 @@ public class CrudServiceTest {
     //newAddress.setMaincontactnamedentityid(java.lang.Integer maincontactnamedentityid);
     newAddress.setIsprimary((byte)1);
     newAddress.setIsactive((byte)1);
+    newAddress.setSource("Editorial Manager");
 
     // save record
 
@@ -391,6 +417,8 @@ public class CrudServiceTest {
     uidEntity.setNedid(1);
     uidEntity.setTypeid(orcidTypeId);
     uidEntity.setUniqueidentifier(ORCID_ID1);
+    uidEntity.setSource("Editorial Manager");
+    namedEntityService.resolveValuesToIds(uidEntity);
 
     // save record
 

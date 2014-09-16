@@ -18,10 +18,6 @@ package org.plos.namedentity.api.entity;
 
 import java.util.Objects;
 
-/**
- * Modified JOOQ generated class(pojo=true).
- */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Phonenumber extends Entity {
 
   private Integer id;
@@ -37,8 +33,48 @@ public class Phonenumber extends Entity {
   private Boolean isprimary;
   private Boolean isactive = true;
 
+  private String  source;
+  private Integer sourcetypeid;
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
+
+    Phonenumber entity = (Phonenumber) o;
+    return Objects.equals(this.id, entity.id)
+        && Objects.equals(this.nedid, entity.nedid)
+        && Objects.equals(this.phonenumber, entity.phonenumber);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, nedid, phonenumber);
+  }
+
+  public Integer getSourcetypeid() {
+    return sourcetypeid;
+  }
+
+  public void setSourcetypeid(Integer sourcetypeid) {
+    this.sourcetypeid = sourcetypeid;
+  }
+
   public String getType() {
     return type;
+  }
+
+  public String getSource() {
+    return source;
+  }
+
+  public void setSource(String source) {
+    this.source = source;
   }
 
   public void setType(String type) {
@@ -117,24 +153,4 @@ public class Phonenumber extends Entity {
     this.isactive = isactive;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-
-    if (o == null || this.getClass() != o.getClass()) {
-      return false;
-    }
-
-    Phonenumber entity = (Phonenumber) o;
-    return Objects.equals(this.id, entity.id)
-        && Objects.equals(this.nedid, entity.nedid)
-        && Objects.equals(this.phonenumber, entity.phonenumber);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, nedid, phonenumber);
-  }
 }

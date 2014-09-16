@@ -37,8 +37,6 @@ public interface NamedEntityDBService {
 
   <T extends Entity> T findResolvedEntityByKey(Integer pk, Class<T> clazz);
 
-  <T extends Entity> T findResolvedEntity(Integer nedId, Class<T> clazz);
-
   <T extends Entity> List<T> findResolvedEntities(Integer nedId, Class<T> clazz);
 
   Integer findTypeClass(String description);

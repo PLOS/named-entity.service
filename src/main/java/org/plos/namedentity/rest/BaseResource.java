@@ -42,6 +42,11 @@ public class BaseResource {
   @Inject
   protected NamedEntityService namedEntityService;
 
+  protected void checkNedIdForEntity(int nedId, Class clazz) {
+    if (namedEntityService.findResolvedEntities(nedId, clazz).size() == 0)
+      throw new EntityNotFoundException(clazz.getSimpleName() + " not found");
+  }
+
   /* ------------------------------------------------------------------------ */
   /*  EMAIL ENTITY                                                            */
   /* ------------------------------------------------------------------------ */
@@ -49,7 +54,7 @@ public class BaseResource {
   public Response createEmail(int nedId, Email emailEntity, Class clazz) {
     try {
 
-      namedEntityService.findResolvedEntity(nedId, clazz);
+      checkNedIdForEntity(nedId, clazz);
 
       emailEntity.setNedid(nedId);
 
@@ -73,7 +78,7 @@ public class BaseResource {
                                  Email emailEntity, Class clazz) {
     try {
 
-      namedEntityService.findResolvedEntity(nedId, clazz);
+      checkNedIdForEntity(nedId, clazz);
 
       emailEntity.setNedid(nedId);
 
@@ -96,7 +101,7 @@ public class BaseResource {
   protected Response deleteEmail(int nedId, int emailId, Class clazz) {
     try {
 
-      namedEntityService.findResolvedEntity(nedId, clazz);
+      checkNedIdForEntity(nedId, clazz);
 
       Email emailEntity = namedEntityService.findResolvedEntityByKey(emailId, Email.class);
 
@@ -117,7 +122,7 @@ public class BaseResource {
     try {
 
       // make sure the nedId belongs to an individual
-      namedEntityService.findResolvedEntity(nedId, clazz);
+      checkNedIdForEntity(nedId, clazz);
 
       List<Email> emails = namedEntityService.findResolvedEntities(nedId, Email.class);
 
@@ -139,7 +144,7 @@ public class BaseResource {
     try {
 
       // make sure the nedId belongs to an individual
-      namedEntityService.findResolvedEntity(nedId, clazz);
+      checkNedIdForEntity(nedId, clazz);
 
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<Email>>(
@@ -160,7 +165,7 @@ public class BaseResource {
   public Response createAddress(int nedId, Address addressEntity, Class clazz) {
     try {
       // verify parent entity exists. throw a 404 if not found.
-      namedEntityService.findResolvedEntity(nedId, clazz);
+      checkNedIdForEntity(nedId, clazz);
 
       addressEntity.setNedid(nedId);
 
@@ -183,7 +188,7 @@ public class BaseResource {
                                    Address addressEntity, Class clazz) {
     try {
       // verify parent entity exists. throw a 404 if not found.
-      namedEntityService.findResolvedEntity(nedId, clazz);
+      checkNedIdForEntity(nedId, clazz);
 
       addressEntity.setNedid(nedId);
 
@@ -205,7 +210,7 @@ public class BaseResource {
 
   protected Response deleteAddress(int nedId, int addressId, Class clazz) {
     try {
-      namedEntityService.findResolvedEntity(nedId, clazz);
+      checkNedIdForEntity(nedId, clazz);
 
       Address addressEntity = namedEntityService.findResolvedEntityByKey(addressId, Address.class);
 
@@ -225,7 +230,7 @@ public class BaseResource {
     try {
 
       // make sure the nedId belongs to an individual
-      namedEntityService.findResolvedEntity(nedId, clazz);
+      checkNedIdForEntity(nedId, clazz);
 
       List<Address> addresses = namedEntityService.findResolvedEntities(nedId, Address.class);
 
@@ -244,7 +249,7 @@ public class BaseResource {
 
   protected Response getAddresses(int nedId, Class clazz) {
     try {
-      namedEntityService.findResolvedEntity(nedId, clazz);
+      checkNedIdForEntity(nedId, clazz);
 
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<Address>>(
@@ -263,7 +268,7 @@ public class BaseResource {
 
   protected Response getPhonenumbers(int nedId, Class clazz) {
     try {
-      namedEntityService.findResolvedEntity(nedId, clazz);
+      checkNedIdForEntity(nedId, clazz);
 
       List<Phonenumber> phonenumbers = namedEntityService.findResolvedEntities(nedId, Phonenumber.class);
       return Response.status(Response.Status.OK).entity(
@@ -282,7 +287,7 @@ public class BaseResource {
 
   protected Response getExternalReferences(int nedId, Class clazz) {
     try {
-      namedEntityService.findResolvedEntity(nedId, clazz);
+      checkNedIdForEntity(nedId, clazz);
 
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<Uniqueidentifier>>(

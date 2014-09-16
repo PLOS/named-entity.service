@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS namedEntities.namedEntityIdentifiers (
 
 DROP TABLE IF EXISTS namedEntities.individuals;
 CREATE TABLE IF NOT EXISTS namedEntities.individuals (
+    id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
     firstName TEXT NOT NULL,
     middleName TEXT NULL,
@@ -51,13 +52,15 @@ CREATE TABLE IF NOT EXISTS namedEntities.individuals (
     nickName TEXT NULL,
     namePrefixTypeId INT NULL,
     nameSuffixTypeId INT NULL,
-    displayName TEXT NOT NULL,
+    displayName TEXT NULL,
     preferredLanguageTypeId INT NULL,
     preferredCommunicationMethodTypeId INT NULL,
     photoImage VARBINARY(255) NULL,
+    sourceTypeId INT NOT NULL,
     isActive TINYINT(1) NOT NULL,
-    isVisible TINYINT(1) NOT NULL,
-    PRIMARY KEY (nedId),
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (namePrefixTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (nameSuffixTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (preferredLanguageTypeId) REFERENCES globalTypes(id),
@@ -66,15 +69,18 @@ CREATE TABLE IF NOT EXISTS namedEntities.individuals (
 
 DROP TABLE IF EXISTS namedEntities.organizations;
 CREATE TABLE IF NOT EXISTS namedEntities.organizations (
+    id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
     typeId INT NULL,
     familiarName TEXT NULL,
     legalName TEXT NULL,
     mainContactId INT NULL,
+    sourceTypeId INT NOT NULL,
     isActive TINYINT(1) NOT NULL,
-    isVisible TINYINT(1) NOT NULL,
-    PRIMARY KEY (nedId),
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (mainContactId) REFERENCES individuals(nedId)
 )   ENGINE=INNODB;
 
@@ -93,10 +99,12 @@ CREATE TABLE IF NOT EXISTS namedEntities.addresses (
     mainContactNamedEntityId INT NULL,
     latitude INT NULL,
     longitude INT NULL,
+    sourceTypeId INT NOT NULL,
     isPrimary TINYINT(1) NOT NULL,
     isActive TINYINT(1) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
@@ -106,10 +114,12 @@ CREATE TABLE IF NOT EXISTS namedEntities.emails (
     nedId INT NOT NULL,
     typeId INT NULL,
     emailAddress TEXT NOT NULL,
+    sourceTypeId INT NOT NULL,
     isPrimary TINYINT(1) NOT NULL,
     isActive TINYINT(1) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
@@ -121,11 +131,13 @@ CREATE TABLE IF NOT EXISTS namedEntities.phoneNumbers (
     countryCodeTypeId INT NULL,
     phoneNumber TEXT NOT NULL,
     extension TEXT NULL,
+    sourceTypeId INT NOT NULL,
     isPrimary TINYINT(1) NOT NULL,
     isActive TINYINT(1) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (countryCodeTypeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
@@ -134,9 +146,10 @@ CREATE TABLE IF NOT EXISTS namedEntities.roles (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
     typeID INT NOT NULL,
-    sourceApplicationTypeId INT NULL,
+    applicationTypeId INT NULL,
     startDate TIMESTAMP NULL,
     endDate TIMESTAMP NULL,
+    sourceTypeId INT NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT 0,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     createdBy INT NULL,
@@ -144,7 +157,8 @@ CREATE TABLE IF NOT EXISTS namedEntities.roles (
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id),
-    FOREIGN KEY (sourceApplicationTypeId) REFERENCES globalTypes(id)
+    FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (applicationTypeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.relationships;
@@ -210,8 +224,10 @@ CREATE TABLE IF NOT EXISTS namedEntities.degrees (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
     typeId INT NOT NULL,
+    sourceTypeId INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
@@ -220,7 +236,9 @@ CREATE TABLE IF NOT EXISTS namedEntities.urls (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
     url TEXT NOT NULL,
+    sourceTypeId INT NOT NULL,
     PRIMARY KEY (id),
+    FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id)
 )   ENGINE=INNODB;
 
@@ -230,8 +248,10 @@ CREATE TABLE IF NOT EXISTS namedEntities.uniqueIdentifiers (
     nedId INT NOT NULL,
     typeId INT NOT NULL,
     uniqueIdentifier TEXT NOT NULL,
+    sourceTypeId INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
@@ -244,12 +264,18 @@ SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Named Party T
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Individual', NULL, 'IND', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Organization', NULL, 'ORG', CURRENT_TIMESTAMP);
 
+/* User Applications */
+INSERT INTO typeDescriptions(description, howUsed) VALUES ('User Applications','Editorial Manager, Ambra, etc');
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='User Applications';
+INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Editorial Manager', NULL, 'EM', CURRENT_TIMESTAMP);
+INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Ambra', NULL, 'AMB', CURRENT_TIMESTAMP);
+INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Named Party DB', NULL, 'NPDB', CURRENT_TIMESTAMP);
+
 /* Source Applications */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Source Applications','Editorial Manager, Ambra, etc');
 SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Source Applications';
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Editorial Manager', NULL, 'EM', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Ambra', NULL, 'AMB', CURRENT_TIMESTAMP);
-INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Named Party DB', NULL, 'NPDB', CURRENT_TIMESTAMP);
 
 /* Organization Types */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Organization Types','University, Department, etc');

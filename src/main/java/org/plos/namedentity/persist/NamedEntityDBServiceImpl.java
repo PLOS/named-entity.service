@@ -44,11 +44,6 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   public <T> Integer create(T t) {
     // load jooq-generated record from pojo. insert (implicitly)
 
-    if (t instanceof Individual)
-      ((Individual) t).setNedid(newNamedEntityId("Individual"));
-    else if (t instanceof Organization)
-      ((Organization) t).setNedid(newNamedEntityId("Organization"));
-
     UpdatableRecord record = (UpdatableRecord) context.newRecord(table(t.getClass()), t);
     record.store();
 
@@ -232,24 +227,12 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   }
 
   @SuppressWarnings("unchecked")
-  public <T extends Entity> T findResolvedEntity(Integer nedId, Class<T> clazz) {
-
-    String cname = clazz.getCanonicalName();
-
-    if (cname.equals(Individual.class.getCanonicalName()))
-      return (T)findIndividualByNedId(nedId);
-    if (cname.equals(Organization.class.getCanonicalName()))
-      return (T)findOrganizationByNedId(nedId);
-
-    throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
-
-  }
-
-  @SuppressWarnings("unchecked")
   public <T extends Entity> List<T> findResolvedEntities(Integer nedId, Class<T> clazz) {
 
     String cname = clazz.getCanonicalName();
 
+    if (cname.equals(Individual.class.getCanonicalName()))
+      return (List<T>)findIndividualsByNedId(nedId);
     if (cname.equals(Address.class.getCanonicalName()))
       return (List<T>)findAddressesByNedId(nedId);
     if (cname.equals(Email.class.getCanonicalName()))
@@ -270,62 +253,43 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   }
 
 
-  private Individual findIndividualByNedId(Integer nedId) {
-/*
-        SELECT gt1.shortDescription nameprefix, i.firstName firstname, 
-               i.middleName middlename, i.lastName lastname, 
-               gt2.shortDescription namesuffix, i.url, 
-               gt3.shortDescription preferredlanguage, 
-               gt4.shortDescription preferredcommunication
-          FROM individuals i
-     LEFT JOIN globalTypes gt1 ON i.namePrefixTypeId        = gt1.ID
-     LEFT JOIN globalTypes gt2 ON i.nameSuffixTypeId        = gt2.ID
-     LEFT JOIN globalTypes gt3 ON i.preferredLanguageTypeId = gt3.ID
-     LEFT JOIN globalTypes gt4 ON i.preferredCommunicationMethodTypeId = gt4.ID
-         WHERE i.NEDID = 37
-*/
+  private List<Individual> findIndividualsByNedId(Integer nedId) {
+
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
     Globaltypes gt3 = GLOBALTYPES.as("gt3");
     Globaltypes gt4 = GLOBALTYPES.as("gt4");
+    Globaltypes gt5 = GLOBALTYPES.as("gt5");
     Individuals i   = INDIVIDUALS.as("i");
 
-    Record record = this.context
+    return this.context
       .select(
-          i.NEDID, i.FIRSTNAME, i.MIDDLENAME, i.LASTNAME, i.DISPLAYNAME,
+          i.ID, i.NEDID, i.FIRSTNAME, i.MIDDLENAME, i.LASTNAME, i.DISPLAYNAME,
           gt1.SHORTDESCRIPTION.as("nameprefix"),
           gt2.SHORTDESCRIPTION.as("namesuffix"),
           gt3.SHORTDESCRIPTION.as("preferredlanguage"),
-          gt4.SHORTDESCRIPTION.as("preferredcommunication"))
+          gt4.SHORTDESCRIPTION.as("preferredcommunication"),
+          gt5.SHORTDESCRIPTION.as("source"))
       .from(i)
       .leftOuterJoin(gt1).on(i.NAMEPREFIXTYPEID.equal(gt1.ID))
       .leftOuterJoin(gt2).on(i.NAMESUFFIXTYPEID.equal(gt2.ID))
       .leftOuterJoin(gt3).on(i.PREFERREDLANGUAGETYPEID.equal(gt3.ID))
       .leftOuterJoin(gt4).on(i.PREFERREDCOMMUNICATIONMETHODTYPEID.equal(gt4.ID))
+      .leftOuterJoin(gt5).on(i.SOURCETYPEID.equal(gt5.ID))
       .where(i.NEDID.equal(nedId))
-      .fetchOne();
-
-    if (record == null)
-      throw new EntityNotFoundException("Individual not found");
-
-    return record.into(Individual.class);
+      .fetch()
+      .into(Individual.class);
   }
 
   private Organization findOrganizationByNedId(Integer nedId) {
-/*
-        SELECT o.NEDID, organizationfamiliarname, organizationlegalname,
-               isactive, isvisible, url, gt1.shortdescription organizationtype
-          FROM organizations o
-     LEFT JOIN globalTypes gt1 ON o.organizationtypeid = gt1.ID
-         WHERE o.NEDID = 100
-*/
+
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Organizations o = ORGANIZATIONS.as("o");
 
     Record record = this.context
         .select(
             o.NEDID, o.FAMILIARNAME,
-            o.LEGALNAME, o.ISACTIVE, o.ISVISIBLE,
+            o.LEGALNAME, o.ISACTIVE,
             gt1.SHORTDESCRIPTION.as("type"))
         .from(o)
         .leftOuterJoin(gt1).on(o.TYPEID.equal(gt1.ID))
@@ -347,7 +311,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     return this.context
         .select(
             o.NEDID, o.FAMILIARNAME,
-            o.LEGALNAME, o.ISACTIVE, o.ISVISIBLE,
+            o.LEGALNAME, o.ISACTIVE,
             gt1.SHORTDESCRIPTION.as("type"))
         .from(o)
         .leftOuterJoin(gt1).on(o.TYPEID.equal(gt1.ID))
@@ -542,7 +506,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         gt1.SHORTDESCRIPTION.as("sourceapplicationtype"),                 
         gt2.SHORTDESCRIPTION.as("type"))
       .from(r)
-      .leftOuterJoin(gt1).on(r.SOURCEAPPLICATIONTYPEID.equal(gt1.ID))
+      .leftOuterJoin(gt1).on(r.APPLICATIONTYPEID.equal(gt1.ID))
       .leftOuterJoin(gt2).on(r.TYPEID.equal(gt2.ID))
       .where(r.NEDID.equal(nedId))
       .fetch()
@@ -569,6 +533,34 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       .where(uid.NEDID.equal(nedId))
       .fetch()
       .into(Uniqueidentifier.class);
+  }
+
+  private Individual findIndividualsByPrimaryKey(Integer individualId) {
+
+    Globaltypes gt1 = GLOBALTYPES.as("gt1");
+    Globaltypes gt2 = GLOBALTYPES.as("gt2");
+    Globaltypes gt3 = GLOBALTYPES.as("gt3");
+    Globaltypes gt4 = GLOBALTYPES.as("gt4");
+    Individuals i   = INDIVIDUALS.as("i");
+
+    Record record = this.context
+        .select(i.ID,
+            i.NEDID, i.FIRSTNAME, i.MIDDLENAME, i.LASTNAME, i.DISPLAYNAME,
+            gt1.SHORTDESCRIPTION.as("nameprefix"),
+            gt2.SHORTDESCRIPTION.as("namesuffix"),
+            gt3.SHORTDESCRIPTION.as("preferredlanguage"),
+            gt4.SHORTDESCRIPTION.as("preferredcommunication"))
+        .from(i)
+        .leftOuterJoin(gt1).on(i.NAMEPREFIXTYPEID.equal(gt1.ID))
+        .leftOuterJoin(gt2).on(i.NAMESUFFIXTYPEID.equal(gt2.ID))
+        .leftOuterJoin(gt3).on(i.PREFERREDLANGUAGETYPEID.equal(gt3.ID))
+        .leftOuterJoin(gt4).on(i.PREFERREDCOMMUNICATIONMETHODTYPEID.equal(gt4.ID))
+        .where(i.ID.equal(individualId))
+        .fetchOne();
+
+    if (record == null) throw new EntityNotFoundException("Individual not found");
+
+    return record.into(Individual.class);
   }
 
   private Email findEmailByPrimaryKey(Integer emailId) {
@@ -650,16 +642,19 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   private static final Map<Class,TablePkPair> entityTableMap;
   static {
     entityTableMap = new ConcurrentHashMap<>();
+
+    // TODO: use reflection to set this for all Entities
+
     entityTableMap.put(Address.class, new TablePkPair(ADDRESSES, ADDRESSES.ID));
     entityTableMap.put(Email.class, new TablePkPair(EMAILS, EMAILS.ID));
     entityTableMap.put(Globaltype.class, new TablePkPair(GLOBALTYPES, GLOBALTYPES.ID));
-    entityTableMap.put(Individual.class, new TablePkPair(INDIVIDUALS, INDIVIDUALS.NEDID));
+    entityTableMap.put(Individual.class, new TablePkPair(INDIVIDUALS, INDIVIDUALS.ID));
     entityTableMap.put(Journal.class, new TablePkPair(JOURNALS, JOURNALS.ID));
     entityTableMap.put(Phonenumber.class, new TablePkPair(PHONENUMBERS, PHONENUMBERS.ID));
     entityTableMap.put(Role.class, new TablePkPair(ROLES, ROLES.ID));
     entityTableMap.put(Typedescription.class, new TablePkPair(TYPEDESCRIPTIONS, TYPEDESCRIPTIONS.ID));
     entityTableMap.put(Uniqueidentifier.class, new TablePkPair(UNIQUEIDENTIFIERS, UNIQUEIDENTIFIERS.ID));
-    entityTableMap.put(Organization.class, new TablePkPair(ORGANIZATIONS, ORGANIZATIONS.NEDID));
+    entityTableMap.put(Organization.class, new TablePkPair(ORGANIZATIONS, ORGANIZATIONS.ID));
     entityTableMap.put(Degree.class, new TablePkPair(DEGREES, DEGREES.ID));
     entityTableMap.put(Url.class, new TablePkPair(URLS, URLS.ID));
   }
