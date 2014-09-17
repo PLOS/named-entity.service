@@ -125,27 +125,29 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   }
 
   @Test
-  public void testIndividualFinders() throws IOException {
+  public void testReadIndividualCompositeByUid() throws Exception {
+
+    Response response = target(INDIVIDUAL_COMPOSITE_URI + "/Editorial Manager/1").request(MediaType.APPLICATION_JSON_TYPE).get();
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    String jsonPayload = response.readEntity(String.class);
+
+    IndividualComposite composite = mapper.readValue(jsonPayload, IndividualComposite.class);
+    Individual individual = composite.getIndividuals().get(0);
+    assertEquals(Integer.valueOf(1), individual.getNedid());
+    assertEquals("firstname", individual.getFirstname());
+    assertEquals("middlename", individual.getMiddlename());
+    assertEquals("lastname", individual.getLastname());
+    assertEquals("Ms.", individual.getNameprefix());
+    assertEquals("email@internet.com", composite.getEmails().get(0).getEmailaddress());
+  }
+
+
+  @Test
+  public void testIndividualsListing() throws IOException {
 
     /* ------------------------------------------------------------------ */
-    /*  FIND (BY ID)                                                      */
-    /* ------------------------------------------------------------------ */
-
-//    Response response = target(INDIVIDUAL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
-//
-//    assertEquals(200, response.getStatus());
-//
-//    String jsonPayload = response.readEntity(String.class);
-//
-//    Individual entity = mapper.readValue(jsonPayload, Individual.class);
-//    assertEquals(Integer.valueOf(1), entity.getNedid());
-//    assertEquals("firstname", entity.getFirstname());
-//    assertEquals("middlename", entity.getMiddlename());
-//    assertEquals("lastname", entity.getLastname());
-//    assertEquals("Mr.", entity.getNameprefix());
-
-    /* ------------------------------------------------------------------ */
-    /*  FIND (ALL)                                                        */
+    /*  LIST                                                              */
     /* ------------------------------------------------------------------ */
 
     Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
@@ -321,21 +323,9 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /*  404 ERRORS                                                        */
     /* ------------------------------------------------------------------ */
 
-//    assertEquals(Response.Status.OK.getStatusCode(),
-//        target("/individuals/1")
-//            .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
-//
-//    assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
-//        target("/individuals/2")
-//            .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
-
     assertEquals(Response.Status.OK.getStatusCode(),
         target("/individuals/1/emails")
         .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
-
-//    assertEquals(Response.Status.OK.getStatusCode(),
-//        target("/organizations/2/emails")
-//            .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
 
     assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
         target("/individuals/2/emails")
@@ -584,58 +574,30 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(500, response.getStatus());
   }
 
-//  @Test
-//  public void testIndividualsCrud() throws Exception {
-//
-//    // CREATE, #1 expect success
-//
-//    final String NEW_FIRSTNAME = "origfirstname";
-//    final String NEW_LASTNAME = "origlastname";
-//
-//    final String NEW_INDIVIDUALS_JSON_PAYLOAD = "{"
-//        + "\"firstname\":\"" + NEW_FIRSTNAME + "\","
-//        + "\"lastname\":\""  + NEW_LASTNAME  + "\""
-//        + "}";
-//
-//    Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
-//        .post(Entity.json(NEW_INDIVIDUALS_JSON_PAYLOAD));
-//
-//    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-//
-//    String jsonPayload = response.readEntity(String.class);
-//
-//    Individual entity = mapper.readValue(jsonPayload, Individual.class);
-//    assertEquals(Integer.valueOf(1), entity.getNedid());
-//    assertEquals("firstname", entity.getFirstname());
-//    assertEquals("lastname", entity.getLastname());
-//
-//    // READ
-//
-//    response = target(INDIVIDUAL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
-//    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-//
-//    jsonPayload = response.readEntity(String.class);
-//
-//    entity = mapper.readValue(jsonPayload, Individual.class);
-//    assertEquals(Integer.valueOf(1), entity.getNedid());
-//    assertEquals("firstname", entity.getFirstname());
-//    assertEquals("lastname", entity.getLastname());
-//
-//    // UPDATE
-//
-//    response = target(INDIVIDUAL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-//        .post(Entity.json(NEW_INDIVIDUALS_JSON_PAYLOAD));
-//
-//    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-//
-//    // DELETE
-//
-//    response = target(INDIVIDUAL_URI + "/1").request().delete();
-//    assertEquals(Response.Status.NO_CONTENT.getStatusCode(), response.getStatus());
-//  }
+  @Test
+  public void testIndividualsUpdate() {
+
+    final String NEW_FIRSTNAME = "origfirstname";
+    final String NEW_LASTNAME = "origlastname";
+
+    final String NEW_INDIVIDUALS_JSON_PAYLOAD = "{"
+        + "\"firstname\":\"" + NEW_FIRSTNAME + "\","
+        + "\"lastname\":\""  + NEW_LASTNAME  + "\""
+        + "}";
+
+    assertEquals(Response.Status.OK.getStatusCode(),
+        target(INDIVIDUAL_URI + "/1/1").request(MediaType.APPLICATION_JSON_TYPE)
+        .post(Entity.json(NEW_INDIVIDUALS_JSON_PAYLOAD)).getStatus());
+  }
 
   @Test
-  public void testGlobalTypesCrud() throws IOException {
+  public void testIndividualsDelete() {
+    assertEquals(Response.Status.NO_CONTENT.getStatusCode(),
+        target(INDIVIDUAL_URI + "/1/1").request().delete().getStatus());
+  }
+
+  @Test
+  public void testGlobalTypesCrud() throws Exception {
 
     /* ------------------------------------------------------------------ */
     /*  CREATE                                                            */
