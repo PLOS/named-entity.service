@@ -59,25 +59,6 @@ public class NamedEntityServiceTest {
     }
   }
 
-//  @Test
-//  public void testCreateOrganization() {
-//    Organization inputEntity = new Organization();
-//    inputEntity.setFamiliarname("familiarname");
-//    inputEntity.setLegalname("legalname");
-//    inputEntity.setIsactive((byte) 1);
-//    inputEntity.setIsvisible((byte) 0);
-//
-//    try {
-//      Organization outputEntity = namedEntityService.createOrganization(inputEntity);
-//      assertNotNull(outputEntity);
-//      assertNotNull(outputEntity.getNedid());
-//      assertTrue(inputEntity.equals(outputEntity));
-//    }
-//    catch (Exception e) {
-//      fail();
-//    }
-//  }
-
   @Test
   public void testCreateIndividualCompositeWithRole() {
 

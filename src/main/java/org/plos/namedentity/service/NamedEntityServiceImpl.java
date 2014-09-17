@@ -268,11 +268,6 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     return findIndividualComposite(nedId);
   }
 
-//  @Override
-//  public <T extends Entity> T findResolvedEntity(Integer nedId, Class<T> clazz) {
-//    return nedDBSvc.findResolvedEntity(nedId, clazz);
-//  }
-
   @Override
   public <T extends Entity> List<T> findResolvedEntities(Integer nedId, Class<T> clazz) {
     return nedDBSvc.findResolvedEntities(nedId, clazz);
@@ -287,11 +282,6 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   public <T extends Entity> T findResolvedEntityByUid(String srcType, String uid, Class<T> clazz) {
     return nedDBSvc.findResolvedEntityByUid(srcType, uid, clazz);
   }
-
-//  @Override @Transactional
-//  public Organization createOrganization(Organization entity) {
-//    return nedDBSvc.findResolvedEntity(nedDBSvc.create(entity), Organization.class);
-//  }
     
   public NamedEntityDBService getNamedEntityDBService() {
     return nedDBSvc;

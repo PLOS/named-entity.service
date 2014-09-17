@@ -112,12 +112,6 @@ public class TestSpringConfig {
     when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(Uniqueidentifier.class)))
       .thenReturn( newUidEntities() );
 
-//    when(mockNamedEntityService.createOrganization(isA(Organization.class)))
-//        .thenReturn(organizationEntity);
-//
-//    when(mockNamedEntityService.findResolvedEntity(eq(organizationEntity.getNedid()), eq(Organization.class)))
-//        .thenReturn(organizationEntity);
-
     mockNamedEntityServiceForEmails(mockNamedEntityService);
     mockNamedEntityServiceForAddresses(mockNamedEntityService);
 

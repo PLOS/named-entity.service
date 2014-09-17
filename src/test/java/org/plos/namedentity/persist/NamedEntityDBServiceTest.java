@@ -437,21 +437,6 @@ public class NamedEntityDBServiceTest {
     List<Organization> allEntitiesInDB = nedDBSvc.findAll(Organization.class);
     assertTrue(allEntitiesInDB.size() > 0);
 
-    // FIND entity with
-
-//    List<Organization> entities = nedDBSvc.findResolvedEntities(nedId, Organization.class);
-//    assertEquals( entities.size(), 0 );
-//
-//    Organization entity = entities.get(0);
-//    entity.setTypeid(organizationTypeId);
-//    assertEquals(entity, savedEntity2);
-//
-//    // DELETE
-//
-//    Organization entityToDelete = new Organization();
-//    entityToDelete.setNedid(organizationId);
-//
-//    assertTrue( nedDBSvc.delete(entityToDelete) );
   }
 
   @Test

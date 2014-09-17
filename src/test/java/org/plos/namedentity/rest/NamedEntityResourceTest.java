@@ -61,52 +61,6 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
   }
 
-//  @Test
-//  public void testOrganizationCrud() throws Exception {
-//
-//    // CREATE
-//
-//    String organizationJson = "{\n" +
-//        "   \"organizationfamiliarname\" : \"organizationfamiliarname\",\n" +
-//        "   \"organizationlegalname\" : \"organizationlegalname\",\n" +
-//        "   \"isactive\" : 0,\n" +
-//        "   \"isvisible\" : true,\n" +
-//        "   \"url\" : \"website.com\" }"; // TODO: make use of this in assertions
-//
-//    // Request #1. Expect success.
-//
-//    Response response = target(ORGANIZATION_URI).request(MediaType.APPLICATION_JSON_TYPE).post(Entity.json(organizationJson));
-//
-//    assertEquals(200, response.getStatus());
-//
-//    String jsonPayload = response.readEntity(String.class);
-//
-//    Organization entity = mapper.readValue(jsonPayload, Organization.class);
-//    assertEquals(Integer.valueOf(2), entity.getNedid());
-//    assertEquals("familiarname", entity.getFamiliarname());
-//    assertEquals("legalname", entity.getLegalname());
-//    assertEquals(new Byte((byte)0), entity.getIsactive());
-//    assertEquals(new Byte((byte)1), entity.getIsvisible());
-//
-//    // GET
-//
-//    response = target(ORGANIZATION_URI + "/2").request(MediaType.APPLICATION_JSON_TYPE).get();
-//
-//    assertEquals(200, response.getStatus());
-//
-//    jsonPayload = response.readEntity(String.class);
-//
-//    entity = mapper.readValue(jsonPayload, Organization.class);
-//    assertEquals(Integer.valueOf(2), entity.getNedid());
-//    assertEquals("familiarname", entity.getFamiliarname());
-//    assertEquals("legalname", entity.getLegalname());
-//    assertEquals(new Byte((byte)0), entity.getIsactive());
-//    assertEquals(new Byte((byte)1), entity.getIsvisible());
-//
-//
-//    // TODO: LIST, DELETE, UPDATE
-//  }
-
   @Test
   public void testCreateIndividualComposite() throws Exception {
 
