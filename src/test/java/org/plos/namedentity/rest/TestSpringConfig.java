@@ -92,7 +92,7 @@ public class TestSpringConfig {
       .thenReturn(individualComposite.getIndividuals());
 
     when(mockNamedEntityService.findResolvedEntityByUid(anyString(), anyString(), eq(Individual.class)))
-      .thenReturn( newIndividualEntities() );
+      .thenReturn( newIndividualEntity() );
 
     when(mockNamedEntityService.findResolvedEntities(eq(individualEntity.getNedid()), eq(Email.class)))
       .thenReturn( newEmailEntitiesForIndividual() );

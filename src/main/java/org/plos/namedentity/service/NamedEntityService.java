@@ -46,7 +46,7 @@ public interface NamedEntityService {
    *
    * @return         list of entities with unique identifier (typically just one)
    */
-  public <T extends Entity> List<T> findResolvedEntityByUid(String srcType, String uid, Class<T> clazz);
+  public <T extends Entity> T findResolvedEntityByUid(String srcType, String uid, Class<T> clazz);
 
 
   /** 

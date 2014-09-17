@@ -284,7 +284,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   }
 
   @Override
-  public <T extends Entity> List<T> findResolvedEntityByUid(String srcType, String uid, Class<T> clazz) {
+  public <T extends Entity> T findResolvedEntityByUid(String srcType, String uid, Class<T> clazz) {
     return nedDBSvc.findResolvedEntityByUid(srcType, uid, clazz);
   }
 

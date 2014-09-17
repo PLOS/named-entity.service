@@ -252,10 +252,10 @@ public class NamedEntityServiceTest {
     List<Uniqueidentifier> uidEntities = namedEntityService.findResolvedEntities(nedId, Uniqueidentifier.class);
     assertEquals(1, uidEntities.size());
 
-    List<Individual> individuals = namedEntityService.findResolvedEntityByUid("ORCID", "0000-0001-9430-319X", Individual.class);
-    assertEquals(1, individuals.size());
+    Individual individual = namedEntityService.findResolvedEntityByUid("ORCID", "0000-0001-9430-319X", Individual.class);
 
-    Individual individual = individuals.get(0);
+    assertNotNull(individual);
+
     assertEquals("firstname", individual.getFirstname());
     assertEquals("lastname", individual.getLastname());
   }

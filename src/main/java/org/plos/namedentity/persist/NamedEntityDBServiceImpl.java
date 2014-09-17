@@ -215,13 +215,13 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   }
 
   @SuppressWarnings("unchecked")
-  public <T extends Entity> List<T> findResolvedEntityByUid(String srcType, String uid, Class<T> clazz) {
+  public <T extends Entity> T findResolvedEntityByUid(String srcType, String uid, Class<T> clazz) {
     String cname = clazz.getCanonicalName();
 
     if (cname.equals(Individual.class.getCanonicalName()))
-      return (List<T>)findIndividualsByUid(srcType, uid);
+      return (T)findIndividualByUid(srcType, uid);
     if (cname.equals(Organization.class.getCanonicalName()))
-      return (List<T>)findOrganizationsByUid(srcType, uid);
+      return (T)findOrganizationByUid(srcType, uid);
 
     throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
   }
@@ -301,14 +301,14 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     return record.into(Organization.class);
   }
 
-  private List<Organization> findOrganizationsByUid(String srcType, String uid) {
+  private Organization findOrganizationByUid(String srcType, String uid) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
     Organizations o = ORGANIZATIONS.as("o");
     Uniqueidentifiers u = UNIQUEIDENTIFIERS.as("u");
 
-    return this.context
+    Record record = this.context
         .select(
             o.NEDID, o.FAMILIARNAME,
             o.LEGALNAME, o.ISACTIVE,
@@ -317,15 +317,15 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .leftOuterJoin(gt1).on(o.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(u.TYPEID.equal(gt2.ID)).and(gt2.SHORTDESCRIPTION.equal(srcType))
         .join(u).on(o.NEDID.equal(u.NEDID))
-        .where(u.UNIQUEIDENTIFIER.equal(uid))
-        .fetch()
-        .into(Organization.class);
+        .where(u.UNIQUEIDENTIFIER.equal(uid)).fetchOne();
 
-    // TODO: make sure the empty set is handles gracefully
+    if (record == null)
+      throw new EntityNotFoundException("Organization not found");
 
+    return record.into(Organization.class);
   }
 
-  private List<Individual> findIndividualsByUid(String srcType, String uid) {
+  private Individual findIndividualByUid(String srcType, String uid) {
 /*
    EXPLAIN
         SELECT gt1.shortDescription nameprefix, i.firstName firstname, 
@@ -352,7 +352,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     Individuals i   = INDIVIDUALS.as("i");
     Uniqueidentifiers u = UNIQUEIDENTIFIERS.as("u");
 
-    return this.context
+    Record record = this.context
       .select(
         i.NEDID, i.FIRSTNAME, i.MIDDLENAME, i.LASTNAME, i.DISPLAYNAME, 
         gt1.SHORTDESCRIPTION.as("nameprefix"),                 
@@ -369,8 +369,12 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       .join(u).on(i.NEDID.equal(u.NEDID))
       .leftOuterJoin(gt5).on(u.TYPEID.equal(gt5.ID)).and(gt5.SHORTDESCRIPTION.eq(srcType))
       .where(u.UNIQUEIDENTIFIER.equal(uid))
-      .fetch()
-      .into(Individual.class);
+      .fetchOne();
+
+    if (record == null)
+      throw new EntityNotFoundException("Individual not found");
+
+    return record.into(Individual.class);
   }
 
   private List<Address> findAddressesByNedId(Integer nedId) {

@@ -22,6 +22,7 @@ import org.jooq.Result;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.persist.db.namedentities.tables.Globaltypes;
 import org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions;
@@ -669,69 +670,69 @@ public class NamedEntityDBServiceTest {
 
     // FIND Individuals with an ORCID id. There should be none. 
 
-    List<Individual> peopleWithOrcidId = nedDBSvc.findResolvedEntityByUid("ORCID", ORCID_ID, Individual.class);
-    assertEquals(0, peopleWithOrcidId.size());
+    try {
+      nedDBSvc.findResolvedEntityByUid("ORCID", ORCID_ID, Individual.class);
+    } catch (EntityNotFoundException expected) {
+    }
 
     // Create two individuals with the same Orcid#
 
     Integer uidId = nedDBSvc.findTypeClass("Unique Identifier Types");
-  
-    for (int i = 1; i <= 2; i++) {
 
-      Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
-      Individual individual = new Individual();
-      individual.setNedid(nedId);
-      individual.setFirstname("firstname");
-      individual.setMiddlename("middlename");
-      individual.setLastname("lastname");
-      individual.setDisplayname("displayname");
-      individual.setSourcetypeid(78);
+    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
-      assertNotNull(nedDBSvc.create(individual));
+    Individual individual = new Individual();
+    individual.setNedid(nedId);
+    individual.setFirstname("firstname");
+    individual.setMiddlename("middlename");
+    individual.setLastname("lastname");
+    individual.setDisplayname("displayname");
+    individual.setSourcetypeid(78);
 
-      Uniqueidentifier uidEntity1 = new Uniqueidentifier();
-      uidEntity1.setNedid(nedId);
-      uidEntity1.setTypeid(uidId);
-      uidEntity1.setUniqueidentifier(ORCID_ID);
-      uidEntity1.setSourcetypeid(78);
+    assertNotNull(nedDBSvc.create(individual));
 
-      assertNull(uidEntity1.getId());
-      assertNotNull(uidEntity1.getNedid());
+    Uniqueidentifier uidEntity1 = new Uniqueidentifier();
+    uidEntity1.setNedid(nedId);
+    uidEntity1.setTypeid(uidId);
+    uidEntity1.setUniqueidentifier(ORCID_ID);
+    uidEntity1.setSourcetypeid(78);
 
-      Integer uidId1 = nedDBSvc.create( uidEntity1 );
-      assertNotNull(uidId1);
+    assertNull(uidEntity1.getId());
+    assertNotNull(uidEntity1.getNedid());
 
-      // FIND By UID (ORCID) #2
-      assertEquals(i, nedDBSvc.findResolvedEntityByUid("ORCID", ORCID_ID, Individual.class).size());
+    Integer uidId1 = nedDBSvc.create( uidEntity1 );
+    assertNotNull(uidId1);
 
-      // UPDATE
+    // FIND By UID (ORCID) #2
+    assertNotNull(nedDBSvc.findResolvedEntityByUid("ORCID", ORCID_ID, Individual.class));
 
-      Uniqueidentifier savedUid = nedDBSvc.findById(uidId1, Uniqueidentifier.class);
-      savedUid.setUniqueidentifier( savedUid.getUniqueidentifier() + "Z" );
-      assertTrue( nedDBSvc.update(savedUid) );
+    // UPDATE
 
-      // Get another instance of same role record 
+    Uniqueidentifier savedUid = nedDBSvc.findById(uidId1, Uniqueidentifier.class);
+    savedUid.setUniqueidentifier(savedUid.getUniqueidentifier() + "Z");
+    assertTrue( nedDBSvc.update(savedUid) );
 
-      Uniqueidentifier savedUid2 = nedDBSvc.findById(uidId1, Uniqueidentifier.class);
-      assertEquals(savedUid, savedUid2);
+    // Get another instance of same role record
 
-      // Restore orcid id.
+    Uniqueidentifier savedUid2 = nedDBSvc.findById(uidId1, Uniqueidentifier.class);
+    assertEquals(savedUid, savedUid2);
 
-      savedUid.setUniqueidentifier(ORCID_ID);
-      assertTrue( nedDBSvc.update(savedUid) );
+    // Restore orcid id.
 
-      // FIND BY JOIN-QUERY 
+    savedUid.setUniqueidentifier(ORCID_ID);
+    assertTrue( nedDBSvc.update(savedUid) );
 
-      List<Uniqueidentifier> uids = nedDBSvc.findResolvedEntities(savedUid.getNedid(), Uniqueidentifier.class);
-      Uniqueidentifier uid = uids.get(0);
-      assertEquals(ORCID_ID, uid.getUniqueidentifier());
-    }
+    // FIND BY JOIN-QUERY
+
+    List<Uniqueidentifier> uids = nedDBSvc.findResolvedEntities(savedUid.getNedid(), Uniqueidentifier.class);
+
+    assertEquals(ORCID_ID, uids.get(0).getUniqueidentifier());
 
     // FIND ALL Roles 
 
     List<Uniqueidentifier> allUidsInDb = nedDBSvc.findAll(Uniqueidentifier.class);
-    assertEquals(2, allUidsInDb.size());
+    assertEquals(1, allUidsInDb.size());
 
     for (Uniqueidentifier uid : allUidsInDb) {
       Uniqueidentifier uidToDelete = new Uniqueidentifier();

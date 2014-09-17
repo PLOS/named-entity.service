@@ -33,7 +33,7 @@ public interface NamedEntityDBService {
   <T> T       findById(Integer id, Class<T> clazz);
   <T> List<T> findByAttribute(T t);
 
-  <T extends Entity> List<T> findResolvedEntityByUid(String srcType, String uid, Class<T> clazz);
+  <T extends Entity> T findResolvedEntityByUid(String srcType, String uid, Class<T> clazz);
 
   <T extends Entity> T findResolvedEntityByKey(Integer pk, Class<T> clazz);
 

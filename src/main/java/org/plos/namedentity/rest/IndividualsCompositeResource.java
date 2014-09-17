@@ -49,10 +49,10 @@ public class IndividualsCompositeResource extends BaseResource {
   }
 
   @GET
-  @Path("/{id}")
+  @Path("/{nedId}")
   @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   @ApiOperation(value = "Read", response = Individual.class)
-  public Response read(@PathParam("id") int nedId) {
+  public Response read(@PathParam("nedId") int nedId) {
     try {
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findIndividualComposite(nedId)).build();
@@ -60,6 +60,23 @@ public class IndividualsCompositeResource extends BaseResource {
       return entityNotFound(e);
     } catch (Exception e) {
       return serverError(e, "Unable to read individual composite");
+    }
+  }
+
+  @GET
+  @Path("/{uidType}/{uidValue}")
+  @ApiOperation(value = "Get by UID")
+  public Response readByUid(@PathParam("uidType") String uidType,
+                            @PathParam("uidValue") String uidValue) {
+    try {
+
+      Individual individual = namedEntityService.findResolvedEntityByUid(
+          uidType, uidValue, Individual.class);
+
+      return Response.status(Response.Status.OK).entity(
+          namedEntityService.findIndividualComposite(individual.getNedid())).build();
+    } catch (Exception e) {
+      return serverError(e, "Find all individuals failed");
     }
   }
 
