@@ -43,15 +43,13 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   private static final String TYPE_CLASS_URI  = "/typeclasses";
   private static final String TYPE_VALUE_URI  = TYPE_CLASS_URI + "/1/typevalues";
   private static final String INDIVIDUAL_URI  = "/individuals";
-  private static final String INDIVIDUAL_COMPOSITE_URI  = "/individuals_composite";
+
   private static final String INDIV_ADDR_URI  = INDIVIDUAL_URI + "/1/addresses";
   private static final String INDIV_EMAIL_URI = INDIVIDUAL_URI + "/1/emails";
   private static final String INDIV_PHONE_URI = INDIVIDUAL_URI + "/1/phonenumbers";
   private static final String INDIV_ROLE_URI  = INDIVIDUAL_URI + "/1/roles";
   private static final String INDIV_XREF_URI  = INDIVIDUAL_URI + "/1/xref";
   private static final String INDIV_DEGREE_URI  = INDIVIDUAL_URI + "/1/degrees";
-
-  private static final String ORGANIZATION_URI= "/organizations";
 
   private ObjectMapper mapper;
 
@@ -62,6 +60,25 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   }
 
   @Test
+  public void testAddToIndividualComposite() throws Exception {
+
+    String compositeIndividualJson = new String(Files.readAllBytes(
+        Paths.get(TEST_RESOURCE_PATH + "composite-individual.json")));
+
+    Response response = target(INDIVIDUAL_URI+"/1").request(MediaType.APPLICATION_JSON_TYPE)
+        .post(Entity.json(compositeIndividualJson));
+
+    assertEquals(200, response.getStatus());
+
+    String jsonPayload = response.readEntity(String.class);
+
+    IndividualComposite composite = mapper.readValue(jsonPayload, IndividualComposite.class);
+    Individual individual = composite.getIndividuals().get(0);
+    assertEquals(Integer.valueOf(1), individual.getNedid());
+    assertEquals("firstname", individual.getFirstname());
+  }
+
+  @Test
   public void testCreateIndividualComposite() throws Exception {
 
     String compositeIndividualJson = new String(Files.readAllBytes(
@@ -69,7 +86,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   
     // Request #1. Expect success.
 
-    Response response = target(INDIVIDUAL_COMPOSITE_URI).request(MediaType.APPLICATION_JSON_TYPE)
+    Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
                           .post(Entity.json(compositeIndividualJson));
 
     assertEquals(200, response.getStatus());
@@ -87,7 +104,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     // Request #2. Expect a validation exception (client-side error)
 
-    response = target(INDIVIDUAL_COMPOSITE_URI).request(MediaType.APPLICATION_JSON_TYPE)
+    response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.json(compositeIndividualJson));
 
     assertEquals(400, response.getStatus());
@@ -97,7 +114,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     // Request #3. Expect a data access exception (server-side error)
 
-    response = target(INDIVIDUAL_COMPOSITE_URI).request(MediaType.APPLICATION_JSON_TYPE)
+    response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.json(compositeIndividualJson));
 
     assertEquals(500, response.getStatus());
@@ -107,9 +124,9 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   }
 
   @Test
-  public void testReadIndividualComposite() throws Exception {
+  public void testReadIndividualCompositeByNedId() throws Exception {
 
-    Response response = target(INDIVIDUAL_COMPOSITE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
+    Response response = target(INDIVIDUAL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
     String jsonPayload = response.readEntity(String.class);
@@ -127,7 +144,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   @Test
   public void testReadIndividualCompositeByUid() throws Exception {
 
-    Response response = target(INDIVIDUAL_COMPOSITE_URI + "/Editorial Manager/1").request(MediaType.APPLICATION_JSON_TYPE).get();
+    Response response = target(INDIVIDUAL_URI + "/Editorial Manager/1").request(MediaType.APPLICATION_JSON_TYPE).get();
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
     String jsonPayload = response.readEntity(String.class);
@@ -435,16 +452,14 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /*  FIND INDIVIDUALS BY EXTERNAL REFERENCE                            */
     /* ------------------------------------------------------------------ */
 
-    response = target(INDIVIDUAL_URI)
-                .queryParam("uidType", "ORCID")
-                .queryParam("uidValue", "0000-0002-9430-3191")
+    response = target(INDIVIDUAL_URI+"/ORCID/0000-0002-9430-3191")
                 .request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(200, response.getStatus());
     jsonPayload = response.readEntity(String.class);
 
-    Individual[] individualEntityArray = mapper.readValue(jsonPayload, Individual[].class);
-    assertEquals(3, individualEntityArray.length);
+    IndividualComposite individualComposite = mapper.readValue(jsonPayload, IndividualComposite.class);
+    assertNotNull(individualComposite);
   }
 
   @Test

@@ -195,12 +195,11 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   }
 
   @Override @Transactional
-  public IndividualComposite createIndividualComposite(IndividualComposite composite) {
+  public IndividualComposite addToComposite(IndividualComposite composite,
+                                            Integer nedId) {
 
-    //TODO - better validation. handle null fields!
-
-    //Individual individual = composite.getIndividual();
-    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+    if (nedId == null)
+      nedId = nedDBSvc.newNamedEntityId("Individual");
 
     List<Individual> individuals = composite.getIndividuals();
     if (individuals != null) {

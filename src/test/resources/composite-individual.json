@@ -1,8 +1,15 @@
 {
-   "firstname" : "Jane",
-   "middlename" : "Q",
-   "namesuffix" : "III",
-   "lastname" : "Doe",
+   "individuals" : [
+      {
+       "firstname" : "Jane",
+       "middlename" : "Q",
+       "namesuffix" : "III",
+       "lastname" : "Doe",
+       "preferredlanguage" : "English",
+       "preferredcommunication" : "Email",
+       "nameprefix" : "Mrs."
+      }
+   ],
    "phonenumbers" : [
       {
          "extension" : "x012",
@@ -18,8 +25,6 @@
          "countrycodetype" : "01"
       }
    ],
-   "preferredlanguage" : "English",
-   "preferredcommunication" : "Email",
    "addresses" : [
       {
          "statecodetype" : "CA",
@@ -51,7 +56,6 @@
         "type":"PhD"
       }
    ],
-   "nameprefix" : "Mrs.",
    "role" : {
       "startdate" : "2014-06-02",
       "roletype" : "Author"
