@@ -59,7 +59,7 @@ public class TestSpringConfig {
 
     when(mockCrudService.create(isA(Individual.class))).thenReturn( individualEntity.getNedid() );
 
-    when(mockCrudService.findAll(eq(Individual.class))).thenReturn( newIndividualEntities() );
+    when(mockCrudService.findAll(eq(Individual.class), eq(0), anyInt())).thenReturn( newIndividualEntities() );
 
     when(mockCrudService.findById(eq(individualEntity.getNedid()), eq(Individual.class))).thenReturn(individualEntity);
 
@@ -397,7 +397,7 @@ public class TestSpringConfig {
       typeClassList.add(td);
     }
 
-    when(mockCrudService.findAll(eq(Typedescription.class))).thenReturn(typeClassList);
+    when(mockCrudService.findAll(eq(Typedescription.class), eq(0),  anyInt())).thenReturn(typeClassList);
 
     // TYPE VALUES (GLOBAL TYPES)
 

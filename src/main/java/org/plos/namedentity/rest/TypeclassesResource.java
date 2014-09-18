@@ -2,6 +2,7 @@ package org.plos.namedentity.rest;
 
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.Globaltype;
 import org.plos.namedentity.api.entity.Typedescription;
@@ -11,6 +12,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -34,11 +36,18 @@ public class TypeclassesResource extends BaseResource {
 
   @GET
   @ApiOperation("List")
-  public Response list() {
+  public Response list(@ApiParam(required = false) @QueryParam("offset") Integer offset,
+                       @ApiParam(required = false) @QueryParam("limit") Integer limit) {
     try {
+
+      if (offset == null || offset < 0)
+        offset = 0;
+      if (limit == null || limit <= 0 || limit > MAX_RESULT_COUNT)
+        limit = DEFAULT_RESULT_COUNT;
+
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<Typedescription>>(
-              crudService.findAll(Typedescription.class)
+              crudService.findAll(Typedescription.class, offset, limit)
           ) {
           }).build();
     } catch (Exception e) {

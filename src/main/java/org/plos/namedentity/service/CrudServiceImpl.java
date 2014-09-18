@@ -53,8 +53,8 @@ public class CrudServiceImpl implements CrudService {
   }
 
   @Override
-  public <T> List<T> findAll(Class<T> clazz) {
-    return namedEntityDBService.findAll(clazz);
+  public <T> List<T> findAll(Class<T> clazz, Integer offset, Integer limit) {
+    return namedEntityDBService.findAll(clazz, offset, limit);
   }
 
   @Override

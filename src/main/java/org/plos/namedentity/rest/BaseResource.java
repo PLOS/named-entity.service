@@ -34,7 +34,11 @@ import java.util.List;
 
 public class BaseResource {
 
-  static Logger logger = Logger.getLogger(BaseResource.class);
+  protected static Logger logger = Logger.getLogger(BaseResource.class);
+
+  protected static final Integer MAX_RESULT_COUNT = 50;
+
+  protected static final Integer DEFAULT_RESULT_COUNT = 10000;
 
   @Inject
   protected CrudService crudService;

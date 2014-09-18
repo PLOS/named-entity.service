@@ -66,8 +66,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   }
 
   @Override
-  public <T> List<T> findAll(Class<T> clazz) {
-    return context.select().from(table(clazz)).fetchInto(clazz);
+  public <T> List<T> findAll(Class<T> clazz, Integer offset, Integer limit) {
+    return context.select().from(table(clazz)).limit(limit).offset(offset).fetchInto(clazz);
   }
 
   @Override
@@ -142,7 +142,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     //TODO - cache type classes and values ?
 
-    for (Typedescription typeClass : findAll(Typedescription.class)) {
+    for (Typedescription typeClass : findAll(Typedescription.class, 0, Integer.MAX_VALUE)) {
       if (typeClass.getDescription().equals(description)) {
         return typeClass.getId();
       }
@@ -152,7 +152,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
   @Override
   public Integer findTypeValue(Integer typeClassId, String name) {
-    for (Globaltype typeValue : findAll(Globaltype.class)) {
+    for (Globaltype typeValue : findAll(Globaltype.class, 0, Integer.MAX_VALUE)) {
       if (typeClassId.equals(typeValue.getTypeid()) &&
           typeValue.getShortdescription().equals(name)) {
         return typeValue.getId();

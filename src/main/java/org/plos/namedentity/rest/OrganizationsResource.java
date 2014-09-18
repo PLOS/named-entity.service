@@ -18,11 +18,13 @@ package org.plos.namedentity.rest;
 
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
 import org.plos.namedentity.api.entity.Organization;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -33,9 +35,16 @@ public class OrganizationsResource extends BaseResource {
 
   @GET
   @ApiOperation(value = "List")
-  public Response list() {
+  public Response list(@ApiParam(required = false) @QueryParam("offset") Integer offset,
+                       @ApiParam(required = false) @QueryParam("limit") Integer limit) {
+
+    if (offset == null || offset < 0)
+      offset = 0;
+    if (limit == null || limit <= 0 || limit > MAX_RESULT_COUNT)
+      limit = DEFAULT_RESULT_COUNT;
+    
     return Response.ok(new GenericEntity<List<Organization>>
-        (crudService.findAll(Organization.class)) {
+        (crudService.findAll(Organization.class, offset, limit)) {
     }).build();
   }
 

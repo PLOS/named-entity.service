@@ -199,7 +199,7 @@ public class CrudServiceTest {
     assertEquals(Integer.valueOf(1), typeClass1.getId());
 
     // FIND All
-    List<Typedescription> typeClasses = crudService.findAll(Typedescription.class);
+    List<Typedescription> typeClasses = crudService.findAll(Typedescription.class, 0, Integer.MAX_VALUE);
     assertNotNull(typeClasses);
     assertTrue(typeClasses.contains(typeClass1));
   }
@@ -247,7 +247,7 @@ public class CrudServiceTest {
 
     // FIND All
 
-    List<Globaltype> globalTypes = crudService.findAll(Globaltype.class);
+    List<Globaltype> globalTypes = crudService.findAll(Globaltype.class, 0, Integer.MAX_VALUE);
     assertNotNull(globalTypes);
     assertTrue(globalTypes.contains(typeVal1));
 
@@ -315,7 +315,7 @@ public class CrudServiceTest {
 
     // FIND All
 
-    List<Email> allEmails = crudService.findAll(Email.class);
+    List<Email> allEmails = crudService.findAll(Email.class, 0, Integer.MAX_VALUE);
     assertNotNull(allEmails);
     assertTrue(allEmails.contains(savedEmail2));
 
@@ -382,7 +382,7 @@ public class CrudServiceTest {
     /*  FINDERS                                                           */
     /* ------------------------------------------------------------------ */
 
-    List<Address> allAddresses = crudService.findAll(Address.class);
+    List<Address> allAddresses = crudService.findAll(Address.class, 0, Integer.MAX_VALUE);
     assertNotNull(allAddresses);
     assertTrue(allAddresses.contains(savedAddress2));
 
@@ -446,7 +446,7 @@ public class CrudServiceTest {
 
     // FIND All
 
-    List<Uniqueidentifier> allUids = crudService.findAll(Uniqueidentifier.class);
+    List<Uniqueidentifier> allUids = crudService.findAll(Uniqueidentifier.class, 0, Integer.MAX_VALUE);
     assertNotNull(allUids);
     assertTrue(allUids.contains(savedUid2));
 

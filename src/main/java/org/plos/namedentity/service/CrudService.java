@@ -25,10 +25,14 @@ import java.util.List;
 public interface CrudService {
 
   public <T> Integer create(T t);
+
   public <T> boolean update(T t);
+
   public <T> boolean delete(T t);
 
-  public <T> T       findById(Integer id, Class<T> clazz);
-  public <T> List<T> findAll        (Class<T> clazz);
+  public <T> T findById(Integer id, Class<T> clazz);
+
+  public <T> List<T> findAll(Class<T> clazz, Integer offset, Integer limit);
+
   public <T> List<T> findByAttribute(T t);
 }

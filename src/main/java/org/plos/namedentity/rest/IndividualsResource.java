@@ -2,6 +2,7 @@ package org.plos.namedentity.rest;
 
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
 import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
@@ -17,6 +18,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -136,18 +138,22 @@ public class IndividualsResource extends BaseResource {
 
   @GET
   @ApiOperation(value = "List individual entities")
-  public Response list() {
+  public Response list(@ApiParam(required = false) @QueryParam("offset") Integer offset,
+                       @ApiParam(required = false) @QueryParam("limit") Integer limit) {
     try {
 
       // TODO: nest/group by NedId?
 
-      // TODO: paginate
+      if (offset == null || offset < 0)
+        offset = 0;
+      if (limit == null || limit <= 0 || limit > MAX_RESULT_COUNT)
+        limit = DEFAULT_RESULT_COUNT;
 
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<Individual>>(
-              crudService.findAll(Individual.class)){}).build();
-    }
-    catch(Exception e) {
+              crudService.findAll(Individual.class, offset, limit)) {
+          }).build();
+    } catch (Exception e) {
       return serverError(e, "Find all individuals failed");
     }
   }

@@ -133,7 +133,7 @@ public class NamedEntityDBServiceTest {
 
   @Test
   public void testFindAllOnEmptyTable() {
-    List<Journal> journals = nedDBSvc.findAll(Journal.class);
+    List<Journal> journals = nedDBSvc.findAll(Journal.class, 0, Integer.MAX_VALUE);
     assertNotNull(journals);
     assertEquals(0, journals.size());
   }
@@ -159,7 +159,7 @@ public class NamedEntityDBServiceTest {
     assertEquals(entity, entity2);
 
     // Find all type classes
-    List<Typedescription> typeClasses = nedDBSvc.findAll(Typedescription.class);
+    List<Typedescription> typeClasses = nedDBSvc.findAll(Typedescription.class, 0, Integer.MAX_VALUE);
     assertTrue(typeClasses.size() >= 20);
 
     // Try to find a type class which doesn't exist
@@ -216,7 +216,7 @@ public class NamedEntityDBServiceTest {
     assertEquals(entity, entity2);
 
     // Find all global types 
-    List<Globaltype> globalTypes = nedDBSvc.findAll(Globaltype.class);
+    List<Globaltype> globalTypes = nedDBSvc.findAll(Globaltype.class, 0, Integer.MAX_VALUE);
     assertTrue(globalTypes.size() >= 75);
 
     // Find global types for a type class
@@ -291,7 +291,7 @@ public class NamedEntityDBServiceTest {
 
     // FIND ALL Email Records 
 
-    List<Email> allEmailsInDB = nedDBSvc.findAll(Email.class);
+    List<Email> allEmailsInDB = nedDBSvc.findAll(Email.class, 0, Integer.MAX_VALUE);
     assertTrue( allEmailsInDB.size() >= 2 );
 
     // FIND BY ATTRIBUTE (Lookup email by address)
@@ -381,7 +381,7 @@ public class NamedEntityDBServiceTest {
 
     // FIND ALL Email Records 
 
-    List<Individual> allIndividualsInDB = nedDBSvc.findAll(Individual.class);
+    List<Individual> allIndividualsInDB = nedDBSvc.findAll(Individual.class, 0, Integer.MAX_VALUE);
     assertTrue(allIndividualsInDB.size() > 0);
 
     // FIND BY JOIN-QUERY 
@@ -434,7 +434,7 @@ public class NamedEntityDBServiceTest {
 
     // FIND ALL Email Records
 
-    List<Organization> allEntitiesInDB = nedDBSvc.findAll(Organization.class);
+    List<Organization> allEntitiesInDB = nedDBSvc.findAll(Organization.class, 0, Integer.MAX_VALUE);
     assertTrue(allEntitiesInDB.size() > 0);
 
   }
@@ -498,7 +498,7 @@ public class NamedEntityDBServiceTest {
 
     // FIND ALL Phone Numbers 
 
-    List<Phonenumber> allPhonenumbersInDb = nedDBSvc.findAll(Phonenumber.class);
+    List<Phonenumber> allPhonenumbersInDb = nedDBSvc.findAll(Phonenumber.class, 0, Integer.MAX_VALUE);
     assertTrue( allPhonenumbersInDb.size() >= 2 );
             
     //TODO : FIND BY ATTRIBUTE (Lookup email by phone number)
@@ -577,7 +577,7 @@ public class NamedEntityDBServiceTest {
 
     // FIND ALL Phone Numbers 
 
-    List<Address> allAddressesInDb = nedDBSvc.findAll(Address.class);
+    List<Address> allAddressesInDb = nedDBSvc.findAll(Address.class, 0, Integer.MAX_VALUE);
     assertTrue( allAddressesInDb.size() > 0 );
 
     // FIND BY JOIN-QUERY 
@@ -632,7 +632,7 @@ public class NamedEntityDBServiceTest {
 
     // FIND ALL Roles 
 
-    List<Role> allRolesInDb = nedDBSvc.findAll(Role.class);
+    List<Role> allRolesInDb = nedDBSvc.findAll(Role.class, 0, Integer.MAX_VALUE);
     assertTrue( allRolesInDb.size() > 0 );
 
     // FIND BY JOIN-QUERY 
@@ -716,7 +716,7 @@ public class NamedEntityDBServiceTest {
 
     // FIND ALL Roles 
 
-    List<Uniqueidentifier> allUidsInDb = nedDBSvc.findAll(Uniqueidentifier.class);
+    List<Uniqueidentifier> allUidsInDb = nedDBSvc.findAll(Uniqueidentifier.class, 0, Integer.MAX_VALUE);
     assertEquals(1, allUidsInDb.size());
 
     for (Uniqueidentifier uid : allUidsInDb) {

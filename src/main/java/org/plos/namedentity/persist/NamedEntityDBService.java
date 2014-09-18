@@ -26,11 +26,15 @@ public interface NamedEntityDBService {
   Integer newNamedEntityId(String typeCode);
 
   <T> Integer create(T t);
+
   <T> boolean update(T t);
+
   <T> boolean delete(T t);
 
-  <T> List<T> findAll(Class<T> clazz);
-  <T> T       findById(Integer id, Class<T> clazz);
+  <T> List<T> findAll(Class<T> clazz, Integer offset, Integer limit);
+
+  <T> T findById(Integer id, Class<T> clazz);
+
   <T> List<T> findByAttribute(T t);
 
   <T extends Entity> T findResolvedEntityByUid(String srcType, String uid, Class<T> clazz);
