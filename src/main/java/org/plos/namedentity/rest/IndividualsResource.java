@@ -139,7 +139,7 @@ public class IndividualsResource extends BaseResource {
   }
 
   @GET
-  @ApiOperation(value = "List individual entities")
+  @ApiOperation(value = "List individual entities", response = Individual.class)
   public Response list(@ApiParam(required = false) @QueryParam("offset") Integer offset,
                        @ApiParam(required = false) @QueryParam("limit") Integer limit) {
     try {
@@ -199,7 +199,7 @@ public class IndividualsResource extends BaseResource {
 
   @GET
   @Path("/{nedId}/emails")
-  @ApiOperation(value = "List emails")
+  @ApiOperation(value = "List emails", response = Email.class)
   public Response getEmails(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Email.class, Individual.class);
   }
@@ -243,7 +243,7 @@ public class IndividualsResource extends BaseResource {
 
   @GET
   @Path("/{nedId}/addresses")
-  @ApiOperation(value = "List addresses")
+  @ApiOperation(value = "List addresses", response = Address.class)
   public Response getAddresss(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Address.class, Individual.class);
   }
@@ -254,10 +254,15 @@ public class IndividualsResource extends BaseResource {
 
   @GET
   @Path("/{nedId}/phonenumbers")
-  @ApiOperation(value = "List phone numbers")
+  @ApiOperation(value = "List phone numbers", response = Phonenumber.class)
   public Response getPhonenumbers(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Phonenumber.class, Individual.class);
   }
+
+
+  /* ----------------------------------------------------------------------- */
+  /*  REFERENCES CRUD                                                        */
+  /* ----------------------------------------------------------------------- */
 
   @GET
   @Path("/{nedId}/xref")
@@ -266,19 +271,15 @@ public class IndividualsResource extends BaseResource {
     return getEntities(nedId, Uniqueidentifier.class, Individual.class);
   }
 
+  /* ----------------------------------------------------------------------- */
+  /*  DEGREES CRUD                                                           */
+  /* ----------------------------------------------------------------------- */
+
   @GET
   @Path("/{nedId}/degrees")
   @ApiOperation(value = "List degrees")
   public Response getDegrees(@PathParam("nedId") int nedId) {
-    try {
-      return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<Degree>>(
-              namedEntityService.findResolvedEntities(
-                  nedId, Degree.class)){}).build();
-    }
-    catch(Exception e) {
-      return serverError(e, "Find degrees by nedId failed");
-    }
+    return getEntities(nedId, Degree.class, Individual.class);
   }
 
   /* ----------------------------------------------------------------------- */

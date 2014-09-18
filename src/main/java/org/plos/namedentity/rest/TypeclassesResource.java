@@ -28,7 +28,6 @@ public class TypeclassesResource extends BaseResource {
     try {
       return Response.status(Response.Status.OK).entity(
           crudService.findById(id, Typedescription.class)).build();
-      //return Response.status(Response.Status.OK).entity( toPojo(entity) ).build();
     } catch (Exception e) {
       return serverError(e, "Find type class by id failed");
     }

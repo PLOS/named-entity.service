@@ -19,14 +19,7 @@ package org.plos.namedentity.rest;
 import org.apache.log4j.Logger;
 import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.entity.Entity;
-import org.plos.namedentity.api.entity.ChildEntity;
-import org.plos.namedentity.api.entity.ParentEntity;
-import org.plos.namedentity.api.entity.Address;
-import org.plos.namedentity.api.entity.Email;
-import org.plos.namedentity.api.entity.Phonenumber;
-import org.plos.namedentity.api.entity.Role;
-import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.service.CrudService;
 import org.plos.namedentity.service.NamedEntityService;
 
@@ -54,7 +47,6 @@ public class BaseResource {
     if (namedEntityService.findResolvedEntities(nedId, clazz).size() == 0)
       throw new EntityNotFoundException(clazz.getSimpleName() + " not found");
   }
-
 
   protected <S extends ChildEntity, T extends ParentEntity> 
     Response createEntity(int nedId, S entity, Class<T> parent) {
@@ -200,6 +192,18 @@ public class BaseResource {
           new GenericEntity<List<Role>>(
             namedEntityService.findResolvedEntities(nedId, Role.class)
           ){}).build();
+      }
+      else if (cname.equals(Degree.class.getCanonicalName())) {
+        return Response.status(Response.Status.OK).entity(
+            new GenericEntity<List<Degree>>(
+                namedEntityService.findResolvedEntities(nedId, Degree.class)
+            ){}).build();
+      }
+      else if (cname.equals(Url.class.getCanonicalName())) {
+        return Response.status(Response.Status.OK).entity(
+            new GenericEntity<List<Url>>(
+                namedEntityService.findResolvedEntities(nedId, Url.class)
+            ){}).build();
       }
       else if (cname.equals(Uniqueidentifier.class.getCanonicalName())) {
         return Response.status(Response.Status.OK).entity(
