@@ -16,6 +16,7 @@
  */
 package org.plos.namedentity.rest;
 
+import org.eclipse.persistence.jaxb.rs.MOXyJsonProvider;
 import org.glassfish.jersey.server.ResourceConfig;
 
 public class Main extends ResourceConfig {
@@ -23,5 +24,17 @@ public class Main extends ResourceConfig {
   public Main() {
     // register jax-rs components
     packages("org.plos.namedentity.rest");
+
+    MOXyJsonProvider moxyJsonProvider = new MOXyJsonProvider();
+    moxyJsonProvider.setAttributePrefix("@");
+    moxyJsonProvider.setFormattedOutput(true);
+    moxyJsonProvider.setIncludeRoot(false);
+    moxyJsonProvider.setMarshalEmptyCollections(false);
+    moxyJsonProvider.setValueWrapper("$");
+
+    register(moxyJsonProvider);
+
+    // set json provider properties here (moxy)
+    //property(MarshallerProperties.JSON_INCLUDE_ROOT, false);
   }
 }

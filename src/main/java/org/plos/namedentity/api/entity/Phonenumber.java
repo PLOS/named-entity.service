@@ -16,9 +16,11 @@
  */
 package org.plos.namedentity.api.entity;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
-public class Phonenumber extends Entity {
+@XmlRootElement
+public class Phonenumber extends ChildEntity {
 
   private Integer id;
   private Integer nedid;

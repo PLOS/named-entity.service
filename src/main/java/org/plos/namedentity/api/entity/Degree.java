@@ -19,7 +19,7 @@ package org.plos.namedentity.api.entity;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Degree extends Entity {
+public class Degree extends ChildEntity {
 
   private Integer id;
   private Integer nedid;

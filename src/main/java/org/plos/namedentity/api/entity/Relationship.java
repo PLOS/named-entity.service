@@ -16,18 +16,29 @@
  */
 package org.plos.namedentity.api.entity;
 
-import java.sql.Timestamp;
+import org.plos.namedentity.api.adapter.DateAdapter;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.sql.Timestamp;
+import java.util.Date;
+
+@XmlRootElement
 public class Relationship extends Entity {
 
-  private Integer   id;
-  private Integer   masternamedentityid;
-  private Integer   childnamedentityid;
-  private Integer   typeid;
-  private String    type;
-  private String    title;
-  private Timestamp startdate;
-  private Timestamp enddate;
+  private Integer id;
+  private Integer masternamedentityid;
+  private Integer childnamedentityid;
+  private Integer typeid;
+  private String  type;
+  private String  title;
+
+  @XmlJavaTypeAdapter(DateAdapter.class)
+  private Date startdate;
+
+  @XmlJavaTypeAdapter(DateAdapter.class)
+  private Date enddate;
+
   private Timestamp created;
   private Timestamp lastmodified;
   private Integer   createdby;
@@ -65,19 +76,19 @@ public class Relationship extends Entity {
     this.typeid = typeid;
   }
 
-  public java.sql.Timestamp getStartdate() {
+  public Date getStartdate() {
     return this.startdate;
   }
 
-  public void setStartdate(java.sql.Timestamp startdate) {
+  public void setStartdate(Date startdate) {
     this.startdate = startdate;
   }
 
-  public java.sql.Timestamp getEnddate() {
+  public Date getEnddate() {
     return this.enddate;
   }
 
-  public void setEnddate(java.sql.Timestamp enddate) {
+  public void setEnddate(Date enddate) {
     this.enddate = enddate;
   }
 

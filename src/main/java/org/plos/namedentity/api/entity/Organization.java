@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement
-public class Organization extends Entity {
+public class Organization extends ParentEntity {
 
   private Integer id;
   private Integer nedid;

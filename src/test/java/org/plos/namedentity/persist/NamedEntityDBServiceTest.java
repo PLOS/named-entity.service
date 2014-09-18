@@ -608,7 +608,10 @@ public class NamedEntityDBServiceTest {
     authorRole.setNedid(1);
     authorRole.setApplicationtypeid(srcAppTypeId);
     authorRole.setTypeid(roleTypeId);
-    authorRole.setStartdate(new Timestamp(new Date().getTime()));
+
+    java.sql.Date startDate = dateNow();
+    authorRole.setStartdate(startDate);
+
     authorRole.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
     authorRole.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
     authorRole.setSourcetypeid(78);
@@ -622,13 +625,18 @@ public class NamedEntityDBServiceTest {
     // UPDATE
 
     Role savedRole = nedDBSvc.findById(authorId, Role.class);
-    savedRole.setEnddate(new Timestamp(new Date().getTime()));
+
+    java.sql.Date endDate = dateNow();
+    savedRole.setEnddate(endDate);
+
     assertTrue( nedDBSvc.update(savedRole) );
 
     // Get another instance of same role record 
 
     Role savedRole2 = nedDBSvc.findById(authorId, Role.class);
     assertEquals(savedRole, savedRole2);
+    assertEquals(savedRole.getStartdate(), savedRole2.getStartdate());
+    assertEquals(savedRole.getEnddate(), savedRole2.getEnddate());
 
     // FIND ALL Roles 
 
@@ -726,4 +734,13 @@ public class NamedEntityDBServiceTest {
     }
   }
 
+  private java.sql.Date dateNow() {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(new java.util.Date());
+    cal.set(Calendar.HOUR_OF_DAY, 0);
+    cal.set(Calendar.MINUTE, 0);
+    cal.set(Calendar.SECOND, 0);
+    cal.set(Calendar.MILLISECOND, 0);
+    return new java.sql.Date( cal.getTimeInMillis() );
+  }
 }

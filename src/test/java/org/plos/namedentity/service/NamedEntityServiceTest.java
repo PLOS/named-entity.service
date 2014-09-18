@@ -340,6 +340,54 @@ public class NamedEntityServiceTest {
   }
 
   @Test
+  public void testRoleEntityCrud() {
+
+    // CREATE role entity. we don't expect the address type to persist.
+
+    Role roleEntity = new Role();
+    roleEntity.setNedid(1);
+    roleEntity.setApplicationtype("Editorial Manager");
+    roleEntity.setType("Academic Editor (PLOS ONE)");
+    roleEntity.setStartdate( dateNow() );
+    roleEntity.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    roleEntity.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    roleEntity.setSource("Editorial Manager");
+
+    try {
+      crudService.create(roleEntity);
+      fail();
+    }
+    catch (NedValidationException expected) {
+      // typeid hasn't been resolved yet, so we expect a not-null
+      // constraint to be thrown
+    }
+
+    // try again but this time use type resolver. remember that type names are
+    // resolved by joins when querying database -- need foreign key to get name.
+    
+    Integer createRoleId = crudService.create( namedEntityService.resolveValuesToIds(roleEntity) );
+    assertNotNull( createRoleId );
+
+    Role savedEntity = namedEntityService.findResolvedEntityByKey(createRoleId, Role.class);
+    assertNotNull( savedEntity.getType() );
+
+    // UPDATE role entity. Scrub appropriate attributes from current instance
+    // and reuse. 
+
+    roleEntity.setId(createRoleId); 
+    roleEntity.setApplicationtypeid(null);
+    roleEntity.setTypeid(null); 
+    assertTrue( crudService.update(namedEntityService.resolveValuesToIds(roleEntity)) );
+
+    Role savedEntity2 = namedEntityService.findResolvedEntityByKey(createRoleId, Role.class);
+    assertNotNull( savedEntity2.getType() );
+
+    // DELETE.
+
+    assertTrue( crudService.delete(roleEntity) );
+  }
+
+  @Test
   public void testAddressEntityCrud() {
 
     // CREATE address entity. we don't expect the address type to persist.
@@ -424,8 +472,9 @@ public class NamedEntityServiceTest {
 
     List<Role> roles = new ArrayList<>();
     Role author = new Role();
+
     author.setType("Author");
-    author.setStartdate(new Timestamp(1401408000));  // "2014-05-30"
+    author.setStartdate(new java.sql.Date(1401408000));  // "2014-05-30"
 
     author.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
     author.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
@@ -437,5 +486,13 @@ public class NamedEntityServiceTest {
     return composite;
   }
 
-  //TODO - add tests with address, email, and phone combinations
+  private java.sql.Date dateNow() {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(new java.util.Date());
+    cal.set(Calendar.HOUR_OF_DAY, 0);
+    cal.set(Calendar.MINUTE, 0);
+    cal.set(Calendar.SECOND, 0);
+    cal.set(Calendar.MILLISECOND, 0);
+    return new java.sql.Date( cal.getTimeInMillis() );
+  }
 }

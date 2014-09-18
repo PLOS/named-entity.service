@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement
-public class Email extends Entity {
+public class Email extends ChildEntity {
 
   private static EmailValidator emailValidator = EmailValidator.getInstance();
 

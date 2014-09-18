@@ -19,7 +19,11 @@ package org.plos.namedentity.rest;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
+import org.plos.namedentity.api.entity.Address;
+import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Organization;
+import org.plos.namedentity.api.entity.Phonenumber;
+import org.plos.namedentity.api.entity.Uniqueidentifier;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -52,28 +56,27 @@ public class OrganizationsResource extends BaseResource {
   @Path("/{nedId}/emails")
   @ApiOperation("List emails")
   public Response getEmails(@PathParam("nedId") int nedId) {
-    return getEmails(nedId, Organization.class);
+    return getEntities(nedId, Email.class, Organization.class);
   }
 
   @GET
   @Path("/{nedId}/addresses")
   @ApiOperation("List addresses")
   public Response getAddresses(@PathParam("nedId") int nedId) {
-    return getAddresses(nedId, Organization.class);
+    return getEntities(nedId, Address.class, Organization.class);
   }
 
   @GET
   @Path("/{nedId}/phonenumbers")
   @ApiOperation("List phone numbers")
   public Response getPhonenumbers(@PathParam("nedId") int nedId) {
-    return getPhonenumbers(nedId, Organization.class);
+    return getEntities(nedId, Phonenumber.class, Organization.class);
   }
 
   @GET
   @Path("/{nedId}/xref")
   @ApiOperation("List references")
   public Response getExternalReferences(@PathParam("nedId") int nedId) {
-    return getExternalReferences(nedId, Organization.class);
+    return getEntities(nedId, Uniqueidentifier.class, Organization.class);
   }
-
 }
