@@ -9,6 +9,8 @@ Database Setup
 set up the database by running the following in MySql
 
     source src/main/resources/ned-schema.mysql.sql;
+    source src/main/resources/ned-data.mysql.sql;
+    
     create user 'ned'@'localhost' identified by '';
     grant all privileges on namedEntities.* to ned@'localhost';
     create user 'ned'@'%' identified by '';

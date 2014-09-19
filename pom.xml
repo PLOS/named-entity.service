@@ -529,6 +529,7 @@
                   <autocommit>true</autocommit>
                   <srcFiles>
                     <srcFile>src/main/resources/ned-schema.h2.sql</srcFile>
+                    <srcFile>src/main/resources/ned-data.h2.sql</srcFile>
                   </srcFiles>
                 </configuration>
               </execution>
