@@ -32,7 +32,7 @@ tomcat)
 
 *)
     echo -e "\nUsage: `basename $0` (codegen-h2|codgen-mysql|package|test|tomcat)"
-    echo -e "\n  tomcat url -> http://localhost:8080/typeclasses\n"
+    echo -e "\n  tomcat url -> http://localhost:8080\n"
     exit 0
     ;;
 esac

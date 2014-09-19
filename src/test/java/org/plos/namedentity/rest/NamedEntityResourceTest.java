@@ -20,12 +20,19 @@ import org.eclipse.persistence.jaxb.JAXBContextProperties;
 import org.eclipse.persistence.oxm.json.JsonStructureSource;
 import org.junit.Test;
 import org.plos.namedentity.api.IndividualComposite;
-import org.plos.namedentity.api.entity.*;
+import org.plos.namedentity.api.entity.Address;
+import org.plos.namedentity.api.entity.Degree;
+import org.plos.namedentity.api.entity.Email;
+import org.plos.namedentity.api.entity.Globaltype;
+import org.plos.namedentity.api.entity.Individual;
+import org.plos.namedentity.api.entity.Phonenumber;
+import org.plos.namedentity.api.entity.Role;
+import org.plos.namedentity.api.entity.Typedescription;
+import org.plos.namedentity.api.entity.Uniqueidentifier;
 
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonReader;
-import javax.ws.rs.HEAD;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -67,14 +74,6 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   private static final String INDIV_XREF_URI   = INDIVIDUAL_URI + "/1/xref";
   private static final String INDIV_DEGREE_URI = INDIVIDUAL_URI + "/1/degrees";
 
-//  private ObjectMapper mapper;
-//
-//  @Before
-//  public void setup() {
-//    this.mapper = new ObjectMapper();
-//    mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-//  }
-
   @Test
   public void testAddToIndividualComposite() throws Exception {
 
@@ -88,7 +87,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    Unmarshaller unmarshaller     = jsonUnmarshaller(IndividualComposite.class);
+    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
     IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
 
     Individual individual = composite.getIndividuals().get(0);
@@ -101,18 +100,18 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   public void testCreateIndividualComposite() throws Exception {
 
     String compositeIndividualJson = new String(Files.readAllBytes(
-                                      Paths.get(TEST_RESOURCE_PATH + "composite-individual.json")));
-  
+        Paths.get(TEST_RESOURCE_PATH + "composite-individual.json")));
+
     // Request #1. Expect success.
 
     Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
-                          .post(Entity.json(compositeIndividualJson));
+        .post(Entity.json(compositeIndividualJson));
 
     assertEquals(200, response.getStatus());
 
     String jsonPayload = response.readEntity(String.class);
 
-    Unmarshaller unmarshaller     = jsonUnmarshaller(IndividualComposite.class);
+    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
     IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
 
     Individual individual = composite.getIndividuals().get(0);
@@ -126,7 +125,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     // Request #2. Expect a validation exception (client-side error)
 
     response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(compositeIndividualJson));
+        .post(Entity.json(compositeIndividualJson));
 
     assertEquals(400, response.getStatus());
 
@@ -136,7 +135,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     // Request #3. Expect a data access exception (server-side error)
 
     response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(compositeIndividualJson));
+        .post(Entity.json(compositeIndividualJson));
 
     assertEquals(500, response.getStatus());
 
@@ -152,7 +151,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    Unmarshaller unmarshaller     = jsonUnmarshaller(IndividualComposite.class);
+    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
     IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
 
     Individual individual = composite.getIndividuals().get(0);
@@ -172,8 +171,9 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    Unmarshaller unmarshaller     = jsonUnmarshaller(IndividualComposite.class);
+    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
     IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
+
     Individual individual = composite.getIndividuals().get(0);
     assertEquals(Integer.valueOf(1), individual.getNedid());
     assertEquals("firstname", individual.getFirstname());
@@ -191,7 +191,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     final String NEW_INDIVIDUALS_JSON_PAYLOAD = "{"
         + "\"firstname\":\"" + NEW_FIRSTNAME + "\","
-        + "\"lastname\":\""  + NEW_LASTNAME  + "\""
+        + "\"lastname\":\"" + NEW_LASTNAME + "\""
         + "}";
 
     Response response = target(INDIVIDUAL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
@@ -228,9 +228,9 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /* ------------------------------------------------------------------ */
 
     String requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "address.json")));
-  
+
     Response response = target(INDIV_ADDR_URI).request(MediaType.APPLICATION_JSON_TYPE)
-                          .post(Entity.json(requestJson));
+        .post(Entity.json(requestJson));
 
     assertEquals(200, response.getStatus());
 
@@ -250,15 +250,15 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals("CA", entity.getStatecodetype());
     assertEquals("United States", entity.getCountrycodetype());
     assertEquals("12345", entity.getPostalcode());
-    assertEquals(Byte.valueOf((byte)1), entity.getIsprimary());
-    assertEquals(Byte.valueOf((byte)1), entity.getIsactive());
+    assertEquals(Byte.valueOf((byte) 1), entity.getIsprimary());
+    assertEquals(Byte.valueOf((byte) 1), entity.getIsactive());
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
     response = target(INDIV_ADDR_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(writeValueAsString(entity)));
+        .post(Entity.json(writeValueAsString(entity)));
 
     assertEquals(200, response.getStatus());
 
@@ -279,7 +279,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     responseJson = response.readEntity(String.class);
 
     Address address = unmarshalEntity(responseJson, Address.class, unmarshaller);
-    assertNotNull( address );
+    assertNotNull(address);
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY NED ID)                                                  */
@@ -310,23 +310,23 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   @Test
   public void testRoleCrud() throws IOException, JAXBException {
 
-    Date START_DATE = gmtDate(2014,6,30);  // Jun 30, 2014 00:00:00 GMT
+    Date START_DATE = gmtDate(2014, 6, 30);  // Jun 30, 2014 00:00:00 GMT
 
     /* ------------------------------------------------------------------ */
     /*  CREATE                                                            */
     /* ------------------------------------------------------------------ */
 
     String requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "role.json")));
-  
+
     Response response = target(INDIV_ROLE_URI).request(MediaType.APPLICATION_JSON_TYPE)
-                          .post(Entity.json(requestJson));
+        .post(Entity.json(requestJson));
 
     assertEquals(200, response.getStatus());
 
     String responseJson = response.readEntity(String.class);
 
     Unmarshaller unmarshaller = jsonUnmarshaller(Role.class);
-    Role entity               = unmarshalEntity(responseJson, Role.class, unmarshaller);
+    Role entity = unmarshalEntity(responseJson, Role.class, unmarshaller);
 
     assertEquals(Integer.valueOf(1), entity.getId());
     assertEquals(Integer.valueOf(1), entity.getNedid());
@@ -340,7 +340,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /* ------------------------------------------------------------------ */
 
     response = target(INDIV_ROLE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(writeValueAsString(entity)));
+        .post(Entity.json(writeValueAsString(entity)));
 
     assertEquals(200, response.getStatus());
 
@@ -361,7 +361,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     responseJson = response.readEntity(String.class);
 
     Role role = unmarshalEntity(responseJson, Role.class, unmarshaller);
-    assertNotNull( role );
+    assertNotNull(role);
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY NED ID)                                                  */
@@ -392,30 +392,30 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /* ------------------------------------------------------------------ */
 
     String emailsJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "emails.json")));
-  
+
     Response response = target(INDIV_EMAIL_URI).request(MediaType.APPLICATION_JSON_TYPE)
-                          .post(Entity.json(emailsJson));
+        .post(Entity.json(emailsJson));
 
     assertEquals(200, response.getStatus());
 
     String jsonPayload = response.readEntity(String.class);
 
     Unmarshaller unmarshaller = jsonUnmarshaller(Email.class);
-    Email entity              = unmarshalEntity(jsonPayload, Email.class, unmarshaller);
+    Email entity = unmarshalEntity(jsonPayload, Email.class, unmarshaller);
 
     assertEquals(Integer.valueOf(1), entity.getId());
     assertEquals(Integer.valueOf(1), entity.getNedid());
     assertEquals("Work", entity.getType());
     assertEquals("foo.bar.personal@gmail.com", entity.getEmailaddress());
-    assertEquals(Byte.valueOf((byte)1), entity.getIsprimary());
-    assertEquals(Byte.valueOf((byte)1), entity.getIsactive());
+    assertEquals(Byte.valueOf((byte) 1), entity.getIsprimary());
+    assertEquals(Byte.valueOf((byte) 1), entity.getIsactive());
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
     response = target(INDIV_EMAIL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                  .post(Entity.json(writeValueAsString(entity)));
+        .post(Entity.json(writeValueAsString(entity)));
 
     assertEquals(200, response.getStatus());
 
@@ -436,7 +436,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     jsonPayload = response.readEntity(String.class);
 
     Email email = unmarshalEntity(jsonPayload, Email.class, unmarshaller);
-    assertNotNull( email );
+    assertNotNull(email);
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY NED ID)                                                  */
@@ -462,23 +462,23 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     assertEquals(Response.Status.OK.getStatusCode(),
         target("/individuals/1/emails")
-        .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
+            .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
 
     assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
         target("/individuals/2/emails")
-        .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
+            .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
 
     // EMAIL CROSSING ENTITIES
 
     assertEquals(Response.Status.OK.getStatusCode(),
         target("/individuals/1/emails/1")
-        .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
+            .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
 
 //    assertEquals(Response.Status.OK.getStatusCode(), target("/organizations/2/emails/5").request(MediaType.APPLICATION_JSON_TYPE).get().getStatus()); // TODO: add this once /organizations email CRUD is done
 
     assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
         target("/individuals/1/emails/5")
-        .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
+            .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
   }
 
   @Test
@@ -495,7 +495,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     String jsonPayload = response.readEntity(String.class);
 
     Unmarshaller unmarshaller = jsonUnmarshaller(Degree.class);
-    List<Degree> degrees      = unmarshalEntities(jsonPayload, Degree.class, unmarshaller);
+    List<Degree> degrees = unmarshalEntities(jsonPayload, Degree.class, unmarshaller);
     assertEquals(1, degrees.size());
 
     Degree degree = degrees.get(0);
@@ -517,7 +517,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    Unmarshaller unmarshaller      = jsonUnmarshaller(Phonenumber.class);
+    Unmarshaller unmarshaller = jsonUnmarshaller(Phonenumber.class);
     List<Phonenumber> phonenumbers = unmarshalEntities(jsonPayload, Phonenumber.class, unmarshaller);
     assertEquals(3, phonenumbers.size());
 
@@ -542,7 +542,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     String jsonPayload = response.readEntity(String.class);
 
     List<Uniqueidentifier> xrefs = unmarshalEntities(jsonPayload, Uniqueidentifier.class,
-                                      jsonUnmarshaller(Uniqueidentifier.class));
+        jsonUnmarshaller(Uniqueidentifier.class));
     assertEquals(2, xrefs.size());
 
     for (Uniqueidentifier xref : xrefs) {
@@ -553,8 +553,8 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /*  FIND INDIVIDUALS BY EXTERNAL REFERENCE                            */
     /* ------------------------------------------------------------------ */
 
-    response = target(INDIVIDUAL_URI+"/ORCID/0000-0002-9430-3191")
-                .request(MediaType.APPLICATION_JSON_TYPE).get();
+    response = target(INDIVIDUAL_URI + "/ORCID/0000-0002-9430-3191")
+        .request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(200, response.getStatus());
     jsonPayload = response.readEntity(String.class);
@@ -570,24 +570,24 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /*  CREATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    final String NEW_TYPE_DESC  = "New Type Description";
+    final String NEW_TYPE_DESC = "New Type Description";
     final String NEW_TYPE_USAGE = "New Type Usage";
 
     final String NEW_TYPE_JSON_PAYLOAD = "{"
-            + "\"description\":\"" + NEW_TYPE_DESC  + "\","
-            + "\"howused\":\""     + NEW_TYPE_USAGE + "\""
-            + "}";
+        + "\"description\":\"" + NEW_TYPE_DESC + "\","
+        + "\"howused\":\"" + NEW_TYPE_USAGE + "\""
+        + "}";
 
     // Request #1. Expect success.
 
     Response response = target(TYPE_CLASS_URI).request(MediaType.APPLICATION_JSON_TYPE)
-                          .post(Entity.json(NEW_TYPE_JSON_PAYLOAD));
+        .post(Entity.json(NEW_TYPE_JSON_PAYLOAD));
 
     assertEquals(200, response.getStatus());
 
     String jsonPayload = response.readEntity(String.class);
 
-    Unmarshaller unmarshaller    = jsonUnmarshaller(Typedescription.class);
+    Unmarshaller unmarshaller = jsonUnmarshaller(Typedescription.class);
     Typedescription newTypeClass = unmarshalEntity(jsonPayload, Typedescription.class, unmarshaller);
 
     assertEquals(Integer.valueOf(1), newTypeClass.getId());
@@ -597,7 +597,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     // Request #2. Expect a validation exception (client-side error)
 
     response = target(TYPE_CLASS_URI).request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(NEW_TYPE_JSON_PAYLOAD));
+        .post(Entity.json(NEW_TYPE_JSON_PAYLOAD));
 
     assertEquals(400, response.getStatus());
 
@@ -607,7 +607,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     // Request #3. Expect a data access exception (server-side error)
 
     response = target(TYPE_CLASS_URI).request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(NEW_TYPE_JSON_PAYLOAD));
+        .post(Entity.json(NEW_TYPE_JSON_PAYLOAD));
 
     assertEquals(500, response.getStatus());
 
@@ -648,7 +648,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    final String UPDATE_TYPE_DESC  = "Update Type Description";
+    final String UPDATE_TYPE_DESC = "Update Type Description";
     final String UPDATE_TYPE_USAGE = "Update Type Usage";
 
     Typedescription updatedTypeClass = foundTypeClass;
@@ -660,7 +660,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     String jsonUpdatedTypeClass = writeValueAsString(updatedTypeClass);
 
     response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(jsonUpdatedTypeClass));
+        .post(Entity.json(jsonUpdatedTypeClass));
 
     assertEquals(200, response.getStatus());
 
@@ -672,14 +672,14 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     // UPDATE #2 should raise a validation exception
 
     response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(jsonUpdatedTypeClass));
+        .post(Entity.json(jsonUpdatedTypeClass));
 
     assertEquals(400, response.getStatus());
-    
+
     // UPDATE #3 should raise a server-side exception
 
     response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(jsonUpdatedTypeClass));
+        .post(Entity.json(jsonUpdatedTypeClass));
 
     assertEquals(500, response.getStatus());
 
@@ -701,27 +701,27 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /*  CREATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    final String NEW_TYPEVAL_SHORTDESC  = "New Type Val Short Description";
-    final String NEW_TYPEVAL_LONGDESC   = "New Type Val Long Description";
-    final String NEW_TYPEVAL_TYPECODE   = "XYZ";
+    final String NEW_TYPEVAL_SHORTDESC = "New Type Val Short Description";
+    final String NEW_TYPEVAL_LONGDESC = "New Type Val Long Description";
+    final String NEW_TYPEVAL_TYPECODE = "XYZ";
 
     final String NEW_TYPEVAL_JSON_PAYLOAD = "{"
-            + "\"shortdescription\":\"" + NEW_TYPEVAL_SHORTDESC + "\","
-            + "\"longdescription\":\""  + NEW_TYPEVAL_LONGDESC  + "\","
-            + "\"typecode\":\""         + NEW_TYPEVAL_TYPECODE  + "\""
-            + "}";
+        + "\"shortdescription\":\"" + NEW_TYPEVAL_SHORTDESC + "\","
+        + "\"longdescription\":\"" + NEW_TYPEVAL_LONGDESC + "\","
+        + "\"typecode\":\"" + NEW_TYPEVAL_TYPECODE + "\""
+        + "}";
 
     // Request #1. Expect success.
 
     Response response = target(TYPE_VALUE_URI).request(MediaType.APPLICATION_JSON_TYPE)
-                          .post(Entity.json(NEW_TYPEVAL_JSON_PAYLOAD));
+        .post(Entity.json(NEW_TYPEVAL_JSON_PAYLOAD));
 
     assertEquals(200, response.getStatus());
 
     String jsonPayload = response.readEntity(String.class);
 
     Unmarshaller unmarshaller = jsonUnmarshaller(Globaltype.class);
-    Globaltype newTypeVal     = unmarshalEntity(jsonPayload, Globaltype.class, unmarshaller);
+    Globaltype newTypeVal = unmarshalEntity(jsonPayload, Globaltype.class, unmarshaller);
 
     assertEquals(Integer.valueOf(1), newTypeVal.getId());
     assertEquals("Type Value #1 Short Description", newTypeVal.getShortdescription());
@@ -730,7 +730,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     // Request #2. Expect a validation exception (client-side error)
 
     response = target(TYPE_VALUE_URI).request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(NEW_TYPEVAL_JSON_PAYLOAD));
+        .post(Entity.json(NEW_TYPEVAL_JSON_PAYLOAD));
 
     assertEquals(400, response.getStatus());
 
@@ -740,7 +740,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     // Request #3. Expect a data access exception (server-side error)
 
     response = target(TYPE_VALUE_URI).request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(NEW_TYPEVAL_JSON_PAYLOAD));
+        .post(Entity.json(NEW_TYPEVAL_JSON_PAYLOAD));
 
     assertEquals(500, response.getStatus());
 
@@ -776,7 +776,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     List<Globaltype> typevaluesfortypeclass = unmarshalEntities(jsonPayload, Globaltype.class, unmarshaller);
     assertEquals(5, typevaluesfortypeclass.size());
     for (int i = 0; i < 5; i++) {
-      assertEquals(Integer.valueOf(i+1), typevaluesfortypeclass.get(i).getId());
+      assertEquals(Integer.valueOf(i + 1), typevaluesfortypeclass.get(i).getId());
     }
 
     /* ------------------------------------------------------------------ */
@@ -791,7 +791,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     String jsonUpdatedTypeVal = writeValueAsString(updatedTypeVal);
 
     response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(jsonUpdatedTypeVal));
+        .post(Entity.json(jsonUpdatedTypeVal));
 
     assertEquals(200, response.getStatus());
 
@@ -803,14 +803,14 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     // UPDATE #2 should raise a validation exception
 
     response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(jsonUpdatedTypeVal));
+        .post(Entity.json(jsonUpdatedTypeVal));
 
     assertEquals(400, response.getStatus());
-    
+
     // UPDATE #3 should raise a server-side exception
 
     response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.json(jsonUpdatedTypeVal));
+        .post(Entity.json(jsonUpdatedTypeVal));
 
     assertEquals(500, response.getStatus());
 
@@ -826,32 +826,32 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   }
 
   private <T> JAXBContext jsonJaxbContext(Class<T> clazz) throws JAXBException {
-    Map<String,Object> properties = new HashMap<String,Object>(2);
+    Map<String, Object> properties = new HashMap<String, Object>(2);
     properties.put(JAXBContextProperties.MEDIA_TYPE, "application/json");
-    properties.put(JAXBContextProperties.JSON_INCLUDE_ROOT, false); 
-    return JAXBContext.newInstance(new Class[] {clazz}, properties);
+    properties.put(JAXBContextProperties.JSON_INCLUDE_ROOT, false);
+    return JAXBContext.newInstance(new Class[]{clazz}, properties);
   }
 
   private <T> Unmarshaller jsonUnmarshaller(Class<T> clazz) throws JAXBException {
-    JAXBContext jc = jsonJaxbContext(clazz); 
+    JAXBContext jc = jsonJaxbContext(clazz);
     return jc.createUnmarshaller();
   }
 
   private <T> Marshaller jsonMarshaller(Class<T> clazz) throws JAXBException {
-    JAXBContext jc = jsonJaxbContext(clazz); 
+    JAXBContext jc = jsonJaxbContext(clazz);
     return jc.createMarshaller();
   }
 
-  private <T> T unmarshalEntity(String json, Class<T> clazz, Unmarshaller unmarshaller) 
-    throws JAXBException {
+  private <T> T unmarshalEntity(String json, Class<T> clazz, Unmarshaller unmarshaller)
+      throws JAXBException {
     return unmarshaller.unmarshal(new StreamSource(new StringReader(json)), clazz).getValue();
   }
 
   @SuppressWarnings("unchecked")
-  private <T> List<T> unmarshalEntities(String json, Class<T> clazz, Unmarshaller unmarshaller) 
-    throws JAXBException {
+  private <T> List<T> unmarshalEntities(String json, Class<T> clazz, Unmarshaller unmarshaller)
+      throws JAXBException {
     JsonReader jsonReader = Json.createReader(new StringReader(json));
-    JsonArray jsonArray   = jsonReader.readArray();
+    JsonArray jsonArray = jsonReader.readArray();
     JsonStructureSource arraySource = new JsonStructureSource(jsonArray);
     return (List<T>) unmarshaller.unmarshal(arraySource, clazz).getValue();
   }
@@ -866,7 +866,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   private Date gmtDate(int year, int month, int day) {
     Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
     // calendar month is 0-based, so subtract one
-    cal.set(year, (month-1), day, 0, 0, 0);
+    cal.set(year, (month - 1), day, 0, 0, 0);
     cal.set(Calendar.MILLISECOND, 0);
     return cal.getTime();
   }
