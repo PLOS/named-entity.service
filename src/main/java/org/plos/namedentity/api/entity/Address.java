@@ -47,7 +47,6 @@ public class Address extends ChildEntity {
 
   private Integer latitude;
   private Integer longitude;
-  private Byte    isprimary;
   private Byte isactive = 1;
 
   private String  source;
@@ -171,14 +170,6 @@ public class Address extends ChildEntity {
 
   public void setLongitude(java.lang.Integer longitude) {
     this.longitude = longitude;
-  }
-
-  public java.lang.Byte getIsprimary() {
-    return this.isprimary;
-  }
-
-  public void setIsprimary(java.lang.Byte isprimary) {
-    this.isprimary = isprimary;
   }
 
   public java.lang.Byte getIsactive() {

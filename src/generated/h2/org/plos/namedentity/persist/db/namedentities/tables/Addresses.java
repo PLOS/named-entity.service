@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Addresses extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.AddressesRecord> {
 
-	private static final long serialVersionUID = 332171049;
+	private static final long serialVersionUID = 910491927;
 
 	/**
 	 * The singleton instance of <code>NAMEDENTITIES.ADDRESSES</code>
@@ -95,11 +95,6 @@ public class Addresses extends org.jooq.impl.TableImpl<org.plos.namedentity.pers
 	 * The column <code>NAMEDENTITIES.ADDRESSES.SOURCETYPEID</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AddressesRecord, java.lang.Integer> SOURCETYPEID = createField("SOURCETYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
-	/**
-	 * The column <code>NAMEDENTITIES.ADDRESSES.ISPRIMARY</code>.
-	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AddressesRecord, java.lang.Byte> ISPRIMARY = createField("ISPRIMARY", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
 
 	/**
 	 * The column <code>NAMEDENTITIES.ADDRESSES.ISACTIVE</code>.

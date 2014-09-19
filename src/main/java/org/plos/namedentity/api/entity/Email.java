@@ -34,8 +34,7 @@ public class Email extends ChildEntity {
   private String  type;
 
   private String emailaddress;
-  private Byte isprimary = 0;  // TODO: change Byte to Bool
-  private Byte isactive  = 1;
+  private Byte isactive  = 1;  // TODO: change Byte to Bool
 
   private String  source;
   private Integer sourcetypeid;
@@ -64,14 +63,13 @@ public class Email extends ChildEntity {
         && Objects.equals(this.typeid, entity.typeid)
         && Objects.equals(this.type, entity.type)
         && Objects.equals(this.emailaddress, entity.emailaddress)
-        && Objects.equals(this.isprimary, entity.isprimary)
         && Objects.equals(this.isactive, entity.isactive);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(
-        id, nedid, typeid, type, emailaddress, isprimary, isactive);
+        id, nedid, typeid, type, emailaddress, isactive);
   }
 
 
@@ -121,14 +119,6 @@ public class Email extends ChildEntity {
 
   public void setEmailaddress(java.lang.String emailaddress) {
     this.emailaddress = emailaddress;
-  }
-
-  public java.lang.Byte getIsprimary() {
-    return this.isprimary;
-  }
-
-  public void setIsprimary(java.lang.Byte isprimary) {
-    this.isprimary = isprimary;
   }
 
   public java.lang.Byte getIsactive() {

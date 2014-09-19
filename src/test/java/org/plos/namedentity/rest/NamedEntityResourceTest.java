@@ -250,7 +250,6 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals("CA", entity.getStatecodetype());
     assertEquals("United States", entity.getCountrycodetype());
     assertEquals("12345", entity.getPostalcode());
-    assertEquals(Byte.valueOf((byte) 1), entity.getIsprimary());
     assertEquals(Byte.valueOf((byte) 1), entity.getIsactive());
 
     /* ------------------------------------------------------------------ */
@@ -407,7 +406,6 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(Integer.valueOf(1), entity.getNedid());
     assertEquals("Work", entity.getType());
     assertEquals("foo.bar.personal@gmail.com", entity.getEmailaddress());
-    assertEquals(Byte.valueOf((byte) 1), entity.getIsprimary());
     assertEquals(Byte.valueOf((byte) 1), entity.getIsactive());
 
     /* ------------------------------------------------------------------ */
@@ -454,7 +452,6 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     Email workEmail = emails.get(0);
     assertEquals("Work", workEmail.getType());
     assertEquals("fu.manchu.work@foo.com", workEmail.getEmailaddress());
-    assertTrue(workEmail.getIsprimary() == 1);
 
     /* ------------------------------------------------------------------ */
     /*  404 ERRORS                                                        */

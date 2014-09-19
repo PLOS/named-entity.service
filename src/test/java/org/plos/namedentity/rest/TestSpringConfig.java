@@ -16,19 +16,23 @@
  */
 package org.plos.namedentity.rest;
 
+import org.eclipse.persistence.jaxb.JAXBContextProperties;
+import org.eclipse.persistence.oxm.json.JsonStructureSource;
 import org.mockito.Mockito;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.service.CrudService;
 import org.plos.namedentity.service.NamedEntityService;
 import org.springframework.context.annotation.Bean;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.when;
-import static org.mockito.Matchers.isNull;
 
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonReader;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.Files;
@@ -38,25 +42,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonReader;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.stream.StreamSource;
-import org.eclipse.persistence.jaxb.JAXBContextProperties;
-import org.eclipse.persistence.oxm.json.JsonStructureSource;
-import org.plos.namedentity.api.entity.Address;
-import org.plos.namedentity.api.entity.Degree;
-import org.plos.namedentity.api.entity.Email;
-import org.plos.namedentity.api.entity.Globaltype;
-import org.plos.namedentity.api.entity.Individual;
-import org.plos.namedentity.api.entity.Organization;
-import org.plos.namedentity.api.entity.Phonenumber;
-import org.plos.namedentity.api.entity.Role;
-import org.plos.namedentity.api.entity.Typedescription;
-import org.plos.namedentity.api.entity.Uniqueidentifier;
+
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Matchers.isNull;
+import static org.mockito.Mockito.when;
 
 public class TestSpringConfig {
 
@@ -205,7 +197,6 @@ public class TestSpringConfig {
     workEmail.setId(1);
     workEmail.setType("Work");
     workEmail.setEmailaddress("fu.manchu.work@foo.com");
-    workEmail.setIsprimary((byte)1);
     emails.add( workEmail );
 
     Email personalEmail = new Email();
@@ -213,7 +204,6 @@ public class TestSpringConfig {
     personalEmail.setId(2);
     personalEmail.setType("Personal");
     personalEmail.setEmailaddress("fu.manchu.home@foo.com");
-    personalEmail.setIsprimary((byte)0);
     emails.add( personalEmail );
 
     return emails;
@@ -227,7 +217,6 @@ public class TestSpringConfig {
     workEmail.setId(5);
     workEmail.setType("Work");
     workEmail.setEmailaddress("bill@microsoft.com");
-    workEmail.setIsprimary((byte)1);
     emails.add( workEmail );
 
     return emails;
@@ -251,7 +240,6 @@ public class TestSpringConfig {
     officePhone.setType("Office");
     officePhone.setCountrycodetype("01");
     officePhone.setPhonenumber("123-456-7890");
-    officePhone.setIsprimary(true);
     phonenumbers.add( officePhone );
 
     Phonenumber mobilePhone = new Phonenumber();
@@ -259,7 +247,6 @@ public class TestSpringConfig {
     mobilePhone.setType("Mobile");
     mobilePhone.setCountrycodetype("01");
     mobilePhone.setPhonenumber("123-444-0011");
-    mobilePhone.setIsprimary(false);
     phonenumbers.add( mobilePhone );
 
     Phonenumber homePhone = new Phonenumber();
@@ -267,7 +254,6 @@ public class TestSpringConfig {
     homePhone.setType("Home");
     homePhone.setCountrycodetype("01");
     homePhone.setPhonenumber("123-555-6666");
-    homePhone.setIsprimary(false);
     phonenumbers.add( homePhone );
 
     return phonenumbers;
@@ -327,7 +313,6 @@ public class TestSpringConfig {
     emailEntity.setId(1);   // db assigned primary key
     emailEntity.setNedid(1);
     emailEntity.setEmailaddress("foo.bar.personal@gmail.com");
-    emailEntity.setIsprimary((byte)1);
     emailEntity.setIsactive((byte)1);
     emailEntity.setType("Work");
 
@@ -364,7 +349,6 @@ public class TestSpringConfig {
         Address address = addresses.get(i);
         address.setId(i+1);   // db assigned primary key (1-based)
         address.setNedid(1);
-        address.setIsprimary((byte)1);
         address.setIsactive((byte)1);
       }
 

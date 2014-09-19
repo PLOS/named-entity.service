@@ -73,14 +73,12 @@ public class NamedEntityServiceTest {
     Email workEmail = new Email();
     workEmail.setType("Work");
     workEmail.setEmailaddress("fu.manchu.work@foo.com");
-    workEmail.setIsprimary((byte)1);
     workEmail.setSource("Editorial Manager");
     emails.add( workEmail );
 
     Email personalEmail = new Email();
     personalEmail.setType("Personal");
     personalEmail.setEmailaddress("fu.manchu.home@foo.com");
-    personalEmail.setIsprimary((byte)0);
     personalEmail.setSource("Editorial Manager");
     emails.add( personalEmail );
 
@@ -96,7 +94,6 @@ public class NamedEntityServiceTest {
     officePhone.setType("Office");
     officePhone.setCountrycodetype("01");
     officePhone.setPhonenumber("123-456-7890");
-    officePhone.setIsprimary(true);
     officePhone.setSource("Editorial Manager");
     phonenumbers.add( officePhone );
 
@@ -104,7 +101,6 @@ public class NamedEntityServiceTest {
     mobilePhone.setType("Mobile");
     mobilePhone.setCountrycodetype("01");
     mobilePhone.setPhonenumber("123-444-0011");
-    mobilePhone.setIsprimary(false);
     mobilePhone.setSource("Editorial Manager");
     phonenumbers.add( mobilePhone );
 
@@ -112,7 +108,6 @@ public class NamedEntityServiceTest {
     homePhone.setType("Home");
     homePhone.setCountrycodetype("01");
     homePhone.setPhonenumber("123-555-6666");
-    homePhone.setIsprimary(false);
     homePhone.setSource("Editorial Manager");
     phonenumbers.add( homePhone );
 
@@ -132,7 +127,6 @@ public class NamedEntityServiceTest {
     officeAddress.setStatecodetype("CA");
     officeAddress.setCountrycodetype("United States");
     officeAddress.setPostalcode("1234567");
-    officeAddress.setIsprimary((byte)1);
     officeAddress.setSource("Editorial Manager");
     addresses.add( officeAddress );
 
@@ -263,7 +257,6 @@ public class NamedEntityServiceTest {
     Email workEmail = new Email();
     workEmail.setType("Work");
     workEmail.setEmailaddress("invalid@email");
-    workEmail.setIsprimary((byte)1);
     workEmail.setSource("Editorial Manager");
     emails.add( workEmail );
 
@@ -293,7 +286,6 @@ public class NamedEntityServiceTest {
     emailEntity.setNedid(1);
     emailEntity.setType("Work");
     emailEntity.setEmailaddress("bill@microsoft.com");
-    emailEntity.setIsprimary((byte)1);
     emailEntity.setSource("Editorial Manager");
 
     Integer createEmailId = crudService.create(namedEntityService.resolveValuesToIds(emailEntity));
@@ -402,7 +394,6 @@ public class NamedEntityServiceTest {
     addressEntity.setStatecodetype("CA");
     addressEntity.setCountrycodetype("United States");
     addressEntity.setPostalcode("94401");
-    addressEntity.setIsprimary((byte)1);
     addressEntity.setSource("Editorial Manager");
 
     try {

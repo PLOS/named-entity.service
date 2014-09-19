@@ -380,17 +380,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   }
 
   private List<Address> findAddressesByNedId(Integer nedId) {
-/*
-        SELECT gt1.shortDescription addresstype, a.addressline1, a.addressline2, 
-               a.addressline3, a.city, a.postalCode, a.isprimary,
-               gt2.shortDescription statecodetype,
-               gt3.shortDescription countrycodetype
-          FROM addresses a
-     LEFT JOIN globalTypes gt1 ON a.addressTypeId     = gt1.ID
-     LEFT JOIN globalTypes gt2 ON a.stateCodeTypeId   = gt2.ID
-     LEFT JOIN globalTypes gt3 ON a.countryCodeTypeId = gt3.ID
-         WHERE a.NEDID = 59
-*/
+
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
     Globaltypes gt3 = GLOBALTYPES.as("gt3");
@@ -400,7 +390,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       .select(
         a.ID,
         a.ADDRESSLINE1, a.ADDRESSLINE2, a.ADDRESSLINE3, a.CITY, 
-        a.POSTALCODE, a.ISPRIMARY,
+        a.POSTALCODE,
         gt1.SHORTDESCRIPTION.as("type"),
         gt2.SHORTDESCRIPTION.as("statecodetype"),
         gt3.SHORTDESCRIPTION.as("countrycodetype"))
@@ -414,20 +404,13 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   }
 
   private List<Email> findEmailsByNedId(Integer nedId) {
-/*
-        SELECT gt1.shortDescription emailtype, e.emailaddress, e.isprimary
-          FROM emails e
-     LEFT JOIN globalTypes gt1 ON e.emailTypeId = gt1.ID
-         WHERE e.NEDID = 59
-*/
+
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Emails      e   = EMAILS.as("e");
 
     return this.context
       .select(
-        e.ID,
-        e.EMAILADDRESS, e.ISPRIMARY, 
-        gt1.SHORTDESCRIPTION.as("type"))
+        e.ID, e.EMAILADDRESS, gt1.SHORTDESCRIPTION.as("type"))
       .from(e)
       .leftOuterJoin(gt1).on(e.TYPEID.equal(gt1.ID))
       .where(e.NEDID.equal(nedId))
@@ -436,15 +419,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   }
 
   private List<Phonenumber> findPhoneNumbersByNedId(Integer nedId) {
-/*
-        SELECT gt1.shortDescription phonenumbertype,
-               gt2.shortDescription countrycodetype,
-               p.phoneNumber phonenumber, p.extension, p.isPrimary
-          FROM phoneNumbers p
-     LEFT JOIN globalTypes gt1 ON p.phoneNumberTypeId = gt1.ID
-     LEFT JOIN globalTypes gt2 ON p.countryCodeTypeId = gt2.ID
-         WHERE p.NEDID = 59
-*/
+
     Globaltypes  gt1 = GLOBALTYPES.as("gt1");
     Globaltypes  gt2 = GLOBALTYPES.as("gt2");
     Phonenumbers p   = PHONENUMBERS.as("p");
@@ -452,7 +427,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     return this.context
       .select(
         p.ID,
-        p.PHONENUMBER, p.EXTENSION, p.ISPRIMARY,
+        p.PHONENUMBER, p.EXTENSION,
         gt1.SHORTDESCRIPTION.as("type"),
         gt2.SHORTDESCRIPTION.as("countrycodetype"))
       .from(p)
@@ -572,14 +547,12 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   private Email findEmailByPrimaryKey(Integer emailId) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
-    //Globaltypes gt2 = GLOBALTYPES.as("gt2");
     Emails        e = EMAILS.as("e");
 
     Record record = this.context
       .select(
-        e.ID, e.NEDID,
-        gt1.SHORTDESCRIPTION.as("type"),
-        e.EMAILADDRESS, e.ISPRIMARY, e.ISACTIVE)
+        e.ID, e.NEDID, gt1.SHORTDESCRIPTION.as("type"),
+        e.EMAILADDRESS, e.ISACTIVE)
       .from(e)
       .leftOuterJoin(gt1).on(e.TYPEID.equal(gt1.ID))
       .where(e.ID.equal(emailId))
@@ -599,9 +572,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     Record record = this.context
       .select(
-        a.ID,
-        a.ADDRESSLINE1, a.ADDRESSLINE2, a.ADDRESSLINE3, a.CITY, 
-        a.POSTALCODE, a.ISPRIMARY,
+        a.ID, a.NEDID,
+        a.ADDRESSLINE1, a.ADDRESSLINE2, a.ADDRESSLINE3, a.CITY, a.POSTALCODE,
         gt1.SHORTDESCRIPTION.as("type"),
         gt2.SHORTDESCRIPTION.as("statecodetype"),
         gt3.SHORTDESCRIPTION.as("countrycodetype"))

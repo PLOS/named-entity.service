@@ -32,7 +32,6 @@ public class Phonenumber extends ChildEntity {
   private String phonenumber;
   private String extension;
 
-  private Boolean isprimary;
   private Boolean isactive = true;
 
   private String  source;
@@ -137,14 +136,6 @@ public class Phonenumber extends ChildEntity {
 
   public void setExtension(String extension) {
     this.extension = extension;
-  }
-
-  public Boolean getIsprimary() {
-    return this.isprimary;
-  }
-
-  public void setIsprimary(Boolean isprimary) {
-    this.isprimary = isprimary;
   }
 
   public Boolean getIsactive() {

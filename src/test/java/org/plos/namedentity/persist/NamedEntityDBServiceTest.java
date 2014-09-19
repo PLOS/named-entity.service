@@ -254,7 +254,6 @@ public class NamedEntityDBServiceTest {
     assertNull(workEmail.getId());
     assertNotNull(workEmail.getNedid());
     assertNotNull(workEmail.getTypeid());
-    assertEquals(Byte.valueOf((byte)0), workEmail.getIsprimary());
     assertEquals(Byte.valueOf((byte)1), workEmail.getIsactive());
 
     Integer workEmailId = nedDBSvc.create( workEmail );
@@ -283,7 +282,6 @@ public class NamedEntityDBServiceTest {
     assertNull(homeEmail.getId());
     assertNotNull(homeEmail.getNedid());
     assertNotNull(homeEmail.getTypeid());
-    assertEquals(Byte.valueOf((byte)0), homeEmail.getIsprimary());
     assertEquals(Byte.valueOf((byte)1), homeEmail.getIsactive());
 
     Integer homeEmailId = nedDBSvc.create( homeEmail );
@@ -458,12 +456,10 @@ public class NamedEntityDBServiceTest {
     mobilePhone.setTypeid(mobilePhoneTypeId);
     mobilePhone.setCountrycodetypeid(usaCountryCodeTypeId);
     mobilePhone.setPhonenumber("650-123-4567");
-    mobilePhone.setIsprimary(true);
     mobilePhone.setSourcetypeid(78);
 
     assertNull(mobilePhone.getId());
     assertNotNull(mobilePhone.getNedid());
-    assertTrue(mobilePhone.getIsprimary());
 
     Integer mobilePhoneId = nedDBSvc.create( mobilePhone );
     assertNotNull(mobilePhoneId);
@@ -486,7 +482,6 @@ public class NamedEntityDBServiceTest {
     officePhone.setTypeid(officePhoneTypeId);
     officePhone.setCountrycodetypeid(usaCountryCodeTypeId);
     officePhone.setPhonenumber("650-222-9876");
-    officePhone.setIsprimary(false);
     officePhone.setSourcetypeid(78);
 
     assertNull(officePhone.getId());
@@ -553,12 +548,10 @@ public class NamedEntityDBServiceTest {
     address.setStatecodetypeid(stateCodeTypeId);
     address.setCountrycodetypeid(countryTypeId);
     address.setPostalcode("94501");
-    address.setIsprimary((byte)1);
     address.setSourcetypeid(78);
 
     assertNull(address.getId());
     assertNotNull(address.getNedid());
-    assertEquals(Byte.valueOf((byte)1), address.getIsprimary());
     assertEquals(Byte.valueOf((byte)1), address.getIsactive());
 
     Integer addressId = nedDBSvc.create( address );
