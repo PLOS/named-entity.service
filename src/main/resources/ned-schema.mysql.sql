@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS namedEntities.globalTypes (
     shortDescription TEXT NOT NULL,
     longDescription TEXT NULL,
     typeCode TEXT NOT NULL,
-    created TIMESTAMP NOT NULL DEFAULT 0,
+    created TIMESTAMP NOT NULL DEFAULT 0, -- requires setting to NULL at insert
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     createdBy INT NULL,
     lastModifiedBy INT NULL,

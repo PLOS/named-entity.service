@@ -34,7 +34,7 @@ public class TypeclassesResource extends BaseResource {
   }
 
   @GET
-  @ApiOperation("List")
+  @ApiOperation(value = "List", response = Typedescription.class)
   public Response list(@ApiParam(required = false) @QueryParam("offset") Integer offset,
                        @ApiParam(required = false) @QueryParam("limit") Integer limit) {
     try {

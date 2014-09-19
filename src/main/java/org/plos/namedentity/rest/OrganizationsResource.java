@@ -38,7 +38,7 @@ import java.util.List;
 public class OrganizationsResource extends BaseResource {
 
   @GET
-  @ApiOperation(value = "List")
+  @ApiOperation(value = "List", response = Organization.class)
   public Response list(@ApiParam(required = false) @QueryParam("offset") Integer offset,
                        @ApiParam(required = false) @QueryParam("limit") Integer limit) {
 

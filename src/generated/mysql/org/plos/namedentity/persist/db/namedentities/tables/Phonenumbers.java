@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Phonenumbers extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord> {
 
-	private static final long serialVersionUID = -976976226;
+	private static final long serialVersionUID = 1168754992;
 
 	/**
 	 * The singleton instance of <code>namedEntities.phoneNumbers</code>
@@ -60,11 +60,6 @@ public class Phonenumbers extends org.jooq.impl.TableImpl<org.plos.namedentity.p
 	 * The column <code>namedEntities.phoneNumbers.sourceTypeId</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.Integer> SOURCETYPEID = createField("sourceTypeId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
-	/**
-	 * The column <code>namedEntities.phoneNumbers.isPrimary</code>.
-	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.Byte> ISPRIMARY = createField("isPrimary", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
 
 	/**
 	 * The column <code>namedEntities.phoneNumbers.isActive</code>.
