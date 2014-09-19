@@ -30,11 +30,11 @@ public class Email extends ChildEntity {
   private Integer id;
   private Integer nedid;
 
-  private Integer typeid;
   private String  type;
+  private Integer typeid;
 
   private String emailaddress;
-  private Byte isactive  = 1;  // TODO: change Byte to Bool
+  private Boolean isactive  = true;
 
   private String  source;
   private Integer sourcetypeid;
@@ -121,11 +121,11 @@ public class Email extends ChildEntity {
     this.emailaddress = emailaddress;
   }
 
-  public java.lang.Byte getIsactive() {
+  public Boolean getIsactive() {
     return this.isactive;
   }
 
-  public void setIsactive(java.lang.Byte isactive) {
+  public void setIsactive(Boolean isactive) {
     this.isactive = isactive;
   }
 

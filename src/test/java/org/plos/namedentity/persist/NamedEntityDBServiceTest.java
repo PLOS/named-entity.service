@@ -254,7 +254,7 @@ public class NamedEntityDBServiceTest {
     assertNull(workEmail.getId());
     assertNotNull(workEmail.getNedid());
     assertNotNull(workEmail.getTypeid());
-    assertEquals(Byte.valueOf((byte)1), workEmail.getIsactive());
+    assertEquals(true, workEmail.getIsactive());
 
     Integer workEmailId = nedDBSvc.create( workEmail );
     assertNotNull(workEmailId);
@@ -263,7 +263,7 @@ public class NamedEntityDBServiceTest {
 
     Email savedWorkEmail = nedDBSvc.findById(workEmailId, Email.class);
     savedWorkEmail.setEmailaddress("super." + savedWorkEmail.getEmailaddress());
-    savedWorkEmail.setIsactive((byte)0);
+    savedWorkEmail.setIsactive(false);
     assertTrue( nedDBSvc.update(savedWorkEmail) );
 
     // Get another instance of same email record 
@@ -282,7 +282,7 @@ public class NamedEntityDBServiceTest {
     assertNull(homeEmail.getId());
     assertNotNull(homeEmail.getNedid());
     assertNotNull(homeEmail.getTypeid());
-    assertEquals(Byte.valueOf((byte)1), homeEmail.getIsactive());
+    assertEquals(true, homeEmail.getIsactive());
 
     Integer homeEmailId = nedDBSvc.create( homeEmail );
     assertNotNull(homeEmailId);
@@ -414,8 +414,7 @@ public class NamedEntityDBServiceTest {
     organization.setTypeid(organizationTypeId);
     organization.setFamiliarname("familiarname");
     organization.setLegalname("legalname");
-    organization.setIsactive((byte)1);
-    organization.setIsvisible((byte)1);
+    organization.setIsactive(true);
     organization.setSourcetypeid(78);
 
     Integer organizationId = nedDBSvc.create(organization);
@@ -552,7 +551,7 @@ public class NamedEntityDBServiceTest {
 
     assertNull(address.getId());
     assertNotNull(address.getNedid());
-    assertEquals(Byte.valueOf((byte)1), address.getIsactive());
+    assertEquals(true, address.getIsactive());
 
     Integer addressId = nedDBSvc.create( address );
     assertNotNull(addressId);

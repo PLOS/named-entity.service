@@ -182,8 +182,7 @@ public class TestSpringConfig {
   static private Organization newOrganizationEntity() {
     Organization entity = new Organization();
     entity.setNedid(2);
-    entity.setIsactive((byte)0);
-    entity.setIsvisible((byte)1);
+    entity.setIsactive(false);
     entity.setLegalname("legalname");
     entity.setFamiliarname("familiarname");
     return entity;
@@ -313,7 +312,7 @@ public class TestSpringConfig {
     emailEntity.setId(1);   // db assigned primary key
     emailEntity.setNedid(1);
     emailEntity.setEmailaddress("foo.bar.personal@gmail.com");
-    emailEntity.setIsactive((byte)1);
+    emailEntity.setIsactive(true);
     emailEntity.setType("Work");
 
     when(mockNamedEntityService.findResolvedEntityByKey(eq(emailEntity.getId()), eq(Email.class)))
@@ -349,7 +348,7 @@ public class TestSpringConfig {
         Address address = addresses.get(i);
         address.setId(i+1);   // db assigned primary key (1-based)
         address.setNedid(1);
-        address.setIsactive((byte)1);
+        address.setIsactive(true);
       }
 
       when(mockNamedEntityService.findResolvedEntityByKey(eq(addresses.get(0).getId()), eq(Address.class)))

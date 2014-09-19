@@ -47,7 +47,7 @@ public class Address extends ChildEntity {
 
   private Integer latitude;
   private Integer longitude;
-  private Byte isactive = 1;
+  private Boolean isactive = true;
 
   private String  source;
   private Integer sourcetypeid;
@@ -172,11 +172,11 @@ public class Address extends ChildEntity {
     this.longitude = longitude;
   }
 
-  public java.lang.Byte getIsactive() {
+  public Boolean getIsactive() {
     return this.isactive;
   }
 
-  public void setIsactive(java.lang.Byte isactive) {
+  public void setIsactive(Boolean isactive) {
     this.isactive = isactive;
   }
 

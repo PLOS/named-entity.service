@@ -406,7 +406,7 @@ public class CrudServiceTest {
     newAddress.setPostalcode("94401");
     //TODO - main contact not well defined.
     //newAddress.setMaincontactnamedentityid(java.lang.Integer maincontactnamedentityid);
-    newAddress.setIsactive((byte)1);
+    newAddress.setIsactive(true);
     newAddress.setSource("Editorial Manager");
 
     // save record

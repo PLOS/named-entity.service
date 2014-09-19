@@ -250,7 +250,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals("CA", entity.getStatecodetype());
     assertEquals("United States", entity.getCountrycodetype());
     assertEquals("12345", entity.getPostalcode());
-    assertEquals(Byte.valueOf((byte) 1), entity.getIsactive());
+    assertEquals(true, entity.getIsactive());
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */
@@ -406,7 +406,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(Integer.valueOf(1), entity.getNedid());
     assertEquals("Work", entity.getType());
     assertEquals("foo.bar.personal@gmail.com", entity.getEmailaddress());
-    assertEquals(Byte.valueOf((byte) 1), entity.getIsactive());
+    assertEquals(true, entity.getIsactive());
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */

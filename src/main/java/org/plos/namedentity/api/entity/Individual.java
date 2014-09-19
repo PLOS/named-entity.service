@@ -48,7 +48,7 @@ public class Individual extends ParentEntity {
   private String  source;
   private Integer sourcetypeid;
 
-  private Byte isactive = 1;
+  private Boolean isactive = true;
 
   @Override
   public boolean equals(Object o) {
@@ -96,11 +96,11 @@ public class Individual extends ParentEntity {
     this.sourcetypeid = sourcetypeid;
   }
 
-  public Byte getIsactive() {
+  public Boolean getIsactive() {
     return isactive;
   }
 
-  public void setIsactive(Byte isactive) {
+  public void setIsactive(Boolean isactive) {
     this.isactive = isactive;
   }
 
