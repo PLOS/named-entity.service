@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Uniqueidentifiers extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord> {
 
-	private static final long serialVersionUID = -2014485975;
+	private static final long serialVersionUID = 425227496;
 
 	/**
 	 * The singleton instance of <code>namedEntities.uniqueIdentifiers</code>
@@ -45,6 +45,11 @@ public class Uniqueidentifiers extends org.jooq.impl.TableImpl<org.plos.namedent
 	 * The column <code>namedEntities.uniqueIdentifiers.uniqueIdentifier</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, java.lang.String> UNIQUEIDENTIFIER = createField("uniqueIdentifier", org.jooq.impl.SQLDataType.CLOB.length(65535).nullable(false), this, "");
+
+	/**
+	 * The column <code>namedEntities.uniqueIdentifiers.sourceTypeId</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, java.lang.Integer> SOURCETYPEID = createField("sourceTypeId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>namedEntities.uniqueIdentifiers</code> table reference
@@ -97,7 +102,7 @@ public class Uniqueidentifiers extends org.jooq.impl.TableImpl<org.plos.namedent
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.UNIQUEIDENTIFIERS_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.UNIQUEIDENTIFIERS_IBFK_2);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.UNIQUEIDENTIFIERS_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.UNIQUEIDENTIFIERS_IBFK_3, org.plos.namedentity.persist.db.namedentities.Keys.UNIQUEIDENTIFIERS_IBFK_2);
 	}
 
 	/**

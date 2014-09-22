@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Roles extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord> {
 
-	private static final long serialVersionUID = -1673458629;
+	private static final long serialVersionUID = 1005342798;
 
 	/**
 	 * The singleton instance of <code>namedEntities.roles</code>
@@ -42,19 +42,24 @@ public class Roles extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.lang.Integer> TYPEID = createField("typeID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedEntities.roles.sourceApplicationTypeId</code>.
+	 * The column <code>namedEntities.roles.applicationTypeId</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.lang.Integer> SOURCEAPPLICATIONTYPEID = createField("sourceApplicationTypeId", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.lang.Integer> APPLICATIONTYPEID = createField("applicationTypeId", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>namedEntities.roles.startDate</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.sql.Date> STARTDATE = createField("startDate", org.jooq.impl.SQLDataType.DATE, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.sql.Timestamp> STARTDATE = createField("startDate", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
 	/**
 	 * The column <code>namedEntities.roles.endDate</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.sql.Date> ENDDATE = createField("endDate", org.jooq.impl.SQLDataType.DATE, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.sql.Timestamp> ENDDATE = createField("endDate", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+
+	/**
+	 * The column <code>namedEntities.roles.sourceTypeId</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.lang.Integer> SOURCETYPEID = createField("sourceTypeId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>namedEntities.roles.created</code>.
@@ -127,7 +132,7 @@ public class Roles extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_2, org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_3);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_2, org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_4, org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_3);
 	}
 
 	/**

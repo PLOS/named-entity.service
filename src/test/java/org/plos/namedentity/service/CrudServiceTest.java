@@ -26,13 +26,13 @@ import org.plos.namedentity.api.entity.Individual;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.persist.NamedEntityDBService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -50,15 +50,23 @@ public class CrudServiceTest {
   @Autowired
   CrudService crudService;
 
+  @Autowired
+  NamedEntityDBService nedDBSvc;
+
   @Test
   public void testIndividualCRUD() {
 
+    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+
     // CREATE
     Individual individual = new Individual();
+    individual.setNedid(nedId);
     individual.setFirstname("firstname");
     individual.setLastname("lastname");
     individual.setDisplayname("displayname");
-    Integer pkId = crudService.create(individual);
+    individual.setSource("Editorial Manager");
+
+    Integer pkId = crudService.create(namedEntityService.resolveValuesToIds(individual));
     assertNotNull(pkId);
 
     // READ
@@ -66,7 +74,7 @@ public class CrudServiceTest {
     assertNotNull(readEntity);
     assertEquals("firstname", readEntity.getFirstname());
     assertEquals(null, readEntity.getMiddlename());
-    assertEquals(pkId, readEntity.getNedid());
+    assertEquals(pkId, readEntity.getId());
 
     // UPDATE
     readEntity.setMiddlename("somemiddlename");
@@ -82,17 +90,25 @@ public class CrudServiceTest {
   @Test
   public void testIndividualInvalidEmail() {
 
+    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+
     Individual individual = new Individual();
+    individual.setNedid(nedId);
     individual.setFirstname("firstname");
     individual.setLastname("lastname");
     individual.setDisplayname("displayname");
-    Integer nedId = crudService.create(individual);
+    individual.setSource("Editorial Manager");
+    namedEntityService.resolveValuesToIds(individual);
+
+    crudService.create(individual);
 
     // Create
     Email email = new Email();
     email.setNedid(nedId);
     email.setType("Work");
     email.setEmailaddress("bill@microsoft");
+    email.setSource("Editorial Manager");
+    namedEntityService.resolveValuesToIds(email);
 
     try {
       crudService.create(email);
@@ -116,16 +132,22 @@ public class CrudServiceTest {
   @Test
   public void testNonNullConstraint() {
 
+    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+
     Individual individual = new Individual();
+    individual.setNedid(nedId);
     individual.setFirstname("firstname");
     individual.setLastname("lastname");
     individual.setDisplayname("displayname");
-    Integer nedId = crudService.create(individual);
+    individual.setSource("Editorial Manager");
+    namedEntityService.resolveValuesToIds(individual);
+    crudService.create(individual);
 
     // Create
     Email email = new Email();
     email.setNedid(nedId);
     email.setType("Work");
+    email.setSource("Editorial Manager");
 
     try {
       crudService.create(email);
@@ -178,7 +200,7 @@ public class CrudServiceTest {
     assertEquals(Integer.valueOf(1), typeClass1.getId());
 
     // FIND All
-    List<Typedescription> typeClasses = crudService.findAll(Typedescription.class);
+    List<Typedescription> typeClasses = crudService.findAll(Typedescription.class, 0, Integer.MAX_VALUE);
     assertNotNull(typeClasses);
     assertTrue(typeClasses.contains(typeClass1));
   }
@@ -226,7 +248,7 @@ public class CrudServiceTest {
 
     // FIND All
 
-    List<Globaltype> globalTypes = crudService.findAll(Globaltype.class);
+    List<Globaltype> globalTypes = crudService.findAll(Globaltype.class, 0, Integer.MAX_VALUE);
     assertNotNull(globalTypes);
     assertTrue(globalTypes.contains(typeVal1));
 
@@ -266,6 +288,8 @@ public class CrudServiceTest {
     newEmail.setNedid(1);
     newEmail.setTypeid(emailTypeId);
     newEmail.setEmailaddress("walter@foo.com");
+    newEmail.setSource("Editorial Manager");
+    namedEntityService.resolveValuesToIds(newEmail);
 
     // save record
 
@@ -292,7 +316,7 @@ public class CrudServiceTest {
 
     // FIND All
 
-    List<Email> allEmails = crudService.findAll(Email.class);
+    List<Email> allEmails = crudService.findAll(Email.class, 0, Integer.MAX_VALUE);
     assertNotNull(allEmails);
     assertTrue(allEmails.contains(savedEmail2));
 
@@ -321,11 +345,12 @@ public class CrudServiceTest {
 
     Role newRole = new Role();
     newRole.setNedid(1);
-    newRole.setSourceapplicationtype("Editorial Manager");
+    newRole.setApplicationtype("Editorial Manager");
     newRole.setType("Academic Editor (PLOS ONE)");
     newRole.setStartdate( dateNow() );
     newRole.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
     newRole.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    newRole.setSource("Editorial Manager");
 
     // save record
 
@@ -335,7 +360,7 @@ public class CrudServiceTest {
     Role savedRole = crudService.findById(pkId, Role.class);
     assertNotNull( savedRole );
     assertEquals(pkId, savedRole.getId());
-    assertNotNull( savedRole.getSourceapplicationtypeid() );
+    assertNotNull( savedRole.getApplicationtypeid() );
     assertNotNull( savedRole.getTypeid() );
 
     /* ------------------------------------------------------------------ */
@@ -351,7 +376,7 @@ public class CrudServiceTest {
     /*  FINDERS                                                           */
     /* ------------------------------------------------------------------ */
 
-    List<Role> allRoles = crudService.findAll(Role.class);
+    List<Role> allRoles = crudService.findAll(Role.class, 0, Integer.MAX_VALUE);
     assertNotNull(allRoles);
     assertTrue(allRoles.contains(savedRole2));
 
@@ -381,8 +406,8 @@ public class CrudServiceTest {
     newAddress.setPostalcode("94401");
     //TODO - main contact not well defined.
     //newAddress.setMaincontactnamedentityid(java.lang.Integer maincontactnamedentityid);
-    newAddress.setIsprimary((byte)1);
-    newAddress.setIsactive((byte)1);
+    newAddress.setIsactive(true);
+    newAddress.setSource("Editorial Manager");
 
     // save record
 
@@ -408,7 +433,7 @@ public class CrudServiceTest {
     /*  FINDERS                                                           */
     /* ------------------------------------------------------------------ */
 
-    List<Address> allAddresses = crudService.findAll(Address.class);
+    List<Address> allAddresses = crudService.findAll(Address.class, 0, Integer.MAX_VALUE);
     assertNotNull(allAddresses);
     assertTrue(allAddresses.contains(savedAddress2));
 
@@ -443,6 +468,8 @@ public class CrudServiceTest {
     uidEntity.setNedid(1);
     uidEntity.setTypeid(orcidTypeId);
     uidEntity.setUniqueidentifier(ORCID_ID1);
+    uidEntity.setSource("Editorial Manager");
+    namedEntityService.resolveValuesToIds(uidEntity);
 
     // save record
 
@@ -470,7 +497,7 @@ public class CrudServiceTest {
 
     // FIND All
 
-    List<Uniqueidentifier> allUids = crudService.findAll(Uniqueidentifier.class);
+    List<Uniqueidentifier> allUids = crudService.findAll(Uniqueidentifier.class, 0, Integer.MAX_VALUE);
     assertNotNull(allUids);
     assertTrue(allUids.contains(savedUid2));
 

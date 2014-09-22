@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Degrees extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord> {
 
-	private static final long serialVersionUID = 740811894;
+	private static final long serialVersionUID = -943562233;
 
 	/**
 	 * The singleton instance of <code>NAMEDENTITIES.DEGREES</code>
@@ -40,6 +40,11 @@ public class Degrees extends org.jooq.impl.TableImpl<org.plos.namedentity.persis
 	 * The column <code>NAMEDENTITIES.DEGREES.TYPEID</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> TYPEID = createField("TYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
+	 * The column <code>NAMEDENTITIES.DEGREES.SOURCETYPEID</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> SOURCETYPEID = createField("SOURCETYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>NAMEDENTITIES.DEGREES</code> table reference
@@ -92,7 +97,7 @@ public class Degrees extends org.jooq.impl.TableImpl<org.plos.namedentity.persis
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_86F, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_86F4);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_86F, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_86F4F, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_86F4);
 	}
 
 	/**

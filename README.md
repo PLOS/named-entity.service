@@ -1,55 +1,82 @@
+Named Entity Database
+=====================
 
-NAMED ENTITY SERVICE 
-===
+NED is a web service for hosting information about people and organizations. It provides a REST API backed my a MySQL database.
 
-TODO
+Database Setup
+--------------
 
-Generating Eclipse Project Files
----
-    mvn eclipse:clean eclipse:eclipse
+set up the database by running the following in MySql
+
+    source src/main/resources/ned-schema.mysql.sql;
+    source src/main/resources/ned-data.mysql.sql;
+    
+    create user 'ned'@'localhost' identified by '';
+    grant all privileges on namedEntities.* to ned@'localhost';
+    create user 'ned'@'%' identified by '';
+    grant all privileges on namedEntities.* to ned@'%';
+    flush privileges;
+    
+Running
+-------
+
+to start in embedded Tomcat instance
+
+    ./ned.sh tomcat
+    
+if you are deploying to a system wide Tomcat instance you will need to add something like the following to your context.xml
+
+    <Resource name="jdbc/ned"
+              auth="Container"
+              type="javax.sql.DataSource"
+              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+              validationQuery="SELECT 1"
+              testOnBorrow="true"
+              driverClassName="com.mysql.jdbc.Driver"
+              username="ned"
+              password=""
+              url="jdbc:mysql://localhost:3306/namedEntities" />
+
+to use the API and see the REST documentation visit the root of the service
+
+    http://localhost:8080/
 
 Running Tests
----
-    /* -------------------------------------------------------------------------- */
-    /*  TESTS                                                                     */
-    /* -------------------------------------------------------------------------- */
+-------------
 
-    * tests use an embedded jersey container (grizzly)
+tests use an embedded jersey container (grizzly)
 
-        make test 
+    ./ned.sh test
 
-    * running specific test classes
+to run a specific test class
 
-        mvn -f pom.h2.xml -Dtest=NamedEntityDBServiceImplTest test
-        mvn -f pom.h2.xml -Dtest=NamedEntityResourceTest test
+    mvn -P h2 clean test -Dtest=NamedEntityServiceTest
+    
+to run a specific test method
 
+    mvn -P h2 clean test -Dtest='NamedEntityServiceTest#testCreateIndividualCompositeWithRole'
+    
 Debugging
----
-    /* -------------------------------------------------------------------------- */
-    /*  DEBUGGING                                                                 */
-    /* -------------------------------------------------------------------------- */
+---------
 
-    * here's how to run Maven Tomcat plugin in DEBUG mode (port:8000).
+to run Maven Tomcat plugin in DEBUG mode (port:8000)
 
-        export MAVEN_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n"
-        mvn -f pom.xml tomcat:run
+    export MAVEN_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n"
+    ./ned.sh tomcat
+    
+in separate window, attach with debug client
 
-    * in separate window, attach with debug client
+    mdb -attach 8000
+    
+to debug a unit test class
+    
+    mvnDebug -P h2 clean test -DforkMode=never -Dtest=NamedEntityServiceTest
+    
+to attach to a debug unit test with IntelliJ, create a remote test config with the following command line
+    
+    -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000
 
-        mdb -attach 8000
+Generating Eclipse Project Files
+--------------------------------
 
-Deployment
----
-    /* -------------------------------------------------------------------------- */
-    /*  DEPLOYMENT                                                                */
-    /* -------------------------------------------------------------------------- */
-
-    * deploy war to a standalone container (glassfish)
-
-        make codegen-war 
-
-        http://localhost:8080/typeclasses/1
-
-    * deploy and start embedded Tomcat instance
-
-        make tomcat 
+    mvn eclipse:clean eclipse:eclipse

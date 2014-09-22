@@ -27,13 +27,12 @@ import org.plos.namedentity.api.entity.Url;
 import org.plos.namedentity.validate.Validatable;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import java.util.List;
 
 @XmlRootElement
 public class IndividualComposite implements Validatable {
 
-  private Individual             individual;
+  private List<Individual>       individuals;
   private List<Role>             roles;
   private List<Address>          addresses;
   private List<Email>            emails;
@@ -41,10 +40,6 @@ public class IndividualComposite implements Validatable {
   private List<Uniqueidentifier> uniqueidentifiers;
   private List<Degree>           degrees;
   private List<Url>              urls;
-
-  public IndividualComposite() {
-    this.individual = new Individual();
-  }
 
   @Override
   public void validate() {
@@ -55,10 +50,13 @@ public class IndividualComposite implements Validatable {
     if (emails == null || emails.size() == 0)
       throw new NedValidationException("Emails can not be empty");
 
-    individual.validate();
+    if (individuals == null || individuals.size() == 0)
+      throw new NedValidationException("Individuals can not be empty");
+
 
     // TODO: determine exactly which lists are required
 
+    for (Individual individual : individuals)     individual.validate();
     for (Role role : roles)                       role.validate();
     for (Email email : emails)                    email.validate();
 
@@ -79,6 +77,14 @@ public class IndividualComposite implements Validatable {
 
   }
 
+  public List<Individual> getIndividuals() {
+    return individuals;
+  }
+
+  public void setIndividuals(List<Individual> individuals) {
+    this.individuals = individuals;
+  }
+
   public List<Url> getUrls() {
     return urls;
   }
@@ -93,87 +99,6 @@ public class IndividualComposite implements Validatable {
 
   public void setDegrees(List<Degree> degrees) {
     this.degrees = degrees;
-  }
-
-  @XmlTransient
-  public Individual getIndividual() {
-    return individual;
-  }
-
-  public void setIndividual(Individual individual) {
-    this.individual = individual;
-  }
-
-  public Integer getNamedentityid() {
-    return this.individual.getNedid();
-  }
-
-  public void setNamedentityid(Integer namedentityid) {
-    this.individual.setNedid(namedentityid);
-  }
-
-  public String getFirstname() {
-    return this.individual.getFirstname();
-  }
-
-  public void setFirstname(String firstname) {
-    this.individual.setFirstname(firstname);
-  }
-
-  public String getMiddlename() {
-    return this.individual.getMiddlename();
-  }
-
-  public void setMiddlename(String middlename) {
-    this.individual.setMiddlename(middlename);
-  }
-
-  public String getLastname() {
-    return this.individual.getLastname();
-  }
-
-  public void setDisplayname(String Displayname) {
-    this.individual.setDisplayname(Displayname);
-  }
-
-  public String getDisplayname() {
-    return this.individual.getDisplayname();
-  }
-
-  public void setLastname(String lastname) {
-    this.individual.setLastname(lastname);
-  }
-
-  public String getNameprefix() {
-    return this.individual.getNameprefix();
-  }
-
-  public void setNameprefix(String nameprefix) {
-    this.individual.setNameprefix(nameprefix);
-  }
-
-  public String getNamesuffix() {
-    return this.individual.getNamesuffix();
-  }
-
-  public void setNamesuffix(String namesuffix) {
-    this.individual.setNamesuffix(namesuffix);
-  }
-
-  public String getPreferredlanguage() {
-    return this.individual.getPreferredlanguage();
-  }
-
-  public void setPreferredlanguage(String preferredlanguage) {
-    this.individual.setPreferredlanguage(preferredlanguage);
-  }
-
-  public String getPreferredcommunication() {
-    return this.individual.getPreferredcommunication();
-  }
-
-  public void setPreferredcommunication(String preferredcommunication) {
-    this.individual.setPreferredcommunication(preferredcommunication);
   }
 
   public List<Role> getRoles() {

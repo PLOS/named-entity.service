@@ -18,10 +18,6 @@ package org.plos.namedentity.api.entity;
 
 import java.sql.Timestamp;
 
-/**
- * JOOQ generated class(pojo=true).
- */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Audittrail extends Entity {
 
   private Integer   id;

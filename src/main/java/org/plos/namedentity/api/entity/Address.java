@@ -20,10 +20,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import java.util.Objects;
 
-/**
- * Modified JOOQ generated class(pojo=true).
- */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @XmlRootElement
 public class Address extends ChildEntity {
 
@@ -51,8 +47,18 @@ public class Address extends ChildEntity {
 
   private Integer latitude;
   private Integer longitude;
-  private Byte    isprimary;
-  private Byte isactive = 1;
+  private Boolean isactive = true;
+
+  private String  source;
+  private Integer sourcetypeid;
+
+  public Integer getSourcetypeid() {
+    return sourcetypeid;
+  }
+
+  public void setSourcetypeid(Integer sourcetypeid) {
+    this.sourcetypeid = sourcetypeid;
+  }
 
   public java.lang.Integer getId() {
     return this.id;
@@ -68,6 +74,14 @@ public class Address extends ChildEntity {
 
   public void setNedid(java.lang.Integer nedid) {
     this.nedid = nedid;
+  }
+
+  public String getSource() {
+    return source;
+  }
+
+  public void setSource(String source) {
+    this.source = source;
   }
 
   public java.lang.Integer getTypeid() {
@@ -158,19 +172,11 @@ public class Address extends ChildEntity {
     this.longitude = longitude;
   }
 
-  public java.lang.Byte getIsprimary() {
-    return this.isprimary;
-  }
-
-  public void setIsprimary(java.lang.Byte isprimary) {
-    this.isprimary = isprimary;
-  }
-
-  public java.lang.Byte getIsactive() {
+  public Boolean getIsactive() {
     return this.isactive;
   }
 
-  public void setIsactive(java.lang.Byte isactive) {
+  public void setIsactive(Boolean isactive) {
     this.isactive = isactive;
   }
 

@@ -18,8 +18,7 @@ package org.plos.namedentity.rest;
 
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
-import org.plos.namedentity.api.EntityNotFoundException;
-import org.plos.namedentity.api.NedValidationException;
+import com.wordnik.swagger.annotations.ApiParam;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Organization;
@@ -27,9 +26,9 @@ import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -38,36 +37,18 @@ import java.util.List;
 @Api("/organizations")
 public class OrganizationsResource extends BaseResource {
 
-  @POST
-  @ApiOperation(value = "Create", response =  Organization.class)
-  public Response create(Organization object) {
-    try {
-      return Response.ok(namedEntityService.createOrganization(object)).build();
-    } catch (NedValidationException e) {
-      return validationError(e, "Unable to create organization");
-    } catch (Exception e) {
-      return serverError(e, "Unable to create organization");
-    }
-  }
-
   @GET
-  @Path("/{nedId}")
-  @ApiOperation(value = "Read", response =  Organization.class)
-  public Response read(@PathParam("nedId") int nedId) {
-    try {
-      return Response.ok(namedEntityService.findResolvedEntity(nedId, Organization.class)).build();
-    } catch (EntityNotFoundException e) {
-      return entityNotFound(e);
-    } catch (Exception e) {
-      return serverError(e, "Find organization by id failed");
-    }
-  }
+  @ApiOperation(value = "List", response = Organization.class)
+  public Response list(@ApiParam(required = false) @QueryParam("offset") Integer offset,
+                       @ApiParam(required = false) @QueryParam("limit") Integer limit) {
 
-  @GET
-  @ApiOperation(value = "List")
-  public Response list() {
+    if (offset == null || offset < 0)
+      offset = 0;
+    if (limit == null || limit <= 0 || limit > MAX_RESULT_COUNT)
+      limit = DEFAULT_RESULT_COUNT;
+    
     return Response.ok(new GenericEntity<List<Organization>>
-        (crudService.findAll(Organization.class)) {
+        (crudService.findAll(Organization.class, offset, limit)) {
     }).build();
   }
 

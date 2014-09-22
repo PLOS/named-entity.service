@@ -1,69 +1,85 @@
 {
-   "firstname" : "Jane",
-   "middlename" : "Q",
-   "namesuffix" : "III",
-   "lastname" : "Doe",
-   "phonenumbers" : [
-      {
-         "extension" : "x012",
-         "isprimary" : "true",
-         "phonenumber" : "650-123-4567",
-         "type" : "Office",
-         "countrycodetype" : "01"
-      },
-      {
-         "isprimary" : "false",
-         "phonenumber" : "650-111-2222",
-         "type" : "Mobile",
-         "countrycodetype" : "01"
-      }
-   ],
-   "preferredlanguage" : "English",
-   "preferredcommunication" : "Email",
-   "addresses" : [
-      {
-         "statecodetype" : "CA",
-         "isprimary" : "true",
-         "city" : "San Francisco",
-         "addressline1" : "123 Maple Street",
-         "addresstype" : "Office",
-         "postalcode" : "94501",
-         "countrycodetype" : "United States"
-      }
-   ],
-   "emails" : [
-      {
-         "isprimary" : "false",
-         "type" : "Personal",
-         "emailaddress" : "jane.q.doe.personal@foo.com"
-      },
-      {
-         "isprimary" : "true",
-         "type" : "Work",
-         "emailaddress" : "jane.q.doe.work@foo.com"
-      }
-   ],
-   "degrees" : [
-      {
-        "type":"MD"
-      },
-      {
-        "type":"PhD"
-      }
-   ],
-   "nameprefix" : "Mrs.",
-   "role" : {
-      "startdate" : "2014-06-02",
-      "roletype" : "Author"
-   },
-   "uniqueidentifiers" : [
-      {
-         "type" : "ORCID",
-         "uniqueidentifier" : "0000-0002-9430-319X"
-      },
-      {
-         "type" : "Editorial Manager",
-         "uniqueidentifier" : "PONE-579386"
-      }
-   ]
+  "individuals" : [
+    {
+      "firstname" : "Jane",
+      "middlename" : "Q",
+      "namesuffix" : "III",
+      "lastname" : "Doe",
+      "preferredlanguage" : "English",
+      "preferredcommunication" : "Email",
+      "nameprefix" : "Mrs.",
+      "source": "Editorial Manager"
+    }
+  ],
+  "phonenumbers" : [
+    {
+      "extension" : "x012",
+      "isprimary" : "true",
+      "phonenumber" : "650-123-4567",
+      "type" : "Office",
+      "countrycodetype" : "1",
+      "source": "Editorial Manager"
+    },
+    {
+      "isprimary" : "false",
+      "phonenumber" : "650-111-2222",
+      "type" : "Mobile",
+      "countrycodetype" : "1",
+      "source": "Editorial Manager"
+    }
+  ],
+  "addresses" : [
+    {
+      "statecodetype" : "CA",
+      "isprimary" : "true",
+      "city" : "San Francisco",
+      "addressline1" : "123 Maple Street",
+      "addresstype" : "Office",
+      "postalcode" : "94501",
+      "countrycodetype" : "UNITED STATES",
+      "source": "Editorial Manager"
+    }
+  ],
+  "emails" : [
+    {
+      "isprimary" : "false",
+      "type" : "Personal",
+      "emailaddress" : "jane.q.doe.personal@foo.com",
+      "source": "Editorial Manager"
+    },
+    {
+      "isprimary" : "true",
+      "type" : "Work",
+      "emailaddress" : "jane.q.doe.work@foo.com",
+      "source": "Editorial Manager"
+    }
+  ],
+  "degrees" : [
+    {
+      "type":"MD",
+      "source": "Editorial Manager"
+    },
+    {
+      "type":"PhD",
+      "source": "Editorial Manager"
+    }
+  ],
+  "roles" : [
+    {
+      "type" : "Author",
+      "source": "Editorial Manager"
+    }
+  ],
+  "uniqueidentifiers" : [
+    {
+      "type" : "ORCID",
+      "uniqueidentifier" : "0000-0002-9430-319X",
+      "source": "Editorial Manager"
+    },
+    {
+      "type" : "Editorial Manager",
+      "uniqueidentifier" : "PONE-579386",
+      "source": "Editorial Manager"
+    }
+  ]
 }

@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Individuals extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord> {
 
-	private static final long serialVersionUID = -1629755735;
+	private static final long serialVersionUID = -1225323930;
 
 	/**
 	 * The singleton instance of <code>NAMEDENTITIES.INDIVIDUALS</code>
@@ -25,6 +25,11 @@ public class Individuals extends org.jooq.impl.TableImpl<org.plos.namedentity.pe
 	public java.lang.Class<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord> getRecordType() {
 		return org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord.class;
 	}
+
+	/**
+	 * The column <code>NAMEDENTITIES.INDIVIDUALS.ID</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>NAMEDENTITIES.INDIVIDUALS.NEDID</code>.
@@ -64,7 +69,7 @@ public class Individuals extends org.jooq.impl.TableImpl<org.plos.namedentity.pe
 	/**
 	 * The column <code>NAMEDENTITIES.INDIVIDUALS.DISPLAYNAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> DISPLAYNAME = createField("DISPLAYNAME", org.jooq.impl.SQLDataType.CLOB.length(2147483647).nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.String> DISPLAYNAME = createField("DISPLAYNAME", org.jooq.impl.SQLDataType.CLOB.length(2147483647), this, "");
 
 	/**
 	 * The column <code>NAMEDENTITIES.INDIVIDUALS.PREFERREDLANGUAGETYPEID</code>.
@@ -82,14 +87,14 @@ public class Individuals extends org.jooq.impl.TableImpl<org.plos.namedentity.pe
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, byte[]> PHOTOIMAGE = createField("PHOTOIMAGE", org.jooq.impl.SQLDataType.VARBINARY, this, "");
 
 	/**
+	 * The column <code>NAMEDENTITIES.INDIVIDUALS.SOURCETYPEID</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Integer> SOURCETYPEID = createField("SOURCETYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
 	 * The column <code>NAMEDENTITIES.INDIVIDUALS.ISACTIVE</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Byte> ISACTIVE = createField("ISACTIVE", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
-
-	/**
-	 * The column <code>NAMEDENTITIES.INDIVIDUALS.ISVISIBLE</code>.
-	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Byte> ISVISIBLE = createField("ISVISIBLE", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
 
 	/**
 	 * Create a <code>NAMEDENTITIES.INDIVIDUALS</code> table reference
@@ -117,6 +122,14 @@ public class Individuals extends org.jooq.impl.TableImpl<org.plos.namedentity.pe
 	 * {@inheritDoc}
 	 */
 	@Override
+	public org.jooq.Identity<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, java.lang.Integer> getIdentity() {
+		return org.plos.namedentity.persist.db.namedentities.Keys.IDENTITY_INDIVIDUALS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord> getPrimaryKey() {
 		return org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_2;
 	}
@@ -134,7 +147,7 @@ public class Individuals extends org.jooq.impl.TableImpl<org.plos.namedentity.pe
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_2A, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_2AC, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_2ACA, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_2ACA4);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualsRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_2A, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_2ACA, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_2ACA4, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_2ACA44, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_2ACA44D, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_2AC);
 	}
 
 	/**

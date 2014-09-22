@@ -78,20 +78,12 @@ public class OrganizationComposite implements Validatable {
     this.organization.setTypeid(organizationmaincontactid);
   }
 
-  public Byte getIsactive() {
+  public Boolean getIsactive() {
     return this.organization.getIsactive();
   }
 
-  public void setIsactive(Byte isactive) {
+  public void setIsactive(Boolean isactive) {
     this.organization.setIsactive(isactive);
-  }
-
-  public Byte getIsvisible() {
-    return this.organization.getIsvisible();
-  }
-
-  public void setIsvisible(Byte isvisible) {
-    this.organization.setIsvisible(isvisible);
   }
 
   public String getOrganizationtype() {

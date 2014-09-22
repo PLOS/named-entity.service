@@ -16,11 +16,10 @@
  */
 package org.plos.namedentity.api.adapter;
  
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
-
-import javax.xml.bind.annotation.adapters.XmlAdapter;
  
 public class DateAdapter extends XmlAdapter<String, Date> {
 

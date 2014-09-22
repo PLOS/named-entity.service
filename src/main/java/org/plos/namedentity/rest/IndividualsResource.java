@@ -2,7 +2,9 @@ package org.plos.namedentity.rest;
 
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
 import org.plos.namedentity.api.EntityNotFoundException;
+import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Degree;
@@ -29,56 +31,82 @@ import java.util.List;
 public class IndividualsResource extends BaseResource {
 
   @POST
-  @ApiOperation(value = "Create", response = Individual.class)
-  public Response create(Individual entity) {
+  @ApiOperation(value = "Create individual composite", response = IndividualComposite.class)
+  public Response create(IndividualComposite composite) {
     try {
-      namedEntityService.resolveValuesToIds(entity);
-
-      Integer nedId = crudService.create(entity);
-
       return Response.status(Response.Status.OK).entity(
-          namedEntityService.findResolvedEntity(nedId, Individual.class)
-                                                       ).build();
-
+          namedEntityService.addToComposite(composite, null)).build();
     } catch (NedValidationException e) {
-      return validationError(e, "Unable to create individual");
+      return validationError(e, "Unable to create individual composite");
     } catch (Exception e) {
-      return serverError(e, "Unable to create individual");
+      return serverError(e, "Unable to create individual composite");
+    }
+  }
+
+  @POST
+  @Path("/{nedId}")
+  @ApiOperation(value = "Add to existing individual composite", response = IndividualComposite.class)
+  public Response add(@PathParam("nedId") int nedId, IndividualComposite composite) {
+    try {
+      return Response.status(Response.Status.OK).entity(
+          namedEntityService.addToComposite(composite, nedId)).build();
+    } catch (NedValidationException e) {
+      return validationError(e, "Unable to add to individual composite");
+    } catch (Exception e) {
+      return serverError(e, "Unable to add to individual composite");
     }
   }
 
   @GET
   @Path("/{nedId}")
   @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-  @ApiOperation(value = "Read", response = Individual.class)
+  @ApiOperation(value = "Read individual composite", response = IndividualComposite.class)
   public Response read(@PathParam("nedId") int nedId) {
     try {
       return Response.status(Response.Status.OK).entity(
-          namedEntityService.findResolvedEntity(nedId, Individual.class)
-                                                       ).build();
+          namedEntityService.findIndividualComposite(nedId)).build();
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
     } catch (Exception e) {
-      return serverError(e, "Find individual by id failed");
+      return serverError(e, "Unable to read individual composite");
+    }
+  }
+
+  @GET
+  @Path("/{uidType}/{uidValue}")
+  @ApiOperation(value = "Read individual composite", response = IndividualComposite.class)
+  public Response readByUid(@PathParam("uidType") String uidType,
+                            @PathParam("uidValue") String uidValue) {
+    try {
+
+      Individual individual = namedEntityService.findResolvedEntityByUid(
+          uidType, uidValue, Individual.class);
+
+      return Response.status(Response.Status.OK).entity(
+          namedEntityService.findIndividualComposite(individual.getNedid())).build();
+    } catch (Exception e) {
+      return serverError(e, "Find all individuals failed");
     }
   }
 
   @POST
-  @Path("/{nedId}")
-  @ApiOperation(value = "Update", response = Individual.class)
-  public Response update(@PathParam("nedId") int nedId, Individual entity) {
+  @Path("/{nedId}/{id}")
+  @ApiOperation(value = "Update a single individual entity", response = Individual.class)
+  public Response update(@PathParam("nedId") int nedId,
+                         @PathParam("id") int id, Individual entity) {
 
     try {
 
-      entity.setNedid(nedId);  // TODO: check if path var=payload for id?
+      checkNedIdForEntity(nedId, Individual.class);
+
+      entity.setId(id);
 
       namedEntityService.resolveValuesToIds(entity);
 
       crudService.update(entity);
 
-      entity = namedEntityService.findResolvedEntity(nedId, Individual.class);
-
-      return Response.ok().entity(entity).build();
+      return Response.ok().entity(
+          namedEntityService.findResolvedEntityByKey(id, Individual.class)).build();
 
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
@@ -89,15 +117,16 @@ public class IndividualsResource extends BaseResource {
   }
 
   @DELETE
-  @Path("/{nedId}")
-  @ApiOperation(value = "Delete")
-  public Response delete(@PathParam("nedId") int nedId) {
+  @Path("/{nedId}/{id}")
+  @ApiOperation(value = "Delete a single individual entity")
+  public Response delete(@PathParam("nedId") int nedId, @PathParam("id") int id) {
 
     try {
 
-      Individual entity = namedEntityService.findResolvedEntity(nedId, Individual.class);
+      checkNedIdForEntity(nedId, Individual.class);
 
-      crudService.delete(entity);
+      // TODO: validate response
+      crudService.delete(namedEntityService.findResolvedEntityByKey(id, Individual.class));
 
       return Response.status(Response.Status.NO_CONTENT).build();
 
@@ -110,22 +139,23 @@ public class IndividualsResource extends BaseResource {
   }
 
   @GET
-  @ApiOperation(value = "List")
-  public Response list(@QueryParam("uidType") String uidType,
-                       @QueryParam("uidValue") String uidValue) {
+  @ApiOperation(value = "List individual entities", response = Individual.class)
+  public Response list(@ApiParam(required = false) @QueryParam("offset") Integer offset,
+                       @ApiParam(required = false) @QueryParam("limit") Integer limit) {
     try {
-      List<Individual> individuals = null;
-      
-      if (isEmptyOrBlank(uidType) || isEmptyOrBlank(uidValue)) {
-        individuals = crudService.findAll(Individual.class);
-      } else {
-        individuals = namedEntityService.findResolvedEntityByUid(
-            uidType, uidValue, Individual.class);
-      }
+
+      // TODO: nest/group by NedId?
+
+      if (offset == null || offset < 0)
+        offset = 0;
+      if (limit == null || limit <= 0 || limit > MAX_RESULT_COUNT)
+        limit = DEFAULT_RESULT_COUNT;
+
       return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<Individual>>(individuals){}).build();
-    }
-    catch(Exception e) {
+          new GenericEntity<List<Individual>>(
+              crudService.findAll(Individual.class, offset, limit)) {
+          }).build();
+    } catch (Exception e) {
       return serverError(e, "Find all individuals failed");
     }
   }
@@ -169,7 +199,7 @@ public class IndividualsResource extends BaseResource {
 
   @GET
   @Path("/{nedId}/emails")
-  @ApiOperation(value = "List emails")
+  @ApiOperation(value = "List emails", response = Email.class)
   public Response getEmails(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Email.class, Individual.class);
   }
@@ -213,7 +243,7 @@ public class IndividualsResource extends BaseResource {
 
   @GET
   @Path("/{nedId}/addresses")
-  @ApiOperation(value = "List addresses")
+  @ApiOperation(value = "List addresses", response = Address.class)
   public Response getAddresss(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Address.class, Individual.class);
   }
@@ -224,10 +254,15 @@ public class IndividualsResource extends BaseResource {
 
   @GET
   @Path("/{nedId}/phonenumbers")
-  @ApiOperation(value = "List phone numbers")
+  @ApiOperation(value = "List phone numbers", response = Phonenumber.class)
   public Response getPhonenumbers(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Phonenumber.class, Individual.class);
   }
+
+
+  /* ----------------------------------------------------------------------- */
+  /*  REFERENCES CRUD                                                        */
+  /* ----------------------------------------------------------------------- */
 
   @GET
   @Path("/{nedId}/xref")
@@ -236,19 +271,15 @@ public class IndividualsResource extends BaseResource {
     return getEntities(nedId, Uniqueidentifier.class, Individual.class);
   }
 
+  /* ----------------------------------------------------------------------- */
+  /*  DEGREES CRUD                                                           */
+  /* ----------------------------------------------------------------------- */
+
   @GET
   @Path("/{nedId}/degrees")
   @ApiOperation(value = "List degrees")
   public Response getDegrees(@PathParam("nedId") int nedId) {
-    try {
-      return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<Degree>>(
-              namedEntityService.findResolvedEntities(
-                  nedId, Degree.class)){}).build();
-    }
-    catch(Exception e) {
-      return serverError(e, "Find degrees by nedId failed");
-    }
+    return getEntities(nedId, Degree.class, Individual.class);
   }
 
   /* ----------------------------------------------------------------------- */

@@ -22,6 +22,7 @@ import org.jooq.Result;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.persist.db.namedentities.tables.Globaltypes;
 import org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions;
@@ -132,7 +133,7 @@ public class NamedEntityDBServiceTest {
 
   @Test
   public void testFindAllOnEmptyTable() {
-    List<Journal> journals = nedDBSvc.findAll(Journal.class);
+    List<Journal> journals = nedDBSvc.findAll(Journal.class, 0, Integer.MAX_VALUE);
     assertNotNull(journals);
     assertEquals(0, journals.size());
   }
@@ -158,7 +159,7 @@ public class NamedEntityDBServiceTest {
     assertEquals(entity, entity2);
 
     // Find all type classes
-    List<Typedescription> typeClasses = nedDBSvc.findAll(Typedescription.class);
+    List<Typedescription> typeClasses = nedDBSvc.findAll(Typedescription.class, 0, Integer.MAX_VALUE);
     assertTrue(typeClasses.size() >= 20);
 
     // Try to find a type class which doesn't exist
@@ -215,7 +216,7 @@ public class NamedEntityDBServiceTest {
     assertEquals(entity, entity2);
 
     // Find all global types 
-    List<Globaltype> globalTypes = nedDBSvc.findAll(Globaltype.class);
+    List<Globaltype> globalTypes = nedDBSvc.findAll(Globaltype.class, 0, Integer.MAX_VALUE);
     assertTrue(globalTypes.size() >= 75);
 
     // Find global types for a type class
@@ -248,12 +249,12 @@ public class NamedEntityDBServiceTest {
     workEmail.setNedid(1);
     workEmail.setTypeid(nedDBSvc.findTypeValue(emailTypeClassId, "Work"));
     workEmail.setEmailaddress("walter.work@foo.com");
+    workEmail.setSourcetypeid(78);
 
     assertNull(workEmail.getId());
     assertNotNull(workEmail.getNedid());
     assertNotNull(workEmail.getTypeid());
-    assertEquals(Byte.valueOf((byte)0), workEmail.getIsprimary());
-    assertEquals(Byte.valueOf((byte)1), workEmail.getIsactive());
+    assertEquals(true, workEmail.getIsactive());
 
     Integer workEmailId = nedDBSvc.create( workEmail );
     assertNotNull(workEmailId);
@@ -262,7 +263,7 @@ public class NamedEntityDBServiceTest {
 
     Email savedWorkEmail = nedDBSvc.findById(workEmailId, Email.class);
     savedWorkEmail.setEmailaddress("super." + savedWorkEmail.getEmailaddress());
-    savedWorkEmail.setIsactive((byte)0);
+    savedWorkEmail.setIsactive(false);
     assertTrue( nedDBSvc.update(savedWorkEmail) );
 
     // Get another instance of same email record 
@@ -276,19 +277,19 @@ public class NamedEntityDBServiceTest {
     homeEmail.setNedid(1);
     homeEmail.setTypeid(nedDBSvc.findTypeValue(emailTypeClassId, "Personal"));
     homeEmail.setEmailaddress("walter.home@foo.com");
+    homeEmail.setSourcetypeid(78);
 
     assertNull(homeEmail.getId());
     assertNotNull(homeEmail.getNedid());
     assertNotNull(homeEmail.getTypeid());
-    assertEquals(Byte.valueOf((byte)0), homeEmail.getIsprimary());
-    assertEquals(Byte.valueOf((byte)1), homeEmail.getIsactive());
+    assertEquals(true, homeEmail.getIsactive());
 
     Integer homeEmailId = nedDBSvc.create( homeEmail );
     assertNotNull(homeEmailId);
 
     // FIND ALL Email Records 
 
-    List<Email> allEmailsInDB = nedDBSvc.findAll(Email.class);
+    List<Email> allEmailsInDB = nedDBSvc.findAll(Email.class, 0, Integer.MAX_VALUE);
     assertTrue( allEmailsInDB.size() >= 2 );
 
     // FIND BY ATTRIBUTE (Lookup email by address)
@@ -361,6 +362,7 @@ public class NamedEntityDBServiceTest {
     individual.setNamesuffixtypeid(suffixTypeId);
     individual.setPreferredlanguagetypeid(langTypeId);
     individual.setPreferredcommunicationmethodtypeid(commMethodTypeId);
+    individual.setSourcetypeid(78);
 
     Integer individualId = nedDBSvc.create( individual );
     assertNotNull(individualId);
@@ -377,27 +379,26 @@ public class NamedEntityDBServiceTest {
 
     // FIND ALL Email Records 
 
-    List<Individual> allIndividualsInDB = nedDBSvc.findAll(Individual.class);
+    List<Individual> allIndividualsInDB = nedDBSvc.findAll(Individual.class, 0, Integer.MAX_VALUE);
     assertTrue(allIndividualsInDB.size() > 0);
 
     // FIND BY JOIN-QUERY 
 
-    Individual entity = nedDBSvc.findResolvedEntity(individualId, Individual.class);
-    assertNotNull( entity );
-    assertEquals("firstname", entity.getFirstname());
-    assertEquals("Mr.", entity.getNameprefix());
-    assertEquals("II", entity.getNamesuffix());
-    assertEquals("Italian", entity.getPreferredlanguage());
-    assertEquals("Email", entity.getPreferredcommunication());
+    List<Individual> entities = nedDBSvc.findResolvedEntities(nedId, Individual.class);
+    assertNotNull( entities );
+    assertEquals("firstname", entities.get(0).getFirstname());
+    assertEquals("Mr.", entities.get(0).getNameprefix());
+    assertEquals("II", entities.get(0).getNamesuffix());
+    assertEquals("Italian", entities.get(0).getPreferredlanguage());
+    assertEquals("Email", entities.get(0).getPreferredcommunication());
 
     // DELETE
 
     Individual individualToDelete = new Individual();
-    individualToDelete.setNedid(individualId);
+    individualToDelete.setId(individualId);
 
     assertTrue( nedDBSvc.delete(individualToDelete) );
   }
-
 
   @Test
   public void testOrganizationCRUD() {
@@ -413,8 +414,8 @@ public class NamedEntityDBServiceTest {
     organization.setTypeid(organizationTypeId);
     organization.setFamiliarname("familiarname");
     organization.setLegalname("legalname");
-    organization.setIsactive((byte)1);
-    organization.setIsvisible((byte)1);
+    organization.setIsactive(true);
+    organization.setSourcetypeid(78);
 
     Integer organizationId = nedDBSvc.create(organization);
     assertNotNull(organizationId);
@@ -430,23 +431,9 @@ public class NamedEntityDBServiceTest {
 
     // FIND ALL Email Records
 
-    List<Organization> allEntitiesInDB = nedDBSvc.findAll(Organization.class);
+    List<Organization> allEntitiesInDB = nedDBSvc.findAll(Organization.class, 0, Integer.MAX_VALUE);
     assertTrue(allEntitiesInDB.size() > 0);
 
-    // FIND entity with
-
-    Organization entity = nedDBSvc.findResolvedEntity(organizationId, Organization.class);
-    assertNotNull( entity );
-
-    entity.setTypeid(organizationTypeId);
-    assertEquals(entity, savedEntity2);
-
-    // DELETE
-
-    Organization entityToDelete = new Organization();
-    entityToDelete.setNedid(organizationId);
-
-    assertTrue( nedDBSvc.delete(entityToDelete) );
   }
 
   @Test
@@ -468,11 +455,10 @@ public class NamedEntityDBServiceTest {
     mobilePhone.setTypeid(mobilePhoneTypeId);
     mobilePhone.setCountrycodetypeid(usaCountryCodeTypeId);
     mobilePhone.setPhonenumber("650-123-4567");
-    mobilePhone.setIsprimary(true);
+    mobilePhone.setSourcetypeid(78);
 
     assertNull(mobilePhone.getId());
     assertNotNull(mobilePhone.getNedid());
-    assertTrue(mobilePhone.getIsprimary());
 
     Integer mobilePhoneId = nedDBSvc.create( mobilePhone );
     assertNotNull(mobilePhoneId);
@@ -495,7 +481,7 @@ public class NamedEntityDBServiceTest {
     officePhone.setTypeid(officePhoneTypeId);
     officePhone.setCountrycodetypeid(usaCountryCodeTypeId);
     officePhone.setPhonenumber("650-222-9876");
-    officePhone.setIsprimary(false);
+    officePhone.setSourcetypeid(78);
 
     assertNull(officePhone.getId());
     assertNotNull(officePhone.getNedid());
@@ -506,7 +492,7 @@ public class NamedEntityDBServiceTest {
 
     // FIND ALL Phone Numbers 
 
-    List<Phonenumber> allPhonenumbersInDb = nedDBSvc.findAll(Phonenumber.class);
+    List<Phonenumber> allPhonenumbersInDb = nedDBSvc.findAll(Phonenumber.class, 0, Integer.MAX_VALUE);
     assertTrue( allPhonenumbersInDb.size() >= 2 );
             
     //TODO : FIND BY ATTRIBUTE (Lookup email by phone number)
@@ -561,12 +547,11 @@ public class NamedEntityDBServiceTest {
     address.setStatecodetypeid(stateCodeTypeId);
     address.setCountrycodetypeid(countryTypeId);
     address.setPostalcode("94501");
-    address.setIsprimary((byte)1);
+    address.setSourcetypeid(78);
 
     assertNull(address.getId());
     assertNotNull(address.getNedid());
-    assertEquals(Byte.valueOf((byte)1), address.getIsprimary());
-    assertEquals(Byte.valueOf((byte)1), address.getIsactive());
+    assertEquals(true, address.getIsactive());
 
     Integer addressId = nedDBSvc.create( address );
     assertNotNull(addressId);
@@ -584,7 +569,7 @@ public class NamedEntityDBServiceTest {
 
     // FIND ALL Phone Numbers 
 
-    List<Address> allAddressesInDb = nedDBSvc.findAll(Address.class);
+    List<Address> allAddressesInDb = nedDBSvc.findAll(Address.class, 0, Integer.MAX_VALUE);
     assertTrue( allAddressesInDb.size() > 0 );
 
     // FIND BY JOIN-QUERY 
@@ -605,7 +590,7 @@ public class NamedEntityDBServiceTest {
 
     // CREATE
 
-    Integer srcAppTypeClassId = nedDBSvc.findTypeClass("Source Applications");
+    Integer srcAppTypeClassId = nedDBSvc.findTypeClass("User Applications");
     Integer roleTypeClassId   = nedDBSvc.findTypeClass("Roles");
 
     Integer srcAppTypeId = nedDBSvc.findTypeValue(srcAppTypeClassId, "Editorial Manager"); assertNotNull(srcAppTypeId);
@@ -613,7 +598,7 @@ public class NamedEntityDBServiceTest {
 
     Role authorRole = new Role();
     authorRole.setNedid(1);
-    authorRole.setSourceapplicationtypeid(srcAppTypeId);
+    authorRole.setApplicationtypeid(srcAppTypeId);
     authorRole.setTypeid(roleTypeId);
 
     java.sql.Date startDate = dateNow();
@@ -621,6 +606,7 @@ public class NamedEntityDBServiceTest {
 
     authorRole.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
     authorRole.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    authorRole.setSourcetypeid(78);
 
     assertNull(authorRole.getId());
     assertNotNull(authorRole.getNedid());
@@ -646,7 +632,7 @@ public class NamedEntityDBServiceTest {
 
     // FIND ALL Roles 
 
-    List<Role> allRolesInDb = nedDBSvc.findAll(Role.class);
+    List<Role> allRolesInDb = nedDBSvc.findAll(Role.class, 0, Integer.MAX_VALUE);
     assertTrue( allRolesInDb.size() > 0 );
 
     // FIND BY JOIN-QUERY 
@@ -669,65 +655,69 @@ public class NamedEntityDBServiceTest {
 
     // FIND Individuals with an ORCID id. There should be none. 
 
-    List<Individual> peopleWithOrcidId = nedDBSvc.findResolvedEntityByUid("ORCID", ORCID_ID, Individual.class);
-    assertEquals(0, peopleWithOrcidId.size());
+    try {
+      nedDBSvc.findResolvedEntityByUid("ORCID", ORCID_ID, Individual.class);
+    } catch (EntityNotFoundException expected) {
+    }
 
     // Create two individuals with the same Orcid#
 
     Integer uidId = nedDBSvc.findTypeClass("Unique Identifier Types");
-    //((NamedEntityQueries) nedDBSvc).findResolvedEntityByKey()
-  
-    for (int i = 1; i <= 2; i++) {
 
-      Individual individual = new Individual();
-      individual.setFirstname("firstname");
-      individual.setMiddlename("middlename");
-      individual.setLastname("lastname");
-      individual.setDisplayname("displayname");
-      Integer individualId = nedDBSvc.create( individual );
-      assertNotNull(individualId);
 
-      Uniqueidentifier uidEntity1 = new Uniqueidentifier();
-      uidEntity1.setNedid(individualId);
-      uidEntity1.setTypeid(uidId);
-      uidEntity1.setUniqueidentifier(ORCID_ID);
+    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
-      assertNull(uidEntity1.getId());
-      assertNotNull(uidEntity1.getNedid());
+    Individual individual = new Individual();
+    individual.setNedid(nedId);
+    individual.setFirstname("firstname");
+    individual.setMiddlename("middlename");
+    individual.setLastname("lastname");
+    individual.setDisplayname("displayname");
+    individual.setSourcetypeid(78);
 
-      Integer uidId1 = nedDBSvc.create( uidEntity1 );
-      assertNotNull(uidId1);
+    assertNotNull(nedDBSvc.create(individual));
 
-      // FIND By UID (ORCID) #2
-      assertEquals(i, nedDBSvc.findResolvedEntityByUid("ORCID", ORCID_ID, Individual.class).size());
+    Uniqueidentifier uidEntity1 = new Uniqueidentifier();
+    uidEntity1.setNedid(nedId);
+    uidEntity1.setTypeid(uidId);
+    uidEntity1.setUniqueidentifier(ORCID_ID);
+    uidEntity1.setSourcetypeid(78);
 
-      // UPDATE
+    assertNull(uidEntity1.getId());
+    assertNotNull(uidEntity1.getNedid());
 
-      Uniqueidentifier savedUid = nedDBSvc.findById(uidId1, Uniqueidentifier.class);
-      savedUid.setUniqueidentifier( savedUid.getUniqueidentifier() + "Z" );
-      assertTrue( nedDBSvc.update(savedUid) );
+    Integer uidId1 = nedDBSvc.create( uidEntity1 );
+    assertNotNull(uidId1);
 
-      // Get another instance of same role record 
+    // FIND By UID (ORCID) #2
+    assertNotNull(nedDBSvc.findResolvedEntityByUid("ORCID", ORCID_ID, Individual.class));
 
-      Uniqueidentifier savedUid2 = nedDBSvc.findById(uidId1, Uniqueidentifier.class);
-      assertEquals(savedUid, savedUid2);
+    // UPDATE
 
-      // Restore orcid id.
+    Uniqueidentifier savedUid = nedDBSvc.findById(uidId1, Uniqueidentifier.class);
+    savedUid.setUniqueidentifier(savedUid.getUniqueidentifier() + "Z");
+    assertTrue( nedDBSvc.update(savedUid) );
 
-      savedUid.setUniqueidentifier(ORCID_ID);
-      assertTrue( nedDBSvc.update(savedUid) );
+    // Get another instance of same role record
 
-      // FIND BY JOIN-QUERY 
+    Uniqueidentifier savedUid2 = nedDBSvc.findById(uidId1, Uniqueidentifier.class);
+    assertEquals(savedUid, savedUid2);
 
-      List<Uniqueidentifier> uids = nedDBSvc.findResolvedEntities(savedUid.getNedid(), Uniqueidentifier.class);
-      Uniqueidentifier uid = uids.get(0);
-      assertEquals(ORCID_ID, uid.getUniqueidentifier());
-    }
+    // Restore orcid id.
+
+    savedUid.setUniqueidentifier(ORCID_ID);
+    assertTrue( nedDBSvc.update(savedUid) );
+
+    // FIND BY JOIN-QUERY
+
+    List<Uniqueidentifier> uids = nedDBSvc.findResolvedEntities(savedUid.getNedid(), Uniqueidentifier.class);
+
+    assertEquals(ORCID_ID, uids.get(0).getUniqueidentifier());
 
     // FIND ALL Roles 
 
-    List<Uniqueidentifier> allUidsInDb = nedDBSvc.findAll(Uniqueidentifier.class);
-    assertEquals(2, allUidsInDb.size());
+    List<Uniqueidentifier> allUidsInDb = nedDBSvc.findAll(Uniqueidentifier.class, 0, Integer.MAX_VALUE);
+    assertEquals(1, allUidsInDb.size());
 
     for (Uniqueidentifier uid : allUidsInDb) {
       Uniqueidentifier uidToDelete = new Uniqueidentifier();

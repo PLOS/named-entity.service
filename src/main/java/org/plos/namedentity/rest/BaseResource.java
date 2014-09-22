@@ -19,14 +19,7 @@ package org.plos.namedentity.rest;
 import org.apache.log4j.Logger;
 import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.entity.Entity;
-import org.plos.namedentity.api.entity.ChildEntity;
-import org.plos.namedentity.api.entity.ParentEntity;
-import org.plos.namedentity.api.entity.Address;
-import org.plos.namedentity.api.entity.Email;
-import org.plos.namedentity.api.entity.Phonenumber;
-import org.plos.namedentity.api.entity.Role;
-import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.service.CrudService;
 import org.plos.namedentity.service.NamedEntityService;
 
@@ -38,7 +31,11 @@ import java.util.List;
 
 public class BaseResource {
 
-  static Logger logger = Logger.getLogger(BaseResource.class);
+  protected static Logger logger = Logger.getLogger(BaseResource.class);
+
+  protected static final Integer MAX_RESULT_COUNT = 50;
+
+  protected static final Integer DEFAULT_RESULT_COUNT = 10000;
 
   @Inject
   protected CrudService crudService;
@@ -46,12 +43,17 @@ public class BaseResource {
   @Inject
   protected NamedEntityService namedEntityService;
 
+  protected <T extends ParentEntity> void checkNedIdForEntity(int nedId, Class<T> clazz) {
+    if (namedEntityService.findResolvedEntities(nedId, clazz).size() == 0)
+      throw new EntityNotFoundException(clazz.getSimpleName() + " not found");
+  }
+
   protected <S extends ChildEntity, T extends ParentEntity> 
     Response createEntity(int nedId, S entity, Class<T> parent) {
 
     try {
-      // make sure ned id is valid for entity type (ie, is owner).throw a 404 if not found.
-      namedEntityService.findResolvedEntity(nedId, parent);
+
+      checkNedIdForEntity(nedId, parent);
 
       entity.setNedid(nedId);
 
@@ -74,8 +76,9 @@ public class BaseResource {
     Response updateEntity(int nedId, int pkId, S entity, Class<T> parent) {
 
     try {
-      // make sure ned id is valid for entity type (ie, is owner).throw a 404 if not found.
-      namedEntityService.findResolvedEntity(nedId, parent);
+
+      // make sure the nedId belongs to the parent class (ie - Individual)
+      checkNedIdForEntity(nedId, parent);
 
       entity.setNedid(nedId);
 
@@ -86,6 +89,7 @@ public class BaseResource {
       Entity dbEntity = namedEntityService.findResolvedEntityByKey(pkId, entity.getClass());
 
       return Response.status(Response.Status.OK).entity(dbEntity).build();
+
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
     } catch (NedValidationException e) {
@@ -99,8 +103,7 @@ public class BaseResource {
     Response deleteEntity(int nedId, int pkId, Class<S> child, Class<T> parent) {
 
     try {
-      // make sure ned id is valid for entity type (ie, is owner).throw a 404 if not found.
-      namedEntityService.findResolvedEntity(nedId, parent);
+      checkNedIdForEntity(nedId, parent);
 
       S entity = namedEntityService.findResolvedEntityByKey(pkId, child);
 
@@ -117,12 +120,13 @@ public class BaseResource {
     }
   }
 
+
   protected <S extends ChildEntity, T extends ParentEntity> 
     Response getEntity(int nedId, int pkId, Class<S> child, Class<T> parent) {
 
     try {
-      // make sure ned id is valid for entity type (ie, is owner).throw a 404 if not found.
-      namedEntityService.findResolvedEntity(nedId, parent);
+
+      checkNedIdForEntity(nedId, parent);
 
       List<S> entities = namedEntityService.findResolvedEntities(nedId, child);
 
@@ -159,8 +163,7 @@ public class BaseResource {
     Response getEntities(int nedId, Class<S> child, Class<T> parent) {
 
     try {
-      // make sure ned id is valid for entity type (ie, is owner).throw a 404 if not found.
-      namedEntityService.findResolvedEntity(nedId, parent);
+      checkNedIdForEntity(nedId, parent);
 
       // *** GENERICS TYPE ERASURE HACK ***! see note #1.
 
@@ -189,6 +192,18 @@ public class BaseResource {
           new GenericEntity<List<Role>>(
             namedEntityService.findResolvedEntities(nedId, Role.class)
           ){}).build();
+      }
+      else if (cname.equals(Degree.class.getCanonicalName())) {
+        return Response.status(Response.Status.OK).entity(
+            new GenericEntity<List<Degree>>(
+                namedEntityService.findResolvedEntities(nedId, Degree.class)
+            ){}).build();
+      }
+      else if (cname.equals(Url.class.getCanonicalName())) {
+        return Response.status(Response.Status.OK).entity(
+            new GenericEntity<List<Url>>(
+                namedEntityService.findResolvedEntities(nedId, Url.class)
+            ){}).build();
       }
       else if (cname.equals(Uniqueidentifier.class.getCanonicalName())) {
         return Response.status(Response.Status.OK).entity(
@@ -230,7 +245,4 @@ public class BaseResource {
         .type(MediaType.TEXT_PLAIN).build();
   }
 
-  protected boolean isEmptyOrBlank(String s) {
-    return s == null || s.trim().isEmpty();
-  }
 }

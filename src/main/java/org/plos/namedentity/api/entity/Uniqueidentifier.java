@@ -16,12 +16,10 @@
  */
 package org.plos.namedentity.api.entity;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
-/**
- * Modified JOOQ generated class(pojo=true).
- */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@XmlRootElement
 public class Uniqueidentifier extends ChildEntity {
 
   private Integer id;
@@ -29,6 +27,31 @@ public class Uniqueidentifier extends ChildEntity {
   private Integer typeid;
   private String  type;
   private String  uniqueidentifier;
+  private String  source;
+  private Integer sourcetypeid;
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
+
+    Uniqueidentifier entity = (Uniqueidentifier) o;
+    return Objects.equals(this.id, entity.id)
+        && Objects.equals(this.nedid, entity.nedid)
+        && Objects.equals(this.typeid, entity.typeid)
+        && Objects.equals(this.uniqueidentifier, entity.uniqueidentifier);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.id, this.nedid,
+        this.typeid, this.uniqueidentifier);
+  }
 
   public String getType() {
     return type;
@@ -44,6 +67,22 @@ public class Uniqueidentifier extends ChildEntity {
 
   public void setId(Integer id) {
     this.id = id;
+  }
+
+  public String getSource() {
+    return source;
+  }
+
+  public void setSource(String source) {
+    this.source = source;
+  }
+
+  public Integer getSourcetypeid() {
+    return sourcetypeid;
+  }
+
+  public void setSourcetypeid(Integer sourcetypeid) {
+    this.sourcetypeid = sourcetypeid;
   }
 
   public Integer getNedid() {
@@ -70,26 +109,5 @@ public class Uniqueidentifier extends ChildEntity {
     this.uniqueidentifier = uniqueidentifier;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
 
-    if (o == null || this.getClass() != o.getClass()) {
-      return false;
-    }
-
-    Uniqueidentifier entity = (Uniqueidentifier) o;
-    return Objects.equals(this.id, entity.id)
-        && Objects.equals(this.nedid, entity.nedid)
-        && Objects.equals(this.typeid, entity.typeid)
-        && Objects.equals(this.uniqueidentifier, entity.uniqueidentifier);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(this.id, this.nedid,
-      this.typeid, this.uniqueidentifier);
-  }
 }

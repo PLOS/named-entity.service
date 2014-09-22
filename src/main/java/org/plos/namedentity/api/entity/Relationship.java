@@ -16,31 +16,28 @@
  */
 package org.plos.namedentity.api.entity;
 
-import java.util.Date;
-import java.sql.Timestamp;
-
 import org.plos.namedentity.api.adapter.DateAdapter;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.sql.Timestamp;
+import java.util.Date;
 
-/**
- * Modified JOOQ generated class(pojo=true).
- */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@XmlRootElement
 public class Relationship extends Entity {
 
-  private Integer   id;
-  private Integer   masternamedentityid;
-  private Integer   childnamedentityid;
-  private Integer   typeid;
-  private String    type;
-  private String    title;
+  private Integer id;
+  private Integer masternamedentityid;
+  private Integer childnamedentityid;
+  private Integer typeid;
+  private String  type;
+  private String  title;
 
   @XmlJavaTypeAdapter(DateAdapter.class)
-  private Date      startdate;
+  private Date startdate;
 
   @XmlJavaTypeAdapter(DateAdapter.class)
-  private Date      enddate;
+  private Date enddate;
 
   private Timestamp created;
   private Timestamp lastmodified;

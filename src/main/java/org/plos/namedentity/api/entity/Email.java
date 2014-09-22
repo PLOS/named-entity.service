@@ -22,10 +22,6 @@ import org.plos.namedentity.api.NedValidationException;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
-/**
- * Modified JOOQ generated class(pojo=true).
- */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @XmlRootElement
 public class Email extends ChildEntity {
 
@@ -34,12 +30,14 @@ public class Email extends ChildEntity {
   private Integer id;
   private Integer nedid;
 
-  private Integer typeid;
   private String  type;
+  private Integer typeid;
 
   private String emailaddress;
-  private Byte isprimary = 0;  // TODO: change Byte to Bool
-  private Byte isactive  = 1;
+  private Boolean isactive  = true;
+
+  private String  source;
+  private Integer sourcetypeid;
 
   @Override
   public void validate() {
@@ -65,14 +63,13 @@ public class Email extends ChildEntity {
         && Objects.equals(this.typeid, entity.typeid)
         && Objects.equals(this.type, entity.type)
         && Objects.equals(this.emailaddress, entity.emailaddress)
-        && Objects.equals(this.isprimary, entity.isprimary)
         && Objects.equals(this.isactive, entity.isactive);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(
-        id, nedid, typeid, type, emailaddress, isprimary, isactive);
+        id, nedid, typeid, type, emailaddress, isactive);
   }
 
 
@@ -92,6 +89,22 @@ public class Email extends ChildEntity {
     this.nedid = nedid;
   }
 
+  public String getSource() {
+    return source;
+  }
+
+  public void setSource(String source) {
+    this.source = source;
+  }
+
+  public Integer getSourcetypeid() {
+    return sourcetypeid;
+  }
+
+  public void setSourcetypeid(Integer sourcetypeid) {
+    this.sourcetypeid = sourcetypeid;
+  }
+
   public java.lang.Integer getTypeid() {
     return this.typeid;
   }
@@ -108,19 +121,11 @@ public class Email extends ChildEntity {
     this.emailaddress = emailaddress;
   }
 
-  public java.lang.Byte getIsprimary() {
-    return this.isprimary;
-  }
-
-  public void setIsprimary(java.lang.Byte isprimary) {
-    this.isprimary = isprimary;
-  }
-
-  public java.lang.Byte getIsactive() {
+  public Boolean getIsactive() {
     return this.isactive;
   }
 
-  public void setIsactive(java.lang.Byte isactive) {
+  public void setIsactive(Boolean isactive) {
     this.isactive = isactive;
   }
 

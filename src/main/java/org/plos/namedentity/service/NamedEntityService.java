@@ -18,7 +18,6 @@ package org.plos.namedentity.service;
 
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.entity.Entity;
-import org.plos.namedentity.api.entity.Organization;
 
 import java.util.List;
 
@@ -28,9 +27,16 @@ import java.util.List;
 
 public interface NamedEntityService {
 
-  public IndividualComposite createIndividualComposite(IndividualComposite composite);
-
-  public Organization createOrganization(Organization entity);
+  /**
+   * This will take a composite and add its subentities to the service. If a
+   * nedId is specified it will add these entities to that existing user. If the nedId
+   * is set to null, a new nedId will be created for the composite.
+   *
+   * @param composite The new composite you want to create or add to an existing one.
+   * @param nedId     The nedId of an existing composite if you want to add to it.
+   * @return          The new composite represented by the NedId
+   */
+  public IndividualComposite addToComposite(IndividualComposite composite, Integer nedId);
 
   public IndividualComposite findIndividualComposite(Integer nedId);
 
@@ -47,7 +53,7 @@ public interface NamedEntityService {
    *
    * @return         list of entities with unique identifier (typically just one)
    */
-  public <T extends Entity> List<T> findResolvedEntityByUid(String srcType, String uid, Class<T> clazz);
+  public <T extends Entity> T findResolvedEntityByUid(String srcType, String uid, Class<T> clazz);
 
 
   /** 
@@ -60,20 +66,6 @@ public interface NamedEntityService {
    * @return       entity with specified primary key
    */
   public <T extends Entity> T findResolvedEntityByKey(Integer pk, Class<T> clazz);
-
-
-  /**
-   * Finds entities by ned id. Type id references in entity are replaced by
-   * equivalent type names (ie, "resolved"). It is assumed that ned id is the 
-   * primary key of the entity. This is currently only true for Individual and
-   * Organization entities.
-   *
-   * @param nedId  primary key of entity
-   * @param clazz  entity class to search by ned id
-   *
-   * @return       entity whose primary key is ned id 
-   */
-  public <T extends Entity> T findResolvedEntity(Integer nedId, Class<T> clazz);
 
 
   /**

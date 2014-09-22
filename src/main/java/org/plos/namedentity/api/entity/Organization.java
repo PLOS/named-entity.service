@@ -19,21 +19,43 @@ package org.plos.namedentity.api.entity;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
-/**
- * Modified JOOQ generated class(pojo=true).
- */
 @XmlRootElement
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Organization extends ParentEntity {
 
+  private Integer id;
   private Integer nedid;
   private Integer typeid;
   private String  type;
   private String  familiarname;
   private String  legalname;
   private Integer maincontactid;
-  private Byte isactive  = 1;
-  private Byte isvisible = 1;
+  private String  source;
+  private Integer sourcetypeid;
+  private Boolean isactive  = true;
+
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  public String getSource() {
+    return source;
+  }
+
+  public void setSource(String source) {
+    this.source = source;
+  }
+
+  public Integer getSourcetypeid() {
+    return sourcetypeid;
+  }
+
+  public void setSourcetypeid(Integer sourcetypeid) {
+    this.sourcetypeid = sourcetypeid;
+  }
 
   public Integer getNedid() {
     return this.nedid;
@@ -75,20 +97,12 @@ public class Organization extends ParentEntity {
     this.maincontactid = maincontactid;
   }
 
-  public Byte getIsactive() {
+  public Boolean getIsactive() {
     return this.isactive;
   }
 
-  public void setIsactive(Byte isactive) {
+  public void setIsactive(Boolean isactive) {
     this.isactive = isactive;
-  }
-
-  public Byte getIsvisible() {
-    return this.isvisible;
-  }
-
-  public void setIsvisible(Byte isvisible) {
-    this.isvisible = isvisible;
   }
 
   public String getType() {
@@ -108,7 +122,6 @@ public class Organization extends ParentEntity {
 
     return Objects.equals(this.nedid, that.nedid)
         && Objects.equals(this.isactive, that.isactive)
-        && Objects.equals(this.isvisible, that.isvisible)
         && Objects.equals(this.familiarname, that.familiarname)
         && Objects.equals(this.legalname, that.legalname)
         && Objects.equals(this.maincontactid, that.maincontactid)
@@ -117,6 +130,6 @@ public class Organization extends ParentEntity {
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.nedid, this.isactive, this.isvisible,this.familiarname, this.legalname, this.maincontactid,this.typeid);
+    return Objects.hash(this.nedid, this.isactive ,this.familiarname, this.legalname, this.maincontactid, this.typeid);
   }
 }

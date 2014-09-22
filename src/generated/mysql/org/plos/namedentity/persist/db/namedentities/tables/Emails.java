@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Emails extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord> {
 
-	private static final long serialVersionUID = 1159944286;
+	private static final long serialVersionUID = -1658167095;
 
 	/**
 	 * The singleton instance of <code>namedEntities.emails</code>
@@ -47,9 +47,9 @@ public class Emails extends org.jooq.impl.TableImpl<org.plos.namedentity.persist
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.String> EMAILADDRESS = createField("emailAddress", org.jooq.impl.SQLDataType.CLOB.length(65535).nullable(false), this, "");
 
 	/**
-	 * The column <code>namedEntities.emails.isPrimary</code>.
+	 * The column <code>namedEntities.emails.sourceTypeId</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Byte> ISPRIMARY = createField("isPrimary", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Integer> SOURCETYPEID = createField("sourceTypeId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>namedEntities.emails.isActive</code>.
@@ -107,7 +107,7 @@ public class Emails extends org.jooq.impl.TableImpl<org.plos.namedentity.persist
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.EMAILS_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.EMAILS_IBFK_2);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.EMAILS_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.EMAILS_IBFK_3, org.plos.namedentity.persist.db.namedentities.Keys.EMAILS_IBFK_2);
 	}
 
 	/**
