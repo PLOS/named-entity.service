@@ -48,11 +48,14 @@ tests use an embedded jersey container (grizzly)
 
     ./ned.sh test
 
-running specific test classes
+to run a specific test class
 
-    mvn -P h2 -Dtest=NamedEntityDBServiceImplTest testMethod
-    mvn -P h2 -Dtest=NamedEntityResourceTest testMethod
+    mvn -P h2 clean test -Dtest=NamedEntityServiceTest
+    
+to run a specific test method
 
+    mvn -P h2 clean test -Dtest='NamedEntityServiceTest#testCreateIndividualCompositeWithRole'
+    
 Debugging
 ---------
 
