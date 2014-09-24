@@ -17,12 +17,22 @@
 package org.plos.namedentity.service;
 
 import org.plos.namedentity.api.IndividualComposite;
-import org.plos.namedentity.api.entity.*;
+import org.plos.namedentity.api.entity.Address;
+import org.plos.namedentity.api.entity.Degree;
+import org.plos.namedentity.api.entity.Email;
+import org.plos.namedentity.api.entity.Entity;
+import org.plos.namedentity.api.entity.Individual;
+import org.plos.namedentity.api.entity.Phonenumber;
+import org.plos.namedentity.api.entity.Role;
+import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.api.entity.Url;
 import org.plos.namedentity.persist.NamedEntityDBService;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class NamedEntityServiceImpl implements NamedEntityService {
 
@@ -176,93 +186,139 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     IndividualComposite composite = new IndividualComposite();
 
     composite.setIndividuals(findResolvedEntities(nedId, Individual.class));
-
     composite.setAddresses(findResolvedEntities(nedId, Address.class));
-
     composite.setPhonenumbers(findResolvedEntities(nedId, Phonenumber.class));
-
     composite.setEmails(findResolvedEntities(nedId, Email.class));
-
     composite.setDegrees(findResolvedEntities(nedId, Degree.class));
-
     composite.setUrls(findResolvedEntities(nedId, Url.class));
-
     composite.setRoles(findResolvedEntities(nedId, Role.class));
-
     composite.setUniqueidentifiers(findResolvedEntities(nedId, Uniqueidentifier.class));
 
     return composite;
   }
 
+  /**
+   * Pushes the changes from newEntities to oldEntities. In the end, for each source
+   * oldEntities should be the same when this function is done as newEntities was
+   * when the function started.
+   *
+   * @param newEntities
+   * @param oldEntities
+   * @param nedId
+   * @param <T>
+   */
+  private <T extends Entity> void syncEntities(List<T> newEntities, List<T> oldEntities, Integer nedId) {
+
+    // set the nedIds since they are needed at insertion time
+    for (Entity entity : newEntities)
+      entity.setNedid(nedId);
+
+    // map: source-> map of entity checksum to pointer to entities
+    Map<Integer, Map<Integer, Integer>> newEntityMap = new HashMap<>();
+    Map<Integer, Map<Integer, Integer>> oldEntityMap = new HashMap<>();
+
+    // populate the maps
+    for (int p = 0; p<newEntities.size(); p++) {
+
+      T entity = newEntities.get(p);
+      Integer source = entity.getSourcetypeid();
+
+      if (!oldEntityMap.containsKey(source))
+        oldEntityMap.put(source, new HashMap<Integer, Integer>());
+
+      oldEntityMap.get(source).put(entity.hashCode(), p);
+    }
+
+    for (int p = 0; p<newEntities.size(); p++) {
+
+      T entity = newEntities.get(p);
+      Integer source = entity.getSourcetypeid();
+
+      if (!newEntityMap.containsKey(source))
+        newEntityMap.put(source, new HashMap<Integer, Integer>());
+
+      newEntityMap.get(source).put(entity.hashCode(), p);
+    }
+
+    // step through every source in the new dataset
+    for (Integer sourceId : newEntityMap.keySet()) {
+
+      Map<Integer, Integer> newChecksums = newEntityMap.get(sourceId);
+
+      // handle new sources as inserts
+      if (!oldEntityMap.containsKey(sourceId)) {
+
+        for (Map.Entry<Integer, Integer> n : newChecksums.entrySet())
+          nedDBSvc.create(resolveValuesToIds(newEntities.get(n.getValue())));
+
+        newEntityMap.remove(sourceId);
+
+      } else { // for existing sources, compare the lists
+
+        Map<Integer, Integer> oldChecksums = oldEntityMap.get(sourceId);
+
+        for (Map.Entry<Integer, Integer> n : newChecksums.entrySet()) {
+
+          // if the entries match, do nothing
+          if (oldChecksums.containsKey(n.getKey()))
+            oldChecksums.remove(n.getKey());
+          else // else insert
+            nedDBSvc.create(resolveValuesToIds(newEntities.get(n.getValue())));
+
+          newChecksums.remove(n.getKey());    // can I do this in the loop?
+        }
+
+        // items left in the old list should now be deleted
+        for (Map.Entry<Integer, Integer> o : newChecksums.entrySet())
+          nedDBSvc.delete(newEntities.get(o.getValue()));
+
+      }
+
+    }
+  }
+
+  public IndividualComposite updateFrom(IndividualComposite newComp, Integer nedId) {
+
+    // TODO: handle various match criteria (ie - email)
+
+    IndividualComposite origComp = findIndividualComposite(nedId);
+
+    syncEntities(newComp.getIndividuals(), origComp.getIndividuals(), nedId);
+    syncEntities(newComp.getRoles(), origComp.getRoles(), nedId);
+    syncEntities(newComp.getAddresses(), origComp.getAddresses(), nedId);
+    syncEntities(newComp.getEmails(), origComp.getEmails(), nedId);
+    syncEntities(newComp.getPhonenumbers(), origComp.getPhonenumbers(), nedId);
+    syncEntities(newComp.getUniqueidentifiers(), origComp.getUniqueidentifiers(), nedId);
+    syncEntities(newComp.getDegrees(), origComp.getDegrees(), nedId);
+    syncEntities(newComp.getUrls(), origComp.getUrls(), nedId);
+
+    return findIndividualComposite(nedId);
+  }
+
+  private <T extends Entity> void addToEntities(List<T> entities, Integer nedId) {
+
+    if (entities != null) {
+      for (Entity entity : entities) {
+        entity.setNedid(nedId);
+        nedDBSvc.create(resolveValuesToIds(entity));
+      }
+    }
+  }
+
   @Override @Transactional
-  public IndividualComposite addToComposite(IndividualComposite composite,
-                                            Integer nedId) {
+  public IndividualComposite addToComposite(IndividualComposite composite, Integer nedId) {
 
     if (nedId == null)
       nedId = nedDBSvc.newNamedEntityId("Individual");
 
-    List<Individual> individuals = composite.getIndividuals();
-    if (individuals != null) {
-      for (Individual individual : individuals) {
-        individual.setNedid(nedId);
-        nedDBSvc.create(resolveIndividual(individual));
-      }
-    }
-
-    List<Address> addresses = composite.getAddresses();
-    if (addresses != null) {
-      for (Address address : addresses) {
-        address.setNedid(nedId);
-        nedDBSvc.create(resolveAddress(address));
-      }
-    }
-    List<Phonenumber> phonenumbers = composite.getPhonenumbers();
-    if (composite.getPhonenumbers() != null) {
-      for (Phonenumber phonenumber : phonenumbers) {
-        phonenumber.setNedid(nedId);
-        nedDBSvc.create(resolvePhonenumber(phonenumber));
-      }
-    }
-
-    List<Email> emails = composite.getEmails();
-    if (composite.getEmails() != null) {
-      for (Email email : emails) {
-        email.setNedid(nedId);
-        nedDBSvc.create(resolveEmail(email));
-      }
-    }
-
-    List<Degree> degrees = composite.getDegrees();
-    if (degrees != null) {
-      for (Degree degree : degrees) {
-        degree.setNedid(nedId);
-        nedDBSvc.create(resolveDegree(degree));
-      }
-    }
-
-    List<Url> urls = composite.getUrls();
-    if (urls != null) {
-      for (Url url : urls) {
-        url.setNedid(nedId);
-        nedDBSvc.create(resolveUrl(url));
-      }
-    }
-
-    List<Role> roles = composite.getRoles();
-    if (roles != null) {
-      for (Role role : roles) {
-        role.setNedid(nedId);
-        nedDBSvc.create(resolveRole(role));
-      }
-    }
-
-    List<Uniqueidentifier> uids = composite.getUniqueidentifiers();
-    if (composite.getUniqueidentifiers() != null) {
-      for (Uniqueidentifier uid : uids) {
-        uid.setNedid(nedId);
-        nedDBSvc.create(resolveReference(uid));
-      }
-    }
+    addToEntities(composite.getIndividuals(), nedId);
+    addToEntities(composite.getAddresses(), nedId);
+    addToEntities(composite.getPhonenumbers(), nedId);
+    addToEntities(composite.getEmails(), nedId);
+    addToEntities(composite.getDegrees(), nedId);
+    addToEntities(composite.getUrls(), nedId);
+    addToEntities(composite.getRoles(), nedId);
+    addToEntities(composite.getUniqueidentifiers(), nedId);
 
     return findIndividualComposite(nedId);
   }

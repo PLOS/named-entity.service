@@ -19,6 +19,7 @@ package org.plos.namedentity.api;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Email;
+import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Individual;
 import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Role;
@@ -41,40 +42,28 @@ public class IndividualComposite implements Validatable {
   private List<Degree>           degrees;
   private List<Url>              urls;
 
+  private <T extends Entity> void validateEntities(List<T> entities) {
+    if (entities != null)
+      for (T entity : entities)
+        entity.validate();
+  }
+
   @Override
   public void validate() {
-
-    if (roles == null || roles.size() == 0)
-      throw new NedValidationException("Roles can not be empty");
-
-    if (emails == null || emails.size() == 0)
-      throw new NedValidationException("Emails can not be empty");
 
     if (individuals == null || individuals.size() == 0)
       throw new NedValidationException("Individuals can not be empty");
 
-
     // TODO: determine exactly which lists are required
 
-    for (Individual individual : individuals)     individual.validate();
-    for (Role role : roles)                       role.validate();
-    for (Email email : emails)                    email.validate();
-
-    if (addresses != null)
-      for (Address address : addresses)           address.validate();
-
-    if (phonenumbers != null)
-      for (Phonenumber p : phonenumbers)          p.validate();
-
-    if (uniqueidentifiers != null)
-      for (Uniqueidentifier u: uniqueidentifiers) u.validate();
-
-    if (degrees != null)
-      for (Degree degree : degrees)               degree.validate();
-
-    if (urls != null)
-      for (Url url : urls)                        url.validate();
-
+    validateEntities(individuals);
+    validateEntities(roles);
+    validateEntities(addresses);
+    validateEntities(emails);
+    validateEntities(phonenumbers);
+    validateEntities(uniqueidentifiers);
+    validateEntities(degrees);
+    validateEntities(urls);
   }
 
   public List<Individual> getIndividuals() {

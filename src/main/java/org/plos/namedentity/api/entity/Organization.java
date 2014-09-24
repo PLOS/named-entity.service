@@ -22,47 +22,29 @@ import java.util.Objects;
 @XmlRootElement
 public class Organization extends ParentEntity {
 
-  private Integer id;
-  private Integer nedid;
   private Integer typeid;
   private String  type;
+
   private String  familiarname;
   private String  legalname;
   private Integer maincontactid;
-  private String  source;
-  private Integer sourcetypeid;
-  private Boolean isactive  = true;
+  private Boolean isactive = true;
 
-  public Integer getId() {
-    return id;
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Organization)) return false;
+
+    Organization that = (Organization) o;
+
+    return Objects.equals(this.familiarname, that.familiarname)
+        && Objects.equals(this.legalname, that.legalname)
+        && Objects.equals(this.type, that.type);
   }
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public String getSource() {
-    return source;
-  }
-
-  public void setSource(String source) {
-    this.source = source;
-  }
-
-  public Integer getSourcetypeid() {
-    return sourcetypeid;
-  }
-
-  public void setSourcetypeid(Integer sourcetypeid) {
-    this.sourcetypeid = sourcetypeid;
-  }
-
-  public Integer getNedid() {
-    return this.nedid;
-  }
-
-  public void setNedid(Integer nedid) {
-    this.nedid = nedid;
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.familiarname, this.legalname, this.typeid);
   }
 
   public Integer getTypeid() {
@@ -113,23 +95,5 @@ public class Organization extends ParentEntity {
     this.type = type;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof Organization)) return false;
 
-    Organization that = (Organization) o;
-
-    return Objects.equals(this.nedid, that.nedid)
-        && Objects.equals(this.isactive, that.isactive)
-        && Objects.equals(this.familiarname, that.familiarname)
-        && Objects.equals(this.legalname, that.legalname)
-        && Objects.equals(this.maincontactid, that.maincontactid)
-        && Objects.equals(this.typeid, that.typeid);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(this.nedid, this.isactive ,this.familiarname, this.legalname, this.maincontactid, this.typeid);
-  }
 }

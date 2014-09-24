@@ -8,6 +8,4 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlTransient
 public abstract class ChildEntity extends Entity {
 
-  public abstract void    setNedid(Integer nedid);
-  public abstract Integer getId();
 }

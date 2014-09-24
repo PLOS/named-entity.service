@@ -48,14 +48,13 @@ public class NamedEntityServiceTest {
   CrudService crudService;
 
   @Test
-  public void testCreateIndividualWithoutRole() {
+  public void testCreateIndividualCompositeWithoutName() {
     // triggers phase 1 validation failure
     try {
       namedEntityService.addToComposite(new IndividualComposite(), null);
       fail();
     }
     catch (NedValidationException expected) {
-      assertTrue(expected.getMessage().indexOf("Roles can not be empty") != -1);
     }
   }
 

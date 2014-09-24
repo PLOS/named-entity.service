@@ -18,7 +18,7 @@ package org.plos.namedentity.api.entity;
 
 import java.sql.Timestamp;
 
-public class Namedentityidentifier extends Entity {
+public class Namedentityidentifier {
 
   private Integer   id;
   private Integer   typeid;

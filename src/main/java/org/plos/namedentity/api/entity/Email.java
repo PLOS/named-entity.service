@@ -27,17 +27,11 @@ public class Email extends ChildEntity {
 
   private static EmailValidator emailValidator = EmailValidator.getInstance();
 
-  private Integer id;
-  private Integer nedid;
-
   private String  type;
   private Integer typeid;
 
   private String emailaddress;
   private Boolean isactive  = true;
-
-  private String  source;
-  private Integer sourcetypeid;
 
   @Override
   public void validate() {
@@ -49,63 +43,23 @@ public class Email extends ChildEntity {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
+    if (this == o)
       return true;
-    }
 
-    if (o == null || this.getClass() != o.getClass()) {
+    if (o == null || this.getClass() != o.getClass())
       return false;
-    }
 
     Email entity = (Email) o;
-    return Objects.equals(this.id, entity.id)
-        && Objects.equals(this.nedid, entity.nedid)
-        && Objects.equals(this.typeid, entity.typeid)
-        && Objects.equals(this.type, entity.type)
-        && Objects.equals(this.emailaddress, entity.emailaddress)
-        && Objects.equals(this.isactive, entity.isactive);
+    return Objects.equals(this.type, entity.type)
+        && Objects.equals(this.emailaddress, entity.emailaddress);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(
-        id, nedid, typeid, type, emailaddress, isactive);
+    return Objects.hash(type, emailaddress);
   }
 
-
-  public java.lang.Integer getId() {
-    return this.id;
-  }
-
-  public void setId(java.lang.Integer id) {
-    this.id = id;
-  }
-
-  public java.lang.Integer getNedid() {
-    return this.nedid;
-  }
-
-  public void setNedid(java.lang.Integer nedid) {
-    this.nedid = nedid;
-  }
-
-  public String getSource() {
-    return source;
-  }
-
-  public void setSource(String source) {
-    this.source = source;
-  }
-
-  public Integer getSourcetypeid() {
-    return sourcetypeid;
-  }
-
-  public void setSourcetypeid(Integer sourcetypeid) {
-    this.sourcetypeid = sourcetypeid;
-  }
-
-  public java.lang.Integer getTypeid() {
+  public Integer getTypeid() {
     return this.typeid;
   }
 
@@ -113,7 +67,7 @@ public class Email extends ChildEntity {
     this.typeid = typeid;
   }
 
-  public java.lang.String getEmailaddress() {
+  public String getEmailaddress() {
     return this.emailaddress;
   }
 

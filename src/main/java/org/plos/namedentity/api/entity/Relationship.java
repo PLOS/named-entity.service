@@ -24,7 +24,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @XmlRootElement
-public class Relationship extends Entity {
+public class Relationship {
 
   private Integer id;
   private Integer masternamedentityid;

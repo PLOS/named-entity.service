@@ -22,8 +22,6 @@ import java.util.Objects;
 @XmlRootElement
 public class Individual extends ParentEntity {
 
-  private Integer id;
-  private Integer nedid;
   private String  firstname;
   private String  middlename;
   private String  lastname;
@@ -45,9 +43,6 @@ public class Individual extends ParentEntity {
 
   private byte[] photoimage;
 
-  private String  source;
-  private Integer sourcetypeid;
-
   private Boolean isactive = true;
 
   @Override
@@ -61,39 +56,19 @@ public class Individual extends ParentEntity {
     }
 
     Individual entity = (Individual) o;
-    return Objects.equals(this.nedid, entity.nedid)
-        && Objects.equals(this.firstname, entity.firstname)
+    return Objects.equals(this.firstname, entity.firstname)
         && Objects.equals(this.middlename, entity.middlename)
-        && Objects.equals(this.lastname, entity.lastname);
+        && Objects.equals(this.lastname, entity.lastname)
+        && Objects.equals(this.nickname, entity.nickname)
+        && Objects.equals(this.nameprefix, entity.nameprefix)
+        && Objects.equals(this.namesuffix, entity.namesuffix)
+        && Objects.equals(this.displayname, entity.displayname);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(nedid, firstname, middlename, lastname);
-  }
-
-  public Integer getId() {
-    return id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public String getSource() {
-    return source;
-  }
-
-  public void setSource(String source) {
-    this.source = source;
-  }
-
-  public Integer getSourcetypeid() {
-    return sourcetypeid;
-  }
-
-  public void setSourcetypeid(Integer sourcetypeid) {
-    this.sourcetypeid = sourcetypeid;
+    return Objects.hash(firstname, middlename, lastname, nickname,
+        nameprefix, namesuffix, displayname);
   }
 
   public Boolean getIsactive() {
@@ -134,14 +109,6 @@ public class Individual extends ParentEntity {
 
   public void setPreferredcommunication(String preferredcommunication) {
     this.preferredcommunication = preferredcommunication;
-  }
-
-  public Integer getNedid() {
-    return this.nedid;
-  }
-
-  public void setNedid(Integer nedid) {
-    this.nedid = nedid;
   }
 
   public String getFirstname() {

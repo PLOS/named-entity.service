@@ -23,9 +23,6 @@ import java.util.Objects;
 @XmlRootElement
 public class Address extends ChildEntity {
 
-  private Integer id;
-  private Integer nedid;
-
   private Integer typeid;
   private String  type;
 
@@ -48,127 +45,119 @@ public class Address extends ChildEntity {
   private Integer latitude;
   private Integer longitude;
   private Boolean isactive = true;
+  
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
 
-  private String  source;
-  private Integer sourcetypeid;
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
 
-  public Integer getSourcetypeid() {
-    return sourcetypeid;
+    Address entity = (Address) o;
+    return Objects.equals(this.type, entity.type)
+        && Objects.equals(this.addressline1, entity.addressline1)
+        && Objects.equals(this.addressline2, entity.addressline2)
+        && Objects.equals(this.addressline3, entity.addressline3)
+        && Objects.equals(this.city, entity.city)
+        && Objects.equals(this.statecodetype, entity.statecodetype)
+        && Objects.equals(this.countrycodetype, entity.countrycodetype)
+        && Objects.equals(this.postalcode, entity.postalcode);
   }
 
-  public void setSourcetypeid(Integer sourcetypeid) {
-    this.sourcetypeid = sourcetypeid;
+  @Override
+  public int hashCode() {
+    return Objects.hash(type, addressline1, addressline2, addressline3,
+        city, statecodetype, countrycodetype, postalcode);
   }
-
-  public java.lang.Integer getId() {
-    return this.id;
-  }
-
-  public void setId(java.lang.Integer id) {
-    this.id = id;
-  }
-
-  public java.lang.Integer getNedid() {
-    return this.nedid;
-  }
-
-  public void setNedid(java.lang.Integer nedid) {
-    this.nedid = nedid;
-  }
-
-  public String getSource() {
-    return source;
-  }
-
-  public void setSource(String source) {
-    this.source = source;
-  }
-
-  public java.lang.Integer getTypeid() {
+  
+  public Integer getTypeid() {
     return this.typeid;
   }
 
-  public void setTypeid(java.lang.Integer typeid) {
+  public void setTypeid(Integer typeid) {
     this.typeid = typeid;
   }
 
-  public java.lang.String getAddressline1() {
+  public String getAddressline1() {
     return this.addressline1;
   }
 
-  public void setAddressline1(java.lang.String addressline1) {
+  public void setAddressline1(String addressline1) {
     this.addressline1 = addressline1;
   }
 
-  public java.lang.String getAddressline2() {
+  public String getAddressline2() {
     return this.addressline2;
   }
 
-  public void setAddressline2(java.lang.String addressline2) {
+  public void setAddressline2(String addressline2) {
     this.addressline2 = addressline2;
   }
 
-  public java.lang.String getAddressline3() {
+  public String getAddressline3() {
     return this.addressline3;
   }
 
-  public void setAddressline3(java.lang.String addressline3) {
+  public void setAddressline3(String addressline3) {
     this.addressline3 = addressline3;
   }
 
-  public java.lang.String getCity() {
+  public String getCity() {
     return this.city;
   }
 
-  public void setCity(java.lang.String city) {
+  public void setCity(String city) {
     this.city = city;
   }
 
-  public java.lang.Integer getStatecodetypeid() {
+  public Integer getStatecodetypeid() {
     return this.statecodetypeid;
   }
 
-  public void setStatecodetypeid(java.lang.Integer statecodetypeid) {
+  public void setStatecodetypeid(Integer statecodetypeid) {
     this.statecodetypeid = statecodetypeid;
   }
 
-  public java.lang.Integer getCountrycodetypeid() {
+  public Integer getCountrycodetypeid() {
     return this.countrycodetypeid;
   }
 
-  public void setCountrycodetypeid(java.lang.Integer countrycodetypeid) {
+  public void setCountrycodetypeid(Integer countrycodetypeid) {
     this.countrycodetypeid = countrycodetypeid;
   }
 
-  public java.lang.String getPostalcode() {
+  public String getPostalcode() {
     return this.postalcode;
   }
 
-  public void setPostalcode(java.lang.String postalcode) {
+  public void setPostalcode(String postalcode) {
     this.postalcode = postalcode;
   }
 
-  public java.lang.Integer getMaincontactnamedentityid() {
+  public Integer getMaincontactnamedentityid() {
     return this.maincontactnamedentityid;
   }
 
-  public void setMaincontactnamedentityid(java.lang.Integer maincontactnamedentityid) {
+  public void setMaincontactnamedentityid(Integer maincontactnamedentityid) {
     this.maincontactnamedentityid = maincontactnamedentityid;
   }
 
-  public java.lang.Integer getLatitude() {
+  public Integer getLatitude() {
     return this.latitude;
   }
 
-  public void setLatitude(java.lang.Integer latitude) {
+  public void setLatitude(Integer latitude) {
     this.latitude = latitude;
   }
 
-  public java.lang.Integer getLongitude() {
+  public Integer getLongitude() {
     return this.longitude;
   }
 
-  public void setLongitude(java.lang.Integer longitude) {
+  public void setLongitude(Integer longitude) {
     this.longitude = longitude;
   }
 
@@ -204,32 +193,5 @@ public class Address extends ChildEntity {
     this.countrycodetype = countrycodetype;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
 
-    if (o == null || this.getClass() != o.getClass()) {
-      return false;
-    }
-
-    Address entity = (Address) o;
-    return Objects.equals(this.id, entity.id)
-        && Objects.equals(this.nedid, entity.nedid)
-        && Objects.equals(this.typeid, entity.typeid)
-        && Objects.equals(this.type, entity.type)
-        && Objects.equals(this.addressline1, entity.addressline1)
-        && Objects.equals(this.city, entity.city)
-        && Objects.equals(this.statecodetypeid, entity.statecodetypeid)
-        && Objects.equals(this.statecodetype, entity.statecodetype)
-        && Objects.equals(this.countrycodetypeid, entity.countrycodetypeid)
-        && Objects.equals(this.countrycodetype, entity.countrycodetype);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, nedid, typeid, addressline1,
-        city, statecodetypeid, statecodetype, countrycodetypeid, countrycodetype);
-  }
 }

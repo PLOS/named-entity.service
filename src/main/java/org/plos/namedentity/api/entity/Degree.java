@@ -17,16 +17,33 @@
 package org.plos.namedentity.api.entity;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Objects;
 
 @XmlRootElement
 public class Degree extends ChildEntity {
 
-  private Integer id;
-  private Integer nedid;
   private Integer typeid;
   private String  type;
-  private String  source;
-  private Integer sourcetypeid;
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
+
+    Degree entity = (Degree) o;
+
+    return Objects.equals(this.type, entity.type);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(type);
+  }
 
   public String getType() {
     return type;
@@ -34,38 +51,6 @@ public class Degree extends ChildEntity {
 
   public void setType(String type) {
     this.type = type;
-  }
-
-  public Integer getId() {
-    return this.id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public String getSource() {
-    return source;
-  }
-
-  public void setSource(String source) {
-    this.source = source;
-  }
-
-  public Integer getSourcetypeid() {
-    return sourcetypeid;
-  }
-
-  public void setSourcetypeid(Integer sourcetypeid) {
-    this.sourcetypeid = sourcetypeid;
-  }
-
-  public Integer getNedid() {
-    return this.nedid;
-  }
-
-  public void setNedid(Integer nedid) {
-    this.nedid = nedid;
   }
 
   public Integer getTypeid() {

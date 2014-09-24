@@ -19,7 +19,7 @@ package org.plos.namedentity.api.entity;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Subjectarea extends Entity {
+public class Subjectarea {
 
   private Integer id;
   private Integer nedid;

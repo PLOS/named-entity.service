@@ -22,13 +22,9 @@ import java.util.Objects;
 @XmlRootElement
 public class Uniqueidentifier extends ChildEntity {
 
-  private Integer id;
-  private Integer nedid;
   private Integer typeid;
   private String  type;
   private String  uniqueidentifier;
-  private String  source;
-  private Integer sourcetypeid;
 
   @Override
   public boolean equals(Object o) {
@@ -41,16 +37,13 @@ public class Uniqueidentifier extends ChildEntity {
     }
 
     Uniqueidentifier entity = (Uniqueidentifier) o;
-    return Objects.equals(this.id, entity.id)
-        && Objects.equals(this.nedid, entity.nedid)
-        && Objects.equals(this.typeid, entity.typeid)
+    return Objects.equals(this.type, entity.type)
         && Objects.equals(this.uniqueidentifier, entity.uniqueidentifier);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.id, this.nedid,
-        this.typeid, this.uniqueidentifier);
+    return Objects.hash(this.type, this.uniqueidentifier);
   }
 
   public String getType() {
@@ -59,38 +52,6 @@ public class Uniqueidentifier extends ChildEntity {
 
   public void setType(String type) {
     this.type = type;
-  }
-
-  public Integer getId() {
-    return this.id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public String getSource() {
-    return source;
-  }
-
-  public void setSource(String source) {
-    this.source = source;
-  }
-
-  public Integer getSourcetypeid() {
-    return sourcetypeid;
-  }
-
-  public void setSourcetypeid(Integer sourcetypeid) {
-    this.sourcetypeid = sourcetypeid;
-  }
-
-  public Integer getNedid() {
-    return this.nedid;
-  }
-
-  public void setNedid(Integer nedid) {
-    this.nedid = nedid;
   }
 
   public Integer getTypeid() {
@@ -108,6 +69,5 @@ public class Uniqueidentifier extends ChildEntity {
   public void setUniqueidentifier(String uniqueidentifier) {
     this.uniqueidentifier = uniqueidentifier;
   }
-
 
 }
