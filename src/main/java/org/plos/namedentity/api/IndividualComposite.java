@@ -29,6 +29,7 @@ import org.plos.namedentity.validate.Validatable;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
+import java.util.Objects;
 
 @XmlRootElement
 public class IndividualComposite implements Validatable {
@@ -54,8 +55,6 @@ public class IndividualComposite implements Validatable {
     if (individuals == null || individuals.size() == 0)
       throw new NedValidationException("Individuals can not be empty");
 
-    // TODO: determine exactly which lists are required
-
     validateEntities(individuals);
     validateEntities(roles);
     validateEntities(addresses);
@@ -64,6 +63,35 @@ public class IndividualComposite implements Validatable {
     validateEntities(uniqueidentifiers);
     validateEntities(degrees);
     validateEntities(urls);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+
+    if (o == null || this.getClass() != o.getClass())
+      return false;
+
+    return Objects.equals(this.hashCode(), ((IndividualComposite) o).hashCode());
+  }
+
+  private <T extends Entity> Integer hashSum(List<T> entities) {
+
+    Integer sum = 0;
+
+    if (entities != null)
+      for (T entity : entities)
+        sum += entity.hashCode();
+
+    return sum;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(hashSum(individuals), hashSum(roles), hashSum(addresses),
+        hashSum(emails), hashSum(phonenumbers), hashSum(uniqueidentifiers),
+        hashSum(degrees), hashSum(urls));
   }
 
   public List<Individual> getIndividuals() {
