@@ -84,6 +84,8 @@ public class IndividualsResource extends BaseResource {
 
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findIndividualComposite(individual.getNedid())).build();
+    } catch (EntityNotFoundException e) {
+      return entityNotFound(e);
     } catch (Exception e) {
       return serverError(e, "Find all individuals failed");
     }
