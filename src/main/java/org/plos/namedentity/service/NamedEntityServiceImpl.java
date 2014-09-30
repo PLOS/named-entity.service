@@ -32,6 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Map;
 
 public class NamedEntityServiceImpl implements NamedEntityService {
 
@@ -179,35 +180,23 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     return entity;
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public IndividualComposite findIndividualComposite(Integer nedId) {
 
     IndividualComposite composite = new IndividualComposite();
 
-    composite.setIndividuals(findResolvedEntities(nedId, Individual.class));
+    Map<Class, List<? extends Entity>> compositeMap = composite.getAsMap();
+
+    for (Class entityType : compositeMap.keySet())
+      compositeMap.put(entityType, findResolvedEntities(nedId, entityType));
+
+    composite.setFromMap(compositeMap);
 
     if (composite.getIndividuals().size() == 0)
       throw new EntityNotFoundException("Individual not found");
 
-    composite.setAddresses(findResolvedEntities(nedId, Address.class));
-    composite.setPhonenumbers(findResolvedEntities(nedId, Phonenumber.class));
-    composite.setEmails(findResolvedEntities(nedId, Email.class));
-    composite.setDegrees(findResolvedEntities(nedId, Degree.class));
-    composite.setUrls(findResolvedEntities(nedId, Url.class));
-    composite.setRoles(findResolvedEntities(nedId, Role.class));
-    composite.setUniqueidentifiers(findResolvedEntities(nedId, Uniqueidentifier.class));
-
     return composite;
-  }
-
-  private <T extends Entity> void addToEntities(List<T> entities, Integer nedId) {
-
-    if (entities != null) {
-      for (Entity entity : entities) {
-        entity.setNedid(nedId);
-        nedDBSvc.create(resolveValuesToIds(entity));
-      }
-    }
   }
 
   @Override @Transactional
@@ -216,14 +205,18 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     if (nedId == null)
       nedId = nedDBSvc.newNamedEntityId("Individual");
 
-    addToEntities(composite.getIndividuals(), nedId);
-    addToEntities(composite.getAddresses(), nedId);
-    addToEntities(composite.getPhonenumbers(), nedId);
-    addToEntities(composite.getEmails(), nedId);
-    addToEntities(composite.getDegrees(), nedId);
-    addToEntities(composite.getUrls(), nedId);
-    addToEntities(composite.getRoles(), nedId);
-    addToEntities(composite.getUniqueidentifiers(), nedId);
+    Map<Class, List<? extends Entity>> compositeMap = composite.getAsMap();
+
+    for (List<? extends Entity> entities : compositeMap.values()) {
+
+      if (entities != null) {
+        for (Entity entity : entities) {
+          entity.setNedid(nedId);
+          nedDBSvc.create(resolveValuesToIds(entity));
+        }
+      }
+
+    }
 
     return findIndividualComposite(nedId);
   }

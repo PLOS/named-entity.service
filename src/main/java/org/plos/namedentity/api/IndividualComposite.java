@@ -28,7 +28,9 @@ import org.plos.namedentity.api.entity.Url;
 import org.plos.namedentity.validate.Validatable;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @XmlRootElement
@@ -43,10 +45,31 @@ public class IndividualComposite implements Validatable {
   private List<Degree>           degrees;
   private List<Url>              urls;
 
-  private <T extends Entity> void validateEntities(List<T> entities) {
-    if (entities != null)
-      for (T entity : entities)
-        entity.validate();
+  public Map<Class, List<? extends Entity>> getAsMap() {
+    Map<Class, List<? extends Entity>> map = new HashMap<>();
+
+    map.put(Individual.class, individuals);
+    map.put(Role.class, roles);
+    map.put(Address.class, addresses);
+    map.put(Email.class, emails);
+    map.put(Phonenumber.class, phonenumbers);
+    map.put(Uniqueidentifier.class, uniqueidentifiers);
+    map.put(Degree.class, degrees);
+    map.put(Url.class, urls);
+
+    return map;
+  }
+
+  @SuppressWarnings("unchecked")
+  public void setFromMap(Map<Class, List<? extends Entity>> map) {
+    individuals = (List<Individual>)map.get(Individual.class);
+    roles = (List<Role>)map.get(Role.class);
+    addresses = (List<Address>)map.get(Address.class);
+    emails = (List<Email>)map.get(Email.class);
+    phonenumbers = (List<Phonenumber>)map.get(Phonenumber.class);
+    uniqueidentifiers = (List<Uniqueidentifier>)map.get(Uniqueidentifier.class);
+    degrees = (List<Degree>)map.get(Degree.class);
+    urls = (List<Url>)map.get(Url.class);
   }
 
   @Override
@@ -55,14 +78,15 @@ public class IndividualComposite implements Validatable {
     if (individuals == null || individuals.size() == 0)
       throw new NedValidationException("Individuals can not be empty");
 
-    validateEntities(individuals);
-    validateEntities(roles);
-    validateEntities(addresses);
-    validateEntities(emails);
-    validateEntities(phonenumbers);
-    validateEntities(uniqueidentifiers);
-    validateEntities(degrees);
-    validateEntities(urls);
+    Map<Class, List<? extends Entity>> compositeMap = getAsMap();
+
+    for (List<? extends Entity> entities : compositeMap.values()) {
+
+      if (entities != null)
+        for (Entity entity : entities)
+          entity.validate();
+    }
+
   }
 
   @Override
@@ -89,6 +113,7 @@ public class IndividualComposite implements Validatable {
 
   @Override
   public int hashCode() {
+    // TODO: pull from getAsMap instead of hardcoding list names
     return Objects.hash(hashSum(individuals), hashSum(roles), hashSum(addresses),
         hashSum(emails), hashSum(phonenumbers), hashSum(uniqueidentifiers),
         hashSum(degrees), hashSum(urls));
