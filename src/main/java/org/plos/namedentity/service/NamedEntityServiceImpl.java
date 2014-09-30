@@ -16,6 +16,7 @@
  */
 package org.plos.namedentity.service;
 
+import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Degree;
@@ -184,6 +185,10 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     IndividualComposite composite = new IndividualComposite();
 
     composite.setIndividuals(findResolvedEntities(nedId, Individual.class));
+
+    if (composite.getIndividuals().size() == 0)
+      throw new EntityNotFoundException("Individual not found");
+
     composite.setAddresses(findResolvedEntities(nedId, Address.class));
     composite.setPhonenumbers(findResolvedEntities(nedId, Phonenumber.class));
     composite.setEmails(findResolvedEntities(nedId, Email.class));

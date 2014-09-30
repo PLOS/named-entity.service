@@ -73,7 +73,7 @@ public class IndividualComposite implements Validatable {
     if (o == null || this.getClass() != o.getClass())
       return false;
 
-    return Objects.equals(this.hashCode(), ((IndividualComposite) o).hashCode());
+    return Objects.equals(this.hashCode(), o.hashCode());
   }
 
   private <T extends Entity> Integer hashSum(List<T> entities) {
