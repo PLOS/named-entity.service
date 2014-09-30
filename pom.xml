@@ -120,6 +120,11 @@
       <artifactId>jersey-media-multipart</artifactId>
       <version>${org.glassfish.jersey-version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.media</groupId>
+      <artifactId>jersey-media-moxy</artifactId>
+      <version>${org.glassfish.jersey-version}</version>
+    </dependency>
 
     <dependency>
       <groupId>org.glassfish.jersey.test-framework.providers</groupId>
