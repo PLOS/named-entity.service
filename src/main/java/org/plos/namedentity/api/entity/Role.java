@@ -55,7 +55,7 @@ public class Role extends ChildEntity {
 
   @Override
   public int hashCode() {
-    return Objects.hash(applicationtype, typeid);
+    return Objects.hash(applicationtype, type);
   }
 
   private Timestamp lastmodified;

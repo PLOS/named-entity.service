@@ -44,7 +44,7 @@ public class Organization extends ParentEntity {
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.familiarname, this.legalname, this.typeid);
+    return Objects.hash(this.familiarname, this.legalname, this.type);
   }
 
   public Integer getTypeid() {
