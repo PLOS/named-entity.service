@@ -18,7 +18,7 @@ package org.plos.namedentity.api.entity;
 
 import java.sql.Timestamp;
 
-public class Audittrail extends Entity {
+public class Audittrail {
 
   private Integer   id;
   private Integer   sourcefieldid;

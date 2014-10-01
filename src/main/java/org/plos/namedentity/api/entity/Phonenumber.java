@@ -22,8 +22,6 @@ import java.util.Objects;
 @XmlRootElement
 public class Phonenumber extends ChildEntity {
 
-  private Integer id;
-  private Integer nedid;
   private Integer typeid;
   private String  type;
   private Integer countrycodetypeid;
@@ -34,48 +32,29 @@ public class Phonenumber extends ChildEntity {
 
   private Boolean isactive = true;
 
-  private String  source;
-  private Integer sourcetypeid;
-
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
+    if (this == o)
       return true;
-    }
 
-    if (o == null || this.getClass() != o.getClass()) {
+    if (o == null || this.getClass() != o.getClass())
       return false;
-    }
 
     Phonenumber entity = (Phonenumber) o;
-    return Objects.equals(this.id, entity.id)
-        && Objects.equals(this.nedid, entity.nedid)
-        && Objects.equals(this.phonenumber, entity.phonenumber);
+
+    return Objects.equals(this.type, entity.type)
+        && Objects.equals(this.countrycodetype, entity.countrycodetype)
+        && Objects.equals(this.phonenumber, entity.phonenumber)
+        && Objects.equals(this.extension, entity.extension);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, nedid, phonenumber);
-  }
-
-  public Integer getSourcetypeid() {
-    return sourcetypeid;
-  }
-
-  public void setSourcetypeid(Integer sourcetypeid) {
-    this.sourcetypeid = sourcetypeid;
+    return Objects.hash(phonenumber, extension, countrycodetype, type);
   }
 
   public String getType() {
     return type;
-  }
-
-  public String getSource() {
-    return source;
-  }
-
-  public void setSource(String source) {
-    this.source = source;
   }
 
   public void setType(String type) {
@@ -88,22 +67,6 @@ public class Phonenumber extends ChildEntity {
 
   public void setCountrycodetype(String countrycodetype) {
     this.countrycodetype = countrycodetype;
-  }
-
-  public Integer getId() {
-    return this.id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public Integer getNedid() {
-    return this.nedid;
-  }
-
-  public void setNedid(Integer nedid) {
-    this.nedid = nedid;
   }
 
   public Integer getTypeid() {

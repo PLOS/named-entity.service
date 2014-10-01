@@ -20,15 +20,12 @@ import org.apache.commons.validator.routines.UrlValidator;
 import org.plos.namedentity.api.NedValidationException;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Objects;
 
 @XmlRootElement
 public class Url extends Entity {
 
-  private Integer id;
-  private Integer nedid;
   private String  url;
-  private String  source;
-  private Integer sourcetypeid;
 
   private static UrlValidator urlValidator = UrlValidator.getInstance();
 
@@ -38,32 +35,21 @@ public class Url extends Entity {
       throw new NedValidationException("URL not valid (" + url + ")");
   }
 
-  public Integer getId() {
-    return id;
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+
+    if (o == null || this.getClass() != o.getClass())
+      return false;
+
+    Url entity = (Url) o;
+    return Objects.equals(this.url, entity.url);
   }
 
-  public Integer getNedid() {
-    return nedid;
-  }
-
-  public String getSource() {
-    return source;
-  }
-
-  public void setSource(String source) {
-    this.source = source;
-  }
-
-  public Integer getSourcetypeid() {
-    return sourcetypeid;
-  }
-
-  public void setSourcetypeid(Integer sourcetypeid) {
-    this.sourcetypeid = sourcetypeid;
-  }
-
-  public void setNedid(Integer nedid) {
-    this.nedid = nedid;
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.url);
   }
 
   public String getUrl() {
@@ -74,7 +60,4 @@ public class Url extends Entity {
     this.url = url;
   }
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
 }

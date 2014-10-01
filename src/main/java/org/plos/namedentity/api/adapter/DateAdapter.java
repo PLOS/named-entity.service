@@ -26,8 +26,7 @@ public class DateAdapter extends XmlAdapter<String, Date> {
   private SimpleDateFormat dateFormat;
 
   public DateAdapter() {
-    this.dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
-    this.dateFormat.setTimeZone( TimeZone.getTimeZone("UTC") );
+    this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
   }
        
   @Override

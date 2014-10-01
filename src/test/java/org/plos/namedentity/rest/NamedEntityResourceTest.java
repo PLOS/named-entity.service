@@ -309,7 +309,10 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   @Test
   public void testRoleCrud() throws IOException, JAXBException {
 
-    Date START_DATE = gmtDate(2014, 6, 30);  // Jun 30, 2014 00:00:00 GMT
+    Calendar cal = new GregorianCalendar();   // Jun 30, 2014 00:00:00 local time
+    cal.set(2014, (6 - 1), 30, 0, 0, 0);      // month is 0-based, so subtract 1
+    cal.set(Calendar.MILLISECOND, 0);
+    Date START_DATE = cal.getTime();
 
     /* ------------------------------------------------------------------ */
     /*  CREATE                                                            */
@@ -858,13 +861,5 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     Marshaller marshaller = jsonMarshaller(t.getClass());
     marshaller.marshal(t, writer);
     return writer.toString();
-  }
-
-  private Date gmtDate(int year, int month, int day) {
-    Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
-    // calendar month is 0-based, so subtract one
-    cal.set(year, (month - 1), day, 0, 0, 0);
-    cal.set(Calendar.MILLISECOND, 0);
-    return cal.getTime();
   }
 }

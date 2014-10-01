@@ -19,6 +19,7 @@ package org.plos.namedentity.api;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Email;
+import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Individual;
 import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Role;
@@ -27,7 +28,10 @@ import org.plos.namedentity.api.entity.Url;
 import org.plos.namedentity.validate.Validatable;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @XmlRootElement
 public class IndividualComposite implements Validatable {
@@ -41,40 +45,78 @@ public class IndividualComposite implements Validatable {
   private List<Degree>           degrees;
   private List<Url>              urls;
 
+  public Map<Class, List<? extends Entity>> getAsMap() {
+    Map<Class, List<? extends Entity>> map = new HashMap<>();
+
+    map.put(Individual.class, individuals);
+    map.put(Role.class, roles);
+    map.put(Address.class, addresses);
+    map.put(Email.class, emails);
+    map.put(Phonenumber.class, phonenumbers);
+    map.put(Uniqueidentifier.class, uniqueidentifiers);
+    map.put(Degree.class, degrees);
+    map.put(Url.class, urls);
+
+    return map;
+  }
+
+  @SuppressWarnings("unchecked")
+  public void setFromMap(Map<Class, List<? extends Entity>> map) {
+    individuals = (List<Individual>)map.get(Individual.class);
+    roles = (List<Role>)map.get(Role.class);
+    addresses = (List<Address>)map.get(Address.class);
+    emails = (List<Email>)map.get(Email.class);
+    phonenumbers = (List<Phonenumber>)map.get(Phonenumber.class);
+    uniqueidentifiers = (List<Uniqueidentifier>)map.get(Uniqueidentifier.class);
+    degrees = (List<Degree>)map.get(Degree.class);
+    urls = (List<Url>)map.get(Url.class);
+  }
+
   @Override
   public void validate() {
-
-    if (roles == null || roles.size() == 0)
-      throw new NedValidationException("Roles can not be empty");
-
-    if (emails == null || emails.size() == 0)
-      throw new NedValidationException("Emails can not be empty");
 
     if (individuals == null || individuals.size() == 0)
       throw new NedValidationException("Individuals can not be empty");
 
+    Map<Class, List<? extends Entity>> compositeMap = getAsMap();
 
-    // TODO: determine exactly which lists are required
+    for (List<? extends Entity> entities : compositeMap.values()) {
 
-    for (Individual individual : individuals)     individual.validate();
-    for (Role role : roles)                       role.validate();
-    for (Email email : emails)                    email.validate();
+      if (entities != null)
+        for (Entity entity : entities)
+          entity.validate();
+    }
 
-    if (addresses != null)
-      for (Address address : addresses)           address.validate();
+  }
 
-    if (phonenumbers != null)
-      for (Phonenumber p : phonenumbers)          p.validate();
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
 
-    if (uniqueidentifiers != null)
-      for (Uniqueidentifier u: uniqueidentifiers) u.validate();
+    if (o == null || this.getClass() != o.getClass())
+      return false;
 
-    if (degrees != null)
-      for (Degree degree : degrees)               degree.validate();
+    return Objects.equals(this.hashCode(), o.hashCode());
+  }
 
-    if (urls != null)
-      for (Url url : urls)                        url.validate();
+  private <T extends Entity> Integer hashSum(List<T> entities) {
 
+    Integer sum = 0;
+
+    if (entities != null)
+      for (T entity : entities)
+        sum += entity.hashCode();
+
+    return sum;
+  }
+
+  @Override
+  public int hashCode() {
+    // TODO: pull from getAsMap instead of hardcoding list names
+    return Objects.hash(hashSum(individuals), hashSum(roles), hashSum(addresses),
+        hashSum(emails), hashSum(phonenumbers), hashSum(uniqueidentifiers),
+        hashSum(degrees), hashSum(urls));
   }
 
   public List<Individual> getIndividuals() {

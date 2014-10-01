@@ -32,6 +32,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -48,15 +49,52 @@ public class NamedEntityServiceTest {
   CrudService crudService;
 
   @Test
-  public void testCreateIndividualWithoutRole() {
+  public void testCreateIndividualCompositeWithoutName() {
     // triggers phase 1 validation failure
     try {
       namedEntityService.addToComposite(new IndividualComposite(), null);
       fail();
     }
     catch (NedValidationException expected) {
-      assertTrue(expected.getMessage().indexOf("Roles can not be empty") != -1);
     }
+  }
+
+  @Test
+  public void testIndividualCompositeEquality() {
+    IndividualComposite composite1 = newCompositeIndividualWithRole();
+
+    IndividualComposite composite2 = newCompositeIndividualWithRole();
+
+    assertEquals(composite1, composite2);
+
+    List<Email> emails = new ArrayList<>();
+
+    Email workEmail = new Email();
+    workEmail.setType("Work");
+    workEmail.setEmailaddress("fu.manchu.work@foo.com");
+    workEmail.setSource("Editorial Manager");
+    emails.add( workEmail );
+
+    Email personalEmail = new Email();
+    personalEmail.setType("Personal");
+    personalEmail.setEmailaddress("fu.manchu.home@foo.com");
+    personalEmail.setSource("Editorial Manager");
+    emails.add( personalEmail );
+
+    composite1.setEmails( emails );
+    assertNotEquals(composite1, composite2);
+
+    composite2.setEmails( emails );
+    assertEquals(composite1, composite2);
+
+    // list order should not affect equality
+    emails = new ArrayList<>();
+    emails.add( personalEmail );
+    emails.add( workEmail );
+
+    composite2.setEmails( emails );
+
+    assertEquals(composite1, composite2);
   }
 
   @Test

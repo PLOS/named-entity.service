@@ -16,7 +16,7 @@
  */
 package org.plos.namedentity.api.entity;
 
-public class Sourcefield extends Entity {
+public class Sourcefield {
 
   private Integer id;
   private String  sourcetable;

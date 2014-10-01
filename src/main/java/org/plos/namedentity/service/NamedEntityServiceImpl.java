@@ -16,13 +16,23 @@
  */
 package org.plos.namedentity.service;
 
+import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.IndividualComposite;
-import org.plos.namedentity.api.entity.*;
+import org.plos.namedentity.api.entity.Address;
+import org.plos.namedentity.api.entity.Degree;
+import org.plos.namedentity.api.entity.Email;
+import org.plos.namedentity.api.entity.Entity;
+import org.plos.namedentity.api.entity.Individual;
+import org.plos.namedentity.api.entity.Phonenumber;
+import org.plos.namedentity.api.entity.Role;
+import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.api.entity.Url;
 import org.plos.namedentity.persist.NamedEntityDBService;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Map;
 
 public class NamedEntityServiceImpl implements NamedEntityService {
 
@@ -170,98 +180,42 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     return entity;
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public IndividualComposite findIndividualComposite(Integer nedId) {
 
     IndividualComposite composite = new IndividualComposite();
 
-    composite.setIndividuals(findResolvedEntities(nedId, Individual.class));
+    Map<Class, List<? extends Entity>> compositeMap = composite.getAsMap();
 
-    composite.setAddresses(findResolvedEntities(nedId, Address.class));
+    for (Class entityType : compositeMap.keySet())
+      compositeMap.put(entityType, findResolvedEntities(nedId, entityType));
 
-    composite.setPhonenumbers(findResolvedEntities(nedId, Phonenumber.class));
+    composite.setFromMap(compositeMap);
 
-    composite.setEmails(findResolvedEntities(nedId, Email.class));
-
-    composite.setDegrees(findResolvedEntities(nedId, Degree.class));
-
-    composite.setUrls(findResolvedEntities(nedId, Url.class));
-
-    composite.setRoles(findResolvedEntities(nedId, Role.class));
-
-    composite.setUniqueidentifiers(findResolvedEntities(nedId, Uniqueidentifier.class));
+    if (composite.getIndividuals().size() == 0)
+      throw new EntityNotFoundException("Individual not found");
 
     return composite;
   }
 
   @Override @Transactional
-  public IndividualComposite addToComposite(IndividualComposite composite,
-                                            Integer nedId) {
+  public IndividualComposite addToComposite(IndividualComposite composite, Integer nedId) {
 
     if (nedId == null)
       nedId = nedDBSvc.newNamedEntityId("Individual");
 
-    List<Individual> individuals = composite.getIndividuals();
-    if (individuals != null) {
-      for (Individual individual : individuals) {
-        individual.setNedid(nedId);
-        nedDBSvc.create(resolveIndividual(individual));
-      }
-    }
+    Map<Class, List<? extends Entity>> compositeMap = composite.getAsMap();
 
-    List<Address> addresses = composite.getAddresses();
-    if (addresses != null) {
-      for (Address address : addresses) {
-        address.setNedid(nedId);
-        nedDBSvc.create(resolveAddress(address));
-      }
-    }
-    List<Phonenumber> phonenumbers = composite.getPhonenumbers();
-    if (composite.getPhonenumbers() != null) {
-      for (Phonenumber phonenumber : phonenumbers) {
-        phonenumber.setNedid(nedId);
-        nedDBSvc.create(resolvePhonenumber(phonenumber));
-      }
-    }
+    for (List<? extends Entity> entities : compositeMap.values()) {
 
-    List<Email> emails = composite.getEmails();
-    if (composite.getEmails() != null) {
-      for (Email email : emails) {
-        email.setNedid(nedId);
-        nedDBSvc.create(resolveEmail(email));
+      if (entities != null) {
+        for (Entity entity : entities) {
+          entity.setNedid(nedId);
+          nedDBSvc.create(resolveValuesToIds(entity));
+        }
       }
-    }
 
-    List<Degree> degrees = composite.getDegrees();
-    if (degrees != null) {
-      for (Degree degree : degrees) {
-        degree.setNedid(nedId);
-        nedDBSvc.create(resolveDegree(degree));
-      }
-    }
-
-    List<Url> urls = composite.getUrls();
-    if (urls != null) {
-      for (Url url : urls) {
-        url.setNedid(nedId);
-        nedDBSvc.create(resolveUrl(url));
-      }
-    }
-
-    List<Role> roles = composite.getRoles();
-    if (roles != null) {
-      for (Role role : roles) {
-        role.setNedid(nedId);
-        nedDBSvc.create(resolveRole(role));
-      }
-    }
-
-    List<Uniqueidentifier> uids = composite.getUniqueidentifiers();
-    if (composite.getUniqueidentifiers() != null) {
-      for (Uniqueidentifier uid : uids) {
-        uid.setNedid(nedId);
-        nedDBSvc.create(resolveReference(uid));
-      }
     }
 
     return findIndividualComposite(nedId);

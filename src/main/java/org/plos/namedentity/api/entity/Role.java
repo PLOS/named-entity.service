@@ -27,9 +27,6 @@ import java.util.Objects;
 @XmlRootElement
 public class Role extends ChildEntity {
 
-  private Integer id;
-  private Integer nedid;
-
   private Integer typeid;
   private String  type;
 
@@ -43,28 +40,22 @@ public class Role extends ChildEntity {
   private String  applicationtype;
   private Integer applicationtypeid;
 
-  private String  source;
-  private Integer sourcetypeid;
-
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
+    if (this == o)
       return true;
-    }
 
-    if (o == null || this.getClass() != o.getClass()) {
+    if (o == null || this.getClass() != o.getClass())
       return false;
-    }
 
     Role entity = (Role) o;
-    return Objects.equals(this.id, entity.id)
-        && Objects.equals(this.nedid, entity.nedid)
-        && Objects.equals(this.typeid, entity.typeid);
+    return Objects.equals(this.applicationtype, entity.applicationtype)
+        && Objects.equals(this.type, entity.type);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, nedid, typeid);
+    return Objects.hash(applicationtype, type);
   }
 
   private Timestamp lastmodified;
@@ -78,44 +69,12 @@ public class Role extends ChildEntity {
     this.applicationtype = applicationtype;
   }
 
-  public String getSource() {
-    return source;
-  }
-
-  public void setSource(String source) {
-    this.source = source;
-  }
-
-  public Integer getSourcetypeid() {
-    return sourcetypeid;
-  }
-
-  public void setSourcetypeid(Integer sourcetypeid) {
-    this.sourcetypeid = sourcetypeid;
-  }
-
   public String getType() {
     return type;
   }
 
   public void setType(String type) {
     this.type = type;
-  }
-
-  public Integer getId() {
-    return this.id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public Integer getNedid() {
-    return this.nedid;
-  }
-
-  public void setNedid(Integer nedid) {
-    this.nedid = nedid;
   }
 
   public Integer getApplicationtypeid() {

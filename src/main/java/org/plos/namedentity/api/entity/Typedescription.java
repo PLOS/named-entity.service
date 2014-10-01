@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement
-public class Typedescription extends Entity {
+public class Typedescription {
 
   private Integer id;
   private String  description;
