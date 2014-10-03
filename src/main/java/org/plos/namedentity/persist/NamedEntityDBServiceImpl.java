@@ -384,6 +384,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
     Globaltypes gt3 = GLOBALTYPES.as("gt3");
+    Globaltypes gt4 = GLOBALTYPES.as("gt4");
     Addresses   a   = ADDRESSES.as("a");
 
     return this.context
@@ -393,11 +394,13 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         a.POSTALCODE,
         gt1.SHORTDESCRIPTION.as("type"),
         gt2.SHORTDESCRIPTION.as("statecodetype"),
-        gt3.SHORTDESCRIPTION.as("countrycodetype"))
+        gt3.SHORTDESCRIPTION.as("countrycodetype"),
+        gt4.SHORTDESCRIPTION.as("source"))
       .from(a)
       .leftOuterJoin(gt1).on(a.TYPEID.equal(gt1.ID))
       .leftOuterJoin(gt2).on(a.STATECODETYPEID.equal(gt2.ID))
       .leftOuterJoin(gt3).on(a.COUNTRYCODETYPEID.equal(gt3.ID))
+      .leftOuterJoin(gt4).on(a.SOURCETYPEID.equal(gt4.ID))
       .where(a.NEDID.equal(nedId))
       .fetch()
       .into(Address.class);
@@ -406,13 +409,16 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   private List<Email> findEmailsByNedId(Integer nedId) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
+    Globaltypes gt2 = GLOBALTYPES.as("gt2");
     Emails      e   = EMAILS.as("e");
 
     return this.context
       .select(
-        e.ID, e.EMAILADDRESS, gt1.SHORTDESCRIPTION.as("type"))
+        e.ID, e.EMAILADDRESS, gt1.SHORTDESCRIPTION.as("type"),
+          gt2.SHORTDESCRIPTION.as("source"))
       .from(e)
       .leftOuterJoin(gt1).on(e.TYPEID.equal(gt1.ID))
+      .leftOuterJoin(gt2).on(e.SOURCETYPEID.equal(gt2.ID))
       .where(e.NEDID.equal(nedId))
       .fetch()
       .into(Email.class);
@@ -422,6 +428,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     Globaltypes  gt1 = GLOBALTYPES.as("gt1");
     Globaltypes  gt2 = GLOBALTYPES.as("gt2");
+    Globaltypes  gt3 = GLOBALTYPES.as("gt3");
     Phonenumbers p   = PHONENUMBERS.as("p");
 
     return this.context
@@ -429,10 +436,12 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         p.ID,
         p.PHONENUMBER, p.EXTENSION,
         gt1.SHORTDESCRIPTION.as("type"),
-        gt2.SHORTDESCRIPTION.as("countrycodetype"))
+        gt2.SHORTDESCRIPTION.as("countrycodetype"),
+        gt3.SHORTDESCRIPTION.as("source"))
       .from(p)
       .leftOuterJoin(gt1).on(p.TYPEID.equal(gt1.ID))
       .leftOuterJoin(gt2).on(p.COUNTRYCODETYPEID.equal(gt2.ID))
+      .leftOuterJoin(gt3).on(p.SOURCETYPEID.equal(gt3.ID))
       .where(p.NEDID.equal(nedId))
       .fetch()
       .into(Phonenumber.class);
@@ -441,14 +450,17 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   private List<Degree> findDegreesByNedId(Integer nedId) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
+    Globaltypes gt2 = GLOBALTYPES.as("gt2");
     Degrees     d   = DEGREES.as("d");
 
     return this.context
         .select(
             d.ID,
-            gt1.SHORTDESCRIPTION.as("type"))
+            gt1.SHORTDESCRIPTION.as("type"),
+            gt2.SHORTDESCRIPTION.as("source"))
         .from(d)
         .leftOuterJoin(gt1).on(d.TYPEID.equal(gt1.ID))
+        .leftOuterJoin(gt2).on(d.SOURCETYPEID.equal(gt2.ID))
         .where(d.NEDID.equal(nedId))
         .fetch()
         .into(Degree.class);
@@ -456,61 +468,55 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
   private List<Url> findUrlsByNedId(Integer nedId) {
 
+    Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Urls        u   = URLS.as("u");
 
     return this.context
-        .select(u.URL)
+        .select(u.URL, gt1.SHORTDESCRIPTION.as("source"))
         .from(u)
+        .leftOuterJoin(gt1).on(u.SOURCETYPEID.equal(gt1.ID))
         .where(u.NEDID.equal(nedId))
         .fetch()
         .into(Url.class);
   }
 
   private List<Role> findRolesByNedId(Integer nedId) {
-/*
-        SELECT gt1.shortDescription sourceapplicationtype,
-               gt2.shortDescription roletype,
-               r.startDate, r.endDate
-          FROM roles r
-     LEFT JOIN globalTypes gt1 ON r.sourceApplicationTypeId = gt1.ID
-     LEFT JOIN globalTypes gt2 ON r.roleTypeID = gt2.ID
-         WHERE r.NEDID = 59
-*/
+
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
+    Globaltypes gt3 = GLOBALTYPES.as("gt3");
     Roles       r   = ROLES.as("r");
 
     return this.context
       .select(
         r.ID,
         r.STARTDATE, r.ENDDATE,
-        gt1.SHORTDESCRIPTION.as("sourceapplicationtype"),                 
-        gt2.SHORTDESCRIPTION.as("type"))
+        gt1.SHORTDESCRIPTION.as("sourceapplicationtype"),
+        gt2.SHORTDESCRIPTION.as("type"),
+        gt3.SHORTDESCRIPTION.as("source"))
       .from(r)
       .leftOuterJoin(gt1).on(r.APPLICATIONTYPEID.equal(gt1.ID))
       .leftOuterJoin(gt2).on(r.TYPEID.equal(gt2.ID))
+      .leftOuterJoin(gt3).on(r.SOURCETYPEID.equal(gt3.ID))
       .where(r.NEDID.equal(nedId))
       .fetch()
       .into(Role.class);
   }
 
   private List<Uniqueidentifier> findUniqueIdsByNedId(Integer nedId) {
-/*
-   EXPLAIN
-        SELECT gt.shortDescription uniqueidentifiertype, uid.uniqueIdentifier 
-          FROM uniqueIdentifiers uid
-     LEFT JOIN globalTypes gt ON uid.uniqueIdentifierTypeId = gt.ID
-         WHERE uid.NEDID = 59
-*/
-    Globaltypes       gt  = GLOBALTYPES.as("gt");
+
+    Globaltypes       gt1 = GLOBALTYPES.as("gt1");
+    Globaltypes       gt2 = GLOBALTYPES.as("gt2");
     Uniqueidentifiers uid = UNIQUEIDENTIFIERS.as("uid");
 
     return this.context
       .select(
         uid.ID,
-        uid.UNIQUEIDENTIFIER, gt.SHORTDESCRIPTION.as("type"))
+        uid.UNIQUEIDENTIFIER, gt1.SHORTDESCRIPTION.as("type"),
+        gt2.SHORTDESCRIPTION.as("source"))
       .from(uid)
-      .leftOuterJoin(gt).on(uid.TYPEID.equal(gt.ID))
+      .leftOuterJoin(gt1).on(uid.TYPEID.equal(gt1.ID))
+      .leftOuterJoin(gt2).on(uid.SOURCETYPEID.equal(gt2.ID))
       .where(uid.NEDID.equal(nedId))
       .fetch()
       .into(Uniqueidentifier.class);

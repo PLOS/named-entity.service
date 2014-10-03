@@ -27,16 +27,7 @@ import java.util.List;
 
 public interface NamedEntityService {
 
-  /**
-   * This will take a composite and add its subentities to the service. If a
-   * nedId is specified it will add these entities to that existing user. If the nedId
-   * is set to null, a new nedId will be created for the composite.
-   *
-   * @param composite The new composite you want to create or add to an existing one.
-   * @param nedId     The nedId of an existing composite if you want to add to it.
-   * @return          The new composite represented by the NedId
-   */
-  public IndividualComposite addToComposite(IndividualComposite composite, Integer nedId);
+  public IndividualComposite createIndividualComposite(IndividualComposite composite);
 
   public IndividualComposite findIndividualComposite(Integer nedId);
 

@@ -53,7 +53,6 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -73,28 +72,6 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   private static final String INDIV_ROLE_URI   = INDIVIDUAL_URI + "/1/roles";
   private static final String INDIV_XREF_URI   = INDIVIDUAL_URI + "/1/xref";
   private static final String INDIV_DEGREE_URI = INDIVIDUAL_URI + "/1/degrees";
-
-  @Test
-  public void testAddToIndividualComposite() throws Exception {
-
-    String compositeIndividualJson = new String(Files.readAllBytes(
-        Paths.get(TEST_RESOURCE_PATH + "composite-individual.json")));
-
-    Response response = target(INDIVIDUAL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(compositeIndividualJson));
-
-    assertEquals(200, response.getStatus());
-
-    String jsonPayload = response.readEntity(String.class);
-
-    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
-    IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
-
-    Individual individual = composite.getIndividuals().get(0);
-    assertEquals(Integer.valueOf(1), individual.getNedid());
-    assertEquals("firstname", individual.getFirstname());
-
-  }
 
   @Test
   public void testCreateIndividualComposite() throws Exception {
@@ -194,7 +171,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
         + "\"lastname\":\"" + NEW_LASTNAME + "\""
         + "}";
 
-    Response response = target(INDIVIDUAL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
+    Response response = target(INDIVIDUAL_URI + "/1/1").request(MediaType.APPLICATION_JSON_TYPE)
         .post(Entity.json(NEW_INDIVIDUALS_JSON_PAYLOAD));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());

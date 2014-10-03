@@ -33,9 +33,9 @@ public class BaseResource {
 
   protected static Logger logger = Logger.getLogger(BaseResource.class);
 
-  protected static final Integer MAX_RESULT_COUNT = 50;
+  protected static final Integer MAX_RESULT_COUNT = 1000;
 
-  protected static final Integer DEFAULT_RESULT_COUNT = 10000;
+  protected static final Integer DEFAULT_RESULT_COUNT = 50;
 
   @Inject
   protected CrudService crudService;
@@ -134,7 +134,7 @@ public class BaseResource {
         if (entity.getId().equals(pkId))
           return Response.status(Response.Status.OK).entity(entity).build();
 
-      return entityNotFound(child.getSimpleName() + " not found");
+      return entityNotFound(child.getSimpleName());
 
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
@@ -221,7 +221,7 @@ public class BaseResource {
   }
 
   protected Response entityNotFound(String message) {
-    logger.error("entity not found: " + message);
+    //logger.error("entity not found: " + message);
     return Response.status(Response.Status.NOT_FOUND)   // 404
         .entity(message)
         .type(MediaType.TEXT_PLAIN).build();

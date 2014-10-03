@@ -70,7 +70,7 @@
     <aop:config>
         <aop:aspect id="validatingAspect" ref="validator">
             <aop:pointcut id="createOrUpdate"
-                    expression="execution(* org.plos.namedentity.service.NamedEntityServiceImpl.addToComposite*(..)) || execution(* org.plos.namedentity.service.CrudServiceImpl.create(..)) || execution(* org.plos.namedentity.service.CrudServiceImpl.update(..))"/>
+                    expression="execution(* org.plos.namedentity.service.NamedEntityServiceImpl.create*(..)) || execution(* org.plos.namedentity.service.CrudServiceImpl.create(..)) || execution(* org.plos.namedentity.service.CrudServiceImpl.update(..))"/>
             <aop:around method="validate" pointcut-ref="createOrUpdate"/>
         </aop:aspect>
     </aop:config>

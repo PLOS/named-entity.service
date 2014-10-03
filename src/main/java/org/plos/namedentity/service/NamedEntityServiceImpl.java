@@ -18,6 +18,7 @@ package org.plos.namedentity.service;
 
 import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.IndividualComposite;
+import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Email;
@@ -200,10 +201,12 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   }
 
   @Override @Transactional
-  public IndividualComposite addToComposite(IndividualComposite composite, Integer nedId) {
+  public IndividualComposite createIndividualComposite(IndividualComposite composite) {
 
-    if (nedId == null)
-      nedId = nedDBSvc.newNamedEntityId("Individual");
+    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+
+    if (composite.getIndividuals() == null || composite.getIndividuals().size() == 0)
+      throw new NedValidationException("Individuals can not be empty");
 
     Map<Class, List<? extends Entity>> compositeMap = composite.getAsMap();
 

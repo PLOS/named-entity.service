@@ -35,25 +35,11 @@ public class IndividualsResource extends BaseResource {
   public Response create(IndividualComposite composite) {
     try {
       return Response.status(Response.Status.OK).entity(
-          namedEntityService.addToComposite(composite, null)).build();
+          namedEntityService.createIndividualComposite(composite)).build();
     } catch (NedValidationException e) {
       return validationError(e, "Unable to create individual composite");
     } catch (Exception e) {
       return serverError(e, "Unable to create individual composite");
-    }
-  }
-
-  @POST
-  @Path("/{nedId}")
-  @ApiOperation(value = "Add to existing individual composite", response = IndividualComposite.class)
-  public Response add(@PathParam("nedId") int nedId, IndividualComposite composite) {
-    try {
-      return Response.status(Response.Status.OK).entity(
-          namedEntityService.addToComposite(composite, nedId)).build();
-    } catch (NedValidationException e) {
-      return validationError(e, "Unable to add to individual composite");
-    } catch (Exception e) {
-      return serverError(e, "Unable to add to individual composite");
     }
   }
 
