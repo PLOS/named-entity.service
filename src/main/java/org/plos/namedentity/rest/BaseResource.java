@@ -48,7 +48,7 @@ public class BaseResource {
       throw new EntityNotFoundException(clazz.getSimpleName() + " not found");
   }
 
-  protected <S extends ChildEntity, T extends ParentEntity> 
+  protected <S extends Entity, T extends ParentEntity>
     Response createEntity(int nedId, S entity, Class<T> parent) {
 
     try {
@@ -72,7 +72,7 @@ public class BaseResource {
     }
   }
 
-  protected <S extends ChildEntity, T extends ParentEntity> 
+  protected <S extends Entity, T extends ParentEntity>
     Response updateEntity(int nedId, int pkId, S entity, Class<T> parent) {
 
     try {
@@ -99,7 +99,7 @@ public class BaseResource {
     }
   }
 
-  protected <S extends ChildEntity, T extends ParentEntity> 
+  protected <S extends Entity, T extends ParentEntity>
     Response deleteEntity(int nedId, int pkId, Class<S> child, Class<T> parent) {
 
     try {
@@ -107,7 +107,7 @@ public class BaseResource {
 
       S entity = namedEntityService.findResolvedEntityByKey(pkId, child);
 
-      crudService.delete(entity);
+      crudService.delete(entity);  // TODO: validate response code
 
       return Response.status(Response.Status.NO_CONTENT).build();
 
@@ -120,8 +120,7 @@ public class BaseResource {
     }
   }
 
-
-  protected <S extends ChildEntity, T extends ParentEntity> 
+  protected <S extends Entity, T extends ParentEntity>
     Response getEntity(int nedId, int pkId, Class<S> child, Class<T> parent) {
 
     try {
@@ -130,11 +129,11 @@ public class BaseResource {
 
       List<S> entities = namedEntityService.findResolvedEntities(nedId, child);
 
-      for (ChildEntity entity : entities)
+      for (Entity entity : entities)
         if (entity.getId().equals(pkId))
           return Response.status(Response.Status.OK).entity(entity).build();
 
-      return entityNotFound(child.getSimpleName());
+      return entityNotFound(child.getSimpleName() + " " + pkId);
 
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
@@ -159,7 +158,7 @@ public class BaseResource {
    * what to do? how about doing a brute-force switch on child class -- 
    * not pretty, but at least allows a generic entry-point. fix in future.
    */
-  protected <S extends ChildEntity, T extends ParentEntity> 
+  protected <S extends Entity, T extends ParentEntity>
     Response getEntities(int nedId, Class<S> child, Class<T> parent) {
 
     try {
@@ -223,7 +222,7 @@ public class BaseResource {
   protected Response entityNotFound(String message) {
     //logger.error("entity not found: " + message);
     return Response.status(Response.Status.NOT_FOUND)   // 404
-        .entity(message)
+        .entity("entity not found: " + message)
         .type(MediaType.TEXT_PLAIN).build();
   }
 

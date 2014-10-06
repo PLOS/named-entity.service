@@ -206,12 +206,16 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     String cname = clazz.getCanonicalName();
 
+    if (cname.equals(Individual.class.getCanonicalName()))
+      return (T)findIndividualByPrimaryKey(pk);
     if (cname.equals(Email.class.getCanonicalName()))
       return (T)findEmailByPrimaryKey(pk);
-    else if (cname.equals(Address.class.getCanonicalName()))
+    if (cname.equals(Address.class.getCanonicalName()))
       return (T)findAddressByPrimaryKey(pk);
-    else if (cname.equals(Role.class.getCanonicalName()))
+    if (cname.equals(Role.class.getCanonicalName()))
       return (T)findRoleByPrimaryKey(pk);
+    if (cname.equals(Uniqueidentifier.class.getCanonicalName()))
+      return (T)findUniqueIdsByPrimaryKey(pk);
 
     throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
   }
@@ -319,7 +323,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .leftOuterJoin(gt1).on(o.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(u.TYPEID.equal(gt2.ID)).and(gt2.SHORTDESCRIPTION.equal(srcType))
         .join(u).on(o.NEDID.equal(u.NEDID))
-        .where(u.UNIQUEIDENTIFIER.equal(uid)).fetchOne();
+        .where(u.UNIQUEIDENTIFIER.equal(uid)).fetchAny();
 
     if (record == null)
       throw new EntityNotFoundException("Organization not found");
@@ -328,24 +332,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   }
 
   private Individual findIndividualByUid(String srcType, String uid) {
-/*
-   EXPLAIN
-        SELECT gt1.shortDescription nameprefix, i.firstName firstname, 
-               i.middleName middlename, i.lastName lastname, 
-               gt2.shortDescription namesuffix, i.url, 
-               gt3.shortDescription preferredlanguage, 
-               gt4.shortDescription preferredcommunication,
-               gt4.shortDescription preferredcommunication,
-         gt5.shortDescription uniqueidentifiertype, uid.uniqueIdentifier 
-          FROM individuals i
-     LEFT JOIN globalTypes gt1 ON i.namePrefixTypeId                   = gt1.ID
-     LEFT JOIN globalTypes gt2 ON i.nameSuffixTypeId                   = gt2.ID
-     LEFT JOIN globalTypes gt3 ON i.preferredLanguageTypeId            = gt3.ID
-     LEFT JOIN globalTypes gt4 ON i.preferredCommunicationMethodTypeId = gt4.ID
-        JOIN uniqueIdentifiers uid ON i.NEDID = uid.NEDID AND uid.uniqueIdentifierTypeId = 50
-     LEFT JOIN globalTypes gt5 ON uid.uniqueIdentifierTypeId           = gt5.ID
-         WHERE uid.uniqueIdentifier = '<UID>'; 
-*/
+
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
     Globaltypes gt3 = GLOBALTYPES.as("gt3");
@@ -371,7 +358,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       .join(u).on(i.NEDID.equal(u.NEDID))
       .leftOuterJoin(gt5).on(u.TYPEID.equal(gt5.ID)).and(gt5.SHORTDESCRIPTION.eq(srcType))
       .where(u.UNIQUEIDENTIFIER.equal(uid))
-      .fetchOne();
+      .fetchAny();
 
     if (record == null)
       throw new EntityNotFoundException("Individual not found");
@@ -522,12 +509,35 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       .into(Uniqueidentifier.class);
   }
 
-  private Individual findIndividualsByPrimaryKey(Integer individualId) {
+  private Uniqueidentifier findUniqueIdsByPrimaryKey(Integer id) {
+
+    Globaltypes       gt1 = GLOBALTYPES.as("gt1");
+    Globaltypes       gt2 = GLOBALTYPES.as("gt2");
+    Uniqueidentifiers uid = UNIQUEIDENTIFIERS.as("uid");
+
+    Record record = this.context
+        .select(
+            uid.ID,
+            uid.UNIQUEIDENTIFIER, gt1.SHORTDESCRIPTION.as("type"),
+            gt2.SHORTDESCRIPTION.as("source"))
+        .from(uid)
+        .leftOuterJoin(gt1).on(uid.TYPEID.equal(gt1.ID))
+        .leftOuterJoin(gt2).on(uid.SOURCETYPEID.equal(gt2.ID))
+        .where(uid.ID.equal(id))
+        .fetchOne();
+
+    if (record == null) throw new EntityNotFoundException("Uniqueidentifier not found");
+
+    return record.into(Uniqueidentifier.class);
+  }
+
+  private Individual findIndividualByPrimaryKey(Integer individualId) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
     Globaltypes gt3 = GLOBALTYPES.as("gt3");
     Globaltypes gt4 = GLOBALTYPES.as("gt4");
+    Globaltypes gt5 = GLOBALTYPES.as("gt5");
     Individuals i   = INDIVIDUALS.as("i");
 
     Record record = this.context
@@ -536,12 +546,14 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
             gt1.SHORTDESCRIPTION.as("nameprefix"),
             gt2.SHORTDESCRIPTION.as("namesuffix"),
             gt3.SHORTDESCRIPTION.as("preferredlanguage"),
-            gt4.SHORTDESCRIPTION.as("preferredcommunication"))
+            gt4.SHORTDESCRIPTION.as("preferredcommunication"),
+            gt5.SHORTDESCRIPTION.as("source"))
         .from(i)
         .leftOuterJoin(gt1).on(i.NAMEPREFIXTYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(i.NAMESUFFIXTYPEID.equal(gt2.ID))
         .leftOuterJoin(gt3).on(i.PREFERREDLANGUAGETYPEID.equal(gt3.ID))
         .leftOuterJoin(gt4).on(i.PREFERREDCOMMUNICATIONMETHODTYPEID.equal(gt4.ID))
+        .leftOuterJoin(gt5).on(i.SOURCETYPEID.equal(gt5.ID))
         .where(i.ID.equal(individualId))
         .fetchOne();
 

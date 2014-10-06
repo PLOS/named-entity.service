@@ -171,7 +171,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
         + "\"lastname\":\"" + NEW_LASTNAME + "\""
         + "}";
 
-    Response response = target(INDIVIDUAL_URI + "/1/1").request(MediaType.APPLICATION_JSON_TYPE)
+    Response response = target(INDIVIDUAL_URI + "/1/individuals/1").request(MediaType.APPLICATION_JSON_TYPE)
         .post(Entity.json(NEW_INDIVIDUALS_JSON_PAYLOAD));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
@@ -181,7 +181,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   @Test
   public void testIndividualDelete() {
     assertEquals(Response.Status.NO_CONTENT.getStatusCode(),
-        target(INDIVIDUAL_URI + "/1/1").request().delete().getStatus());
+        target(INDIVIDUAL_URI + "/1/individuals/1").request().delete().getStatus());
   }
 
   @Test
