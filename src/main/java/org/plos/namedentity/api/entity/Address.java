@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement
-public class Address extends ChildEntity {
+public class Address extends Entity {
 
   private Integer typeid;
   private String  type;

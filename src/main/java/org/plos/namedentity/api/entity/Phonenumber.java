@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement
-public class Phonenumber extends ChildEntity {
+public class Phonenumber extends Entity {
 
   private Integer typeid;
   private String  type;

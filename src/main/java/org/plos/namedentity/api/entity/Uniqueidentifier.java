@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement
-public class Uniqueidentifier extends ChildEntity {
+public class Uniqueidentifier extends Entity {
 
   private Integer typeid;
   private String  type;

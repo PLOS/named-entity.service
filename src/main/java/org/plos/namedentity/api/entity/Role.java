@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @XmlRootElement
-public class Role extends ChildEntity {
+public class Role extends Entity {
 
   private Integer typeid;
   private String  type;
