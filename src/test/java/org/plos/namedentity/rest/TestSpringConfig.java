@@ -47,7 +47,6 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
-import static org.mockito.Matchers.isNull;
 import static org.mockito.Mockito.when;
 
 public class TestSpringConfig {
@@ -85,13 +84,10 @@ public class TestSpringConfig {
 
     IndividualComposite individualComposite = newIndividualComposite();
 
-    when(mockNamedEntityService.addToComposite(isA(IndividualComposite.class), isNull(Integer.class)))
+    when(mockNamedEntityService.createIndividualComposite(isA(IndividualComposite.class)))
       .thenReturn(individualComposite)
         .thenThrow(NedValidationException.class)
           .thenThrow(RuntimeException.class);
-
-    when(mockNamedEntityService.addToComposite(isA(IndividualComposite.class), eq(individualEntity.getNedid())))
-      .thenReturn(individualComposite);
 
     when(mockNamedEntityService.findIndividualComposite(anyInt()))
         .thenReturn( individualComposite );

@@ -52,7 +52,7 @@ public class NamedEntityServiceTest {
   public void testCreateIndividualCompositeWithoutName() {
     // triggers phase 1 validation failure
     try {
-      namedEntityService.addToComposite(new IndividualComposite(), null);
+      namedEntityService.createIndividualComposite(new IndividualComposite());
       fail();
     }
     catch (NedValidationException expected) {
@@ -213,7 +213,7 @@ public class NamedEntityServiceTest {
     Integer nedId = null;
 
     try {
-      namedEntityService.addToComposite(composite, null);
+      namedEntityService.createIndividualComposite(composite);
       fail("invalid URL was not rejected");
     } catch (NedValidationException expected) {
       // expected since url is invalid
@@ -227,7 +227,7 @@ public class NamedEntityServiceTest {
     composite.setUrls(urls);
 
     try {
-      IndividualComposite responseComposite = namedEntityService.addToComposite(composite, null);
+      IndividualComposite responseComposite = namedEntityService.createIndividualComposite(composite);
       assertNotNull(responseComposite);
       assertNotNull(responseComposite.getIndividuals().get(0).getNedid());
 
@@ -301,7 +301,7 @@ public class NamedEntityServiceTest {
     composite.setEmails( emails );
 
     try {
-      namedEntityService.addToComposite(composite, null);
+      namedEntityService.createIndividualComposite(composite);
       fail();
     }
     catch (NedValidationException expected) {

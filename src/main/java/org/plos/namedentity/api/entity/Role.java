@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @XmlRootElement
-public class Role extends ChildEntity {
+public class Role extends Entity {
 
   private Integer typeid;
   private String  type;
@@ -50,12 +50,14 @@ public class Role extends ChildEntity {
 
     Role entity = (Role) o;
     return Objects.equals(this.applicationtype, entity.applicationtype)
-        && Objects.equals(this.type, entity.type);
+        && Objects.equals(this.type, entity.type)
+        && Objects.equals(this.startdate, entity.startdate)
+        && Objects.equals(this.enddate, entity.enddate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(applicationtype, type);
+    return Objects.hash(applicationtype, type, startdate, enddate);
   }
 
   private Timestamp lastmodified;

@@ -12,3 +12,4 @@ cd ..
 cp ned-pojos.jar ~/applications/pentaho/lib
 #ln -s `pwd`/ned-pojos.jar ~/src/named-entity.etl/update-ned.plugin/lib
 cp ned-pojos.jar ~/src/named-entity.etl/update-ned.plugin/lib
+

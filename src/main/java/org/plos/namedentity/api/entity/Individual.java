@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement
-public class Individual extends ParentEntity {
+public class Individual extends Entity {
 
   private String  firstname;
   private String  middlename;

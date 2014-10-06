@@ -32,10 +32,10 @@ public class IndividualsResource extends BaseResource {
 
   @POST
   @ApiOperation(value = "Create individual composite", response = IndividualComposite.class)
-  public Response create(IndividualComposite composite) {
+  public Response createComposite(IndividualComposite composite) {
     try {
       return Response.status(Response.Status.OK).entity(
-          namedEntityService.addToComposite(composite, null)).build();
+          namedEntityService.createIndividualComposite(composite)).build();
     } catch (NedValidationException e) {
       return validationError(e, "Unable to create individual composite");
     } catch (Exception e) {
@@ -43,25 +43,11 @@ public class IndividualsResource extends BaseResource {
     }
   }
 
-  @POST
-  @Path("/{nedId}")
-  @ApiOperation(value = "Add to existing individual composite", response = IndividualComposite.class)
-  public Response add(@PathParam("nedId") int nedId, IndividualComposite composite) {
-    try {
-      return Response.status(Response.Status.OK).entity(
-          namedEntityService.addToComposite(composite, nedId)).build();
-    } catch (NedValidationException e) {
-      return validationError(e, "Unable to add to individual composite");
-    } catch (Exception e) {
-      return serverError(e, "Unable to add to individual composite");
-    }
-  }
-
   @GET
   @Path("/{nedId}")
   @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   @ApiOperation(value = "Read individual composite", response = IndividualComposite.class)
-  public Response read(@PathParam("nedId") int nedId) {
+  public Response readComposite(@PathParam("nedId") int nedId) {
     try {
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findIndividualComposite(nedId)).build();
@@ -75,8 +61,8 @@ public class IndividualsResource extends BaseResource {
   @GET
   @Path("/{uidType}/{uidValue}")
   @ApiOperation(value = "Read individual composite", response = IndividualComposite.class)
-  public Response readByUid(@PathParam("uidType") String uidType,
-                            @PathParam("uidValue") String uidValue) {
+  public Response readCompositeByUid(@PathParam("uidType") String uidType,
+                                     @PathParam("uidValue") String uidValue) {
     try {
 
       Individual individual = namedEntityService.findResolvedEntityByUid(
@@ -91,59 +77,11 @@ public class IndividualsResource extends BaseResource {
     }
   }
 
-  @POST
-  @Path("/{nedId}/{id}")
-  @ApiOperation(value = "Update a single individual entity", response = Individual.class)
-  public Response update(@PathParam("nedId") int nedId,
-                         @PathParam("id") int id, Individual entity) {
-
-    try {
-
-      checkNedIdForEntity(nedId, Individual.class);
-
-      entity.setId(id);
-
-      namedEntityService.resolveValuesToIds(entity);
-
-      crudService.update(entity);
-
-      return Response.ok().entity(
-          namedEntityService.findResolvedEntityByKey(id, Individual.class)).build();
-
-    } catch (EntityNotFoundException e) {
-      return entityNotFound(e);
-    } catch (Exception e) {
-      return serverError(e, "Unable to update individual");
-    }
-
-  }
-
-  @DELETE
-  @Path("/{nedId}/{id}")
-  @ApiOperation(value = "Delete a single individual entity")
-  public Response delete(@PathParam("nedId") int nedId, @PathParam("id") int id) {
-
-    try {
-
-      checkNedIdForEntity(nedId, Individual.class);
-
-      // TODO: validate response
-      crudService.delete(namedEntityService.findResolvedEntityByKey(id, Individual.class));
-
-      return Response.status(Response.Status.NO_CONTENT).build();
-
-    } catch (EntityNotFoundException e) {
-      return entityNotFound(e);
-    } catch (Exception e) {
-      return serverError(e, "Unable to delete individual");
-    }
-
-  }
-
   @GET
   @ApiOperation(value = "List individual entities", response = Individual.class)
-  public Response list(@ApiParam(required = false) @QueryParam("offset") Integer offset,
-                       @ApiParam(required = false) @QueryParam("limit") Integer limit) {
+  public Response listIndividuals(
+      @ApiParam(required = false) @QueryParam("offset") Integer offset,
+      @ApiParam(required = false) @QueryParam("limit") Integer limit) {
     try {
 
       // TODO: nest/group by NedId?
@@ -160,6 +98,33 @@ public class IndividualsResource extends BaseResource {
     } catch (Exception e) {
       return serverError(e, "Find all individuals failed");
     }
+  }
+
+  /* ----------------------------------------------------------------------- */
+  /*  INDIVIDUAL CRUD                                                        */
+  /* ----------------------------------------------------------------------- */
+
+  @POST
+  @Path("/{nedId}/individuals")
+  @ApiOperation(value = "Add individual entity to composite", response = IndividualComposite.class)
+  public Response addIndividual(@PathParam("nedId") int nedId, Individual entity) {
+    return createEntity(nedId, entity, Individual.class);
+  }
+
+  @POST
+  @Path("/{nedId}/individuals/{id}")
+  @ApiOperation(value = "Update a single individual entity", response = Individual.class)
+  public Response updateIndividual(@PathParam("nedId") int nedId,
+                         @PathParam("id") int id, Individual entity) {
+
+    return updateEntity(nedId, id, entity, Individual.class);
+  }
+
+  @DELETE
+  @Path("/{nedId}/individuals/{id}")
+  @ApiOperation(value = "Delete a single individual entity")
+  public Response deleteIndividual(@PathParam("nedId") int nedId, @PathParam("id") int id) {
+    return deleteEntity(nedId, id, Individual.class, Individual.class);
   }
 
   /* ----------------------------------------------------------------------- */
@@ -246,7 +211,7 @@ public class IndividualsResource extends BaseResource {
   @GET
   @Path("/{nedId}/addresses")
   @ApiOperation(value = "List addresses", response = Address.class)
-  public Response getAddresss(@PathParam("nedId") int nedId) {
+  public Response getAddresses(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Address.class, Individual.class);
   }
 
@@ -266,12 +231,38 @@ public class IndividualsResource extends BaseResource {
   /*  REFERENCES CRUD                                                        */
   /* ----------------------------------------------------------------------- */
 
+  @POST
+  @Path("/{nedId}/uids")
+  @ApiOperation(value = "Create UID", response = Uniqueidentifier.class)
+  public Response createUid(@PathParam("nedId") int nedId,
+                            Uniqueidentifier entity) {
+    return createEntity(nedId, entity, Individual.class);
+  }
+
+  @POST
+  @Path("/{nedId}/uids/{id}")
+  @ApiOperation(value = "Update UID", response = Uniqueidentifier.class)
+  public Response updateUid(@PathParam("nedId") int nedId,
+                            @PathParam("id") int id,
+                            Uniqueidentifier entity) {
+    return updateEntity(nedId, id, entity, Individual.class);
+  }
+
+  @DELETE
+  @Path("/{nedId}/uids/{id}")
+  @ApiOperation(value = "Delete UID")
+  public Response deleteUid(@PathParam("nedId") int nedId,
+                            @PathParam("id") int id) {
+    return deleteEntity(nedId, id, Uniqueidentifier.class, Individual.class);
+  }
+
   @GET
-  @Path("/{nedId}/xref")
-  @ApiOperation(value = "List references")
+  @Path("/{nedId}/uids")
+  @ApiOperation(value = "List UIDs")
   public Response getExternalReferences(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Uniqueidentifier.class, Individual.class);
   }
+
 
   /* ----------------------------------------------------------------------- */
   /*  DEGREES CRUD                                                           */

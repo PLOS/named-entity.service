@@ -75,9 +75,6 @@ public class IndividualComposite implements Validatable {
   @Override
   public void validate() {
 
-    if (individuals == null || individuals.size() == 0)
-      throw new NedValidationException("Individuals can not be empty");
-
     Map<Class, List<? extends Entity>> compositeMap = getAsMap();
 
     for (List<? extends Entity> entities : compositeMap.values()) {

@@ -74,9 +74,9 @@ public class OrganizationsResource extends BaseResource {
   }
 
   @GET
-  @Path("/{nedId}/xref")
-  @ApiOperation("List references")
-  public Response getExternalReferences(@PathParam("nedId") int nedId) {
+  @Path("/{nedId}/uids")
+  @ApiOperation("List UIDs")
+  public Response getUids(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Uniqueidentifier.class, Organization.class);
   }
 }

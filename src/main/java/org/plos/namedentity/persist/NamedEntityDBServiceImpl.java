@@ -20,6 +20,7 @@ package org.plos.namedentity.persist;
 
 import org.jooq.DSLContext;
 import org.jooq.Record;
+import org.jooq.SelectOnConditionStep;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
@@ -206,12 +207,16 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     String cname = clazz.getCanonicalName();
 
+    if (cname.equals(Individual.class.getCanonicalName()))
+      return (T)findIndividualByPrimaryKey(pk);
     if (cname.equals(Email.class.getCanonicalName()))
       return (T)findEmailByPrimaryKey(pk);
-    else if (cname.equals(Address.class.getCanonicalName()))
+    if (cname.equals(Address.class.getCanonicalName()))
       return (T)findAddressByPrimaryKey(pk);
-    else if (cname.equals(Role.class.getCanonicalName()))
+    if (cname.equals(Role.class.getCanonicalName()))
       return (T)findRoleByPrimaryKey(pk);
+    if (cname.equals(Uniqueidentifier.class.getCanonicalName()))
+      return (T)findUniqueIdsByPrimaryKey(pk);
 
     throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
   }
@@ -254,33 +259,98 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
   }
 
+  private SelectOnConditionStep select(Uniqueidentifiers uid) {
 
-  private List<Individual> findIndividualsByNedId(Integer nedId) {
+    Globaltypes gt1 = GLOBALTYPES.as("gt1");
+    Globaltypes gt2 = GLOBALTYPES.as("gt2");
+
+    return this.context
+        .select(
+            uid.ID,
+            uid.UNIQUEIDENTIFIER, gt1.SHORTDESCRIPTION.as("type"),
+            gt2.SHORTDESCRIPTION.as("source"))
+        .from(uid)
+        .leftOuterJoin(gt1).on(uid.TYPEID.equal(gt1.ID))
+        .leftOuterJoin(gt2).on(uid.SOURCETYPEID.equal(gt2.ID));
+  }
+
+  private SelectOnConditionStep select(Individuals i) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
     Globaltypes gt3 = GLOBALTYPES.as("gt3");
     Globaltypes gt4 = GLOBALTYPES.as("gt4");
     Globaltypes gt5 = GLOBALTYPES.as("gt5");
-    Individuals i   = INDIVIDUALS.as("i");
 
     return this.context
-      .select(
-          i.ID, i.NEDID, i.FIRSTNAME, i.MIDDLENAME, i.LASTNAME, i.DISPLAYNAME,
-          gt1.SHORTDESCRIPTION.as("nameprefix"),
-          gt2.SHORTDESCRIPTION.as("namesuffix"),
-          gt3.SHORTDESCRIPTION.as("preferredlanguage"),
-          gt4.SHORTDESCRIPTION.as("preferredcommunication"),
-          gt5.SHORTDESCRIPTION.as("source"))
-      .from(i)
-      .leftOuterJoin(gt1).on(i.NAMEPREFIXTYPEID.equal(gt1.ID))
-      .leftOuterJoin(gt2).on(i.NAMESUFFIXTYPEID.equal(gt2.ID))
-      .leftOuterJoin(gt3).on(i.PREFERREDLANGUAGETYPEID.equal(gt3.ID))
-      .leftOuterJoin(gt4).on(i.PREFERREDCOMMUNICATIONMETHODTYPEID.equal(gt4.ID))
-      .leftOuterJoin(gt5).on(i.SOURCETYPEID.equal(gt5.ID))
-      .where(i.NEDID.equal(nedId))
-      .fetch()
-      .into(Individual.class);
+        .select(
+            i.ID, i.NEDID, i.FIRSTNAME, i.MIDDLENAME, i.LASTNAME, i.DISPLAYNAME,
+            gt1.SHORTDESCRIPTION.as("nameprefix"),
+            gt2.SHORTDESCRIPTION.as("namesuffix"),
+            gt3.SHORTDESCRIPTION.as("preferredlanguage"),
+            gt4.SHORTDESCRIPTION.as("preferredcommunication"),
+            gt5.SHORTDESCRIPTION.as("source"))
+        .from(i)
+        .leftOuterJoin(gt1).on(i.NAMEPREFIXTYPEID.equal(gt1.ID))
+        .leftOuterJoin(gt2).on(i.NAMESUFFIXTYPEID.equal(gt2.ID))
+        .leftOuterJoin(gt3).on(i.PREFERREDLANGUAGETYPEID.equal(gt3.ID))
+        .leftOuterJoin(gt4).on(i.PREFERREDCOMMUNICATIONMETHODTYPEID.equal(gt4.ID))
+        .leftOuterJoin(gt5).on(i.SOURCETYPEID.equal(gt5.ID));
+  }
+
+  private SelectOnConditionStep select(Emails e) {
+
+    Globaltypes gt1 = GLOBALTYPES.as("gt1");
+    Globaltypes gt2 = GLOBALTYPES.as("gt2");
+
+    return this.context
+        .select(
+            e.ID, e.EMAILADDRESS, gt1.SHORTDESCRIPTION.as("type"),
+            gt2.SHORTDESCRIPTION.as("source"))
+        .from(e)
+        .leftOuterJoin(gt1).on(e.TYPEID.equal(gt1.ID))
+        .leftOuterJoin(gt2).on(e.SOURCETYPEID.equal(gt2.ID));
+  }
+
+  private SelectOnConditionStep select(Addresses a) {
+
+    Globaltypes gt1 = GLOBALTYPES.as("gt1");
+    Globaltypes gt2 = GLOBALTYPES.as("gt2");
+    Globaltypes gt3 = GLOBALTYPES.as("gt3");
+    Globaltypes gt4 = GLOBALTYPES.as("gt4");
+
+    return this.context
+        .select(
+            a.ID,
+            a.ADDRESSLINE1, a.ADDRESSLINE2, a.ADDRESSLINE3, a.CITY,
+            a.POSTALCODE,
+            gt1.SHORTDESCRIPTION.as("type"),
+            gt2.SHORTDESCRIPTION.as("statecodetype"),
+            gt3.SHORTDESCRIPTION.as("countrycodetype"),
+            gt4.SHORTDESCRIPTION.as("source"))
+        .from(a)
+        .leftOuterJoin(gt1).on(a.TYPEID.equal(gt1.ID))
+        .leftOuterJoin(gt2).on(a.STATECODETYPEID.equal(gt2.ID))
+        .leftOuterJoin(gt3).on(a.COUNTRYCODETYPEID.equal(gt3.ID))
+        .leftOuterJoin(gt4).on(a.SOURCETYPEID.equal(gt4.ID));
+  }
+
+  private SelectOnConditionStep select(Roles r) {
+
+    Globaltypes gt1 = GLOBALTYPES.as("gt1");
+    Globaltypes gt2 = GLOBALTYPES.as("gt2");
+    Globaltypes gt3 = GLOBALTYPES.as("gt3");
+
+    return this.context
+        .select(
+            r.ID, r.STARTDATE, r.ENDDATE,
+            gt1.SHORTDESCRIPTION.as("applicationtype"),
+            gt2.SHORTDESCRIPTION.as("type"),
+            gt2.SHORTDESCRIPTION.as("source"))
+        .from(r)
+        .leftOuterJoin(gt1).on(r.APPLICATIONTYPEID.equal(gt1.ID))
+        .leftOuterJoin(gt2).on(r.TYPEID.equal(gt2.ID))
+        .leftOuterJoin(gt3).on(r.SOURCETYPEID.equal(gt3.ID));
   }
 
   private Organization findOrganizationByNedId(Integer nedId) {
@@ -298,7 +368,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .where(o.NEDID.equal(nedId)).fetchOne();
 
     if (record == null)
-      throw new EntityNotFoundException("Organization not found");
+      throw new EntityNotFoundException("Organization");
 
     return record.into(Organization.class);
   }
@@ -319,33 +389,16 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .leftOuterJoin(gt1).on(o.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(u.TYPEID.equal(gt2.ID)).and(gt2.SHORTDESCRIPTION.equal(srcType))
         .join(u).on(o.NEDID.equal(u.NEDID))
-        .where(u.UNIQUEIDENTIFIER.equal(uid)).fetchOne();
+        .where(u.UNIQUEIDENTIFIER.equal(uid)).fetchAny();
 
     if (record == null)
-      throw new EntityNotFoundException("Organization not found");
+      throw new EntityNotFoundException("Organization");
 
     return record.into(Organization.class);
   }
 
   private Individual findIndividualByUid(String srcType, String uid) {
-/*
-   EXPLAIN
-        SELECT gt1.shortDescription nameprefix, i.firstName firstname, 
-               i.middleName middlename, i.lastName lastname, 
-               gt2.shortDescription namesuffix, i.url, 
-               gt3.shortDescription preferredlanguage, 
-               gt4.shortDescription preferredcommunication,
-               gt4.shortDescription preferredcommunication,
-         gt5.shortDescription uniqueidentifiertype, uid.uniqueIdentifier 
-          FROM individuals i
-     LEFT JOIN globalTypes gt1 ON i.namePrefixTypeId                   = gt1.ID
-     LEFT JOIN globalTypes gt2 ON i.nameSuffixTypeId                   = gt2.ID
-     LEFT JOIN globalTypes gt3 ON i.preferredLanguageTypeId            = gt3.ID
-     LEFT JOIN globalTypes gt4 ON i.preferredCommunicationMethodTypeId = gt4.ID
-        JOIN uniqueIdentifiers uid ON i.NEDID = uid.NEDID AND uid.uniqueIdentifierTypeId = 50
-     LEFT JOIN globalTypes gt5 ON uid.uniqueIdentifierTypeId           = gt5.ID
-         WHERE uid.uniqueIdentifier = '<UID>'; 
-*/
+
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
     Globaltypes gt3 = GLOBALTYPES.as("gt3");
@@ -371,84 +424,80 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       .join(u).on(i.NEDID.equal(u.NEDID))
       .leftOuterJoin(gt5).on(u.TYPEID.equal(gt5.ID)).and(gt5.SHORTDESCRIPTION.eq(srcType))
       .where(u.UNIQUEIDENTIFIER.equal(uid))
-      .fetchOne();
+      .fetchAny();
 
     if (record == null)
-      throw new EntityNotFoundException("Individual not found");
+      throw new EntityNotFoundException("Individual");
 
     return record.into(Individual.class);
   }
 
+
+  private List<Individual> findIndividualsByNedId(Integer nedId) {
+    Individuals i   = INDIVIDUALS.as("i");
+    return select(i).where(i.NEDID.equal(nedId)).fetch().into(Individual.class);
+  }
+
   private List<Address> findAddressesByNedId(Integer nedId) {
-
-    Globaltypes gt1 = GLOBALTYPES.as("gt1");
-    Globaltypes gt2 = GLOBALTYPES.as("gt2");
-    Globaltypes gt3 = GLOBALTYPES.as("gt3");
-    Addresses   a   = ADDRESSES.as("a");
-
-    return this.context
-      .select(
-        a.ID,
-        a.ADDRESSLINE1, a.ADDRESSLINE2, a.ADDRESSLINE3, a.CITY, 
-        a.POSTALCODE,
-        gt1.SHORTDESCRIPTION.as("type"),
-        gt2.SHORTDESCRIPTION.as("statecodetype"),
-        gt3.SHORTDESCRIPTION.as("countrycodetype"))
-      .from(a)
-      .leftOuterJoin(gt1).on(a.TYPEID.equal(gt1.ID))
-      .leftOuterJoin(gt2).on(a.STATECODETYPEID.equal(gt2.ID))
-      .leftOuterJoin(gt3).on(a.COUNTRYCODETYPEID.equal(gt3.ID))
-      .where(a.NEDID.equal(nedId))
-      .fetch()
-      .into(Address.class);
+    Addresses a = ADDRESSES.as("a");
+    return select(a).where(a.NEDID.equal(nedId)).fetch().into(Address.class);
   }
 
   private List<Email> findEmailsByNedId(Integer nedId) {
+    Emails e   = EMAILS.as("e");
+    return select(e).where(e.NEDID.equal(nedId)).fetch().into(Email.class);
+  }
 
-    Globaltypes gt1 = GLOBALTYPES.as("gt1");
-    Emails      e   = EMAILS.as("e");
+  private List<Role> findRolesByNedId(Integer nedId) {
+    Roles r = ROLES.as("r");
+    return select(r).where(r.NEDID.equal(nedId)).fetch().into(Role.class);
+  }
 
-    return this.context
-      .select(
-        e.ID, e.EMAILADDRESS, gt1.SHORTDESCRIPTION.as("type"))
-      .from(e)
-      .leftOuterJoin(gt1).on(e.TYPEID.equal(gt1.ID))
-      .where(e.NEDID.equal(nedId))
-      .fetch()
-      .into(Email.class);
+  private List<Uniqueidentifier> findUniqueIdsByNedId(Integer nedId) {
+
+    Uniqueidentifiers uid = UNIQUEIDENTIFIERS.as("uid");
+
+    return select(uid).where(uid.NEDID.equal(nedId))
+        .fetch().into(Uniqueidentifier.class);
   }
 
   private List<Phonenumber> findPhoneNumbersByNedId(Integer nedId) {
 
     Globaltypes  gt1 = GLOBALTYPES.as("gt1");
     Globaltypes  gt2 = GLOBALTYPES.as("gt2");
+    Globaltypes  gt3 = GLOBALTYPES.as("gt3");
     Phonenumbers p   = PHONENUMBERS.as("p");
 
     return this.context
-      .select(
-        p.ID,
-        p.PHONENUMBER, p.EXTENSION,
-        gt1.SHORTDESCRIPTION.as("type"),
-        gt2.SHORTDESCRIPTION.as("countrycodetype"))
-      .from(p)
-      .leftOuterJoin(gt1).on(p.TYPEID.equal(gt1.ID))
-      .leftOuterJoin(gt2).on(p.COUNTRYCODETYPEID.equal(gt2.ID))
-      .where(p.NEDID.equal(nedId))
-      .fetch()
-      .into(Phonenumber.class);
+        .select(
+            p.ID,
+            p.PHONENUMBER, p.EXTENSION,
+            gt1.SHORTDESCRIPTION.as("type"),
+            gt2.SHORTDESCRIPTION.as("countrycodetype"),
+            gt3.SHORTDESCRIPTION.as("source"))
+        .from(p)
+        .leftOuterJoin(gt1).on(p.TYPEID.equal(gt1.ID))
+        .leftOuterJoin(gt2).on(p.COUNTRYCODETYPEID.equal(gt2.ID))
+        .leftOuterJoin(gt3).on(p.SOURCETYPEID.equal(gt3.ID))
+        .where(p.NEDID.equal(nedId))
+        .fetch()
+        .into(Phonenumber.class);
   }
 
   private List<Degree> findDegreesByNedId(Integer nedId) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
+    Globaltypes gt2 = GLOBALTYPES.as("gt2");
     Degrees     d   = DEGREES.as("d");
 
     return this.context
         .select(
             d.ID,
-            gt1.SHORTDESCRIPTION.as("type"))
+            gt1.SHORTDESCRIPTION.as("type"),
+            gt2.SHORTDESCRIPTION.as("source"))
         .from(d)
         .leftOuterJoin(gt1).on(d.TYPEID.equal(gt1.ID))
+        .leftOuterJoin(gt2).on(d.SOURCETYPEID.equal(gt2.ID))
         .where(d.NEDID.equal(nedId))
         .fetch()
         .into(Degree.class);
@@ -456,159 +505,71 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
   private List<Url> findUrlsByNedId(Integer nedId) {
 
+    Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Urls        u   = URLS.as("u");
 
     return this.context
-        .select(u.URL)
+        .select(u.URL, gt1.SHORTDESCRIPTION.as("source"))
         .from(u)
+        .leftOuterJoin(gt1).on(u.SOURCETYPEID.equal(gt1.ID))
         .where(u.NEDID.equal(nedId))
         .fetch()
         .into(Url.class);
   }
 
-  private List<Role> findRolesByNedId(Integer nedId) {
-/*
-        SELECT gt1.shortDescription sourceapplicationtype,
-               gt2.shortDescription roletype,
-               r.startDate, r.endDate
-          FROM roles r
-     LEFT JOIN globalTypes gt1 ON r.sourceApplicationTypeId = gt1.ID
-     LEFT JOIN globalTypes gt2 ON r.roleTypeID = gt2.ID
-         WHERE r.NEDID = 59
-*/
-    Globaltypes gt1 = GLOBALTYPES.as("gt1");
-    Globaltypes gt2 = GLOBALTYPES.as("gt2");
-    Roles       r   = ROLES.as("r");
+  private Uniqueidentifier findUniqueIdsByPrimaryKey(Integer id) {
 
-    return this.context
-      .select(
-        r.ID,
-        r.STARTDATE, r.ENDDATE,
-        gt1.SHORTDESCRIPTION.as("sourceapplicationtype"),                 
-        gt2.SHORTDESCRIPTION.as("type"))
-      .from(r)
-      .leftOuterJoin(gt1).on(r.APPLICATIONTYPEID.equal(gt1.ID))
-      .leftOuterJoin(gt2).on(r.TYPEID.equal(gt2.ID))
-      .where(r.NEDID.equal(nedId))
-      .fetch()
-      .into(Role.class);
-  }
-
-  private List<Uniqueidentifier> findUniqueIdsByNedId(Integer nedId) {
-/*
-   EXPLAIN
-        SELECT gt.shortDescription uniqueidentifiertype, uid.uniqueIdentifier 
-          FROM uniqueIdentifiers uid
-     LEFT JOIN globalTypes gt ON uid.uniqueIdentifierTypeId = gt.ID
-         WHERE uid.NEDID = 59
-*/
-    Globaltypes       gt  = GLOBALTYPES.as("gt");
     Uniqueidentifiers uid = UNIQUEIDENTIFIERS.as("uid");
 
-    return this.context
-      .select(
-        uid.ID,
-        uid.UNIQUEIDENTIFIER, gt.SHORTDESCRIPTION.as("type"))
-      .from(uid)
-      .leftOuterJoin(gt).on(uid.TYPEID.equal(gt.ID))
-      .where(uid.NEDID.equal(nedId))
-      .fetch()
-      .into(Uniqueidentifier.class);
+    Record record = select(uid).where(uid.ID.equal(id)).fetchOne();
+
+    if (record == null) throw new EntityNotFoundException("Uniqueidentifier");
+
+    return record.into(Uniqueidentifier.class);
   }
 
-  private Individual findIndividualsByPrimaryKey(Integer individualId) {
+  private Individual findIndividualByPrimaryKey(Integer individualId) {
 
-    Globaltypes gt1 = GLOBALTYPES.as("gt1");
-    Globaltypes gt2 = GLOBALTYPES.as("gt2");
-    Globaltypes gt3 = GLOBALTYPES.as("gt3");
-    Globaltypes gt4 = GLOBALTYPES.as("gt4");
     Individuals i   = INDIVIDUALS.as("i");
 
-    Record record = this.context
-        .select(i.ID,
-            i.NEDID, i.FIRSTNAME, i.MIDDLENAME, i.LASTNAME, i.DISPLAYNAME,
-            gt1.SHORTDESCRIPTION.as("nameprefix"),
-            gt2.SHORTDESCRIPTION.as("namesuffix"),
-            gt3.SHORTDESCRIPTION.as("preferredlanguage"),
-            gt4.SHORTDESCRIPTION.as("preferredcommunication"))
-        .from(i)
-        .leftOuterJoin(gt1).on(i.NAMEPREFIXTYPEID.equal(gt1.ID))
-        .leftOuterJoin(gt2).on(i.NAMESUFFIXTYPEID.equal(gt2.ID))
-        .leftOuterJoin(gt3).on(i.PREFERREDLANGUAGETYPEID.equal(gt3.ID))
-        .leftOuterJoin(gt4).on(i.PREFERREDCOMMUNICATIONMETHODTYPEID.equal(gt4.ID))
-        .where(i.ID.equal(individualId))
-        .fetchOne();
+    Record record = select(i).where(i.ID.equal(individualId)).fetchOne();
 
-    if (record == null) throw new EntityNotFoundException("Individual not found");
+    if (record == null) throw new EntityNotFoundException("Individual");
 
     return record.into(Individual.class);
   }
 
   private Email findEmailByPrimaryKey(Integer emailId) {
 
-    Globaltypes gt1 = GLOBALTYPES.as("gt1");
-    Emails        e = EMAILS.as("e");
+    Emails e = EMAILS.as("e");
 
-    Record record = this.context
-      .select(
-        e.ID, e.NEDID, gt1.SHORTDESCRIPTION.as("type"),
-        e.EMAILADDRESS, e.ISACTIVE)
-      .from(e)
-      .leftOuterJoin(gt1).on(e.TYPEID.equal(gt1.ID))
-      .where(e.ID.equal(emailId))
-      .fetchOne();
+    Record record = select(e).where(e.ID.equal(emailId)).fetchOne();
 
-    if (record == null) throw new EntityNotFoundException("Email not found");
+    if (record == null) throw new EntityNotFoundException("Email");
 
     return record.into(Email.class);
   }
 
   private Address findAddressByPrimaryKey(Integer addressId) {
 
-    Globaltypes gt1 = GLOBALTYPES.as("gt1");
-    Globaltypes gt2 = GLOBALTYPES.as("gt2");
-    Globaltypes gt3 = GLOBALTYPES.as("gt3");
-    Addresses   a   = ADDRESSES.as("a");
+    Addresses a = ADDRESSES.as("a");
 
-    Record record = this.context
-      .select(
-        a.ID, a.NEDID,
-        a.ADDRESSLINE1, a.ADDRESSLINE2, a.ADDRESSLINE3, a.CITY, a.POSTALCODE,
-        gt1.SHORTDESCRIPTION.as("type"),
-        gt2.SHORTDESCRIPTION.as("statecodetype"),
-        gt3.SHORTDESCRIPTION.as("countrycodetype"))
-      .from(a)
-      .leftOuterJoin(gt1).on(a.TYPEID.equal(gt1.ID))
-      .leftOuterJoin(gt2).on(a.STATECODETYPEID.equal(gt2.ID))
-      .leftOuterJoin(gt3).on(a.COUNTRYCODETYPEID.equal(gt3.ID))
-      .where(a.ID.equal(addressId))
-      .fetchOne();
+    Record record = select(a).where(a.ID.equal(addressId)).fetchOne();
 
-      if (record == null) throw new EntityNotFoundException("Address not found");
+    if (record == null) throw new EntityNotFoundException("Address");
 
-      return record.into(Address.class); 
+    return record.into(Address.class);
   }
 
   private Role findRoleByPrimaryKey(Integer roleId) {
 
-    Globaltypes gt1 = GLOBALTYPES.as("gt1");
-    Globaltypes gt2 = GLOBALTYPES.as("gt2");
-    Roles       r   = ROLES.as("r");
+    Roles r = ROLES.as("r");
 
-    Record record = this.context
-      .select(
-        r.ID, r.STARTDATE, r.ENDDATE,
-        gt1.SHORTDESCRIPTION.as("applicationtype"),
-        gt2.SHORTDESCRIPTION.as("type"))
-      .from(r)
-      .leftOuterJoin(gt1).on(r.APPLICATIONTYPEID.equal(gt1.ID))
-      .leftOuterJoin(gt2).on(r.TYPEID.equal(gt2.ID))
-      .where(r.ID.equal(roleId))
-      .fetchOne();
+    Record record = select(r).where(r.ID.equal(roleId)).fetchOne();
 
-      if (record == null) throw new EntityNotFoundException("Role not found");
+    if (record == null) throw new EntityNotFoundException("Role");
 
-      return record.into(Role.class); 
+    return record.into(Role.class);
   }
 
   /* ---------------------------------------------------------------------- */

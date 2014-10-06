@@ -53,7 +53,6 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -71,30 +70,8 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   private static final String INDIV_EMAIL_URI  = INDIVIDUAL_URI + "/1/emails";
   private static final String INDIV_PHONE_URI  = INDIVIDUAL_URI + "/1/phonenumbers";
   private static final String INDIV_ROLE_URI   = INDIVIDUAL_URI + "/1/roles";
-  private static final String INDIV_XREF_URI   = INDIVIDUAL_URI + "/1/xref";
+  private static final String INDIV_UID_URI    = INDIVIDUAL_URI + "/1/uids";
   private static final String INDIV_DEGREE_URI = INDIVIDUAL_URI + "/1/degrees";
-
-  @Test
-  public void testAddToIndividualComposite() throws Exception {
-
-    String compositeIndividualJson = new String(Files.readAllBytes(
-        Paths.get(TEST_RESOURCE_PATH + "composite-individual.json")));
-
-    Response response = target(INDIVIDUAL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(compositeIndividualJson));
-
-    assertEquals(200, response.getStatus());
-
-    String jsonPayload = response.readEntity(String.class);
-
-    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
-    IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
-
-    Individual individual = composite.getIndividuals().get(0);
-    assertEquals(Integer.valueOf(1), individual.getNedid());
-    assertEquals("firstname", individual.getFirstname());
-
-  }
 
   @Test
   public void testCreateIndividualComposite() throws Exception {
@@ -194,7 +171,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
         + "\"lastname\":\"" + NEW_LASTNAME + "\""
         + "}";
 
-    Response response = target(INDIVIDUAL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
+    Response response = target(INDIVIDUAL_URI + "/1/individuals/1").request(MediaType.APPLICATION_JSON_TYPE)
         .post(Entity.json(NEW_INDIVIDUALS_JSON_PAYLOAD));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
@@ -204,7 +181,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   @Test
   public void testIndividualDelete() {
     assertEquals(Response.Status.NO_CONTENT.getStatusCode(),
-        target(INDIVIDUAL_URI + "/1/1").request().delete().getStatus());
+        target(INDIVIDUAL_URI + "/1/individuals/1").request().delete().getStatus());
   }
 
   @Test
@@ -535,18 +512,18 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /*  FIND EXTERNAL REFERENCES FOR INDIVIDUAL                           */
     /* ------------------------------------------------------------------ */
 
-    Response response = target(INDIV_XREF_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    Response response = target(INDIV_UID_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(200, response.getStatus());
 
     String jsonPayload = response.readEntity(String.class);
 
-    List<Uniqueidentifier> xrefs = unmarshalEntities(jsonPayload, Uniqueidentifier.class,
+    List<Uniqueidentifier> uids = unmarshalEntities(jsonPayload, Uniqueidentifier.class,
         jsonUnmarshaller(Uniqueidentifier.class));
-    assertEquals(2, xrefs.size());
+    assertEquals(2, uids.size());
 
-    for (Uniqueidentifier xref : xrefs) {
-      assertEquals("ORCID", xref.getType());
+    for (Uniqueidentifier uid : uids) {
+      assertEquals("ORCID", uid.getType());
     }
 
     /* ------------------------------------------------------------------ */
