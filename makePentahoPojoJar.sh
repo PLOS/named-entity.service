@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd target/classes
-jar cvf ../ned-pojos.jar org/plos/namedentity/api/* org/plos/namedentity/validate/Validatable.class META_INF
+jar cvf ../ned-pojos.jar org/plos/namedentity/api/* org/plos/namedentity/validate/Validatable.class META-INF
 cd ..
 
 # make symlinks or copy the jar to external directories (examples below)
