@@ -70,7 +70,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   private static final String INDIV_EMAIL_URI  = INDIVIDUAL_URI + "/1/emails";
   private static final String INDIV_PHONE_URI  = INDIVIDUAL_URI + "/1/phonenumbers";
   private static final String INDIV_ROLE_URI   = INDIVIDUAL_URI + "/1/roles";
-  private static final String INDIV_XREF_URI   = INDIVIDUAL_URI + "/1/xref";
+  private static final String INDIV_UID_URI    = INDIVIDUAL_URI + "/1/uids";
   private static final String INDIV_DEGREE_URI = INDIVIDUAL_URI + "/1/degrees";
 
   @Test
@@ -512,18 +512,18 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /*  FIND EXTERNAL REFERENCES FOR INDIVIDUAL                           */
     /* ------------------------------------------------------------------ */
 
-    Response response = target(INDIV_XREF_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    Response response = target(INDIV_UID_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(200, response.getStatus());
 
     String jsonPayload = response.readEntity(String.class);
 
-    List<Uniqueidentifier> xrefs = unmarshalEntities(jsonPayload, Uniqueidentifier.class,
+    List<Uniqueidentifier> uids = unmarshalEntities(jsonPayload, Uniqueidentifier.class,
         jsonUnmarshaller(Uniqueidentifier.class));
-    assertEquals(2, xrefs.size());
+    assertEquals(2, uids.size());
 
-    for (Uniqueidentifier xref : xrefs) {
-      assertEquals("ORCID", xref.getType());
+    for (Uniqueidentifier uid : uids) {
+      assertEquals("ORCID", uid.getType());
     }
 
     /* ------------------------------------------------------------------ */

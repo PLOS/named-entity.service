@@ -232,33 +232,33 @@ public class IndividualsResource extends BaseResource {
   /* ----------------------------------------------------------------------- */
 
   @POST
-  @Path("/{nedId}/xref")
-  @ApiOperation(value = "Create reference", response = Uniqueidentifier.class)
-  public Response createReference(@PathParam("nedId") int nedId,
-                                 Uniqueidentifier entity) {
+  @Path("/{nedId}/uids")
+  @ApiOperation(value = "Create UID", response = Uniqueidentifier.class)
+  public Response createUid(@PathParam("nedId") int nedId,
+                            Uniqueidentifier entity) {
     return createEntity(nedId, entity, Individual.class);
   }
 
   @POST
-  @Path("/{nedId}/xref/{id}")
-  @ApiOperation(value = "Update reference", response = Uniqueidentifier.class)
-  public Response updateReference(@PathParam("nedId") int nedId,
-                                  @PathParam("id") int id,
-                                  Uniqueidentifier entity) {
+  @Path("/{nedId}/uids/{id}")
+  @ApiOperation(value = "Update UID", response = Uniqueidentifier.class)
+  public Response updateUid(@PathParam("nedId") int nedId,
+                            @PathParam("id") int id,
+                            Uniqueidentifier entity) {
     return updateEntity(nedId, id, entity, Individual.class);
   }
 
   @DELETE
-  @Path("/{nedId}/xref/{id}")
-  @ApiOperation(value = "Delete reference")
-  public Response deleteReference(@PathParam("nedId") int nedId,
-                                  @PathParam("id") int id) {
+  @Path("/{nedId}/uids/{id}")
+  @ApiOperation(value = "Delete UID")
+  public Response deleteUid(@PathParam("nedId") int nedId,
+                            @PathParam("id") int id) {
     return deleteEntity(nedId, id, Uniqueidentifier.class, Individual.class);
   }
 
   @GET
-  @Path("/{nedId}/xref")
-  @ApiOperation(value = "List references")
+  @Path("/{nedId}/uids")
+  @ApiOperation(value = "List UIDs")
   public Response getExternalReferences(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Uniqueidentifier.class, Individual.class);
   }
