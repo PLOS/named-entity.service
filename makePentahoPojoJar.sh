@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# tip: run "package" phase to ensure META-INF/services gets deployed to classes dir
+
 cd target/classes
 jar cvf ../ned-pojos.jar org/plos/namedentity/api/* org/plos/namedentity/validate/Validatable.class META-INF
 cd ..
