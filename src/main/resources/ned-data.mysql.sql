@@ -19,6 +19,7 @@ INSERT INTO typeDescriptions(description, howUsed) VALUES ('Source Applications'
 SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Source Applications';
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Editorial Manager', NULL, 'EM', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Ambra', NULL, 'AMB', CURRENT_TIMESTAMP);
+INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Salesforce', NULL, 'SF', CURRENT_TIMESTAMP);
 
 /* Organization Types */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Organization Types','University, Department, etc');

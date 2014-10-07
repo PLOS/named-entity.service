@@ -107,6 +107,7 @@ INSERT INTO namedEntities.globalTypes VALUES (76,17,'CAS',NULL,'CAS','2014-03-23
 INSERT INTO namedEntities.globalTypes VALUES (77,17,'Salesforce',NULL,'SF','2014-03-23 20:34:40','2014-03-23 20:34:40',1,1);
 INSERT INTO namedEntities.globalTypes VALUES (78,20,'Editorial Manager',NULL,'EM','2014-03-23 20:34:40','2014-03-23 20:34:40',1,1);
 INSERT INTO namedEntities.globalTypes VALUES (79,20,'Ambra',NULL,'AMB','2014-03-23 20:35:05','2014-03-23 20:35:05',1,1);
+INSERT INTO namedEntities.globalTypes VALUES (80,20,'Salesforce',NULL,'SF','2014-03-23 20:35:05','2014-03-23 20:35:05',1,1);
 
 INSERT INTO namedEntities.namedEntityIdentifiers VALUES (1, 1, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, NULL, NULL);
 INSERT INTO namedEntities.individuals VALUES (1, 1, 'NED', NULL, 'NED', NULL, NULL, NULL, 'NED', NULL, NULL, NULL, 78,  1);
