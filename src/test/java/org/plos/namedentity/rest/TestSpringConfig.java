@@ -19,6 +19,7 @@ package org.plos.namedentity.rest;
 import org.eclipse.persistence.jaxb.JAXBContextProperties;
 import org.eclipse.persistence.oxm.json.JsonStructureSource;
 import org.mockito.Mockito;
+import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.*;
@@ -47,6 +48,8 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 public class TestSpringConfig {
@@ -97,14 +100,15 @@ public class TestSpringConfig {
     when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(Individual.class)))
         .thenReturn(emptyIndividuals);
 
-    when(mockNamedEntityService.findResolvedEntities(eq(individualEntity.getNedid()), eq(Individual.class)))
-      .thenReturn(individualComposite.getIndividuals());
+    doNothing().when(mockNamedEntityService).checkNedIdForType(eq(individualEntity.getNedid()), anyString());
+
+    doThrow(new EntityNotFoundException("expected")).when(mockNamedEntityService).checkNedIdForType(eq(2), anyString());
 
     when(mockNamedEntityService.findResolvedEntityByUid(anyString(), anyString(), eq(Individual.class)))
       .thenReturn( newIndividualEntity() );
 
     when(mockNamedEntityService.findResolvedEntities(eq(individualEntity.getNedid()), eq(Email.class)))
-      .thenReturn( newEmailEntitiesForIndividual() );
+      .thenReturn(newEmailEntitiesForIndividual());
 
     when(mockNamedEntityService.findResolvedEntities(eq(organizationEntity.getNedid()), eq(Email.class)))
         .thenReturn( newEmailEntitiesForOrganization() );
