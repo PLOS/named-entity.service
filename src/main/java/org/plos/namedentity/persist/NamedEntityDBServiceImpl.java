@@ -176,6 +176,20 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
                .getId();
   }
 
+  @Override
+  public void checkNedIdForType(Integer nedId, String namedPartyType) {
+
+    // select * from namedEntityIdentifiers as n, globalTypes as g where g.typeId=n.typeId AND shortDescription="Individual" AND n.id=nedId
+
+    if (this.context.select()
+        .from(NAMEDENTITYIDENTIFIERS)
+        .join(GLOBALTYPES).on(GLOBALTYPES.TYPEID.equal(NAMEDENTITYIDENTIFIERS.TYPEID))
+        .and(GLOBALTYPES.SHORTDESCRIPTION.equal(namedPartyType))
+        .and(NAMEDENTITYIDENTIFIERS.ID.equal(nedId)).fetchOne()
+      == null)
+        throw new EntityNotFoundException(namedPartyType);
+  }
+
   private Integer findTypeIdByName(TypeClassEnum typeClass, String typeValue) {
     if (isEmptyOrBlank(typeValue)) {
       return null;

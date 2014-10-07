@@ -193,8 +193,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     composite.setFromMap(compositeMap);
 
-    if (composite.getIndividuals().size() == 0)
-      throw new EntityNotFoundException("Individual not found");
+    if (composite.getUniqueidentifiers().size() == 0)
+      throw new EntityNotFoundException("Individual");
 
     return composite;
   }
@@ -233,6 +233,11 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   @Override
   public <T extends Entity> T findResolvedEntityByUid(String srcType, String uid, Class<T> clazz) {
     return nedDBSvc.findResolvedEntityByUid(srcType, uid, clazz);
+  }
+
+  @Override
+  public void checkNedIdForType(Integer nedId, String namedPartyType) {
+    nedDBSvc.checkNedIdForType(nedId, namedPartyType);
   }
     
   public NamedEntityDBService getNamedEntityDBService() {

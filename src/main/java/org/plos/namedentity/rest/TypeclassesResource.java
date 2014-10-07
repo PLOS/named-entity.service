@@ -21,6 +21,13 @@ import java.util.List;
 @Api("/typeclasses")
 public class TypeclassesResource extends BaseResource {
 
+  private static String namedPartyType = "Typeclass";
+
+  @Override
+  protected String getNamedPartyType() {
+    return namedPartyType;
+  }
+
   @GET
   @Path("/{id}")
   @ApiOperation(value = "Read", response = Typedescription.class)
