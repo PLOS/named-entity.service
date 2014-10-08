@@ -16,6 +16,8 @@
  */
 package org.plos.namedentity.api.entity;
 
+import org.plos.namedentity.api.NedValidationException;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
@@ -25,6 +27,14 @@ public class Uniqueidentifier extends Entity {
   private Integer typeid;
   private String  type;
   private String  uniqueidentifier;
+
+  @Override
+  public void validate() {
+
+    if (uniqueidentifier == null || uniqueidentifier.length() < 1)
+      throw new NedValidationException("uniqueidentifier is too short");
+
+  }
 
   @Override
   public boolean equals(Object o) {

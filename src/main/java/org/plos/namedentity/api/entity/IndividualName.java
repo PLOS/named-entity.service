@@ -16,6 +16,8 @@
  */
 package org.plos.namedentity.api.entity;
 
+import org.plos.namedentity.api.NedValidationException;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
@@ -36,6 +38,17 @@ public class IndividualName extends Entity {
   private String displayname;
 
   private Boolean isactive = true;
+
+  @Override
+  public void validate() {
+
+    if (firstname == null || firstname.length() < 1)
+      throw new NedValidationException("firstname is too short");
+
+    if (lastname == null || lastname.length() < 1)
+      throw new NedValidationException("lastname is too short");
+
+  }
 
   @Override
   public boolean equals(Object o) {

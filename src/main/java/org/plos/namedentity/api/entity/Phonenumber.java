@@ -16,6 +16,8 @@
  */
 package org.plos.namedentity.api.entity;
 
+import org.plos.namedentity.api.NedValidationException;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
@@ -31,6 +33,14 @@ public class Phonenumber extends Entity {
   private String extension;
 
   private Boolean isactive = true;
+
+  @Override
+  public void validate() {
+
+    if (phonenumber == null || phonenumber.length() < 1)
+      throw new NedValidationException("phonenumber is too short");
+
+  }
 
   @Override
   public boolean equals(Object o) {
