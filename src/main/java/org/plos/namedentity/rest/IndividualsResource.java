@@ -2,14 +2,13 @@ package org.plos.namedentity.rest;
 
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiParam;
 import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Email;
-import org.plos.namedentity.api.entity.Individual;
+import org.plos.namedentity.api.entity.IndividualName;
 import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
@@ -20,11 +19,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @Path("/individuals")
 @Api(value="/individuals")
@@ -38,23 +34,23 @@ public class IndividualsResource extends BaseResource {
   }
 
   @POST
-  @ApiOperation(value = "Create individual composite", response = IndividualComposite.class)
-  public Response createComposite(IndividualComposite composite) {
+  @ApiOperation(value = "Create individual", response = IndividualComposite.class)
+  public Response createIndividual(IndividualComposite composite) {
     try {
       return Response.status(Response.Status.OK).entity(
           namedEntityService.createIndividualComposite(composite)).build();
     } catch (NedValidationException e) {
-      return validationError(e, "Unable to create individual composite");
+      return validationError(e, "Unable to create individual");
     } catch (Exception e) {
-      return serverError(e, "Unable to create individual composite");
+      return serverError(e, "Unable to create individual");
     }
   }
 
   @GET
   @Path("/{nedId}")
   @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-  @ApiOperation(value = "Read individual composite", response = IndividualComposite.class)
-  public Response readComposite(@PathParam("nedId") int nedId) {
+  @ApiOperation(value = "Read individual by Ned ID", response = IndividualComposite.class)
+  public Response readIndividual(@PathParam("nedId") int nedId) {
     try {
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findIndividualComposite(nedId)).build();
@@ -67,16 +63,16 @@ public class IndividualsResource extends BaseResource {
 
   @GET
   @Path("/{uidType}/{uidValue}")
-  @ApiOperation(value = "Read individual composite", response = IndividualComposite.class)
-  public Response readCompositeByUid(@PathParam("uidType") String uidType,
+  @ApiOperation(value = "Read individual by UID", response = IndividualComposite.class)
+  public Response readIndividualByUid(@PathParam("uidType") String uidType,
                                      @PathParam("uidValue") String uidValue) {
     try {
 
-      Individual individual = namedEntityService.findResolvedEntityByUid(
-          uidType, uidValue, Individual.class);
+      IndividualName individualName = namedEntityService.findResolvedEntityByUid(
+          uidType, uidValue, IndividualName.class);
 
       return Response.status(Response.Status.OK).entity(
-          namedEntityService.findIndividualComposite(individual.getNedid())).build();
+          namedEntityService.findIndividualComposite(individualName.getNedid())).build();
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
     } catch (Exception e) {
@@ -84,54 +80,31 @@ public class IndividualsResource extends BaseResource {
     }
   }
 
-  @GET
-  @ApiOperation(value = "List individual entities", response = Individual.class)
-  public Response listIndividuals(
-      @ApiParam(required = false) @QueryParam("offset") Integer offset,
-      @ApiParam(required = false) @QueryParam("limit") Integer limit) {
-    try {
-
-      // TODO: nest/group by NedId?
-
-      if (offset == null || offset < 0)
-        offset = 0;
-      if (limit == null || limit <= 0 || limit > MAX_RESULT_COUNT)
-        limit = DEFAULT_RESULT_COUNT;
-
-      return Response.status(Response.Status.OK).entity(
-          new GenericEntity<List<Individual>>(
-              crudService.findAll(Individual.class, offset, limit)) {
-          }).build();
-    } catch (Exception e) {
-      return serverError(e, "Find all individuals failed");
-    }
-  }
-
   /* ----------------------------------------------------------------------- */
-  /*  INDIVIDUAL CRUD                                                        */
+  /*  NAME CRUD                                                              */
   /* ----------------------------------------------------------------------- */
 
   @POST
-  @Path("/{nedId}/individuals")
-  @ApiOperation(value = "Add individual entity to composite", response = IndividualComposite.class)
-  public Response addIndividual(@PathParam("nedId") int nedId, Individual entity) {
+  @Path("/{nedId}/names")
+  @ApiOperation(value = "Add name", response = IndividualComposite.class)
+  public Response addName(@PathParam("nedId") int nedId, IndividualName entity) {
     return createEntity(nedId, entity);
   }
 
   @POST
-  @Path("/{nedId}/individuals/{id}")
-  @ApiOperation(value = "Update a single individual entity", response = Individual.class)
-  public Response updateIndividual(@PathParam("nedId") int nedId,
-                         @PathParam("id") int id, Individual entity) {
+  @Path("/{nedId}/names/{id}")
+  @ApiOperation(value = "Update a name", response = IndividualName.class)
+  public Response updateName(@PathParam("nedId") int nedId,
+                         @PathParam("id") int id, IndividualName entity) {
 
     return updateEntity(nedId, id, entity);
   }
 
   @DELETE
-  @Path("/{nedId}/individuals/{id}")
-  @ApiOperation(value = "Delete a single individual entity")
-  public Response deleteIndividual(@PathParam("nedId") int nedId, @PathParam("id") int id) {
-    return deleteEntity(nedId, id, Individual.class);
+  @Path("/{nedId}/names/{id}")
+  @ApiOperation(value = "Delete a name")
+  public Response deleteName(@PathParam("nedId") int nedId, @PathParam("id") int id) {
+    return deleteEntity(nedId, id, IndividualName.class);
   }
 
   /* ----------------------------------------------------------------------- */

@@ -22,7 +22,7 @@ import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
-import org.plos.namedentity.api.entity.Individual;
+import org.plos.namedentity.api.entity.IndividualName;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
@@ -59,18 +59,18 @@ public class CrudServiceTest {
     Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
     // CREATE
-    Individual individual = new Individual();
-    individual.setNedid(nedId);
-    individual.setFirstname("firstname");
-    individual.setLastname("lastname");
-    individual.setDisplayname("displayname");
-    individual.setSource("Editorial Manager");
+    IndividualName individualName = new IndividualName();
+    individualName.setNedid(nedId);
+    individualName.setFirstname("firstname");
+    individualName.setLastname("lastname");
+    individualName.setDisplayname("displayname");
+    individualName.setSource("Editorial Manager");
 
-    Integer pkId = crudService.create(namedEntityService.resolveValuesToIds(individual));
+    Integer pkId = crudService.create(namedEntityService.resolveValuesToIds(individualName));
     assertNotNull(pkId);
 
     // READ
-    Individual readEntity = crudService.findById(pkId, Individual.class);
+    IndividualName readEntity = crudService.findById(pkId, IndividualName.class);
     assertNotNull(readEntity);
     assertEquals("firstname", readEntity.getFirstname());
     assertEquals(null, readEntity.getMiddlename());
@@ -79,7 +79,7 @@ public class CrudServiceTest {
     // UPDATE
     readEntity.setMiddlename("somemiddlename");
     assertTrue(crudService.update(readEntity));
-    Individual readEntity2 = crudService.findById(pkId, Individual.class);
+    IndividualName readEntity2 = crudService.findById(pkId, IndividualName.class);
 //    assertEquals(null, readEntity.getFirstname());  // TODO: since PUT is a full replace
     assertEquals("somemiddlename", readEntity.getMiddlename());
 
@@ -92,15 +92,15 @@ public class CrudServiceTest {
 
     Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
-    Individual individual = new Individual();
-    individual.setNedid(nedId);
-    individual.setFirstname("firstname");
-    individual.setLastname("lastname");
-    individual.setDisplayname("displayname");
-    individual.setSource("Editorial Manager");
-    namedEntityService.resolveValuesToIds(individual);
+    IndividualName individualName = new IndividualName();
+    individualName.setNedid(nedId);
+    individualName.setFirstname("firstname");
+    individualName.setLastname("lastname");
+    individualName.setDisplayname("displayname");
+    individualName.setSource("Editorial Manager");
+    namedEntityService.resolveValuesToIds(individualName);
 
-    crudService.create(individual);
+    crudService.create(individualName);
 
     // Create
     Email email = new Email();
@@ -134,14 +134,14 @@ public class CrudServiceTest {
 
     Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
-    Individual individual = new Individual();
-    individual.setNedid(nedId);
-    individual.setFirstname("firstname");
-    individual.setLastname("lastname");
-    individual.setDisplayname("displayname");
-    individual.setSource("Editorial Manager");
-    namedEntityService.resolveValuesToIds(individual);
-    crudService.create(individual);
+    IndividualName individualName = new IndividualName();
+    individualName.setNedid(nedId);
+    individualName.setFirstname("firstname");
+    individualName.setLastname("lastname");
+    individualName.setDisplayname("displayname");
+    individualName.setSource("Editorial Manager");
+    namedEntityService.resolveValuesToIds(individualName);
+    crudService.create(individualName);
 
     // Create
     Email email = new Email();

@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement
-public class Individual extends Entity {
+public class IndividualName extends Entity {
 
   private String  firstname;
   private String  middlename;
@@ -35,14 +35,6 @@ public class Individual extends Entity {
 
   private String displayname;
 
-  private String  preferredlanguage;
-  private Integer preferredlanguagetypeid;
-
-  private String  preferredcommunication;
-  private Integer preferredcommunicationmethodtypeid;
-
-  private byte[] photoimage;
-
   private Boolean isactive = true;
 
   @Override
@@ -55,7 +47,7 @@ public class Individual extends Entity {
       return false;
     }
 
-    Individual entity = (Individual) o;
+    IndividualName entity = (IndividualName) o;
     return Objects.equals(this.firstname, entity.firstname)
         && Objects.equals(this.middlename, entity.middlename)
         && Objects.equals(this.lastname, entity.lastname)
@@ -93,22 +85,6 @@ public class Individual extends Entity {
 
   public void setNamesuffix(String namesuffix) {
     this.namesuffix = namesuffix;
-  }
-
-  public String getPreferredlanguage() {
-    return preferredlanguage;
-  }
-
-  public void setPreferredlanguage(String preferredlanguage) {
-    this.preferredlanguage = preferredlanguage;
-  }
-
-  public String getPreferredcommunication() {
-    return preferredcommunication;
-  }
-
-  public void setPreferredcommunication(String preferredcommunication) {
-    this.preferredcommunication = preferredcommunication;
   }
 
   public String getFirstname() {
@@ -165,30 +141,6 @@ public class Individual extends Entity {
 
   public void setDisplayname(String displayname) {
     this.displayname = displayname;
-  }
-
-  public Integer getPreferredlanguagetypeid() {
-    return this.preferredlanguagetypeid;
-  }
-
-  public void setPreferredlanguagetypeid(Integer preferredlanguagetypeid) {
-    this.preferredlanguagetypeid = preferredlanguagetypeid;
-  }
-
-  public Integer getPreferredcommunicationmethodtypeid() {
-    return this.preferredcommunicationmethodtypeid;
-  }
-
-  public void setPreferredcommunicationmethodtypeid(Integer preferredcommunicationmethodtypeid) {
-    this.preferredcommunicationmethodtypeid = preferredcommunicationmethodtypeid;
-  }
-
-  public byte[] getPhotoimage() {
-    return this.photoimage;
-  }
-
-  public void setPhotoimage(byte[] photoimage) {
-    this.photoimage = photoimage;
   }
 
 }

@@ -33,6 +33,8 @@ public class InfoResource {
   @Inject
   private InfoService infoService;
 
+  // TODO: add endpoint to show basic Individual counts etc.
+
   @GET
   @Path("/config")
   @ApiOperation(value = "Config info", response = ConfigInfo.class)

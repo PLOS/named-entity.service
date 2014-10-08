@@ -110,4 +110,4 @@ INSERT INTO namedEntities.globalTypes VALUES (79,20,'Ambra',NULL,'AMB','2014-03-
 INSERT INTO namedEntities.globalTypes VALUES (80,20,'Salesforce',NULL,'SF','2014-03-23 20:35:05','2014-03-23 20:35:05',1,1);
 
 INSERT INTO namedEntities.namedEntityIdentifiers VALUES (1, 1, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, NULL, NULL);
-INSERT INTO namedEntities.individuals VALUES (1, 1, 'NED', NULL, 'NED', NULL, NULL, NULL, 'NED', NULL, NULL, NULL, 78,  1);
+INSERT INTO namedEntities.individualNames VALUES (1, 1, 'NED', NULL, 'NED', NULL, NULL, NULL, 'NED', 78,  1);

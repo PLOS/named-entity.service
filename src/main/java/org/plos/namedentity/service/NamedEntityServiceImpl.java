@@ -22,7 +22,7 @@ import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Entity;
-import org.plos.namedentity.api.entity.Individual;
+import org.plos.namedentity.api.entity.IndividualName;
 import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
@@ -40,8 +40,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   public <T extends Entity> T resolveValuesToIds(T t) {
 
-    if (t instanceof Individual)
-      resolveIndividual((Individual) t);
+    if (t instanceof IndividualName)
+      resolveIndividual((IndividualName) t);
     else if (t instanceof Address)
       resolveAddress((Address) t);
     else if (t instanceof Phonenumber)
@@ -62,7 +62,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     return t;
   }
 
-  private Individual resolveIndividual(Individual entity) {
+  private IndividualName resolveIndividual(IndividualName entity) {
 
     if (entity.getSource() != null)
       entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
@@ -77,18 +77,6 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       Integer suffixTypeClassId = nedDBSvc.findTypeClass("Named Party Suffixes");
       Integer suffixTypeId      = nedDBSvc.findTypeValue(suffixTypeClassId, entity.getNamesuffix());
       entity.setNamesuffixtypeid(suffixTypeId);
-    }
-
-    if (entity.getPreferredlanguage() != null) {
-      Integer langTypeClassId = nedDBSvc.findTypeClass("Languages");
-      Integer langTypeId      = nedDBSvc.findTypeValue(langTypeClassId, entity.getPreferredlanguage());
-      entity.setPreferredlanguagetypeid(langTypeId);
-    }
-
-    if (entity.getPreferredcommunication() != null) {
-      Integer commMethodsTypeClassId = nedDBSvc.findTypeClass("Communication Methods");
-      Integer commMethodTypeId = nedDBSvc.findTypeValue(commMethodsTypeClassId, entity.getPreferredcommunication());
-      entity.setPreferredcommunicationmethodtypeid(commMethodTypeId);
     }
 
     return entity;
