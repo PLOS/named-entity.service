@@ -20,7 +20,7 @@ import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Entity;
-import org.plos.namedentity.api.entity.Individual;
+import org.plos.namedentity.api.entity.IndividualName;
 import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
@@ -36,7 +36,7 @@ import java.util.Objects;
 @XmlRootElement
 public class IndividualComposite implements Validatable {
 
-  private List<Individual>       individuals;
+  private List<IndividualName>   individualNames;
   private List<Role>             roles;
   private List<Address>          addresses;
   private List<Email>            emails;
@@ -48,7 +48,7 @@ public class IndividualComposite implements Validatable {
   public Map<Class, List<? extends Entity>> getAsMap() {
     Map<Class, List<? extends Entity>> map = new HashMap<>();
 
-    map.put(Individual.class, individuals);
+    map.put(IndividualName.class, individualNames);
     map.put(Role.class, roles);
     map.put(Address.class, addresses);
     map.put(Email.class, emails);
@@ -62,14 +62,14 @@ public class IndividualComposite implements Validatable {
 
   @SuppressWarnings("unchecked")
   public void setFromMap(Map<Class, List<? extends Entity>> map) {
-    individuals = (List<Individual>)map.get(Individual.class);
-    roles = (List<Role>)map.get(Role.class);
-    addresses = (List<Address>)map.get(Address.class);
-    emails = (List<Email>)map.get(Email.class);
-    phonenumbers = (List<Phonenumber>)map.get(Phonenumber.class);
-    uniqueidentifiers = (List<Uniqueidentifier>)map.get(Uniqueidentifier.class);
-    degrees = (List<Degree>)map.get(Degree.class);
-    urls = (List<Url>)map.get(Url.class);
+    individualNames = (List<IndividualName>) map.get(IndividualName.class);
+    roles = (List<Role>) map.get(Role.class);
+    addresses = (List<Address>) map.get(Address.class);
+    emails = (List<Email>) map.get(Email.class);
+    phonenumbers = (List<Phonenumber>) map.get(Phonenumber.class);
+    uniqueidentifiers = (List<Uniqueidentifier>) map.get(Uniqueidentifier.class);
+    degrees = (List<Degree>) map.get(Degree.class);
+    urls = (List<Url>) map.get(Url.class);
   }
 
   @Override
@@ -117,17 +117,17 @@ public class IndividualComposite implements Validatable {
   @Override
   public int hashCode() {
     // TODO: pull from getAsMap instead of hardcoding list names
-    return Objects.hash(hashSum(individuals), hashSum(roles), hashSum(addresses),
+    return Objects.hash(hashSum(individualNames), hashSum(roles), hashSum(addresses),
         hashSum(emails), hashSum(phonenumbers), hashSum(uniqueidentifiers),
         hashSum(degrees), hashSum(urls));
   }
 
-  public List<Individual> getIndividuals() {
-    return individuals;
+  public List<IndividualName> getIndividualNames() {
+    return individualNames;
   }
 
-  public void setIndividuals(List<Individual> individuals) {
-    this.individuals = individuals;
+  public void setIndividualNames(List<IndividualName> individualNames) {
+    this.individualNames = individualNames;
   }
 
   public List<Url> getUrls() {

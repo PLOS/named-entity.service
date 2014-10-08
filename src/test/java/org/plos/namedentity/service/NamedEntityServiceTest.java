@@ -229,7 +229,7 @@ public class NamedEntityServiceTest {
     try {
       IndividualComposite responseComposite = namedEntityService.createIndividualComposite(composite);
       assertNotNull(responseComposite);
-      assertNotNull(responseComposite.getIndividuals().get(0).getNedid());
+      assertNotNull(responseComposite.getIndividualNames().get(0).getNedid());
 
       // make sure foreign keys are resolved for sub entities
       assertNotNull(responseComposite.getEmails().get(0).getId());
@@ -248,7 +248,7 @@ public class NamedEntityServiceTest {
 
     // Test "By NedId" Finders
 
-    List<Individual> entity = namedEntityService.findResolvedEntities(nedId, Individual.class);
+    List<IndividualName> entity = namedEntityService.findResolvedEntities(nedId, IndividualName.class);
     assertEquals(1, entity.size());
 
     List<Address> addressesEntities = namedEntityService.findResolvedEntities(nedId, Address.class);
@@ -266,12 +266,12 @@ public class NamedEntityServiceTest {
     List<Uniqueidentifier> uidEntities = namedEntityService.findResolvedEntities(nedId, Uniqueidentifier.class);
     assertEquals(1, uidEntities.size());
 
-    Individual individual = namedEntityService.findResolvedEntityByUid("ORCID", "0000-0001-9430-319X", Individual.class);
+    IndividualName individualName = namedEntityService.findResolvedEntityByUid("ORCID", "0000-0001-9430-319X", IndividualName.class);
 
-    assertNotNull(individual);
+    assertNotNull(individualName);
 
-    assertEquals("firstname", individual.getFirstname());
-    assertEquals("lastname", individual.getLastname());
+    assertEquals("firstname", individualName.getFirstname());
+    assertEquals("lastname", individualName.getLastname());
   }
 
   private Integer findUidTypeIdByName(String typeName) {
@@ -484,20 +484,18 @@ public class NamedEntityServiceTest {
   private IndividualComposite newCompositeIndividualWithRole() {
 
     IndividualComposite composite = new IndividualComposite();
-    Individual individual = new Individual();
-    individual.setFirstname("firstname");
-    individual.setLastname("lastname");
-    individual.setDisplayname("displayname");
-    individual.setNameprefix("Mr.");
-    individual.setNamesuffix("III");
-    individual.setPreferredlanguage("English");
-    individual.setPreferredcommunication("Email");
-    individual.setSource("Editorial Manager");
+    IndividualName individualName = new IndividualName();
+    individualName.setFirstname("firstname");
+    individualName.setLastname("lastname");
+    individualName.setDisplayname("displayname");
+    individualName.setNameprefix("Mr.");
+    individualName.setNamesuffix("III");
+    individualName.setSource("Editorial Manager");
 
-    List<Individual> individuals = new ArrayList<>();
-    individuals.add(individual);
+    List<IndividualName> individualNames = new ArrayList<>();
+    individualNames.add(individualName);
 
-    composite.setIndividuals(individuals);
+    composite.setIndividualNames(individualNames);
 
     List<Role> roles = new ArrayList<>();
     Role author = new Role();

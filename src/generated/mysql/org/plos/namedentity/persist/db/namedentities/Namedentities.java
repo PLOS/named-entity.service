@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Namedentities extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -853505144;
+	private static final long serialVersionUID = 1050234910;
 
 	/**
 	 * The singleton instance of <code>namedEntities</code>
@@ -39,7 +39,7 @@ public class Namedentities extends org.jooq.impl.SchemaImpl {
 			org.plos.namedentity.persist.db.namedentities.tables.Degrees.DEGREES,
 			org.plos.namedentity.persist.db.namedentities.tables.Emails.EMAILS,
 			org.plos.namedentity.persist.db.namedentities.tables.Globaltypes.GLOBALTYPES,
-			org.plos.namedentity.persist.db.namedentities.tables.Individuals.INDIVIDUALS,
+			org.plos.namedentity.persist.db.namedentities.tables.Individualnames.INDIVIDUALNAMES,
 			org.plos.namedentity.persist.db.namedentities.tables.Journals.JOURNALS,
 			org.plos.namedentity.persist.db.namedentities.tables.Namedentityidentifiers.NAMEDENTITYIDENTIFIERS,
 			org.plos.namedentity.persist.db.namedentities.tables.Organizations.ORGANIZATIONS,

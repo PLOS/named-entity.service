@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Urls extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord> {
 
-	private static final long serialVersionUID = 216994231;
+	private static final long serialVersionUID = 234279686;
 
 	/**
 	 * The singleton instance of <code>NAMEDENTITIES.URLS</code>
@@ -81,7 +81,7 @@ public class Urls extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.d
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord> getPrimaryKey() {
-		return org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_27;
+		return org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_2;
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class Urls extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.d
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_27);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_2);
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class Urls extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.d
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_27E0, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_27E);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_27E, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_27);
 	}
 
 	/**

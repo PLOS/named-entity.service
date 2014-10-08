@@ -24,7 +24,7 @@ import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
-import org.plos.namedentity.api.entity.Individual;
+import org.plos.namedentity.api.entity.IndividualName;
 import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Typedescription;
@@ -91,12 +91,12 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
     IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
 
-    Individual individual = composite.getIndividuals().get(0);
-    assertEquals(Integer.valueOf(1), individual.getNedid());
-    assertEquals("firstname", individual.getFirstname());
-    assertEquals("middlename", individual.getMiddlename());
-    assertEquals("lastname", individual.getLastname());
-    assertEquals("Ms.", individual.getNameprefix());
+    IndividualName individualName = composite.getIndividualNames().get(0);
+    assertEquals(Integer.valueOf(1), individualName.getNedid());
+    assertEquals("firstname", individualName.getFirstname());
+    assertEquals("middlename", individualName.getMiddlename());
+    assertEquals("lastname", individualName.getLastname());
+    assertEquals("Ms.", individualName.getNameprefix());
     assertEquals("email@internet.com", composite.getEmails().get(0).getEmailaddress());
 
     // Request #2. Expect a validation exception (client-side error)
@@ -131,12 +131,12 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
     IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
 
-    Individual individual = composite.getIndividuals().get(0);
-    assertEquals(Integer.valueOf(1), individual.getNedid());
-    assertEquals("firstname", individual.getFirstname());
-    assertEquals("middlename", individual.getMiddlename());
-    assertEquals("lastname", individual.getLastname());
-    assertEquals("Ms.", individual.getNameprefix());
+    IndividualName individualName = composite.getIndividualNames().get(0);
+    assertEquals(Integer.valueOf(1), individualName.getNedid());
+    assertEquals("firstname", individualName.getFirstname());
+    assertEquals("middlename", individualName.getMiddlename());
+    assertEquals("lastname", individualName.getLastname());
+    assertEquals("Ms.", individualName.getNameprefix());
     assertEquals("email@internet.com", composite.getEmails().get(0).getEmailaddress());
   }
 
@@ -151,12 +151,12 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
     IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
 
-    Individual individual = composite.getIndividuals().get(0);
-    assertEquals(Integer.valueOf(1), individual.getNedid());
-    assertEquals("firstname", individual.getFirstname());
-    assertEquals("middlename", individual.getMiddlename());
-    assertEquals("lastname", individual.getLastname());
-    assertEquals("Ms.", individual.getNameprefix());
+    IndividualName individualName = composite.getIndividualNames().get(0);
+    assertEquals(Integer.valueOf(1), individualName.getNedid());
+    assertEquals("firstname", individualName.getFirstname());
+    assertEquals("middlename", individualName.getMiddlename());
+    assertEquals("lastname", individualName.getLastname());
+    assertEquals("Ms.", individualName.getNameprefix());
     assertEquals("email@internet.com", composite.getEmails().get(0).getEmailaddress());
   }
 
@@ -171,7 +171,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
         + "\"lastname\":\"" + NEW_LASTNAME + "\""
         + "}";
 
-    Response response = target(INDIVIDUAL_URI + "/1/individuals/1").request(MediaType.APPLICATION_JSON_TYPE)
+    Response response = target(INDIVIDUAL_URI + "/1/names/1").request(MediaType.APPLICATION_JSON_TYPE)
         .post(Entity.json(NEW_INDIVIDUALS_JSON_PAYLOAD));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
@@ -181,7 +181,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   @Test
   public void testIndividualDelete() {
     assertEquals(Response.Status.NO_CONTENT.getStatusCode(),
-        target(INDIVIDUAL_URI + "/1/individuals/1").request().delete().getStatus());
+        target(INDIVIDUAL_URI + "/1/names/1").request().delete().getStatus());
   }
 
   @Test
@@ -192,9 +192,9 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(200, response.getStatus());
     String jsonPayload = response.readEntity(String.class);
 
-    Unmarshaller unmarshaller = jsonUnmarshaller(Individual.class);
-    List<Individual> individuals = unmarshalEntities(jsonPayload, Individual.class, unmarshaller);
-    assertEquals(3, individuals.size());
+    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualName.class);
+    List<IndividualName> individualNames = unmarshalEntities(jsonPayload, IndividualName.class, unmarshaller);
+    assertEquals(3, individualNames.size());
   }
 
   @Test
