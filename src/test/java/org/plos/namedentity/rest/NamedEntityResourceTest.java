@@ -185,19 +185,6 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   }
 
   @Test
-  public void testIndividualsListing() throws Exception {
-
-    Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
-
-    assertEquals(200, response.getStatus());
-    String jsonPayload = response.readEntity(String.class);
-
-    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualName.class);
-    List<IndividualName> individualNames = unmarshalEntities(jsonPayload, IndividualName.class, unmarshaller);
-    assertEquals(3, individualNames.size());
-  }
-
-  @Test
   public void testAddressCrud() throws IOException, JAXBException {
 
     /* ------------------------------------------------------------------ */
