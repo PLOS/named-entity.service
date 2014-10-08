@@ -17,6 +17,7 @@
     <buildDate>${maven.build.timestamp}</buildDate>
     <h2db.version>1.4.180</h2db.version>
     <mysql.connector.version>5.1.30</mysql.connector.version> 
+    <org.apache.commons.version>3.3.2</org.apache.commons.version>
     <org.glassfish.jersey-version>2.11</org.glassfish.jersey-version>
     <org.hamcrest.version>1.3</org.hamcrest.version>
     <org.jooq.version>3.4.1</org.jooq.version>
@@ -189,6 +190,11 @@
       <groupId>commons-validator</groupId>
       <artifactId>commons-validator</artifactId>
       <version>1.4.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${org.apache.commons.version}</version>
     </dependency>
 
   </dependencies>
