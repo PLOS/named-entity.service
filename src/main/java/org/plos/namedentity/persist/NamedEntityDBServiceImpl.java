@@ -179,11 +179,11 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   @Override
   public void checkNedIdForType(Integer nedId, String namedPartyType) {
 
-    // select * from namedEntityIdentifiers as n, globalTypes as g where g.typeId=n.id AND shortDescription="Individual" AND n.id=nedId
+    // select * from namedEntityIdentifiers as n, globalTypes as g where g.id=n.typeId AND shortDescription="Individual" AND n.id=nedId
 
     if (this.context.select()
         .from(NAMEDENTITYIDENTIFIERS)
-        .join(GLOBALTYPES).on(GLOBALTYPES.TYPEID.equal(NAMEDENTITYIDENTIFIERS.ID))
+        .join(GLOBALTYPES).on(GLOBALTYPES.ID.equal(NAMEDENTITYIDENTIFIERS.TYPEID))
         .and(GLOBALTYPES.SHORTDESCRIPTION.equal(namedPartyType))
         .and(NAMEDENTITYIDENTIFIERS.ID.equal(nedId)).fetchOne()
       == null)
