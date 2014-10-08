@@ -81,4 +81,13 @@ public interface NamedEntityService {
    * @return    same entity object with type ids populated (ie, resolved) 
    */
   public <T extends Entity> T resolveValuesToIds(T t);
+
+  /**
+   * Check to make sure the given NedId exists for the namedPartyType
+   * (ie - Individual). If the ID does not exist, an exception is thrown.
+   *
+   * @param nedId
+   * @param namedPartyType
+   */
+  public void checkNedIdForType(Integer nedId, String namedPartyType);
 }

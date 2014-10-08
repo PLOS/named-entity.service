@@ -47,4 +47,5 @@ public interface NamedEntityDBService {
 
   Integer findTypeValue(Integer typeClassId, String name);
 
+  void checkNedIdForType(Integer nedId, String namedPartyType);
 }

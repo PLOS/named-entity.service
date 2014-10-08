@@ -30,6 +30,13 @@ import java.util.List;
 @Api(value="/individuals")
 public class IndividualsResource extends BaseResource {
 
+  private static String namedPartyType = "Individual";
+
+  @Override
+  protected String getNamedPartyType() {
+    return namedPartyType;
+  }
+
   @POST
   @ApiOperation(value = "Create individual composite", response = IndividualComposite.class)
   public Response createComposite(IndividualComposite composite) {
@@ -108,7 +115,7 @@ public class IndividualsResource extends BaseResource {
   @Path("/{nedId}/individuals")
   @ApiOperation(value = "Add individual entity to composite", response = IndividualComposite.class)
   public Response addIndividual(@PathParam("nedId") int nedId, Individual entity) {
-    return createEntity(nedId, entity, Individual.class);
+    return createEntity(nedId, entity);
   }
 
   @POST
@@ -117,14 +124,14 @@ public class IndividualsResource extends BaseResource {
   public Response updateIndividual(@PathParam("nedId") int nedId,
                          @PathParam("id") int id, Individual entity) {
 
-    return updateEntity(nedId, id, entity, Individual.class);
+    return updateEntity(nedId, id, entity);
   }
 
   @DELETE
   @Path("/{nedId}/individuals/{id}")
   @ApiOperation(value = "Delete a single individual entity")
   public Response deleteIndividual(@PathParam("nedId") int nedId, @PathParam("id") int id) {
-    return deleteEntity(nedId, id, Individual.class, Individual.class);
+    return deleteEntity(nedId, id, Individual.class);
   }
 
   /* ----------------------------------------------------------------------- */
@@ -136,7 +143,7 @@ public class IndividualsResource extends BaseResource {
   @ApiOperation(value = "Create email", response = Email.class)
   public Response createEmail(@PathParam("nedId") int nedId,
                               Email emailEntity) {
-    return createEntity(nedId, emailEntity, Individual.class);
+    return createEntity(nedId, emailEntity);
   }
 
   @POST
@@ -145,7 +152,7 @@ public class IndividualsResource extends BaseResource {
   public Response updateEmail(@PathParam("nedId") int nedId, 
                               @PathParam("emailId") int emailId, 
                               Email emailEntity) {
-    return updateEntity(nedId, emailId, emailEntity, Individual.class);
+    return updateEntity(nedId, emailId, emailEntity);
   }
 
   @DELETE
@@ -153,7 +160,7 @@ public class IndividualsResource extends BaseResource {
   @ApiOperation(value = "Delete email")
   public Response deleteEmail(@PathParam("nedId") int nedId, 
                               @PathParam("emailId") int emailId) {
-    return deleteEntity(nedId, emailId, Email.class, Individual.class);
+    return deleteEntity(nedId, emailId, Email.class);
   }
 
   @GET
@@ -161,14 +168,14 @@ public class IndividualsResource extends BaseResource {
   @ApiOperation(value = "Read email", response = Email.class)
   public Response getEmail(@PathParam("nedId") int nedId,
                            @PathParam("emailId") int emailId) {
-    return getEntity(nedId, emailId, Email.class, Individual.class);
+    return getEntity(nedId, emailId, Email.class);
   }
 
   @GET
   @Path("/{nedId}/emails")
   @ApiOperation(value = "List emails", response = Email.class)
   public Response getEmails(@PathParam("nedId") int nedId) {
-    return getEntities(nedId, Email.class, Individual.class);
+    return getEntities(nedId, Email.class);
   }
 
   /* ----------------------------------------------------------------------- */
@@ -180,7 +187,7 @@ public class IndividualsResource extends BaseResource {
   @ApiOperation(value = "Create address", response = Address.class)
   public Response createAddress(@PathParam("nedId") int nedId,
                                 Address addressEntity) {
-    return createEntity(nedId, addressEntity, Individual.class);
+    return createEntity(nedId, addressEntity);
   }
 
   @POST
@@ -189,7 +196,7 @@ public class IndividualsResource extends BaseResource {
   public Response updateAddress(@PathParam("nedId") int nedId, 
                                 @PathParam("addressId") int addressId, 
                                 Address addressEntity) {
-    return updateEntity(nedId, addressId, addressEntity, Individual.class);
+    return updateEntity(nedId, addressId, addressEntity);
   }
 
   @DELETE
@@ -197,7 +204,7 @@ public class IndividualsResource extends BaseResource {
   @ApiOperation(value = "Delete address")
   public Response deleteAddress(@PathParam("nedId") int nedId, 
                                 @PathParam("addressId") int addressId) {
-    return deleteEntity(nedId, addressId, Address.class, Individual.class);
+    return deleteEntity(nedId, addressId, Address.class);
   }
 
   @GET
@@ -205,14 +212,14 @@ public class IndividualsResource extends BaseResource {
   @ApiOperation(value = "Read address", response = Address.class)
   public Response getAddress(@PathParam("nedId") int nedId,
                              @PathParam("addressId") int addressId) {
-    return getEntity(nedId, addressId, Address.class, Individual.class);
+    return getEntity(nedId, addressId, Address.class);
   }
 
   @GET
   @Path("/{nedId}/addresses")
   @ApiOperation(value = "List addresses", response = Address.class)
   public Response getAddresses(@PathParam("nedId") int nedId) {
-    return getEntities(nedId, Address.class, Individual.class);
+    return getEntities(nedId, Address.class);
   }
 
   /* ----------------------------------------------------------------------- */
@@ -223,7 +230,7 @@ public class IndividualsResource extends BaseResource {
   @Path("/{nedId}/phonenumbers")
   @ApiOperation(value = "List phone numbers", response = Phonenumber.class)
   public Response getPhonenumbers(@PathParam("nedId") int nedId) {
-    return getEntities(nedId, Phonenumber.class, Individual.class);
+    return getEntities(nedId, Phonenumber.class);
   }
 
 
@@ -236,7 +243,7 @@ public class IndividualsResource extends BaseResource {
   @ApiOperation(value = "Create UID", response = Uniqueidentifier.class)
   public Response createUid(@PathParam("nedId") int nedId,
                             Uniqueidentifier entity) {
-    return createEntity(nedId, entity, Individual.class);
+    return createEntity(nedId, entity);
   }
 
   @POST
@@ -245,7 +252,7 @@ public class IndividualsResource extends BaseResource {
   public Response updateUid(@PathParam("nedId") int nedId,
                             @PathParam("id") int id,
                             Uniqueidentifier entity) {
-    return updateEntity(nedId, id, entity, Individual.class);
+    return updateEntity(nedId, id, entity);
   }
 
   @DELETE
@@ -253,14 +260,14 @@ public class IndividualsResource extends BaseResource {
   @ApiOperation(value = "Delete UID")
   public Response deleteUid(@PathParam("nedId") int nedId,
                             @PathParam("id") int id) {
-    return deleteEntity(nedId, id, Uniqueidentifier.class, Individual.class);
+    return deleteEntity(nedId, id, Uniqueidentifier.class);
   }
 
   @GET
   @Path("/{nedId}/uids")
   @ApiOperation(value = "List UIDs")
   public Response getExternalReferences(@PathParam("nedId") int nedId) {
-    return getEntities(nedId, Uniqueidentifier.class, Individual.class);
+    return getEntities(nedId, Uniqueidentifier.class);
   }
 
 
@@ -272,7 +279,7 @@ public class IndividualsResource extends BaseResource {
   @Path("/{nedId}/degrees")
   @ApiOperation(value = "List degrees")
   public Response getDegrees(@PathParam("nedId") int nedId) {
-    return getEntities(nedId, Degree.class, Individual.class);
+    return getEntities(nedId, Degree.class);
   }
 
   /* ----------------------------------------------------------------------- */
@@ -283,7 +290,7 @@ public class IndividualsResource extends BaseResource {
   @Path("/{nedId}/roles")
   @ApiOperation(value = "Create role", response = Role.class)
   public Response createRole(@PathParam("nedId") int nedId, Role roleEntity) {
-    return createEntity(nedId, roleEntity, Individual.class);
+    return createEntity(nedId, roleEntity);
   }
 
   @POST
@@ -292,7 +299,7 @@ public class IndividualsResource extends BaseResource {
   public Response updateRole(@PathParam("nedId") int nedId, 
                              @PathParam("roleId") int roleId, 
                              Role roleEntity) {
-    return updateEntity(nedId, roleId, roleEntity, Individual.class);
+    return updateEntity(nedId, roleId, roleEntity);
   }
 
   @DELETE
@@ -300,7 +307,7 @@ public class IndividualsResource extends BaseResource {
   @ApiOperation(value = "Delete role")
   public Response deleteRole(@PathParam("nedId") int nedId, 
                              @PathParam("roleId") int roleId) {
-    return deleteEntity(nedId, roleId, Role.class, Individual.class);
+    return deleteEntity(nedId, roleId, Role.class);
   }
 
   @GET
@@ -308,13 +315,13 @@ public class IndividualsResource extends BaseResource {
   @ApiOperation(value = "Read role", response = Role.class)
   public Response getRole(@PathParam("nedId") int nedId,
                           @PathParam("roleId") int roleId) {
-    return getEntity(nedId, roleId, Role.class, Individual.class);
+    return getEntity(nedId, roleId, Role.class);
   }
 
   @GET
   @Path("/{nedId}/roles")
   @ApiOperation(value = "List roles")
   public Response getRoles(@PathParam("nedId") int nedId) {
-    return getEntities(nedId, Role.class, Individual.class);
+    return getEntities(nedId, Role.class);
   }
 }

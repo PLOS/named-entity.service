@@ -29,7 +29,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-public class BaseResource {
+public abstract class BaseResource {
 
   protected static Logger logger = Logger.getLogger(BaseResource.class);
 
@@ -43,17 +43,14 @@ public class BaseResource {
   @Inject
   protected NamedEntityService namedEntityService;
 
-  protected <T extends Entity> void checkNedIdForEntity(int nedId, Class<T> clazz) {
-    if (namedEntityService.findResolvedEntities(nedId, clazz).size() == 0)
-      throw new EntityNotFoundException(clazz.getSimpleName() + " not found");
-  }
+  abstract protected String getNamedPartyType();
 
-  protected <S extends Entity, T extends Entity>
-    Response createEntity(int nedId, S entity, Class<T> parent) {
+  protected <S extends Entity>
+    Response createEntity(int nedId, S entity) {
 
     try {
 
-      checkNedIdForEntity(nedId, parent);
+      namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
 
       entity.setNedid(nedId);
 
@@ -72,13 +69,12 @@ public class BaseResource {
     }
   }
 
-  protected <S extends Entity, T extends Entity>
-    Response updateEntity(int nedId, int pkId, S entity, Class<T> parent) {
+  protected <S extends Entity>
+    Response updateEntity(int nedId, int pkId, S entity) {
 
     try {
 
-      // make sure the nedId belongs to the parent class (ie - Individual)
-      checkNedIdForEntity(nedId, parent);
+      namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
 
       entity.setNedid(nedId);
 
@@ -99,11 +95,11 @@ public class BaseResource {
     }
   }
 
-  protected <S extends Entity, T extends Entity>
-    Response deleteEntity(int nedId, int pkId, Class<S> child, Class<T> parent) {
+  protected <S extends Entity>
+    Response deleteEntity(int nedId, int pkId, Class<S> child) {
 
     try {
-      checkNedIdForEntity(nedId, parent);
+      namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
 
       S entity = namedEntityService.findResolvedEntityByKey(pkId, child);
 
@@ -120,12 +116,12 @@ public class BaseResource {
     }
   }
 
-  protected <S extends Entity, T extends Entity>
-    Response getEntity(int nedId, int pkId, Class<S> child, Class<T> parent) {
+  protected <S extends Entity>
+    Response getEntity(int nedId, int pkId, Class<S> child) {
 
     try {
 
-      checkNedIdForEntity(nedId, parent);
+      namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
 
       List<S> entities = namedEntityService.findResolvedEntities(nedId, child);
 
@@ -158,11 +154,11 @@ public class BaseResource {
    * what to do? how about doing a brute-force switch on child class -- 
    * not pretty, but at least allows a generic entry-point. fix in future.
    */
-  protected <S extends Entity, T extends Entity>
-    Response getEntities(int nedId, Class<S> child, Class<T> parent) {
+  protected <S extends Entity>
+    Response getEntities(int nedId, Class<S> child) {
 
     try {
-      checkNedIdForEntity(nedId, parent);
+      namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
 
       // *** GENERICS TYPE ERASURE HACK ***! see note #1.
 

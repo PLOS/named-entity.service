@@ -176,6 +176,20 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
                .getId();
   }
 
+  @Override
+  public void checkNedIdForType(Integer nedId, String namedPartyType) {
+
+    // select * from namedEntityIdentifiers as n, globalTypes as g where g.id=n.typeId AND shortDescription="Individual" AND n.id=nedId
+
+    if (this.context.select()
+        .from(NAMEDENTITYIDENTIFIERS)
+        .join(GLOBALTYPES).on(GLOBALTYPES.ID.equal(NAMEDENTITYIDENTIFIERS.TYPEID))
+        .and(GLOBALTYPES.SHORTDESCRIPTION.equal(namedPartyType))
+        .and(NAMEDENTITYIDENTIFIERS.ID.equal(nedId)).fetchOne()
+      == null)
+        throw new EntityNotFoundException(namedPartyType);
+  }
+
   private Integer findTypeIdByName(TypeClassEnum typeClass, String typeValue) {
     if (isEmptyOrBlank(typeValue)) {
       return null;
@@ -346,7 +360,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
             r.ID, r.STARTDATE, r.ENDDATE,
             gt1.SHORTDESCRIPTION.as("applicationtype"),
             gt2.SHORTDESCRIPTION.as("type"),
-            gt2.SHORTDESCRIPTION.as("source"))
+            gt3.SHORTDESCRIPTION.as("source"))
         .from(r)
         .leftOuterJoin(gt1).on(r.APPLICATIONTYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(r.TYPEID.equal(gt2.ID))

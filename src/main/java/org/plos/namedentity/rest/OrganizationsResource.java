@@ -37,6 +37,13 @@ import java.util.List;
 @Api("/organizations")
 public class OrganizationsResource extends BaseResource {
 
+  private static String namedPartyType = "Organization";
+
+  @Override
+  protected String getNamedPartyType() {
+    return namedPartyType;
+  }
+
   @GET
   @ApiOperation(value = "List", response = Organization.class)
   public Response list(@ApiParam(required = false) @QueryParam("offset") Integer offset,
@@ -56,27 +63,27 @@ public class OrganizationsResource extends BaseResource {
   @Path("/{nedId}/emails")
   @ApiOperation("List emails")
   public Response getEmails(@PathParam("nedId") int nedId) {
-    return getEntities(nedId, Email.class, Organization.class);
+    return getEntities(nedId, Email.class);
   }
 
   @GET
   @Path("/{nedId}/addresses")
   @ApiOperation("List addresses")
   public Response getAddresses(@PathParam("nedId") int nedId) {
-    return getEntities(nedId, Address.class, Organization.class);
+    return getEntities(nedId, Address.class);
   }
 
   @GET
   @Path("/{nedId}/phonenumbers")
   @ApiOperation("List phone numbers")
   public Response getPhonenumbers(@PathParam("nedId") int nedId) {
-    return getEntities(nedId, Phonenumber.class, Organization.class);
+    return getEntities(nedId, Phonenumber.class);
   }
 
   @GET
   @Path("/{nedId}/uids")
   @ApiOperation("List UIDs")
   public Response getUids(@PathParam("nedId") int nedId) {
-    return getEntities(nedId, Uniqueidentifier.class, Organization.class);
+    return getEntities(nedId, Uniqueidentifier.class);
   }
 }
