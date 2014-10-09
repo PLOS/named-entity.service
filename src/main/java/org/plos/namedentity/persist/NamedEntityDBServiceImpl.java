@@ -280,7 +280,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     return this.context
         .select(
-            uid.ID,
+            uid.ID, uid.NEDID,
             uid.UNIQUEIDENTIFIER, gt1.SHORTDESCRIPTION.as("type"),
             gt2.SHORTDESCRIPTION.as("source"))
         .from(uid)
@@ -313,7 +313,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     return this.context
         .select(
-            e.ID, e.EMAILADDRESS, gt1.SHORTDESCRIPTION.as("type"),
+            e.ID, e.NEDID,
+            e.EMAILADDRESS, gt1.SHORTDESCRIPTION.as("type"),
             gt2.SHORTDESCRIPTION.as("source"))
         .from(e)
         .leftOuterJoin(gt1).on(e.TYPEID.equal(gt1.ID))
@@ -329,7 +330,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     return this.context
         .select(
-            a.ID,
+            a.ID, a.NEDID,
             a.ADDRESSLINE1, a.ADDRESSLINE2, a.ADDRESSLINE3, a.CITY,
             a.POSTALCODE,
             gt1.SHORTDESCRIPTION.as("type"),
@@ -351,7 +352,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     return this.context
         .select(
-            r.ID, r.STARTDATE, r.ENDDATE,
+            r.ID, r.STARTDATE, r.ENDDATE, r.NEDID,
             gt1.SHORTDESCRIPTION.as("applicationtype"),
             gt2.SHORTDESCRIPTION.as("type"),
             gt3.SHORTDESCRIPTION.as("source"))
@@ -472,7 +473,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     return this.context
         .select(
-            p.ID,
+            p.ID, p.NEDID,
             p.PHONENUMBER, p.EXTENSION,
             gt1.SHORTDESCRIPTION.as("type"),
             gt2.SHORTDESCRIPTION.as("countrycodetype"),
@@ -494,7 +495,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     return this.context
         .select(
-            d.ID,
+            d.ID, d.NEDID,
             gt1.SHORTDESCRIPTION.as("type"),
             gt2.SHORTDESCRIPTION.as("source"))
         .from(d)
@@ -511,7 +512,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     Urls        u   = URLS.as("u");
 
     return this.context
-        .select(u.URL, gt1.SHORTDESCRIPTION.as("source"))
+        .select(u.URL, u.NEDID, gt1.SHORTDESCRIPTION.as("source"))
         .from(u)
         .leftOuterJoin(gt1).on(u.SOURCETYPEID.equal(gt1.ID))
         .where(u.NEDID.equal(nedId))

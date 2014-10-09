@@ -319,8 +319,8 @@ public class NamedEntityDBServiceTest {
     // FIND BY JOIN-QUERY 
     List<Email> emails = nedDBSvc.findResolvedEntities(foundEmails2.get(0).getNedid(), Email.class);
 
-
     assertTrue( emails.size() > 0 );
+    assertNotNull(emails.get(0).getNedid());
 
     // Try to find an email which doesn't exist
 
@@ -387,6 +387,7 @@ public class NamedEntityDBServiceTest {
     assertEquals("firstname", entities.get(0).getFirstname());
     assertEquals("Mr.", entities.get(0).getNameprefix());
     assertEquals("II", entities.get(0).getNamesuffix());
+    assertEquals(nedId, entities.get(0).getNedid());
 
     // DELETE
 
@@ -508,6 +509,7 @@ public class NamedEntityDBServiceTest {
 
     List<Phonenumber> phonenumbers = nedDBSvc.findResolvedEntities(foundPhones.get(0).getNedid(), Phonenumber.class);
     assertTrue( phonenumbers.size() > 0 );
+    assertNotNull(phonenumbers.get(0).getNedid());
 
     // DELETE
 
@@ -572,6 +574,7 @@ public class NamedEntityDBServiceTest {
 
     List<Address> addresses = nedDBSvc.findResolvedEntities(savedAddress.getNedid(), Address.class);
     assertTrue( addresses.size() > 0 );
+    assertEquals(address.getNedid(), addresses.get(0).getNedid());
             
     // DELETE
 
@@ -636,6 +639,7 @@ public class NamedEntityDBServiceTest {
     List<Role> roles = nedDBSvc.findResolvedEntities(savedRole.getNedid(), Role.class);
     Role role = roles.get(0);
     assertEquals("Author", role.getType());
+    assertEquals(authorRole.getNedid(), role.getNedid());
               
     // DELETE
 
@@ -709,6 +713,7 @@ public class NamedEntityDBServiceTest {
     List<Uniqueidentifier> uids = nedDBSvc.findResolvedEntities(savedUid.getNedid(), Uniqueidentifier.class);
 
     assertEquals(ORCID_ID, uids.get(0).getUniqueidentifier());
+    assertEquals(nedId, uids.get(0).getNedid());
 
     // FIND ALL Roles 
 
