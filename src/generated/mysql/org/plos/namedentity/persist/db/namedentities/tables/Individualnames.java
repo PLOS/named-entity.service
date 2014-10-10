@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Individualnames extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualnamesRecord> {
 
-	private static final long serialVersionUID = 548116170;
+	private static final long serialVersionUID = -862861684;
 
 	/**
 	 * The singleton instance of <code>namedEntities.individualNames</code>
@@ -39,7 +39,7 @@ public class Individualnames extends org.jooq.impl.TableImpl<org.plos.namedentit
 	/**
 	 * The column <code>namedEntities.individualNames.firstName</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualnamesRecord, java.lang.String> FIRSTNAME = createField("firstName", org.jooq.impl.SQLDataType.CLOB.length(65535).nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualnamesRecord, java.lang.String> FIRSTNAME = createField("firstName", org.jooq.impl.SQLDataType.CLOB.length(65535), this, "");
 
 	/**
 	 * The column <code>namedEntities.individualNames.middleName</code>.
@@ -49,7 +49,7 @@ public class Individualnames extends org.jooq.impl.TableImpl<org.plos.namedentit
 	/**
 	 * The column <code>namedEntities.individualNames.lastName</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualnamesRecord, java.lang.String> LASTNAME = createField("lastName", org.jooq.impl.SQLDataType.CLOB.length(65535).nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualnamesRecord, java.lang.String> LASTNAME = createField("lastName", org.jooq.impl.SQLDataType.CLOB.length(65535), this, "");
 
 	/**
 	 * The column <code>namedEntities.individualNames.nickName</code>.
