@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Phonenumbers extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord> {
 
-	private static final long serialVersionUID = -466237281;
+	private static final long serialVersionUID = -650737664;
 
 	/**
 	 * The singleton instance of <code>NAMEDENTITIES.PHONENUMBERS</code>
@@ -49,7 +49,7 @@ public class Phonenumbers extends org.jooq.impl.TableImpl<org.plos.namedentity.p
 	/**
 	 * The column <code>NAMEDENTITIES.PHONENUMBERS.PHONENUMBER</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.String> PHONENUMBER = createField("PHONENUMBER", org.jooq.impl.SQLDataType.CLOB.length(2147483647).nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.String> PHONENUMBER = createField("PHONENUMBER", org.jooq.impl.SQLDataType.CLOB.length(2147483647), this, "");
 
 	/**
 	 * The column <code>NAMEDENTITIES.PHONENUMBERS.EXTENSION</code>.
