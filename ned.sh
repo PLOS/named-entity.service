@@ -52,7 +52,7 @@ dbreset)
     ;;
 
 *)
-    echo -e "\nUsage: `basename $0` (codegen-h2|codgen-mysql|dbreset|install|package|test|tomcat)"
+    echo -e "\nUsage: `basename $0` (codegen-h2|codegen-mysql|dbreset|install|package|test|tomcat)"
     echo -e "\n  tomcat url -> http://localhost:8080\n"
     exit 0
     ;;
