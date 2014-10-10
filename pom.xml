@@ -250,7 +250,7 @@
         <artifactId>maven-jar-plugin</artifactId>
         <version>2.5</version>
         <configuration>
-          <finalName>ned-pojos-${project.version}</finalName>
+          <finalName>named-entity-pojos-${project.version}</finalName>
           <includes>
             <include>**/namedentity/api/**/*</include>
             <include>**/validate/Validatable.class</include>
@@ -286,7 +286,7 @@
           <artifactId>named-entity-pojos</artifactId>
           <version>${project.version}</version>
           <packaging>jar</packaging>
-          <file>${basedir}/target/ned-pojos-${project.version}.jar</file>
+          <file>${basedir}/target/named-entity-pojos-${project.version}.jar</file>
           <generatePom>true</generatePom>
         </configuration>
         <executions>
