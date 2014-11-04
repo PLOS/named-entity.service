@@ -1,0 +1,12 @@
+neddb:
+    build: neddb.mysql
+    volumes:
+         - ../src/main/resources:/mysql_schema
+
+nedsvc:
+    build: nedsvc
+    volumes:
+        - ../target:/build 
+    links:
+        - neddb:neddb
+
