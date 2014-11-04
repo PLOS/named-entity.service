@@ -17,19 +17,29 @@ def cmd_return(command):
 	
 def run_tests(base_url):
 
+	r = requests.get("%s/service/config" % base_url)
+	data = json.loads(r.text)
+	assert(data['version'])
+
 	r = requests.get("%s/typeclasses" % base_url)
-	print (r.text)
+	data = json.loads(r.text)
+	assert(len(data) > 10)
 	assert(r.status_code == 200)
 	
 	r = requests.get("%s/typeclasses/2" % base_url)
 	assert(r.status_code == 200)
 
+	r = requests.get("%s/boguspath" % base_url)
+	assert(r.status_code == 404)
+
 
 print ("Building containers...")
 
-print (cmd("fig build"))  # TODO: stream output
+print (cmd("fig build"))  # TODO: stream output since it can take a while
 
 cmd("fig up -d")
+
+wait_secs = 3
 
 service_host = "docker_nedsvc_1"
 
@@ -39,8 +49,7 @@ service_ip = cmd("docker inspect --format '{{ .NetworkSettings.IPAddress }}' %s"
 
 db_ip = cmd("docker inspect --format '{{ .NetworkSettings.IPAddress }}' %s" % db_host)
 
-print ("service_ip = [%s]" % service_ip)
-sleep(15)
+#print ("service_ip = [%s]" % service_ip)
 
 test_url = "http://%s:8080/service/config" % service_ip
 
@@ -55,7 +64,7 @@ for i in range(0, 30):
 		break
 
 	print ("Database not ready ... waiting")
-	sleep(1)
+	sleep(3)
 
 print ("Database ready")
 
@@ -68,7 +77,7 @@ for i in range(0,30):
 		r = requests.get(test_url)
 	except requests.exceptions.ConnectionError, e:
 		print (e)
-		sleep(1)
+		sleep(3)
 		continue
 
 	print (r)
@@ -76,8 +85,9 @@ for i in range(0,30):
 	if r.status_code != 200:
 		continue
 		
-	break
+	json.dumps(r.text, sort_keys=True, indent=4)
 
+	break
 
 
 print ("Service is up, running tests...")
@@ -85,9 +95,9 @@ print ("Service is up, running tests...")
 try:
 	run_tests("http://%s:8080" % service_ip)
 	print ("TESTS PASSED")
-except:
+except Exception, e:
 	print ("TEST FAILED")
+	print (e)
 finally:
 	print ("Stopping containers")
 	cmd("fig stop && fig rm --force")
-
