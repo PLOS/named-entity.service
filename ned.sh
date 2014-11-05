@@ -60,7 +60,7 @@ container-start)
 		
 container-stop)
 		cd docker
-		fig stop
+		fig stop && fig rm --force
 		;;
 
 container-test)

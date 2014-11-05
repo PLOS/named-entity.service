@@ -7,15 +7,22 @@ import requests
 import subprocess
 from time import sleep
 
-def cmd(command):
+def cmd_read(command):
 	return subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout.read().strip()
 
 def cmd_return(command):
-	proc = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
+	proc = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=open(os.devnull, 'wb'))
 	proc.communicate()
 	return proc.returncode
+
+def cmd_stream(command):
+	proc = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
+	while proc.poll() is None:
+		print (proc.stdout.readline().rstrip())
 	
 def run_tests(base_url):
+
+	# TODO: look for ENV variable to specify location of external python integration tests
 
 	r = requests.get("%s/service/config" % base_url)
 	data = json.loads(r.text)
@@ -24,20 +31,20 @@ def run_tests(base_url):
 	r = requests.get("%s/typeclasses" % base_url)
 	data = json.loads(r.text)
 	assert(len(data) > 10)
-	assert(r.status_code == 200)
+	assert(r.status_code == requests.codes.ok)
 	
 	r = requests.get("%s/typeclasses/2" % base_url)
-	assert(r.status_code == 200)
+	assert(r.status_code == requests.codes.ok)
 
 	r = requests.get("%s/boguspath" % base_url)
-	assert(r.status_code == 404)
+	assert(r.status_code == requests.codes.not_found)
 
 
-print ("Building containers...")
+print ("Building containers... (be patient; this may take 5-10 minutes the first time)")
 
-print (cmd("fig build"))  # TODO: stream output since it can take a while
+cmd_stream("fig build")
 
-cmd("fig up -d")
+cmd_stream("fig up -d")
 
 wait_secs = 3
 
@@ -45,17 +52,15 @@ service_host = "docker_nedsvc_1"
 
 db_host = "docker_neddb_1"
 
-service_ip = cmd("docker inspect --format '{{ .NetworkSettings.IPAddress }}' %s" % service_host)
+service_ip = cmd_read("docker inspect --format '{{ .NetworkSettings.IPAddress }}' %s" % service_host)
 
-db_ip = cmd("docker inspect --format '{{ .NetworkSettings.IPAddress }}' %s" % db_host)
-
-#print ("service_ip = [%s]" % service_ip)
+db_ip = cmd_read("docker inspect --format '{{ .NetworkSettings.IPAddress }}' %s" % db_host)
 
 test_url = "http://%s:8080/service/config" % service_ip
 
-# check that the db is up
-
 test_sql = "mysql -h %s -u ned namedEntities -e exit" % db_ip
+
+print ("Checking database container at %s" % db_ip)
 
 for i in range(0, 30):
 	sql_proc_return = cmd_return(test_sql)
@@ -63,34 +68,32 @@ for i in range(0, 30):
 	if sql_proc_return == 0:
 		break
 
-	print ("Database not ready ... waiting")
-	sleep(3)
+	print ("Database not ready ... waiting %d seconds" % wait_secs)
+	sleep (wait_secs)
 
 print ("Database ready")
 
+print ("Checking service container at %s" % service_ip)
 
-# check that the service is up
-
-for i in range(0,30):
+for i in range(0, 30):
 	try:
 		print ("Visiting %s" % test_url)
 		r = requests.get(test_url)
 	except requests.exceptions.ConnectionError, e:
 		print (e)
-		sleep(3)
+		sleep (wait_secs)
 		continue
 
 	print (r)
 	
-	if r.status_code != 200:
+	if r.status_code != requests.codes.ok:
 		continue
 		
-	json.dumps(r.text, sort_keys=True, indent=4)
+	print (json.dumps(r.text, sort_keys=True, indent=4))
 
 	break
 
-
-print ("Service is up, running tests...")
+print ("Service is up, running tests")
 
 try:
 	run_tests("http://%s:8080" % service_ip)
@@ -100,4 +103,4 @@ except Exception, e:
 	print (e)
 finally:
 	print ("Stopping containers")
-	cmd("fig stop && fig rm --force")
+	cmd_stream("fig stop && fig rm --force")

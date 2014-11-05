@@ -15,9 +15,9 @@ echo -e "\nFinished creating schema."
 
 /usr/sbin/mysqld &
 sleep 5
-echo -e "\nCreating DB User ($DB_USER)"
-echo "CREATE USER '$DB_USER' IDENTIFIED BY ''" | mysql --default-character-set=utf8
-echo "GRANT ALL PRIVILEGES ON *.* TO '$DB_USER'@'%' WITH GRANT OPTION; FLUSH PRIVILEGES" | mysql --default-character-set=utf8
+echo -e "\nCreating DB User (ned)"
+echo "CREATE USER 'ned' IDENTIFIED BY ''" | mysql --default-character-set=utf8
+echo "GRANT ALL PRIVILEGES ON *.* TO 'ned'@'%' WITH GRANT OPTION; FLUSH PRIVILEGES" | mysql --default-character-set=utf8
 echo "Finished creating user."
 
 # restart the server to go operational

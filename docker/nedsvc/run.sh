@@ -1,10 +1,22 @@
 #!/bin/bash
 
-# TODO: check for file http://stackoverflow.com/questions/6363441/check-if-a-file-exists-with-wildcard-in-shell-script
 echo Deleting contents of webapps/
 rm -rf /var/lib/tomcat7/webapps/*
-echo Copying WAR to webapps
-cp /build/named-entity-service-*.war /var/lib/tomcat7/webapps/ROOT.war # quit if there is an error
+
+BUILD_DIR=/build
+NED_SVC_WAR=named-entity-service-*.war
+
+echo Checking that WAR exists
+
+WARCOUNT=$(ls ${BUILD_DIR}/${NED_SVC_WAR} 2> /dev/null | wc -l)
+
+if [ $WARCOUNT -ne 0 ] ; then
+  echo Copying WAR to webapps
+  cp `ls -t ${BUILD_DIR}/${NED_SVC_WAR} | head -1` /var/lib/tomcat7/webapps/ROOT.war
+else
+  echo "WAR file not found in ${BUILD_DIR}. Exiting..."
+  exit 1
+fi
 
 MYSQL_CMD="mysql -h ${MYSQL_HOSTNAME} -u ned namedEntities"
 
@@ -24,4 +36,3 @@ echo -e "\nDatabase (${MYSQL_HOSTNAME}) ready!"
 # The container will run as long as the script is running, 
 # that's why we need something long-lived here
 exec tail -f /var/log/tomcat7/catalina.out
-
