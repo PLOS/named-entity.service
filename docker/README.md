@@ -1,5 +1,5 @@
 NED Integration tests in Docker
-==============================
+===============================
 
 To run these tests cd into this directory and run ./run_tests.py
 

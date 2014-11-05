@@ -9,4 +9,3 @@ nedsvc:
         - ../target:/build 
     links:
         - neddb:neddb
-
