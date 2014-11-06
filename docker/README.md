@@ -13,6 +13,9 @@ Requirements
 * fig >= 0.5.2 (www.fig.sh)
 * python 2.7 (see script imports for required libraries)
 
+It is recommended that you set up docker to run as a user instead of requiring sudo. See documentation (https://docs.docker.com/installation/ubuntulinux/#giving-non-root-access).
+
+
 Notes
 -----
-The first time you run these tests it can take a while. This is because it has to download a base Linux image the first time, and then it has to build the docker images. These will be caches so successive runs have an overhead of under a minute (not including the tests themselves) to start and stop the containers.
+The first time you run these tests it can take a while. This is because it has to download a base Linux image the first time, and then it has to build the docker images. These will be cached so successive runs have an overhead of under a minute (not including the tests themselves) to start and stop the containers.
