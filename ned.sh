@@ -50,9 +50,28 @@ dbreset)
     mysql -u root < src/main/resources/ned-schema.mysql.sql
     mysql -u root < src/main/resources/ned-data.mysql.sql
     ;;
+    
+container-start)
+		cd docker
+		fig up -d
+		echo MySQL DB = `docker inspect --format '{{ .NetworkSettings.IPAddress }}' docker_neddb_1`:3306
+		echo Ned Service = http://`docker inspect --format '{{ .NetworkSettings.IPAddress }}' docker_nedsvc_1`:8080
+		;;
+		
+container-stop)
+		cd docker
+		fig stop && fig rm --force
+		;;
+
+container-test)
+		MVN_TARGETS="clean install" do_mvn
+		cd docker
+		time ./run_tests.py
+		;;
+		
 
 *)
-    echo -e "\nUsage: `basename $0` (codegen-h2|codegen-mysql|dbreset|install|package|test|tomcat)"
+    echo -e "\nUsage: `basename $0` (codegen-h2|codegen-mysql|dbreset|install|package|test|tomcat|container-start|container-stop|container-test)"
     echo -e "\n  tomcat url -> http://localhost:8080\n"
     exit 0
     ;;
