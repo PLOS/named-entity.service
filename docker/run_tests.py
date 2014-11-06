@@ -39,12 +39,21 @@ def run_tests(base_url):
 	r = requests.get("%s/boguspath" % base_url)
 	assert(r.status_code == requests.codes.not_found)
 
+	try:
+		# TODO: find this class with an external path via PYTHONPATH
+		# ie > PYTHONPATH=$PYTHONPATH:/path/to/integrationtest/dir ./run_tests.py
+		import rest_tester
+		print ("Running external REST tests")
+		t = rest_tester.NedRestTester(base_url)
+		t.run()
+	except ImportError, e:
+		print ("Skipping external REST tests since none were found.")
+
+
 
 print ("Building containers... (be patient; this may take 5-10 minutes the first time)")
 
-cmd_stream("fig build")
-
-cmd_stream("fig up -d")
+cmd_stream("fig build && fig up -d")
 
 wait_secs = 3
 
