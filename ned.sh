@@ -55,7 +55,29 @@ container-start)
 		cd docker
 		fig up -d
 		echo MySQL DB = `docker inspect --format '{{ .NetworkSettings.IPAddress }}' docker_neddb_1`:3306
-		echo Ned Service = http://`docker inspect --format '{{ .NetworkSettings.IPAddress }}' docker_nedsvc_1`:8080
+		
+		echo "Bringing up NED service..."
+
+		SERVICE_IP=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' docker_nedsvc_1`
+
+		CURL_CMD="curl http://${SERVICE_IP}:8080/service/config"
+
+		$CURL_CMD
+		CURL_RETURN_CODE=$?
+
+		while [ $CURL_RETURN_CODE -ne 0 ] ; do
+			echo "Service not ready. Waiting..."
+			sleep 3
+			$CURL_CMD
+			CURL_RETURN_CODE=$?
+		done;
+
+		echo "Service is up"
+		
+		echo NED Service = http://`docker inspect --format '{{ .NetworkSettings.IPAddress }}' docker_nedsvc_1`:8080
+		
+		echo Launching web browser  # Linux desktop only
+		xdg-open "http://${SERVICE_IP}:8080"
 		;;
 		
 container-stop)

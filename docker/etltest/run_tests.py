@@ -56,6 +56,7 @@ print ("Service is up, running tests")
 
 try:
 
+  # TODO: make these tests external so they can live in another repo
   print ("Running external tests")
   t = NedEtlDataTester.NedEtlDataTester(ambra_mysql_ip, "nedetl_test_ambra", "dummyuser", "password", 3306, etl_jar, ned_base_url)
   t.run()
