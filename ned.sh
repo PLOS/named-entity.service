@@ -72,9 +72,7 @@ container-start)
 			CURL_RETURN_CODE=$?
 		done;
 
-		echo "Service is up"
-		
-		echo NED Service = http://`docker inspect --format '{{ .NetworkSettings.IPAddress }}' docker_nedsvc_1`:8080
+		echo NED Service = http://${SERVICE_IP}:8080
 		
 		echo Launching web browser  # Linux desktop only
 		xdg-open "http://${SERVICE_IP}:8080"
@@ -86,9 +84,12 @@ container-stop)
 		;;
 
 container-test)
-		MVN_TARGETS="clean install" do_mvn
-		cd docker
-		time ./run_tests.py
+  	MVN_TARGETS="clean install" do_mvn
+    echo "RUNNING API TESTS"
+  	time docker/run_api_tests.py
+
+    echo "RUNNING ETL TESTS"
+    time docker/etltest/run_etl_tests.py
 		;;
 		
 

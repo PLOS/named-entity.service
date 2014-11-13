@@ -1,13 +1,17 @@
 #!/usr/bin/python
 __author__ = 'jfinger'
 
-import requests
-import json
+import os, sys
 import docker_tester
+
+# change to the script directory to run fig
+os.chdir(os.path.dirname(__file__))
 
 dt = docker_tester.DockerTester()
 
 dt.containers_up()
+
+# TODO: check for the presence of .war before starting
 
 service_ip = dt.get_container_ip("docker_nedsvc_1")
 db_ip = dt.get_container_ip("docker_neddb_1")
@@ -22,25 +26,19 @@ dt.wait_for_web("%s/service/config" % base_url)
 print ("Service is up, running tests")
 
 try:
-	
-	r = requests.get("%s/service/config" % base_url)
-	data = json.loads(r.text)
-	assert(data['version'])
-
-	r = requests.get("%s/typeclasses" % base_url)
-	data = json.loads(r.text)
-	assert(len(data) > 10)
-	assert(r.status_code == requests.codes.ok)
-	
-	r = requests.get("%s/typeclasses/2" % base_url)
-	assert(r.status_code == requests.codes.ok)
-
-	r = requests.get("%s/boguspath" % base_url)
-	assert(r.status_code == requests.codes.not_found)
 
 	try:
-		# TODO: find this class with an external path via PYTHONPATH
-		# ie > PYTHONPATH=$PYTHONPATH:/path/to/integrationtest/dir ./run_tests.py
+
+		# NOTE to run the sample do:
+		# > PYTHONPATH=$PYTHONPATH:/path/to/your/etl_data_tester/dir/ ./run_api_tests.py
+		#
+		# If you do not specify a path to your tests, the ones in sampletest/ will run
+
+		try:
+			user_paths = os.environ['PYTHONPATH'].split(os.pathsep)
+		except KeyError:
+			sys.path.append("sampletest")
+
 		import rest_tester
 		print ("Running external REST tests")
 		t = rest_tester.NedRestTester(base_url)
@@ -54,4 +52,3 @@ except Exception, e:
 	print (e)
 finally:
 	dt.containers_down()
-

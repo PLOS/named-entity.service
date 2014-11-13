@@ -27,6 +27,7 @@ class DockerTester:
       print (proc.stdout.readline().rstrip())
 
   def containers_up(self):
+    # TODO: cd to this directory in order to handled fig remote
     print ("Building containers... (be patient; this may take 5-10 minutes the first time)")
     self.cmd_stream("fig build && fig up -d")
 
