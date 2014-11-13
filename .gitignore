@@ -9,3 +9,4 @@ cp.mmddyy.txt
 debug.sh
 mdb.ini
 target
+*.pyc
