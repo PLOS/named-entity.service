@@ -1,0 +1,356 @@
+{
+    "endpoints": {
+        "individuals": {
+            "create": {
+                "requestmethod": "post",
+                "individual": {
+                    "querymap": "|individuals",
+                    "parameters": {},
+                    "description": "Create individual"
+                },
+                "address": {
+                    "querymap": "|individuals|nedId|addresses",
+                    "parameters": {
+                        "nedId": "nedId"
+                    },
+                    "description": "Create address"
+                },
+                "email": {
+                    "querymap": "|individuals|nedId|emails",
+                    "parameters": {
+                        "nedId": "nedId"
+                    },
+                    "description": "Create email"
+                },
+                "role": {
+                    "querymap": "|individuals|nedId|roles",
+                    "parameters": {
+                        "nedId": "nedId"
+                    },
+                    "description": "Create role"
+                },
+                "uid": {
+                    "querymap": "|individuals|nedId|uids",
+                    "parameters": {
+                        "nedId": "nedId"
+                    },
+                    "description": "CreateUID"
+                }
+            },
+            "read": {
+                "requestmethod": "get",
+                "individual": {
+                    "nedid": {
+                        "querymap": "|individuals|nedId",
+                        "parameters": {
+                            "nedId": "nedId"
+                        },
+                        "description": "ReadindividualbyNedID"
+                    },
+                    "uid": {
+                        "querymap": "|individuals|uidType|uidValue",
+                        "parameters": {
+                            "uidType": "uidType",
+                            "uidValue": "uidValue"
+                        },
+                        "description": "ReadindividualbyUID"
+                    },
+                    "address": {
+                        "querymap": "|individuals|nedId|addresses|addressId",
+                        "parameters": {
+                            "nedId": "nedId",
+                            "addressId": "addressId"
+                        },
+                        "description": "Readaddress"
+                    },
+                    "email": {
+                        "querymap": "|individuals|nedId|emails|emailId",
+                        "parameters": {
+                            "nedId": "nedId",
+                            "emailId": "emailId"
+                        },
+                        "description": "Reademail"
+                    },
+                    "role": {
+                        "querymap": "|individuals|nedId|roles|roleId",
+                        "parameters": {
+                            "nedId": "nedId",
+                            "roleId": "roleId"
+                        },
+                        "description": "Readrole"
+                    },
+                    "list": {
+                        "addresses": {
+                            "querymap": "|individuals|nedId|addresses",
+                            "parameters": {
+                                "nedId": "nedId"
+                            },
+                            "description": "Listaddresses"
+                        },
+                        "degrees": {
+                            "querymap": "|individuals|nedId|degrees",
+                            "parameters": {
+                                "nedId": "nedId"
+                            },
+                            "description": "Listdegrees"
+                        },
+                        "emails": {
+                            "querymap": "|individuals|nedId|emails",
+                            "parameters": {
+                                "nedId": "nedId"
+                            },
+                            "description": "Listemails"
+                        },
+                        "phoneNumbers": {
+                            "querymap": "|individuals|nedId|phonenumbers",
+                            "parameters": {
+                                "nedId": "nedId"
+                            },
+                            "description": "Listphonenumbers"
+                        },
+                        "role": {
+                            "querymap": "|individuals|nedId|roles",
+                            "parameters": {
+                                "nedId": "nedId"
+                            },
+                            "description": "Listroles"
+                        },
+                        "UIDs": {
+                            "querymap": "|individuals|nedId|uids",
+                            "parameters": {
+                                "nedId": "nedId"
+                            },
+                            "description": "ListUIDs"
+                        }
+                    },
+                    "delete": {
+                        "requestmethod": "delete",
+                        "address": {
+                            "querymap": "|individuals|nedId|addresses|addressId",
+                            "parameters": {
+                                "nedId": "nedId",
+                                "addressId": "addressId"
+                            },
+                            "description": "Deleteaddress"
+                        },
+                        "name": {
+                            "querymap": "|individuals|nedId|names|id",
+                            "parameters": {
+                                "nedId": "nedId",
+                                "id": "id"
+                            },
+                            "description": "Deleteaname"
+                        },
+                        "email": {
+                            "querymap": "|individuals|nedId|emails|emailId",
+                            "parameters": {
+                                "nedId": "nedId",
+                                "emailId": "emailId"
+                            },
+                            "description": "Deleteemail"
+                        },
+                        "role": {
+                            "querymap": "|individuals|nedId|roles|roleId",
+                            "parameters": {
+                                "nedId": "nedId",
+                                "roleId": "roleId"
+                            },
+                            "description": "Deleterole"
+                        },
+                        "uid": {
+                            "querymap": "|individuals|nedId|uids|id",
+                            "parameters": {
+                                "nedId": "nedId",
+                                "id": "id"
+                            },
+                            "description": "DeleteUID"
+                        }
+                    },
+                    "update": {
+                        "requestmethod": "post",
+                        "email": {
+                            "querymap": "|individuals|nedId|emails|emailId",
+                            "parameters": {
+                                "nedId": "nedId",
+                                "emailId": "emailId"
+                            },
+                            "description": "Updateemail"
+                        },
+                        "address": {
+                            "querymap": "|individuals|addresses|addressId",
+                            "parameters": {
+                                "nedId": "nedId",
+                                "addressId": "addressId"
+                            },
+                            "description": "Updateaddress"
+                        },
+                        "name": {
+                            "querymap": "|individuals|nedId|names|id",
+                            "parameters": {
+                                "nedId": "nedId",
+                                "id": "id"
+                            },
+                            "description": "Updateaname"
+                        },
+                        "role": {
+                            "querymap": "|individuals|nedId|roles|roleId",
+                            "parameters": {
+                                "nedId": "nedId",
+                                "roleId": "roleId"
+                            },
+                            "description": "Updaterole"
+                        },
+                        "uid": {
+                            "querymap": "|individuals|nedId|uids|id",
+                            "parameters": {
+                                "nedId": "nedId",
+                                "id": "id"
+                            },
+                            "description": "UpdateUID"
+                        },
+                        "addName": {
+                            "querymap": "|individuals|nedId|names",
+                            "parameters": {
+                                "nedId": "nedId"
+                            },
+                            "description": "Addname"
+                        }
+                    }
+                }
+            }
+        },
+        "organizations": {
+            "read": {
+                "requestmethod": "get",
+                "list": {
+                    "organizations": {
+                        "querymap": "|organizations",
+                        "parameters": {},
+                        "description": "List organizations"
+                    },
+                    "addresses": {
+                        "querymap": "|organizations|nedId|addresses",
+                        "parameters": {
+                            "nedId": "nedId"
+                        },
+                        "description": "List addresses"
+                    },
+                    "emails": {
+                        "querymap": "|organizations|nedId|emails",
+                        "parameters": {
+                            "nedId": "nedId"
+                        },
+                        "description": "Listemails"
+                    },
+                    "phoneNumbers": {
+                        "querymap": "|organizations|nedId|phonenumbers",
+                        "parameters": {
+                            "nedId": "nedId"
+                        },
+                        "description": "Listphonenumbers"
+                    },
+                    "uids": {
+                        "querymap": "|organizations|nedId|uids",
+                        "parameters": {
+                            "nedId": "nedId"
+                        },
+                        "description": "ListUIDs"
+                    }
+                }
+            }
+        },
+        "service": {
+            "read": {
+                "requestmethod": "get",
+                "configInfo": {
+                    "querymap": "|service|config",
+                    "parameters": {},
+                    "description": "Config info"
+                }
+            }
+        },
+        "typeclasses": {
+            "create": {
+                "requestmethod": "post",
+                "typeclasses": {
+                    "querymap": "|typeclasses",
+                    "parameters": {},
+                    "description": "Create typeclasses"
+                },
+                "globalType": {
+                    "querymap": "|typeclasses|typeclassid|typevalues",
+                    "parameters": {
+                        "typeclassid": "typeclassid"
+                    },
+                    "description": "Create global type"
+                }
+            },
+            "read": {
+                "requestmethod": "get",
+                "typeclasses": {
+                    "querymap": "|typeclasses",
+                    "parameters": {},
+                    "description": "list typeclasses"
+                },
+                "typeclass": {
+                    "querymap": "|typeclasses|id",
+                    "parameters": {
+                        "id": "id"
+                    },
+                    "description": "Read typeclass"
+                },
+                "globalTypes": {
+                    "querymap": "|typeclasses|typeclassid|typevalues",
+                    "parameters": {
+                        "typeclassid": "typeclassid"
+                    },
+                    "description": "List global types"
+                },
+                "globalType": {
+                    "querymap": "|typeclasses|typeclassid|typevalues|typevalueid",
+                    "parameters": {
+                        "typeclassid": "typeclassid",
+                        "typevalueid": "typevalueid"
+                    },
+                    "description": "Read global type"
+                }
+            },
+            "update": {
+                "requestmethod": "post",
+                "typeclasses": {
+                    "querymap": "|typeclasses|id",
+                    "parameters": {
+                        "id": "id"
+                    },
+                    "description": "Update typeclasses"
+                },
+                "globalType": {
+                    "querymap": "|typeclasses|typeclassid|typevalues|typevalueid",
+                    "parameters": {
+                        "typeclassid": "typeclassid",
+                        "typevalueid": "typevalueid"
+                    },
+                    "description": "Update global type"
+                }
+            },
+            "delete": {
+                "requestmethod": "delete",
+                "typeclasses": {
+                    "querymap": "|typeclasses|id",
+                    "parameters": {
+                        "id": "id"
+                    },
+                    "description": "Delete typeclass"
+                },
+                "globalType": {
+                    "querymap": "|typeclasses|typeclassid|typevalues|typevalueid",
+                    "parameters": {
+                        "typeclassid": "typeclassid",
+                        "typevalueid": "typevalueid"
+                    },
+                    "description": "Delete global type"
+                }
+            }
+        }
+    }
+}

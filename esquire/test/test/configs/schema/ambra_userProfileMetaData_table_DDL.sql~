@@ -1,0 +1,29 @@
+CREATE TABLE userProfileMetaData
+(
+   userProfileMetaDataID  BIGINT         NOT NULL,
+   userProfileID          BIGINT         NOT NULL,
+   metaKey                VARCHAR(50)    NOT NULL,
+   metaValue              VARCHAR(255),
+   lastModified           DATETIME       NOT NULL,
+   created                DATETIME       NOT NULL
+)
+ENGINE=InnoDB;
+
+ALTER TABLE userProfileMetaData
+   ADD CONSTRAINT pk_userprofilemetadata
+   PRIMARY KEY (userProfileMetaDataID);
+
+CREATE INDEX metaKey
+   ON userProfileMetaData (metaKey ASC);
+
+CREATE UNIQUE INDEX userProfileID
+   ON userProfileMetaData (userProfileID ASC, metaKey ASC);
+
+
+-- BEGIN FOREIGN KEYS --
+ALTER TABLE userProfileMetaData
+  ADD CONSTRAINT userProfileMetaData_ibfk_1 FOREIGN KEY (userProfileID)
+  REFERENCES userProfile (userProfileID)
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION;
+-- END FOREIGN KEYS --
