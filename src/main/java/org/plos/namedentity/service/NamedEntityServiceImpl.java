@@ -16,8 +16,8 @@
  */
 package org.plos.namedentity.service;
 
-import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.IndividualComposite;
+import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Email;
@@ -181,9 +181,6 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     composite.setFromMap(compositeMap);
 
-    if (composite.getUniqueidentifiers().size() == 0)
-      throw new EntityNotFoundException("Individual");
-
     return composite;
   }
 
@@ -193,6 +190,9 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
     Map<Class, List<? extends Entity>> compositeMap = composite.getAsMap();
+
+    if (compositeMap.get(Uniqueidentifier.class) == null)
+      throw new NedException("Unique identifier required");
 
     for (List<? extends Entity> entities : compositeMap.values()) {
 
