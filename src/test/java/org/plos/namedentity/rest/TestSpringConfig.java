@@ -66,13 +66,13 @@ public class TestSpringConfig {
     mockCrudForRoles(mockCrudService);
 
     // INDIVIDUALS
-    IndividualName individualNameEntity = newIndividualEntity();
+    IndividualProfile individualProfileEntity = newIndividualEntity();
 
-    when(mockCrudService.create(isA(IndividualName.class))).thenReturn( individualNameEntity.getNedid() );
+    when(mockCrudService.create(isA(IndividualProfile.class))).thenReturn( individualProfileEntity.getNedid() );
 
-    when(mockCrudService.findAll(eq(IndividualName.class), eq(0), anyInt())).thenReturn( newIndividualEntities() );
+    when(mockCrudService.findAll(eq(IndividualProfile.class), eq(0), anyInt())).thenReturn( newIndividualEntities() );
 
-    when(mockCrudService.findById(eq(individualNameEntity.getNedid()), eq(IndividualName.class))).thenReturn(individualNameEntity);
+    when(mockCrudService.findById(eq(individualProfileEntity.getNedid()), eq(IndividualProfile.class))).thenReturn(individualProfileEntity);
 
     return mockCrudService;
   }
@@ -81,7 +81,7 @@ public class TestSpringConfig {
   static public NamedEntityService namedEntityService() {
     NamedEntityService mockNamedEntityService =  Mockito.mock(NamedEntityService.class);
 
-    IndividualName individualNameEntity = newIndividualEntity();
+    IndividualProfile individualProfileEntity = newIndividualEntity();
 
     Organization organizationEntity = newOrganizationEntity();
 
@@ -95,19 +95,19 @@ public class TestSpringConfig {
     when(mockNamedEntityService.findIndividualComposite(anyInt()))
         .thenReturn( individualComposite );
 
-    List<IndividualName> emptyIndividualNames = new ArrayList<>();
+    List<IndividualProfile> emptyIndividualProfiles = new ArrayList<>();
 
-    when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(IndividualName.class)))
-        .thenReturn(emptyIndividualNames);
+    when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(IndividualProfile.class)))
+        .thenReturn(emptyIndividualProfiles);
 
-    doNothing().when(mockNamedEntityService).checkNedIdForType(eq(individualNameEntity.getNedid()), anyString());
+    doNothing().when(mockNamedEntityService).checkNedIdForType(eq(individualProfileEntity.getNedid()), anyString());
 
     doThrow(new EntityNotFoundException("expected")).when(mockNamedEntityService).checkNedIdForType(eq(2), anyString());
 
-    when(mockNamedEntityService.findResolvedEntityByUid(anyString(), anyString(), eq(IndividualName.class)))
+    when(mockNamedEntityService.findResolvedEntityByUid(anyString(), anyString(), eq(IndividualProfile.class)))
       .thenReturn( newIndividualEntity() );
 
-    when(mockNamedEntityService.findResolvedEntities(eq(individualNameEntity.getNedid()), eq(Email.class)))
+    when(mockNamedEntityService.findResolvedEntities(eq(individualProfileEntity.getNedid()), eq(Email.class)))
       .thenReturn(newEmailEntitiesForIndividual());
 
     when(mockNamedEntityService.findResolvedEntities(eq(organizationEntity.getNedid()), eq(Email.class)))
@@ -139,8 +139,8 @@ public class TestSpringConfig {
     return new TypeclassesResource();
   }
 
-  static private IndividualName newIndividualEntity() {
-    IndividualName entity = new IndividualName();
+  static private IndividualProfile newIndividualEntity() {
+    IndividualProfile entity = new IndividualProfile();
     entity.setNedid(1);
     entity.setFirstname("firstname");
     entity.setMiddlename("middlename");
@@ -154,7 +154,7 @@ public class TestSpringConfig {
 
     IndividualComposite composite = new IndividualComposite();
 
-    IndividualName entity = new IndividualName();
+    IndividualProfile entity = new IndividualProfile();
     entity.setNedid(1);
     entity.setFirstname("firstname");
     entity.setMiddlename("middlename");
@@ -167,10 +167,10 @@ public class TestSpringConfig {
 
     composite.setEmails(new ArrayList<>(Arrays.asList(emailEntity)));
 
-    List<IndividualName> individualNames = new ArrayList<>();
-    individualNames.add(entity);
+    List<IndividualProfile> individualProfiles = new ArrayList<>();
+    individualProfiles.add(entity);
 
-    composite.setIndividualNames(individualNames);
+    composite.setIndividualProfiles(individualProfiles);
 
     return composite;
   }
@@ -254,20 +254,20 @@ public class TestSpringConfig {
     return phonenumbers;
   }
 
-  static private List<IndividualName> newIndividualEntities() {
-    List<IndividualName> individualNameEntities = new ArrayList<>();
+  static private List<IndividualProfile> newIndividualEntities() {
+    List<IndividualProfile> individualProfileEntities = new ArrayList<>();
 
     for (int i = 1; i <=3; i++) {
-      IndividualName individualName = new IndividualName();
-      individualName.setNedid(i);
-      individualName.setFirstname("firstname"+i);
-      individualName.setMiddlename("middlename"+i);
-      individualName.setLastname("lastname"+i);
-      individualName.setNameprefixtypeid(i);
-      individualName.setNamesuffixtypeid(i);
-      individualNameEntities.add(individualName);
+      IndividualProfile individualProfile = new IndividualProfile();
+      individualProfile.setNedid(i);
+      individualProfile.setFirstname("firstname"+i);
+      individualProfile.setMiddlename("middlename"+i);
+      individualProfile.setLastname("lastname"+i);
+      individualProfile.setNameprefixtypeid(i);
+      individualProfile.setNamesuffixtypeid(i);
+      individualProfileEntities.add(individualProfile);
     }
-    return individualNameEntities;
+    return individualProfileEntities;
   }
 
   static private List<Uniqueidentifier> newUidEntities() {

@@ -39,9 +39,9 @@ public class Tables {
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Globaltypes GLOBALTYPES = org.plos.namedentity.persist.db.namedentities.tables.Globaltypes.GLOBALTYPES;
 
 	/**
-	 * The table namedEntities.individualNames
+	 * The table namedEntities.individualProfiles
 	 */
-	public static final org.plos.namedentity.persist.db.namedentities.tables.Individualnames INDIVIDUALNAMES = org.plos.namedentity.persist.db.namedentities.tables.Individualnames.INDIVIDUALNAMES;
+	public static final org.plos.namedentity.persist.db.namedentities.tables.Individualprofiles INDIVIDUALPROFILES = org.plos.namedentity.persist.db.namedentities.tables.Individualprofiles.INDIVIDUALPROFILES;
 
 	/**
 	 * The table namedEntities.journals

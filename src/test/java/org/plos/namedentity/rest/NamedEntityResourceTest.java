@@ -24,7 +24,7 @@ import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
-import org.plos.namedentity.api.entity.IndividualName;
+import org.plos.namedentity.api.entity.IndividualProfile;
 import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Typedescription;
@@ -91,12 +91,12 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
     IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
 
-    IndividualName individualName = composite.getIndividualNames().get(0);
-    assertEquals(Integer.valueOf(1), individualName.getNedid());
-    assertEquals("firstname", individualName.getFirstname());
-    assertEquals("middlename", individualName.getMiddlename());
-    assertEquals("lastname", individualName.getLastname());
-    assertEquals("Ms.", individualName.getNameprefix());
+    IndividualProfile individualProfile = composite.getIndividualProfiles().get(0);
+    assertEquals(Integer.valueOf(1), individualProfile.getNedid());
+    assertEquals("firstname", individualProfile.getFirstname());
+    assertEquals("middlename", individualProfile.getMiddlename());
+    assertEquals("lastname", individualProfile.getLastname());
+    assertEquals("Ms.", individualProfile.getNameprefix());
     assertEquals("email@internet.com", composite.getEmails().get(0).getEmailaddress());
 
     // Request #2. Expect a validation exception (client-side error)
@@ -131,12 +131,12 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
     IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
 
-    IndividualName individualName = composite.getIndividualNames().get(0);
-    assertEquals(Integer.valueOf(1), individualName.getNedid());
-    assertEquals("firstname", individualName.getFirstname());
-    assertEquals("middlename", individualName.getMiddlename());
-    assertEquals("lastname", individualName.getLastname());
-    assertEquals("Ms.", individualName.getNameprefix());
+    IndividualProfile individualProfile = composite.getIndividualProfiles().get(0);
+    assertEquals(Integer.valueOf(1), individualProfile.getNedid());
+    assertEquals("firstname", individualProfile.getFirstname());
+    assertEquals("middlename", individualProfile.getMiddlename());
+    assertEquals("lastname", individualProfile.getLastname());
+    assertEquals("Ms.", individualProfile.getNameprefix());
     assertEquals("email@internet.com", composite.getEmails().get(0).getEmailaddress());
   }
 
@@ -151,12 +151,12 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
     IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
 
-    IndividualName individualName = composite.getIndividualNames().get(0);
-    assertEquals(Integer.valueOf(1), individualName.getNedid());
-    assertEquals("firstname", individualName.getFirstname());
-    assertEquals("middlename", individualName.getMiddlename());
-    assertEquals("lastname", individualName.getLastname());
-    assertEquals("Ms.", individualName.getNameprefix());
+    IndividualProfile individualProfile = composite.getIndividualProfiles().get(0);
+    assertEquals(Integer.valueOf(1), individualProfile.getNedid());
+    assertEquals("firstname", individualProfile.getFirstname());
+    assertEquals("middlename", individualProfile.getMiddlename());
+    assertEquals("lastname", individualProfile.getLastname());
+    assertEquals("Ms.", individualProfile.getNameprefix());
     assertEquals("email@internet.com", composite.getEmails().get(0).getEmailaddress());
   }
 

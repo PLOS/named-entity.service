@@ -8,7 +8,7 @@ import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Email;
-import org.plos.namedentity.api.entity.IndividualName;
+import org.plos.namedentity.api.entity.IndividualProfile;
 import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
@@ -68,11 +68,11 @@ public class IndividualsResource extends BaseResource {
                                      @PathParam("uidValue") String uidValue) {
     try {
 
-      IndividualName individualName = namedEntityService.findResolvedEntityByUid(
-          uidType, uidValue, IndividualName.class);
+      IndividualProfile individualProfile = namedEntityService.findResolvedEntityByUid(
+          uidType, uidValue, IndividualProfile.class);
 
       return Response.status(Response.Status.OK).entity(
-          namedEntityService.findIndividualComposite(individualName.getNedid())).build();
+          namedEntityService.findIndividualComposite(individualProfile.getNedid())).build();
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
     } catch (Exception e) {
@@ -87,15 +87,15 @@ public class IndividualsResource extends BaseResource {
   @POST
   @Path("/{nedId}/names")
   @ApiOperation(value = "Add name", response = IndividualComposite.class)
-  public Response addName(@PathParam("nedId") int nedId, IndividualName entity) {
+  public Response addName(@PathParam("nedId") int nedId, IndividualProfile entity) {
     return createEntity(nedId, entity);
   }
 
   @POST
   @Path("/{nedId}/names/{id}")
-  @ApiOperation(value = "Update a name", response = IndividualName.class)
+  @ApiOperation(value = "Update a name", response = IndividualProfile.class)
   public Response updateName(@PathParam("nedId") int nedId,
-                         @PathParam("id") int id, IndividualName entity) {
+                         @PathParam("id") int id, IndividualProfile entity) {
 
     return updateEntity(nedId, id, entity);
   }
@@ -104,7 +104,7 @@ public class IndividualsResource extends BaseResource {
   @Path("/{nedId}/names/{id}")
   @ApiOperation(value = "Delete a name")
   public Response deleteName(@PathParam("nedId") int nedId, @PathParam("id") int id) {
-    return deleteEntity(nedId, id, IndividualName.class);
+    return deleteEntity(nedId, id, IndividualProfile.class);
   }
 
   /* ----------------------------------------------------------------------- */

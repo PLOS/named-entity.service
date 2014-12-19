@@ -29,9 +29,9 @@ public class Tables {
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Namedentityidentifiers NAMEDENTITYIDENTIFIERS = org.plos.namedentity.persist.db.namedentities.tables.Namedentityidentifiers.NAMEDENTITYIDENTIFIERS;
 
 	/**
-	 * The table NAMEDENTITIES.INDIVIDUALNAMES
+	 * The table NAMEDENTITIES.INDIVIDUALPROFILES
 	 */
-	public static final org.plos.namedentity.persist.db.namedentities.tables.Individualnames INDIVIDUALNAMES = org.plos.namedentity.persist.db.namedentities.tables.Individualnames.INDIVIDUALNAMES;
+	public static final org.plos.namedentity.persist.db.namedentities.tables.Individualprofiles INDIVIDUALPROFILES = org.plos.namedentity.persist.db.namedentities.tables.Individualprofiles.INDIVIDUALPROFILES;
 
 	/**
 	 * The table NAMEDENTITIES.ORGANIZATIONS

@@ -352,37 +352,38 @@ public class NamedEntityDBServiceTest {
     Integer langTypeId       = nedDBSvc.findTypeValue(langTypeClassId, "Italian")      ; assertNotNull(langTypeClassId)        ;
     Integer commMethodTypeId = nedDBSvc.findTypeValue(commMethodsTypeClassId, "Email") ; assertNotNull(commMethodsTypeClassId) ;
 
-    IndividualName individualName = new IndividualName();
-    individualName.setNedid(nedId);
-    individualName.setFirstname("firstname");
-    individualName.setMiddlename("middlename");
-    individualName.setLastname("lastname");
-    individualName.setDisplayname("displayname");
-    individualName.setNameprefixtypeid(prefixTypeId);
-    individualName.setNamesuffixtypeid(suffixTypeId);
-    individualName.setSourcetypeid(78);
+    IndividualProfile individualProfile = new IndividualProfile();
+    individualProfile.setNedid(nedId);
+    individualProfile.setFirstname("firstname");
+    individualProfile.setMiddlename("middlename");
+    individualProfile.setLastname("lastname");
+    individualProfile.setDisplayname("displayname");
+    individualProfile.setBiography("bio");
+    individualProfile.setNameprefixtypeid(prefixTypeId);
+    individualProfile.setNamesuffixtypeid(suffixTypeId);
+    individualProfile.setSourcetypeid(78);
 
-    Integer individualId = nedDBSvc.create(individualName);
+    Integer individualId = nedDBSvc.create(individualProfile);
     assertNotNull(individualId);
 
     // UPDATE
     
-    IndividualName savedIndividualName = nedDBSvc.findById(individualId, IndividualName.class);
-    savedIndividualName.setMiddlename("chuck");
-    assertTrue( nedDBSvc.update(savedIndividualName) );
+    IndividualProfile savedIndividualProfile = nedDBSvc.findById(individualId, IndividualProfile.class);
+    savedIndividualProfile.setMiddlename("chuck");
+    assertTrue( nedDBSvc.update(savedIndividualProfile) );
 
     // Get another instance of same individual record
-    IndividualName savedIndividualNameAfterUpdate = nedDBSvc.findById(individualId, IndividualName.class);
-    assertEquals(savedIndividualName, savedIndividualNameAfterUpdate);
+    IndividualProfile savedIndividualProfileAfterUpdate = nedDBSvc.findById(individualId, IndividualProfile.class);
+    assertEquals(savedIndividualProfile, savedIndividualProfileAfterUpdate);
 
     // FIND ALL Email Records 
 
-    List<IndividualName> allIndividualsInDB = nedDBSvc.findAll(IndividualName.class, 0, Integer.MAX_VALUE);
+    List<IndividualProfile> allIndividualsInDB = nedDBSvc.findAll(IndividualProfile.class, 0, Integer.MAX_VALUE);
     assertTrue(allIndividualsInDB.size() > 0);
 
     // FIND BY JOIN-QUERY 
 
-    List<IndividualName> entities = nedDBSvc.findResolvedEntities(nedId, IndividualName.class);
+    List<IndividualProfile> entities = nedDBSvc.findResolvedEntities(nedId, IndividualProfile.class);
     assertNotNull( entities );
     assertEquals("firstname", entities.get(0).getFirstname());
     assertEquals("Mr.", entities.get(0).getNameprefix());
@@ -391,10 +392,10 @@ public class NamedEntityDBServiceTest {
 
     // DELETE
 
-    IndividualName individualNameToDelete = new IndividualName();
-    individualNameToDelete.setId(individualId);
+    IndividualProfile individualProfileToDelete = new IndividualProfile();
+    individualProfileToDelete.setId(individualId);
 
-    assertTrue( nedDBSvc.delete(individualNameToDelete) );
+    assertTrue( nedDBSvc.delete(individualProfileToDelete) );
   }
 
   @Test
@@ -656,7 +657,7 @@ public class NamedEntityDBServiceTest {
     // FIND Individuals with an ORCID id. There should be none. 
 
     try {
-      nedDBSvc.findResolvedEntityByUid("ORCID", ORCID_ID, IndividualName.class);
+      nedDBSvc.findResolvedEntityByUid("ORCID", ORCID_ID, IndividualProfile.class);
     } catch (EntityNotFoundException expected) {
     }
 
@@ -667,15 +668,15 @@ public class NamedEntityDBServiceTest {
 
     Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
-    IndividualName individualName = new IndividualName();
-    individualName.setNedid(nedId);
-    individualName.setFirstname("firstname");
-    individualName.setMiddlename("middlename");
-    individualName.setLastname("lastname");
-    individualName.setDisplayname("displayname");
-    individualName.setSourcetypeid(78);
+    IndividualProfile individualProfile = new IndividualProfile();
+    individualProfile.setNedid(nedId);
+    individualProfile.setFirstname("firstname");
+    individualProfile.setMiddlename("middlename");
+    individualProfile.setLastname("lastname");
+    individualProfile.setDisplayname("displayname");
+    individualProfile.setSourcetypeid(78);
 
-    assertNotNull(nedDBSvc.create(individualName));
+    assertNotNull(nedDBSvc.create(individualProfile));
 
     Uniqueidentifier uidEntity1 = new Uniqueidentifier();
     uidEntity1.setNedid(nedId);
@@ -690,7 +691,7 @@ public class NamedEntityDBServiceTest {
     assertNotNull(uidId1);
 
     // FIND By UID (ORCID) #2
-    assertNotNull(nedDBSvc.findResolvedEntityByUid("ORCID", ORCID_ID, IndividualName.class));
+    assertNotNull(nedDBSvc.findResolvedEntityByUid("ORCID", ORCID_ID, IndividualProfile.class));
 
     // UPDATE
 

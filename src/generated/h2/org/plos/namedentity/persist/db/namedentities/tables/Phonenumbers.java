@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Phonenumbers extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord> {
 
-	private static final long serialVersionUID = -650737664;
+	private static final long serialVersionUID = -11337411;
 
 	/**
 	 * The singleton instance of <code>NAMEDENTITIES.PHONENUMBERS</code>
@@ -101,7 +101,7 @@ public class Phonenumbers extends org.jooq.impl.TableImpl<org.plos.namedentity.p
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord> getPrimaryKey() {
-		return org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8;
+		return org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8A;
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class Phonenumbers extends org.jooq.impl.TableImpl<org.plos.namedentity.p
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8A);
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class Phonenumbers extends org.jooq.impl.TableImpl<org.plos.namedentity.p
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8A, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8A9, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8A98E, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8A98);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8A9, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8A98, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8A98E1, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8A98E);
 	}
 
 	/**

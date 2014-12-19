@@ -42,8 +42,8 @@ CREATE TABLE IF NOT EXISTS namedEntities.namedEntityIdentifiers (
     FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
-DROP TABLE IF EXISTS namedEntities.individualNames;
-CREATE TABLE IF NOT EXISTS namedEntities.individualNames (
+DROP TABLE IF EXISTS namedEntities.individualProfiles;
+CREATE TABLE IF NOT EXISTS namedEntities.individualProfiles (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
     firstName TEXT NULL,
@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS namedEntities.individualNames (
     namePrefixTypeId INT NULL,
     nameSuffixTypeId INT NULL,
     displayName TEXT NULL,
+    biography TEXT NULL,
     sourceTypeId INT NOT NULL,
     isActive TINYINT(1) NOT NULL,
     PRIMARY KEY (id),
@@ -76,7 +77,7 @@ CREATE TABLE IF NOT EXISTS namedEntities.organizations (
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id),
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
-    FOREIGN KEY (mainContactId) REFERENCES individualNames(nedId)
+    FOREIGN KEY (mainContactId) REFERENCES individualProfiles(nedId)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.addresses;

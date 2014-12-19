@@ -22,7 +22,7 @@ import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
-import org.plos.namedentity.api.entity.IndividualName;
+import org.plos.namedentity.api.entity.IndividualProfile;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
@@ -59,18 +59,18 @@ public class CrudServiceTest {
     Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
     // CREATE
-    IndividualName individualName = new IndividualName();
-    individualName.setNedid(nedId);
-    individualName.setFirstname("firstname");
-    individualName.setLastname("lastname");
-    individualName.setDisplayname("displayname");
-    individualName.setSource("Editorial Manager");
+    IndividualProfile individualProfile = new IndividualProfile();
+    individualProfile.setNedid(nedId);
+    individualProfile.setFirstname("firstname");
+    individualProfile.setLastname("lastname");
+    individualProfile.setDisplayname("displayname");
+    individualProfile.setSource("Editorial Manager");
 
-    Integer pkId = crudService.create(namedEntityService.resolveValuesToIds(individualName));
+    Integer pkId = crudService.create(namedEntityService.resolveValuesToIds(individualProfile));
     assertNotNull(pkId);
 
     // READ
-    IndividualName readEntity = crudService.findById(pkId, IndividualName.class);
+    IndividualProfile readEntity = crudService.findById(pkId, IndividualProfile.class);
     assertNotNull(readEntity);
     assertEquals("firstname", readEntity.getFirstname());
     assertEquals(null, readEntity.getMiddlename());
@@ -79,7 +79,7 @@ public class CrudServiceTest {
     // UPDATE
     readEntity.setMiddlename("somemiddlename");
     assertTrue(crudService.update(readEntity));
-    IndividualName readEntity2 = crudService.findById(pkId, IndividualName.class);
+    IndividualProfile readEntity2 = crudService.findById(pkId, IndividualProfile.class);
 //    assertEquals(null, readEntity.getFirstname());  // TODO: since PUT is a full replace
     assertEquals("somemiddlename", readEntity.getMiddlename());
 
@@ -92,15 +92,15 @@ public class CrudServiceTest {
 
     Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
-    IndividualName individualName = new IndividualName();
-    individualName.setNedid(nedId);
-    individualName.setFirstname("firstname");
-    individualName.setLastname("lastname");
-    individualName.setDisplayname("displayname");
-    individualName.setSource("Editorial Manager");
-    namedEntityService.resolveValuesToIds(individualName);
+    IndividualProfile individualProfile = new IndividualProfile();
+    individualProfile.setNedid(nedId);
+    individualProfile.setFirstname("firstname");
+    individualProfile.setLastname("lastname");
+    individualProfile.setDisplayname("displayname");
+    individualProfile.setSource("Editorial Manager");
+    namedEntityService.resolveValuesToIds(individualProfile);
 
-    crudService.create(individualName);
+    crudService.create(individualProfile);
 
     // Create
     Email email = new Email();
@@ -134,14 +134,14 @@ public class CrudServiceTest {
 
     Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
-    IndividualName individualName = new IndividualName();
-    individualName.setNedid(nedId);
-    individualName.setFirstname("firstname");
-    individualName.setLastname("lastname");
-    individualName.setDisplayname("displayname");
-    individualName.setSource("Editorial Manager");
-    namedEntityService.resolveValuesToIds(individualName);
-    crudService.create(individualName);
+    IndividualProfile individualProfile = new IndividualProfile();
+    individualProfile.setNedid(nedId);
+    individualProfile.setFirstname("firstname");
+    individualProfile.setLastname("lastname");
+    individualProfile.setDisplayname("displayname");
+    individualProfile.setSource("Editorial Manager");
+    namedEntityService.resolveValuesToIds(individualProfile);
+    crudService.create(individualProfile);
 
     // Create
     Email email = new Email();
