@@ -64,6 +64,11 @@ container-start)
 
 		$CURL_CMD
 		CURL_RETURN_CODE=$?
+        if [ $CURL_RETURN_CODE -eq 6 ] ; then
+            echo -e "\nERROR: unable to resolve NED Service host. Exiting."
+            echo -e "Possible Reason: NED Service war on host hasn't been built.\n"
+            exit 1
+        fi
 
 		while [ $CURL_RETURN_CODE -ne 0 ] ; do
 			echo "Service not ready. Waiting..."
