@@ -6,6 +6,6 @@ neddb:
 nedsvc:
     build: nedsvc
     volumes:
-        - ../target:/build 
+        - ../target:/build
     links:
         - neddb:neddb
