@@ -1,11 +1,12 @@
 {
-  "individuals" : [
+  "individualProfiles" : [
     {
       "firstname" : "Jane",
       "middlename" : "Q",
       "namesuffix" : "III",
       "lastname" : "Doe",
       "nameprefix" : "Mrs.",
+      "biography" : "bio",
       "source": "Editorial Manager"
     }
   ],

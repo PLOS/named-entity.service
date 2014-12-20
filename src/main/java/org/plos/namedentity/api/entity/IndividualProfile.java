@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement
-public class IndividualName extends Entity {
+public class IndividualProfile extends Entity {
 
   private String  firstname;
   private String  middlename;
@@ -36,6 +36,8 @@ public class IndividualName extends Entity {
   private Integer namesuffixtypeid;
 
   private String displayname;
+
+  private String biography;
 
   private Boolean isactive = true;
 
@@ -60,20 +62,21 @@ public class IndividualName extends Entity {
       return false;
     }
 
-    IndividualName entity = (IndividualName) o;
+    IndividualProfile entity = (IndividualProfile) o;
     return Objects.equals(this.firstname, entity.firstname)
         && Objects.equals(this.middlename, entity.middlename)
         && Objects.equals(this.lastname, entity.lastname)
         && Objects.equals(this.nickname, entity.nickname)
         && Objects.equals(this.nameprefix, entity.nameprefix)
         && Objects.equals(this.namesuffix, entity.namesuffix)
-        && Objects.equals(this.displayname, entity.displayname);
+        && Objects.equals(this.displayname, entity.displayname)
+        && Objects.equals(this.biography, entity.biography);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(firstname, middlename, lastname, nickname,
-        nameprefix, namesuffix, displayname);
+        nameprefix, namesuffix, displayname, biography);
   }
 
   public Boolean getIsactive() {
@@ -156,4 +159,11 @@ public class IndividualName extends Entity {
     this.displayname = displayname;
   }
 
+  public String getBiography() {
+    return biography;
+  }
+
+  public void setBiography(String biography) {
+    this.biography = biography;
+  }
 }
