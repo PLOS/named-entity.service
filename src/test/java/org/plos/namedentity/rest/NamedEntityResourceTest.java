@@ -507,14 +507,10 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     List<Uniqueidentifier> uids = unmarshalEntities(jsonPayload, Uniqueidentifier.class,
         jsonUnmarshaller(Uniqueidentifier.class));
-    assertEquals(2, uids.size());
-
-    for (Uniqueidentifier uid : uids) {
-      assertEquals("ORCID", uid.getType());
-    }
+    assertEquals(3, uids.size());
 
     /* ------------------------------------------------------------------ */
-    /*  FIND INDIVIDUALS BY EXTERNAL REFERENCE                            */
+    /*  FIND INDIVIDUAL BY ORCID                                          */
     /* ------------------------------------------------------------------ */
 
     response = target(INDIVIDUAL_URI + "/ORCID/0000-0002-9430-3191")
@@ -524,6 +520,19 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     jsonPayload = response.readEntity(String.class);
 
     IndividualComposite individualComposite = unmarshalEntity(jsonPayload, IndividualComposite.class, jsonUnmarshaller(IndividualComposite.class));
+    assertNotNull(individualComposite);
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND INDIVIDUAL BY AMBRA userProfileID                            */
+    /* ------------------------------------------------------------------ */
+
+    response = target(INDIVIDUAL_URI + "/Ambra/123456")
+        .request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(200, response.getStatus());
+    jsonPayload = response.readEntity(String.class);
+
+    individualComposite = unmarshalEntity(jsonPayload, IndividualComposite.class, jsonUnmarshaller(IndividualComposite.class));
     assertNotNull(individualComposite);
   }
 

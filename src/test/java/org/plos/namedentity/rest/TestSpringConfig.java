@@ -271,14 +271,22 @@ public class TestSpringConfig {
   }
 
   static private List<Uniqueidentifier> newUidEntities() {
+    String[] uidValues = new String[]{
+      "0000-0002-9430-3191",
+      "0000-0002-9430-3192",
+      "12345"
+    };
+
+    String[] uidTypes = new String[]{ "ORCID","ORCID","Ambra" };
+
     List<Uniqueidentifier> uids = new ArrayList<>();
-    for (int i = 1; i <=2; i++) {
+    for (int i = 0; i < uidValues.length; i++) {
 
       Uniqueidentifier uid = new Uniqueidentifier();
-      uid.setId(i);
+      uid.setId(i+1);
       uid.setNedid(1);
-      uid.setUniqueidentifier("0000-0002-9430-319"+i);
-      uid.setType("ORCID");
+      uid.setUniqueidentifier(uidValues[i]);
+      uid.setType(uidTypes[i]);
 
       uids.add(uid);
     }
