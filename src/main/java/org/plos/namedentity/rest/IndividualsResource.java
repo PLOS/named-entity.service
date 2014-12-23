@@ -52,6 +52,7 @@ public class IndividualsResource extends BaseResource {
   @ApiOperation(value = "Read individual by Ned ID", response = IndividualComposite.class)
   public Response readIndividual(@PathParam("nedId") int nedId) {
     try {
+      namedEntityService.checkNedIdForType(nedId, "Individual");
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findIndividualComposite(nedId)).build();
     } catch (EntityNotFoundException e) {
