@@ -143,7 +143,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   @Test
   public void testReadIndividualCompositeByUid() throws Exception {
 
-    Response response = target(INDIVIDUAL_URI + "/Editorial Manager/1").request(MediaType.APPLICATION_JSON_TYPE).get();
+    Response response = target(INDIVIDUAL_URI + "/Editorial Manager/PONE-579386").request(MediaType.APPLICATION_JSON_TYPE).get();
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
     String jsonPayload = response.readEntity(String.class);
@@ -507,33 +507,42 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     List<Uniqueidentifier> uids = unmarshalEntities(jsonPayload, Uniqueidentifier.class,
         jsonUnmarshaller(Uniqueidentifier.class));
-    assertEquals(3, uids.size());
+    assertEquals(5, uids.size());
 
     /* ------------------------------------------------------------------ */
-    /*  FIND INDIVIDUAL BY ORCID                                          */
+    /*  FIND INDIVIDUAL BY EXTERNAL UNIQUE IDENTIFIER (UID)               */
     /* ------------------------------------------------------------------ */
 
-    response = target(INDIVIDUAL_URI + "/ORCID/0000-0002-9430-3191")
+    String[] uidTypes = new String[] {
+      "ORCID", "Editorial Manager", "CAS", "Salesforce", "Ambra"
+    };
+
+    String[] uidValues = new String[] {
+      "0000-0002-9430-319X",
+      "PONE-579386",
+      "3BBFE34C8EEF46FEA1E0DA3339DF1EC9",
+      "001U0000008Qlfj",
+      "421649"
+    };
+
+    for (int i = 0; i < uidTypes.length; i++) {
+      response = target(INDIVIDUAL_URI + "/"+uidTypes[i]+"/"+uidValues[i])
+          .request(MediaType.APPLICATION_JSON_TYPE).get();
+
+      assertEquals(200, response.getStatus());
+      jsonPayload = response.readEntity(String.class);
+
+      IndividualComposite individualComposite = unmarshalEntity(jsonPayload, 
+        IndividualComposite.class, jsonUnmarshaller(IndividualComposite.class));
+
+      assertNotNull(individualComposite);
+    }
+
+    // invalid uid lookup
+    response = target(INDIVIDUAL_URI + "/BOGUS_TYPE/BOGUS_VALUE")
         .request(MediaType.APPLICATION_JSON_TYPE).get();
 
-    assertEquals(200, response.getStatus());
-    jsonPayload = response.readEntity(String.class);
-
-    IndividualComposite individualComposite = unmarshalEntity(jsonPayload, IndividualComposite.class, jsonUnmarshaller(IndividualComposite.class));
-    assertNotNull(individualComposite);
-
-    /* ------------------------------------------------------------------ */
-    /*  FIND INDIVIDUAL BY AMBRA userProfileID                            */
-    /* ------------------------------------------------------------------ */
-
-    response = target(INDIVIDUAL_URI + "/Ambra/123456")
-        .request(MediaType.APPLICATION_JSON_TYPE).get();
-
-    assertEquals(200, response.getStatus());
-    jsonPayload = response.readEntity(String.class);
-
-    individualComposite = unmarshalEntity(jsonPayload, IndividualComposite.class, jsonUnmarshaller(IndividualComposite.class));
-    assertNotNull(individualComposite);
+    assertEquals(404, response.getStatus());
   }
 
   @Test
