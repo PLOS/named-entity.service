@@ -386,7 +386,7 @@ public class TestSpringConfig {
 
       List<Uniqueidentifier> uids = (List<Uniqueidentifier>) unmarshaller.unmarshal(arraySource, Uniqueidentifier.class).getValue();
 
-      // finding entity by uid is a bit fragile. basically, the last match wins.
+      // finding mock entity by uid is a bit fragile. basically, the last match wins.
       // we throw an exception unless are able to match a type and value read in
       // from the json file.
 

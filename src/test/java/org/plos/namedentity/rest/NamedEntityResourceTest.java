@@ -510,7 +510,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(5, uids.size());
 
     /* ------------------------------------------------------------------ */
-    /*  FIND INDIVIDUAL BY EXTERNAL UNIQUE IDENTIFIER (UID)               */
+    /*  FIND INDIVIDUAL BY EXTERNAL REFERENCE                             */
     /* ------------------------------------------------------------------ */
 
     String[] uidTypes = new String[] {
