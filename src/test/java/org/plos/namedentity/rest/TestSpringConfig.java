@@ -104,9 +104,6 @@ public class TestSpringConfig {
 
     doThrow(new EntityNotFoundException("expected")).when(mockNamedEntityService).checkNedIdForType(eq(2), anyString());
 
-    when(mockNamedEntityService.findResolvedEntityByUid(anyString(), anyString(), eq(IndividualProfile.class)))
-      .thenReturn( newIndividualEntity() );
-
     when(mockNamedEntityService.findResolvedEntities(eq(individualProfileEntity.getNedid()), eq(Email.class)))
       .thenReturn(newEmailEntitiesForIndividual());
 
@@ -119,12 +116,10 @@ public class TestSpringConfig {
     when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(Phonenumber.class)))
       .thenReturn( newPhonenumberEntities() );
 
-    when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(Uniqueidentifier.class)))
-      .thenReturn( newUidEntities() );
-
     mockNamedEntityServiceForEmails(mockNamedEntityService);
     mockNamedEntityServiceForAddresses(mockNamedEntityService);
     mockNamedEntityServiceForRoles(mockNamedEntityService);
+    mockNamedEntityServiceForUniqueIdentifiers(mockNamedEntityService);
 
     return mockNamedEntityService;
   }
@@ -270,21 +265,6 @@ public class TestSpringConfig {
     return individualProfileEntities;
   }
 
-  static private List<Uniqueidentifier> newUidEntities() {
-    List<Uniqueidentifier> uids = new ArrayList<>();
-    for (int i = 1; i <=2; i++) {
-
-      Uniqueidentifier uid = new Uniqueidentifier();
-      uid.setId(i);
-      uid.setNedid(1);
-      uid.setUniqueidentifier("0000-0002-9430-319"+i);
-      uid.setType("ORCID");
-
-      uids.add(uid);
-    }
-    return uids;
-  }
-
   static private void mockCrudForEmails(CrudService mockCrudService) {
     //when(mockCrudService.create(isA(EmailEntity.class)))
         //.thenAnswer(new Answer<EmailEntity>() {
@@ -387,6 +367,53 @@ public class TestSpringConfig {
     catch (IOException e) {
       throw new RuntimeException(String.format(
         "Problem reading role json file. Reason: %s", e.getMessage()));
+    }
+  }
+
+  static private void mockNamedEntityServiceForUniqueIdentifiers(NamedEntityService mockNamedEntityService) {
+    try {
+      String uidsJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "uids.json")));
+
+      JAXBContext jc = jsonJaxbContext(Uniqueidentifier.class);
+      Unmarshaller unmarshaller = jc.createUnmarshaller();
+
+      // parse json
+      JsonReader jsonReader = Json.createReader(new StringReader(uidsJson));
+
+      // unmarshal root level json array
+      JsonArray uidsArray = jsonReader.readArray();
+      JsonStructureSource arraySource = new JsonStructureSource(uidsArray);
+
+      List<Uniqueidentifier> uids = (List<Uniqueidentifier>) unmarshaller.unmarshal(arraySource, Uniqueidentifier.class).getValue();
+
+      // finding mock entity by uid is a bit fragile. basically, the last match wins.
+      // we throw an exception unless are able to match a type and value read in
+      // from the json file.
+
+      when(mockNamedEntityService.findResolvedEntityByUid(anyString(), anyString(), eq(IndividualProfile.class)))
+        .thenThrow(new EntityNotFoundException(""));
+
+      for (int i = 0; i < uids.size(); i++) {
+        Uniqueidentifier uid = uids.get(i);
+        uid.setId(i+1);   // db assigned primary key (1-based)
+
+        when(mockNamedEntityService.findResolvedEntityByUid(eq(uid.getType()), eq(uid.getUniqueidentifier()), eq(IndividualProfile.class)))
+          .thenReturn( newIndividualEntity() );
+      }
+
+      when(mockNamedEntityService.findResolvedEntityByKey(eq(uids.get(0).getId()), eq(Uniqueidentifier.class)))
+        .thenReturn( uids.get(0) );
+
+      when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(Uniqueidentifier.class)))
+        .thenReturn( uids );
+
+    }
+    catch (JAXBException je) {
+      throw new RuntimeException(je);
+    }
+    catch (IOException e) {
+      throw new RuntimeException(String.format(
+        "Problem reading unique identifiers json file. Reason: %s", e.getMessage()));
     }
   }
 

@@ -632,6 +632,7 @@ INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@t
 INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'Editorial Manager','EM', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'CAS','CAS', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'Salesforce','SF', CURRENT_TIMESTAMP);
+INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'Ambra','AMB', CURRENT_TIMESTAMP);
 
 /* State and Province Codes */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('State and Province Codes','CA, ONT, etc');
