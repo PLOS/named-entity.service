@@ -253,7 +253,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     String cname = clazz.getCanonicalName();
 
     if (cname.equals(IndividualProfile.class.getCanonicalName()))
-      return (List<T>)findIndividualsByNedId(nedId);
+      return (List<T>) findProfilesByNedId(nedId);
     if (cname.equals(Address.class.getCanonicalName()))
       return (List<T>)findAddressesByNedId(nedId);
     if (cname.equals(Email.class.getCanonicalName()))
@@ -436,7 +436,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   }
 
 
-  private List<IndividualProfile> findIndividualsByNedId(Integer nedId) {
+  private List<IndividualProfile> findProfilesByNedId(Integer nedId) {
     Individualprofiles i   = INDIVIDUALPROFILES.as("i");
     return select(i).where(i.NEDID.equal(nedId)).fetch().into(IndividualProfile.class);
   }

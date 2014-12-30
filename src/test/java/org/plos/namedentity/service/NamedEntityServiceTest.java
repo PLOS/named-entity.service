@@ -316,6 +316,47 @@ public class NamedEntityServiceTest {
   }
 
   @Test
+  public void testProfileEntityCrud() {
+
+    IndividualProfile individualProfile = new IndividualProfile();
+    individualProfile.setFirstname("");
+    individualProfile.setLastname("lastname");
+    individualProfile.setDisplayname("displayname");
+    individualProfile.setNameprefix("Mr.");
+    individualProfile.setNamesuffix("III");
+    individualProfile.setSource("Editorial Manager");
+    individualProfile.setNedid(1);
+
+    try {
+      crudService.create(namedEntityService.resolveValuesToIds(individualProfile));
+      fail();
+    }
+    catch (NedValidationException expected) {
+      System.out.println(expected.getMessage());
+      // first name too short
+    }
+
+    individualProfile.setFirstname("firstname");
+
+    Integer profileId = crudService.create( namedEntityService.resolveValuesToIds(individualProfile) );
+    assertNotNull( profileId );
+
+    IndividualProfile savedEntity = namedEntityService.findResolvedEntityByKey(profileId, IndividualProfile.class);
+    assertNotNull( savedEntity.getFirstname() );
+
+    // UPDATE
+
+    individualProfile.setId(profileId);
+    individualProfile.setFirstname("firstname2");
+
+    assertTrue(crudService.update(namedEntityService.resolveValuesToIds(individualProfile)));
+
+    // DELETE
+
+    assertTrue( crudService.delete(individualProfile) );
+  }
+
+  @Test
   public void testEmailEntityCrud() {
 
     // CREATE email entity. we don't expect the email type to persist.

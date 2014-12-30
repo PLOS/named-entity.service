@@ -41,7 +41,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   public <T extends Entity> T resolveValuesToIds(T t) {
 
     if (t instanceof IndividualProfile)
-      resolveIndividual((IndividualProfile) t);
+      resolveProfile((IndividualProfile) t);
     else if (t instanceof Address)
       resolveAddress((Address) t);
     else if (t instanceof Phonenumber)
@@ -62,7 +62,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     return t;
   }
 
-  private IndividualProfile resolveIndividual(IndividualProfile entity) {
+  private IndividualProfile resolveProfile(IndividualProfile entity) {
 
     if (entity.getSource() != null)
       entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));

@@ -82,30 +82,47 @@ public class IndividualsResource extends BaseResource {
   }
 
   /* ----------------------------------------------------------------------- */
-  /*  NAME CRUD                                                              */
+  /*  PROFILE CRUD                                                              */
   /* ----------------------------------------------------------------------- */
 
   @POST
-  @Path("/{nedId}/names")
-  @ApiOperation(value = "Add name", response = IndividualComposite.class)
-  public Response addName(@PathParam("nedId") int nedId, IndividualProfile entity) {
+  @Path("/{nedId}/individualprofiles")
+  @ApiOperation(value = "Add profile", response = IndividualProfile.class)
+  public Response addProfile(@PathParam("nedId") int nedId, IndividualProfile entity) {
     return createEntity(nedId, entity);
   }
 
   @POST
-  @Path("/{nedId}/names/{id}")
-  @ApiOperation(value = "Update a name", response = IndividualProfile.class)
-  public Response updateName(@PathParam("nedId") int nedId,
-                         @PathParam("id") int id, IndividualProfile entity) {
+  @Path("/{nedId}/individualprofiles/{profileId}")
+  @ApiOperation(value = "Update a profile", response = IndividualProfile.class)
+  public Response updateProfile(@PathParam("nedId") int nedId,
+                                @PathParam("profileId") int profileId,
+                                IndividualProfile entity) {
 
-    return updateEntity(nedId, id, entity);
+    return updateEntity(nedId, profileId, entity);
   }
 
   @DELETE
-  @Path("/{nedId}/names/{id}")
-  @ApiOperation(value = "Delete a name")
-  public Response deleteName(@PathParam("nedId") int nedId, @PathParam("id") int id) {
-    return deleteEntity(nedId, id, IndividualProfile.class);
+  @Path("/{nedId}/individualprofiles/{profileId}")
+  @ApiOperation(value = "Delete a profile")
+  public Response deleteProfile(@PathParam("nedId") int nedId,
+                                @PathParam("profileId") int profileId) {
+    return deleteEntity(nedId, profileId, IndividualProfile.class);
+  }
+
+  @GET
+  @Path("/{nedId}/individualprofiles/{profileId}")
+  @ApiOperation(value = "Read profile", response = IndividualProfile.class)
+  public Response getProfile(@PathParam("nedId") int nedId,
+                             @PathParam("profileId") int profileId) {
+    return getEntity(nedId, profileId, IndividualProfile.class);
+  }
+
+  @GET
+  @Path("/{nedId}/individualprofiles")
+  @ApiOperation(value = "List profiles", response = IndividualProfile.class)
+  public Response getProfiless(@PathParam("nedId") int nedId) {
+    return getEntities(nedId, IndividualProfile.class);
   }
 
   /* ----------------------------------------------------------------------- */
