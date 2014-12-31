@@ -22,7 +22,7 @@ import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
-import org.plos.namedentity.api.entity.IndividualProfile;
+import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
@@ -59,7 +59,7 @@ public class CrudServiceTest {
     Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
     // CREATE
-    IndividualProfile individualProfile = new IndividualProfile();
+    Individualprofile individualProfile = new Individualprofile();
     individualProfile.setNedid(nedId);
     individualProfile.setFirstname("firstname");
     individualProfile.setLastname("lastname");
@@ -70,7 +70,7 @@ public class CrudServiceTest {
     assertNotNull(pkId);
 
     // READ
-    IndividualProfile readEntity = crudService.findById(pkId, IndividualProfile.class);
+    Individualprofile readEntity = crudService.findById(pkId, Individualprofile.class);
     assertNotNull(readEntity);
     assertEquals("firstname", readEntity.getFirstname());
     assertEquals(null, readEntity.getMiddlename());
@@ -79,7 +79,7 @@ public class CrudServiceTest {
     // UPDATE
     readEntity.setMiddlename("somemiddlename");
     assertTrue(crudService.update(readEntity));
-    IndividualProfile readEntity2 = crudService.findById(pkId, IndividualProfile.class);
+    Individualprofile readEntity2 = crudService.findById(pkId, Individualprofile.class);
 //    assertEquals(null, readEntity.getFirstname());  // TODO: since PUT is a full replace
     assertEquals("somemiddlename", readEntity.getMiddlename());
 
@@ -92,7 +92,7 @@ public class CrudServiceTest {
 
     Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
-    IndividualProfile individualProfile = new IndividualProfile();
+    Individualprofile individualProfile = new Individualprofile();
     individualProfile.setNedid(nedId);
     individualProfile.setFirstname("firstname");
     individualProfile.setLastname("lastname");
@@ -134,7 +134,7 @@ public class CrudServiceTest {
 
     Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
-    IndividualProfile individualProfile = new IndividualProfile();
+    Individualprofile individualProfile = new Individualprofile();
     individualProfile.setNedid(nedId);
     individualProfile.setFirstname("firstname");
     individualProfile.setLastname("lastname");

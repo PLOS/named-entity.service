@@ -8,7 +8,7 @@ import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Email;
-import org.plos.namedentity.api.entity.IndividualProfile;
+import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
@@ -69,8 +69,8 @@ public class IndividualsResource extends BaseResource {
                                      @PathParam("uidValue") String uidValue) {
     try {
 
-      IndividualProfile individualProfile = namedEntityService.findResolvedEntityByUid(
-          uidType, uidValue, IndividualProfile.class);
+      Individualprofile individualProfile = namedEntityService.findResolvedEntityByUid(
+          uidType, uidValue, Individualprofile.class);
 
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findIndividualComposite(individualProfile.getNedid())).build();
@@ -87,17 +87,17 @@ public class IndividualsResource extends BaseResource {
 
   @POST
   @Path("/{nedId}/individualprofiles")
-  @ApiOperation(value = "Add profile", response = IndividualProfile.class)
-  public Response addProfile(@PathParam("nedId") int nedId, IndividualProfile entity) {
+  @ApiOperation(value = "Add profile", response = Individualprofile.class)
+  public Response addProfile(@PathParam("nedId") int nedId, Individualprofile entity) {
     return createEntity(nedId, entity);
   }
 
   @POST
   @Path("/{nedId}/individualprofiles/{profileId}")
-  @ApiOperation(value = "Update a profile", response = IndividualProfile.class)
+  @ApiOperation(value = "Update a profile", response = Individualprofile.class)
   public Response updateProfile(@PathParam("nedId") int nedId,
                                 @PathParam("profileId") int profileId,
-                                IndividualProfile entity) {
+                                Individualprofile entity) {
 
     return updateEntity(nedId, profileId, entity);
   }
@@ -107,22 +107,22 @@ public class IndividualsResource extends BaseResource {
   @ApiOperation(value = "Delete a profile")
   public Response deleteProfile(@PathParam("nedId") int nedId,
                                 @PathParam("profileId") int profileId) {
-    return deleteEntity(nedId, profileId, IndividualProfile.class);
+    return deleteEntity(nedId, profileId, Individualprofile.class);
   }
 
   @GET
   @Path("/{nedId}/individualprofiles/{profileId}")
-  @ApiOperation(value = "Read profile", response = IndividualProfile.class)
+  @ApiOperation(value = "Read profile", response = Individualprofile.class)
   public Response getProfile(@PathParam("nedId") int nedId,
                              @PathParam("profileId") int profileId) {
-    return getEntity(nedId, profileId, IndividualProfile.class);
+    return getEntity(nedId, profileId, Individualprofile.class);
   }
 
   @GET
   @Path("/{nedId}/individualprofiles")
-  @ApiOperation(value = "List profiles", response = IndividualProfile.class)
+  @ApiOperation(value = "List profiles", response = Individualprofile.class)
   public Response getProfiless(@PathParam("nedId") int nedId) {
-    return getEntities(nedId, IndividualProfile.class);
+    return getEntities(nedId, Individualprofile.class);
   }
 
   /* ----------------------------------------------------------------------- */

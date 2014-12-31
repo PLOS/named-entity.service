@@ -20,7 +20,7 @@ import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Entity;
-import org.plos.namedentity.api.entity.IndividualProfile;
+import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
@@ -36,7 +36,7 @@ import java.util.Objects;
 @XmlRootElement
 public class IndividualComposite implements Validatable {
 
-  private List<IndividualProfile> individualProfiles;
+  private List<Individualprofile> individualprofiles;
   private List<Role>              roles;
   private List<Address>           addresses;
   private List<Email>             emails;
@@ -48,7 +48,7 @@ public class IndividualComposite implements Validatable {
   public Map<Class, List<? extends Entity>> getAsMap() {
     Map<Class, List<? extends Entity>> map = new HashMap<>();
 
-    map.put(IndividualProfile.class, individualProfiles);
+    map.put(Individualprofile.class, individualprofiles);
     map.put(Role.class, roles);
     map.put(Address.class, addresses);
     map.put(Email.class, emails);
@@ -62,7 +62,7 @@ public class IndividualComposite implements Validatable {
 
   @SuppressWarnings("unchecked")
   public void setFromMap(Map<Class, List<? extends Entity>> map) {
-    individualProfiles = (List<IndividualProfile>) map.get(IndividualProfile.class);
+    individualprofiles = (List<Individualprofile>) map.get(Individualprofile.class);
     roles = (List<Role>) map.get(Role.class);
     addresses = (List<Address>) map.get(Address.class);
     emails = (List<Email>) map.get(Email.class);
@@ -117,17 +117,17 @@ public class IndividualComposite implements Validatable {
   @Override
   public int hashCode() {
     // TODO: pull from getAsMap instead of hardcoding list names
-    return Objects.hash(hashSum(individualProfiles), hashSum(roles), hashSum(addresses),
+    return Objects.hash(hashSum(individualprofiles), hashSum(roles), hashSum(addresses),
         hashSum(emails), hashSum(phonenumbers), hashSum(uniqueidentifiers),
         hashSum(degrees), hashSum(urls));
   }
 
-  public List<IndividualProfile> getIndividualProfiles() {
-    return individualProfiles;
+  public List<Individualprofile> getIndividualprofiles() {
+    return individualprofiles;
   }
 
-  public void setIndividualProfiles(List<IndividualProfile> individualProfiles) {
-    this.individualProfiles = individualProfiles;
+  public void setIndividualprofiles(List<Individualprofile> individualprofiles) {
+    this.individualprofiles = individualprofiles;
   }
 
   public List<Url> getUrls() {

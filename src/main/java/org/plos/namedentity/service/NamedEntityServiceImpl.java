@@ -22,7 +22,7 @@ import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Entity;
-import org.plos.namedentity.api.entity.IndividualProfile;
+import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
@@ -40,8 +40,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   public <T extends Entity> T resolveValuesToIds(T t) {
 
-    if (t instanceof IndividualProfile)
-      resolveProfile((IndividualProfile) t);
+    if (t instanceof Individualprofile)
+      resolveProfile((Individualprofile) t);
     else if (t instanceof Address)
       resolveAddress((Address) t);
     else if (t instanceof Phonenumber)
@@ -62,7 +62,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     return t;
   }
 
-  private IndividualProfile resolveProfile(IndividualProfile entity) {
+  private Individualprofile resolveProfile(Individualprofile entity) {
 
     if (entity.getSource() != null)
       entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));

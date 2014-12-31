@@ -24,7 +24,7 @@ import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
-import org.plos.namedentity.api.entity.IndividualProfile;
+import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Typedescription;
@@ -91,7 +91,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
     IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
 
-    IndividualProfile individualProfile = composite.getIndividualProfiles().get(0);
+    Individualprofile individualProfile = composite.getIndividualprofiles().get(0);
     assertEquals(Integer.valueOf(1), individualProfile.getNedid());
     assertEquals("firstname", individualProfile.getFirstname());
     assertEquals("middlename", individualProfile.getMiddlename());
@@ -131,7 +131,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
     IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
 
-    IndividualProfile individualProfile = composite.getIndividualProfiles().get(0);
+    Individualprofile individualProfile = composite.getIndividualprofiles().get(0);
     assertEquals(Integer.valueOf(1), individualProfile.getNedid());
     assertEquals("firstname", individualProfile.getFirstname());
     assertEquals("middlename", individualProfile.getMiddlename());
@@ -151,7 +151,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
     IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
 
-    IndividualProfile individualProfile = composite.getIndividualProfiles().get(0);
+    Individualprofile individualProfile = composite.getIndividualprofiles().get(0);
     assertEquals(Integer.valueOf(1), individualProfile.getNedid());
     assertEquals("firstname", individualProfile.getFirstname());
     assertEquals("middlename", individualProfile.getMiddlename());

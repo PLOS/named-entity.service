@@ -229,7 +229,7 @@ public class NamedEntityServiceTest {
     try {
       IndividualComposite responseComposite = namedEntityService.createIndividualComposite(composite);
       assertNotNull(responseComposite);
-      assertNotNull(responseComposite.getIndividualProfiles().get(0).getNedid());
+      assertNotNull(responseComposite.getIndividualprofiles().get(0).getNedid());
 
       // make sure foreign keys are resolved for sub entities
       assertNotNull(responseComposite.getEmails().get(0).getId());
@@ -248,7 +248,7 @@ public class NamedEntityServiceTest {
 
     // Test "By NedId" Finders
 
-    List<IndividualProfile> entity = namedEntityService.findResolvedEntities(nedId, IndividualProfile.class);
+    List<Individualprofile> entity = namedEntityService.findResolvedEntities(nedId, Individualprofile.class);
     assertEquals(1, entity.size());
 
     List<Address> addressesEntities = namedEntityService.findResolvedEntities(nedId, Address.class);
@@ -266,7 +266,7 @@ public class NamedEntityServiceTest {
     List<Uniqueidentifier> uidEntities = namedEntityService.findResolvedEntities(nedId, Uniqueidentifier.class);
     assertEquals(1, uidEntities.size());
 
-    IndividualProfile individualProfile = namedEntityService.findResolvedEntityByUid("ORCID", "0000-0001-9430-319X", IndividualProfile.class);
+    Individualprofile individualProfile = namedEntityService.findResolvedEntityByUid("ORCID", "0000-0001-9430-319X", Individualprofile.class);
 
     assertNotNull(individualProfile);
 
@@ -318,7 +318,7 @@ public class NamedEntityServiceTest {
   @Test
   public void testProfileEntityCrud() {
 
-    IndividualProfile individualProfile = new IndividualProfile();
+    Individualprofile individualProfile = new Individualprofile();
     individualProfile.setFirstname("");
     individualProfile.setLastname("lastname");
     individualProfile.setDisplayname("displayname");
@@ -341,7 +341,7 @@ public class NamedEntityServiceTest {
     Integer profileId = crudService.create( namedEntityService.resolveValuesToIds(individualProfile) );
     assertNotNull( profileId );
 
-    IndividualProfile savedEntity = namedEntityService.findResolvedEntityByKey(profileId, IndividualProfile.class);
+    Individualprofile savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
     assertNotNull( savedEntity.getFirstname() );
 
     // UPDATE
@@ -525,7 +525,7 @@ public class NamedEntityServiceTest {
   private IndividualComposite newCompositeIndividualWithRole() {
 
     IndividualComposite composite = new IndividualComposite();
-    IndividualProfile individualProfile = new IndividualProfile();
+    Individualprofile individualProfile = new Individualprofile();
     individualProfile.setFirstname("firstname");
     individualProfile.setLastname("lastname");
     individualProfile.setDisplayname("displayname");
@@ -533,10 +533,10 @@ public class NamedEntityServiceTest {
     individualProfile.setNamesuffix("III");
     individualProfile.setSource("Editorial Manager");
 
-    List<IndividualProfile> individualProfiles = new ArrayList<>();
+    List<Individualprofile> individualProfiles = new ArrayList<>();
     individualProfiles.add(individualProfile);
 
-    composite.setIndividualProfiles(individualProfiles);
+    composite.setIndividualprofiles(individualProfiles);
 
     List<Role> roles = new ArrayList<>();
     Role author = new Role();

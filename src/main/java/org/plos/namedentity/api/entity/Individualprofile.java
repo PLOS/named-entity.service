@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement
-public class IndividualProfile extends Entity {
+public class Individualprofile extends Entity {
 
   private String  firstname;
   private String  middlename;
@@ -62,7 +62,7 @@ public class IndividualProfile extends Entity {
       return false;
     }
 
-    IndividualProfile entity = (IndividualProfile) o;
+    Individualprofile entity = (Individualprofile) o;
     return Objects.equals(this.firstname, entity.firstname)
         && Objects.equals(this.middlename, entity.middlename)
         && Objects.equals(this.lastname, entity.lastname)

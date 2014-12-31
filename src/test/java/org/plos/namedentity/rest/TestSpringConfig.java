@@ -66,13 +66,13 @@ public class TestSpringConfig {
     mockCrudForRoles(mockCrudService);
 
     // INDIVIDUALS
-    IndividualProfile individualProfileEntity = newIndividualEntity();
+    Individualprofile individualProfileEntity = newIndividualEntity();
 
-    when(mockCrudService.create(isA(IndividualProfile.class))).thenReturn( individualProfileEntity.getNedid() );
+    when(mockCrudService.create(isA(Individualprofile.class))).thenReturn( individualProfileEntity.getNedid() );
 
-    when(mockCrudService.findAll(eq(IndividualProfile.class), eq(0), anyInt())).thenReturn( newIndividualEntities() );
+    when(mockCrudService.findAll(eq(Individualprofile.class), eq(0), anyInt())).thenReturn( newIndividualEntities() );
 
-    when(mockCrudService.findById(eq(individualProfileEntity.getNedid()), eq(IndividualProfile.class))).thenReturn(individualProfileEntity);
+    when(mockCrudService.findById(eq(individualProfileEntity.getNedid()), eq(Individualprofile.class))).thenReturn(individualProfileEntity);
 
     return mockCrudService;
   }
@@ -81,7 +81,7 @@ public class TestSpringConfig {
   static public NamedEntityService namedEntityService() {
     NamedEntityService mockNamedEntityService =  Mockito.mock(NamedEntityService.class);
 
-    IndividualProfile individualProfileEntity = newIndividualEntity();
+    Individualprofile individualProfileEntity = newIndividualEntity();
 
     Organization organizationEntity = newOrganizationEntity();
 
@@ -95,9 +95,9 @@ public class TestSpringConfig {
     when(mockNamedEntityService.findIndividualComposite(anyInt()))
         .thenReturn( individualComposite );
 
-    List<IndividualProfile> emptyIndividualProfiles = new ArrayList<>();
+    List<Individualprofile> emptyIndividualProfiles = new ArrayList<>();
 
-    when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(IndividualProfile.class)))
+    when(mockNamedEntityService.findResolvedEntities(anyInt(), eq(Individualprofile.class)))
         .thenReturn(emptyIndividualProfiles);
 
     doNothing().when(mockNamedEntityService).checkNedIdForType(eq(individualProfileEntity.getNedid()), anyString());
@@ -134,8 +134,8 @@ public class TestSpringConfig {
     return new TypeclassesResource();
   }
 
-  static private IndividualProfile newIndividualEntity() {
-    IndividualProfile entity = new IndividualProfile();
+  static private Individualprofile newIndividualEntity() {
+    Individualprofile entity = new Individualprofile();
     entity.setNedid(1);
     entity.setFirstname("firstname");
     entity.setMiddlename("middlename");
@@ -149,7 +149,7 @@ public class TestSpringConfig {
 
     IndividualComposite composite = new IndividualComposite();
 
-    IndividualProfile entity = new IndividualProfile();
+    Individualprofile entity = new Individualprofile();
     entity.setNedid(1);
     entity.setFirstname("firstname");
     entity.setMiddlename("middlename");
@@ -162,10 +162,10 @@ public class TestSpringConfig {
 
     composite.setEmails(new ArrayList<>(Arrays.asList(emailEntity)));
 
-    List<IndividualProfile> individualProfiles = new ArrayList<>();
+    List<Individualprofile> individualProfiles = new ArrayList<>();
     individualProfiles.add(entity);
 
-    composite.setIndividualProfiles(individualProfiles);
+    composite.setIndividualprofiles(individualProfiles);
 
     return composite;
   }
@@ -249,11 +249,11 @@ public class TestSpringConfig {
     return phonenumbers;
   }
 
-  static private List<IndividualProfile> newIndividualEntities() {
-    List<IndividualProfile> individualProfileEntities = new ArrayList<>();
+  static private List<Individualprofile> newIndividualEntities() {
+    List<Individualprofile> individualProfileEntities = new ArrayList<>();
 
     for (int i = 1; i <=3; i++) {
-      IndividualProfile individualProfile = new IndividualProfile();
+      Individualprofile individualProfile = new Individualprofile();
       individualProfile.setNedid(i);
       individualProfile.setFirstname("firstname"+i);
       individualProfile.setMiddlename("middlename"+i);
@@ -390,14 +390,14 @@ public class TestSpringConfig {
       // we throw an exception unless are able to match a type and value read in
       // from the json file.
 
-      when(mockNamedEntityService.findResolvedEntityByUid(anyString(), anyString(), eq(IndividualProfile.class)))
+      when(mockNamedEntityService.findResolvedEntityByUid(anyString(), anyString(), eq(Individualprofile.class)))
         .thenThrow(new EntityNotFoundException(""));
 
       for (int i = 0; i < uids.size(); i++) {
         Uniqueidentifier uid = uids.get(i);
         uid.setId(i+1);   // db assigned primary key (1-based)
 
-        when(mockNamedEntityService.findResolvedEntityByUid(eq(uid.getType()), eq(uid.getUniqueidentifier()), eq(IndividualProfile.class)))
+        when(mockNamedEntityService.findResolvedEntityByUid(eq(uid.getType()), eq(uid.getUniqueidentifier()), eq(Individualprofile.class)))
           .thenReturn( newIndividualEntity() );
       }
 

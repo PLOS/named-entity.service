@@ -221,7 +221,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     String cname = clazz.getCanonicalName();
 
-    if (cname.equals(IndividualProfile.class.getCanonicalName()))
+    if (cname.equals(Individualprofile.class.getCanonicalName()))
       return (T)findIndividualByPrimaryKey(pk);
     if (cname.equals(Email.class.getCanonicalName()))
       return (T)findEmailByPrimaryKey(pk);
@@ -239,7 +239,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   public <T extends Entity> T findResolvedEntityByUid(String srcType, String uid, Class<T> clazz) {
     String cname = clazz.getCanonicalName();
 
-    if (cname.equals(IndividualProfile.class.getCanonicalName()))
+    if (cname.equals(Individualprofile.class.getCanonicalName()))
       return (T)findIndividualByUid(srcType, uid);
     if (cname.equals(Organization.class.getCanonicalName()))
       return (T)findOrganizationByUid(srcType, uid);
@@ -252,7 +252,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     String cname = clazz.getCanonicalName();
 
-    if (cname.equals(IndividualProfile.class.getCanonicalName()))
+    if (cname.equals(Individualprofile.class.getCanonicalName()))
       return (List<T>) findProfilesByNedId(nedId);
     if (cname.equals(Address.class.getCanonicalName()))
       return (List<T>)findAddressesByNedId(nedId);
@@ -406,7 +406,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     return record.into(Organization.class);
   }
 
-  private IndividualProfile findIndividualByUid(String srcType, String uid) {
+  private Individualprofile findIndividualByUid(String srcType, String uid) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
@@ -432,13 +432,13 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     if (record == null)
       throw new EntityNotFoundException("Individual");
 
-    return record.into(IndividualProfile.class);
+    return record.into(Individualprofile.class);
   }
 
 
-  private List<IndividualProfile> findProfilesByNedId(Integer nedId) {
+  private List<Individualprofile> findProfilesByNedId(Integer nedId) {
     Individualprofiles i   = INDIVIDUALPROFILES.as("i");
-    return select(i).where(i.NEDID.equal(nedId)).fetch().into(IndividualProfile.class);
+    return select(i).where(i.NEDID.equal(nedId)).fetch().into(Individualprofile.class);
   }
 
   private List<Address> findAddressesByNedId(Integer nedId) {
@@ -531,7 +531,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     return record.into(Uniqueidentifier.class);
   }
 
-  private IndividualProfile findIndividualByPrimaryKey(Integer individualId) {
+  private Individualprofile findIndividualByPrimaryKey(Integer individualId) {
 
     Individualprofiles i   = INDIVIDUALPROFILES.as("i");
 
@@ -539,7 +539,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     if (record == null) throw new EntityNotFoundException("Individual");
 
-    return record.into(IndividualProfile.class);
+    return record.into(Individualprofile.class);
   }
 
   private Email findEmailByPrimaryKey(Integer emailId) {
@@ -612,7 +612,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     entityTableMap.put(Address.class, new TablePkPair(ADDRESSES, ADDRESSES.ID));
     entityTableMap.put(Email.class, new TablePkPair(EMAILS, EMAILS.ID));
     entityTableMap.put(Globaltype.class, new TablePkPair(GLOBALTYPES, GLOBALTYPES.ID));
-    entityTableMap.put(IndividualProfile.class, new TablePkPair(INDIVIDUALPROFILES, INDIVIDUALPROFILES.ID));
+    entityTableMap.put(Individualprofile.class, new TablePkPair(INDIVIDUALPROFILES, INDIVIDUALPROFILES.ID));
     entityTableMap.put(Journal.class, new TablePkPair(JOURNALS, JOURNALS.ID));
     entityTableMap.put(Phonenumber.class, new TablePkPair(PHONENUMBERS, PHONENUMBERS.ID));
     entityTableMap.put(Role.class, new TablePkPair(ROLES, ROLES.ID));

@@ -205,10 +205,10 @@ public abstract class BaseResource {
           new GenericEntity<List<Uniqueidentifier>>(
             namedEntityService.findResolvedEntities(nedId, Uniqueidentifier.class)
           ){}).build();
-      } else if (cname.equals(IndividualProfile.class.getCanonicalName())) {
+      } else if (cname.equals(Individualprofile.class.getCanonicalName())) {
         return Response.status(Response.Status.OK).entity(
-            new GenericEntity<List<IndividualProfile>>(
-                namedEntityService.findResolvedEntities(nedId, IndividualProfile.class)
+            new GenericEntity<List<Individualprofile>>(
+                namedEntityService.findResolvedEntities(nedId, Individualprofile.class)
             ){}).build();
       }
       throw new UnsupportedOperationException("Unsupported child entity: " + child.getSimpleName());
