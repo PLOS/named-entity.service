@@ -402,7 +402,7 @@ public class CrudServiceTest {
     newAddress.setAddressline3("addressline 3");
     newAddress.setCity("city");
     newAddress.setStatecodetype("CA");
-    newAddress.setCountrycodetype("United States");
+    newAddress.setCountrycodetype("United States of America");
     newAddress.setPostalcode("94401");
     //TODO - main contact not well defined.
     //newAddress.setMaincontactnamedentityid(java.lang.Integer maincontactnamedentityid);

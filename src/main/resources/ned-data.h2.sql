@@ -73,9 +73,9 @@ INSERT INTO namedEntities.globalTypes VALUES (42,14,'Oncology',NULL,'ONC','2014-
 INSERT INTO namedEntities.globalTypes VALUES (43,15,'PLOSOne',NULL,'PL1','2014-03-23 21:33:02','2014-03-23 21:33:02',1,1);
 INSERT INTO namedEntities.globalTypes VALUES (44,15,'PLOS Genetics',NULL,'PLGE','2014-03-23 21:33:25','2014-03-23 21:33:25',1,1);
 INSERT INTO namedEntities.globalTypes VALUES (45,15,'PLOS Biology',NULL,'PLBI','2014-03-23 21:33:51','2014-03-23 21:33:51',1,1);
-INSERT INTO namedEntities.globalTypes VALUES (46,16,'Canada',NULL,'CAN','2014-03-23 21:39:04','2014-03-23 21:39:04',1,1);
-INSERT INTO namedEntities.globalTypes VALUES (47,16,'United States',NULL,'USA','2014-03-23 21:39:49','2014-03-23 21:39:49',1,1);
-INSERT INTO namedEntities.globalTypes VALUES (48,16,'United Kingdom',NULL,'UK','2014-03-23 21:40:27','2014-03-23 21:40:27',1,1);
+INSERT INTO namedEntities.globalTypes VALUES (46,16,'Canada',NULL,'CA','2014-03-23 21:39:04','2014-03-23 21:39:04',1,1);
+INSERT INTO namedEntities.globalTypes VALUES (47,16,'United States of America',NULL,'US','2014-03-23 21:39:49','2014-03-23 21:39:49',1,1);
+INSERT INTO namedEntities.globalTypes VALUES (48,16,'United Kingdom of Great Britain and Northern Ireland',NULL,'GB','2014-03-23 21:40:27','2014-03-23 21:40:27',1,1);
 INSERT INTO namedEntities.globalTypes VALUES (49,17,'Ringgold',NULL,'RG','2014-03-23 21:43:08','2014-03-23 21:43:08',1,1);
 INSERT INTO namedEntities.globalTypes VALUES (50,17,'ORCID',NULL,'ORC','2014-03-23 21:43:40','2014-03-23 21:43:40',1,1);
 INSERT INTO namedEntities.globalTypes VALUES (51,18,'CA','California','CA','2014-03-23 21:44:57','2014-03-23 21:44:57',1,1);

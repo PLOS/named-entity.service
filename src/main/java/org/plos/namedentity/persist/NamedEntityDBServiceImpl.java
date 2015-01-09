@@ -155,7 +155,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   public Integer findTypeValue(Integer typeClassId, String name) {
     for (Globaltype typeValue : findAll(Globaltype.class, 0, Integer.MAX_VALUE)) {
       if (typeClassId.equals(typeValue.getTypeid()) &&
-          typeValue.getShortdescription().equals(name)) {
+          typeValue.getShortdescription().equalsIgnoreCase(name)) {
         return typeValue.getId();
       }
     }
