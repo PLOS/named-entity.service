@@ -163,7 +163,7 @@ public class NamedEntityServiceTest {
     officeAddress.setAddressline2("addressline2");
     officeAddress.setCity("city");
     officeAddress.setStatecodetype("CA");
-    officeAddress.setCountrycodetype("United States");
+    officeAddress.setCountrycodetype("United States of America");
     officeAddress.setPostalcode("1234567");
     officeAddress.setSource("Editorial Manager");
     addresses.add( officeAddress );
@@ -471,7 +471,7 @@ public class NamedEntityServiceTest {
     addressEntity.setAddressline3("addressline 3");
     addressEntity.setCity("city");
     addressEntity.setStatecodetype("CA");
-    addressEntity.setCountrycodetype("United States");
+    addressEntity.setCountrycodetype("United States of America");
     addressEntity.setPostalcode("94401");
     addressEntity.setSource("Editorial Manager");
 

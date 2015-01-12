@@ -239,6 +239,19 @@ public class NamedEntityDBServiceTest {
   }
 
   @Test
+  public void testGlobaltypeValueCaseInsensitiveComparison() {
+
+    Integer countryTypeId = nedDBSvc.findTypeClass("Country Types");
+
+    String usa = "United States of America";
+    String countryInput[] = new String[] { usa, usa.toLowerCase(), usa.toUpperCase() };
+
+    for (String country : countryInput) {
+      assertNotNull( nedDBSvc.findTypeValue(countryTypeId,country) );
+    }
+  }
+
+  @Test
   public void testEmailsCRUD() {
 
     Integer emailTypeClassId = nedDBSvc.findTypeClass("Email Address Types");
@@ -532,9 +545,9 @@ public class NamedEntityDBServiceTest {
     Integer countryTypeClassId   = nedDBSvc.findTypeClass("Country Types");
     Integer stateCodeTypeClassId = nedDBSvc.findTypeClass("State and Province Codes");
 
-    Integer officeAddressTypeId = nedDBSvc.findTypeValue(addressTypeClassId, "Office")       ; assertNotNull(officeAddressTypeId);
-    Integer countryTypeId       = nedDBSvc.findTypeValue(countryTypeClassId, "United States"); assertNotNull(countryTypeId)      ;
-    Integer stateCodeTypeId     = nedDBSvc.findTypeValue(stateCodeTypeClassId, "CA")         ; assertNotNull(stateCodeTypeId)    ;
+    Integer officeAddressTypeId = nedDBSvc.findTypeValue(addressTypeClassId, "Office")                  ; assertNotNull(officeAddressTypeId);
+    Integer countryTypeId       = nedDBSvc.findTypeValue(countryTypeClassId, "United States of America"); assertNotNull(countryTypeId)      ;
+    Integer stateCodeTypeId     = nedDBSvc.findTypeValue(stateCodeTypeClassId, "CA")                    ; assertNotNull(stateCodeTypeId)    ;
 
     Address address = new Address();
     address.setNedid(1);
