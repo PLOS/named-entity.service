@@ -172,7 +172,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
         + "}";
 
     Response response = target(INDIVIDUAL_URI + "/1/individualprofiles/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(NEW_INDIVIDUALS_JSON_PAYLOAD));
+        .put(Entity.json(NEW_INDIVIDUALS_JSON_PAYLOAD));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
@@ -221,7 +221,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /* ------------------------------------------------------------------ */
 
     response = target(INDIV_ADDR_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(writeValueAsString(entity)));
+        .put(Entity.json(writeValueAsString(entity)));
 
     assertEquals(200, response.getStatus());
 
@@ -306,7 +306,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /* ------------------------------------------------------------------ */
 
     response = target(INDIV_ROLE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(writeValueAsString(entity)));
+        .put(Entity.json(writeValueAsString(entity)));
 
     assertEquals(200, response.getStatus());
 
@@ -380,7 +380,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /* ------------------------------------------------------------------ */
 
     response = target(INDIV_EMAIL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(writeValueAsString(entity)));
+        .put(Entity.json(writeValueAsString(entity)));
 
     assertEquals(200, response.getStatus());
 
@@ -642,7 +642,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     String jsonUpdatedTypeClass = writeValueAsString(updatedTypeClass);
 
     response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(jsonUpdatedTypeClass));
+        .put(Entity.json(jsonUpdatedTypeClass));
 
     assertEquals(200, response.getStatus());
 
@@ -654,14 +654,14 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     // UPDATE #2 should raise a validation exception
 
     response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(jsonUpdatedTypeClass));
+        .put(Entity.json(jsonUpdatedTypeClass));
 
     assertEquals(400, response.getStatus());
 
     // UPDATE #3 should raise a server-side exception
 
     response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(jsonUpdatedTypeClass));
+        .put(Entity.json(jsonUpdatedTypeClass));
 
     assertEquals(500, response.getStatus());
 
@@ -773,7 +773,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     String jsonUpdatedTypeVal = writeValueAsString(updatedTypeVal);
 
     response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(jsonUpdatedTypeVal));
+        .put(Entity.json(jsonUpdatedTypeVal));
 
     assertEquals(200, response.getStatus());
 
@@ -785,14 +785,14 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     // UPDATE #2 should raise a validation exception
 
     response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(jsonUpdatedTypeVal));
+        .put(Entity.json(jsonUpdatedTypeVal));
 
     assertEquals(400, response.getStatus());
 
     // UPDATE #3 should raise a server-side exception
 
     response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(jsonUpdatedTypeVal));
+        .put(Entity.json(jsonUpdatedTypeVal));
 
     assertEquals(500, response.getStatus());
 
