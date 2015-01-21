@@ -16,6 +16,7 @@ import org.plos.namedentity.api.entity.Uniqueidentifier;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -92,7 +93,7 @@ public class IndividualsResource extends BaseResource {
     return createEntity(nedId, entity);
   }
 
-  @POST
+  @PUT
   @Path("/{nedId}/individualprofiles/{profileId}")
   @ApiOperation(value = "Update a profile", response = Individualprofile.class)
   public Response updateProfile(@PathParam("nedId") int nedId,
@@ -137,7 +138,7 @@ public class IndividualsResource extends BaseResource {
     return createEntity(nedId, emailEntity);
   }
 
-  @POST
+  @PUT
   @Path("/{nedId}/emails/{emailId}")
   @ApiOperation(value = "Update email", response = Email.class)
   public Response updateEmail(@PathParam("nedId") int nedId, 
@@ -181,7 +182,7 @@ public class IndividualsResource extends BaseResource {
     return createEntity(nedId, addressEntity);
   }
 
-  @POST
+  @PUT
   @Path("/{nedId}/addresses/{addressId}")
   @ApiOperation(value = "Update address", response = Address.class)
   public Response updateAddress(@PathParam("nedId") int nedId, 
@@ -237,7 +238,7 @@ public class IndividualsResource extends BaseResource {
     return createEntity(nedId, entity);
   }
 
-  @POST
+  @PUT
   @Path("/{nedId}/uids/{id}")
   @ApiOperation(value = "Update UID", response = Uniqueidentifier.class)
   public Response updateUid(@PathParam("nedId") int nedId,
@@ -284,7 +285,7 @@ public class IndividualsResource extends BaseResource {
     return createEntity(nedId, roleEntity);
   }
 
-  @POST
+  @PUT
   @Path("/{nedId}/roles/{roleId}")
   @ApiOperation(value = "Update role", response = Role.class)
   public Response updateRole(@PathParam("nedId") int nedId, 
