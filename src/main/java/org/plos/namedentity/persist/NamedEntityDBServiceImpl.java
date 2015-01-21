@@ -19,7 +19,9 @@ package org.plos.namedentity.persist;
 // to reduce verbosity, static import generated tables and jooq functions
 
 import org.jooq.DSLContext;
+import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.Row;
 import org.jooq.SelectOnConditionStep;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -54,11 +56,30 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
   @Override @SuppressWarnings("unchecked")
   public <T> boolean update(T t) {
-    if (t instanceof Entity && ((Entity)t).getId() == null) {
-      throw new NedValidationException("Can't update entity without primary key: " + (Entity)t);
-    }
     // load jooq-generated record from pojo. update (explicitly) 
     UpdatableRecord record = (UpdatableRecord) context.newRecord(table(t.getClass()), t);
+
+    // by default, all "changed" bits are set to true. to allow for partial
+    // updates, we'll set change bit to false for all "null" attributes (which 
+    // implies they weren't present in the payload). additionally, we'll 
+    // interpret the empty string values as setting to "null" in the database 
+    // (instead of storing the empty string).
+
+    if (t instanceof Entity) {
+      if (((Entity)t).getId() == null) {
+        throw new NedValidationException("Can't update entity without primary key: " + (Entity)t);
+      }
+
+      for (Field f : record.fields()) {
+        String fieldName = f.getName();
+        if (record.getValue(fieldName) == null) {
+          record.changed(fieldName,false);
+        } else if (record.getValue(fieldName).equals("")) {
+          record.setValue(f,null);
+        }
+      }
+    }
+
     return (context.executeUpdate(record) == 1);
   }
 
