@@ -64,15 +64,7 @@ public class TestSpringConfig {
     mockCrudForEmails(mockCrudService);
     mockCrudForAddresses(mockCrudService);
     mockCrudForRoles(mockCrudService);
-
-    // INDIVIDUALS
-    Individualprofile individualProfileEntity = newIndividualEntity();
-
-    when(mockCrudService.create(isA(Individualprofile.class))).thenReturn( individualProfileEntity.getNedid() );
-
-    when(mockCrudService.findAll(eq(Individualprofile.class), eq(0), anyInt())).thenReturn( newIndividualEntities() );
-
-    when(mockCrudService.findById(eq(individualProfileEntity.getNedid()), eq(Individualprofile.class))).thenReturn(individualProfileEntity);
+    mockCrudForProfiles(mockCrudService);
 
     return mockCrudService;
   }
@@ -299,6 +291,13 @@ public class TestSpringConfig {
 
   static private void mockCrudForRoles(CrudService mockCrudService) {
     when(mockCrudService.create(isA(Role.class))).thenReturn(1);
+  }
+
+  static private void mockCrudForProfiles(CrudService mockCrudService) {
+    Individualprofile individualProfileEntity = newIndividualEntity();
+    when(mockCrudService.create(isA(Individualprofile.class))).thenReturn( individualProfileEntity.getNedid() );
+    when(mockCrudService.findAll(eq(Individualprofile.class), eq(0), anyInt())).thenReturn( newIndividualEntities() );
+    when(mockCrudService.findById(eq(individualProfileEntity.getNedid()), eq(Individualprofile.class))).thenReturn(individualProfileEntity);
   }
 
   @SuppressWarnings("unchecked")

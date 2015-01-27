@@ -54,7 +54,10 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
   @Override @SuppressWarnings("unchecked")
   public <T> boolean update(T t) {
-    // load jooq-generated record from pojo. update (explicitly) 
+    if (t instanceof Entity && ((Entity)t).getId() == null) {
+      throw new NedValidationException("Can't update entity without primary key: " + (Entity)t);
+    }
+    // load jooq-generated record from pojo. update (explicitly)
     UpdatableRecord record = (UpdatableRecord) context.newRecord(table(t.getClass()), t);
     return (context.executeUpdate(record) == 1);
   }

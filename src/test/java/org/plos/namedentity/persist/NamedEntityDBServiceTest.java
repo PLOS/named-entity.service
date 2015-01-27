@@ -23,6 +23,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.plos.namedentity.api.EntityNotFoundException;
+import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.persist.db.namedentities.tables.Globaltypes;
 import org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions;
@@ -382,7 +383,18 @@ public class NamedEntityDBServiceTest {
     // UPDATE
     
     Individualprofile savedIndividualProfile = nedDBSvc.findById(individualId, Individualprofile.class);
+    Integer savedProfileId = savedIndividualProfile.getId();
     savedIndividualProfile.setMiddlename("chuck");
+
+    try {
+      // Try to update without a primary key. This should fail.
+      savedIndividualProfile.setId(null);
+      nedDBSvc.update(savedIndividualProfile);
+      fail();
+    } catch (NedValidationException expected) { }
+
+    // Restore primary key and try to update again. This should succeed.
+    savedIndividualProfile.setId(savedProfileId);
     assertTrue( nedDBSvc.update(savedIndividualProfile) );
 
     // Get another instance of same individual record

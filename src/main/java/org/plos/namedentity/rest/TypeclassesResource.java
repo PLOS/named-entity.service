@@ -10,6 +10,7 @@ import org.plos.namedentity.api.entity.Typedescription;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
@@ -76,7 +77,7 @@ public class TypeclassesResource extends BaseResource {
     }
   }
 
-  @POST
+  @PUT
   @Path("/{id}")
   @ApiOperation(value = "Update", response = Typedescription.class)
   public Response update(Typedescription typeDescription) {
@@ -162,7 +163,7 @@ public class TypeclassesResource extends BaseResource {
     }
   }
 
-  @POST
+  @PUT
   @Path("/{typeclassid}/typevalues/{typevalueid}")
   @ApiOperation(value = "Update global type", response = Globaltype.class)
   public Response updateGlobalType(@PathParam("typeclassid") int typeClassId,

@@ -76,6 +76,7 @@ public abstract class BaseResource {
 
       namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
 
+      entity.setId(pkId);
       entity.setNedid(nedId);
 
       namedEntityService.resolveValuesToIds(entity);
