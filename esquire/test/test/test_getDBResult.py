@@ -8,6 +8,7 @@ import operator
 import dockerUtil
 from unittest import TestCase, main
 import dockerUtil
+import baseAPI
 
 
 class verify_getDBResult(TestCase):
@@ -72,8 +73,8 @@ class verify_getDBResult(TestCase):
 
         sql= """select id, nedId, firstName from individualNames;"""
         ckey="nedId"
-
-        dock_data = dockerUtil.doURLCall(str(dockerUtil.docker_api_list_all_containers_url), None, None)
+        api=baseAPI
+        dock_data = api.doURLCall(str(dockerUtil.docker_api_list_all_containers_url), None, None)
         containerInfo = dockerUtil.build_app_context(dock_data, dockerUtil.docker_api_url)
         if 0 < containerInfo.__len__():
             NedSrvHTTP = 'http://'

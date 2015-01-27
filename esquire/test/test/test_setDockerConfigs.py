@@ -5,6 +5,7 @@ import MySQLdb
 import urllib2
 import json
 import operator
+import baseAPI
 from unittest import TestCase, main
 import dockerUtil
 
@@ -17,7 +18,9 @@ class verify_ContainerConfigInfoSetup(TestCase):
 
 
     def test_getContainerInfo(self):
-        dock_data = dockerUtil.doURLCall(str(dockerUtil.docker_api_list_all_containers_url), None, None)
+        api=baseAPI
+
+        dock_data = api.doURLCall(str(dockerUtil.docker_api_list_all_containers_url), None, None)
         containerInfoObj = dockerUtil.build_app_context(dock_data, dockerUtil.docker_api_url)
 
         if 0 < containerInfoObj.__len__():

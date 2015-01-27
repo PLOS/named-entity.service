@@ -44,3 +44,13 @@ def doURLCall(aURL):
             return "true"
         else:
             return "false"
+
+def postToURL(aUrl,data):
+        req = urllib2.Request(aUrl)
+        req.add_header('Accept','application/json')
+        req.add_header('Content-Type', 'application/json')
+        f = urllib2.urlopen(req, data)
+        response = f.read()
+
+        return response
+        f.close()

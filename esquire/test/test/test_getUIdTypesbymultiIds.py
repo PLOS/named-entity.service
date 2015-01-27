@@ -5,7 +5,7 @@ import MySQLdb
 import urllib2
 import json
 import operator
-import dockerUtil
+import baseAPI
 from unittest import TestCase, main
 import dockerUtil
 
@@ -82,8 +82,9 @@ class verify_getUIdTypesByIdsbymultiIds(TestCase):
         sql="""select uni.typeId as uidType, uni.uniqueIdentifier as uidValue from uniqueIdentifiers uni, individualNames idn WHERE idn.nedId=uni.nedId;"""
         ckey="nedId"
         vkey='id'
+        api=baseAPI
 
-        dock_data = dockerUtil.doURLCall(str(dockerUtil.docker_api_list_all_containers_url), None, None)
+        dock_data = api.doURLCall(str(dockerUtil.docker_api_list_all_containers_url), None, None)
         containerInfo = dockerUtil.build_app_context(dock_data, dockerUtil.docker_api_url)
         if 0 < containerInfo.__len__():
             NedSrvHTTP = 'http://'

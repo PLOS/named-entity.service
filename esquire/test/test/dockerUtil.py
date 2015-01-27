@@ -4,22 +4,22 @@ __author__ = 'eaknowledge'
 import jsonUtil
 import urllib2
 import json
-from baseAPI import doURLCall
+import baseAPI
 
 '''
 
-Like procedural language function have to be parse before they are called by code
+Like procedural langapi=api_channeluage function have to be parse before they are called by code
 
 '''
 ned_service_container = {}
 ned_database_container = {}
 
+api=baseAPI
 ned_service_ip = None
 ned_database_ip = None
 
 
-
-docker_api_url = 'http://localhost:2323'
+docker_api_url = 'http://127.0.0.1:4949'
 docker_api_endpoint = '/containers/json'
 docker_api_query_params = '?all=1'
 docker_api_list_all_containers_url=docker_api_url+docker_api_endpoint+docker_api_query_params
@@ -64,6 +64,7 @@ We always - only - expect two containers of the latest returns
 
 def build_app_context(dock_data, dockerAPIURL):
     docker_Obj={}
+
     print(dock_data)
 
 
@@ -80,30 +81,35 @@ def build_app_context(dock_data, dockerAPIURL):
 
 
 
-
     for key in container_Obj.keys():
+
+        #print(container_Obj[key])
+
         if "Up" in str(container_Obj[key]):
-            dockInfo= doURLCall(str(docker_api_list_all_containers_url), None, None)
+
+            dockInfo= api.doURLCall(str(docker_api_list_all_containers_url), None, None)
+
         elif "Exited" in str(container_Obj[key]):
             startContainer = startDocker(dockerAPIURL, key)
-            status=doURLCall(str(startContainer), 1, '')
+            #print(startContainer)
+            #status=api.doURLCall(str(startContainer), 1, '')
+
         else:
             print("better rebuild")
 
         inspectContainer = inspectDocker(dockerAPIURL, key)
 
-        print('---------------------------')
-        print(inspectContainer)
-        docker_inspect_data=doURLCall(str(inspectContainer),None,None)
-        print(docker_inspect_data)
-        print('---------------------------')
+        #print('---------------------------')
+        #print(inspectContainer)
+        docker_inspect_data=api.doURLCall(str(inspectContainer),None,None)
+        #print(docker_inspect_data)
+        #print('---------------------------')
 
         if 'docker_nedsvc' in str(docker_inspect_data['Name']):
             ned_service_container.update({'name':docker_inspect_data['Name'], 'ip': docker_inspect_data['NetworkSettings']['IPAddress']})
         elif 'docker_neddb' in str(docker_inspect_data['Name']):
             ned_database_container.update({'name':docker_inspect_data['Name'], 'ip': docker_inspect_data['NetworkSettings']['IPAddress']})
-        else:
-            raise
+
 
 
         docker_Obj.update({'service':ned_service_container, 'database':ned_database_container})
@@ -111,11 +117,13 @@ def build_app_context(dock_data, dockerAPIURL):
     return docker_Obj
 
 
-
 #//////////////////////////////////////////////////////////////////////
 # Execution happens here
+'''
+dock_data = api.doURLCall(str(docker_api_list_all_containers_url), None, None)
+print(dock_data)
 
-dock_data = doURLCall(str(docker_api_list_all_containers_url), None, None)
 containerInfo = build_app_context(dock_data, docker_api_url)
 if 0 < containerInfo.__len__():
     print(containerInfo)
+'''
