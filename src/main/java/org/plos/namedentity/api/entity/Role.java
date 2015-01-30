@@ -33,9 +33,8 @@ public class Role extends Entity {
   private Date startdate;
   private Date enddate;
 
-  private Timestamp created;
-  private Integer   createdby;
-  private Integer   lastmodifiedby;
+  private Integer createdby;
+  private Integer lastmodifiedby;
 
   private String  applicationtype;
   private Integer applicationtypeid;
@@ -113,22 +112,6 @@ public class Role extends Entity {
   @XmlJavaTypeAdapter(DateAdapter.class)
   public void setEnddate(Date enddate) {
     this.enddate = enddate;
-  }
-
-  public java.sql.Timestamp getCreated() {
-    return this.created;
-  }
-
-  public void setCreated(java.sql.Timestamp created) {
-    this.created = created;
-  }
-
-  public java.sql.Timestamp getLastmodified() {
-    return this.lastmodified;
-  }
-
-  public void setLastmodified(java.sql.Timestamp lastmodified) {
-    this.lastmodified = lastmodified;
   }
 
   public Integer getCreatedby() {

@@ -17,6 +17,7 @@
 package org.plos.namedentity.api.entity;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @XmlRootElement
@@ -25,6 +26,9 @@ public class Typedescription {
   private Integer id;
   private String  description;
   private String  howused;
+
+  private Timestamp created;
+  private Timestamp lastmodified;
 
   @Override
   public boolean equals(Object o) {
@@ -71,5 +75,19 @@ public class Typedescription {
     this.howused = howused;
   }
 
+  public Timestamp getLastmodified() {
+    return this.lastmodified;
+  }
 
+  public void setLastmodified(Timestamp lastmodified) {
+    this.lastmodified = lastmodified;
+  }
+
+  public Timestamp getCreated() {
+    return this.created;
+  }
+
+  public void setCreated(Timestamp created) {
+    this.created = created;
+  }
 }

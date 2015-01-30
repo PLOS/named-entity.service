@@ -6,13 +6,17 @@ import org.plos.namedentity.validate.Validatable;
 
 import javax.xml.bind.annotation.XmlTransient;
 
+import java.sql.Timestamp;
+
 @XmlTransient
 public abstract class Entity implements Validatable {
 
-  protected Integer id;
-  protected Integer nedid;
-  protected String  source;
-  protected Integer sourcetypeid;
+  protected Integer   id;
+  protected Integer   nedid;
+  protected String    source;
+  protected Integer   sourcetypeid;
+  protected Timestamp created;
+  protected Timestamp lastmodified;
 
   @Override
   public void validate() {
@@ -53,5 +57,21 @@ public abstract class Entity implements Validatable {
 
   public void setSourcetypeid(Integer sourcetypeid) {
     this.sourcetypeid = sourcetypeid;
+  }
+
+  public Timestamp getCreated() {
+    return this.created;
+  }
+
+  public void setCreated(Timestamp created) {
+    this.created = created;
+  }
+
+  public Timestamp getLastmodified() {
+    return this.lastmodified;
+  }
+
+  public void setLastmodified(Timestamp lastmodified) {
+    this.lastmodified = lastmodified;
   }
 }

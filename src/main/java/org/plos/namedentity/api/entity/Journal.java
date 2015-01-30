@@ -16,14 +16,18 @@
  */
 package org.plos.namedentity.api.entity;
 
+import java.sql.Timestamp;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Journal {
 
-  private Integer id;
-  private Integer nedid;
-  private Integer typeid;
+  private Integer   id;
+  private Integer   nedid;
+  private Integer   typeid;
+  private Timestamp created;
+  private Timestamp lastmodified;
 
   public Integer getId() {
     return this.id;
@@ -47,5 +51,21 @@ public class Journal {
 
   public void setTypeid(Integer typeid) {
     this.typeid = typeid;
+  }
+
+  public Timestamp getLastmodified() {
+    return this.lastmodified;
+  }
+
+  public void setLastmodified(Timestamp lastmodified) {
+    this.lastmodified = lastmodified;
+  }
+
+  public Timestamp getCreated() {
+    return this.created;
+  }
+
+  public void setCreated(Timestamp created) {
+    this.created = created;
   }
 }
