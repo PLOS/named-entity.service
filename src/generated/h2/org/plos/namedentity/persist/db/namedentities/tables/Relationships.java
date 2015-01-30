@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Relationships extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord> {
 
-	private static final long serialVersionUID = -1387040118;
+	private static final long serialVersionUID = 1311528140;
 
 	/**
 	 * The singleton instance of <code>NAMEDENTITIES.RELATIONSHIPS</code>
@@ -64,12 +64,12 @@ public class Relationships extends org.jooq.impl.TableImpl<org.plos.namedentity.
 	/**
 	 * The column <code>NAMEDENTITIES.RELATIONSHIPS.CREATED</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.sql.Timestamp> CREATED = createField("CREATED", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.sql.Timestamp> CREATED = createField("CREATED", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "");
 
 	/**
 	 * The column <code>NAMEDENTITIES.RELATIONSHIPS.LASTMODIFIED</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.sql.Timestamp> LASTMODIFIED = createField("LASTMODIFIED", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.sql.Timestamp> LASTMODIFIED = createField("LASTMODIFIED", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "");
 
 	/**
 	 * The column <code>NAMEDENTITIES.RELATIONSHIPS.CREATEDBY</code>.

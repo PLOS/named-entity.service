@@ -4,26 +4,30 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ALLOW_INVALID_DATES';
 
 DROP SCHEMA IF EXISTS namedEntities;
 
-CREATE SCHEMA IF NOT EXISTS namedEntities 
+CREATE SCHEMA namedEntities 
     DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+use namedEntities;
+
 DROP TABLE IF EXISTS namedEntities.typeDescriptions;
-CREATE TABLE IF NOT EXISTS namedEntities.typeDescriptions (
+CREATE TABLE namedEntities.typeDescriptions (
     id INT NOT NULL AUTO_INCREMENT,
     description TEXT NOT NULL,
     howUsed TEXT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.globalTypes;
-CREATE TABLE IF NOT EXISTS namedEntities.globalTypes (
+CREATE TABLE namedEntities.globalTypes (
     id INT NOT NULL AUTO_INCREMENT,
     typeId INT NOT NULL,
     shortDescription TEXT NOT NULL,
     longDescription TEXT NULL,
     typeCode TEXT NOT NULL,
-    created TIMESTAMP NOT NULL DEFAULT 0, -- requires setting to NULL at insert
-    lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     createdBy INT NULL,
     lastModifiedBy INT NULL,
     PRIMARY KEY (id),
@@ -34,8 +38,8 @@ DROP TABLE IF EXISTS namedEntities.namedEntityIdentifiers;
 CREATE TABLE IF NOT EXISTS namedEntities.namedEntityIdentifiers (
     id INT NOT NULL AUTO_INCREMENT,
     typeId INT NOT NULL,
-    created TIMESTAMP NOT NULL DEFAULT 0,
-    lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     createdBy INT NULL,
     lastModifiedBy INT NULL,
     PRIMARY KEY (id),
@@ -56,6 +60,8 @@ CREATE TABLE IF NOT EXISTS namedEntities.individualProfiles (
     biography TEXT NULL,
     sourceTypeId INT NOT NULL,
     isActive TINYINT(1) NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
@@ -73,6 +79,8 @@ CREATE TABLE IF NOT EXISTS namedEntities.organizations (
     mainContactId INT NULL,
     sourceTypeId INT NOT NULL,
     isActive TINYINT(1) NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id),
@@ -97,6 +105,8 @@ CREATE TABLE IF NOT EXISTS namedEntities.addresses (
     longitude INT NULL,
     sourceTypeId INT NOT NULL,
     isActive TINYINT(1) NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
@@ -111,6 +121,8 @@ CREATE TABLE IF NOT EXISTS namedEntities.emails (
     emailAddress TEXT NULL,
     sourceTypeId INT NOT NULL,
     isActive TINYINT(1) NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
@@ -127,6 +139,8 @@ CREATE TABLE IF NOT EXISTS namedEntities.phoneNumbers (
     extension TEXT NULL,
     sourceTypeId INT NOT NULL,
     isActive TINYINT(1) NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id),
@@ -143,8 +157,8 @@ CREATE TABLE IF NOT EXISTS namedEntities.roles (
     startDate DATE NULL,
     endDate DATE NULL,
     sourceTypeId INT NOT NULL,
-    created TIMESTAMP NOT NULL DEFAULT 0,
-    lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     createdBy INT NULL,
     lastModifiedBy INT NULL,
     PRIMARY KEY (id),
@@ -163,8 +177,8 @@ CREATE TABLE IF NOT EXISTS namedEntities.relationships (
     title TEXT NULL,
     startDate DATE NULL,
     endDate DATE NULL,
-    created TIMESTAMP NOT NULL DEFAULT 0,
-    lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     createdBy INT NULL,
     lastModifiedBy INT NULL,
     PRIMARY KEY (id),
@@ -176,6 +190,8 @@ CREATE TABLE IF NOT EXISTS namedEntities.sourceFields (
     id INT NOT NULL AUTO_INCREMENT,
     sourceTable TEXT NOT NULL,
     sourceField TEXT NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 )   ENGINE=INNODB;
 
@@ -186,7 +202,9 @@ CREATE TABLE IF NOT EXISTS namedEntities.auditTrail (
     rowNumber INT NULL,
     oldValue TEXT NOT NULL,
     newValue TEXT NOT NULL,
-    lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    createdBy INT NULL,
+    lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     lastModifiedBy INT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (sourceFieldId) REFERENCES sourceFields(id)
@@ -197,6 +215,8 @@ CREATE TABLE IF NOT EXISTS namedEntities.subjectAreas (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
     typeId INT NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id)
@@ -207,6 +227,8 @@ CREATE TABLE IF NOT EXISTS namedEntities.journals (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
     typeId INT NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id)
@@ -218,6 +240,8 @@ CREATE TABLE IF NOT EXISTS namedEntities.degrees (
     nedId INT NOT NULL,
     typeId INT NOT NULL,
     sourceTypeId INT NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
@@ -230,6 +254,8 @@ CREATE TABLE IF NOT EXISTS namedEntities.urls (
     nedId INT NOT NULL,
     url TEXT NULL,
     sourceTypeId INT NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id)
@@ -242,6 +268,8 @@ CREATE TABLE IF NOT EXISTS namedEntities.uniqueIdentifiers (
     typeId INT NOT NULL,
     uniqueIdentifier TEXT NULL,
     sourceTypeId INT NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),

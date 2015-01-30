@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Phonenumbers extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord> {
 
-	private static final long serialVersionUID = -11337411;
+	private static final long serialVersionUID = 1929547858;
 
 	/**
 	 * The singleton instance of <code>NAMEDENTITIES.PHONENUMBERS</code>
@@ -65,6 +65,16 @@ public class Phonenumbers extends org.jooq.impl.TableImpl<org.plos.namedentity.p
 	 * The column <code>NAMEDENTITIES.PHONENUMBERS.ISACTIVE</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.Byte> ISACTIVE = createField("ISACTIVE", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
+
+	/**
+	 * The column <code>NAMEDENTITIES.PHONENUMBERS.CREATED</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.sql.Timestamp> CREATED = createField("CREATED", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "");
+
+	/**
+	 * The column <code>NAMEDENTITIES.PHONENUMBERS.LASTMODIFIED</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.sql.Timestamp> LASTMODIFIED = createField("LASTMODIFIED", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "");
 
 	/**
 	 * Create a <code>NAMEDENTITIES.PHONENUMBERS</code> table reference

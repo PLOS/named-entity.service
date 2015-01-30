@@ -192,6 +192,4 @@ public class Address extends Entity {
   public void setCountrycodetype(String countrycodetype) {
     this.countrycodetype = countrycodetype;
   }
-
-
 }

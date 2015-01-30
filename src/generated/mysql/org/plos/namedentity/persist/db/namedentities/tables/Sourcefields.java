@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sourcefields extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.SourcefieldsRecord> {
 
-	private static final long serialVersionUID = -178724403;
+	private static final long serialVersionUID = 192237884;
 
 	/**
 	 * The singleton instance of <code>namedEntities.sourceFields</code>
@@ -40,6 +40,16 @@ public class Sourcefields extends org.jooq.impl.TableImpl<org.plos.namedentity.p
 	 * The column <code>namedEntities.sourceFields.sourceField</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SourcefieldsRecord, java.lang.String> SOURCEFIELD = createField("sourceField", org.jooq.impl.SQLDataType.CLOB.length(65535).nullable(false), this, "");
+
+	/**
+	 * The column <code>namedEntities.sourceFields.created</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SourcefieldsRecord, java.sql.Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+
+	/**
+	 * The column <code>namedEntities.sourceFields.lastModified</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SourcefieldsRecord, java.sql.Timestamp> LASTMODIFIED = createField("lastModified", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * Create a <code>namedEntities.sourceFields</code> table reference

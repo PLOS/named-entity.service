@@ -44,6 +44,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.plos.namedentity.persist.db.namedentities.Tables.GLOBALTYPES;
@@ -212,9 +213,11 @@ public class NamedEntityDBServiceTest {
     entity.setShortdescription( entity.getShortdescription() + "2");
     assertTrue( nedDBSvc.update(entity) );
 
-    // Get another instance of same type value
     Globaltype entity2 = nedDBSvc.findById(newGlobalTypeId, Globaltype.class);
-    assertEquals(entity, entity2);
+    assertFalse( entity.equals(entity2) );  // last mod date updated when record updated
+
+    Globaltype entity3 = nedDBSvc.findById(newGlobalTypeId, Globaltype.class);
+    assertEquals(entity2, entity3);
 
     // Find all global types 
     List<Globaltype> globalTypes = nedDBSvc.findAll(Globaltype.class, 0, Integer.MAX_VALUE);
@@ -227,8 +230,8 @@ public class NamedEntityDBServiceTest {
     assertEquals(3, globalTypesForTypeClass.size());
 
     // Try to find a global type which doesn't exist
-    Globaltype entity3 = nedDBSvc.findById(666, Globaltype.class);
-    assertNull(entity3);
+    Globaltype entity4 = nedDBSvc.findById(666, Globaltype.class);
+    assertNull(entity4);
 
     // DELETE
     Globaltype typeValueToDelete = new Globaltype();
@@ -586,10 +589,15 @@ public class NamedEntityDBServiceTest {
     savedAddress.setAddressline2("updated addressline2");
     assertTrue( nedDBSvc.update(savedAddress) );
 
-    // Get another instance of same address record 
+    // Get two other instances of same address record. They should be equal,
+    // however, not against the savedAddress which has an older last modified
+    // timestamp which was modified when the record was updated.
 
     Address savedAddress2 = nedDBSvc.findById(addressId, Address.class);
-    assertEquals(savedAddress, savedAddress2);
+    assertFalse( savedAddress.equals(savedAddress2) );
+
+    Address savedAddress3 = nedDBSvc.findById(addressId, Address.class);
+    assertEquals(savedAddress2, savedAddress3);
 
     // FIND ALL Phone Numbers 
 

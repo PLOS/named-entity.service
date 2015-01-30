@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Journals extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord> {
 
-	private static final long serialVersionUID = -876076258;
+	private static final long serialVersionUID = 1639265767;
 
 	/**
 	 * The singleton instance of <code>namedEntities.journals</code>
@@ -40,6 +40,16 @@ public class Journals extends org.jooq.impl.TableImpl<org.plos.namedentity.persi
 	 * The column <code>namedEntities.journals.typeId</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord, java.lang.Integer> TYPEID = createField("typeId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
+	 * The column <code>namedEntities.journals.created</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord, java.sql.Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+
+	/**
+	 * The column <code>namedEntities.journals.lastModified</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord, java.sql.Timestamp> LASTMODIFIED = createField("lastModified", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * Create a <code>namedEntities.journals</code> table reference

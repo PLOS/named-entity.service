@@ -11,7 +11,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Individualprofiles extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord> {
 
-	private static final long serialVersionUID = -1619407176;
+	private static final long serialVersionUID = 1992377543;
 
 	/**
 	 * The singleton instance of <code>NAMEDENTITIES.INDIVIDUALPROFILES</code>
@@ -85,6 +85,16 @@ public class Individualprofiles extends org.jooq.impl.TableImpl<org.plos.nameden
 	 * The column <code>NAMEDENTITIES.INDIVIDUALPROFILES.ISACTIVE</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord, java.lang.Byte> ISACTIVE = createField("ISACTIVE", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
+
+	/**
+	 * The column <code>NAMEDENTITIES.INDIVIDUALPROFILES.CREATED</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord, java.sql.Timestamp> CREATED = createField("CREATED", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "");
+
+	/**
+	 * The column <code>NAMEDENTITIES.INDIVIDUALPROFILES.LASTMODIFIED</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord, java.sql.Timestamp> LASTMODIFIED = createField("LASTMODIFIED", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "");
 
 	/**
 	 * Create a <code>NAMEDENTITIES.INDIVIDUALPROFILES</code> table reference

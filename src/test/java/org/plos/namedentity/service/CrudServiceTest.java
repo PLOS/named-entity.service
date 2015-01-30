@@ -37,6 +37,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -231,8 +232,12 @@ public class CrudServiceTest {
 
     savedTypeVal.setShortdescription("abc2");
     assertTrue( crudService.update(savedTypeVal) );
+
     Globaltype savedTypeVal2 = crudService.findById(pkId, Globaltype.class);
-    assertEquals(savedTypeVal, savedTypeVal2);
+    assertFalse( savedTypeVal.equals(savedTypeVal2) );  // last mod date updated when record updated
+
+    Globaltype savedTypeVal3 = crudService.findById(pkId, Globaltype.class);
+    assertEquals(savedTypeVal2, savedTypeVal3);
 
     // DELETE - delete type class without any children
 
@@ -426,8 +431,12 @@ public class CrudServiceTest {
 
     savedAddress.setAddressline1("update." + savedAddress.getAddressline1());
     assertTrue( crudService.update(savedAddress) );
+
     Address savedAddress2 = crudService.findById(pkId, Address.class);
-    assertEquals(savedAddress, savedAddress2);
+    assertFalse( savedAddress.equals(savedAddress2) );  // last mod date updated when record updated
+
+    Address savedAddress3 = crudService.findById(pkId, Address.class);
+    assertEquals(savedAddress2, savedAddress3);
 
     /* ------------------------------------------------------------------ */
     /*  FINDERS                                                           */
