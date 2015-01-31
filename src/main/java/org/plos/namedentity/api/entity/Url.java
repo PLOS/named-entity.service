@@ -20,7 +20,6 @@ import org.apache.commons.validator.routines.UrlValidator;
 import org.plos.namedentity.api.NedValidationException;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Objects;
 
 @XmlRootElement
 public class Url extends Entity {
@@ -33,23 +32,6 @@ public class Url extends Entity {
   public void validate() {
     if (url != null && !urlValidator.isValid(url))
       throw new NedValidationException("URL not valid (" + url + ")");
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o)
-      return true;
-
-    if (o == null || this.getClass() != o.getClass())
-      return false;
-
-    Url entity = (Url) o;
-    return Objects.equals(this.url, entity.url);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(this.url);
   }
 
   public String getUrl() {

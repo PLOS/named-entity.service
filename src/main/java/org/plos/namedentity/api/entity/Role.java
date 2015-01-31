@@ -22,7 +22,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.Objects;
 
 @XmlRootElement
 public class Role extends Entity {
@@ -39,28 +38,7 @@ public class Role extends Entity {
   private String  applicationtype;
   private Integer applicationtypeid;
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o)
-      return true;
-
-    if (o == null || this.getClass() != o.getClass())
-      return false;
-
-    Role entity = (Role) o;
-    return Objects.equals(this.applicationtype, entity.applicationtype)
-        && Objects.equals(this.type, entity.type)
-        && Objects.equals(this.startdate, entity.startdate)
-        && Objects.equals(this.enddate, entity.enddate);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(applicationtype, type, startdate, enddate);
-  }
-
   private Timestamp lastmodified;
-
 
   public String getApplicationtype() {
     return applicationtype;

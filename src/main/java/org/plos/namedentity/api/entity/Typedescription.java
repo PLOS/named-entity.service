@@ -16,6 +16,9 @@
  */
 package org.plos.namedentity.api.entity;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -30,25 +33,16 @@ public class Typedescription {
   private Timestamp created;
   private Timestamp lastmodified;
 
+  private static String EXCLUDED_FIELDS[] = { "created", "lastmodified" };
+
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-
-    if (o == null || this.getClass() != o.getClass()) {
-      return false;
-    }
-
-    Typedescription entity = (Typedescription) o;
-    return Objects.equals(this.id, entity.id)
-        && Objects.equals(this.description, entity.description)
-        && Objects.equals(this.howused, entity.howused);
+    return EqualsBuilder.reflectionEquals(this, o, EXCLUDED_FIELDS);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.id, this.description, this.howused);
+    return HashCodeBuilder.reflectionHashCode(this, EXCLUDED_FIELDS);
   }
 
   public Integer getId() {

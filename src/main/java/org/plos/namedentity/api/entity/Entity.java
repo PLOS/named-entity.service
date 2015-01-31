@@ -1,5 +1,7 @@
 package org.plos.namedentity.api.entity;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.plos.namedentity.validate.Validatable;
@@ -17,6 +19,18 @@ public abstract class Entity implements Validatable {
   protected Integer   sourcetypeid;
   protected Timestamp created;
   protected Timestamp lastmodified;
+
+  private static String EXCLUDED_FIELDS[] = { "created", "lastmodified" };
+
+  @Override
+  public boolean equals(Object o) {
+    return EqualsBuilder.reflectionEquals(this, o, EXCLUDED_FIELDS);
+  }
+
+  @Override
+  public int hashCode() {
+    return HashCodeBuilder.reflectionHashCode(this, EXCLUDED_FIELDS);
+  }
 
   @Override
   public void validate() {

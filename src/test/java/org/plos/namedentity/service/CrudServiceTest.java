@@ -234,10 +234,7 @@ public class CrudServiceTest {
     assertTrue( crudService.update(savedTypeVal) );
 
     Globaltype savedTypeVal2 = crudService.findById(pkId, Globaltype.class);
-    assertFalse( savedTypeVal.equals(savedTypeVal2) );  // last mod date updated when record updated
-
-    Globaltype savedTypeVal3 = crudService.findById(pkId, Globaltype.class);
-    assertEquals(savedTypeVal2, savedTypeVal3);
+    assertEquals(savedTypeVal, savedTypeVal2);
 
     // DELETE - delete type class without any children
 
@@ -433,10 +430,7 @@ public class CrudServiceTest {
     assertTrue( crudService.update(savedAddress) );
 
     Address savedAddress2 = crudService.findById(pkId, Address.class);
-    assertFalse( savedAddress.equals(savedAddress2) );  // last mod date updated when record updated
-
-    Address savedAddress3 = crudService.findById(pkId, Address.class);
-    assertEquals(savedAddress2, savedAddress3);
+    assertEquals(savedAddress, savedAddress2);
 
     /* ------------------------------------------------------------------ */
     /*  FINDERS                                                           */

@@ -16,9 +16,11 @@
  */
 package org.plos.namedentity.api.entity;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 @XmlRootElement
 public class Globaltype {
@@ -33,32 +35,16 @@ public class Globaltype {
   private Integer   createdby;
   private Integer   lastmodifiedby;
 
+  private static String EXCLUDED_FIELDS[] = { "created", "lastmodified" };
+
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-
-    if (o == null || this.getClass() != o.getClass()) {
-      return false;
-    }
-
-    Globaltype entity = (Globaltype) o;
-    return Objects.equals(this.id, entity.id)
-        && Objects.equals(this.typeid, entity.typeid)
-        && Objects.equals(this.shortdescription, entity.shortdescription)
-        && Objects.equals(this.longdescription, entity.longdescription)
-        && Objects.equals(this.typecode, entity.typecode)
-        && Objects.equals(this.created, entity.created)
-        && Objects.equals(this.lastmodified, entity.lastmodified)
-        && Objects.equals(this.createdby, entity.createdby)
-        && Objects.equals(this.lastmodifiedby, entity.lastmodifiedby);
+    return EqualsBuilder.reflectionEquals(this, o, EXCLUDED_FIELDS);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, typeid, shortdescription, longdescription,
-        typecode, created, lastmodified, createdby, lastmodifiedby);
+    return HashCodeBuilder.reflectionHashCode(this, EXCLUDED_FIELDS);
   }
 
   public Integer getId() {

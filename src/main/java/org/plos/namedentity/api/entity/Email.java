@@ -20,7 +20,6 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.plos.namedentity.api.NedValidationException;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Objects;
 
 @XmlRootElement
 public class Email extends Entity {
@@ -39,24 +38,6 @@ public class Email extends Entity {
     if (emailaddress != null && !emailValidator.isValid(emailaddress))
       throw new NedValidationException("Email not valid");
 
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o)
-      return true;
-
-    if (o == null || this.getClass() != o.getClass())
-      return false;
-
-    Email entity = (Email) o;
-    return Objects.equals(this.type, entity.type)
-        && Objects.equals(this.emailaddress, entity.emailaddress);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(type, emailaddress);
   }
 
   public Integer getTypeid() {
