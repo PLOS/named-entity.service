@@ -21,7 +21,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 @XmlRootElement
 public class Typedescription {

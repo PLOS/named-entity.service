@@ -20,7 +20,28 @@ public abstract class Entity implements Validatable {
   protected Timestamp created;
   protected Timestamp lastmodified;
 
-  private static String EXCLUDED_FIELDS[] = { "created", "lastmodified" };
+  // exclude creation/update timestamps and global type foreign keys
+  // from comparison (equals) and identity (hashcode). by convention,
+  // all global type fk's are suffixed with typeid. hmmm... would be
+  // nice to exclude these via reflection or something.
+  //
+  // NOTE - this list is manually maintained, so if schema changes and you
+  //        want new fields excluded from equals/hashcode operations,
+  //        you will need to manually add attribute names to this list.
+
+  private static String EXCLUDED_FIELDS[] = {
+    "applicationtypeid",
+    "countrycodetypeid",
+    "created",
+    "id",
+    "lastmodified",
+    "nameprefixtypeid",
+    "namesuffixtypeid",
+    "nedid",
+    "sourcetypeid",
+    "statecodetypeid",
+    "typeid"
+  };
 
   @Override
   public boolean equals(Object o) {
