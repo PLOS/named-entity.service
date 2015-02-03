@@ -16,10 +16,10 @@ package org.plos.namedentity.persist.db.information_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Collations extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.information_schema.tables.records.CollationsRecord> {
 
-	private static final long serialVersionUID = -582373752;
+	private static final long serialVersionUID = 2035072744;
 
 	/**
-	 * The reference instance of <code>INFORMATION_SCHEMA.COLLATIONS</code>
+	 * The reference instance of <code>information_schema.collations</code>
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Collations COLLATIONS = new org.plos.namedentity.persist.db.information_schema.tables.Collations();
 
@@ -32,24 +32,24 @@ public class Collations extends org.jooq.impl.TableImpl<org.plos.namedentity.per
 	}
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.COLLATIONS.NAME</code>.
+	 * The column <code>information_schema.collations.name</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CollationsRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CollationsRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.COLLATIONS.KEY</code>.
+	 * The column <code>information_schema.collations.key</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CollationsRecord, java.lang.String> KEY = createField("KEY", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.CollationsRecord, java.lang.String> KEY = createField("key", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * Create a <code>INFORMATION_SCHEMA.COLLATIONS</code> table reference
+	 * Create a <code>information_schema.collations</code> table reference
 	 */
 	public Collations() {
-		this("COLLATIONS", null);
+		this("collations", null);
 	}
 
 	/**
-	 * Create an aliased <code>INFORMATION_SCHEMA.COLLATIONS</code> table reference
+	 * Create an aliased <code>information_schema.collations</code> table reference
 	 */
 	public Collations(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.information_schema.tables.Collations.COLLATIONS);

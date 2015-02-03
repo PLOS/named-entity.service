@@ -16,10 +16,10 @@ package org.plos.namedentity.persist.db.information_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Help extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.information_schema.tables.records.HelpRecord> {
 
-	private static final long serialVersionUID = -1865881284;
+	private static final long serialVersionUID = -382263812;
 
 	/**
-	 * The reference instance of <code>INFORMATION_SCHEMA.HELP</code>
+	 * The reference instance of <code>information_schema.help</code>
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Help HELP = new org.plos.namedentity.persist.db.information_schema.tables.Help();
 
@@ -32,39 +32,39 @@ public class Help extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.d
 	}
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.HELP.ID</code>.
+	 * The column <code>information_schema.help.id</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.HelpRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.HelpRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.HELP.SECTION</code>.
+	 * The column <code>information_schema.help.section</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.HelpRecord, java.lang.String> SECTION = createField("SECTION", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.HelpRecord, java.lang.String> SECTION = createField("section", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.HELP.TOPIC</code>.
+	 * The column <code>information_schema.help.topic</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.HelpRecord, java.lang.String> TOPIC = createField("TOPIC", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.HelpRecord, java.lang.String> TOPIC = createField("topic", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.HELP.SYNTAX</code>.
+	 * The column <code>information_schema.help.syntax</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.HelpRecord, java.lang.String> SYNTAX = createField("SYNTAX", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.HelpRecord, java.lang.String> SYNTAX = createField("syntax", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.HELP.TEXT</code>.
+	 * The column <code>information_schema.help.text</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.HelpRecord, java.lang.String> TEXT = createField("TEXT", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.HelpRecord, java.lang.String> TEXT = createField("text", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * Create a <code>INFORMATION_SCHEMA.HELP</code> table reference
+	 * Create a <code>information_schema.help</code> table reference
 	 */
 	public Help() {
-		this("HELP", null);
+		this("help", null);
 	}
 
 	/**
-	 * Create an aliased <code>INFORMATION_SCHEMA.HELP</code> table reference
+	 * Create an aliased <code>information_schema.help</code> table reference
 	 */
 	public Help(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.information_schema.tables.Help.HELP);

@@ -16,10 +16,10 @@ package org.plos.namedentity.persist.db.information_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Rights extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.information_schema.tables.records.RightsRecord> {
 
-	private static final long serialVersionUID = -1978934575;
+	private static final long serialVersionUID = -1522003567;
 
 	/**
-	 * The reference instance of <code>INFORMATION_SCHEMA.RIGHTS</code>
+	 * The reference instance of <code>information_schema.rights</code>
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Rights RIGHTS = new org.plos.namedentity.persist.db.information_schema.tables.Rights();
 
@@ -32,49 +32,49 @@ public class Rights extends org.jooq.impl.TableImpl<org.plos.namedentity.persist
 	}
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.RIGHTS.GRANTEE</code>.
+	 * The column <code>information_schema.rights.grantee</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.RightsRecord, java.lang.String> GRANTEE = createField("GRANTEE", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.RightsRecord, java.lang.String> GRANTEE = createField("grantee", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.RIGHTS.GRANTEETYPE</code>.
+	 * The column <code>information_schema.rights.granteetype</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.RightsRecord, java.lang.String> GRANTEETYPE = createField("GRANTEETYPE", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.RightsRecord, java.lang.String> GRANTEETYPE = createField("granteetype", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.RIGHTS.GRANTEDROLE</code>.
+	 * The column <code>information_schema.rights.grantedrole</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.RightsRecord, java.lang.String> GRANTEDROLE = createField("GRANTEDROLE", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.RightsRecord, java.lang.String> GRANTEDROLE = createField("grantedrole", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.RIGHTS.RIGHTS</code>.
+	 * The column <code>information_schema.rights.rights</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.RightsRecord, java.lang.String> RIGHTS_ = createField("RIGHTS", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.RightsRecord, java.lang.String> RIGHTS_ = createField("rights", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.RIGHTS.TABLE_SCHEMA</code>.
+	 * The column <code>information_schema.rights.table_schema</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.RightsRecord, java.lang.String> TABLE_SCHEMA = createField("TABLE_SCHEMA", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.RightsRecord, java.lang.String> TABLE_SCHEMA = createField("table_schema", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.RIGHTS.TABLE_NAME</code>.
+	 * The column <code>information_schema.rights.table_name</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.RightsRecord, java.lang.String> TABLE_NAME = createField("TABLE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.RightsRecord, java.lang.String> TABLE_NAME = createField("table_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.RIGHTS.ID</code>.
+	 * The column <code>information_schema.rights.id</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.RightsRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.RightsRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * Create a <code>INFORMATION_SCHEMA.RIGHTS</code> table reference
+	 * Create a <code>information_schema.rights</code> table reference
 	 */
 	public Rights() {
-		this("RIGHTS", null);
+		this("rights", null);
 	}
 
 	/**
-	 * Create an aliased <code>INFORMATION_SCHEMA.RIGHTS</code> table reference
+	 * Create an aliased <code>information_schema.rights</code> table reference
 	 */
 	public Rights(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.information_schema.tables.Rights.RIGHTS);

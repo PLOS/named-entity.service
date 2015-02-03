@@ -16,10 +16,10 @@ package org.plos.namedentity.persist.db.information_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TablePrivileges extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.information_schema.tables.records.TablePrivilegesRecord> {
 
-	private static final long serialVersionUID = -1891197300;
+	private static final long serialVersionUID = 1535782508;
 
 	/**
-	 * The reference instance of <code>INFORMATION_SCHEMA.TABLE_PRIVILEGES</code>
+	 * The reference instance of <code>information_schema.table_privileges</code>
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.TablePrivileges TABLE_PRIVILEGES = new org.plos.namedentity.persist.db.information_schema.tables.TablePrivileges();
 
@@ -32,49 +32,49 @@ public class TablePrivileges extends org.jooq.impl.TableImpl<org.plos.namedentit
 	}
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.TABLE_PRIVILEGES.GRANTOR</code>.
+	 * The column <code>information_schema.table_privileges.grantor</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablePrivilegesRecord, java.lang.String> GRANTOR = createField("GRANTOR", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablePrivilegesRecord, java.lang.String> GRANTOR = createField("grantor", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.TABLE_PRIVILEGES.GRANTEE</code>.
+	 * The column <code>information_schema.table_privileges.grantee</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablePrivilegesRecord, java.lang.String> GRANTEE = createField("GRANTEE", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablePrivilegesRecord, java.lang.String> GRANTEE = createField("grantee", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.TABLE_PRIVILEGES.TABLE_CATALOG</code>.
+	 * The column <code>information_schema.table_privileges.table_catalog</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablePrivilegesRecord, java.lang.String> TABLE_CATALOG = createField("TABLE_CATALOG", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablePrivilegesRecord, java.lang.String> TABLE_CATALOG = createField("table_catalog", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.TABLE_PRIVILEGES.TABLE_SCHEMA</code>.
+	 * The column <code>information_schema.table_privileges.table_schema</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablePrivilegesRecord, java.lang.String> TABLE_SCHEMA = createField("TABLE_SCHEMA", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablePrivilegesRecord, java.lang.String> TABLE_SCHEMA = createField("table_schema", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.TABLE_PRIVILEGES.TABLE_NAME</code>.
+	 * The column <code>information_schema.table_privileges.table_name</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablePrivilegesRecord, java.lang.String> TABLE_NAME = createField("TABLE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablePrivilegesRecord, java.lang.String> TABLE_NAME = createField("table_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.TABLE_PRIVILEGES.PRIVILEGE_TYPE</code>.
+	 * The column <code>information_schema.table_privileges.privilege_type</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablePrivilegesRecord, java.lang.String> PRIVILEGE_TYPE = createField("PRIVILEGE_TYPE", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablePrivilegesRecord, java.lang.String> PRIVILEGE_TYPE = createField("privilege_type", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.TABLE_PRIVILEGES.IS_GRANTABLE</code>.
+	 * The column <code>information_schema.table_privileges.is_grantable</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablePrivilegesRecord, java.lang.String> IS_GRANTABLE = createField("IS_GRANTABLE", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.TablePrivilegesRecord, java.lang.String> IS_GRANTABLE = createField("is_grantable", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * Create a <code>INFORMATION_SCHEMA.TABLE_PRIVILEGES</code> table reference
+	 * Create a <code>information_schema.table_privileges</code> table reference
 	 */
 	public TablePrivileges() {
-		this("TABLE_PRIVILEGES", null);
+		this("table_privileges", null);
 	}
 
 	/**
-	 * Create an aliased <code>INFORMATION_SCHEMA.TABLE_PRIVILEGES</code> table reference
+	 * Create an aliased <code>information_schema.table_privileges</code> table reference
 	 */
 	public TablePrivileges(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.information_schema.tables.TablePrivileges.TABLE_PRIVILEGES);

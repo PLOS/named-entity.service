@@ -16,10 +16,10 @@ package org.plos.namedentity.persist.db.information_schema;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InformationSchema extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1599918101;
+	private static final long serialVersionUID = -505274325;
 
 	/**
-	 * The reference instance of <code>INFORMATION_SCHEMA</code>
+	 * The reference instance of <code>information_schema</code>
 	 */
 	public static final InformationSchema INFORMATION_SCHEMA = new InformationSchema();
 
@@ -27,7 +27,7 @@ public class InformationSchema extends org.jooq.impl.SchemaImpl {
 	 * No further instances allowed
 	 */
 	private InformationSchema() {
-		super("INFORMATION_SCHEMA");
+		super("information_schema");
 	}
 
 	@Override

@@ -16,10 +16,10 @@ package org.plos.namedentity.persist.db.information_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Users extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.information_schema.tables.records.UsersRecord> {
 
-	private static final long serialVersionUID = -1909958903;
+	private static final long serialVersionUID = 957444905;
 
 	/**
-	 * The reference instance of <code>INFORMATION_SCHEMA.USERS</code>
+	 * The reference instance of <code>information_schema.users</code>
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Users USERS = new org.plos.namedentity.persist.db.information_schema.tables.Users();
 
@@ -32,34 +32,34 @@ public class Users extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.
 	}
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.USERS.NAME</code>.
+	 * The column <code>information_schema.users.name</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.UsersRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.UsersRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.USERS.ADMIN</code>.
+	 * The column <code>information_schema.users.admin</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.UsersRecord, java.lang.String> ADMIN = createField("ADMIN", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.UsersRecord, java.lang.String> ADMIN = createField("admin", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.USERS.REMARKS</code>.
+	 * The column <code>information_schema.users.remarks</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.UsersRecord, java.lang.String> REMARKS = createField("REMARKS", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.UsersRecord, java.lang.String> REMARKS = createField("remarks", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.USERS.ID</code>.
+	 * The column <code>information_schema.users.id</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.UsersRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.UsersRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * Create a <code>INFORMATION_SCHEMA.USERS</code> table reference
+	 * Create a <code>information_schema.users</code> table reference
 	 */
 	public Users() {
-		this("USERS", null);
+		this("users", null);
 	}
 
 	/**
-	 * Create an aliased <code>INFORMATION_SCHEMA.USERS</code> table reference
+	 * Create an aliased <code>information_schema.users</code> table reference
 	 */
 	public Users(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.information_schema.tables.Users.USERS);

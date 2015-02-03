@@ -16,87 +16,87 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UrlsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -154155274;
+	private static final long serialVersionUID = -2077047114;
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.URLS.ID</code>.
+	 * Setter for <code>namedentities.urls.id</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.URLS.ID</code>.
+	 * Getter for <code>namedentities.urls.id</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.URLS.NEDID</code>.
+	 * Setter for <code>namedentities.urls.nedid</code>.
 	 */
 	public void setNedid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.URLS.NEDID</code>.
+	 * Getter for <code>namedentities.urls.nedid</code>.
 	 */
 	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.URLS.URL</code>.
+	 * Setter for <code>namedentities.urls.url</code>.
 	 */
 	public void setUrl(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.URLS.URL</code>.
+	 * Getter for <code>namedentities.urls.url</code>.
 	 */
 	public java.lang.String getUrl() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.URLS.SOURCETYPEID</code>.
+	 * Setter for <code>namedentities.urls.sourcetypeid</code>.
 	 */
 	public void setSourcetypeid(java.lang.Integer value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.URLS.SOURCETYPEID</code>.
+	 * Getter for <code>namedentities.urls.sourcetypeid</code>.
 	 */
 	public java.lang.Integer getSourcetypeid() {
 		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.URLS.CREATED</code>.
+	 * Setter for <code>namedentities.urls.created</code>.
 	 */
 	public void setCreated(java.sql.Timestamp value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.URLS.CREATED</code>.
+	 * Getter for <code>namedentities.urls.created</code>.
 	 */
 	public java.sql.Timestamp getCreated() {
 		return (java.sql.Timestamp) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.URLS.LASTMODIFIED</code>.
+	 * Setter for <code>namedentities.urls.lastmodified</code>.
 	 */
 	public void setLastmodified(java.sql.Timestamp value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.URLS.LASTMODIFIED</code>.
+	 * Getter for <code>namedentities.urls.lastmodified</code>.
 	 */
 	public java.sql.Timestamp getLastmodified() {
 		return (java.sql.Timestamp) getValue(5);

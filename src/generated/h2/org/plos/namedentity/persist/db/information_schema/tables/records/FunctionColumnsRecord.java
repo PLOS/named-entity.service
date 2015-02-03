@@ -16,241 +16,241 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FunctionColumnsRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionColumnsRecord> implements org.jooq.Record17<java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Short, java.lang.Short, java.lang.Short, java.lang.Short, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -1906135051;
+	private static final long serialVersionUID = -2055216331;
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.ALIAS_CATALOG</code>.
+	 * Setter for <code>information_schema.function_columns.alias_catalog</code>.
 	 */
 	public void setAliasCatalog(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.ALIAS_CATALOG</code>.
+	 * Getter for <code>information_schema.function_columns.alias_catalog</code>.
 	 */
 	public java.lang.String getAliasCatalog() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.ALIAS_SCHEMA</code>.
+	 * Setter for <code>information_schema.function_columns.alias_schema</code>.
 	 */
 	public void setAliasSchema(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.ALIAS_SCHEMA</code>.
+	 * Getter for <code>information_schema.function_columns.alias_schema</code>.
 	 */
 	public java.lang.String getAliasSchema() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.ALIAS_NAME</code>.
+	 * Setter for <code>information_schema.function_columns.alias_name</code>.
 	 */
 	public void setAliasName(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.ALIAS_NAME</code>.
+	 * Getter for <code>information_schema.function_columns.alias_name</code>.
 	 */
 	public java.lang.String getAliasName() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.JAVA_CLASS</code>.
+	 * Setter for <code>information_schema.function_columns.java_class</code>.
 	 */
 	public void setJavaClass(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.JAVA_CLASS</code>.
+	 * Getter for <code>information_schema.function_columns.java_class</code>.
 	 */
 	public java.lang.String getJavaClass() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.JAVA_METHOD</code>.
+	 * Setter for <code>information_schema.function_columns.java_method</code>.
 	 */
 	public void setJavaMethod(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.JAVA_METHOD</code>.
+	 * Getter for <code>information_schema.function_columns.java_method</code>.
 	 */
 	public java.lang.String getJavaMethod() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.COLUMN_COUNT</code>.
+	 * Setter for <code>information_schema.function_columns.column_count</code>.
 	 */
 	public void setColumnCount(java.lang.Integer value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.COLUMN_COUNT</code>.
+	 * Getter for <code>information_schema.function_columns.column_count</code>.
 	 */
 	public java.lang.Integer getColumnCount() {
 		return (java.lang.Integer) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.POS</code>.
+	 * Setter for <code>information_schema.function_columns.pos</code>.
 	 */
 	public void setPos(java.lang.Integer value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.POS</code>.
+	 * Getter for <code>information_schema.function_columns.pos</code>.
 	 */
 	public java.lang.Integer getPos() {
 		return (java.lang.Integer) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.COLUMN_NAME</code>.
+	 * Setter for <code>information_schema.function_columns.column_name</code>.
 	 */
 	public void setColumnName(java.lang.String value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.COLUMN_NAME</code>.
+	 * Getter for <code>information_schema.function_columns.column_name</code>.
 	 */
 	public java.lang.String getColumnName() {
 		return (java.lang.String) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.DATA_TYPE</code>.
+	 * Setter for <code>information_schema.function_columns.data_type</code>.
 	 */
 	public void setDataType(java.lang.Integer value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.DATA_TYPE</code>.
+	 * Getter for <code>information_schema.function_columns.data_type</code>.
 	 */
 	public java.lang.Integer getDataType() {
 		return (java.lang.Integer) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.TYPE_NAME</code>.
+	 * Setter for <code>information_schema.function_columns.type_name</code>.
 	 */
 	public void setTypeName(java.lang.String value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.TYPE_NAME</code>.
+	 * Getter for <code>information_schema.function_columns.type_name</code>.
 	 */
 	public java.lang.String getTypeName() {
 		return (java.lang.String) getValue(9);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.PRECISION</code>.
+	 * Setter for <code>information_schema.function_columns.precision</code>.
 	 */
 	public void setPrecision(java.lang.Integer value) {
 		setValue(10, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.PRECISION</code>.
+	 * Getter for <code>information_schema.function_columns.precision</code>.
 	 */
 	public java.lang.Integer getPrecision() {
 		return (java.lang.Integer) getValue(10);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.SCALE</code>.
+	 * Setter for <code>information_schema.function_columns.scale</code>.
 	 */
 	public void setScale(java.lang.Short value) {
 		setValue(11, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.SCALE</code>.
+	 * Getter for <code>information_schema.function_columns.scale</code>.
 	 */
 	public java.lang.Short getScale() {
 		return (java.lang.Short) getValue(11);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.RADIX</code>.
+	 * Setter for <code>information_schema.function_columns.radix</code>.
 	 */
 	public void setRadix(java.lang.Short value) {
 		setValue(12, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.RADIX</code>.
+	 * Getter for <code>information_schema.function_columns.radix</code>.
 	 */
 	public java.lang.Short getRadix() {
 		return (java.lang.Short) getValue(12);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.NULLABLE</code>.
+	 * Setter for <code>information_schema.function_columns.nullable</code>.
 	 */
 	public void setNullable(java.lang.Short value) {
 		setValue(13, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.NULLABLE</code>.
+	 * Getter for <code>information_schema.function_columns.nullable</code>.
 	 */
 	public java.lang.Short getNullable() {
 		return (java.lang.Short) getValue(13);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.COLUMN_TYPE</code>.
+	 * Setter for <code>information_schema.function_columns.column_type</code>.
 	 */
 	public void setColumnType(java.lang.Short value) {
 		setValue(14, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.COLUMN_TYPE</code>.
+	 * Getter for <code>information_schema.function_columns.column_type</code>.
 	 */
 	public java.lang.Short getColumnType() {
 		return (java.lang.Short) getValue(14);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.REMARKS</code>.
+	 * Setter for <code>information_schema.function_columns.remarks</code>.
 	 */
 	public void setRemarks(java.lang.String value) {
 		setValue(15, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.REMARKS</code>.
+	 * Getter for <code>information_schema.function_columns.remarks</code>.
 	 */
 	public java.lang.String getRemarks() {
 		return (java.lang.String) getValue(15);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.COLUMN_DEFAULT</code>.
+	 * Setter for <code>information_schema.function_columns.column_default</code>.
 	 */
 	public void setColumnDefault(java.lang.String value) {
 		setValue(16, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS.COLUMN_DEFAULT</code>.
+	 * Getter for <code>information_schema.function_columns.column_default</code>.
 	 */
 	public java.lang.String getColumnDefault() {
 		return (java.lang.String) getValue(16);

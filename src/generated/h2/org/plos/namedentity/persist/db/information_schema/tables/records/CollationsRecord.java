@@ -16,31 +16,31 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CollationsRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.CollationsRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -1460689681;
+	private static final long serialVersionUID = -563322641;
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.COLLATIONS.NAME</code>.
+	 * Setter for <code>information_schema.collations.name</code>.
 	 */
 	public void setName(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.COLLATIONS.NAME</code>.
+	 * Getter for <code>information_schema.collations.name</code>.
 	 */
 	public java.lang.String getName() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.COLLATIONS.KEY</code>.
+	 * Setter for <code>information_schema.collations.key</code>.
 	 */
 	public void setKey(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.COLLATIONS.KEY</code>.
+	 * Getter for <code>information_schema.collations.key</code>.
 	 */
 	public java.lang.String getKey() {
 		return (java.lang.String) getValue(1);

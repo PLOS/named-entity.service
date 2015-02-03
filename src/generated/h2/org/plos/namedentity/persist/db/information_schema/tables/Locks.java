@@ -16,10 +16,10 @@ package org.plos.namedentity.persist.db.information_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Locks extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.information_schema.tables.records.LocksRecord> {
 
-	private static final long serialVersionUID = 712072185;
+	private static final long serialVersionUID = 1380169689;
 
 	/**
-	 * The reference instance of <code>INFORMATION_SCHEMA.LOCKS</code>
+	 * The reference instance of <code>information_schema.locks</code>
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Locks LOCKS = new org.plos.namedentity.persist.db.information_schema.tables.Locks();
 
@@ -32,34 +32,34 @@ public class Locks extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.
 	}
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.LOCKS.TABLE_SCHEMA</code>.
+	 * The column <code>information_schema.locks.table_schema</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.LocksRecord, java.lang.String> TABLE_SCHEMA = createField("TABLE_SCHEMA", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.LocksRecord, java.lang.String> TABLE_SCHEMA = createField("table_schema", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.LOCKS.TABLE_NAME</code>.
+	 * The column <code>information_schema.locks.table_name</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.LocksRecord, java.lang.String> TABLE_NAME = createField("TABLE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.LocksRecord, java.lang.String> TABLE_NAME = createField("table_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.LOCKS.SESSION_ID</code>.
+	 * The column <code>information_schema.locks.session_id</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.LocksRecord, java.lang.Integer> SESSION_ID = createField("SESSION_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.LocksRecord, java.lang.Integer> SESSION_ID = createField("session_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.LOCKS.LOCK_TYPE</code>.
+	 * The column <code>information_schema.locks.lock_type</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.LocksRecord, java.lang.String> LOCK_TYPE = createField("LOCK_TYPE", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.LocksRecord, java.lang.String> LOCK_TYPE = createField("lock_type", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * Create a <code>INFORMATION_SCHEMA.LOCKS</code> table reference
+	 * Create a <code>information_schema.locks</code> table reference
 	 */
 	public Locks() {
-		this("LOCKS", null);
+		this("locks", null);
 	}
 
 	/**
-	 * Create an aliased <code>INFORMATION_SCHEMA.LOCKS</code> table reference
+	 * Create an aliased <code>information_schema.locks</code> table reference
 	 */
 	public Locks(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.information_schema.tables.Locks.LOCKS);

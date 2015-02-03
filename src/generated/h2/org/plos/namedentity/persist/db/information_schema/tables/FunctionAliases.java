@@ -16,10 +16,10 @@ package org.plos.namedentity.persist.db.information_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FunctionAliases extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord> {
 
-	private static final long serialVersionUID = 495427714;
+	private static final long serialVersionUID = 178540642;
 
 	/**
-	 * The reference instance of <code>INFORMATION_SCHEMA.FUNCTION_ALIASES</code>
+	 * The reference instance of <code>information_schema.function_aliases</code>
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.FunctionAliases FUNCTION_ALIASES = new org.plos.namedentity.persist.db.information_schema.tables.FunctionAliases();
 
@@ -32,74 +32,74 @@ public class FunctionAliases extends org.jooq.impl.TableImpl<org.plos.namedentit
 	}
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.ALIAS_CATALOG</code>.
+	 * The column <code>information_schema.function_aliases.alias_catalog</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.String> ALIAS_CATALOG = createField("ALIAS_CATALOG", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.String> ALIAS_CATALOG = createField("alias_catalog", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.ALIAS_SCHEMA</code>.
+	 * The column <code>information_schema.function_aliases.alias_schema</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.String> ALIAS_SCHEMA = createField("ALIAS_SCHEMA", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.String> ALIAS_SCHEMA = createField("alias_schema", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.ALIAS_NAME</code>.
+	 * The column <code>information_schema.function_aliases.alias_name</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.String> ALIAS_NAME = createField("ALIAS_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.String> ALIAS_NAME = createField("alias_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.JAVA_CLASS</code>.
+	 * The column <code>information_schema.function_aliases.java_class</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.String> JAVA_CLASS = createField("JAVA_CLASS", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.String> JAVA_CLASS = createField("java_class", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.JAVA_METHOD</code>.
+	 * The column <code>information_schema.function_aliases.java_method</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.String> JAVA_METHOD = createField("JAVA_METHOD", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.String> JAVA_METHOD = createField("java_method", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.DATA_TYPE</code>.
+	 * The column <code>information_schema.function_aliases.data_type</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.Integer> DATA_TYPE = createField("DATA_TYPE", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.Integer> DATA_TYPE = createField("data_type", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.TYPE_NAME</code>.
+	 * The column <code>information_schema.function_aliases.type_name</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.String> TYPE_NAME = createField("TYPE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.String> TYPE_NAME = createField("type_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.COLUMN_COUNT</code>.
+	 * The column <code>information_schema.function_aliases.column_count</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.Integer> COLUMN_COUNT = createField("COLUMN_COUNT", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.Integer> COLUMN_COUNT = createField("column_count", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.RETURNS_RESULT</code>.
+	 * The column <code>information_schema.function_aliases.returns_result</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.Short> RETURNS_RESULT = createField("RETURNS_RESULT", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.Short> RETURNS_RESULT = createField("returns_result", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.REMARKS</code>.
+	 * The column <code>information_schema.function_aliases.remarks</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.String> REMARKS = createField("REMARKS", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.String> REMARKS = createField("remarks", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.ID</code>.
+	 * The column <code>information_schema.function_aliases.id</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.SOURCE</code>.
+	 * The column <code>information_schema.function_aliases.source</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.String> SOURCE = createField("SOURCE", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord, java.lang.String> SOURCE = createField("source", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * Create a <code>INFORMATION_SCHEMA.FUNCTION_ALIASES</code> table reference
+	 * Create a <code>information_schema.function_aliases</code> table reference
 	 */
 	public FunctionAliases() {
-		this("FUNCTION_ALIASES", null);
+		this("function_aliases", null);
 	}
 
 	/**
-	 * Create an aliased <code>INFORMATION_SCHEMA.FUNCTION_ALIASES</code> table reference
+	 * Create an aliased <code>information_schema.function_aliases</code> table reference
 	 */
 	public FunctionAliases(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.information_schema.tables.FunctionAliases.FUNCTION_ALIASES);

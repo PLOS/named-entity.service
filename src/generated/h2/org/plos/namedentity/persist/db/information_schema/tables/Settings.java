@@ -16,10 +16,10 @@ package org.plos.namedentity.persist.db.information_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Settings extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.information_schema.tables.records.SettingsRecord> {
 
-	private static final long serialVersionUID = -1292960675;
+	private static final long serialVersionUID = 924777661;
 
 	/**
-	 * The reference instance of <code>INFORMATION_SCHEMA.SETTINGS</code>
+	 * The reference instance of <code>information_schema.settings</code>
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Settings SETTINGS = new org.plos.namedentity.persist.db.information_schema.tables.Settings();
 
@@ -32,24 +32,24 @@ public class Settings extends org.jooq.impl.TableImpl<org.plos.namedentity.persi
 	}
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.SETTINGS.NAME</code>.
+	 * The column <code>information_schema.settings.name</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SettingsRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SettingsRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.SETTINGS.VALUE</code>.
+	 * The column <code>information_schema.settings.value</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SettingsRecord, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SettingsRecord, java.lang.String> VALUE = createField("value", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * Create a <code>INFORMATION_SCHEMA.SETTINGS</code> table reference
+	 * Create a <code>information_schema.settings</code> table reference
 	 */
 	public Settings() {
-		this("SETTINGS", null);
+		this("settings", null);
 	}
 
 	/**
-	 * Create an aliased <code>INFORMATION_SCHEMA.SETTINGS</code> table reference
+	 * Create an aliased <code>information_schema.settings</code> table reference
 	 */
 	public Settings(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.information_schema.tables.Settings.SETTINGS);

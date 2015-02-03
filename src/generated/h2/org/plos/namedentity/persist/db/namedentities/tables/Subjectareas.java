@@ -16,10 +16,10 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Subjectareas extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord> {
 
-	private static final long serialVersionUID = 1248326861;
+	private static final long serialVersionUID = -16429169;
 
 	/**
-	 * The reference instance of <code>NAMEDENTITIES.SUBJECTAREAS</code>
+	 * The reference instance of <code>namedentities.subjectareas</code>
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Subjectareas SUBJECTAREAS = new org.plos.namedentity.persist.db.namedentities.tables.Subjectareas();
 
@@ -32,39 +32,39 @@ public class Subjectareas extends org.jooq.impl.TableImpl<org.plos.namedentity.p
 	}
 
 	/**
-	 * The column <code>NAMEDENTITIES.SUBJECTAREAS.ID</code>.
+	 * The column <code>namedentities.subjectareas.id</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>NAMEDENTITIES.SUBJECTAREAS.NEDID</code>.
+	 * The column <code>namedentities.subjectareas.nedid</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord, java.lang.Integer> NEDID = createField("NEDID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord, java.lang.Integer> NEDID = createField("nedid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>NAMEDENTITIES.SUBJECTAREAS.TYPEID</code>.
+	 * The column <code>namedentities.subjectareas.typeid</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord, java.lang.Integer> TYPEID = createField("TYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord, java.lang.Integer> TYPEID = createField("typeid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>NAMEDENTITIES.SUBJECTAREAS.CREATED</code>.
+	 * The column <code>namedentities.subjectareas.created</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord, java.sql.Timestamp> CREATED = createField("CREATED", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord, java.sql.Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>NAMEDENTITIES.SUBJECTAREAS.LASTMODIFIED</code>.
+	 * The column <code>namedentities.subjectareas.lastmodified</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord, java.sql.Timestamp> LASTMODIFIED = createField("LASTMODIFIED", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord, java.sql.Timestamp> LASTMODIFIED = createField("lastmodified", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * Create a <code>NAMEDENTITIES.SUBJECTAREAS</code> table reference
+	 * Create a <code>namedentities.subjectareas</code> table reference
 	 */
 	public Subjectareas() {
-		this("SUBJECTAREAS", null);
+		this("subjectareas", null);
 	}
 
 	/**
-	 * Create an aliased <code>NAMEDENTITIES.SUBJECTAREAS</code> table reference
+	 * Create an aliased <code>namedentities.subjectareas</code> table reference
 	 */
 	public Subjectareas(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.namedentities.tables.Subjectareas.SUBJECTAREAS);

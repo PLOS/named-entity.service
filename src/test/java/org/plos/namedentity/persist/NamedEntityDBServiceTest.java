@@ -272,9 +272,12 @@ public class NamedEntityDBServiceTest {
     Integer workEmailId = nedDBSvc.create( workEmail );
     assertNotNull(workEmailId);
 
-    // UPDATE Work Email and Status 
+    // verify that created and lastmodified attributes are populated (by db)
 
     Email savedWorkEmail = nedDBSvc.findById(workEmailId, Email.class);
+
+    // UPDATE Work Email and Status 
+
     savedWorkEmail.setEmailaddress("super." + savedWorkEmail.getEmailaddress());
     savedWorkEmail.setIsactive(false);
     assertTrue( nedDBSvc.update(savedWorkEmail) );

@@ -4,7 +4,7 @@
 package org.plos.namedentity.persist.db.namedentities;
 
 /**
- * A class modelling foreign key relationships between tables of the <code>NAMEDENTITIES</code> 
+ * A class modelling foreign key relationships between tables of the <code>namedentities</code> 
  * schema
  */
 @javax.annotation.Generated(

@@ -16,115 +16,115 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SchemataRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.SchemataRecord> implements org.jooq.Record8<java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Boolean, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1859031644;
+	private static final long serialVersionUID = -546959652;
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.SCHEMATA.CATALOG_NAME</code>.
+	 * Setter for <code>information_schema.schemata.catalog_name</code>.
 	 */
 	public void setCatalogName(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.SCHEMATA.CATALOG_NAME</code>.
+	 * Getter for <code>information_schema.schemata.catalog_name</code>.
 	 */
 	public java.lang.String getCatalogName() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.SCHEMATA.SCHEMA_NAME</code>.
+	 * Setter for <code>information_schema.schemata.schema_name</code>.
 	 */
 	public void setSchemaName(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.SCHEMATA.SCHEMA_NAME</code>.
+	 * Getter for <code>information_schema.schemata.schema_name</code>.
 	 */
 	public java.lang.String getSchemaName() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.SCHEMATA.SCHEMA_OWNER</code>.
+	 * Setter for <code>information_schema.schemata.schema_owner</code>.
 	 */
 	public void setSchemaOwner(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.SCHEMATA.SCHEMA_OWNER</code>.
+	 * Getter for <code>information_schema.schemata.schema_owner</code>.
 	 */
 	public java.lang.String getSchemaOwner() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.SCHEMATA.DEFAULT_CHARACTER_SET_NAME</code>.
+	 * Setter for <code>information_schema.schemata.default_character_set_name</code>.
 	 */
 	public void setDefaultCharacterSetName(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.SCHEMATA.DEFAULT_CHARACTER_SET_NAME</code>.
+	 * Getter for <code>information_schema.schemata.default_character_set_name</code>.
 	 */
 	public java.lang.String getDefaultCharacterSetName() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.SCHEMATA.DEFAULT_COLLATION_NAME</code>.
+	 * Setter for <code>information_schema.schemata.default_collation_name</code>.
 	 */
 	public void setDefaultCollationName(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.SCHEMATA.DEFAULT_COLLATION_NAME</code>.
+	 * Getter for <code>information_schema.schemata.default_collation_name</code>.
 	 */
 	public java.lang.String getDefaultCollationName() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.SCHEMATA.IS_DEFAULT</code>.
+	 * Setter for <code>information_schema.schemata.is_default</code>.
 	 */
 	public void setIsDefault(java.lang.Boolean value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.SCHEMATA.IS_DEFAULT</code>.
+	 * Getter for <code>information_schema.schemata.is_default</code>.
 	 */
 	public java.lang.Boolean getIsDefault() {
 		return (java.lang.Boolean) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.SCHEMATA.REMARKS</code>.
+	 * Setter for <code>information_schema.schemata.remarks</code>.
 	 */
 	public void setRemarks(java.lang.String value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.SCHEMATA.REMARKS</code>.
+	 * Getter for <code>information_schema.schemata.remarks</code>.
 	 */
 	public java.lang.String getRemarks() {
 		return (java.lang.String) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.SCHEMATA.ID</code>.
+	 * Setter for <code>information_schema.schemata.id</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.SCHEMATA.ID</code>.
+	 * Getter for <code>information_schema.schemata.id</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(7);

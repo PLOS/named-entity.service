@@ -16,101 +16,101 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ConstantsRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.ConstantsRecord> implements org.jooq.Record7<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = -343260632;
+	private static final long serialVersionUID = -853780952;
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.CONSTANTS.CONSTANT_CATALOG</code>.
+	 * Setter for <code>information_schema.constants.constant_catalog</code>.
 	 */
 	public void setConstantCatalog(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.CONSTANTS.CONSTANT_CATALOG</code>.
+	 * Getter for <code>information_schema.constants.constant_catalog</code>.
 	 */
 	public java.lang.String getConstantCatalog() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.CONSTANTS.CONSTANT_SCHEMA</code>.
+	 * Setter for <code>information_schema.constants.constant_schema</code>.
 	 */
 	public void setConstantSchema(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.CONSTANTS.CONSTANT_SCHEMA</code>.
+	 * Getter for <code>information_schema.constants.constant_schema</code>.
 	 */
 	public java.lang.String getConstantSchema() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.CONSTANTS.CONSTANT_NAME</code>.
+	 * Setter for <code>information_schema.constants.constant_name</code>.
 	 */
 	public void setConstantName(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.CONSTANTS.CONSTANT_NAME</code>.
+	 * Getter for <code>information_schema.constants.constant_name</code>.
 	 */
 	public java.lang.String getConstantName() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.CONSTANTS.DATA_TYPE</code>.
+	 * Setter for <code>information_schema.constants.data_type</code>.
 	 */
 	public void setDataType(java.lang.Integer value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.CONSTANTS.DATA_TYPE</code>.
+	 * Getter for <code>information_schema.constants.data_type</code>.
 	 */
 	public java.lang.Integer getDataType() {
 		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.CONSTANTS.REMARKS</code>.
+	 * Setter for <code>information_schema.constants.remarks</code>.
 	 */
 	public void setRemarks(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.CONSTANTS.REMARKS</code>.
+	 * Getter for <code>information_schema.constants.remarks</code>.
 	 */
 	public java.lang.String getRemarks() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.CONSTANTS.SQL</code>.
+	 * Setter for <code>information_schema.constants.sql</code>.
 	 */
 	public void setSql(java.lang.String value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.CONSTANTS.SQL</code>.
+	 * Getter for <code>information_schema.constants.sql</code>.
 	 */
 	public java.lang.String getSql() {
 		return (java.lang.String) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.CONSTANTS.ID</code>.
+	 * Setter for <code>information_schema.constants.id</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.CONSTANTS.ID</code>.
+	 * Getter for <code>information_schema.constants.id</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(6);

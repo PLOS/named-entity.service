@@ -16,73 +16,73 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SubjectareasRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord> implements org.jooq.Record5<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1807188359;
+	private static final long serialVersionUID = 2080594247;
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.SUBJECTAREAS.ID</code>.
+	 * Setter for <code>namedentities.subjectareas.id</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.SUBJECTAREAS.ID</code>.
+	 * Getter for <code>namedentities.subjectareas.id</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.SUBJECTAREAS.NEDID</code>.
+	 * Setter for <code>namedentities.subjectareas.nedid</code>.
 	 */
 	public void setNedid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.SUBJECTAREAS.NEDID</code>.
+	 * Getter for <code>namedentities.subjectareas.nedid</code>.
 	 */
 	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.SUBJECTAREAS.TYPEID</code>.
+	 * Setter for <code>namedentities.subjectareas.typeid</code>.
 	 */
 	public void setTypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.SUBJECTAREAS.TYPEID</code>.
+	 * Getter for <code>namedentities.subjectareas.typeid</code>.
 	 */
 	public java.lang.Integer getTypeid() {
 		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.SUBJECTAREAS.CREATED</code>.
+	 * Setter for <code>namedentities.subjectareas.created</code>.
 	 */
 	public void setCreated(java.sql.Timestamp value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.SUBJECTAREAS.CREATED</code>.
+	 * Getter for <code>namedentities.subjectareas.created</code>.
 	 */
 	public java.sql.Timestamp getCreated() {
 		return (java.sql.Timestamp) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.SUBJECTAREAS.LASTMODIFIED</code>.
+	 * Setter for <code>namedentities.subjectareas.lastmodified</code>.
 	 */
 	public void setLastmodified(java.sql.Timestamp value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.SUBJECTAREAS.LASTMODIFIED</code>.
+	 * Getter for <code>namedentities.subjectareas.lastmodified</code>.
 	 */
 	public java.sql.Timestamp getLastmodified() {
 		return (java.sql.Timestamp) getValue(4);

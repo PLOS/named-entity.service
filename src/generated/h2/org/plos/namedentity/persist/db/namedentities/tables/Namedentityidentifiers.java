@@ -16,10 +16,10 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Namedentityidentifiers extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.NamedentityidentifiersRecord> {
 
-	private static final long serialVersionUID = -1614184633;
+	private static final long serialVersionUID = -675701335;
 
 	/**
-	 * The reference instance of <code>NAMEDENTITIES.NAMEDENTITYIDENTIFIERS</code>
+	 * The reference instance of <code>namedentities.namedentityidentifiers</code>
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Namedentityidentifiers NAMEDENTITYIDENTIFIERS = new org.plos.namedentity.persist.db.namedentities.tables.Namedentityidentifiers();
 
@@ -32,44 +32,44 @@ public class Namedentityidentifiers extends org.jooq.impl.TableImpl<org.plos.nam
 	}
 
 	/**
-	 * The column <code>NAMEDENTITIES.NAMEDENTITYIDENTIFIERS.ID</code>.
+	 * The column <code>namedentities.namedentityidentifiers.id</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.NamedentityidentifiersRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.NamedentityidentifiersRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>NAMEDENTITIES.NAMEDENTITYIDENTIFIERS.TYPEID</code>.
+	 * The column <code>namedentities.namedentityidentifiers.typeid</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.NamedentityidentifiersRecord, java.lang.Integer> TYPEID = createField("TYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.NamedentityidentifiersRecord, java.lang.Integer> TYPEID = createField("typeid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>NAMEDENTITIES.NAMEDENTITYIDENTIFIERS.CREATED</code>.
+	 * The column <code>namedentities.namedentityidentifiers.created</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.NamedentityidentifiersRecord, java.sql.Timestamp> CREATED = createField("CREATED", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.NamedentityidentifiersRecord, java.sql.Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>NAMEDENTITIES.NAMEDENTITYIDENTIFIERS.LASTMODIFIED</code>.
+	 * The column <code>namedentities.namedentityidentifiers.lastmodified</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.NamedentityidentifiersRecord, java.sql.Timestamp> LASTMODIFIED = createField("LASTMODIFIED", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.NamedentityidentifiersRecord, java.sql.Timestamp> LASTMODIFIED = createField("lastmodified", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>NAMEDENTITIES.NAMEDENTITYIDENTIFIERS.CREATEDBY</code>.
+	 * The column <code>namedentities.namedentityidentifiers.createdby</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.NamedentityidentifiersRecord, java.lang.Integer> CREATEDBY = createField("CREATEDBY", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.NamedentityidentifiersRecord, java.lang.Integer> CREATEDBY = createField("createdby", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>NAMEDENTITIES.NAMEDENTITYIDENTIFIERS.LASTMODIFIEDBY</code>.
+	 * The column <code>namedentities.namedentityidentifiers.lastmodifiedby</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.NamedentityidentifiersRecord, java.lang.Integer> LASTMODIFIEDBY = createField("LASTMODIFIEDBY", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.NamedentityidentifiersRecord, java.lang.Integer> LASTMODIFIEDBY = createField("lastmodifiedby", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * Create a <code>NAMEDENTITIES.NAMEDENTITYIDENTIFIERS</code> table reference
+	 * Create a <code>namedentities.namedentityidentifiers</code> table reference
 	 */
 	public Namedentityidentifiers() {
-		this("NAMEDENTITYIDENTIFIERS", null);
+		this("namedentityidentifiers", null);
 	}
 
 	/**
-	 * Create an aliased <code>NAMEDENTITIES.NAMEDENTITYIDENTIFIERS</code> table reference
+	 * Create an aliased <code>namedentities.namedentityidentifiers</code> table reference
 	 */
 	public Namedentityidentifiers(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.namedentities.tables.Namedentityidentifiers.NAMEDENTITYIDENTIFIERS);

@@ -16,59 +16,59 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UsersRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.UsersRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1803732297;
+	private static final long serialVersionUID = -1066904905;
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.USERS.NAME</code>.
+	 * Setter for <code>information_schema.users.name</code>.
 	 */
 	public void setName(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.USERS.NAME</code>.
+	 * Getter for <code>information_schema.users.name</code>.
 	 */
 	public java.lang.String getName() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.USERS.ADMIN</code>.
+	 * Setter for <code>information_schema.users.admin</code>.
 	 */
 	public void setAdmin(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.USERS.ADMIN</code>.
+	 * Getter for <code>information_schema.users.admin</code>.
 	 */
 	public java.lang.String getAdmin() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.USERS.REMARKS</code>.
+	 * Setter for <code>information_schema.users.remarks</code>.
 	 */
 	public void setRemarks(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.USERS.REMARKS</code>.
+	 * Getter for <code>information_schema.users.remarks</code>.
 	 */
 	public java.lang.String getRemarks() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.USERS.ID</code>.
+	 * Setter for <code>information_schema.users.id</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.USERS.ID</code>.
+	 * Getter for <code>information_schema.users.id</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(3);

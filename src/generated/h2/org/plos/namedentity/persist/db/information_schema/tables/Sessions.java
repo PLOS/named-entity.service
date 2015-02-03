@@ -16,10 +16,10 @@ package org.plos.namedentity.persist.db.information_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sessions extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.information_schema.tables.records.SessionsRecord> {
 
-	private static final long serialVersionUID = 1189728427;
+	private static final long serialVersionUID = -629189749;
 
 	/**
-	 * The reference instance of <code>INFORMATION_SCHEMA.SESSIONS</code>
+	 * The reference instance of <code>information_schema.sessions</code>
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Sessions SESSIONS = new org.plos.namedentity.persist.db.information_schema.tables.Sessions();
 
@@ -32,44 +32,44 @@ public class Sessions extends org.jooq.impl.TableImpl<org.plos.namedentity.persi
 	}
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.SESSIONS.ID</code>.
+	 * The column <code>information_schema.sessions.id</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SessionsRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SessionsRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.SESSIONS.USER_NAME</code>.
+	 * The column <code>information_schema.sessions.user_name</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SessionsRecord, java.lang.String> USER_NAME = createField("USER_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SessionsRecord, java.lang.String> USER_NAME = createField("user_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.SESSIONS.SESSION_START</code>.
+	 * The column <code>information_schema.sessions.session_start</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SessionsRecord, java.lang.String> SESSION_START = createField("SESSION_START", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SessionsRecord, java.lang.String> SESSION_START = createField("session_start", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.SESSIONS.STATEMENT</code>.
+	 * The column <code>information_schema.sessions.statement</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SessionsRecord, java.lang.String> STATEMENT = createField("STATEMENT", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SessionsRecord, java.lang.String> STATEMENT = createField("statement", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.SESSIONS.STATEMENT_START</code>.
+	 * The column <code>information_schema.sessions.statement_start</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SessionsRecord, java.lang.String> STATEMENT_START = createField("STATEMENT_START", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SessionsRecord, java.lang.String> STATEMENT_START = createField("statement_start", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>INFORMATION_SCHEMA.SESSIONS.CONTAINS_UNCOMMITTED</code>.
+	 * The column <code>information_schema.sessions.contains_uncommitted</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SessionsRecord, java.lang.String> CONTAINS_UNCOMMITTED = createField("CONTAINS_UNCOMMITTED", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SessionsRecord, java.lang.String> CONTAINS_UNCOMMITTED = createField("contains_uncommitted", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * Create a <code>INFORMATION_SCHEMA.SESSIONS</code> table reference
+	 * Create a <code>information_schema.sessions</code> table reference
 	 */
 	public Sessions() {
-		this("SESSIONS", null);
+		this("sessions", null);
 	}
 
 	/**
-	 * Create an aliased <code>INFORMATION_SCHEMA.SESSIONS</code> table reference
+	 * Create an aliased <code>information_schema.sessions</code> table reference
 	 */
 	public Sessions(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.information_schema.tables.Sessions.SESSIONS);

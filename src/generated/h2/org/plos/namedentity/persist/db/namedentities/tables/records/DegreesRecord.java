@@ -16,87 +16,87 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DegreesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 2021102844;
+	private static final long serialVersionUID = -1883959620;
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.DEGREES.ID</code>.
+	 * Setter for <code>namedentities.degrees.id</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.DEGREES.ID</code>.
+	 * Getter for <code>namedentities.degrees.id</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.DEGREES.NEDID</code>.
+	 * Setter for <code>namedentities.degrees.nedid</code>.
 	 */
 	public void setNedid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.DEGREES.NEDID</code>.
+	 * Getter for <code>namedentities.degrees.nedid</code>.
 	 */
 	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.DEGREES.TYPEID</code>.
+	 * Setter for <code>namedentities.degrees.typeid</code>.
 	 */
 	public void setTypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.DEGREES.TYPEID</code>.
+	 * Getter for <code>namedentities.degrees.typeid</code>.
 	 */
 	public java.lang.Integer getTypeid() {
 		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.DEGREES.SOURCETYPEID</code>.
+	 * Setter for <code>namedentities.degrees.sourcetypeid</code>.
 	 */
 	public void setSourcetypeid(java.lang.Integer value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.DEGREES.SOURCETYPEID</code>.
+	 * Getter for <code>namedentities.degrees.sourcetypeid</code>.
 	 */
 	public java.lang.Integer getSourcetypeid() {
 		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.DEGREES.CREATED</code>.
+	 * Setter for <code>namedentities.degrees.created</code>.
 	 */
 	public void setCreated(java.sql.Timestamp value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.DEGREES.CREATED</code>.
+	 * Getter for <code>namedentities.degrees.created</code>.
 	 */
 	public java.sql.Timestamp getCreated() {
 		return (java.sql.Timestamp) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.DEGREES.LASTMODIFIED</code>.
+	 * Setter for <code>namedentities.degrees.lastmodified</code>.
 	 */
 	public void setLastmodified(java.sql.Timestamp value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.DEGREES.LASTMODIFIED</code>.
+	 * Getter for <code>namedentities.degrees.lastmodified</code>.
 	 */
 	public java.sql.Timestamp getLastmodified() {
 		return (java.sql.Timestamp) getValue(5);

@@ -16,115 +16,115 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class EmailsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord> implements org.jooq.Record8<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Byte, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -2064278924;
+	private static final long serialVersionUID = 974001716;
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.EMAILS.ID</code>.
+	 * Setter for <code>namedentities.emails.id</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.EMAILS.ID</code>.
+	 * Getter for <code>namedentities.emails.id</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.EMAILS.NEDID</code>.
+	 * Setter for <code>namedentities.emails.nedid</code>.
 	 */
 	public void setNedid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.EMAILS.NEDID</code>.
+	 * Getter for <code>namedentities.emails.nedid</code>.
 	 */
 	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.EMAILS.TYPEID</code>.
+	 * Setter for <code>namedentities.emails.typeid</code>.
 	 */
 	public void setTypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.EMAILS.TYPEID</code>.
+	 * Getter for <code>namedentities.emails.typeid</code>.
 	 */
 	public java.lang.Integer getTypeid() {
 		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.EMAILS.EMAILADDRESS</code>.
+	 * Setter for <code>namedentities.emails.emailaddress</code>.
 	 */
 	public void setEmailaddress(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.EMAILS.EMAILADDRESS</code>.
+	 * Getter for <code>namedentities.emails.emailaddress</code>.
 	 */
 	public java.lang.String getEmailaddress() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.EMAILS.SOURCETYPEID</code>.
+	 * Setter for <code>namedentities.emails.sourcetypeid</code>.
 	 */
 	public void setSourcetypeid(java.lang.Integer value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.EMAILS.SOURCETYPEID</code>.
+	 * Getter for <code>namedentities.emails.sourcetypeid</code>.
 	 */
 	public java.lang.Integer getSourcetypeid() {
 		return (java.lang.Integer) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.EMAILS.ISACTIVE</code>.
+	 * Setter for <code>namedentities.emails.isactive</code>.
 	 */
 	public void setIsactive(java.lang.Byte value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.EMAILS.ISACTIVE</code>.
+	 * Getter for <code>namedentities.emails.isactive</code>.
 	 */
 	public java.lang.Byte getIsactive() {
 		return (java.lang.Byte) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.EMAILS.CREATED</code>.
+	 * Setter for <code>namedentities.emails.created</code>.
 	 */
 	public void setCreated(java.sql.Timestamp value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.EMAILS.CREATED</code>.
+	 * Getter for <code>namedentities.emails.created</code>.
 	 */
 	public java.sql.Timestamp getCreated() {
 		return (java.sql.Timestamp) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>NAMEDENTITIES.EMAILS.LASTMODIFIED</code>.
+	 * Setter for <code>namedentities.emails.lastmodified</code>.
 	 */
 	public void setLastmodified(java.sql.Timestamp value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>NAMEDENTITIES.EMAILS.LASTMODIFIED</code>.
+	 * Getter for <code>namedentities.emails.lastmodified</code>.
 	 */
 	public java.sql.Timestamp getLastmodified() {
 		return (java.sql.Timestamp) getValue(7);

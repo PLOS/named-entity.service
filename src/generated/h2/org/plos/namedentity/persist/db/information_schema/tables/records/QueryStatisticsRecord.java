@@ -16,171 +16,171 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class QueryStatisticsRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord> implements org.jooq.Record12<java.lang.String, java.lang.Integer, java.lang.Long, java.lang.Long, java.lang.Long, java.lang.Double, java.lang.Double, java.lang.Integer, java.lang.Integer, java.lang.Long, java.lang.Double, java.lang.Double> {
 
-	private static final long serialVersionUID = 307386106;
+	private static final long serialVersionUID = -1643472006;
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.SQL_STATEMENT</code>.
+	 * Setter for <code>information_schema.query_statistics.sql_statement</code>.
 	 */
 	public void setSqlStatement(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.SQL_STATEMENT</code>.
+	 * Getter for <code>information_schema.query_statistics.sql_statement</code>.
 	 */
 	public java.lang.String getSqlStatement() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.EXECUTION_COUNT</code>.
+	 * Setter for <code>information_schema.query_statistics.execution_count</code>.
 	 */
 	public void setExecutionCount(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.EXECUTION_COUNT</code>.
+	 * Getter for <code>information_schema.query_statistics.execution_count</code>.
 	 */
 	public java.lang.Integer getExecutionCount() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.MIN_EXECUTION_TIME</code>.
+	 * Setter for <code>information_schema.query_statistics.min_execution_time</code>.
 	 */
 	public void setMinExecutionTime(java.lang.Long value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.MIN_EXECUTION_TIME</code>.
+	 * Getter for <code>information_schema.query_statistics.min_execution_time</code>.
 	 */
 	public java.lang.Long getMinExecutionTime() {
 		return (java.lang.Long) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.MAX_EXECUTION_TIME</code>.
+	 * Setter for <code>information_schema.query_statistics.max_execution_time</code>.
 	 */
 	public void setMaxExecutionTime(java.lang.Long value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.MAX_EXECUTION_TIME</code>.
+	 * Getter for <code>information_schema.query_statistics.max_execution_time</code>.
 	 */
 	public java.lang.Long getMaxExecutionTime() {
 		return (java.lang.Long) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.CUMULATIVE_EXECUTION_TIME</code>.
+	 * Setter for <code>information_schema.query_statistics.cumulative_execution_time</code>.
 	 */
 	public void setCumulativeExecutionTime(java.lang.Long value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.CUMULATIVE_EXECUTION_TIME</code>.
+	 * Getter for <code>information_schema.query_statistics.cumulative_execution_time</code>.
 	 */
 	public java.lang.Long getCumulativeExecutionTime() {
 		return (java.lang.Long) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.AVERAGE_EXECUTION_TIME</code>.
+	 * Setter for <code>information_schema.query_statistics.average_execution_time</code>.
 	 */
 	public void setAverageExecutionTime(java.lang.Double value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.AVERAGE_EXECUTION_TIME</code>.
+	 * Getter for <code>information_schema.query_statistics.average_execution_time</code>.
 	 */
 	public java.lang.Double getAverageExecutionTime() {
 		return (java.lang.Double) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.STD_DEV_EXECUTION_TIME</code>.
+	 * Setter for <code>information_schema.query_statistics.std_dev_execution_time</code>.
 	 */
 	public void setStdDevExecutionTime(java.lang.Double value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.STD_DEV_EXECUTION_TIME</code>.
+	 * Getter for <code>information_schema.query_statistics.std_dev_execution_time</code>.
 	 */
 	public java.lang.Double getStdDevExecutionTime() {
 		return (java.lang.Double) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.MIN_ROW_COUNT</code>.
+	 * Setter for <code>information_schema.query_statistics.min_row_count</code>.
 	 */
 	public void setMinRowCount(java.lang.Integer value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.MIN_ROW_COUNT</code>.
+	 * Getter for <code>information_schema.query_statistics.min_row_count</code>.
 	 */
 	public java.lang.Integer getMinRowCount() {
 		return (java.lang.Integer) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.MAX_ROW_COUNT</code>.
+	 * Setter for <code>information_schema.query_statistics.max_row_count</code>.
 	 */
 	public void setMaxRowCount(java.lang.Integer value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.MAX_ROW_COUNT</code>.
+	 * Getter for <code>information_schema.query_statistics.max_row_count</code>.
 	 */
 	public java.lang.Integer getMaxRowCount() {
 		return (java.lang.Integer) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.CUMULATIVE_ROW_COUNT</code>.
+	 * Setter for <code>information_schema.query_statistics.cumulative_row_count</code>.
 	 */
 	public void setCumulativeRowCount(java.lang.Long value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.CUMULATIVE_ROW_COUNT</code>.
+	 * Getter for <code>information_schema.query_statistics.cumulative_row_count</code>.
 	 */
 	public java.lang.Long getCumulativeRowCount() {
 		return (java.lang.Long) getValue(9);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.AVERAGE_ROW_COUNT</code>.
+	 * Setter for <code>information_schema.query_statistics.average_row_count</code>.
 	 */
 	public void setAverageRowCount(java.lang.Double value) {
 		setValue(10, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.AVERAGE_ROW_COUNT</code>.
+	 * Getter for <code>information_schema.query_statistics.average_row_count</code>.
 	 */
 	public java.lang.Double getAverageRowCount() {
 		return (java.lang.Double) getValue(10);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.STD_DEV_ROW_COUNT</code>.
+	 * Setter for <code>information_schema.query_statistics.std_dev_row_count</code>.
 	 */
 	public void setStdDevRowCount(java.lang.Double value) {
 		setValue(11, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.QUERY_STATISTICS.STD_DEV_ROW_COUNT</code>.
+	 * Getter for <code>information_schema.query_statistics.std_dev_row_count</code>.
 	 */
 	public java.lang.Double getStdDevRowCount() {
 		return (java.lang.Double) getValue(11);

@@ -16,31 +16,31 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InDoubtRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.InDoubtRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 122650931;
+	private static final long serialVersionUID = -749801165;
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.IN_DOUBT.TRANSACTION</code>.
+	 * Setter for <code>information_schema.in_doubt.transaction</code>.
 	 */
 	public void setTransaction(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.IN_DOUBT.TRANSACTION</code>.
+	 * Getter for <code>information_schema.in_doubt.transaction</code>.
 	 */
 	public java.lang.String getTransaction() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.IN_DOUBT.STATE</code>.
+	 * Setter for <code>information_schema.in_doubt.state</code>.
 	 */
 	public void setState(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.IN_DOUBT.STATE</code>.
+	 * Getter for <code>information_schema.in_doubt.state</code>.
 	 */
 	public java.lang.String getState() {
 		return (java.lang.String) getValue(1);

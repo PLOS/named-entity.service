@@ -16,115 +16,115 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ColumnPrivilegesRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.ColumnPrivilegesRecord> implements org.jooq.Record8<java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 721353094;
+	private static final long serialVersionUID = 927492486;
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.COLUMN_PRIVILEGES.GRANTOR</code>.
+	 * Setter for <code>information_schema.column_privileges.grantor</code>.
 	 */
 	public void setGrantor(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.COLUMN_PRIVILEGES.GRANTOR</code>.
+	 * Getter for <code>information_schema.column_privileges.grantor</code>.
 	 */
 	public java.lang.String getGrantor() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.COLUMN_PRIVILEGES.GRANTEE</code>.
+	 * Setter for <code>information_schema.column_privileges.grantee</code>.
 	 */
 	public void setGrantee(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.COLUMN_PRIVILEGES.GRANTEE</code>.
+	 * Getter for <code>information_schema.column_privileges.grantee</code>.
 	 */
 	public java.lang.String getGrantee() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.COLUMN_PRIVILEGES.TABLE_CATALOG</code>.
+	 * Setter for <code>information_schema.column_privileges.table_catalog</code>.
 	 */
 	public void setTableCatalog(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.COLUMN_PRIVILEGES.TABLE_CATALOG</code>.
+	 * Getter for <code>information_schema.column_privileges.table_catalog</code>.
 	 */
 	public java.lang.String getTableCatalog() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.COLUMN_PRIVILEGES.TABLE_SCHEMA</code>.
+	 * Setter for <code>information_schema.column_privileges.table_schema</code>.
 	 */
 	public void setTableSchema(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.COLUMN_PRIVILEGES.TABLE_SCHEMA</code>.
+	 * Getter for <code>information_schema.column_privileges.table_schema</code>.
 	 */
 	public java.lang.String getTableSchema() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.COLUMN_PRIVILEGES.TABLE_NAME</code>.
+	 * Setter for <code>information_schema.column_privileges.table_name</code>.
 	 */
 	public void setTableName(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.COLUMN_PRIVILEGES.TABLE_NAME</code>.
+	 * Getter for <code>information_schema.column_privileges.table_name</code>.
 	 */
 	public java.lang.String getTableName() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.COLUMN_PRIVILEGES.COLUMN_NAME</code>.
+	 * Setter for <code>information_schema.column_privileges.column_name</code>.
 	 */
 	public void setColumnName(java.lang.String value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.COLUMN_PRIVILEGES.COLUMN_NAME</code>.
+	 * Getter for <code>information_schema.column_privileges.column_name</code>.
 	 */
 	public java.lang.String getColumnName() {
 		return (java.lang.String) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.COLUMN_PRIVILEGES.PRIVILEGE_TYPE</code>.
+	 * Setter for <code>information_schema.column_privileges.privilege_type</code>.
 	 */
 	public void setPrivilegeType(java.lang.String value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.COLUMN_PRIVILEGES.PRIVILEGE_TYPE</code>.
+	 * Getter for <code>information_schema.column_privileges.privilege_type</code>.
 	 */
 	public java.lang.String getPrivilegeType() {
 		return (java.lang.String) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>INFORMATION_SCHEMA.COLUMN_PRIVILEGES.IS_GRANTABLE</code>.
+	 * Setter for <code>information_schema.column_privileges.is_grantable</code>.
 	 */
 	public void setIsGrantable(java.lang.String value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>INFORMATION_SCHEMA.COLUMN_PRIVILEGES.IS_GRANTABLE</code>.
+	 * Getter for <code>information_schema.column_privileges.is_grantable</code>.
 	 */
 	public java.lang.String getIsGrantable() {
 		return (java.lang.String) getValue(7);
