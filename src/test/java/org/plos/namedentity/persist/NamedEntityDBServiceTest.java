@@ -272,31 +272,45 @@ public class NamedEntityDBServiceTest {
     Integer workEmailId = nedDBSvc.create( workEmail );
     assertNotNull(workEmailId);
 
-    // verify that created and lastmodified attributes are populated (by db)
+    // Verify CREATED and LASTMODIFIED attributes populated (by db)
 
     Email savedWorkEmail = nedDBSvc.findById(workEmailId, Email.class);
 
-    // UPDATE Work Email and Status 
+    Timestamp created1      = savedWorkEmail.getCreated()      ; assertNotNull(created1);
+    Timestamp lastModified1 = savedWorkEmail.getLastmodified() ; assertNotNull(lastModified1);
+    assertEquals(created1, lastModified1);
 
-    savedWorkEmail.setEmailaddress("super." + savedWorkEmail.getEmailaddress());
-    savedWorkEmail.setIsactive(false);
-    assertTrue( nedDBSvc.update(savedWorkEmail) );
+    // UPDATE #1 : Try to update record violating Not Null Constraint
 
-    // UPDATE #2 : Try to update record violating Not Null Constraint
-
+    Integer savedSourceTypeId = savedWorkEmail.getSourcetypeid();
     try {
       savedWorkEmail.setSourcetypeid(null);
       assertFalse( nedDBSvc.update(savedWorkEmail) );
       fail("entity updated: " + savedWorkEmail);
     }
     catch (DataIntegrityViolationException expected) {
-      // this should happen because source type id is required (ie, not null)
+      // this is expected because source type id is required (ie, not null)
+      // restore source type before continuing.
+      savedWorkEmail.setSourcetypeid(savedSourceTypeId);
     }
 
-    // Get another instance of same email record 
+    // UPDATE #2 : Work Email and Status
+
+    savedWorkEmail.setEmailaddress("super." + savedWorkEmail.getEmailaddress());
+    savedWorkEmail.setIsactive(false);
+    assertTrue( nedDBSvc.update(savedWorkEmail) );
+
+    // Get another instance of same email record.
 
     Email savedWorkEmail2 = nedDBSvc.findById(workEmailId, Email.class);
     assertEquals(savedWorkEmail, savedWorkEmail2);
+
+    // Verify CREATED hasn't changed and LASTMODIFIED has.
+
+    Timestamp created2      = savedWorkEmail2.getCreated()      ; assertNotNull(created2);
+    Timestamp lastModified2 = savedWorkEmail2.getLastmodified() ; assertNotNull(lastModified2);
+    assertEquals(created1, created2);
+    assertTrue( lastModified1.before(lastModified2) );
 
     // CREATE Home Email
 
