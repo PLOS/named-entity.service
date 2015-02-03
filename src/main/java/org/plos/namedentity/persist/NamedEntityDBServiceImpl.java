@@ -19,6 +19,7 @@ package org.plos.namedentity.persist;
 // to reduce verbosity, static import generated tables and jooq functions
 
 import org.jooq.DSLContext;
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.SelectOnConditionStep;
 import org.jooq.Table;
@@ -54,11 +55,28 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
   @Override @SuppressWarnings("unchecked")
   public <T> boolean update(T t) {
-    if (t instanceof Entity && ((Entity)t).getId() == null) {
-      throw new NedValidationException("Can't update entity without primary key: " + (Entity)t);
-    }
     // load jooq-generated record from pojo. update (explicitly)
     UpdatableRecord record = (UpdatableRecord) context.newRecord(table(t.getClass()), t);
+
+    if (t instanceof Entity) {
+      if (((Entity)t).getId() == null) {
+        throw new NedValidationException("Can't update entity without primary key: " + (Entity)t);
+      }
+
+      // in jooq 3.5.1, the field change flag isn't set for null entity pojos
+      // value. this seems different behavior from 3.4.1 which did this for all
+      // attributes. let's manually control this for now by explicitly setting
+      // changed flag for all attributes except created and lastmodified attributes.
+
+      for (Field<?> f : record.fields()) {
+        String fieldName = f.getName();
+        if (fieldName.equalsIgnoreCase("created") || fieldName.equalsIgnoreCase("lastmodified")) {
+          record.changed(fieldName,false);
+        } else {
+          record.changed(fieldName,true);
+        }
+      }
+    }
     return (context.executeUpdate(record) == 1);
   }
 

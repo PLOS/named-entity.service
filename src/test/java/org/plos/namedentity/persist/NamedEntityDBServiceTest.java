@@ -130,7 +130,6 @@ public class NamedEntityDBServiceTest {
     } catch (DataIntegrityViolationException expected) {
       // this should happen because emailAddress is required
     }
-
   }
 
   @Test
@@ -279,6 +278,17 @@ public class NamedEntityDBServiceTest {
     savedWorkEmail.setEmailaddress("super." + savedWorkEmail.getEmailaddress());
     savedWorkEmail.setIsactive(false);
     assertTrue( nedDBSvc.update(savedWorkEmail) );
+
+    // UPDATE #2 : Try to update record violating Not Null Constraint
+
+    try {
+      savedWorkEmail.setSourcetypeid(null);
+      assertFalse( nedDBSvc.update(savedWorkEmail) );
+      fail("entity updated: " + savedWorkEmail);
+    }
+    catch (DataIntegrityViolationException expected) {
+      // this should happen because source type id is required (ie, not null)
+    }
 
     // Get another instance of same email record 
 
