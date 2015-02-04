@@ -35,7 +35,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static org.jooq.impl.DSL.currentTimestamp;
 import static org.plos.namedentity.persist.db.namedentities.Tables.*;
 
 public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
@@ -64,9 +63,9 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       }
 
       // in jooq 3.5.1, the field change flag isn't set for null entity pojos
-      // value. this seems different behavior from 3.4.1 which did this for all
-      // attributes. let's manually control this for now by explicitly setting
-      // changed flag for all attributes except created and lastmodified attributes.
+      // values. this seems different behavior from 3.4.1 which did this for all
+      // attributes. let's manually control this for now by explicitly setting 
+      // the changed flag for all attributes except created and lastmodified.
 
       for (Field<?> f : record.fields()) {
         String fieldName = f.getName();
@@ -189,9 +188,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     return this.context.insertInto(NAMEDENTITYIDENTIFIERS) 
                .set(NAMEDENTITYIDENTIFIERS.TYPEID, findTypeIdByName(TypeClassEnum.NAMED_ENTITY_TYPES, typeCode))
                .set(ROLES.CREATEDBY, 1)
-               .set(ROLES.CREATED, currentTimestamp())
                .set(ROLES.LASTMODIFIEDBY, 1)
-               .set(ROLES.LASTMODIFIED, currentTimestamp())
                .returning(NAMEDENTITYIDENTIFIERS.ID)
                .fetchOne()
                .getId();
@@ -303,7 +300,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .select(
             uid.ID, uid.NEDID,
             uid.UNIQUEIDENTIFIER, gt1.SHORTDESCRIPTION.as("type"),
-            gt2.SHORTDESCRIPTION.as("source"))
+            gt2.SHORTDESCRIPTION.as("source"),
+            uid.CREATED, uid.LASTMODIFIED)
         .from(uid)
         .leftOuterJoin(gt1).on(uid.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(uid.SOURCETYPEID.equal(gt2.ID));
@@ -320,7 +318,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
             i.ID, i.NEDID, i.FIRSTNAME, i.MIDDLENAME, i.LASTNAME, i.DISPLAYNAME, i.BIOGRAPHY,
             gt1.SHORTDESCRIPTION.as("nameprefix"),
             gt2.SHORTDESCRIPTION.as("namesuffix"),
-            gt5.SHORTDESCRIPTION.as("source"))
+            gt5.SHORTDESCRIPTION.as("source"),
+            i.CREATED, i.LASTMODIFIED)
         .from(i)
         .leftOuterJoin(gt1).on(i.NAMEPREFIXTYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(i.NAMESUFFIXTYPEID.equal(gt2.ID))
@@ -336,7 +335,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .select(
             e.ID, e.NEDID,
             e.EMAILADDRESS, gt1.SHORTDESCRIPTION.as("type"),
-            gt2.SHORTDESCRIPTION.as("source"))
+            gt2.SHORTDESCRIPTION.as("source"),
+            e.CREATED, e.LASTMODIFIED)
         .from(e)
         .leftOuterJoin(gt1).on(e.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(e.SOURCETYPEID.equal(gt2.ID));
@@ -357,7 +357,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
             gt1.SHORTDESCRIPTION.as("type"),
             gt2.SHORTDESCRIPTION.as("statecodetype"),
             gt3.SHORTDESCRIPTION.as("countrycodetype"),
-            gt4.SHORTDESCRIPTION.as("source"))
+            gt4.SHORTDESCRIPTION.as("source"),
+            a.CREATED, a.LASTMODIFIED)
         .from(a)
         .leftOuterJoin(gt1).on(a.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(a.STATECODETYPEID.equal(gt2.ID))
@@ -376,7 +377,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
             r.ID, r.STARTDATE, r.ENDDATE, r.NEDID,
             gt1.SHORTDESCRIPTION.as("applicationtype"),
             gt2.SHORTDESCRIPTION.as("type"),
-            gt3.SHORTDESCRIPTION.as("source"))
+            gt3.SHORTDESCRIPTION.as("source"),
+            r.CREATED, r.LASTMODIFIED)
         .from(r)
         .leftOuterJoin(gt1).on(r.APPLICATIONTYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(r.TYPEID.equal(gt2.ID))
@@ -392,7 +394,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .select(
             o.NEDID, o.FAMILIARNAME,
             o.LEGALNAME, o.ISACTIVE,
-            gt1.SHORTDESCRIPTION.as("type"))
+            gt1.SHORTDESCRIPTION.as("type"),
+            o.CREATED, o.LASTMODIFIED)
         .from(o)
         .leftOuterJoin(gt1).on(o.TYPEID.equal(gt1.ID))
         .where(o.NEDID.equal(nedId)).fetchOne();
@@ -414,7 +417,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .select(
             o.NEDID, o.FAMILIARNAME,
             o.LEGALNAME, o.ISACTIVE,
-            gt1.SHORTDESCRIPTION.as("type"))
+            gt1.SHORTDESCRIPTION.as("type"),
+            o.CREATED, o.LASTMODIFIED)
         .from(o)
         .leftOuterJoin(gt1).on(o.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(u.TYPEID.equal(gt2.ID)).and(gt2.SHORTDESCRIPTION.equal(srcType))
@@ -441,7 +445,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         gt1.SHORTDESCRIPTION.as("nameprefix"),                 
         gt2.SHORTDESCRIPTION.as("namesuffix"),
         gt5.SHORTDESCRIPTION.as("uniqueidentifiertype"),
-        u.UNIQUEIDENTIFIER)
+        u.UNIQUEIDENTIFIER, i.CREATED, i.LASTMODIFIED)
       .from(i)
       .leftOuterJoin(gt1).on(i.NAMEPREFIXTYPEID.equal(gt1.ID))
       .leftOuterJoin(gt2).on(i.NAMESUFFIXTYPEID.equal(gt2.ID))
@@ -498,7 +502,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
             p.PHONENUMBER, p.EXTENSION,
             gt1.SHORTDESCRIPTION.as("type"),
             gt2.SHORTDESCRIPTION.as("countrycodetype"),
-            gt3.SHORTDESCRIPTION.as("source"))
+            gt3.SHORTDESCRIPTION.as("source"),
+            p.CREATED, p.LASTMODIFIED)
         .from(p)
         .leftOuterJoin(gt1).on(p.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(p.COUNTRYCODETYPEID.equal(gt2.ID))
@@ -518,7 +523,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .select(
             d.ID, d.NEDID,
             gt1.SHORTDESCRIPTION.as("type"),
-            gt2.SHORTDESCRIPTION.as("source"))
+            gt2.SHORTDESCRIPTION.as("source"),
+            d.CREATED, d.LASTMODIFIED)
         .from(d)
         .leftOuterJoin(gt1).on(d.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(d.SOURCETYPEID.equal(gt2.ID))
@@ -533,7 +539,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     Urls        u   = URLS.as("u");
 
     return this.context
-        .select(u.URL, u.NEDID, gt1.SHORTDESCRIPTION.as("source"))
+        .select(u.URL, u.NEDID, gt1.SHORTDESCRIPTION.as("source"), 
+                u.CREATED, u.LASTMODIFIED)
         .from(u)
         .leftOuterJoin(gt1).on(u.SOURCETYPEID.equal(gt1.ID))
         .where(u.NEDID.equal(nedId))
