@@ -1,26 +1,18 @@
 #!/bin/bash
 
-# Import database if provided via 'docker run --env url="http:/ex.org/db.sql"'
+echo "Starting Percona Server"
 /usr/sbin/mysqld &
 sleep 5
 
 echo -e "\nCreating NED Schema"
 mysql --default-character-set=utf8 < /mysql_schema/ned-schema.mysql.sql
-sleep 1
 
 echo -e "\nSeeding NED Schema"
 mysql --default-character-set=utf8 < /mysql_schema/ned-data.mysql.sql
-mysqladmin shutdown
-echo -e "\nFinished creating schema."
 
-/usr/sbin/mysqld &
-sleep 5
 echo -e "\nCreating DB User (ned)"
 echo "CREATE USER 'ned' IDENTIFIED BY ''" | mysql --default-character-set=utf8
 echo "GRANT ALL PRIVILEGES ON *.* TO 'ned'@'%' WITH GRANT OPTION; FLUSH PRIVILEGES" | mysql --default-character-set=utf8
 echo "Finished creating user."
 
-# restart the server to go operational
-mysqladmin shutdown
-echo "Starting MySQL Server"
-/usr/sbin/mysqld
+tail -f /var/log/mysql/*

@@ -1,5 +1,5 @@
 neddb:
-    build: ../neddb.mysql
+    build: ../neddb.percona
     volumes:
          - ../../src/main/resources:/mysql_schema
 
@@ -12,4 +12,3 @@ nedsvc:
 
 ambradb:
     build: ambra.mysql
-    
