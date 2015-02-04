@@ -22,7 +22,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.Objects;
 
 @XmlRootElement
 public class Role extends Entity {
@@ -33,35 +32,13 @@ public class Role extends Entity {
   private Date startdate;
   private Date enddate;
 
-  private Timestamp created;
-  private Integer   createdby;
-  private Integer   lastmodifiedby;
+  private Integer createdby;
+  private Integer lastmodifiedby;
 
   private String  applicationtype;
   private Integer applicationtypeid;
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o)
-      return true;
-
-    if (o == null || this.getClass() != o.getClass())
-      return false;
-
-    Role entity = (Role) o;
-    return Objects.equals(this.applicationtype, entity.applicationtype)
-        && Objects.equals(this.type, entity.type)
-        && Objects.equals(this.startdate, entity.startdate)
-        && Objects.equals(this.enddate, entity.enddate);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(applicationtype, type, startdate, enddate);
-  }
-
   private Timestamp lastmodified;
-
 
   public String getApplicationtype() {
     return applicationtype;
@@ -113,22 +90,6 @@ public class Role extends Entity {
   @XmlJavaTypeAdapter(DateAdapter.class)
   public void setEnddate(Date enddate) {
     this.enddate = enddate;
-  }
-
-  public java.sql.Timestamp getCreated() {
-    return this.created;
-  }
-
-  public void setCreated(java.sql.Timestamp created) {
-    this.created = created;
-  }
-
-  public java.sql.Timestamp getLastmodified() {
-    return this.lastmodified;
-  }
-
-  public void setLastmodified(java.sql.Timestamp lastmodified) {
-    this.lastmodified = lastmodified;
   }
 
   public Integer getCreatedby() {

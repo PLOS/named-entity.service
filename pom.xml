@@ -15,12 +15,12 @@
   <properties>
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
     <buildDate>${maven.build.timestamp}</buildDate>
-    <h2db.version>1.4.180</h2db.version>
+    <h2db.version>1.4.185</h2db.version>
     <mysql.connector.version>5.1.30</mysql.connector.version> 
     <org.apache.commons.version>3.3.2</org.apache.commons.version>
     <org.glassfish.jersey-version>2.11</org.glassfish.jersey-version>
     <org.hamcrest.version>1.3</org.hamcrest.version>
-    <org.jooq.version>3.4.1</org.jooq.version>
+    <org.jooq.version>3.5.1</org.jooq.version>
     <org.springframework.version>3.2.2.RELEASE</org.springframework.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <tomcat.jdbc.version>7.0.54</tomcat.jdbc.version>

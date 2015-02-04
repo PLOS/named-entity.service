@@ -16,8 +16,11 @@
  */
 package org.plos.namedentity.api.entity;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Objects;
+import java.sql.Timestamp;
 
 @XmlRootElement
 public class Typedescription {
@@ -26,25 +29,19 @@ public class Typedescription {
   private String  description;
   private String  howused;
 
+  private Timestamp created;
+  private Timestamp lastmodified;
+
+  private static String EXCLUDED_FIELDS[] = { "created", "lastmodified" };
+
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-
-    if (o == null || this.getClass() != o.getClass()) {
-      return false;
-    }
-
-    Typedescription entity = (Typedescription) o;
-    return Objects.equals(this.id, entity.id)
-        && Objects.equals(this.description, entity.description)
-        && Objects.equals(this.howused, entity.howused);
+    return EqualsBuilder.reflectionEquals(this, o, EXCLUDED_FIELDS);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.id, this.description, this.howused);
+    return HashCodeBuilder.reflectionHashCode(this, EXCLUDED_FIELDS);
   }
 
   public Integer getId() {
@@ -71,5 +68,19 @@ public class Typedescription {
     this.howused = howused;
   }
 
+  public Timestamp getLastmodified() {
+    return this.lastmodified;
+  }
 
+  public void setLastmodified(Timestamp lastmodified) {
+    this.lastmodified = lastmodified;
+  }
+
+  public Timestamp getCreated() {
+    return this.created;
+  }
+
+  public void setCreated(Timestamp created) {
+    this.created = created;
+  }
 }

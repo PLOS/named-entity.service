@@ -491,33 +491,31 @@ public class NamedEntityServiceTest {
     Address savedEntity2 = namedEntityService.findResolvedEntityByKey(createAddressId2, Address.class);
     assertNotNull( savedEntity2.getType() );
 
-    // UPDATE address entity. Scrub appropriate attributes from current instance
-    // and reuse. Again, we don't expect for address type to persist.
+    // Test unsuccessful UPDATE of an address entity. The savedEntity2 pojo has
+    // just type names without type ids (ie, types haven't been resolved to
+    // id's). Trying to update this entity should fail.
 
-    addressEntity.setId(createAddressId2);
-    addressEntity.setTypeid(null);
-    addressEntity.setStatecodetypeid(null); 
-    addressEntity.setCountrycodetypeid(null);
+    savedEntity2.setPostalcode("66666");
 
     try {
-      assertFalse(crudService.update(addressEntity));
+      crudService.update(savedEntity2);
       fail();
     } catch (NedValidationException e) {
-      // expected since the data is incomplete in regards to DB schema
+      // expected since entity pojo has no type ids (just type names) 
     }
 
     // try again with type resolver.
 
-    assertTrue( crudService.update(namedEntityService.resolveValuesToIds(addressEntity)) );
+    assertTrue( crudService.update(namedEntityService.resolveValuesToIds(savedEntity2)) );
 
-    Address savedEntity4 = namedEntityService.findResolvedEntityByKey(createAddressId2, Address.class);
-    assertNotNull( savedEntity4.getType() );
+    Address savedEntity3 = namedEntityService.findResolvedEntityByKey(createAddressId2, Address.class);
+    assertEquals("66666", savedEntity3.getPostalcode());
 
     // DELETE.
 
-    assertTrue( crudService.delete(addressEntity) );
-
     addressEntity.setId(createAddressId2);
+
+    assertTrue(crudService.delete(addressEntity));
 
     assertFalse(crudService.delete(addressEntity));
   }

@@ -18,8 +18,6 @@ package org.plos.namedentity.api.entity;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import java.util.Objects;
-
 @XmlRootElement
 public class Address extends Entity {
 
@@ -45,33 +43,6 @@ public class Address extends Entity {
   private Integer latitude;
   private Integer longitude;
   private Boolean isactive = true;
-  
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-
-    if (o == null || this.getClass() != o.getClass()) {
-      return false;
-    }
-
-    Address entity = (Address) o;
-    return Objects.equals(this.type, entity.type)
-        && Objects.equals(this.addressline1, entity.addressline1)
-        && Objects.equals(this.addressline2, entity.addressline2)
-        && Objects.equals(this.addressline3, entity.addressline3)
-        && Objects.equals(this.city, entity.city)
-        && Objects.equals(this.statecodetype, entity.statecodetype)
-        && Objects.equals(this.countrycodetype, entity.countrycodetype)
-        && Objects.equals(this.postalcode, entity.postalcode);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(type, addressline1, addressline2, addressline3,
-        city, statecodetype, countrycodetype, postalcode);
-  }
   
   public Integer getTypeid() {
     return this.typeid;
@@ -192,6 +163,4 @@ public class Address extends Entity {
   public void setCountrycodetype(String countrycodetype) {
     this.countrycodetype = countrycodetype;
   }
-
-
 }

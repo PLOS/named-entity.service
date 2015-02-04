@@ -25,6 +25,7 @@ public class Audittrail {
   private Integer   rownumber;
   private String    oldvalue;
   private String    newvalue;
+  private Timestamp created;
   private Timestamp lastmodified;
   private Integer   lastmodifiedby;
 
@@ -82,5 +83,13 @@ public class Audittrail {
 
   public void setLastmodifiedby(Integer lastmodifiedby) {
     this.lastmodifiedby = lastmodifiedby;
+  }
+
+  public Timestamp getCreated() {
+    return this.created;
+  }
+
+  public void setCreated(Timestamp created) {
+    this.created = created;
   }
 }

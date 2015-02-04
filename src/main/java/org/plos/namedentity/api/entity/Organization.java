@@ -17,7 +17,6 @@
 package org.plos.namedentity.api.entity;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Objects;
 
 @XmlRootElement
 public class Organization extends Entity {
@@ -29,23 +28,6 @@ public class Organization extends Entity {
   private String  legalname;
   private Integer maincontactid;
   private Boolean isactive = true;
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof Organization)) return false;
-
-    Organization that = (Organization) o;
-
-    return Objects.equals(this.familiarname, that.familiarname)
-        && Objects.equals(this.legalname, that.legalname)
-        && Objects.equals(this.type, that.type);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(this.familiarname, this.legalname, this.type);
-  }
 
   public Integer getTypeid() {
     return this.typeid;

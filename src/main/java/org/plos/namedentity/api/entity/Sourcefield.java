@@ -16,11 +16,16 @@
  */
 package org.plos.namedentity.api.entity;
 
+import java.sql.Timestamp;
+
 public class Sourcefield {
 
   private Integer id;
   private String  sourcetable;
   private String  sourcefield;
+
+  private Timestamp created;
+  private Timestamp lastmodified;
 
   public Integer getId() {
     return this.id;
@@ -44,5 +49,21 @@ public class Sourcefield {
 
   public void setSourcefield(String sourcefield) {
     this.sourcefield = sourcefield;
+  }
+
+  public Timestamp getLastmodified() {
+    return this.lastmodified;
+  }
+
+  public void setLastmodified(Timestamp lastmodified) {
+    this.lastmodified = lastmodified;
+  }
+
+  public Timestamp getCreated() {
+    return this.created;
+  }
+
+  public void setCreated(Timestamp created) {
+    this.created = created;
   }
 }

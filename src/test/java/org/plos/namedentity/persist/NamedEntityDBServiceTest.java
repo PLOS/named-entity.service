@@ -44,6 +44,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.plos.namedentity.persist.db.namedentities.Tables.GLOBALTYPES;
@@ -129,7 +130,6 @@ public class NamedEntityDBServiceTest {
     } catch (DataIntegrityViolationException expected) {
       // this should happen because emailAddress is required
     }
-
   }
 
   @Test
@@ -212,7 +212,6 @@ public class NamedEntityDBServiceTest {
     entity.setShortdescription( entity.getShortdescription() + "2");
     assertTrue( nedDBSvc.update(entity) );
 
-    // Get another instance of same type value
     Globaltype entity2 = nedDBSvc.findById(newGlobalTypeId, Globaltype.class);
     assertEquals(entity, entity2);
 
@@ -273,17 +272,45 @@ public class NamedEntityDBServiceTest {
     Integer workEmailId = nedDBSvc.create( workEmail );
     assertNotNull(workEmailId);
 
-    // UPDATE Work Email and Status 
+    // Verify CREATED and LASTMODIFIED attributes populated (by db)
 
     Email savedWorkEmail = nedDBSvc.findById(workEmailId, Email.class);
+
+    Timestamp created1      = savedWorkEmail.getCreated()      ; assertNotNull(created1);
+    Timestamp lastModified1 = savedWorkEmail.getLastmodified() ; assertNotNull(lastModified1);
+    assertEquals(created1, lastModified1);
+
+    // UPDATE #1 : Try to update record violating Not Null Constraint
+
+    Integer savedSourceTypeId = savedWorkEmail.getSourcetypeid();
+    try {
+      savedWorkEmail.setSourcetypeid(null);
+      assertFalse( nedDBSvc.update(savedWorkEmail) );
+      fail("entity updated: " + savedWorkEmail);
+    }
+    catch (DataIntegrityViolationException expected) {
+      // this is expected because source type id is required (ie, not null)
+      // restore source type before continuing.
+      savedWorkEmail.setSourcetypeid(savedSourceTypeId);
+    }
+
+    // UPDATE #2 : Work Email and Status
+
     savedWorkEmail.setEmailaddress("super." + savedWorkEmail.getEmailaddress());
     savedWorkEmail.setIsactive(false);
     assertTrue( nedDBSvc.update(savedWorkEmail) );
 
-    // Get another instance of same email record 
+    // Get another instance of same email record.
 
     Email savedWorkEmail2 = nedDBSvc.findById(workEmailId, Email.class);
     assertEquals(savedWorkEmail, savedWorkEmail2);
+
+    // Verify CREATED hasn't changed and LASTMODIFIED has.
+
+    Timestamp created2      = savedWorkEmail2.getCreated()      ; assertNotNull(created2);
+    Timestamp lastModified2 = savedWorkEmail2.getLastmodified() ; assertNotNull(lastModified2);
+    assertEquals(created1, created2);
+    assertTrue( lastModified1.before(lastModified2) );
 
     // CREATE Home Email
 
@@ -586,7 +613,7 @@ public class NamedEntityDBServiceTest {
     savedAddress.setAddressline2("updated addressline2");
     assertTrue( nedDBSvc.update(savedAddress) );
 
-    // Get another instance of same address record 
+    // Get another instance of same address record.
 
     Address savedAddress2 = nedDBSvc.findById(addressId, Address.class);
     assertEquals(savedAddress, savedAddress2);

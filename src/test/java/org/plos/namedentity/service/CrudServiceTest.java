@@ -37,6 +37,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -231,6 +232,7 @@ public class CrudServiceTest {
 
     savedTypeVal.setShortdescription("abc2");
     assertTrue( crudService.update(savedTypeVal) );
+
     Globaltype savedTypeVal2 = crudService.findById(pkId, Globaltype.class);
     assertEquals(savedTypeVal, savedTypeVal2);
 
@@ -426,6 +428,7 @@ public class CrudServiceTest {
 
     savedAddress.setAddressline1("update." + savedAddress.getAddressline1());
     assertTrue( crudService.update(savedAddress) );
+
     Address savedAddress2 = crudService.findById(pkId, Address.class);
     assertEquals(savedAddress, savedAddress2);
 

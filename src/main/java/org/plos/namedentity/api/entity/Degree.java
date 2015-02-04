@@ -17,33 +17,12 @@
 package org.plos.namedentity.api.entity;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Objects;
 
 @XmlRootElement
 public class Degree extends Entity {
 
   private Integer typeid;
   private String  type;
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-
-    if (o == null || this.getClass() != o.getClass()) {
-      return false;
-    }
-
-    Degree entity = (Degree) o;
-
-    return Objects.equals(this.type, entity.type);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(type);
-  }
 
   public String getType() {
     return type;
