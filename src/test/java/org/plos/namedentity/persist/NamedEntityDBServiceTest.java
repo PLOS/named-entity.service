@@ -398,7 +398,7 @@ public class NamedEntityDBServiceTest {
     individualProfile.setFirstname("firstname");
     individualProfile.setMiddlename("middlename");
     individualProfile.setLastname("lastname");
-    individualProfile.setDisplayname("displayname");
+    individualProfile.setDisplayname("displayname_i");
     individualProfile.setBiography("bio");
     individualProfile.setNameprefixtypeid(prefixTypeId);
     individualProfile.setNamesuffixtypeid(suffixTypeId);
@@ -725,7 +725,7 @@ public class NamedEntityDBServiceTest {
     individualProfile.setFirstname("firstname");
     individualProfile.setMiddlename("middlename");
     individualProfile.setLastname("lastname");
-    individualProfile.setDisplayname("displayname");
+    individualProfile.setDisplayname("displayname_u");
     individualProfile.setSourcetypeid(78);
 
     assertNotNull(nedDBSvc.create(individualProfile));

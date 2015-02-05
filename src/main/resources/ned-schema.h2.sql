@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS namedEntities.individualProfiles (
     nickName TEXT NULL,
     namePrefixTypeId INT NULL,
     nameSuffixTypeId INT NULL,
-    displayName TEXT NULL,
+    displayName VARCHAR(255) NULL,
     biography TEXT NULL,
     sourceTypeId INT NOT NULL,
     isActive TINYINT(1) NOT NULL,
@@ -64,7 +64,8 @@ CREATE TABLE IF NOT EXISTS namedEntities.individualProfiles (
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (namePrefixTypeId) REFERENCES globalTypes(id),
-    FOREIGN KEY (nameSuffixTypeId) REFERENCES globalTypes(id)
+    FOREIGN KEY (nameSuffixTypeId) REFERENCES globalTypes(id),
+    UNIQUE (displayName, sourceTypeId)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.organizations;
@@ -116,7 +117,7 @@ CREATE TABLE IF NOT EXISTS namedEntities.emails (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
     typeId INT NULL,
-    emailAddress TEXT NULL,
+    emailAddress VARCHAR(255) NULL,
     sourceTypeId INT NOT NULL,
     isActive TINYINT(1) NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -124,7 +125,8 @@ CREATE TABLE IF NOT EXISTS namedEntities.emails (
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
-    FOREIGN KEY (typeId) REFERENCES globalTypes(id)
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id),
+    UNIQUE (emailAddress, sourceTypeId)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.phoneNumbers;

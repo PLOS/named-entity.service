@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Individualprofiles extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord> {
 
-	private static final long serialVersionUID = -247323332;
+	private static final long serialVersionUID = -2079202376;
 
 	/**
 	 * The reference instance of <code>namedentities.individualprofiles</code>
@@ -74,7 +74,7 @@ public class Individualprofiles extends org.jooq.impl.TableImpl<org.plos.nameden
 	/**
 	 * The column <code>namedentities.individualprofiles.displayname</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord, java.lang.String> DISPLAYNAME = createField("displayname", org.jooq.impl.SQLDataType.CLOB.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord, java.lang.String> DISPLAYNAME = createField("displayname", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
 
 	/**
 	 * The column <code>namedentities.individualprofiles.biography</code>.
@@ -144,7 +144,7 @@ public class Individualprofiles extends org.jooq.impl.TableImpl<org.plos.nameden
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_888881);
 	}
 
 	/**

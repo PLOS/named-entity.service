@@ -16,6 +16,7 @@
  */
 package org.plos.namedentity.validate;
 
+import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.plos.namedentity.api.NedValidationException;
 import org.springframework.core.Ordered;
@@ -23,11 +24,18 @@ import org.springframework.dao.DataIntegrityViolationException;
 
 public class NamedEntityValidator implements Ordered {
 
+  protected static Logger logger = Logger.getLogger(NamedEntityValidator.class);
+
   // allows us to control ordering of advice (ascending priority, 1 highest)
   private int order;
 
-  public int  getOrder()          { return order;       }
-  public void setOrder(int order) { this.order = order; }
+  public int getOrder() {
+    return order;
+  }
+
+  public void setOrder(int order) {
+    this.order = order;
+  }
 
   public Object validate(ProceedingJoinPoint call) throws Throwable {
 
@@ -38,7 +46,7 @@ public class NamedEntityValidator implements Ordered {
     Object[] args = call.getArgs();
 
     if (args[0] instanceof Validatable)
-      ((Validatable)args[0]).validate();
+      ((Validatable) args[0]).validate();
 
     /* ------------------------------------------------------------------ */
     /*  METHOD EXECUTION                                                  */
@@ -49,6 +57,7 @@ public class NamedEntityValidator implements Ordered {
     try {
       returnValue = call.proceed();
     } catch (DataIntegrityViolationException e) {
+      logger.debug("validation exception", e);
       throw new NedValidationException("validation exception", e);
     }
 

@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Emails extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord> {
 
-	private static final long serialVersionUID = 1718368396;
+	private static final long serialVersionUID = -926792063;
 
 	/**
 	 * The reference instance of <code>namedEntities.emails</code>
@@ -49,7 +49,7 @@ public class Emails extends org.jooq.impl.TableImpl<org.plos.namedentity.persist
 	/**
 	 * The column <code>namedEntities.emails.emailAddress</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.String> EMAILADDRESS = createField("emailAddress", org.jooq.impl.SQLDataType.CLOB.length(65535), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.String> EMAILADDRESS = createField("emailAddress", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
 
 	/**
 	 * The column <code>namedEntities.emails.sourceTypeId</code>.
@@ -114,7 +114,7 @@ public class Emails extends org.jooq.impl.TableImpl<org.plos.namedentity.persist
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord>>asList(org.plos.namedentity.persist.db.namedentities.Keys.KEY_EMAILS_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord>>asList(org.plos.namedentity.persist.db.namedentities.Keys.KEY_EMAILS_PRIMARY, org.plos.namedentity.persist.db.namedentities.Keys.KEY_EMAILS_EMAILADDRESS);
 	}
 
 	/**
