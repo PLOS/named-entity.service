@@ -16,18 +16,24 @@
  */
 package org.plos.namedentity.rest;
 
+import org.plos.namedentity.spring.config.ContextConfig;
+
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.AfterClass;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public abstract class SpringContextAwareJerseyTest extends JerseyTest {
 
-  private static AnnotationConfigApplicationContext context;
+  //private static AnnotationConfigApplicationContext context;
+  private static ClassPathXmlApplicationContext context;
 
   @Override
   protected javax.ws.rs.core.Application configure() {
-    context = new AnnotationConfigApplicationContext(TestSpringConfig.class);
+    //context = new AnnotationConfigApplicationContext(TestSpringConfig.class);
+    String[] springFiles = { "spring-beans.xml", "spring-beans.test.xml" };
+    context = new ClassPathXmlApplicationContext(springFiles);
     ResourceConfig config = new Main().property("contextConfig", context);
     return config;
   }

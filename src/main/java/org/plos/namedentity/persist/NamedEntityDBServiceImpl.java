@@ -40,13 +40,15 @@ import static org.plos.namedentity.persist.db.namedentities.Tables.*;
 public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
   @Autowired DSLContext context;
+  public void setContext(DSLContext context) {
+    this.context = context;
+  }
 
   @Override @SuppressWarnings("unchecked")
   public <T> Integer create(T t) {
-    // load jooq-generated record from pojo. insert (implicitly)
-
+    // load jooq-generated record from pojo.
     UpdatableRecord record = (UpdatableRecord) context.newRecord(table(t.getClass()), t);
-    record.store();
+    record.insert();
 
     // assume first attribute is always the primary key
     return record.getValue(0, Integer.class);
@@ -54,7 +56,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
   @Override @SuppressWarnings("unchecked")
   public <T> boolean update(T t) {
-    // load jooq-generated record from pojo. update (explicitly)
+    // load jooq-generated record from pojo.
     UpdatableRecord record = (UpdatableRecord) context.newRecord(table(t.getClass()), t);
 
     if (t instanceof Entity) {
