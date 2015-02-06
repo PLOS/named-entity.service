@@ -20,6 +20,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.sql.Timestamp;
 
 @XmlRootElement
@@ -68,6 +69,7 @@ public class Typedescription {
     this.howused = howused;
   }
 
+  @XmlTransient
   public Timestamp getLastmodified() {
     return this.lastmodified;
   }
@@ -76,6 +78,7 @@ public class Typedescription {
     this.lastmodified = lastmodified;
   }
 
+  @XmlTransient
   public Timestamp getCreated() {
     return this.created;
   }

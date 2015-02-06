@@ -12,6 +12,7 @@ import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.service.NamedEntityService;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -28,11 +29,9 @@ import java.util.List;
 @Api(value="/individuals")
 public class IndividualsResource extends BaseResource {
 
-  private static String namedPartyType = "Individual";
-
   @Override
   protected String getNamedPartyType() {
-    return namedPartyType;
+    return NamedEntityService.individualType;
   }
 
   @POST
@@ -54,7 +53,7 @@ public class IndividualsResource extends BaseResource {
   @ApiOperation(value = "Read individual by Ned ID", response = IndividualComposite.class)
   public Response readIndividual(@PathParam("nedId") int nedId) {
     try {
-      namedEntityService.checkNedIdForType(nedId, "Individual");
+      namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findIndividualComposite(nedId)).build();
     } catch (EntityNotFoundException e) {

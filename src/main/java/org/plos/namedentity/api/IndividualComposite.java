@@ -28,6 +28,7 @@ import org.plos.namedentity.api.entity.Url;
 import org.plos.namedentity.validate.Validatable;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +46,7 @@ public class IndividualComposite implements Validatable {
   private List<Degree>            degrees;
   private List<Url>               urls;
 
+  @XmlTransient
   public Map<Class, List<? extends Entity>> getAsMap() {
     Map<Class, List<? extends Entity>> map = new HashMap<>();
 

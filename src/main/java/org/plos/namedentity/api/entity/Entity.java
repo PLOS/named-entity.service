@@ -94,6 +94,7 @@ public abstract class Entity implements Validatable {
     this.sourcetypeid = sourcetypeid;
   }
 
+  @XmlTransient
   public Timestamp getCreated() {
     return this.created;
   }
@@ -102,6 +103,7 @@ public abstract class Entity implements Validatable {
     this.created = created;
   }
 
+  @XmlTransient
   public Timestamp getLastmodified() {
     return this.lastmodified;
   }

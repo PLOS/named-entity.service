@@ -18,46 +18,75 @@ package org.plos.namedentity.rest;
 
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiParam;
+import org.plos.namedentity.api.EntityNotFoundException;
+import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Email;
-import org.plos.namedentity.api.entity.Organization;
 import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.service.NamedEntityService;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @Path("/organizations")
 @Api("/organizations")
 public class OrganizationsResource extends BaseResource {
 
-  private static String namedPartyType = "Organization";
-
   @Override
   protected String getNamedPartyType() {
-    return namedPartyType;
+    return NamedEntityService.organizationType;
+  }
+
+  @POST
+  @ApiOperation(value = "Create organization", response = OrganizationComposite.class)
+  public Response createOrganization(OrganizationComposite composite) {
+    try {
+      return Response.status(Response.Status.OK).entity(
+          namedEntityService.createOrganizationComposite(composite)).build();
+    } catch (NedValidationException e) {
+      return validationError(e, "Unable to create organization");
+    } catch (Exception e) {
+      return serverError(e, "Unable to create organization");
+    }
   }
 
   @GET
-  @ApiOperation(value = "List", response = Organization.class)
-  public Response list(@ApiParam(required = false) @QueryParam("offset") Integer offset,
-                       @ApiParam(required = false) @QueryParam("limit") Integer limit) {
-
-    if (offset == null || offset < 0)
-      offset = 0;
-    if (limit == null || limit <= 0 || limit > MAX_RESULT_COUNT)
-      limit = DEFAULT_RESULT_COUNT;
-    
-    return Response.ok(new GenericEntity<List<Organization>>
-        (crudService.findAll(Organization.class, offset, limit)) {
-    }).build();
+  @Path("/{nedId}")
+  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+  @ApiOperation(value = "Read organization by Ned ID", response = OrganizationComposite.class)
+  public Response readOrganization(@PathParam("nedId") int nedId) {
+    try {
+      namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
+      return Response.status(Response.Status.OK).entity(
+          namedEntityService.findOrganizationComposite(nedId)).build();
+    } catch (EntityNotFoundException e) {
+      return entityNotFound(e);
+    } catch (Exception e) {
+      return serverError(e, "Unable to read organization composite");
+    }
   }
+
+//  @GET
+//  @ApiOperation(value = "List", response = Organization.class)
+//  public Response list(@ApiParam(required = false) @QueryParam("offset") Integer offset,
+//                       @ApiParam(required = false) @QueryParam("limit") Integer limit) {
+//
+//    if (offset == null || offset < 0)
+//      offset = 0;
+//    if (limit == null || limit <= 0 || limit > MAX_RESULT_COUNT)
+//      limit = DEFAULT_RESULT_COUNT;
+//
+//    return Response.ok(new GenericEntity<List<Organization>>
+//        (crudService.findAll(Organization.class, offset, limit)) {
+//    }).build();
+//  }
 
   @GET
   @Path("/{nedId}/emails")

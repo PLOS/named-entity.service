@@ -271,7 +271,9 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     String cname = clazz.getCanonicalName();
 
     if (cname.equals(Individualprofile.class.getCanonicalName()))
-      return (List<T>) findProfilesByNedId(nedId);
+      return (List<T>)findProfilesByNedId(nedId);
+    if (cname.equals(Organization.class.getCanonicalName()))
+      return (List<T>)findOrganizationsByNedId(nedId);
     if (cname.equals(Address.class.getCanonicalName()))
       return (List<T>)findAddressesByNedId(nedId);
     if (cname.equals(Email.class.getCanonicalName()))
@@ -385,25 +387,21 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .leftOuterJoin(gt3).on(r.SOURCETYPEID.equal(gt3.ID));
   }
 
-  private Organization findOrganizationByNedId(Integer nedId) {
+  private SelectOnConditionStep select(Organizations o) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
-    Organizations o = ORGANIZATIONS.as("o");
+    Globaltypes gt2 = GLOBALTYPES.as("gt2");
 
-    Record record = this.context
-        .select(
+    return this.context
+        .select(o.ID,
             o.NEDID, o.FAMILIARNAME,
             o.LEGALNAME, o.ISACTIVE,
             gt1.SHORTDESCRIPTION.as("type"),
+            gt2.SHORTDESCRIPTION.as("source"),
             o.CREATED, o.LASTMODIFIED)
         .from(o)
         .leftOuterJoin(gt1).on(o.TYPEID.equal(gt1.ID))
-        .where(o.NEDID.equal(nedId)).fetchOne();
-
-    if (record == null)
-      throw new EntityNotFoundException("Organization");
-
-    return record.into(Organization.class);
+        .leftOuterJoin(gt2).on(o.SOURCETYPEID.equal(gt2.ID));
   }
 
   private Organization findOrganizationByUid(String srcType, String uid) {
@@ -464,6 +462,11 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   private List<Individualprofile> findProfilesByNedId(Integer nedId) {
     Individualprofiles i   = INDIVIDUALPROFILES.as("i");
     return select(i).where(i.NEDID.equal(nedId)).fetch().into(Individualprofile.class);
+  }
+
+  private List<Organization> findOrganizationsByNedId(Integer nedId) {
+    Organizations e   = ORGANIZATIONS.as("e");
+    return select(e).where(e.NEDID.equal(nedId)).fetch().into(Organization.class);
   }
 
   private List<Address> findAddressesByNedId(Integer nedId) {
