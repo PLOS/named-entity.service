@@ -122,7 +122,8 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   //@Test
   public void testReadIndividualCompositeByUid() throws Exception {
 
-    Response response = target(INDIVIDUAL_URI + "/Editorial Manager/PONE-579386").request(MediaType.APPLICATION_JSON_TYPE).get();
+    Response response = target(INDIVIDUAL_URI + "/Editorial Manager/PONE-579386")
+                          .request(MediaType.APPLICATION_JSON_TYPE).get();
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
     String jsonPayload = response.readEntity(String.class);
