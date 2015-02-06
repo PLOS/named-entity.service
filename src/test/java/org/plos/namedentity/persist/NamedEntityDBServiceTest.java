@@ -280,6 +280,16 @@ public class NamedEntityDBServiceTest {
     Timestamp lastModified1 = savedWorkEmail.getLastmodified() ; assertNotNull(lastModified1);
     assertEquals(created1, lastModified1);
 
+    // Inserting duplicate email address should fail
+
+    try {
+      nedDBSvc.create( workEmail );
+      fail("duplicate email saved: " + workEmail);
+    }
+    catch (DataIntegrityViolationException expected) {
+      // expected
+    }
+
     // UPDATE #1 : Try to update record violating Not Null Constraint
 
     Integer savedSourceTypeId = savedWorkEmail.getSourcetypeid();
@@ -398,7 +408,7 @@ public class NamedEntityDBServiceTest {
     individualProfile.setFirstname("firstname");
     individualProfile.setMiddlename("middlename");
     individualProfile.setLastname("lastname");
-    individualProfile.setDisplayname("displayname");
+    individualProfile.setDisplayname("displayname_i");
     individualProfile.setBiography("bio");
     individualProfile.setNameprefixtypeid(prefixTypeId);
     individualProfile.setNamesuffixtypeid(suffixTypeId);
@@ -725,7 +735,7 @@ public class NamedEntityDBServiceTest {
     individualProfile.setFirstname("firstname");
     individualProfile.setMiddlename("middlename");
     individualProfile.setLastname("lastname");
-    individualProfile.setDisplayname("displayname");
+    individualProfile.setDisplayname("displayname_u");
     individualProfile.setSourcetypeid(78);
 
     assertNotNull(nedDBSvc.create(individualProfile));

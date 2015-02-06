@@ -16,11 +16,20 @@
  */
 package org.plos.namedentity.service;
 
+import org.eclipse.core.runtime.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.entity.*;
+import org.plos.namedentity.api.entity.Address;
+import org.plos.namedentity.api.entity.Degree;
+import org.plos.namedentity.api.entity.Email;
+import org.plos.namedentity.api.entity.Globaltype;
+import org.plos.namedentity.api.entity.Individualprofile;
+import org.plos.namedentity.api.entity.Phonenumber;
+import org.plos.namedentity.api.entity.Role;
+import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.api.entity.Url;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -29,6 +38,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -64,6 +74,9 @@ public class NamedEntityServiceTest {
     IndividualComposite composite1 = newCompositeIndividualWithRole();
 
     IndividualComposite composite2 = newCompositeIndividualWithRole();
+
+    composite2.getIndividualprofiles().get(0).setDisplayname(
+        composite1.getIndividualprofiles().get(0).getDisplayname());
 
     assertEquals(composite1, composite2);
 
@@ -187,15 +200,12 @@ public class NamedEntityServiceTest {
     /*  UNIQUE IDENTIFIERS                                                */
     /* ------------------------------------------------------------------ */
 
-    List<Uniqueidentifier> uids = new ArrayList<>();
-
     Uniqueidentifier uidEntity = new Uniqueidentifier();
     uidEntity.setType("ORCID");
     uidEntity.setUniqueidentifier("0000-0001-9430-319X");
     uidEntity.setSource("Editorial Manager");
-    uids.add( uidEntity );
 
-    composite.setUniqueidentifiers( uids );
+    composite.getUniqueidentifiers().add(uidEntity);
 
     /* ------------------------------------------------------------------ */
     /*  URLS                                                              */
@@ -264,7 +274,7 @@ public class NamedEntityServiceTest {
     assertEquals(1, roleEntities.size());
 
     List<Uniqueidentifier> uidEntities = namedEntityService.findResolvedEntities(nedId, Uniqueidentifier.class);
-    assertEquals(1, uidEntities.size());
+    assertEquals(2, uidEntities.size());
 
     Individualprofile individualProfile = namedEntityService.findResolvedEntityByUid("ORCID", "0000-0001-9430-319X", Individualprofile.class);
 
@@ -316,12 +326,48 @@ public class NamedEntityServiceTest {
   }
 
   @Test
+  public void testCreateIndividualCompositeValidator() {
+
+    IndividualComposite composite = newCompositeIndividualWithRole();
+
+    try {
+      namedEntityService.createIndividualComposite(composite);
+      fail();
+    } catch (NedValidationException expected) {
+      Assert.isTrue(expected.getMessage().equals("Email entities can not be empty"));
+    }
+
+    List<Email> emails = new ArrayList<>();
+
+    Email workEmail = new Email();
+    workEmail.setType("Work");
+    workEmail.setEmailaddress("valid@email.com");
+    workEmail.setSource("Editorial Manager");
+    emails.add( workEmail );
+
+    composite.setEmails( emails );
+    composite.setIndividualprofiles(null);
+
+    try {
+      namedEntityService.createIndividualComposite(composite);
+      fail();
+    } catch (NedValidationException expected) {
+      Assert.isTrue(expected.getMessage().equals("Profile entities can not be empty"));
+    }
+
+    composite = newCompositeIndividualWithRole();
+    composite.setEmails( emails );
+
+    namedEntityService.createIndividualComposite(composite);
+  }
+
+  @Test
   public void testProfileEntityCrud() {
 
     Individualprofile individualProfile = new Individualprofile();
     individualProfile.setFirstname("");
     individualProfile.setLastname("lastname");
-    individualProfile.setDisplayname("displayname");
+    individualProfile.setDisplayname("displayname_p");
     individualProfile.setNameprefix("Mr.");
     individualProfile.setNamesuffix("III");
     individualProfile.setSource("Editorial Manager");
@@ -364,7 +410,7 @@ public class NamedEntityServiceTest {
     Email emailEntity = new Email();
     emailEntity.setNedid(1);
     emailEntity.setType("Work");
-    emailEntity.setEmailaddress("bill@microsoft.com");
+    emailEntity.setEmailaddress("bill_1@microsoft.com");
     emailEntity.setSource("Editorial Manager");
 
     Integer createEmailId = crudService.create(namedEntityService.resolveValuesToIds(emailEntity));
@@ -378,6 +424,8 @@ public class NamedEntityServiceTest {
     
     namedEntityService.resolveValuesToIds(emailEntity);
 
+    emailEntity.setEmailaddress("bill_2@microsoft.com");
+
     Integer createEmailId2 = crudService.create(emailEntity);
     assertNotNull( createEmailId2 );
 
@@ -387,7 +435,9 @@ public class NamedEntityServiceTest {
     // UPDATE email entity. Scrub appropriate attributes from current instance
     // and reuse. Again, we don't expect for email type to persist.
 
-    emailEntity.setTypeid(null); emailEntity.setId(createEmailId);
+    emailEntity.setTypeid(null);
+    emailEntity.setEmailaddress("bill_3@microsoft.com");
+    emailEntity.setId(createEmailId);
     assertTrue( crudService.update(emailEntity) );
 
     Email savedEntity3 = namedEntityService.findResolvedEntityByKey(createEmailId, Email.class);
@@ -526,7 +576,7 @@ public class NamedEntityServiceTest {
     Individualprofile individualProfile = new Individualprofile();
     individualProfile.setFirstname("firstname");
     individualProfile.setLastname("lastname");
-    individualProfile.setDisplayname("displayname");
+    individualProfile.setDisplayname("displayname"+ UUID.randomUUID().toString());
     individualProfile.setNameprefix("Mr.");
     individualProfile.setNamesuffix("III");
     individualProfile.setSource("Editorial Manager");
@@ -548,6 +598,16 @@ public class NamedEntityServiceTest {
     roles.add(author);
 
     composite.setRoles(roles);
+
+    Uniqueidentifier uid = new Uniqueidentifier();
+    uid.setSource("Ambra");
+    uid.setType("CAS");
+    uid.setUniqueidentifier("123");
+
+    List<Uniqueidentifier> uniqueidentifiers = new ArrayList<>();
+    uniqueidentifiers.add(uid);
+
+    composite.setUniqueidentifiers(uniqueidentifiers);
 
     return composite;
   }

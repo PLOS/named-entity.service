@@ -37,7 +37,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -64,7 +63,7 @@ public class CrudServiceTest {
     individualProfile.setNedid(nedId);
     individualProfile.setFirstname("firstname");
     individualProfile.setLastname("lastname");
-    individualProfile.setDisplayname("displayname");
+    individualProfile.setDisplayname("displayname_i");
     individualProfile.setSource("Editorial Manager");
 
     Integer pkId = crudService.create(namedEntityService.resolveValuesToIds(individualProfile));
@@ -97,7 +96,7 @@ public class CrudServiceTest {
     individualProfile.setNedid(nedId);
     individualProfile.setFirstname("firstname");
     individualProfile.setLastname("lastname");
-    individualProfile.setDisplayname("displayname");
+    individualProfile.setDisplayname("displayname_e");
     individualProfile.setSource("Editorial Manager");
     namedEntityService.resolveValuesToIds(individualProfile);
 
@@ -139,7 +138,7 @@ public class CrudServiceTest {
     individualProfile.setNedid(nedId);
     individualProfile.setFirstname("firstname");
     individualProfile.setLastname("lastname");
-    individualProfile.setDisplayname("displayname");
+    individualProfile.setDisplayname("displayname_nn");
     individualProfile.setSource("Editorial Manager");
     namedEntityService.resolveValuesToIds(individualProfile);
     crudService.create(individualProfile);

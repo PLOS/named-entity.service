@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Individualprofiles extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord> {
 
-	private static final long serialVersionUID = 1788113261;
+	private static final long serialVersionUID = 779879965;
 
 	/**
 	 * The reference instance of <code>namedEntities.individualProfiles</code>
@@ -74,7 +74,7 @@ public class Individualprofiles extends org.jooq.impl.TableImpl<org.plos.nameden
 	/**
 	 * The column <code>namedEntities.individualProfiles.displayName</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord, java.lang.String> DISPLAYNAME = createField("displayName", org.jooq.impl.SQLDataType.CLOB.length(65535), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord, java.lang.String> DISPLAYNAME = createField("displayName", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
 
 	/**
 	 * The column <code>namedEntities.individualProfiles.biography</code>.
@@ -144,7 +144,7 @@ public class Individualprofiles extends org.jooq.impl.TableImpl<org.plos.nameden
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord>>asList(org.plos.namedentity.persist.db.namedentities.Keys.KEY_INDIVIDUALPROFILES_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord>>asList(org.plos.namedentity.persist.db.namedentities.Keys.KEY_INDIVIDUALPROFILES_PRIMARY, org.plos.namedentity.persist.db.namedentities.Keys.KEY_INDIVIDUALPROFILES_DISPLAYNAME);
 	}
 
 	/**

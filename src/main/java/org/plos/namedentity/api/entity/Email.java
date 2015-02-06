@@ -35,7 +35,7 @@ public class Email extends Entity {
   @Override
   public void validate() {
 
-    if (emailaddress != null && !emailValidator.isValid(emailaddress))
+    if (emailaddress == null || !emailValidator.isValid(emailaddress))
       throw new NedValidationException("Email not valid");
 
   }

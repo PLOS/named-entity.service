@@ -22,6 +22,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/individuals")
 @Api(value="/individuals")
@@ -108,6 +109,10 @@ public class IndividualsResource extends BaseResource {
   @ApiOperation(value = "Delete a profile")
   public Response deleteProfile(@PathParam("nedId") int nedId,
                                 @PathParam("profileId") int profileId) {
+
+    if (((List)(getEntities(nedId, Individualprofile.class).getEntity())).size() == 1)
+      return validationError(new NedValidationException("Profile entities cannot be empty"), "Unable to delete profile");
+
     return deleteEntity(nedId, profileId, Individualprofile.class);
   }
 
@@ -122,7 +127,7 @@ public class IndividualsResource extends BaseResource {
   @GET
   @Path("/{nedId}/individualprofiles")
   @ApiOperation(value = "List profiles", response = Individualprofile.class)
-  public Response getProfiless(@PathParam("nedId") int nedId) {
+  public Response getProfiles(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Individualprofile.class);
   }
 
@@ -152,6 +157,10 @@ public class IndividualsResource extends BaseResource {
   @ApiOperation(value = "Delete email")
   public Response deleteEmail(@PathParam("nedId") int nedId, 
                               @PathParam("emailId") int emailId) {
+
+    if (((List)(getEntities(nedId, Email.class).getEntity())).size() == 1)
+      return validationError(new NedValidationException("Email entities cannot be empty"), "Unable to delete email");
+
     return deleteEntity(nedId, emailId, Email.class);
   }
 
@@ -252,6 +261,25 @@ public class IndividualsResource extends BaseResource {
   @ApiOperation(value = "Delete UID")
   public Response deleteUid(@PathParam("nedId") int nedId,
                             @PathParam("id") int id) {
+
+    int casCount = 0;
+
+    int entityLocation = -1;
+
+    List<Uniqueidentifier> uids = ((List<Uniqueidentifier>)(getEntities(nedId, Uniqueidentifier.class).getEntity()));
+
+    for (int i=0; i<uids.size(); i++) {
+      Uniqueidentifier uid = uids.get(i);
+      if (uid.getType().equals("CAS")) {
+        casCount++;
+        if (uid.getId() == id)
+          entityLocation = i;
+      }
+    }
+
+    if (entityLocation != -1 && casCount == 1)
+      return validationError(new NedValidationException("Can not remove last CAS ID"), "Unable to Uniqueidentifier");
+
     return deleteEntity(nedId, id, Uniqueidentifier.class);
   }
 

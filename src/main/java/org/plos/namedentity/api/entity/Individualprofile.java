@@ -49,6 +49,9 @@ public class Individualprofile extends Entity {
     if (lastname == null || lastname.length() < 1)
       throw new NedValidationException("lastname is too short");
 
+    if (displayname == null || displayname.length() < 1)
+      throw new NedValidationException("displayname is too short");
+
   }
 
   public Boolean getIsactive() {
