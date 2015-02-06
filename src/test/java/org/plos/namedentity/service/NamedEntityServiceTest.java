@@ -62,7 +62,7 @@ public class NamedEntityServiceTest {
   public void testCreateIndividualCompositeWithoutName() {
     // triggers phase 1 validation failure
     try {
-      namedEntityService.createIndividualComposite(new IndividualComposite());
+      namedEntityService.createComposite(new IndividualComposite(), IndividualComposite.class);
       fail();
     }
     catch (NedValidationException expected) {
@@ -223,7 +223,7 @@ public class NamedEntityServiceTest {
     Integer nedId = null;
 
     try {
-      namedEntityService.createIndividualComposite(composite);
+      namedEntityService.createComposite(composite, IndividualComposite.class);
       fail("invalid URL was not rejected");
     } catch (NedValidationException expected) {
       // expected since url is invalid
@@ -237,7 +237,7 @@ public class NamedEntityServiceTest {
     composite.setUrls(urls);
 
     try {
-      IndividualComposite responseComposite = namedEntityService.createIndividualComposite(composite);
+      IndividualComposite responseComposite = namedEntityService.createComposite(composite, IndividualComposite.class);
       assertNotNull(responseComposite);
       assertNotNull(responseComposite.getIndividualprofiles().get(0).getNedid());
 
@@ -311,7 +311,7 @@ public class NamedEntityServiceTest {
     composite.setEmails( emails );
 
     try {
-      namedEntityService.createIndividualComposite(composite);
+      namedEntityService.createComposite(composite, IndividualComposite.class);
       fail();
     }
     catch (NedValidationException expected) {
@@ -331,7 +331,7 @@ public class NamedEntityServiceTest {
     IndividualComposite composite = newCompositeIndividualWithRole();
 
     try {
-      namedEntityService.createIndividualComposite(composite);
+      namedEntityService.createComposite(composite, IndividualComposite.class);
       fail();
     } catch (NedValidationException expected) {
       Assert.isTrue(expected.getMessage().equals("Email entities can not be empty"));
@@ -349,7 +349,7 @@ public class NamedEntityServiceTest {
     composite.setIndividualprofiles(null);
 
     try {
-      namedEntityService.createIndividualComposite(composite);
+      namedEntityService.createComposite(composite, IndividualComposite.class);
       fail();
     } catch (NedValidationException expected) {
       Assert.isTrue(expected.getMessage().equals("Profile entities can not be empty"));
@@ -358,7 +358,7 @@ public class NamedEntityServiceTest {
     composite = newCompositeIndividualWithRole();
     composite.setEmails( emails );
 
-    namedEntityService.createIndividualComposite(composite);
+    namedEntityService.createComposite(composite, IndividualComposite.class);
   }
 
   @Test

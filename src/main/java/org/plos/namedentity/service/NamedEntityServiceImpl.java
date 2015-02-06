@@ -16,14 +16,13 @@
  */
 package org.plos.namedentity.service;
 
-import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
-import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.persist.NamedEntityDBService;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.lang.reflect.Constructor;
 import java.util.List;
 import java.util.Map;
 
@@ -177,83 +176,45 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   @SuppressWarnings("unchecked")
   @Override
-  public IndividualComposite findIndividualComposite(Integer nedId) {
+  public <T extends Composite> T findComposite(Integer nedId, Class<T> clazz) {
 
-    IndividualComposite composite = new IndividualComposite();
+    Constructor<?> ctor = clazz.getConstructors()[0];
+    try {
+      T composite = (T)ctor.newInstance();
 
-    Map<Class, List<? extends Entity>> compositeMap = composite.getAsMap();
+      Map<Class, List<? extends Entity>> compositeMap = composite.getAsMap();
 
-    for (Class entityType : compositeMap.keySet())
-      compositeMap.put(entityType, findResolvedEntities(nedId, entityType));
+      for (Class entityType : compositeMap.keySet())
+        compositeMap.put(entityType, findResolvedEntities(nedId, entityType));
 
-    composite.setFromMap(compositeMap);
+      composite.setFromMap(compositeMap);
 
-    return composite;
-  }
+      return composite;
 
-  @SuppressWarnings("unchecked")
-  @Override
-  public OrganizationComposite findOrganizationComposite(Integer nedId) {
-
-    OrganizationComposite composite = new OrganizationComposite();
-
-    Map<Class, List<? extends Entity>> compositeMap = composite.getAsMap();
-
-    for (Class entityType : compositeMap.keySet())
-      compositeMap.put(entityType, findResolvedEntities(nedId, entityType));
-
-    composite.setFromMap(compositeMap);
-
-    return composite;
+    } catch (Exception e) {
+      throw new NedException("Invalid composite type");
+    }
   }
 
   @Override @Transactional
-  public IndividualComposite createIndividualComposite(IndividualComposite composite) {
+  public  <T extends Composite> T createComposite(T composite, Class<T> clazz) {
 
     Integer nedId = nedDBSvc.newNamedEntityId(individualType);
 
     Map<Class, List<? extends Entity>> compositeMap = composite.getAsMap();
 
-    if (compositeMap.get(Uniqueidentifier.class) == null)
-      throw new NedException("Unique identifier required");
-
     for (List<? extends Entity> entities : compositeMap.values()) {
-
       if (entities != null) {
         for (Entity entity : entities) {
           entity.setNedid(nedId);
           nedDBSvc.create(resolveValuesToIds(entity));
         }
       }
-
     }
 
-    return findIndividualComposite(nedId);
+    return findComposite(nedId, clazz);
   }
 
-  @Override @Transactional
-  public OrganizationComposite createOrganizationComposite(OrganizationComposite composite) {
-
-    Integer nedId = nedDBSvc.newNamedEntityId(organizationType);
-
-    Map<Class, List<? extends Entity>> compositeMap = composite.getAsMap();
-
-//    if (compositeMap.get(Uniqueidentifier.class) == null)
-//      throw new NedException("Unique identifier required");
-
-    for (List<? extends Entity> entities : compositeMap.values()) {
-
-      if (entities != null) {
-        for (Entity entity : entities) {
-          entity.setNedid(nedId);
-          nedDBSvc.create(resolveValuesToIds(entity));
-        }
-      }
-
-    }
-
-    return findOrganizationComposite(nedId);
-  }
 
   @Override
   public <T extends Entity> List<T> findResolvedEntities(Integer nedId, Class<T> clazz) {

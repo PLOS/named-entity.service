@@ -79,12 +79,12 @@ public class TestSpringConfig {
 
     IndividualComposite individualComposite = newIndividualComposite();
 
-    when(mockNamedEntityService.createIndividualComposite(isA(IndividualComposite.class)))
+    when(mockNamedEntityService.createComposite(isA(IndividualComposite.class), eq(IndividualComposite.class)))
       .thenReturn(individualComposite)
         .thenThrow(NedValidationException.class)
           .thenThrow(RuntimeException.class);
 
-    when(mockNamedEntityService.findIndividualComposite(anyInt()))
+    when(mockNamedEntityService.findComposite(anyInt(), eq(IndividualComposite.class)))
         .thenReturn( individualComposite );
 
     List<Individualprofile> emptyIndividualProfiles = new ArrayList<>();

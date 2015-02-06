@@ -10,9 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OrganizationComposite implements Validatable {
+public class OrganizationComposite implements Composite, Validatable {
 
-  private Organization organization = new Organization();
+  private Organization           organization = new Organization();
   private List<Address>          addresses;
   private List<Email>            emails;
   private List<Phonenumber>      phonenumbers;

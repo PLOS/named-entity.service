@@ -49,7 +49,7 @@ public class OrganizationsResource extends BaseResource {
   public Response createOrganization(OrganizationComposite composite) {
     try {
       return Response.status(Response.Status.OK).entity(
-          namedEntityService.createOrganizationComposite(composite)).build();
+          namedEntityService.createComposite(composite, OrganizationComposite.class)).build();
     } catch (NedValidationException e) {
       return validationError(e, "Unable to create organization");
     } catch (Exception e) {
@@ -65,7 +65,7 @@ public class OrganizationsResource extends BaseResource {
     try {
       namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
       return Response.status(Response.Status.OK).entity(
-          namedEntityService.findOrganizationComposite(nedId)).build();
+          namedEntityService.findComposite(nedId, OrganizationComposite.class)).build();
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
     } catch (Exception e) {

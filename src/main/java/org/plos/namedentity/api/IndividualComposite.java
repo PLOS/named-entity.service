@@ -16,15 +16,7 @@
  */
 package org.plos.namedentity.api;
 
-import org.plos.namedentity.api.entity.Address;
-import org.plos.namedentity.api.entity.Degree;
-import org.plos.namedentity.api.entity.Email;
-import org.plos.namedentity.api.entity.Entity;
-import org.plos.namedentity.api.entity.Individualprofile;
-import org.plos.namedentity.api.entity.Phonenumber;
-import org.plos.namedentity.api.entity.Role;
-import org.plos.namedentity.api.entity.Uniqueidentifier;
-import org.plos.namedentity.api.entity.Url;
+import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.validate.Validatable;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,7 +27,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @XmlRootElement
-public class IndividualComposite implements Validatable {
+public class IndividualComposite implements Composite, Validatable {
 
   private List<Individualprofile> individualprofiles;
   private List<Role>              roles;

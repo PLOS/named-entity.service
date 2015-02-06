@@ -39,7 +39,7 @@ public class IndividualsResource extends BaseResource {
   public Response createIndividual(IndividualComposite composite) {
     try {
       return Response.status(Response.Status.OK).entity(
-          namedEntityService.createIndividualComposite(composite)).build();
+          namedEntityService.createComposite(composite, IndividualComposite.class)).build();
     } catch (NedValidationException e) {
       return validationError(e, "Unable to create individual");
     } catch (Exception e) {
@@ -55,7 +55,7 @@ public class IndividualsResource extends BaseResource {
     try {
       namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
       return Response.status(Response.Status.OK).entity(
-          namedEntityService.findIndividualComposite(nedId)).build();
+          namedEntityService.findComposite(nedId, IndividualComposite.class)).build();
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
     } catch (Exception e) {
@@ -74,7 +74,7 @@ public class IndividualsResource extends BaseResource {
           uidType, uidValue, Individualprofile.class);
 
       return Response.status(Response.Status.OK).entity(
-          namedEntityService.findIndividualComposite(individualProfile.getNedid())).build();
+          namedEntityService.findComposite(individualProfile.getNedid(), IndividualComposite.class)).build();
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
     } catch (Exception e) {

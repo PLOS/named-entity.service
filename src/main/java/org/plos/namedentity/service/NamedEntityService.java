@@ -16,8 +16,7 @@
  */
 package org.plos.namedentity.service;
 
-import org.plos.namedentity.api.IndividualComposite;
-import org.plos.namedentity.api.OrganizationComposite;
+import org.plos.namedentity.api.entity.Composite;
 import org.plos.namedentity.api.entity.Entity;
 
 import java.util.List;
@@ -32,13 +31,9 @@ public interface NamedEntityService {
 
   public static String organizationType = "Organization";
 
-  public IndividualComposite createIndividualComposite(IndividualComposite composite);
+  public <T extends Composite> T findComposite(Integer nedId, Class<T> clazz);
 
-  public OrganizationComposite createOrganizationComposite(OrganizationComposite composite);
-
-  public IndividualComposite findIndividualComposite(Integer nedId);
-
-  public OrganizationComposite findOrganizationComposite(Integer nedId);
+  public <T extends Composite> T createComposite(T composite, Class<T> clazz);
 
   /**
    * Finds entity by a unique identifier. Type id references in entity are
