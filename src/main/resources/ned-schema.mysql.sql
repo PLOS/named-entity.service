@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS namedEntities.organizations (
     nedId INT NOT NULL,
     typeId INT NULL,
     familiarName TEXT NOT NULL,
-    legalName TEXT NOT NULL,
+    legalName VARCHAR(255) NOT NULL,
     mainContactId INT NULL,
     sourceTypeId INT NOT NULL,
     isActive TINYINT(1) NOT NULL,
@@ -86,7 +86,8 @@ CREATE TABLE IF NOT EXISTS namedEntities.organizations (
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id),
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
-    FOREIGN KEY (mainContactId) REFERENCES individualProfiles(nedId)
+    FOREIGN KEY (mainContactId) REFERENCES individualProfiles(nedId),
+    UNIQUE (legalName, sourceTypeId)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.addresses;

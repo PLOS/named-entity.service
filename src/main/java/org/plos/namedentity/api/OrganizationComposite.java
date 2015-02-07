@@ -61,9 +61,6 @@ public class OrganizationComposite implements Composite, Validatable {
     if (organization == null)
       throw new NedValidationException("Organization needs basic info");
 
-//    if (emails == null || emails.size() == 0)
-//      throw new NedValidationException("Emails can not be empty");
-
   }
 
   public Integer getTypeid() {
@@ -160,6 +157,14 @@ public class OrganizationComposite implements Composite, Validatable {
 
   public void setSourcetypeid(Integer sourcetypeid) {
     organization.setSourcetypeid(sourcetypeid);
+  }
+
+  public List<Uniqueidentifier> getUniqueidentifiers() {
+    return uniqueidentifiers;
+  }
+
+  public void setUniqueidentifiers(List<Uniqueidentifier> uniqueidentifiers) {
+    this.uniqueidentifiers = uniqueidentifiers;
   }
 
   @XmlTransient

@@ -23,6 +23,7 @@ import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Email;
+import org.plos.namedentity.api.entity.Organization;
 import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.service.NamedEntityService;
@@ -87,6 +88,26 @@ public class OrganizationsResource extends BaseResource {
 //        (crudService.findAll(Organization.class, offset, limit)) {
 //    }).build();
 //  }
+
+  @GET
+  @Path("/{uidType}/{uidValue}")
+  @ApiOperation(value = "Read organization by UID", response = OrganizationComposite.class)
+  public Response readIndividualByUid(@PathParam("uidType") String uidType,
+                                      @PathParam("uidValue") String uidValue) {
+    try {
+
+      Organization organization = namedEntityService.findResolvedEntityByUid(
+          uidType, uidValue, Organization.class);
+
+      return Response.status(Response.Status.OK).entity(
+          namedEntityService.findComposite(organization.getNedid(), OrganizationComposite.class)).build();
+    } catch (EntityNotFoundException e) {
+      return entityNotFound(e);
+    } catch (Exception e) {
+      return serverError(e, "Find organization failed");
+    }
+  }
+
 
   @GET
   @Path("/{nedId}/emails")

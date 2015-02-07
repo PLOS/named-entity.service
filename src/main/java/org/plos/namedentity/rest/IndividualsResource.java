@@ -78,7 +78,7 @@ public class IndividualsResource extends BaseResource {
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
     } catch (Exception e) {
-      return serverError(e, "Find all individuals failed");
+      return serverError(e, "Find individual failed");
     }
   }
 
