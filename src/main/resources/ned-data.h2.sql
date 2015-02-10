@@ -305,7 +305,7 @@ INSERT INTO namedEntities.globalTypes (typeId, longDescription, typeCode, shortD
 INSERT INTO namedEntities.globalTypes (typeId, longDescription, typeCode, shortDescription) VALUES ((select max(id) from namedEntities.typeDescriptions),'Ukraine','UA','380');
 INSERT INTO namedEntities.globalTypes (typeId, longDescription, typeCode, shortDescription) VALUES ((select max(id) from namedEntities.typeDescriptions),'United Arab Emirates','AE','971');
 INSERT INTO namedEntities.globalTypes (typeId, longDescription, typeCode, shortDescription) VALUES ((select max(id) from namedEntities.typeDescriptions),'United Kingdom','GB','44');
-INSERT INTO namedEntities.globalTypes (typeId, longDescription, typeCode, shortDescription) VALUES ((select max(id) from namedEntities.typeDescriptions),'United States','US','1');
+INSERT INTO namedEntities.globalTypes (typeId, longDescription, typeCode, shortDescription) VALUES ((select max(id) from namedEntities.typeDescriptions),'United States','US','01');
 INSERT INTO namedEntities.globalTypes (typeId, longDescription, typeCode, shortDescription) VALUES ((select max(id) from namedEntities.typeDescriptions),'Uruguay','UY','598');
 INSERT INTO namedEntities.globalTypes (typeId, longDescription, typeCode, shortDescription) VALUES ((select max(id) from namedEntities.typeDescriptions),'Uzbekistan','UZ','998');
 INSERT INTO namedEntities.globalTypes (typeId, longDescription, typeCode, shortDescription) VALUES ((select max(id) from namedEntities.typeDescriptions),'Vanuatu','VU','678');
