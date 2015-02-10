@@ -18,16 +18,16 @@ package org.plos.namedentity.rest;
 
 import org.eclipse.persistence.jaxb.JAXBContextProperties;
 import org.eclipse.persistence.oxm.json.JsonStructureSource;
+
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.entity.Address;
-import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
 import org.plos.namedentity.api.entity.Individualprofile;
-import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
@@ -66,17 +66,8 @@ import static org.junit.Assert.fail;
 public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
   private static final String TEST_RESOURCE_PATH = "src/test/resources/";
-
-  private static final String TYPE_CLASS_URI = "/typeclasses";
-  private static final String TYPE_VALUE_URI = TYPE_CLASS_URI + "/1/typevalues";
-  private static final String INDIVIDUAL_URI = "/individuals";
-
-  private static final String INDIV_ADDR_URI   = INDIVIDUAL_URI + "/1/addresses";
-  private static final String INDIV_EMAIL_URI  = INDIVIDUAL_URI + "/1/emails";
-  private static final String INDIV_PHONE_URI  = INDIVIDUAL_URI + "/1/phonenumbers";
-  private static final String INDIV_ROLE_URI   = INDIVIDUAL_URI + "/1/roles";
-  private static final String INDIV_UID_URI    = INDIVIDUAL_URI + "/1/uids";
-  private static final String INDIV_DEGREE_URI = INDIVIDUAL_URI + "/1/degrees";
+  private static final String TYPE_CLASS_URI     = "/typeclasses";
+  private static final String INDIVIDUAL_URI     = "/individuals";
 
   @Test
   public void test00CreateIndividualCompositeAndFindByNedId() throws Exception {
@@ -100,7 +91,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals("Q", individualProfile.getMiddlename());
     assertEquals("Doe", individualProfile.getLastname());
     assertEquals("Mrs.", individualProfile.getNameprefix());
-    assertEquals("jane.q.doe.personal@foo.com", composite.getEmails().get(0).getEmailaddress());
+    assertEquals("jane.q.doe.work@foo.com", composite.getEmails().get(0).getEmailaddress());
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY NED ID (PK))                                             */
@@ -341,8 +332,8 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     Unmarshaller unmarshaller = jsonUnmarshaller(Role.class);
     Role role = unmarshalEntity(responseJson, Role.class, unmarshaller);
 
-    assertEquals(Integer.valueOf(1), role.getId());
-    assertEquals(Integer.valueOf(1), role.getNedid());
+    assertTrue( role.getId() > 0 );
+    assertEquals(nedid, role.getNedid());
     assertEquals("Editorial Manager", role.getApplicationtype());
     assertEquals("Academic Editor (PLOS ONE)", role.getType());
 
@@ -378,7 +369,6 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     Role role0 = roles.get(0);
     assertTrue(role0.getId() > 0);
     assertEquals(nedid, role0.getNedid());
-    assertEquals("Editorial Manager", role0.getApplicationtype());
     assertEquals("Author", role0.getType());
 
     Role role1 = roles.get(1);
@@ -409,7 +399,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(204, response.getStatus());
   }
 
-  //@Test
+  @Test
   public void test04EmailCrud() throws IOException, JAXBException {
 
     Integer nedid = getNedID();
@@ -421,7 +411,8 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String emailJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "email.json")));
 
-    Response response = target(INDIV_EMAIL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+    Response response = target(emailsURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
         .post(Entity.json(emailJson));
 
     assertEquals(200, response.getStatus());
@@ -434,7 +425,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertTrue(email.getId() > 0);
     assertEquals(nedid, email.getNedid());
     assertEquals("jane.q.doe.personal@foo.com", email.getEmailaddress());
-    assertEquals(false, email.getIsactive());
+    assertEquals(true, email.getIsactive());
 
     String emailURI = emailsURI + "/" + email.getId();
 
@@ -473,7 +464,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals("Personal", email1.getType());
     assertEquals("jane.q.doe.personal@foo.com", email1.getEmailaddress());
     assertEquals("Ambra", email1.getSource());
-    assertEquals(false, email1.getIsactive());
+    assertEquals(true, email1.getIsactive());
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */
@@ -489,100 +480,88 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /*  DELETE                                                            */
     /* ------------------------------------------------------------------ */
 
-    response = target(emailURI).request(MediaType.APPLICATION_JSON_TYPE).delete();
+    response = target(emailURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
+        .delete();
+
     assertEquals(204, response.getStatus());
 
     /* ------------------------------------------------------------------ */
     /*  404 ERRORS                                                        */
     /* ------------------------------------------------------------------ */
 
-    assertEquals(Response.Status.OK.getStatusCode(),
-        target("/individuals/-1/emails")
-            .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
-
     assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
-        target("/individuals/-2/emails")
+        target("/individuals/-1/emails")
             .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
 
     // EMAIL CROSSING ENTITIES
 
-    assertEquals(Response.Status.OK.getStatusCode(),
-        target("/individuals/1/emails/1")
-            .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
+    //assertEquals(Response.Status.OK.getStatusCode(),
+        //target("/individuals/1/emails/1")
+            //.request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
 
 //    assertEquals(Response.Status.OK.getStatusCode(), target("/organizations/2/emails/5").request(MediaType.APPLICATION_JSON_TYPE).get().getStatus()); // TODO: add this once /organizations email CRUD is done
 
-    assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
-        target("/individuals/1/emails/5")
-            .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
+    //assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
+        //target("/individuals/1/emails/5")
+            //.request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
   }
 
-  //@Test
-  public void testDegreeCrud() throws IOException, JAXBException {
+  @Test
+  public void test05UniqueIdentifiersCRUD() throws IOException, JAXBException {
+
+    Integer nedid = getNedID();
+    String uidsURI = String.format("%s/%d/uids", INDIVIDUAL_URI, nedid);
 
     /* ------------------------------------------------------------------ */
-    /*  FIND (BY ID)                                                      */
+    /*  CREATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    Response response = target(INDIV_DEGREE_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    String requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "uid.json")));
+
+    Response response = target(uidsURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
+        .post(Entity.json(requestJson));
 
     assertEquals(200, response.getStatus());
 
-    String jsonPayload = response.readEntity(String.class);
+    String responseJson = response.readEntity(String.class);
 
-    Unmarshaller unmarshaller = jsonUnmarshaller(Degree.class);
-    List<Degree> degrees = unmarshalEntities(jsonPayload, Degree.class, unmarshaller);
-    assertEquals(1, degrees.size());
+    Unmarshaller unmarshaller = jsonUnmarshaller(Uniqueidentifier.class);
+    Uniqueidentifier uid = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
+    assertNotNull(uid);
 
-    Degree degree = degrees.get(0);
-    assertEquals("Super Doctor", degree.getType());
-
-    //TODO - CREATE, UPDATE, DELETE
-  }
-
-  //@Test
-  public void testPhonenumberCrud() throws IOException, JAXBException {
+    String uidURI = uidsURI + "/" + uid.getId();
 
     /* ------------------------------------------------------------------ */
-    /*  FIND (BY ID)                                                      */
+    /*  FIND (BY UID ID (PK))                                             */
     /* ------------------------------------------------------------------ */
 
-    Response response = target(INDIV_PHONE_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    response = target(uidURI).request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(200, response.getStatus());
 
-    String jsonPayload = response.readEntity(String.class);
+    responseJson = response.readEntity(String.class);
 
-    Unmarshaller unmarshaller = jsonUnmarshaller(Phonenumber.class);
-    List<Phonenumber> phonenumbers = unmarshalEntities(jsonPayload, Phonenumber.class, unmarshaller);
-    assertEquals(3, phonenumbers.size());
-
-    Phonenumber officePhone = phonenumbers.get(0);
-    assertEquals("Office", officePhone.getType());
-    assertEquals("123-456-7890", officePhone.getPhonenumber());
-
-    //TODO - CREATE, UPDATE, DELETE
-  }
-
-  //@Test
-  public void testExternalReferenceLookup() throws IOException, JAXBException {
+    Uniqueidentifier foundUid = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
+    assertEquals(uid, foundUid);
 
     /* ------------------------------------------------------------------ */
-    /*  FIND EXTERNAL REFERENCES FOR INDIVIDUAL                           */
+    /*  FIND UIDs FOR INDIVIDUAL (BY NED ID)                              */
     /* ------------------------------------------------------------------ */
 
-    Response response = target(INDIV_UID_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    response = target(uidsURI).request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(200, response.getStatus());
 
-    String jsonPayload = response.readEntity(String.class);
+    responseJson = response.readEntity(String.class);
 
-    List<Uniqueidentifier> uids = unmarshalEntities(jsonPayload, Uniqueidentifier.class,
+    List<Uniqueidentifier> uids = unmarshalEntities(responseJson, Uniqueidentifier.class,
         jsonUnmarshaller(Uniqueidentifier.class));
     assertEquals(5, uids.size());
 
     /* ------------------------------------------------------------------ */
-    /*  FIND INDIVIDUAL BY EXTERNAL REFERENCE                             */
+    /*  FIND INDIVIDUAL BY UID                                            */
     /* ------------------------------------------------------------------ */
 
     String[] uidTypes = new String[] {
@@ -598,13 +577,13 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     };
 
     for (int i = 0; i < uidTypes.length; i++) {
-      response = target(INDIVIDUAL_URI + "/"+uidTypes[i]+"/"+uidValues[i])
+      response = target(INDIVIDUAL_URI+"/"+uidTypes[i]+"/"+uidValues[i])
           .request(MediaType.APPLICATION_JSON_TYPE).get();
 
       assertEquals(200, response.getStatus());
-      jsonPayload = response.readEntity(String.class);
+      responseJson = response.readEntity(String.class);
 
-      IndividualComposite individualComposite = unmarshalEntity(jsonPayload, 
+      IndividualComposite individualComposite = unmarshalEntity(responseJson, 
         IndividualComposite.class, jsonUnmarshaller(IndividualComposite.class));
 
       assertNotNull(individualComposite);
@@ -615,6 +594,26 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
         .request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(404, response.getStatus());
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    response = target(uidURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
+        .put(Entity.json(writeValueAsString(foundUid)));
+
+    assertEquals(200, response.getStatus());
+
+    /* ------------------------------------------------------------------ */
+    /*  DELETE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    response = target(uidURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
+        .delete();
+
+    assertEquals(204, response.getStatus());
   }
 
   @Test

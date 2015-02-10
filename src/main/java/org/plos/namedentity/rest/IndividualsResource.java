@@ -227,7 +227,7 @@ public class IndividualsResource extends BaseResource {
 
 
   /* ----------------------------------------------------------------------- */
-  /*  REFERENCES CRUD                                                        */
+  /*  UID CRUD                                                               */
   /* ----------------------------------------------------------------------- */
 
   @POST
@@ -256,12 +256,19 @@ public class IndividualsResource extends BaseResource {
   }
 
   @GET
-  @Path("/{nedId}/uids")
-  @ApiOperation(value = "List UIDs")
-  public Response getExternalReferences(@PathParam("nedId") int nedId) {
-    return getEntities(nedId, Uniqueidentifier.class);
+  @Path("/{nedId}/uids/{id}")
+  @ApiOperation(value = "Read uid", response = Uniqueidentifier.class)
+  public Response getUid(@PathParam("nedId") int nedId,
+                         @PathParam("id") int id) {
+    return getEntity(nedId, id, Uniqueidentifier.class);
   }
 
+  @GET
+  @Path("/{nedId}/uids")
+  @ApiOperation(value = "List UIDs")
+  public Response getUids(@PathParam("nedId") int nedId) {
+    return getEntities(nedId, Uniqueidentifier.class);
+  }
 
   /* ----------------------------------------------------------------------- */
   /*  DEGREES CRUD                                                           */

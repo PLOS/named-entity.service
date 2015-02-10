@@ -74,6 +74,16 @@
       "type"             : "Editorial Manager",
       "uniqueidentifier" : "PONE-579386",
       "source"           : "Editorial Manager"
+    },
+    {
+      "type"             : "CAS",
+      "uniqueidentifier" : "3BBFE34C8EEF46FEA1E0DA3339DF1EC9",
+      "source"           : "Ambra"
+    },
+    {
+      "type"             : "Salesforce",
+      "uniqueidentifier" : "001U0000008Qlfj",
+      "source"           : "Ambra"
     }
   ]
 }
