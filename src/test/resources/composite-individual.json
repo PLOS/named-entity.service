@@ -29,6 +29,7 @@
   ],
   "addresses" : [
     {
+      "type"            : "Office",
       "statecodetype"   : "CA",
       "isprimary"       : "true",
       "city"            : "San Francisco",
@@ -40,12 +41,6 @@
     }
   ],
   "emails" : [
-    {
-      "isprimary"    : "false",
-      "type"         : "Personal",
-      "emailaddress" : "jane.q.doe.personal@foo.com",
-      "source"       : "Editorial Manager"
-    },
     {
       "isprimary"    : "true",
       "type"         : "Work",
