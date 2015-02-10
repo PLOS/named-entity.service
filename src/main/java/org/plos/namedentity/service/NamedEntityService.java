@@ -27,10 +27,6 @@ import java.util.List;
 
 public interface NamedEntityService {
 
-//  public static String individualType = "Individual";
-//
-//  public static String organizationType = "Organization";
-
   public <T extends Composite> T findComposite(Integer nedId, Class<T> clazz);
 
   public <T extends Composite> T createComposite(T composite, Class<T> clazz);

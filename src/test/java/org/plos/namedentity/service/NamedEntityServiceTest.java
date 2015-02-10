@@ -21,15 +21,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.entity.Address;
-import org.plos.namedentity.api.entity.Degree;
-import org.plos.namedentity.api.entity.Email;
-import org.plos.namedentity.api.entity.Globaltype;
-import org.plos.namedentity.api.entity.Individualprofile;
-import org.plos.namedentity.api.entity.Phonenumber;
-import org.plos.namedentity.api.entity.Role;
-import org.plos.namedentity.api.entity.Uniqueidentifier;
-import org.plos.namedentity.api.entity.Url;
+import org.plos.namedentity.api.OrganizationComposite;
+import org.plos.namedentity.api.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -108,6 +101,43 @@ public class NamedEntityServiceTest {
     composite2.setEmails( emails );
 
     assertEquals(composite1, composite2);
+  }
+
+  @Test
+  public void testCreateOrganizationComposite() {
+    OrganizationComposite composite = newOrganizationComposite();
+
+    List<Email> emails = new ArrayList<>();
+
+    Email workEmail = new Email();
+    workEmail.setType("Work");
+    workEmail.setEmailaddress("fu.manchu.work@foo.com");
+    workEmail.setSource("Ambra");
+    emails.add( workEmail );
+
+    composite.setEmails( emails );
+
+    List<Uniqueidentifier> uniqueidentifiers = new ArrayList<>();
+
+    Uniqueidentifier uidEntity = new Uniqueidentifier();
+    uidEntity.setType("Ringgold");
+    uidEntity.setUniqueidentifier("1234");
+    uidEntity.setSource("Ambra");
+
+    uniqueidentifiers.add(uidEntity);
+
+    //composite.getUniqueidentifiers().add(uidEntity);
+    composite.setUniqueidentifiers(uniqueidentifiers);
+
+    OrganizationComposite responseComposite = namedEntityService.createComposite(composite, OrganizationComposite.class);
+
+    assertNotNull(responseComposite);
+    assertNotNull(responseComposite.getNedid());
+
+    OrganizationComposite foundComposite = namedEntityService.findComposite(responseComposite.getNedid(), OrganizationComposite.class);
+
+    assert(foundComposite.getLegalname().equals(responseComposite.getLegalname()));
+
   }
 
   @Test
@@ -608,6 +638,16 @@ public class NamedEntityServiceTest {
     uniqueidentifiers.add(uid);
 
     composite.setUniqueidentifiers(uniqueidentifiers);
+
+    return composite;
+  }
+
+  private OrganizationComposite newOrganizationComposite() {
+    OrganizationComposite composite = new OrganizationComposite();
+
+    composite.setLegalname("legal name"+UUID.randomUUID().toString());
+    composite.setFamiliarname("familiar name");
+    composite.setSource("Ambra");
 
     return composite;
   }
