@@ -275,7 +275,7 @@ public class CrudServiceTest {
     // lookup id for "work" email type
 
     Globaltype globalTypesearchCriteria = new Globaltype();
-    globalTypesearchCriteria.setTypeid(10);
+    globalTypesearchCriteria.setTypeid( nedDBSvc.findTypeClass("Email Address Types") );
     globalTypesearchCriteria.setShortdescription("Work");
     List<Globaltype> globalTypesResult = crudService.findByAttribute(globalTypesearchCriteria);
     assertEquals(1, globalTypesResult.size());
@@ -451,10 +451,10 @@ public class CrudServiceTest {
 
     final String ORCID_ID1 = "0000-0001-9430-319X";
 
-    // lookup id for orcid (using hardcoded type class 17 :))
+    // lookup id for orcid
 
     Globaltype globalTypesearchCriteria = new Globaltype();
-    globalTypesearchCriteria.setTypeid(17);
+    globalTypesearchCriteria.setTypeid( nedDBSvc.findTypeClass("Unique Identifier Types") );
     globalTypesearchCriteria.setShortdescription("ORCID");
     List<Globaltype> globalTypesResult = crudService.findByAttribute(globalTypesearchCriteria);
     assertEquals(1, globalTypesResult.size());

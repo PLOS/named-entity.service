@@ -1,84 +1,89 @@
 {
-  "individualProfiles" : [
+  "individualprofiles" : [
     {
-      "firstname" : "Jane",
+      "firstname"  : "Jane",
       "middlename" : "Q",
       "namesuffix" : "III",
-      "lastname" : "Doe",
+      "lastname"   : "Doe",
       "nameprefix" : "Mrs.",
-      "biography" : "bio",
-      "source": "Editorial Manager"
+      "biography"  : "bio",
+      "source"     : "Editorial Manager"
     }
   ],
   "phonenumbers" : [
     {
-      "extension" : "x012",
-      "isprimary" : "true",
-      "phonenumber" : "650-123-4567",
-      "type" : "Office",
+      "extension"       : "x012",
+      "isprimary"       : "true",
+      "phonenumber"     : "650-123-4567",
+      "type"            : "Office",
       "countrycodetype" : "1",
-      "source": "Editorial Manager"
+      "source"          : "Editorial Manager"
     },
     {
-      "isprimary" : "false",
-      "phonenumber" : "650-111-2222",
-      "type" : "Mobile",
+      "isprimary"       : "false",
+      "phonenumber"     : "650-111-2222",
+      "type"            : "Mobile",
       "countrycodetype" : "1",
-      "source": "Editorial Manager"
+      "source"          : "Editorial Manager"
     }
   ],
   "addresses" : [
     {
-      "statecodetype" : "CA",
-      "isprimary" : "true",
-      "city" : "San Francisco",
-      "addressline1" : "123 Maple Street",
-      "addresstype" : "Office",
-      "postalcode" : "94501",
-      "countrycodetype" : "UNITED STATES",
-      "source": "Editorial Manager"
+      "type"            : "Office",
+      "statecodetype"   : "CA",
+      "isprimary"       : "true",
+      "city"            : "San Francisco",
+      "addressline1"    : "123 Maple Street",
+      "addresstype"     : "Office",
+      "postalcode"      : "94501",
+      "countrycodetype" : "United States of America",
+      "source"          : "Editorial Manager"
     }
   ],
   "emails" : [
     {
-      "isprimary" : "false",
-      "type" : "Personal",
-      "emailaddress" : "jane.q.doe.personal@foo.com",
-      "source": "Editorial Manager"
-    },
-    {
-      "isprimary" : "true",
-      "type" : "Work",
+      "isprimary"    : "true",
+      "type"         : "Work",
       "emailaddress" : "jane.q.doe.work@foo.com",
-      "source": "Editorial Manager"
+      "source"       : "Editorial Manager"
     }
   ],
   "degrees" : [
     {
-      "type":"MD",
-      "source": "Editorial Manager"
+      "type"   : "MD",
+      "source" : "Editorial Manager"
     },
     {
-      "type":"PhD",
-      "source": "Editorial Manager"
+      "type"   : "PhD",
+      "source" : "Editorial Manager"
     }
   ],
   "roles" : [
     {
-      "type" : "Author",
-      "source": "Editorial Manager"
+      "type"   : "Author",
+      "source" : "Editorial Manager"
     }
   ],
   "uniqueidentifiers" : [
     {
-      "type" : "ORCID",
+      "type"             : "ORCID",
       "uniqueidentifier" : "0000-0002-9430-319X",
-      "source": "Editorial Manager"
+      "source"           : "Editorial Manager"
     },
     {
-      "type" : "Editorial Manager",
+      "type"             : "Editorial Manager",
       "uniqueidentifier" : "PONE-579386",
-      "source": "Editorial Manager"
+      "source"           : "Editorial Manager"
+    },
+    {
+      "type"             : "CAS",
+      "uniqueidentifier" : "3BBFE34C8EEF46FEA1E0DA3339DF1EC9",
+      "source"           : "Ambra"
+    },
+    {
+      "type"             : "Salesforce",
+      "uniqueidentifier" : "001U0000008Qlfj",
+      "source"           : "Ambra"
     }
   ]
 }

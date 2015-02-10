@@ -1,5 +1,6 @@
 {
-    "sourceapplicationtype" : "Editorial Manager",
-    "type"                  : "Academic Editor (PLOS ONE)",
-    "startdate"             : "2014-06-30"
+    "applicationtype" : "Editorial Manager",
+    "type"            : "Academic Editor (PLOS ONE)",
+    "startdate"       : "2014-06-30",
+    "source"          : "Ambra"
 }
