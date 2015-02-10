@@ -38,6 +38,12 @@ public class IndividualComposite implements Composite, Validatable {
   private List<Degree>            degrees;
   private List<Url>               urls;
 
+  public static String typeName = "Individual";
+
+  public String getTypeName() {
+    return typeName;
+  }
+
   @XmlTransient
   public Map<Class, List<? extends Entity>> getAsMap() {
     Map<Class, List<? extends Entity>> map = new HashMap<>();

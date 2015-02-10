@@ -199,7 +199,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   @Override @Transactional
   public  <T extends Composite> T createComposite(T composite, Class<T> clazz) {
 
-    Integer nedId = nedDBSvc.newNamedEntityId(individualType);
+    Integer nedId = nedDBSvc.newNamedEntityId(composite.getTypeName());
 
     Map<Class, List<? extends Entity>> compositeMap = composite.getAsMap();
 

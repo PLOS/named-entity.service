@@ -11,4 +11,6 @@ public interface Composite {
 
   public void setFromMap(Map<Class, List<? extends Entity>> map);
 
+  public String getTypeName();
+
 }

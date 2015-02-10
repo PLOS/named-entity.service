@@ -406,7 +406,6 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
   private Organization findOrganizationByUid(String srcType, String uid) {
 
-    Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
     Organizations o = ORGANIZATIONS.as("o");
     Uniqueidentifiers u = UNIQUEIDENTIFIERS.as("u");
@@ -415,13 +414,12 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .select(
             o.NEDID, o.FAMILIARNAME,
             o.LEGALNAME, o.ISACTIVE,
-            gt1.SHORTDESCRIPTION.as("type"),
+            gt2.SHORTDESCRIPTION.as("uniqueidentifiertype"),
             o.CREATED, o.LASTMODIFIED)
         .from(o)
-        .leftOuterJoin(gt1).on(o.TYPEID.equal(gt1.ID))
-        .leftOuterJoin(gt2).on(u.TYPEID.equal(gt2.ID)).and(gt2.SHORTDESCRIPTION.equal(srcType))
         .join(u).on(o.NEDID.equal(u.NEDID))
-        .where(u.UNIQUEIDENTIFIER.equal(uid)).fetchAny();
+        .leftOuterJoin(gt2).on(u.TYPEID.equal(gt2.ID))
+        .where(u.UNIQUEIDENTIFIER.equal(uid)).and(gt2.SHORTDESCRIPTION.equal(srcType)).fetchAny();
 
     if (record == null)
       throw new EntityNotFoundException("Organization");
@@ -434,7 +432,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
     Globaltypes gt5 = GLOBALTYPES.as("gt5");
-    Individualprofiles i   = INDIVIDUALPROFILES.as("i");
+    Individualprofiles i = INDIVIDUALPROFILES.as("i");
     Uniqueidentifiers u = UNIQUEIDENTIFIERS.as("u");
 
     Record record = this.context
@@ -448,8 +446,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       .leftOuterJoin(gt1).on(i.NAMEPREFIXTYPEID.equal(gt1.ID))
       .leftOuterJoin(gt2).on(i.NAMESUFFIXTYPEID.equal(gt2.ID))
       .join(u).on(i.NEDID.equal(u.NEDID))
-      .leftOuterJoin(gt5).on(u.TYPEID.equal(gt5.ID)).and(gt5.SHORTDESCRIPTION.eq(srcType))
-      .where(u.UNIQUEIDENTIFIER.equal(uid))
+      .leftOuterJoin(gt5).on(u.TYPEID.equal(gt5.ID))
+      .where(u.UNIQUEIDENTIFIER.equal(uid)).and(gt5.SHORTDESCRIPTION.eq(srcType))
       .fetchAny();
 
     if (record == null)

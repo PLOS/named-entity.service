@@ -18,6 +18,12 @@ public class OrganizationComposite implements Composite, Validatable {
   private List<Phonenumber>      phonenumbers;
   private List<Uniqueidentifier> uniqueidentifiers;
 
+  public static String typeName = "Organization";
+
+  public String getTypeName() {
+    return typeName;
+  }
+
   @XmlTransient
   public Map<Class, List<? extends Entity>> getAsMap() {
     Map<Class, List<? extends Entity>> map = new HashMap<>();
