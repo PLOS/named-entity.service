@@ -23,6 +23,7 @@ import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
 import org.plos.namedentity.api.entity.Individualprofile;
+import org.plos.namedentity.api.entity.Organization;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
@@ -34,6 +35,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -84,6 +86,44 @@ public class CrudServiceTest {
     assertEquals("somemiddlename", readEntity.getMiddlename());
 
     // DELETE
+    assertTrue(crudService.delete(readEntity));
+  }
+
+  @Test
+  public void testOrganizationCRUD() {
+
+    // CREATE
+
+    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+
+    Organization organization = new Organization();
+    organization.setNedid(nedId);
+    organization.setLegalname("legal name"+ UUID.randomUUID().toString());
+    organization.setFamiliarname("familiar name");
+    organization.setSource("Ambra");
+
+    namedEntityService.resolveValuesToIds(organization);
+
+    Integer pkId = crudService.create(namedEntityService.resolveValuesToIds(organization));
+    assertNotNull(pkId);
+
+    // READ
+
+    Organization readEntity = crudService.findById(pkId, Organization.class);
+    assertNotNull(readEntity);
+    assertEquals(organization.getLegalname(), readEntity.getLegalname());
+    assertEquals(organization.getFamiliarname(), readEntity.getFamiliarname());
+    assertEquals(pkId, readEntity.getId());
+
+    // UPDATE
+
+    readEntity.setFamiliarname("familiar name 2");
+    assertTrue(crudService.update(readEntity));
+    Organization readEntity2 = crudService.findById(pkId, Organization.class);
+    assertEquals(readEntity.getFamiliarname(), readEntity2.getFamiliarname());
+
+    // DELETE
+
     assertTrue(crudService.delete(readEntity));
   }
 

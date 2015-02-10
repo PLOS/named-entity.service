@@ -105,6 +105,7 @@ public class NamedEntityServiceTest {
 
   @Test
   public void testCreateOrganizationComposite() {
+
     OrganizationComposite composite = newOrganizationComposite();
 
     List<Email> emails = new ArrayList<>();
@@ -126,8 +127,20 @@ public class NamedEntityServiceTest {
 
     uniqueidentifiers.add(uidEntity);
 
-    //composite.getUniqueidentifiers().add(uidEntity);
     composite.setUniqueidentifiers(uniqueidentifiers);
+
+
+    String legalName = composite.getLegalname();
+    composite.setLegalname("");
+
+    try {
+      namedEntityService.createComposite(composite, OrganizationComposite.class);
+      fail("invalid legal name was not rejected");
+    } catch (NedValidationException e) {
+      // expected
+    }
+
+    composite.setLegalname(legalName);
 
     OrganizationComposite responseComposite = namedEntityService.createComposite(composite, OrganizationComposite.class);
 
