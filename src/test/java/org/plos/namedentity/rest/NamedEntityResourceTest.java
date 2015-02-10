@@ -18,14 +18,15 @@ package org.plos.namedentity.rest;
 
 import org.eclipse.persistence.jaxb.JAXBContextProperties;
 import org.eclipse.persistence.oxm.json.JsonStructureSource;
+
+import org.junit.Before;
 import org.junit.Test;
+
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.entity.Address;
-import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
 import org.plos.namedentity.api.entity.Individualprofile;
-import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
@@ -57,135 +58,175 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
   private static final String TEST_RESOURCE_PATH = "src/test/resources/";
+  private static final String TYPE_CLASS_URI     = "/typeclasses";
+  private static final String INDIVIDUAL_URI     = "/individuals";
 
-  private static final String TYPE_CLASS_URI = "/typeclasses";
-  private static final String TYPE_VALUE_URI = TYPE_CLASS_URI + "/1/typevalues";
-  private static final String INDIVIDUAL_URI = "/individuals";
+  private static Integer nedid = null;
 
-  private static final String INDIV_ADDR_URI   = INDIVIDUAL_URI + "/1/addresses";
-  private static final String INDIV_EMAIL_URI  = INDIVIDUAL_URI + "/1/emails";
-  private static final String INDIV_PHONE_URI  = INDIVIDUAL_URI + "/1/phonenumbers";
-  private static final String INDIV_ROLE_URI   = INDIVIDUAL_URI + "/1/roles";
-  private static final String INDIV_UID_URI    = INDIVIDUAL_URI + "/1/uids";
-  private static final String INDIV_DEGREE_URI = INDIVIDUAL_URI + "/1/degrees";
+  @Before public void setup() throws Exception {
+
+    synchronized(NamedEntityResourceTest.class) {
+      if (nedid == null) {
+        String compositeIndividualJson = new String(Files.readAllBytes(
+            Paths.get(TEST_RESOURCE_PATH + "composite-individual.json")));
+
+        Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+            .post(Entity.json(compositeIndividualJson));
+
+        assertEquals(200, response.getStatus());
+
+        String jsonPayload = response.readEntity(String.class);
+
+        Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
+        IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
+        Individualprofile individualProfile = composite.getIndividualprofiles().get(0);
+        assertNotNull(individualProfile.getNedid());
+
+        nedid = individualProfile.getNedid();
+      }
+    }
+  }
 
   @Test
-  public void testCreateIndividualComposite() throws Exception {
+  public void testCompositeFinders() throws Exception {
 
-    String compositeIndividualJson = new String(Files.readAllBytes(
-        Paths.get(TEST_RESOURCE_PATH + "composite-individual.json")));
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY NED ID (PK))                                             */
+    /* ------------------------------------------------------------------ */
 
-    // Request #1. Expect success.
+    Response response = target(INDIVIDUAL_URI+"/"+nedid)
+      .request(MediaType.APPLICATION_JSON_TYPE).get();
 
-    Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(compositeIndividualJson));
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    String jsonPayload = response.readEntity(String.class);
+
+    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
+    IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
+
+    Individualprofile individualProfile = composite.getIndividualprofiles().get(0);
+    assertNotNull(individualProfile);
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY EM GUID)                                                 */
+    /* ------------------------------------------------------------------ */
+
+    response = target(INDIVIDUAL_URI+"/Editorial Manager/PONE-579386")
+                .request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    jsonPayload = response.readEntity(String.class);
+
+    IndividualComposite composite2 = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
+
+    Individualprofile individualProfile2 = composite.getIndividualprofiles().get(0);
+    assertEquals(individualProfile, individualProfile2);
+  }
+
+  @Test
+  public void testIndividualProfileCRUD() throws Exception {
+
+    String profilesURI = String.format("%s/%d/individualprofiles", INDIVIDUAL_URI, nedid);
+
+    /* ------------------------------------------------------------------ */
+    /*  CREATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    String requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "individualprofile.json")));
+
+    Response response = target(profilesURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
+        .post(Entity.json(requestJson));
 
     assertEquals(200, response.getStatus());
 
-    String jsonPayload = response.readEntity(String.class);
+    String responseJson = response.readEntity(String.class);
 
-    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
-    IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
+    Unmarshaller unmarshaller = jsonUnmarshaller(Individualprofile.class);
+    Individualprofile profile = unmarshalEntity(responseJson, Individualprofile.class, unmarshaller);
 
-    Individualprofile individualProfile = composite.getIndividualprofiles().get(0);
-    assertEquals(Integer.valueOf(1), individualProfile.getNedid());
-    assertEquals("firstname", individualProfile.getFirstname());
-    assertEquals("middlename", individualProfile.getMiddlename());
-    assertEquals("lastname", individualProfile.getLastname());
-    assertEquals("Ms.", individualProfile.getNameprefix());
-    assertEquals("email@internet.com", composite.getEmails().get(0).getEmailaddress());
+    String profileURI = profilesURI + "/" + profile.getId();
 
-    // Request #2. Expect a validation exception (client-side error)
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY PROFILE ID (PK))                                         */
+    /* ------------------------------------------------------------------ */
 
-    response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(compositeIndividualJson));
+    response = target(profileURI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    assertEquals(200, response.getStatus());
 
-    assertEquals(400, response.getStatus());
+    responseJson = response.readEntity(String.class);
 
-    String textPayload = response.readEntity(String.class);
-    assertTrue(textPayload.indexOf("Validation failed") >= 0);
+    Individualprofile profile2 = unmarshalEntity(responseJson, Individualprofile.class, unmarshaller);
+    assertEquals(profile, profile2);
 
-    // Request #3. Expect a data access exception (server-side error)
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY NED ID)                                                  */
+    /* ------------------------------------------------------------------ */
 
-    response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(compositeIndividualJson));
+    response = target(profilesURI).request(MediaType.APPLICATION_JSON_TYPE).get();
 
-    assertEquals(500, response.getStatus());
+    assertEquals(200, response.getStatus());
 
-    textPayload = response.readEntity(String.class);
-    assertTrue(textPayload.indexOf("Internal error") >= 0);
-  }
+    responseJson = response.readEntity(String.class);
 
-  @Test
-  public void testReadIndividualCompositeByNedId() throws Exception {
+    List<Individualprofile> profiles = unmarshalEntities(responseJson, Individualprofile.class, unmarshaller);
+    assertEquals(2, profiles.size());
 
-    Response response = target(INDIVIDUAL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
-    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+    Individualprofile profile0 = profiles.get(0);
+    assertEquals("Mrs.", profile0.getNameprefix());
+    assertEquals("Jane", profile0.getFirstname());
+    assertEquals("Q", profile0.getMiddlename());
+    assertEquals("Doe", profile0.getLastname());
+    assertEquals("III", profile0.getNamesuffix());
+    assertEquals("Editorial Manager", profile0.getSource());
 
-    String jsonPayload = response.readEntity(String.class);
+    Individualprofile profile1 = profiles.get(1);
+    assertEquals("Jane", profile1.getFirstname());
+    assertEquals("Shmoe", profile1.getLastname());
+    assertEquals("Janie", profile1.getNickname());
+    assertEquals("janeshmoe", profile1.getDisplayname());
+    assertEquals("Ambra", profile1.getSource());
 
-    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
-    IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
 
-    Individualprofile individualProfile = composite.getIndividualprofiles().get(0);
-    assertEquals(Integer.valueOf(1), individualProfile.getNedid());
-    assertEquals("firstname", individualProfile.getFirstname());
-    assertEquals("middlename", individualProfile.getMiddlename());
-    assertEquals("lastname", individualProfile.getLastname());
-    assertEquals("Ms.", individualProfile.getNameprefix());
-    assertEquals("email@internet.com", composite.getEmails().get(0).getEmailaddress());
-  }
+    profile.setLastname("Flanders");
 
-  @Test
-  public void testReadIndividualCompositeByUid() throws Exception {
+    // marshall pojo to json
+    String updateIndividualProfileJson = writeValueAsString(profile);
 
-    Response response = target(INDIVIDUAL_URI + "/Editorial Manager/PONE-579386").request(MediaType.APPLICATION_JSON_TYPE).get();
-    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-
-    String jsonPayload = response.readEntity(String.class);
-
-    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
-    IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
-
-    Individualprofile individualProfile = composite.getIndividualprofiles().get(0);
-    assertEquals(Integer.valueOf(1), individualProfile.getNedid());
-    assertEquals("firstname", individualProfile.getFirstname());
-    assertEquals("middlename", individualProfile.getMiddlename());
-    assertEquals("lastname", individualProfile.getLastname());
-    assertEquals("Ms.", individualProfile.getNameprefix());
-    assertEquals("email@internet.com", composite.getEmails().get(0).getEmailaddress());
-  }
-
-  @Test
-  public void testIndividualUpdate() throws Exception {
-
-    final String NEW_FIRSTNAME = "origfirstname";
-    final String NEW_LASTNAME = "origlastname";
-
-    final String NEW_INDIVIDUALS_JSON_PAYLOAD = "{"
-        + "\"firstname\":\"" + NEW_FIRSTNAME + "\","
-        + "\"lastname\":\"" + NEW_LASTNAME + "\""
-        + "}";
-
-    Response response = target(INDIVIDUAL_URI + "/1/individualprofiles/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .put(Entity.json(NEW_INDIVIDUALS_JSON_PAYLOAD));
+    response = target(profileURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
+        .put(Entity.json(updateIndividualProfileJson));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
-  }
+    String jsonPayload = response.readEntity(String.class);
 
-  @Test
-  public void testIndividualDelete() {
+    Individualprofile updatedIndividualprofile = unmarshalEntity(jsonPayload, 
+        Individualprofile.class, jsonUnmarshaller(Individualprofile.class));
+
+    assertEquals("Flanders", updatedIndividualprofile.getLastname());
+
+    /* ------------------------------------------------------------------ */
+    /*  DELETE                                                            */
+    /* ------------------------------------------------------------------ */
+
     assertEquals(Response.Status.NO_CONTENT.getStatusCode(),
-        target(INDIVIDUAL_URI + "/1/individualprofiles/1").request().delete().getStatus());
+      target(profileURI).request().delete().getStatus());
   }
 
   @Test
   public void testAddressCrud() throws IOException, JAXBException {
+
+    String addressesURI = String.format("%s/%d/addresses", INDIVIDUAL_URI, nedid);
 
     /* ------------------------------------------------------------------ */
     /*  CREATE                                                            */
@@ -193,7 +234,8 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "address.json")));
 
-    Response response = target(INDIV_ADDR_URI).request(MediaType.APPLICATION_JSON_TYPE)
+    Response response = target(addressesURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
         .post(Entity.json(requestJson));
 
     assertEquals(200, response.getStatus());
@@ -201,54 +243,29 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     String responseJson = response.readEntity(String.class);
 
     Unmarshaller unmarshaller = jsonUnmarshaller(Address.class);
+    Address address = unmarshalEntity(responseJson, Address.class, unmarshaller);
+    assertNotNull(address);
 
-    Address entity = unmarshalEntity(responseJson, Address.class, unmarshaller);
-
-    assertEquals(Integer.valueOf(1), entity.getId());
-    assertEquals(Integer.valueOf(1), entity.getNedid());
-    assertEquals("Office", entity.getType());
-    assertEquals("addressline 1", entity.getAddressline1());
-    assertEquals("addressline 2", entity.getAddressline2());
-    assertEquals("addressline 3", entity.getAddressline3());
-    assertEquals("city", entity.getCity());
-    assertEquals("CA", entity.getStatecodetype());
-    assertEquals("United States", entity.getCountrycodetype());
-    assertEquals("12345", entity.getPostalcode());
-    assertEquals(true, entity.getIsactive());
-
-    /* ------------------------------------------------------------------ */
-    /*  UPDATE                                                            */
-    /* ------------------------------------------------------------------ */
-
-    response = target(INDIV_ADDR_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .put(Entity.json(writeValueAsString(entity)));
-
-    assertEquals(200, response.getStatus());
-
-    /* ------------------------------------------------------------------ */
-    /*  DELETE                                                            */
-    /* ------------------------------------------------------------------ */
-
-    response = target(INDIV_ADDR_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).delete();
-    assertEquals(204, response.getStatus());
+    String addressURI = addressesURI + "/" + address.getId();
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY ADDRESS ID (PK))                                         */
     /* ------------------------------------------------------------------ */
 
-    response = target(INDIV_ADDR_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
+    response = target(addressURI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
     assertEquals(200, response.getStatus());
 
     responseJson = response.readEntity(String.class);
 
-    Address address = unmarshalEntity(responseJson, Address.class, unmarshaller);
-    assertNotNull(address);
+    Address foundAddress = unmarshalEntity(responseJson, Address.class, unmarshaller);
+    assertEquals(address, foundAddress);
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY NED ID)                                                  */
     /* ------------------------------------------------------------------ */
 
-    response = target(INDIV_ADDR_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    response = target(addressesURI).request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(200, response.getStatus());
 
@@ -257,21 +274,41 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     List<Address> addresses = unmarshalEntities(responseJson, Address.class, unmarshaller);
     assertEquals(2, addresses.size());
 
-    Address officeAddress = addresses.get(0);
-    assertEquals("Office", officeAddress.getType());
-    assertEquals("addressline 1", officeAddress.getAddressline1());
-    assertEquals("CA", officeAddress.getStatecodetype());
-    assertEquals("12345", officeAddress.getPostalcode());
+    Address address0 = addresses.get(0);
+    assertEquals("Office", address0.getType());
+    assertEquals("123 Maple Street", address0.getAddressline1());
+    assertEquals("CA", address0.getStatecodetype());
+    assertEquals("United States of America", address0.getCountrycodetype());
+    assertEquals("94501", address0.getPostalcode());
 
-    Address homeAddress = addresses.get(1);
-    assertEquals("Home", homeAddress.getType());
-    assertEquals("addressline 1.2", homeAddress.getAddressline1());
-    assertEquals("ONT", homeAddress.getStatecodetype());
-    assertEquals("M4C 1B5", homeAddress.getPostalcode());
+    Address address1 = addresses.get(1);
+    assertEquals("Home", address1.getType());
+    assertEquals("addressline 1", address1.getAddressline1());
+    assertEquals("ONT", address1.getStatecodetype());
+    assertEquals("Canada", address1.getCountrycodetype());
+    assertEquals("M4C 1B5", address1.getPostalcode());
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    response = target(addressURI).request(MediaType.APPLICATION_JSON_TYPE)
+        .put(Entity.json(writeValueAsString(foundAddress)));
+
+    assertEquals(200, response.getStatus());
+
+    /* ------------------------------------------------------------------ */
+    /*  DELETE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    response = target(addressURI).request(MediaType.APPLICATION_JSON_TYPE).delete();
+    assertEquals(204, response.getStatus());
   }
 
   @Test
   public void testRoleCrud() throws IOException, JAXBException {
+
+    String rolesURI = String.format("%s/%d/roles", INDIVIDUAL_URI, nedid);
 
     Calendar cal = new GregorianCalendar();   // Jun 30, 2014 00:00:00 local time
     cal.set(2014, (6 - 1), 30, 0, 0, 0);      // month is 0-based, so subtract 1
@@ -284,7 +321,8 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "role.json")));
 
-    Response response = target(INDIV_ROLE_URI).request(MediaType.APPLICATION_JSON_TYPE)
+    Response response = target(rolesURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
         .post(Entity.json(requestJson));
 
     assertEquals(200, response.getStatus());
@@ -292,95 +330,61 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     String responseJson = response.readEntity(String.class);
 
     Unmarshaller unmarshaller = jsonUnmarshaller(Role.class);
-    Role entity = unmarshalEntity(responseJson, Role.class, unmarshaller);
+    Role role = unmarshalEntity(responseJson, Role.class, unmarshaller);
 
-    assertEquals(Integer.valueOf(1), entity.getId());
-    assertEquals(Integer.valueOf(1), entity.getNedid());
-    assertEquals("Editorial Manager", entity.getApplicationtype());
-    assertEquals("Academic Editor (PLOS ONE)", entity.getType());
+    assertTrue( role.getId() > 0 );
+    assertEquals(nedid, role.getNedid());
+    assertEquals("Editorial Manager", role.getApplicationtype());
+    assertEquals("Academic Editor (PLOS ONE)", role.getType());
 
-    assertEquals(START_DATE, entity.getStartdate());
+    assertEquals(START_DATE, role.getStartdate());
 
-    /* ------------------------------------------------------------------ */
-    /*  UPDATE                                                            */
-    /* ------------------------------------------------------------------ */
-
-    response = target(INDIV_ROLE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .put(Entity.json(writeValueAsString(entity)));
-
-    assertEquals(200, response.getStatus());
-
-    /* ------------------------------------------------------------------ */
-    /*  DELETE                                                            */
-    /* ------------------------------------------------------------------ */
-
-    response = target(INDIV_ROLE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).delete();
-    assertEquals(204, response.getStatus());
+    String roleURI = rolesURI + "/" + role.getId();
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY ROLE ID (PK))                                            */
     /* ------------------------------------------------------------------ */
 
-    response = target(INDIV_ROLE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
+    response = target(roleURI).request(MediaType.APPLICATION_JSON_TYPE).get();
     assertEquals(200, response.getStatus());
 
     responseJson = response.readEntity(String.class);
 
-    Role role = unmarshalEntity(responseJson, Role.class, unmarshaller);
-    assertNotNull(role);
+    Role foundRole = unmarshalEntity(responseJson, Role.class, unmarshaller);
+    assertEquals(role, foundRole);
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY NED ID)                                                  */
     /* ------------------------------------------------------------------ */
 
-    response = target(INDIV_ROLE_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    response = target(rolesURI).request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(200, response.getStatus());
 
     responseJson = response.readEntity(String.class);
 
     List<Role> roles = unmarshalEntities(responseJson, Role.class, unmarshaller);
-    assertEquals(1, roles.size());
+    assertEquals(2, roles.size());
 
-    role = roles.get(0);
-    assertEquals(Integer.valueOf(1), role.getId());
-    assertEquals(Integer.valueOf(1), role.getNedid());
-    assertEquals("Editorial Manager", role.getApplicationtype());
-    assertEquals("Academic Editor (PLOS ONE)", role.getType());
-    assertEquals(START_DATE, role.getStartdate());
-  }
+    Role role0 = roles.get(0);
+    assertTrue(role0.getId() > 0);
+    assertEquals(nedid, role0.getNedid());
+    assertEquals("Author", role0.getType());
 
-  @Test
-  public void testEmailCrud() throws IOException, JAXBException {
-
-    /* ------------------------------------------------------------------ */
-    /*  CREATE                                                            */
-    /* ------------------------------------------------------------------ */
-
-    String emailsJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "emails.json")));
-
-    Response response = target(INDIV_EMAIL_URI).request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(emailsJson));
-
-    assertEquals(200, response.getStatus());
-
-    String jsonPayload = response.readEntity(String.class);
-
-    Unmarshaller unmarshaller = jsonUnmarshaller(Email.class);
-    Email entity = unmarshalEntity(jsonPayload, Email.class, unmarshaller);
-
-    assertEquals(Integer.valueOf(1), entity.getId());
-    assertEquals(Integer.valueOf(1), entity.getNedid());
-    assertEquals("Work", entity.getType());
-    assertEquals("foo.bar.personal@gmail.com", entity.getEmailaddress());
-    assertEquals(true, entity.getIsactive());
+    Role role1 = roles.get(1);
+    assertTrue(role1.getId() > 0);
+    assertEquals(nedid, role1.getNedid());
+    assertEquals("Editorial Manager", role1.getApplicationtype());
+    assertEquals("Academic Editor (PLOS ONE)", role1.getType());
+    assertEquals(START_DATE, role1.getStartdate());
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    response = target(INDIV_EMAIL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .put(Entity.json(writeValueAsString(entity)));
+    response = target(roleURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
+        .put(Entity.json(writeValueAsString(role)));
 
     assertEquals(200, response.getStatus());
 
@@ -388,26 +392,59 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /*  DELETE                                                            */
     /* ------------------------------------------------------------------ */
 
-    response = target(INDIV_EMAIL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).delete();
+    response = target(roleURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
+        .delete();
+
     assertEquals(204, response.getStatus());
+  }
+
+  @Test
+  public void testEmailCrud() throws IOException, JAXBException {
+
+    String emailsURI = String.format("%s/%d/emails", INDIVIDUAL_URI, nedid);
+
+    /* ------------------------------------------------------------------ */
+    /*  CREATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    String emailJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "email.json")));
+
+    Response response = target(emailsURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
+        .post(Entity.json(emailJson));
+
+    assertEquals(200, response.getStatus());
+
+    String jsonPayload = response.readEntity(String.class);
+
+    Unmarshaller unmarshaller = jsonUnmarshaller(Email.class);
+    Email email = unmarshalEntity(jsonPayload, Email.class, unmarshaller);
+
+    assertTrue(email.getId() > 0);
+    assertEquals(nedid, email.getNedid());
+    assertEquals("jane.q.doe.personal@foo.com", email.getEmailaddress());
+    assertEquals(true, email.getIsactive());
+
+    String emailURI = emailsURI + "/" + email.getId();
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY EMAIL ID (PK))                                           */
     /* ------------------------------------------------------------------ */
 
-    response = target(INDIV_EMAIL_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
+    response = target(emailURI).request(MediaType.APPLICATION_JSON_TYPE).get();
     assertEquals(200, response.getStatus());
 
     jsonPayload = response.readEntity(String.class);
 
-    Email email = unmarshalEntity(jsonPayload, Email.class, unmarshaller);
-    assertNotNull(email);
+    Email foundEmail = unmarshalEntity(jsonPayload, Email.class, unmarshaller);
+    assertEquals(email, foundEmail);
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY NED ID)                                                  */
     /* ------------------------------------------------------------------ */
 
-    response = target(INDIV_EMAIL_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    response = target(emailsURI).request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(200, response.getStatus());
 
@@ -416,101 +453,113 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     List<Email> emails = unmarshalEntities(jsonPayload, Email.class, unmarshaller);
     assertEquals(2, emails.size());
 
-    Email workEmail = emails.get(0);
-    assertEquals("Work", workEmail.getType());
-    assertEquals("fu.manchu.work@foo.com", workEmail.getEmailaddress());
+    Email email0 = emails.get(0);
+    assertEquals("Work", email0.getType());
+    assertEquals("jane.q.doe.work@foo.com", email0.getEmailaddress());
+    assertEquals("Editorial Manager", email0.getSource());
+    assertEquals(true, email0.getIsactive());
+
+    Email email1 = emails.get(1);
+    assertEquals("Personal", email1.getType());
+    assertEquals("jane.q.doe.personal@foo.com", email1.getEmailaddress());
+    assertEquals("Ambra", email1.getSource());
+    assertEquals(true, email1.getIsactive());
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    response = target(emailURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
+        .put(Entity.json(writeValueAsString(email)));
+
+    assertEquals(200, response.getStatus());
+
+    /* ------------------------------------------------------------------ */
+    /*  DELETE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    response = target(emailURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
+        .delete();
+
+    assertEquals(204, response.getStatus());
 
     /* ------------------------------------------------------------------ */
     /*  404 ERRORS                                                        */
     /* ------------------------------------------------------------------ */
 
-    assertEquals(Response.Status.OK.getStatusCode(),
-        target("/individuals/1/emails")
-            .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
-
     assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
-        target("/individuals/2/emails")
+        target("/individuals/-1/emails")
             .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
 
     // EMAIL CROSSING ENTITIES
 
-    assertEquals(Response.Status.OK.getStatusCode(),
-        target("/individuals/1/emails/1")
-            .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
+    //assertEquals(Response.Status.OK.getStatusCode(),
+        //target("/individuals/1/emails/1")
+            //.request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
 
 //    assertEquals(Response.Status.OK.getStatusCode(), target("/organizations/2/emails/5").request(MediaType.APPLICATION_JSON_TYPE).get().getStatus()); // TODO: add this once /organizations email CRUD is done
 
-    assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
-        target("/individuals/1/emails/5")
-            .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
+    //assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
+        //target("/individuals/1/emails/5")
+            //.request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
   }
 
   @Test
-  public void testDegreeCrud() throws IOException, JAXBException {
+  public void testUniqueIdentifiersCRUD() throws IOException, JAXBException {
+
+    String uidsURI = String.format("%s/%d/uids", INDIVIDUAL_URI, nedid);
 
     /* ------------------------------------------------------------------ */
-    /*  FIND (BY ID)                                                      */
+    /*  CREATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    Response response = target(INDIV_DEGREE_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    String requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "uid.json")));
+
+    Response response = target(uidsURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
+        .post(Entity.json(requestJson));
 
     assertEquals(200, response.getStatus());
 
-    String jsonPayload = response.readEntity(String.class);
+    String responseJson = response.readEntity(String.class);
 
-    Unmarshaller unmarshaller = jsonUnmarshaller(Degree.class);
-    List<Degree> degrees = unmarshalEntities(jsonPayload, Degree.class, unmarshaller);
-    assertEquals(1, degrees.size());
+    Unmarshaller unmarshaller = jsonUnmarshaller(Uniqueidentifier.class);
+    Uniqueidentifier uid = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
+    assertNotNull(uid);
 
-    Degree degree = degrees.get(0);
-    assertEquals("Super Doctor", degree.getType());
-
-    //TODO - CREATE, UPDATE, DELETE
-  }
-
-  @Test
-  public void testPhonenumberCrud() throws IOException, JAXBException {
+    String uidURI = uidsURI + "/" + uid.getId();
 
     /* ------------------------------------------------------------------ */
-    /*  FIND (BY ID)                                                      */
+    /*  FIND (BY UID ID (PK))                                             */
     /* ------------------------------------------------------------------ */
 
-    Response response = target(INDIV_PHONE_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    response = target(uidURI).request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(200, response.getStatus());
 
-    String jsonPayload = response.readEntity(String.class);
+    responseJson = response.readEntity(String.class);
 
-    Unmarshaller unmarshaller = jsonUnmarshaller(Phonenumber.class);
-    List<Phonenumber> phonenumbers = unmarshalEntities(jsonPayload, Phonenumber.class, unmarshaller);
-    assertEquals(3, phonenumbers.size());
-
-    Phonenumber officePhone = phonenumbers.get(0);
-    assertEquals("Office", officePhone.getType());
-    assertEquals("123-456-7890", officePhone.getPhonenumber());
-
-    //TODO - CREATE, UPDATE, DELETE
-  }
-
-  @Test
-  public void testExternalReferenceLookup() throws IOException, JAXBException {
+    Uniqueidentifier foundUid = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
+    assertEquals(uid, foundUid);
 
     /* ------------------------------------------------------------------ */
-    /*  FIND EXTERNAL REFERENCES FOR INDIVIDUAL                           */
+    /*  FIND UIDs FOR INDIVIDUAL (BY NED ID)                              */
     /* ------------------------------------------------------------------ */
 
-    Response response = target(INDIV_UID_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    response = target(uidsURI).request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(200, response.getStatus());
 
-    String jsonPayload = response.readEntity(String.class);
+    responseJson = response.readEntity(String.class);
 
-    List<Uniqueidentifier> uids = unmarshalEntities(jsonPayload, Uniqueidentifier.class,
+    List<Uniqueidentifier> uids = unmarshalEntities(responseJson, Uniqueidentifier.class,
         jsonUnmarshaller(Uniqueidentifier.class));
     assertEquals(5, uids.size());
 
     /* ------------------------------------------------------------------ */
-    /*  FIND INDIVIDUAL BY EXTERNAL REFERENCE                             */
+    /*  FIND INDIVIDUAL BY UID                                            */
     /* ------------------------------------------------------------------ */
 
     String[] uidTypes = new String[] {
@@ -526,13 +575,13 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     };
 
     for (int i = 0; i < uidTypes.length; i++) {
-      response = target(INDIVIDUAL_URI + "/"+uidTypes[i]+"/"+uidValues[i])
+      response = target(INDIVIDUAL_URI+"/"+uidTypes[i]+"/"+uidValues[i])
           .request(MediaType.APPLICATION_JSON_TYPE).get();
 
       assertEquals(200, response.getStatus());
-      jsonPayload = response.readEntity(String.class);
+      responseJson = response.readEntity(String.class);
 
-      IndividualComposite individualComposite = unmarshalEntity(jsonPayload, 
+      IndividualComposite individualComposite = unmarshalEntity(responseJson, 
         IndividualComposite.class, jsonUnmarshaller(IndividualComposite.class));
 
       assertNotNull(individualComposite);
@@ -543,6 +592,26 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
         .request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(404, response.getStatus());
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    response = target(uidURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
+        .put(Entity.json(writeValueAsString(foundUid)));
+
+    assertEquals(200, response.getStatus());
+
+    /* ------------------------------------------------------------------ */
+    /*  DELETE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    response = target(uidURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
+        .delete();
+
+    assertEquals(204, response.getStatus());
   }
 
   @Test
@@ -552,18 +621,13 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /*  CREATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    final String NEW_TYPE_DESC = "New Type Description";
+    final String NEW_TYPE_DESC  = "New Type Class";
     final String NEW_TYPE_USAGE = "New Type Usage";
 
-    final String NEW_TYPE_JSON_PAYLOAD = "{"
-        + "\"description\":\"" + NEW_TYPE_DESC + "\","
-        + "\"howused\":\"" + NEW_TYPE_USAGE + "\""
-        + "}";
-
-    // Request #1. Expect success.
+    String typeClassJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "typeclass.json")));
 
     Response response = target(TYPE_CLASS_URI).request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(NEW_TYPE_JSON_PAYLOAD));
+        .post(Entity.json(typeClassJson));
 
     assertEquals(200, response.getStatus());
 
@@ -572,35 +636,17 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     Unmarshaller unmarshaller = jsonUnmarshaller(Typedescription.class);
     Typedescription newTypeClass = unmarshalEntity(jsonPayload, Typedescription.class, unmarshaller);
 
-    assertEquals(Integer.valueOf(1), newTypeClass.getId());
+    Integer typeClassId = newTypeClass.getId();
+
+    assertTrue( typeClassId > 0 );
     assertEquals(NEW_TYPE_DESC, newTypeClass.getDescription());
     assertEquals(NEW_TYPE_USAGE, newTypeClass.getHowused());
-
-    // Request #2. Expect a validation exception (client-side error)
-
-    response = target(TYPE_CLASS_URI).request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(NEW_TYPE_JSON_PAYLOAD));
-
-    assertEquals(400, response.getStatus());
-
-    String textPayload = response.readEntity(String.class);
-    assertTrue(textPayload.indexOf("Validation failed") >= 0);
-
-    // Request #3. Expect a data access exception (server-side error)
-
-    response = target(TYPE_CLASS_URI).request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(NEW_TYPE_JSON_PAYLOAD));
-
-    assertEquals(500, response.getStatus());
-
-    textPayload = response.readEntity(String.class);
-    assertTrue(textPayload.indexOf("Internal error") >= 0);
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY ID)                                                      */
     /* ------------------------------------------------------------------ */
 
-    response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
+    response = target(TYPE_CLASS_URI+"/"+typeClassId).request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(200, response.getStatus());
 
@@ -608,7 +654,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     Typedescription foundTypeClass = unmarshalEntity(jsonPayload, Typedescription.class, unmarshaller);
 
-    assertEquals(Integer.valueOf(1), foundTypeClass.getId());
+    assertEquals(typeClassId, foundTypeClass.getId());
     assertEquals(NEW_TYPE_DESC, foundTypeClass.getDescription());
     assertEquals(NEW_TYPE_USAGE, foundTypeClass.getHowused());
 
@@ -624,56 +670,42 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     List<Typedescription> typedescriptions = unmarshalEntities(
         jsonPayload, Typedescription.class, unmarshaller);
 
-    assertEquals(3, typedescriptions.size());
+    assertTrue( typedescriptions.size() > 1 );
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    final String UPDATE_TYPE_DESC = "Update Type Description";
+    final String UPDATE_TYPE_DESC  = "Update Type Description";
     final String UPDATE_TYPE_USAGE = "Update Type Usage";
 
-    Typedescription updatedTypeClass = foundTypeClass;
-    updatedTypeClass.setDescription(UPDATE_TYPE_DESC);
-    updatedTypeClass.setHowused(UPDATE_TYPE_USAGE);
+    Typedescription updateTypeClass = foundTypeClass;
+    updateTypeClass.setDescription(UPDATE_TYPE_DESC);
+    updateTypeClass.setHowused(UPDATE_TYPE_USAGE);
 
     // marshal Type description pojo object to JSON String.
 
-    String jsonUpdatedTypeClass = writeValueAsString(updatedTypeClass);
+    String jsonUpdateTypeClass = writeValueAsString(updateTypeClass);
 
-    response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .put(Entity.json(jsonUpdatedTypeClass));
+    response = target(TYPE_CLASS_URI+"/"+typeClassId).request(MediaType.APPLICATION_JSON_TYPE)
+        .put(Entity.json(jsonUpdateTypeClass));
 
     assertEquals(200, response.getStatus());
 
-    // we won't bother to inspect payload because it won't be updated (we
-    // didn't mock for this). however, just trying to update and returning
-    // a 200 winds through much of the code we want tested.
+    jsonPayload = response.readEntity(String.class);
 
+    Typedescription updatedTypeClass = unmarshalEntity(jsonPayload, Typedescription.class, unmarshaller);
 
-    // UPDATE #2 should raise a validation exception
-
-    response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .put(Entity.json(jsonUpdatedTypeClass));
-
-    assertEquals(400, response.getStatus());
-
-    // UPDATE #3 should raise a server-side exception
-
-    response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .put(Entity.json(jsonUpdatedTypeClass));
-
-    assertEquals(500, response.getStatus());
+    assertEquals(typeClassId, updatedTypeClass.getId());
+    assertEquals(UPDATE_TYPE_DESC, updatedTypeClass.getDescription());
+    assertEquals(UPDATE_TYPE_USAGE, updatedTypeClass.getHowused());
 
     /* ------------------------------------------------------------------ */
     /*  DELETE                                                           */
     /* ------------------------------------------------------------------ */
 
-    response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).delete();
+    response = target(TYPE_CLASS_URI+"/"+typeClassId).request(MediaType.APPLICATION_JSON_TYPE).delete();
     assertEquals(204, response.getStatus());
-
-    response = target(TYPE_CLASS_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).delete();
-    assertEquals(500, response.getStatus());
   }
 
   @Test
@@ -683,128 +715,110 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /*  CREATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    final String NEW_TYPEVAL_SHORTDESC = "New Type Val Short Description";
-    final String NEW_TYPEVAL_LONGDESC = "New Type Val Long Description";
-    final String NEW_TYPEVAL_TYPECODE = "XYZ";
+    final String NEW_TYPE_VAL_SDESC = "New Type Value Short Description";
+    final String NEW_TYPE_VAL_LDESC = "New Type Value Long Description";
+    final String NEW_TYPE_VAL_CODE  = "XYZ";
 
-    final String NEW_TYPEVAL_JSON_PAYLOAD = "{"
-        + "\"shortdescription\":\"" + NEW_TYPEVAL_SHORTDESC + "\","
-        + "\"longdescription\":\"" + NEW_TYPEVAL_LONGDESC + "\","
-        + "\"typecode\":\"" + NEW_TYPEVAL_TYPECODE + "\""
-        + "}";
+    String globalTypeJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "globaltype.json")));
 
-    // Request #1. Expect success.
+    Integer typeClassId = findTypeClassIdByName("Roles");
 
-    Response response = target(TYPE_VALUE_URI).request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(NEW_TYPEVAL_JSON_PAYLOAD));
+    String typeValueUri = String.format("%s/%s/typevalues", TYPE_CLASS_URI, typeClassId);
+
+    Response response = target(typeValueUri).request(MediaType.APPLICATION_JSON_TYPE)
+                          .post(Entity.json(globalTypeJson));
 
     assertEquals(200, response.getStatus());
 
     String jsonPayload = response.readEntity(String.class);
 
     Unmarshaller unmarshaller = jsonUnmarshaller(Globaltype.class);
-    Globaltype newTypeVal = unmarshalEntity(jsonPayload, Globaltype.class, unmarshaller);
+    Globaltype newTypeValue   = unmarshalEntity(jsonPayload, Globaltype.class, unmarshaller);
 
-    assertEquals(Integer.valueOf(1), newTypeVal.getId());
-    assertEquals("Type Value #1 Short Description", newTypeVal.getShortdescription());
-    assertEquals("TV1", newTypeVal.getTypecode());
+    Integer newTypeValueId = newTypeValue.getId();
 
-    // Request #2. Expect a validation exception (client-side error)
-
-    response = target(TYPE_VALUE_URI).request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(NEW_TYPEVAL_JSON_PAYLOAD));
-
-    assertEquals(400, response.getStatus());
-
-    String textPayload = response.readEntity(String.class);
-    assertTrue(textPayload.indexOf("Validation failed") >= 0);
-
-    // Request #3. Expect a data access exception (server-side error)
-
-    response = target(TYPE_VALUE_URI).request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(NEW_TYPEVAL_JSON_PAYLOAD));
-
-    assertEquals(500, response.getStatus());
-
-    textPayload = response.readEntity(String.class);
-    assertTrue(textPayload.indexOf("Internal error") >= 0);
+    assertTrue( newTypeValueId > 0 );
+    assertEquals(NEW_TYPE_VAL_SDESC, newTypeValue.getShortdescription());
+    assertEquals(NEW_TYPE_VAL_CODE, newTypeValue.getTypecode());
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY ID)                                                      */
     /* ------------------------------------------------------------------ */
 
-    response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).get();
+    response = target(typeValueUri+"/"+newTypeValueId)
+                  .request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(200, response.getStatus());
 
     jsonPayload = response.readEntity(String.class);
 
-    Globaltype foundTypeVal = unmarshalEntity(jsonPayload, Globaltype.class, unmarshaller);
+    Globaltype foundTypeValue = unmarshalEntity(jsonPayload, Globaltype.class, unmarshaller);
 
-    assertEquals(Integer.valueOf(1), foundTypeVal.getId());
-    assertEquals(Integer.valueOf(1), foundTypeVal.getTypeid());
-    assertEquals("Type Value #1 Short Description", foundTypeVal.getShortdescription());
-    assertEquals("TV1", foundTypeVal.getTypecode());
+    assertEquals(newTypeValueId, foundTypeValue.getId());
+    assertEquals(typeClassId, foundTypeValue.getTypeid());
+    assertEquals(NEW_TYPE_VAL_SDESC, foundTypeValue.getShortdescription());
+    assertEquals(NEW_TYPE_VAL_CODE, foundTypeValue.getTypecode());
 
     /* ------------------------------------------------------------------ */
     /*  FIND VALUES FOR TYPE CLASS (BY ATTRIBUTE)                         */
     /* ------------------------------------------------------------------ */
 
-    response = target(TYPE_VALUE_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    response = target(typeValueUri).request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(200, response.getStatus());
     jsonPayload = response.readEntity(String.class);
 
     List<Globaltype> typevaluesfortypeclass = unmarshalEntities(jsonPayload, Globaltype.class, unmarshaller);
-    assertEquals(5, typevaluesfortypeclass.size());
-    for (int i = 0; i < 5; i++) {
-      assertEquals(Integer.valueOf(i + 1), typevaluesfortypeclass.get(i).getId());
-    }
+    assertTrue(typevaluesfortypeclass.size() > 2);
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    Globaltype updatedTypeVal = foundTypeVal;
-    updatedTypeVal.setShortdescription("Update Type Value #1 Short Description");
+    final String UPDATE_TYPE_VAL_SDESC = "Updated Type Value Short Description";
+
+    Globaltype updateTypeValue = foundTypeValue;
+    updateTypeValue.setShortdescription(UPDATE_TYPE_VAL_SDESC);
 
     // marshal Type value pojo object to JSON String.
 
-    String jsonUpdatedTypeVal = writeValueAsString(updatedTypeVal);
+    String updateTypeValueJson = writeValueAsString(updateTypeValue);
 
-    response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .put(Entity.json(jsonUpdatedTypeVal));
+    response = target(typeValueUri+"/"+newTypeValueId).request(MediaType.APPLICATION_JSON_TYPE)
+        .put(Entity.json(updateTypeValueJson));
 
     assertEquals(200, response.getStatus());
 
-    // we won't bother to inspect payload because it won't be updated (we
-    // didn't mock for this). however, just trying to update and returning
-    // a 200 winds through much of the code we want tested.
+    jsonPayload = response.readEntity(String.class);
 
+    Globaltype updatedTypeValue = unmarshalEntity(jsonPayload, Globaltype.class, unmarshaller);
 
-    // UPDATE #2 should raise a validation exception
-
-    response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .put(Entity.json(jsonUpdatedTypeVal));
-
-    assertEquals(400, response.getStatus());
-
-    // UPDATE #3 should raise a server-side exception
-
-    response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE)
-        .put(Entity.json(jsonUpdatedTypeVal));
-
-    assertEquals(500, response.getStatus());
+    assertEquals(newTypeValueId, updatedTypeValue.getId());
+    assertEquals(typeClassId, updatedTypeValue.getTypeid());
+    assertEquals(UPDATE_TYPE_VAL_SDESC, updatedTypeValue.getShortdescription());
 
     /* ------------------------------------------------------------------ */
     /*  DELETE                                                           */
     /* ------------------------------------------------------------------ */
 
-    response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).delete();
+    response = target(typeValueUri+"/"+newTypeValueId).request(MediaType.APPLICATION_JSON_TYPE).delete();
     assertEquals(204, response.getStatus());
+  }
 
-    response = target(TYPE_VALUE_URI + "/1").request(MediaType.APPLICATION_JSON_TYPE).delete();
-    assertEquals(500, response.getStatus());
+  private Integer findTypeClassIdByName(String name) throws JAXBException {
+    Response response  = target(TYPE_CLASS_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    String jsonPayload = response.readEntity(String.class);
+
+    Unmarshaller unmarshaller = jsonUnmarshaller(Typedescription.class);
+    List<Typedescription> typedescriptions = unmarshalEntities(jsonPayload, Typedescription.class, unmarshaller);
+
+    for (Typedescription typeclass : typedescriptions) {
+      if (typeclass.getDescription().equals(name)) {
+        return typeclass.getId();
+      }
+    }
+    fail("Unable to find TypeClass:"+name);
+    return null;
   }
 
   private <T> JAXBContext jsonJaxbContext(Class<T> clazz) throws JAXBException {

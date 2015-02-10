@@ -158,8 +158,6 @@ public class IndividualsResource extends NedResource {
     return deleteEntity(nedId, id, Uniqueidentifier.class);
   }
 
-
-
   /* ----------------------------------------------------------------------- */
   /*  DEGREES CRUD                                                           */
   /* ----------------------------------------------------------------------- */

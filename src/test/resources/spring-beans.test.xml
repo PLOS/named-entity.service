@@ -15,4 +15,16 @@
        <property name="username" value="${db.username}" />
        <property name="password" value="${db.password}" />
     </bean>
+
+    <bean id="crudService" class="org.plos.namedentity.service.CrudServiceImpl">
+       <property name="namedEntityDBService" ref="namedEntityDBService" />
+    </bean>
+
+    <bean id="namedEntityDBService" class="org.plos.namedentity.persist.NamedEntityDBServiceImpl">
+       <property name="context" ref="dsl" />
+    </bean>
+
+    <bean id="namedEntityService" class="org.plos.namedentity.service.NamedEntityServiceImpl">
+        <property name="namedEntityDBService" ref="namedEntityDBService" />
+    </bean>
 </beans>
