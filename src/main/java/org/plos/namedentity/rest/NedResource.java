@@ -165,7 +165,7 @@ public abstract class NedResource extends BaseResource {
                             Uniqueidentifier entity) {
     return updateEntity(nedId, id, entity);
   }
-  
+
   @GET
   @Path("/{nedId}/uids/{id}")
   @ApiOperation(value = "Read uid", response = Uniqueidentifier.class)

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class OrganizationComposite implements Composite, Validatable {
 
@@ -68,6 +69,29 @@ public class OrganizationComposite implements Composite, Validatable {
       throw new NedValidationException("Organization needs basic info");
 
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+
+    if (o == null || this.getClass() != o.getClass())
+      return false;
+
+    return Objects.equals(this.hashCode(), o.hashCode());
+  }
+
+  private <T extends Entity> Integer hashSum(List<T> entities) {
+
+    Integer sum = 0;
+
+    if (entities != null)
+      for (T entity : entities)
+        sum += entity.hashCode();
+
+    return sum;
+  }
+
 
   public Integer getTypeid() {
     return organization.getTypeid();
