@@ -18,11 +18,10 @@ package org.plos.namedentity.rest;
 
 import org.eclipse.persistence.jaxb.JAXBContextProperties;
 import org.eclipse.persistence.oxm.json.JsonStructureSource;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import org.plos.namedentity.api.IndividualComposite;
+import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
@@ -65,13 +64,17 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   private static final String TEST_RESOURCE_PATH = "src/test/resources/";
   private static final String TYPE_CLASS_URI     = "/typeclasses";
   private static final String INDIVIDUAL_URI     = "/individuals";
+  private static final String ORGANIZATION_URI   = "/organizations";
 
-  private static Integer nedid = null;
+  private static Integer nedIndividualId = null;
 
-  @Before public void setup() throws Exception {
+  private static Integer nedOrganizationId = null;
 
-    synchronized(NamedEntityResourceTest.class) {
-      if (nedid == null) {
+  @Before
+  public void setup() throws Exception {
+
+    synchronized (NamedEntityResourceTest.class) {
+      if (nedIndividualId == null) {
         String compositeIndividualJson = new String(Files.readAllBytes(
             Paths.get(TEST_RESOURCE_PATH + "composite-individual.json")));
 
@@ -87,52 +90,123 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
         Individualprofile individualProfile = composite.getIndividualprofiles().get(0);
         assertNotNull(individualProfile.getNedid());
 
-        nedid = individualProfile.getNedid();
+        nedIndividualId = individualProfile.getNedid();
       }
+
+      if (nedOrganizationId == null) {
+        String compositeJson = new String(Files.readAllBytes(
+            Paths.get(TEST_RESOURCE_PATH + "composite-organization.json")));
+
+        Response response = target(ORGANIZATION_URI).request(MediaType.APPLICATION_JSON_TYPE)
+            .post(Entity.json(compositeJson));
+
+        assertEquals(200, response.getStatus());
+
+        String jsonPayload = response.readEntity(String.class);
+
+        Unmarshaller unmarshaller = jsonUnmarshaller(OrganizationComposite.class);
+        OrganizationComposite composite = unmarshalEntity(jsonPayload, OrganizationComposite.class, unmarshaller);
+
+        assertNotNull(composite.getNedid());
+
+        nedOrganizationId = composite.getNedid();
+      }
+
     }
   }
 
   @Test
   public void testCompositeFinders() throws Exception {
 
+    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
+    IndividualComposite composite_io = unmarshalEntity(
+        new String(Files.readAllBytes(
+        Paths.get(TEST_RESOURCE_PATH + "composite-individual.json"))),
+        IndividualComposite.class, unmarshaller);
+
+    unmarshaller = jsonUnmarshaller(OrganizationComposite.class);
+    OrganizationComposite composite_oo = unmarshalEntity(
+        new String(Files.readAllBytes(
+            Paths.get(TEST_RESOURCE_PATH + "composite-organization.json"))),
+        OrganizationComposite.class, unmarshaller);
+
+
     /* ------------------------------------------------------------------ */
-    /*  FIND (BY NED ID (PK))                                             */
+    /*  FIND INDIVIDUAL BY NED ID                                         */
     /* ------------------------------------------------------------------ */
 
-    Response response = target(INDIVIDUAL_URI+"/"+nedid)
-      .request(MediaType.APPLICATION_JSON_TYPE).get();
+    Response response = target(INDIVIDUAL_URI + "/" + nedIndividualId)
+        .request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
     String jsonPayload = response.readEntity(String.class);
 
-    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
-    IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
+    unmarshaller = jsonUnmarshaller(IndividualComposite.class);
+    IndividualComposite composite_in = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
 
-    Individualprofile individualProfile = composite.getIndividualprofiles().get(0);
-    assertNotNull(individualProfile);
+    Individualprofile individualProfile = composite_in.getIndividualprofiles().get(0);
+    assertNotNull(individualProfile.getNedid());
+
+    assertEquals(composite_in, composite_io);
 
     /* ------------------------------------------------------------------ */
-    /*  FIND (BY EM GUID)                                                 */
+    /*  FIND INDIVIDUAL BY GUID                                           */
     /* ------------------------------------------------------------------ */
 
-    response = target(INDIVIDUAL_URI+"/Editorial Manager/PONE-579386")
-                .request(MediaType.APPLICATION_JSON_TYPE).get();
+    response = target(INDIVIDUAL_URI + "/Editorial Manager/PONE-579386")
+        .request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
     jsonPayload = response.readEntity(String.class);
 
-    IndividualComposite composite2 = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
+    IndividualComposite composite_ig = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
 
-    Individualprofile individualProfile2 = composite.getIndividualprofiles().get(0);
-    assertEquals(individualProfile, individualProfile2);
+    assertEquals(composite_ig, composite_in);
+
+    assertEquals(composite_ig, composite_io);
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND ORGANIZATION BY NED ID                                       */
+    /* ------------------------------------------------------------------ */
+
+    response = target(ORGANIZATION_URI + "/" + nedOrganizationId)
+        .request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    jsonPayload = response.readEntity(String.class);
+
+    unmarshaller = jsonUnmarshaller(OrganizationComposite.class);
+    OrganizationComposite composite_on = unmarshalEntity(jsonPayload, OrganizationComposite.class, unmarshaller);
+
+    assertNotNull(composite_on.getNedid());
+
+    assertEquals(composite_on, composite_oo);
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND ORGANIZATION BY GUID                                         */
+    /* ------------------------------------------------------------------ */
+
+    response = target(ORGANIZATION_URI + "/Ringgold/123")
+        .request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    jsonPayload = response.readEntity(String.class);
+
+    OrganizationComposite composite_og = unmarshalEntity(jsonPayload, OrganizationComposite.class, unmarshaller);
+
+    assertEquals(composite_og, composite_on);
+
+    assertEquals(composite_og, composite_oo);
   }
 
   @Test
   public void testIndividualProfileCRUD() throws Exception {
 
-    String profilesURI = String.format("%s/%d/individualprofiles", INDIVIDUAL_URI, nedid);
+    String profilesURI = String.format("%s/%d/individualprofiles", INDIVIDUAL_URI, nedIndividualId);
 
     /* ------------------------------------------------------------------ */
     /*  CREATE                                                            */
@@ -226,7 +300,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   @Test
   public void testAddressCrud() throws IOException, JAXBException {
 
-    String addressesURI = String.format("%s/%d/addresses", INDIVIDUAL_URI, nedid);
+    String addressesURI = String.format("%s/%d/addresses", INDIVIDUAL_URI, nedIndividualId);
 
     /* ------------------------------------------------------------------ */
     /*  CREATE                                                            */
@@ -308,7 +382,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   @Test
   public void testRoleCrud() throws IOException, JAXBException {
 
-    String rolesURI = String.format("%s/%d/roles", INDIVIDUAL_URI, nedid);
+    String rolesURI = String.format("%s/%d/roles", INDIVIDUAL_URI, nedIndividualId);
 
     Calendar cal = new GregorianCalendar();   // Jun 30, 2014 00:00:00 local time
     cal.set(2014, (6 - 1), 30, 0, 0, 0);      // month is 0-based, so subtract 1
@@ -333,7 +407,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     Role role = unmarshalEntity(responseJson, Role.class, unmarshaller);
 
     assertTrue( role.getId() > 0 );
-    assertEquals(nedid, role.getNedid());
+    assertEquals(nedIndividualId, role.getNedid());
     assertEquals("Editorial Manager", role.getApplicationtype());
     assertEquals("Academic Editor (PLOS ONE)", role.getType());
 
@@ -368,12 +442,12 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     Role role0 = roles.get(0);
     assertTrue(role0.getId() > 0);
-    assertEquals(nedid, role0.getNedid());
+    assertEquals(nedIndividualId, role0.getNedid());
     assertEquals("Author", role0.getType());
 
     Role role1 = roles.get(1);
     assertTrue(role1.getId() > 0);
-    assertEquals(nedid, role1.getNedid());
+    assertEquals(nedIndividualId, role1.getNedid());
     assertEquals("Editorial Manager", role1.getApplicationtype());
     assertEquals("Academic Editor (PLOS ONE)", role1.getType());
     assertEquals(START_DATE, role1.getStartdate());
@@ -402,7 +476,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   @Test
   public void testEmailCrud() throws IOException, JAXBException {
 
-    String emailsURI = String.format("%s/%d/emails", INDIVIDUAL_URI, nedid);
+    String emailsURI = String.format("%s/%d/emails", INDIVIDUAL_URI, nedIndividualId);
 
     /* ------------------------------------------------------------------ */
     /*  CREATE                                                            */
@@ -422,7 +496,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     Email email = unmarshalEntity(jsonPayload, Email.class, unmarshaller);
 
     assertTrue(email.getId() > 0);
-    assertEquals(nedid, email.getNedid());
+    assertEquals(nedIndividualId, email.getNedid());
     assertEquals("jane.q.doe.personal@foo.com", email.getEmailaddress());
     assertEquals(true, email.getIsactive());
 
@@ -490,26 +564,29 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     /* ------------------------------------------------------------------ */
 
     assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
-        target("/individuals/-1/emails")
+        target(INDIVIDUAL_URI + "/-1/emails")
             .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
 
-    // EMAIL CROSSING ENTITIES
+    // EMAIL CROSSING ENTITY TYPES
 
-    //assertEquals(Response.Status.OK.getStatusCode(),
-        //target("/individuals/1/emails/1")
-            //.request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
+    assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
+        target(INDIVIDUAL_URI + "/"+ nedOrganizationId +"/emails")
+            .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
 
-//    assertEquals(Response.Status.OK.getStatusCode(), target("/organizations/2/emails/5").request(MediaType.APPLICATION_JSON_TYPE).get().getStatus()); // TODO: add this once /organizations email CRUD is done
+    assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
+        target(ORGANIZATION_URI + "/"+ nedIndividualId +"/emails/" + email0.getId())
+            .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
 
-    //assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
-        //target("/individuals/1/emails/5")
-            //.request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
+    assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
+        target(ORGANIZATION_URI + "/"+ nedOrganizationId +"/emails/" + email0.getId())
+            .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
+
   }
 
   @Test
   public void testUniqueIdentifiersCRUD() throws IOException, JAXBException {
 
-    String uidsURI = String.format("%s/%d/uids", INDIVIDUAL_URI, nedid);
+    String uidsURI = String.format("%s/%d/uids", INDIVIDUAL_URI, nedIndividualId);
 
     /* ------------------------------------------------------------------ */
     /*  CREATE                                                            */

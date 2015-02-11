@@ -21,15 +21,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.entity.Address;
-import org.plos.namedentity.api.entity.Degree;
-import org.plos.namedentity.api.entity.Email;
-import org.plos.namedentity.api.entity.Globaltype;
-import org.plos.namedentity.api.entity.Individualprofile;
-import org.plos.namedentity.api.entity.Phonenumber;
-import org.plos.namedentity.api.entity.Role;
-import org.plos.namedentity.api.entity.Uniqueidentifier;
-import org.plos.namedentity.api.entity.Url;
+import org.plos.namedentity.api.OrganizationComposite;
+import org.plos.namedentity.api.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -62,7 +55,7 @@ public class NamedEntityServiceTest {
   public void testCreateIndividualCompositeWithoutName() {
     // triggers phase 1 validation failure
     try {
-      namedEntityService.createIndividualComposite(new IndividualComposite());
+      namedEntityService.createComposite(new IndividualComposite(), IndividualComposite.class);
       fail();
     }
     catch (NedValidationException expected) {
@@ -108,6 +101,56 @@ public class NamedEntityServiceTest {
     composite2.setEmails( emails );
 
     assertEquals(composite1, composite2);
+  }
+
+  @Test
+  public void testCreateOrganizationComposite() {
+
+    OrganizationComposite composite = newOrganizationComposite();
+
+    List<Email> emails = new ArrayList<>();
+
+    Email workEmail = new Email();
+    workEmail.setType("Work");
+    workEmail.setEmailaddress("fu.manchu.work@foo.com");
+    workEmail.setSource("Ambra");
+    emails.add( workEmail );
+
+    composite.setEmails( emails );
+
+    List<Uniqueidentifier> uniqueidentifiers = new ArrayList<>();
+
+    Uniqueidentifier uidEntity = new Uniqueidentifier();
+    uidEntity.setType("Ringgold");
+    uidEntity.setUniqueidentifier("1234");
+    uidEntity.setSource("Ambra");
+
+    uniqueidentifiers.add(uidEntity);
+
+    composite.setUniqueidentifiers(uniqueidentifiers);
+
+
+    String legalName = composite.getLegalname();
+    composite.setLegalname("");
+
+    try {
+      namedEntityService.createComposite(composite, OrganizationComposite.class);
+      fail("invalid legal name was not rejected");
+    } catch (NedValidationException e) {
+      // expected
+    }
+
+    composite.setLegalname(legalName);
+
+    OrganizationComposite responseComposite = namedEntityService.createComposite(composite, OrganizationComposite.class);
+
+    assertNotNull(responseComposite);
+    assertNotNull(responseComposite.getNedid());
+
+    OrganizationComposite foundComposite = namedEntityService.findComposite(responseComposite.getNedid(), OrganizationComposite.class);
+
+    assert(foundComposite.getLegalname().equals(responseComposite.getLegalname()));
+
   }
 
   @Test
@@ -223,7 +266,7 @@ public class NamedEntityServiceTest {
     Integer nedId = null;
 
     try {
-      namedEntityService.createIndividualComposite(composite);
+      namedEntityService.createComposite(composite, IndividualComposite.class);
       fail("invalid URL was not rejected");
     } catch (NedValidationException expected) {
       // expected since url is invalid
@@ -237,7 +280,7 @@ public class NamedEntityServiceTest {
     composite.setUrls(urls);
 
     try {
-      IndividualComposite responseComposite = namedEntityService.createIndividualComposite(composite);
+      IndividualComposite responseComposite = namedEntityService.createComposite(composite, IndividualComposite.class);
       assertNotNull(responseComposite);
       assertNotNull(responseComposite.getIndividualprofiles().get(0).getNedid());
 
@@ -311,7 +354,7 @@ public class NamedEntityServiceTest {
     composite.setEmails( emails );
 
     try {
-      namedEntityService.createIndividualComposite(composite);
+      namedEntityService.createComposite(composite, IndividualComposite.class);
       fail();
     }
     catch (NedValidationException expected) {
@@ -331,7 +374,7 @@ public class NamedEntityServiceTest {
     IndividualComposite composite = newCompositeIndividualWithRole();
 
     try {
-      namedEntityService.createIndividualComposite(composite);
+      namedEntityService.createComposite(composite, IndividualComposite.class);
       fail();
     } catch (NedValidationException expected) {
       Assert.isTrue(expected.getMessage().equals("Email entities can not be empty"));
@@ -349,7 +392,7 @@ public class NamedEntityServiceTest {
     composite.setIndividualprofiles(null);
 
     try {
-      namedEntityService.createIndividualComposite(composite);
+      namedEntityService.createComposite(composite, IndividualComposite.class);
       fail();
     } catch (NedValidationException expected) {
       Assert.isTrue(expected.getMessage().equals("Profile entities can not be empty"));
@@ -358,7 +401,7 @@ public class NamedEntityServiceTest {
     composite = newCompositeIndividualWithRole();
     composite.setEmails( emails );
 
-    namedEntityService.createIndividualComposite(composite);
+    namedEntityService.createComposite(composite, IndividualComposite.class);
   }
 
   @Test
@@ -608,6 +651,16 @@ public class NamedEntityServiceTest {
     uniqueidentifiers.add(uid);
 
     composite.setUniqueidentifiers(uniqueidentifiers);
+
+    return composite;
+  }
+
+  private OrganizationComposite newOrganizationComposite() {
+    OrganizationComposite composite = new OrganizationComposite();
+
+    composite.setLegalname("legal name"+UUID.randomUUID().toString());
+    composite.setFamiliarname("familiar name");
+    composite.setSource("Ambra");
 
     return composite;
   }

@@ -16,25 +16,17 @@
  */
 package org.plos.namedentity.api;
 
-import org.plos.namedentity.api.entity.Address;
-import org.plos.namedentity.api.entity.Degree;
-import org.plos.namedentity.api.entity.Email;
-import org.plos.namedentity.api.entity.Entity;
-import org.plos.namedentity.api.entity.Individualprofile;
-import org.plos.namedentity.api.entity.Phonenumber;
-import org.plos.namedentity.api.entity.Role;
-import org.plos.namedentity.api.entity.Uniqueidentifier;
-import org.plos.namedentity.api.entity.Url;
+import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.validate.Validatable;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @XmlRootElement
-public class IndividualComposite implements Validatable {
+public class IndividualComposite extends Composite implements Validatable {
 
   private List<Individualprofile> individualprofiles;
   private List<Role>              roles;
@@ -45,6 +37,13 @@ public class IndividualComposite implements Validatable {
   private List<Degree>            degrees;
   private List<Url>               urls;
 
+  public static String typeName = "Individual";
+
+  public String getTypeName() {
+    return typeName;
+  }
+
+  @XmlTransient
   public Map<Class, List<? extends Entity>> getAsMap() {
     Map<Class, List<? extends Entity>> map = new HashMap<>();
 
@@ -107,35 +106,6 @@ public class IndividualComposite implements Validatable {
       throw new NedValidationException("CAS ID required");
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o)
-      return true;
-
-    if (o == null || this.getClass() != o.getClass())
-      return false;
-
-    return Objects.equals(this.hashCode(), o.hashCode());
-  }
-
-  private <T extends Entity> Integer hashSum(List<T> entities) {
-
-    Integer sum = 0;
-
-    if (entities != null)
-      for (T entity : entities)
-        sum += entity.hashCode();
-
-    return sum;
-  }
-
-  @Override
-  public int hashCode() {
-    // TODO: pull from getAsMap instead of hardcoding list names
-    return Objects.hash(hashSum(individualprofiles), hashSum(roles), hashSum(addresses),
-        hashSum(emails), hashSum(phonenumbers), hashSum(uniqueidentifiers),
-        hashSum(degrees), hashSum(urls));
-  }
 
   public List<Individualprofile> getIndividualprofiles() {
     return individualprofiles;

@@ -5,11 +5,8 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Degree;
-import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Individualprofile;
-import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 
@@ -26,13 +23,11 @@ import java.util.List;
 
 @Path("/individuals")
 @Api(value="/individuals")
-public class IndividualsResource extends BaseResource {
-
-  private static String namedPartyType = "Individual";
+public class IndividualsResource extends NedResource {
 
   @Override
   protected String getNamedPartyType() {
-    return namedPartyType;
+    return IndividualComposite.typeName;
   }
 
   @POST
@@ -40,7 +35,7 @@ public class IndividualsResource extends BaseResource {
   public Response createIndividual(IndividualComposite composite) {
     try {
       return Response.status(Response.Status.OK).entity(
-          namedEntityService.createIndividualComposite(composite)).build();
+          namedEntityService.createComposite(composite, IndividualComposite.class)).build();
     } catch (NedValidationException e) {
       return validationError(e, "Unable to create individual");
     } catch (Exception e) {
@@ -54,9 +49,9 @@ public class IndividualsResource extends BaseResource {
   @ApiOperation(value = "Read individual by Ned ID", response = IndividualComposite.class)
   public Response readIndividual(@PathParam("nedId") int nedId) {
     try {
-      namedEntityService.checkNedIdForType(nedId, "Individual");
+      namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
       return Response.status(Response.Status.OK).entity(
-          namedEntityService.findIndividualComposite(nedId)).build();
+          namedEntityService.findComposite(nedId, IndividualComposite.class)).build();
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
     } catch (Exception e) {
@@ -75,11 +70,11 @@ public class IndividualsResource extends BaseResource {
           uidType, uidValue, Individualprofile.class);
 
       return Response.status(Response.Status.OK).entity(
-          namedEntityService.findIndividualComposite(individualProfile.getNedid())).build();
+          namedEntityService.findComposite(individualProfile.getNedid(), IndividualComposite.class)).build();
     } catch (EntityNotFoundException e) {
       return entityNotFound(e);
     } catch (Exception e) {
-      return serverError(e, "Find all individuals failed");
+      return serverError(e, "Find individual failed");
     }
   }
 
@@ -131,130 +126,10 @@ public class IndividualsResource extends BaseResource {
     return getEntities(nedId, Individualprofile.class);
   }
 
-  /* ----------------------------------------------------------------------- */
-  /*  EMAIL CRUD                                                             */
-  /* ----------------------------------------------------------------------- */
-
-  @POST
-  @Path("/{nedId}/emails")
-  @ApiOperation(value = "Create email", response = Email.class)
-  public Response createEmail(@PathParam("nedId") int nedId,
-                              Email emailEntity) {
-    return createEntity(nedId, emailEntity);
-  }
-
-  @PUT
-  @Path("/{nedId}/emails/{emailId}")
-  @ApiOperation(value = "Update email", response = Email.class)
-  public Response updateEmail(@PathParam("nedId") int nedId, 
-                              @PathParam("emailId") int emailId, 
-                              Email emailEntity) {
-    return updateEntity(nedId, emailId, emailEntity);
-  }
-
-  @DELETE
-  @Path("/{nedId}/emails/{emailId}")
-  @ApiOperation(value = "Delete email")
-  public Response deleteEmail(@PathParam("nedId") int nedId, 
-                              @PathParam("emailId") int emailId) {
-
-    if (((List)(getEntities(nedId, Email.class).getEntity())).size() == 1)
-      return validationError(new NedValidationException("Email entities cannot be empty"), "Unable to delete email");
-
-    return deleteEntity(nedId, emailId, Email.class);
-  }
-
-  @GET
-  @Path("/{nedId}/emails/{emailId}")
-  @ApiOperation(value = "Read email", response = Email.class)
-  public Response getEmail(@PathParam("nedId") int nedId,
-                           @PathParam("emailId") int emailId) {
-    return getEntity(nedId, emailId, Email.class);
-  }
-
-  @GET
-  @Path("/{nedId}/emails")
-  @ApiOperation(value = "List emails", response = Email.class)
-  public Response getEmails(@PathParam("nedId") int nedId) {
-    return getEntities(nedId, Email.class);
-  }
 
   /* ----------------------------------------------------------------------- */
-  /*  ADDRESS CRUD                                                           */
+  /*  UIDS                                                                   */
   /* ----------------------------------------------------------------------- */
-
-  @POST
-  @Path("/{nedId}/addresses")
-  @ApiOperation(value = "Create address", response = Address.class)
-  public Response createAddress(@PathParam("nedId") int nedId,
-                                Address addressEntity) {
-    return createEntity(nedId, addressEntity);
-  }
-
-  @PUT
-  @Path("/{nedId}/addresses/{addressId}")
-  @ApiOperation(value = "Update address", response = Address.class)
-  public Response updateAddress(@PathParam("nedId") int nedId, 
-                                @PathParam("addressId") int addressId, 
-                                Address addressEntity) {
-    return updateEntity(nedId, addressId, addressEntity);
-  }
-
-  @DELETE
-  @Path("/{nedId}/addresses/{addressId}")
-  @ApiOperation(value = "Delete address")
-  public Response deleteAddress(@PathParam("nedId") int nedId, 
-                                @PathParam("addressId") int addressId) {
-    return deleteEntity(nedId, addressId, Address.class);
-  }
-
-  @GET
-  @Path("/{nedId}/addresses/{addressId}")
-  @ApiOperation(value = "Read address", response = Address.class)
-  public Response getAddress(@PathParam("nedId") int nedId,
-                             @PathParam("addressId") int addressId) {
-    return getEntity(nedId, addressId, Address.class);
-  }
-
-  @GET
-  @Path("/{nedId}/addresses")
-  @ApiOperation(value = "List addresses", response = Address.class)
-  public Response getAddresses(@PathParam("nedId") int nedId) {
-    return getEntities(nedId, Address.class);
-  }
-
-  /* ----------------------------------------------------------------------- */
-  /*  PHONE NUMBER CRUD                                                      */
-  /* ----------------------------------------------------------------------- */
-
-  @GET
-  @Path("/{nedId}/phonenumbers")
-  @ApiOperation(value = "List phone numbers", response = Phonenumber.class)
-  public Response getPhonenumbers(@PathParam("nedId") int nedId) {
-    return getEntities(nedId, Phonenumber.class);
-  }
-
-
-  /* ----------------------------------------------------------------------- */
-  /*  UID CRUD                                                               */
-  /* ----------------------------------------------------------------------- */
-
-  @POST
-  @Path("/{nedId}/uids")
-  @ApiOperation(value = "Create UID", response = Uniqueidentifier.class)
-  public Response createUid(@PathParam("nedId") int nedId,
-                            Uniqueidentifier entity) {
-    return createEntity(nedId, entity);
-  }
-
-  @PUT
-  @Path("/{nedId}/uids/{id}")
-  @ApiOperation(value = "Update UID", response = Uniqueidentifier.class)
-  public Response updateUid(@PathParam("nedId") int nedId,
-                            @PathParam("id") int id,
-                            Uniqueidentifier entity) {
-    return updateEntity(nedId, id, entity);
-  }
 
   @DELETE
   @Path("/{nedId}/uids/{id}")
@@ -281,21 +156,6 @@ public class IndividualsResource extends BaseResource {
       return validationError(new NedValidationException("Can not remove last CAS ID"), "Unable to Uniqueidentifier");
 
     return deleteEntity(nedId, id, Uniqueidentifier.class);
-  }
-
-  @GET
-  @Path("/{nedId}/uids/{id}")
-  @ApiOperation(value = "Read uid", response = Uniqueidentifier.class)
-  public Response getUid(@PathParam("nedId") int nedId,
-                         @PathParam("id") int id) {
-    return getEntity(nedId, id, Uniqueidentifier.class);
-  }
-
-  @GET
-  @Path("/{nedId}/uids")
-  @ApiOperation(value = "List UIDs")
-  public Response getUids(@PathParam("nedId") int nedId) {
-    return getEntities(nedId, Uniqueidentifier.class);
   }
 
   /* ----------------------------------------------------------------------- */

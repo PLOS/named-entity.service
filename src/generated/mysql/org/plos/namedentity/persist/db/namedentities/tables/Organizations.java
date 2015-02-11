@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Organizations extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord> {
 
-	private static final long serialVersionUID = 1231582241;
+	private static final long serialVersionUID = 550059013;
 
 	/**
 	 * The reference instance of <code>namedEntities.organizations</code>
@@ -49,12 +49,12 @@ public class Organizations extends org.jooq.impl.TableImpl<org.plos.namedentity.
 	/**
 	 * The column <code>namedEntities.organizations.familiarName</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.String> FAMILIARNAME = createField("familiarName", org.jooq.impl.SQLDataType.CLOB.length(65535), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.String> FAMILIARNAME = createField("familiarName", org.jooq.impl.SQLDataType.CLOB.length(65535).nullable(false), this, "");
 
 	/**
 	 * The column <code>namedEntities.organizations.legalName</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.String> LEGALNAME = createField("legalName", org.jooq.impl.SQLDataType.CLOB.length(65535), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord, java.lang.String> LEGALNAME = createField("legalName", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
 
 	/**
 	 * The column <code>namedEntities.organizations.mainContactId</code>.
@@ -124,7 +124,7 @@ public class Organizations extends org.jooq.impl.TableImpl<org.plos.namedentity.
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord>>asList(org.plos.namedentity.persist.db.namedentities.Keys.KEY_ORGANIZATIONS_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord>>asList(org.plos.namedentity.persist.db.namedentities.Keys.KEY_ORGANIZATIONS_PRIMARY, org.plos.namedentity.persist.db.namedentities.Keys.KEY_ORGANIZATIONS_LEGALNAME);
 	}
 
 	/**

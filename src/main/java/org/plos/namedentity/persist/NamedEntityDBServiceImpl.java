@@ -273,7 +273,9 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     String cname = clazz.getCanonicalName();
 
     if (cname.equals(Individualprofile.class.getCanonicalName()))
-      return (List<T>) findProfilesByNedId(nedId);
+      return (List<T>)findProfilesByNedId(nedId);
+    if (cname.equals(Organization.class.getCanonicalName()))
+      return (List<T>)findOrganizationsByNedId(nedId);
     if (cname.equals(Address.class.getCanonicalName()))
       return (List<T>)findAddressesByNedId(nedId);
     if (cname.equals(Email.class.getCanonicalName()))
@@ -388,45 +390,42 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .leftOuterJoin(gt3).on(r.SOURCETYPEID.equal(gt3.ID));
   }
 
-  private Organization findOrganizationByNedId(Integer nedId) {
+  private SelectOnConditionStep select(Organizations o) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
-    Organizations o = ORGANIZATIONS.as("o");
+    Globaltypes gt2 = GLOBALTYPES.as("gt2");
 
-    Record record = this.context
-        .select(
+    return this.context
+        .select(o.ID,
             o.NEDID, o.FAMILIARNAME,
             o.LEGALNAME, o.ISACTIVE,
             gt1.SHORTDESCRIPTION.as("type"),
+            gt2.SHORTDESCRIPTION.as("source"),
             o.CREATED, o.LASTMODIFIED)
         .from(o)
         .leftOuterJoin(gt1).on(o.TYPEID.equal(gt1.ID))
-        .where(o.NEDID.equal(nedId)).fetchOne();
-
-    if (record == null)
-      throw new EntityNotFoundException("Organization");
-
-    return record.into(Organization.class);
+        .leftOuterJoin(gt2).on(o.SOURCETYPEID.equal(gt2.ID));
   }
 
   private Organization findOrganizationByUid(String srcType, String uid) {
 
-    Globaltypes gt1 = GLOBALTYPES.as("gt1");
-    Globaltypes gt2 = GLOBALTYPES.as("gt2");
-    Organizations o = ORGANIZATIONS.as("o");
+    Globaltypes gt      = GLOBALTYPES.as("gt");
+    Typedescriptions td = TYPEDESCRIPTIONS.as("td");
+    Organizations o     = ORGANIZATIONS.as("o");
     Uniqueidentifiers u = UNIQUEIDENTIFIERS.as("u");
 
     Record record = this.context
         .select(
             o.NEDID, o.FAMILIARNAME,
             o.LEGALNAME, o.ISACTIVE,
-            gt1.SHORTDESCRIPTION.as("type"),
+            gt.SHORTDESCRIPTION.as("uniqueidentifiertype"),
             o.CREATED, o.LASTMODIFIED)
         .from(o)
-        .leftOuterJoin(gt1).on(o.TYPEID.equal(gt1.ID))
-        .leftOuterJoin(gt2).on(u.TYPEID.equal(gt2.ID)).and(gt2.SHORTDESCRIPTION.equal(srcType))
         .join(u).on(o.NEDID.equal(u.NEDID))
-        .where(u.UNIQUEIDENTIFIER.equal(uid)).fetchAny();
+        .join(gt).on(u.TYPEID.equal(gt.ID))
+        .join(td).on(gt.TYPEID.equal(td.ID))
+                 .and(td.DESCRIPTION.eq(TypeClassEnum.UNIQUE_IDENTIFIERS.getName()))
+        .where(u.UNIQUEIDENTIFIER.equal(uid)).and(gt.SHORTDESCRIPTION.equal(srcType)).fetchAny();
 
     if (record == null)
       throw new EntityNotFoundException("Organization");
@@ -436,25 +435,28 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
   private Individualprofile findIndividualByUid(String srcType, String uid) {
 
-    Globaltypes gt1 = GLOBALTYPES.as("gt1");
-    Globaltypes gt2 = GLOBALTYPES.as("gt2");
-    Globaltypes gt5 = GLOBALTYPES.as("gt5");
-    Individualprofiles i   = INDIVIDUALPROFILES.as("i");
-    Uniqueidentifiers u = UNIQUEIDENTIFIERS.as("u");
+    Globaltypes gt1      = GLOBALTYPES.as("gt1");
+    Globaltypes gt2      = GLOBALTYPES.as("gt2");
+    Globaltypes gt3      = GLOBALTYPES.as("gt3");
+    Typedescriptions td  = TYPEDESCRIPTIONS.as("td");
+    Individualprofiles i = INDIVIDUALPROFILES.as("i");
+    Uniqueidentifiers u  = UNIQUEIDENTIFIERS.as("u");
 
     Record record = this.context
       .select(
         i.NEDID, i.FIRSTNAME, i.MIDDLENAME, i.LASTNAME, i.DISPLAYNAME, 
         gt1.SHORTDESCRIPTION.as("nameprefix"),                 
         gt2.SHORTDESCRIPTION.as("namesuffix"),
-        gt5.SHORTDESCRIPTION.as("uniqueidentifiertype"),
+        gt3.SHORTDESCRIPTION.as("uniqueidentifiertype"),
         u.UNIQUEIDENTIFIER, i.CREATED, i.LASTMODIFIED)
       .from(i)
       .leftOuterJoin(gt1).on(i.NAMEPREFIXTYPEID.equal(gt1.ID))
       .leftOuterJoin(gt2).on(i.NAMESUFFIXTYPEID.equal(gt2.ID))
       .join(u).on(i.NEDID.equal(u.NEDID))
-      .leftOuterJoin(gt5).on(u.TYPEID.equal(gt5.ID)).and(gt5.SHORTDESCRIPTION.eq(srcType))
-      .where(u.UNIQUEIDENTIFIER.equal(uid))
+      .join(gt3).on(u.TYPEID.equal(gt3.ID))
+      .join(td).on(gt3.TYPEID.equal(td.ID))
+               .and(td.DESCRIPTION.eq(TypeClassEnum.UNIQUE_IDENTIFIERS.getName()))
+      .where(u.UNIQUEIDENTIFIER.equal(uid)).and(gt3.SHORTDESCRIPTION.eq(srcType))
       .fetchAny();
 
     if (record == null)
@@ -467,6 +469,11 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   private List<Individualprofile> findProfilesByNedId(Integer nedId) {
     Individualprofiles i   = INDIVIDUALPROFILES.as("i");
     return select(i).where(i.NEDID.equal(nedId)).fetch().into(Individualprofile.class);
+  }
+
+  private List<Organization> findOrganizationsByNedId(Integer nedId) {
+    Organizations e   = ORGANIZATIONS.as("e");
+    return select(e).where(e.NEDID.equal(nedId)).fetch().into(Organization.class);
   }
 
   private List<Address> findAddressesByNedId(Integer nedId) {

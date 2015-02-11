@@ -16,7 +16,7 @@
  */
 package org.plos.namedentity.service;
 
-import org.plos.namedentity.api.IndividualComposite;
+import org.plos.namedentity.api.entity.Composite;
 import org.plos.namedentity.api.entity.Entity;
 
 import java.util.List;
@@ -27,11 +27,11 @@ import java.util.List;
 
 public interface NamedEntityService {
 
-  public IndividualComposite createIndividualComposite(IndividualComposite composite);
+  public <T extends Composite> T findComposite(Integer nedId, Class<T> clazz);
 
-  public IndividualComposite findIndividualComposite(Integer nedId);
+  public <T extends Composite> T createComposite(T composite, Class<T> clazz);
 
-  /** 
+  /**
    * Finds entity by a unique identifier. Type id references in entity are
    * replaced by equivalent type names (ie, "resolved"). Unique identifiers are
    * unique for a given type class. For example, "Office" could a unique
@@ -42,19 +42,19 @@ public interface NamedEntityService {
    * @param uid      type value
    * @param clazz    type of resolved entity to return (ex: individual) 
    *
-   * @return         list of entities with unique identifier (typically just one)
+   * @return list of entities with unique identifier (typically just one)
    */
   public <T extends Entity> T findResolvedEntityByUid(String srcType, String uid, Class<T> clazz);
 
 
-  /** 
+  /**
    * Finds entity by primary key. Type id references in entity are replaced by
    * equivalent type names (ie, "resolved").
    *
    * @param pk     primary key of entity
    * @param clazz  entity class to lookup by key 
    *
-   * @return       entity with specified primary key
+   * @return entity with specified primary key
    */
   public <T extends Entity> T findResolvedEntityByKey(Integer pk, Class<T> clazz);
 

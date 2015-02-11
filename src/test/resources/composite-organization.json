@@ -1,0 +1,49 @@
+{
+  "type": "University",
+  "familiarname": "UC Berkeley",
+  "legalname": "University of California, Berkeley",
+  "source":"Ambra",
+  "uniqueidentifiers": [
+    {
+      "type": "Ringgold",
+      "uniqueidentifier": "123",
+      "source": "Ambra"
+    }
+  ],
+  "emails" : [
+    {
+      "type"         : "Work",
+      "emailaddress" : "info@berkeley.edu",
+      "source"       : "Ambra"
+    }
+  ],
+  "addresses" : [
+    {
+      "type"            : "Office",
+      "statecodetype"   : "CA",
+      "city"            : "San Francisco",
+      "addressline1"    : "123 Maple Street",
+      "addresstype"     : "Office",
+      "postalcode"      : "94501",
+      "countrycodetype" : "United States of America",
+      "source"          : "Editorial Manager"
+    }
+  ],
+  "phonenumbers" : [
+    {
+      "extension"       : "x012",
+      "isprimary"       : "true",
+      "phonenumber"     : "650-123-4567",
+      "type"            : "Office",
+      "countrycodetype" : "1",
+      "source"          : "Editorial Manager"
+    },
+    {
+      "isprimary"       : "false",
+      "phonenumber"     : "650-111-2222",
+      "type"            : "Mobile",
+      "countrycodetype" : "1",
+      "source"          : "Editorial Manager"
+    }
+  ]
+}
