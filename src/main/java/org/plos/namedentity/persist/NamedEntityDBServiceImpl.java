@@ -409,20 +409,23 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
   private Organization findOrganizationByUid(String srcType, String uid) {
 
-    Globaltypes gt2 = GLOBALTYPES.as("gt2");
-    Organizations o = ORGANIZATIONS.as("o");
+    Globaltypes gt      = GLOBALTYPES.as("gt");
+    Typedescriptions td = TYPEDESCRIPTIONS.as("td");
+    Organizations o     = ORGANIZATIONS.as("o");
     Uniqueidentifiers u = UNIQUEIDENTIFIERS.as("u");
 
     Record record = this.context
         .select(
             o.NEDID, o.FAMILIARNAME,
             o.LEGALNAME, o.ISACTIVE,
-            gt2.SHORTDESCRIPTION.as("uniqueidentifiertype"),
+            gt.SHORTDESCRIPTION.as("uniqueidentifiertype"),
             o.CREATED, o.LASTMODIFIED)
         .from(o)
         .join(u).on(o.NEDID.equal(u.NEDID))
-        .leftOuterJoin(gt2).on(u.TYPEID.equal(gt2.ID))
-        .where(u.UNIQUEIDENTIFIER.equal(uid)).and(gt2.SHORTDESCRIPTION.equal(srcType)).fetchAny();
+        .join(gt).on(u.TYPEID.equal(gt.ID))
+        .join(td).on(gt.TYPEID.equal(td.ID))
+                 .and(td.DESCRIPTION.eq(TypeClassEnum.UNIQUE_IDENTIFIERS.getName()))
+        .where(u.UNIQUEIDENTIFIER.equal(uid)).and(gt.SHORTDESCRIPTION.equal(srcType)).fetchAny();
 
     if (record == null)
       throw new EntityNotFoundException("Organization");
@@ -432,25 +435,28 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
   private Individualprofile findIndividualByUid(String srcType, String uid) {
 
-    Globaltypes gt1 = GLOBALTYPES.as("gt1");
-    Globaltypes gt2 = GLOBALTYPES.as("gt2");
-    Globaltypes gt5 = GLOBALTYPES.as("gt5");
+    Globaltypes gt1      = GLOBALTYPES.as("gt1");
+    Globaltypes gt2      = GLOBALTYPES.as("gt2");
+    Globaltypes gt3      = GLOBALTYPES.as("gt3");
+    Typedescriptions td  = TYPEDESCRIPTIONS.as("td");
     Individualprofiles i = INDIVIDUALPROFILES.as("i");
-    Uniqueidentifiers u = UNIQUEIDENTIFIERS.as("u");
+    Uniqueidentifiers u  = UNIQUEIDENTIFIERS.as("u");
 
     Record record = this.context
       .select(
         i.NEDID, i.FIRSTNAME, i.MIDDLENAME, i.LASTNAME, i.DISPLAYNAME, 
         gt1.SHORTDESCRIPTION.as("nameprefix"),                 
         gt2.SHORTDESCRIPTION.as("namesuffix"),
-        gt5.SHORTDESCRIPTION.as("uniqueidentifiertype"),
+        gt3.SHORTDESCRIPTION.as("uniqueidentifiertype"),
         u.UNIQUEIDENTIFIER, i.CREATED, i.LASTMODIFIED)
       .from(i)
       .leftOuterJoin(gt1).on(i.NAMEPREFIXTYPEID.equal(gt1.ID))
       .leftOuterJoin(gt2).on(i.NAMESUFFIXTYPEID.equal(gt2.ID))
       .join(u).on(i.NEDID.equal(u.NEDID))
-      .leftOuterJoin(gt5).on(u.TYPEID.equal(gt5.ID))
-      .where(u.UNIQUEIDENTIFIER.equal(uid)).and(gt5.SHORTDESCRIPTION.eq(srcType))
+      .join(gt3).on(u.TYPEID.equal(gt3.ID))
+      .join(td).on(gt3.TYPEID.equal(td.ID))
+               .and(td.DESCRIPTION.eq(TypeClassEnum.UNIQUE_IDENTIFIERS.getName()))
+      .where(u.UNIQUEIDENTIFIER.equal(uid)).and(gt3.SHORTDESCRIPTION.eq(srcType))
       .fetchAny();
 
     if (record == null)
