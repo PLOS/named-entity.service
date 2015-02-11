@@ -24,10 +24,9 @@ import javax.xml.bind.annotation.XmlTransient;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @XmlRootElement
-public class IndividualComposite implements Composite, Validatable {
+public class IndividualComposite extends Composite implements Validatable {
 
   private List<Individualprofile> individualprofiles;
   private List<Role>              roles;
@@ -107,35 +106,6 @@ public class IndividualComposite implements Composite, Validatable {
       throw new NedValidationException("CAS ID required");
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o)
-      return true;
-
-    if (o == null || this.getClass() != o.getClass())
-      return false;
-
-    return Objects.equals(this.hashCode(), o.hashCode());
-  }
-
-  private <T extends Entity> Integer hashSum(List<T> entities) {
-
-    Integer sum = 0;
-
-    if (entities != null)
-      for (T entity : entities)
-        sum += entity.hashCode();
-
-    return sum;
-  }
-
-  @Override
-  public int hashCode() {
-    // TODO: pull from getAsMap instead of hardcoding list names
-    return Objects.hash(hashSum(individualprofiles), hashSum(roles), hashSum(addresses),
-        hashSum(emails), hashSum(phonenumbers), hashSum(uniqueidentifiers),
-        hashSum(degrees), hashSum(urls));
-  }
 
   public List<Individualprofile> getIndividualprofiles() {
     return individualprofiles;

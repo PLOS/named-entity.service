@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class OrganizationComposite implements Composite, Validatable {
+public class OrganizationComposite extends Composite implements Validatable {
 
   private Organization           organization = new Organization();
   private List<Address>          addresses;

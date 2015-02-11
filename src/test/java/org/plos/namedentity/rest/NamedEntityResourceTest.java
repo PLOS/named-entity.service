@@ -118,6 +118,19 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
   @Test
   public void testCompositeFinders() throws Exception {
 
+    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
+    IndividualComposite composite_io = unmarshalEntity(
+        new String(Files.readAllBytes(
+        Paths.get(TEST_RESOURCE_PATH + "composite-individual.json"))),
+        IndividualComposite.class, unmarshaller);
+
+    unmarshaller = jsonUnmarshaller(OrganizationComposite.class);
+    OrganizationComposite composite_oo = unmarshalEntity(
+        new String(Files.readAllBytes(
+            Paths.get(TEST_RESOURCE_PATH + "composite-organization.json"))),
+        OrganizationComposite.class, unmarshaller);
+
+
     /* ------------------------------------------------------------------ */
     /*  FIND INDIVIDUAL BY NED ID                                         */
     /* ------------------------------------------------------------------ */
@@ -129,14 +142,13 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     String jsonPayload = response.readEntity(String.class);
 
-    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
+    unmarshaller = jsonUnmarshaller(IndividualComposite.class);
     IndividualComposite composite_in = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
 
     Individualprofile individualProfile = composite_in.getIndividualprofiles().get(0);
-    assertNotNull(individualProfile);
+    assertNotNull(individualProfile.getNedid());
 
-    // TODO: assert something stronger about data output
-
+    assertEquals(composite_in, composite_io);
 
     /* ------------------------------------------------------------------ */
     /*  FIND INDIVIDUAL BY GUID                                           */
@@ -152,6 +164,8 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     IndividualComposite composite_ig = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
 
     assertEquals(composite_ig, composite_in);
+
+    assertEquals(composite_ig, composite_io);
 
     /* ------------------------------------------------------------------ */
     /*  FIND ORGANIZATION BY NED ID                                       */
@@ -169,6 +183,8 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     assertNotNull(composite_on.getNedid());
 
+    assertEquals(composite_on, composite_oo);
+
     /* ------------------------------------------------------------------ */
     /*  FIND ORGANIZATION BY GUID                                         */
     /* ------------------------------------------------------------------ */
@@ -182,17 +198,9 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     OrganizationComposite composite_og = unmarshalEntity(jsonPayload, OrganizationComposite.class, unmarshaller);
 
+    assertEquals(composite_og, composite_on);
 
-
-
-
-
-
-
-
-
-//    assertEquals(composite_og, composite_on);
-
+    assertEquals(composite_og, composite_oo);
   }
 
   @Test
