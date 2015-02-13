@@ -34,7 +34,6 @@ public class Uniqueidentifier extends Entity {
       throw new NedValidationException("uniqueidentifier is too short");
 
   }
-
   public String getType() {
     return type;
   }
