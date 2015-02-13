@@ -714,7 +714,7 @@ public class NamedEntityDBServiceTest {
   @Test
   public void testUniqueIdentifiersCRUD() {
 
-    final String ORCID_ID = "0000-0001-9430-319X";
+    final String ORCID_ID = "0000-0001-9430-319X_UIDSERVICE";
 
     // FIND Individuals with an ORCID id. There should be none. 
 
@@ -778,17 +778,6 @@ public class NamedEntityDBServiceTest {
 
     assertEquals(ORCID_ID, uids.get(0).getUniqueidentifier());
     assertEquals(nedId, uids.get(0).getNedid());
-
-    // FIND ALL Roles 
-
-    List<Uniqueidentifier> allUidsInDb = nedDBSvc.findAll(Uniqueidentifier.class, 0, Integer.MAX_VALUE);
-    assertEquals(1, allUidsInDb.size());
-
-    for (Uniqueidentifier uid : allUidsInDb) {
-      Uniqueidentifier uidToDelete = new Uniqueidentifier();
-      uidToDelete.setId(uid.getId());
-      assertTrue( nedDBSvc.delete(uidToDelete) );
-    }
   }
 
   private Integer getSourceTypeId(String source) {
