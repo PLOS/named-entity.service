@@ -52,7 +52,6 @@ public class Uniqueidentifier extends Entity {
         throw new NedValidationException("unrecognized uid type:" + type);
     }
   }
-
   public String getType() {
     return type;
   }

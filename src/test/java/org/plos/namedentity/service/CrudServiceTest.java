@@ -489,7 +489,7 @@ public class CrudServiceTest {
   @Test
   public void testExternalReferencesCRUD() {
 
-    final String ORCID_ID1 = "0000-0001-9430-319X";
+    final String ORCID_ID1 = "0000-0001-9430-319X-UIDCRUDSERV";
 
     // lookup id for orcid
 

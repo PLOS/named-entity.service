@@ -68,8 +68,13 @@ public class NamedEntityServiceTest {
 
     IndividualComposite composite2 = newCompositeIndividualWithRole();
 
+    // patch randomized attributes in objects so that they'll pass equality check
+
     composite2.getIndividualprofiles().get(0).setDisplayname(
         composite1.getIndividualprofiles().get(0).getDisplayname());
+
+    composite2.getUniqueidentifiers().get(0).setUniqueidentifier(
+      composite1.getUniqueidentifiers().get(0).getUniqueidentifier());
 
     assertEquals(composite1, composite2);
 
@@ -245,7 +250,7 @@ public class NamedEntityServiceTest {
 
     Uniqueidentifier uidEntity = new Uniqueidentifier();
     uidEntity.setType("ORCID");
-    uidEntity.setUniqueidentifier("0000-0001-9430-319X");
+    uidEntity.setUniqueidentifier("0000-0001-9430-319X-SERVIND");
     uidEntity.setSource("Editorial Manager");
 
     composite.getUniqueidentifiers().add(uidEntity);
@@ -319,7 +324,7 @@ public class NamedEntityServiceTest {
     List<Uniqueidentifier> uidEntities = namedEntityService.findResolvedEntities(nedId, Uniqueidentifier.class);
     assertEquals(2, uidEntities.size());
 
-    Individualprofile individualProfile = namedEntityService.findResolvedEntityByUid("ORCID", "0000-0001-9430-319X", Individualprofile.class);
+    Individualprofile individualProfile = namedEntityService.findResolvedEntityByUid("ORCID", "0000-0001-9430-319X-SERVIND", Individualprofile.class);
 
     assertNotNull(individualProfile);
 
@@ -645,7 +650,7 @@ public class NamedEntityServiceTest {
     Uniqueidentifier uid = new Uniqueidentifier();
     uid.setSource("Ambra");
     uid.setType("CAS");
-    uid.setUniqueidentifier("123");
+    uid.setUniqueidentifier(UUID.randomUUID().toString());
 
     List<Uniqueidentifier> uniqueidentifiers = new ArrayList<>();
     uniqueidentifiers.add(uid);

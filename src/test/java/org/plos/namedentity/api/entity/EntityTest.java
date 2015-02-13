@@ -16,14 +16,14 @@
  */
 package org.plos.namedentity.api.entity;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class EntityTest {
 
@@ -38,7 +38,7 @@ public class EntityTest {
     url1.setUrl("http://foo")  ; verifyFalse(url1,url2); 
     url2.setUrl(url1.getUrl()) ; verifyTrue(url1,url2);
 
-    url1.id = 1 ; url1.nedid = 100 ; verifyFalse(url1,url2);
+    url1.id = 1 ; url1.nedid = 100 ; verifyTrue(url1,url2);
 
     url2.id = url1.id ; url2.nedid = url1.nedid ; verifyTrue(url1,url2);
 
