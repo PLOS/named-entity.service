@@ -650,7 +650,7 @@ public class NamedEntityServiceTest {
     Uniqueidentifier uid = new Uniqueidentifier();
     uid.setSource("Ambra");
     uid.setType("CAS");
-    uid.setUniqueidentifier("CAS"+UUID.randomUUID().toString());
+    uid.setUniqueidentifier(UUID.randomUUID().toString());
 
     List<Uniqueidentifier> uniqueidentifiers = new ArrayList<>();
     uniqueidentifiers.add(uid);

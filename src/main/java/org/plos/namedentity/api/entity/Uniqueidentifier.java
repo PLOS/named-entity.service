@@ -19,6 +19,7 @@ package org.plos.namedentity.api.entity;
 import org.plos.namedentity.api.NedValidationException;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.regex.Pattern;
 
 @XmlRootElement
 public class Uniqueidentifier extends Entity {
@@ -27,12 +28,31 @@ public class Uniqueidentifier extends Entity {
   private String  type;
   private String  uniqueidentifier;
 
+  private static Integer casMinLen = 28;
+  private static Integer casMaxLen = 36;
+  private static Pattern casRegex = Pattern.compile("^[A-Za-z0-9-]+$");
+
   @Override
   public void validate() {
 
     if (uniqueidentifier == null || uniqueidentifier.length() < 1)
       throw new NedValidationException("uniqueidentifier is too short");
 
+    if (type != null && type.equals("CAS"))
+      validateCas();
+
+  }
+
+  private void validateCas() {
+
+    if (uniqueidentifier.length() < casMinLen)
+      throw new NedValidationException("CAS ID can not be shorter then " + casMinLen + " characters");
+
+    if (uniqueidentifier.length() > casMaxLen)
+      throw new NedValidationException("CAS ID can not be longer then " + casMaxLen + " characters");
+
+    if (!casRegex.matcher(uniqueidentifier).matches())
+      throw new NedValidationException("CAS ID contains invalid characters");
   }
 
   public String getType() {

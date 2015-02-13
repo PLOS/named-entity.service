@@ -1,6 +1,12 @@
 package org.plos.namedentity.api;
 
-import org.plos.namedentity.api.entity.*;
+import org.plos.namedentity.api.entity.Address;
+import org.plos.namedentity.api.entity.Composite;
+import org.plos.namedentity.api.entity.Email;
+import org.plos.namedentity.api.entity.Entity;
+import org.plos.namedentity.api.entity.Organization;
+import org.plos.namedentity.api.entity.Phonenumber;
+import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.validate.Validatable;
 
 import javax.xml.bind.annotation.XmlTransient;
@@ -9,7 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class OrganizationComposite extends Composite implements Validatable {
 
@@ -69,29 +74,6 @@ public class OrganizationComposite extends Composite implements Validatable {
       throw new NedValidationException("Organization needs basic info");
 
   }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o)
-      return true;
-
-    if (o == null || this.getClass() != o.getClass())
-      return false;
-
-    return Objects.equals(this.hashCode(), o.hashCode());
-  }
-
-  private <T extends Entity> Integer hashSum(List<T> entities) {
-
-    Integer sum = 0;
-
-    if (entities != null)
-      for (T entity : entities)
-        sum += entity.hashCode();
-
-    return sum;
-  }
-
 
   public Integer getTypeid() {
     return organization.getTypeid();

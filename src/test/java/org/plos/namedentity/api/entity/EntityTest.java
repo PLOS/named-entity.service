@@ -16,14 +16,16 @@
  */
 package org.plos.namedentity.api.entity;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import org.plos.namedentity.api.NedValidationException;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class EntityTest {
 
@@ -52,6 +54,43 @@ public class EntityTest {
 
     url2.created = now()      ; verifyTrue(url1,url2); 
     url2.lastmodified = now() ; verifyTrue(url1,url2); 
+  }
+
+  @Test
+  public void testUidCasVlidation() {
+    Uniqueidentifier uid = new Uniqueidentifier();
+    uid.setType("CAS");
+
+    uid.setUniqueidentifier("3BBFE34-C8EEF46FEA-1E0DA3339DF1EC9");
+    uid.validate();
+
+
+    uid.setUniqueidentifier("shortidentifier");
+
+    try {
+      uid.validate();
+      fail("Short CAS ID should not have been accepted");
+    } catch (NedValidationException e) {
+      assertTrue(e.getMessage().contains("CAS ID can not be shorter then"));
+    }
+
+    uid.setUniqueidentifier("3BBFE34C8EEF46FEA1E0DA3339DF1EC9-longidentifier");
+
+    try {
+      uid.validate();
+      fail("Long CAS ID should not have been accepted");
+    } catch (NedValidationException e) {
+      assertTrue(e.getMessage().contains("CAS ID can not be shorter then"));
+    }
+
+    uid.setUniqueidentifier("badcharacters-^!");
+
+    try {
+      uid.validate();
+      fail("CAS ID with invalid characters should not have been accepted");
+    } catch (NedValidationException e) {
+      assertTrue(e.getMessage().contains("invalid characters"));
+    }
   }
 
   private void verifyTrue(Entity e1, Entity e2) {
