@@ -4,8 +4,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ALLOW_INVALID_DATES';
 
 DROP SCHEMA IF EXISTS namedEntities;
 
-CREATE SCHEMA namedEntities 
-    DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE SCHEMA namedEntities DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 use namedEntities;
 
@@ -269,12 +268,13 @@ CREATE TABLE IF NOT EXISTS namedEntities.uniqueIdentifiers (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
     typeId INT NOT NULL,
-    uniqueIdentifier TEXT NULL,
+    uniqueIdentifier VARCHAR(255) NOT NULL,
     sourceTypeId INT NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
-    FOREIGN KEY (typeId) REFERENCES globalTypes(id)
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id),
+    UNIQUE (typeId, uniqueIdentifier, sourceTypeId)
 )   ENGINE=INNODB;
