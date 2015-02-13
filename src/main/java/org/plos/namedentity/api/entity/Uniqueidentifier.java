@@ -16,7 +16,10 @@
  */
 package org.plos.namedentity.api.entity;
 
+import org.plos.namedentity.persist.UidTypeEnum;
 import org.plos.namedentity.api.NedValidationException;
+
+import java.util.regex.Pattern;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -30,9 +33,17 @@ public class Uniqueidentifier extends Entity {
   @Override
   public void validate() {
 
-    if (uniqueidentifier == null || uniqueidentifier.length() < 1)
-      throw new NedValidationException("uniqueidentifier is too short");
+    if (type == null) { throw new NedValidationException("uid type is null"); }
+    if (uniqueidentifier == null) { throw new NedValidationException("uid value is null"); }
 
+    switch (UidTypeEnum.getUidTypeEnum(type)) {
+      case SALESFORCE: 
+        if ( !validateSalesforceId(uniqueidentifier) )
+          throw new NedValidationException("invalid salesforce id:" + uniqueidentifier);
+        break;
+    }
+
+    throw new NedValidationException("unrecognized uid type:" + type);
   }
 
   public String getType() {
@@ -59,4 +70,9 @@ public class Uniqueidentifier extends Entity {
     this.uniqueidentifier = uniqueidentifier;
   }
 
+  // http://developer.force.com/cookbook/recipe/validating-an-id
+  private boolean validateSalesforceId(String salesforceId) {
+    return ((salesforceId.length() == 15 || salesforceId.length() == 18) 
+             && Pattern.matches("^[a-zA-Z0-9]*$", salesforceId));
+  }
 }
