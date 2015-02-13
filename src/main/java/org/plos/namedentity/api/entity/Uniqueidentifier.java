@@ -33,17 +33,24 @@ public class Uniqueidentifier extends Entity {
   @Override
   public void validate() {
 
-    if (type == null) { throw new NedValidationException("uid type is null"); }
-    if (uniqueidentifier == null) { throw new NedValidationException("uid value is null"); }
+    if (type == null && typeid == null) { throw new NedValidationException("uid type is null");  }
+    if (uniqueidentifier == null)       { throw new NedValidationException("uid value is null"); }
 
     switch (UidTypeEnum.getUidTypeEnum(type)) {
       case SALESFORCE: 
         if ( !validateSalesforceId(uniqueidentifier) )
           throw new NedValidationException("invalid salesforce id:" + uniqueidentifier);
         break;
-    }
 
-    throw new NedValidationException("unrecognized uid type:" + type);
+      case RINGGOLD:
+      case ORCID:
+      case EDITORIAL_MANAGER:
+      case CAS:
+      case AMBRA: break;
+
+      default:
+        throw new NedValidationException("unrecognized uid type:" + type);
+    }
   }
 
   public String getType() {
