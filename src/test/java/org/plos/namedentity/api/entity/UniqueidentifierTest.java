@@ -31,7 +31,7 @@ public class UniqueidentifierTest {
     Uniqueidentifier[] badSalesforceIds = {
       uid(null,null),
       uid(SALESFORCE.getName(),null),
-      uid("BadType","123"),
+      uid("BadType",""),
       sfuid("12345"),
       sfuid("12345678901234@"),
       sfuid("!23456789012345678"),

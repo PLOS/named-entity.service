@@ -16,6 +16,8 @@
  */
 package org.plos.namedentity.api.adapter;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 import java.util.Calendar;
@@ -32,23 +34,23 @@ public class DateAdapterTest {
     // component. this is represented as a midnight GMT epoch time.
 
     Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
-    //(year, month(0=jan), date, hour24, minute)
+    //(year, month(0=jan), day, hour24, minute, second)
     cal.set(2014, 9, 25, 0, 0, 0);
 
     java.sql.Date date = new java.sql.Date(cal.getTimeInMillis());
 
-    //assertEquals("2014-10-25", dateAdapter.marshal(date));
+    assertEquals("2014-10-25", dateAdapter.marshal(date));
   }
 
   @Test
   public void testUnmarshallingDate() throws Exception {
 
     Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
-    //(year, month(0=jan), date, hour24, minute)
+    //(year, month(0=jan), day, hour24, minute, second)
     cal.set(2014, 9, 25, 0, 0, 0);
     cal.set(Calendar.MILLISECOND, 0);
 
-//    assertEquals(new java.util.Date(cal.getTimeInMillis()),
-//                 dateAdapter.unmarshal("2014-10-25"));
+   assertEquals(new java.util.Date(cal.getTimeInMillis()),
+                dateAdapter.unmarshal("2014-10-25"));
   }
 }

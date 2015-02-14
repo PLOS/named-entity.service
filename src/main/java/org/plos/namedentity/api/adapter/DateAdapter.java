@@ -27,15 +27,21 @@ public class DateAdapter extends XmlAdapter<String, Date> {
 
   public DateAdapter() {
     this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    this.dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
   }
        
   @Override
   public String marshal(Date date) throws Exception {
-    return dateFormat.format(date);
+    String dateStr = dateFormat.format(date);
+    return dateStr;
+    //return dateFormat.format(date);
   }
 
   @Override
   public Date unmarshal(String string) throws Exception {
-    return dateFormat.parse(string);
+    string = string + "T00:00:00-0000";
+    //return dateFormat.parse(string);
+    Date date = dateFormat.parse(string);
+    return date;
   }
 }
