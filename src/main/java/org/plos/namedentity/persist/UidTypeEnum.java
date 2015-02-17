@@ -14,25 +14,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.plos.namedentity.api.adapter;
+package org.plos.namedentity.persist;
 
-import static org.junit.Assert.assertEquals;
+import java.util.EnumSet;
 
-import org.junit.Test;
+public enum UidTypeEnum {
 
-import org.joda.time.LocalDate;
+  RINGGOLD("Ringgold"),
+  ORCID("ORCID"),
+  EDITORIAL_MANAGER("Editorial Manager"),
+  CAS("CAS"),
+  SALESFORCE("Salesforce"),
+  AMBRA("Ambra"),
+  INVALID_UID_TYPE("");
 
-public class DateAdapterTest {
+  String name;
 
-  private DateAdapter dateAdapter = new DateAdapter();
-
-  @Test
-  public void testMarshallingDate() throws Exception {
-    assertEquals("2014-10-25", dateAdapter.marshal(new LocalDate(2014,10,25).toDate()));
+  private UidTypeEnum(String name) {
+    this.name = name;
   }
 
-  @Test
-  public void testUnmarshallingDate() throws Exception {
-		assertEquals(new LocalDate(2014,10,25).toDate(), dateAdapter.unmarshal("2014-10-25"));
+  // assume uom names are unique; may not be true for symbols.
+  public static UidTypeEnum getUidTypeEnum(String name) {
+    for (UidTypeEnum uidtype : EnumSet.allOf(UidTypeEnum.class))
+      if (uidtype.name.equals(name))
+        return uidtype;
+    return INVALID_UID_TYPE;
+  }
+
+  public String getName() {
+    return name;
   }
 }
