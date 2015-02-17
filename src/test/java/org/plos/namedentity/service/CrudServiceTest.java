@@ -509,7 +509,6 @@ public class CrudServiceTest {
     Uniqueidentifier uidEntity = new Uniqueidentifier();
     uidEntity.setNedid(1);
     uidEntity.setType("ORCID");
-    //uidEntity.setTypeid(orcidTypeId);
     uidEntity.setUniqueidentifier(ORCID_ID1);
     uidEntity.setSource("Editorial Manager");
     namedEntityService.resolveValuesToIds(uidEntity);
