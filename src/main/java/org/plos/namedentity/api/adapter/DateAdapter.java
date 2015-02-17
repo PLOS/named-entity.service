@@ -15,33 +15,32 @@
  * limitations under the License.
  */
 package org.plos.namedentity.api.adapter;
- 
+
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
- 
+
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 public class DateAdapter extends XmlAdapter<String, Date> {
 
-  private SimpleDateFormat dateFormat;
+  private DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
 
-  public DateAdapter() {
-    this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    this.dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-  }
-       
   @Override
   public String marshal(Date date) throws Exception {
-    String dateStr = dateFormat.format(date);
-    return dateStr;
-    //return dateFormat.format(date);
+    if (date == null) return null;
+
+    LocalDate localDate = new LocalDate(date);
+    return dtf.print(localDate);
   }
 
   @Override
-  public Date unmarshal(String string) throws Exception {
-    string = string + "T00:00:00-0000";
-    //return dateFormat.parse(string);
-    Date date = dateFormat.parse(string);
-    return date;
+  public Date unmarshal(String datestr) throws Exception {
+    if (datestr == null) return null;
+
+    LocalDate dt = dtf.parseLocalDate(datestr);
+    return dt.toDate();
   }
 }
