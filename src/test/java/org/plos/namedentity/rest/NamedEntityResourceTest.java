@@ -644,7 +644,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     };
 
     String[] uidValues = new String[] {
-      "0000-0002-9430-319X-JSON",
+      "0000-0002-9430-000X",
       "PONE-579386",
       "3BBFE34C8EEF46FEA1E0DA3339DF1EC9",
       "001U0000008Qlfj",

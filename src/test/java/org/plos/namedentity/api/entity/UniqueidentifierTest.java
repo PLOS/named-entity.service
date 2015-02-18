@@ -16,12 +16,12 @@
  */
 package org.plos.namedentity.api.entity;
 
-import static org.junit.Assert.fail;
-import static org.plos.namedentity.persist.UidTypeEnum.*;
-
+import org.junit.Test;
 import org.plos.namedentity.api.NedValidationException;
 
-import org.junit.Test;
+import static org.junit.Assert.fail;
+import static org.plos.namedentity.persist.UidTypeEnum.ORCID;
+import static org.plos.namedentity.persist.UidTypeEnum.SALESFORCE;
 
 public class UniqueidentifierTest {
 
@@ -58,6 +58,39 @@ public class UniqueidentifierTest {
     for (Uniqueidentifier uid : okSalesforceIds) {
       uid.validate();
     }
+  }
+
+  @Test
+  public void testOrcidValidation() {
+
+    Uniqueidentifier[] badIds = {
+        uid(null, null),
+        uid(ORCID.getName(), null),
+        uid("BadType",""),
+        uid(ORCID.getName(), "0000-0001-9430-001"),
+        uid(ORCID.getName(), "0000-0001-9430-!@12"),
+        uid(ORCID.getName(), "0000-0001-9430-001a"),
+        uid(ORCID.getName(), "0000-X001-9430-001a")
+    };
+
+    Uniqueidentifier[] goodIds = {
+        uid(ORCID.getName(), "0000-0001-9430-001X"),
+        uid(ORCID.getName(), "0000-0001-9430-0012"),
+        uid(ORCID.getName(), "000000019430001X"),
+        uid(ORCID.getName(), "000000019430001x")
+    };
+
+    for (Uniqueidentifier uid : badIds) {
+      try {
+        uid.validate();
+        fail();
+      } catch (NedValidationException expected) { }
+    }
+
+    for (Uniqueidentifier uid : goodIds) {
+      uid.validate();
+    }
+
   }
 
   private Uniqueidentifier sfuid(String uidValue) {
