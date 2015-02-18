@@ -262,7 +262,7 @@ public class NamedEntityDBServiceTest {
     workEmail.setNedid(1);
     workEmail.setTypeid(nedDBSvc.findTypeValue(emailTypeClassId, "Work"));
     workEmail.setEmailaddress("walter.work@foo.com");
-    workEmail.setSourcetypeid( getSourceTypeId("Editorial Manager") );
+    workEmail.setSourcetypeid( getSourceTypeId(UidTypeEnum.EDITORIAL_MANAGER.getName()) );
 
     assertNull(workEmail.getId());
     assertNotNull(workEmail.getNedid());
@@ -328,7 +328,7 @@ public class NamedEntityDBServiceTest {
     homeEmail.setNedid(1);
     homeEmail.setTypeid(nedDBSvc.findTypeValue(emailTypeClassId, "Personal"));
     homeEmail.setEmailaddress("walter.home@foo.com");
-    homeEmail.setSourcetypeid( getSourceTypeId("Editorial Manager") );
+    homeEmail.setSourcetypeid( getSourceTypeId(UidTypeEnum.EDITORIAL_MANAGER.getName()) );
 
     assertNull(homeEmail.getId());
     assertNotNull(homeEmail.getNedid());
@@ -412,7 +412,7 @@ public class NamedEntityDBServiceTest {
     individualProfile.setBiography("bio");
     individualProfile.setNameprefixtypeid(prefixTypeId);
     individualProfile.setNamesuffixtypeid(suffixTypeId);
-    individualProfile.setSourcetypeid( getSourceTypeId("Editorial Manager") );
+    individualProfile.setSourcetypeid( getSourceTypeId(UidTypeEnum.EDITORIAL_MANAGER.getName()) );
 
     Integer individualId = nedDBSvc.create(individualProfile);
     assertNotNull(individualId);
@@ -475,7 +475,7 @@ public class NamedEntityDBServiceTest {
     organization.setFamiliarname("familiarname");
     organization.setLegalname("legalname");
     organization.setIsactive(true);
-    organization.setSourcetypeid( getSourceTypeId("Editorial Manager") );
+    organization.setSourcetypeid( getSourceTypeId(UidTypeEnum.EDITORIAL_MANAGER.getName()) );
 
     Integer organizationId = nedDBSvc.create(organization);
     assertNotNull(organizationId);
@@ -515,7 +515,7 @@ public class NamedEntityDBServiceTest {
     mobilePhone.setTypeid(mobilePhoneTypeId);
     mobilePhone.setCountrycodetypeid(usaCountryCodeTypeId);
     mobilePhone.setPhonenumber("650-123-4567");
-    mobilePhone.setSourcetypeid( getSourceTypeId("Editorial Manager") );
+    mobilePhone.setSourcetypeid( getSourceTypeId(UidTypeEnum.EDITORIAL_MANAGER.getName()) );
 
     assertNull(mobilePhone.getId());
     assertNotNull(mobilePhone.getNedid());
@@ -541,7 +541,7 @@ public class NamedEntityDBServiceTest {
     officePhone.setTypeid(officePhoneTypeId);
     officePhone.setCountrycodetypeid(usaCountryCodeTypeId);
     officePhone.setPhonenumber("650-222-9876");
-    officePhone.setSourcetypeid( getSourceTypeId("Editorial Manager") );
+    officePhone.setSourcetypeid( getSourceTypeId(UidTypeEnum.EDITORIAL_MANAGER.getName()) );
 
     assertNull(officePhone.getId());
     assertNotNull(officePhone.getNedid());
@@ -608,7 +608,7 @@ public class NamedEntityDBServiceTest {
     address.setStatecodetypeid(stateCodeTypeId);
     address.setCountrycodetypeid(countryTypeId);
     address.setPostalcode("94501");
-    address.setSourcetypeid( getSourceTypeId("Editorial Manager") );
+    address.setSourcetypeid( getSourceTypeId(UidTypeEnum.EDITORIAL_MANAGER.getName()) );
 
     assertNull(address.getId());
     assertNotNull(address.getNedid());
@@ -655,7 +655,7 @@ public class NamedEntityDBServiceTest {
     Integer srcAppTypeClassId = nedDBSvc.findTypeClass("User Applications");
     Integer roleTypeClassId   = nedDBSvc.findTypeClass("Roles");
 
-    Integer srcAppTypeId = nedDBSvc.findTypeValue(srcAppTypeClassId, "Editorial Manager"); assertNotNull(srcAppTypeId);
+    Integer srcAppTypeId = nedDBSvc.findTypeValue(srcAppTypeClassId, UidTypeEnum.EDITORIAL_MANAGER.getName()); assertNotNull(srcAppTypeId);
     Integer roleTypeId   = nedDBSvc.findTypeValue(roleTypeClassId, "Author")             ; assertNotNull(roleTypeId)  ;
 
     Role authorRole = new Role();
@@ -668,7 +668,7 @@ public class NamedEntityDBServiceTest {
 
     authorRole.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
     authorRole.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
-    authorRole.setSourcetypeid( getSourceTypeId("Editorial Manager") );
+    authorRole.setSourcetypeid( getSourceTypeId(UidTypeEnum.EDITORIAL_MANAGER.getName()) );
 
     assertNull(authorRole.getId());
     assertNotNull(authorRole.getNedid());
@@ -719,7 +719,7 @@ public class NamedEntityDBServiceTest {
     // FIND Individuals with an ORCID id. There should be none. 
 
     try {
-      nedDBSvc.findResolvedEntityByUid("ORCID", ORCID_ID, Individualprofile.class);
+      nedDBSvc.findResolvedEntityByUid(UidTypeEnum.ORCID.getName(), ORCID_ID, Individualprofile.class);
     } catch (EntityNotFoundException expected) {
     }
 
@@ -727,7 +727,8 @@ public class NamedEntityDBServiceTest {
 
     Integer uidIdType = nedDBSvc.findTypeClass("Unique Identifier Types");
 
-    Integer orcidTypeId  = nedDBSvc.findTypeValue(uidIdType, "ORCID")             ; assertNotNull(orcidTypeId);
+    Integer orcidTypeId  = nedDBSvc.findTypeValue(uidIdType, UidTypeEnum.ORCID.getName());
+    assertNotNull(orcidTypeId);
 
     Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
@@ -737,7 +738,7 @@ public class NamedEntityDBServiceTest {
     individualProfile.setMiddlename("middlename");
     individualProfile.setLastname("lastname");
     individualProfile.setDisplayname("displayname_u");
-    individualProfile.setSourcetypeid( getSourceTypeId("Editorial Manager") );
+    individualProfile.setSourcetypeid( getSourceTypeId(UidTypeEnum.EDITORIAL_MANAGER.getName()) );
 
     assertNotNull(nedDBSvc.create(individualProfile));
 
@@ -745,7 +746,7 @@ public class NamedEntityDBServiceTest {
     uidEntity1.setNedid(nedId);
     uidEntity1.setTypeid(orcidTypeId);
     uidEntity1.setUniqueidentifier(ORCID_ID);
-    uidEntity1.setSourcetypeid( getSourceTypeId("Editorial Manager") );
+    uidEntity1.setSourcetypeid( getSourceTypeId(UidTypeEnum.EDITORIAL_MANAGER.getName()) );
 
     assertNull(uidEntity1.getId());
     assertNotNull(uidEntity1.getNedid());
@@ -754,7 +755,7 @@ public class NamedEntityDBServiceTest {
     assertNotNull(uidId1);
 
     // FIND By UID (ORCID) #2
-    assertNotNull(nedDBSvc.findResolvedEntityByUid("ORCID", ORCID_ID, Individualprofile.class));
+    assertNotNull(nedDBSvc.findResolvedEntityByUid(UidTypeEnum.ORCID.getName(), ORCID_ID, Individualprofile.class));
 
     // UPDATE
 
