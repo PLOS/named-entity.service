@@ -82,19 +82,25 @@ public class NedExceptionTest {
   @Test
   public void testInvalidTypeValueException() {
 
+    Integer     typeClassID     = null;
     Integer     typeValueID     = null;
     Set<String> validTypeValues = null;
-/*
+
     try {
-      Integer typeClassID = nedDBSvc.findTypeClass("Named Party Types");
+      typeClassID = nedDBSvc.findTypeClass("Named Party Types");
+      typeValueID = nedDBSvc.findTypeValue(typeClassID, "Indix");
       fail();
     } catch (NedValidationException nve) {  // expected
-      assertEquals(ErrorType.InvalidTypeClass, nve.getErrorType());
-
+      assertEquals(ErrorType.InvalidTypeValue, nve.getErrorType());
       validTypeValues = nve.getAcceptableValues();
+    }
+
+    assertTrue(validTypeValues.size() > 1);
+/*
+    for (String typevalue : validTypeValues) {
+      // finder will thrown an exception if class not found
+      assertTrue( nedDBSvc.findTypeValue(typeClassID, typevalue) > 0 );
     }
 */
   }
-
-  //Integer findTypeValue(Integer typeClassId, String name);
 }
