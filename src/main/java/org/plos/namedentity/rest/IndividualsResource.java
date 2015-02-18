@@ -78,6 +78,30 @@ public class IndividualsResource extends NedResource {
     }
   }
 
+  @GET
+  @Path("/displayname/{displayName}")
+  @ApiOperation(value = "Read individual by display name", response = IndividualComposite.class)
+  public Response readIndividualByDisplayName
+      (@PathParam("displayName") String displayName) {
+    try {
+
+      Individualprofile p = new Individualprofile();
+      p.setDisplayname(displayName);
+
+      List<Individualprofile> results = crudService.findByAttribute(p);
+
+      if (results.size() == 0)
+        throw new EntityNotFoundException("Individual");
+
+      return Response.status(Response.Status.OK).entity(
+          namedEntityService.findComposite(results.get(0).getNedid(), IndividualComposite.class)).build();
+    } catch (EntityNotFoundException e) {
+      return entityNotFound(e);
+    } catch (Exception e) {
+      return serverError(e, "Find individual failed");
+    }
+  }
+
   /* ----------------------------------------------------------------------- */
   /*  PROFILE CRUD                                                              */
   /* ----------------------------------------------------------------------- */
