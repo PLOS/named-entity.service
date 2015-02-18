@@ -16,13 +16,74 @@
  */
 package org.plos.namedentity.api;
 
+import java.util.EnumSet;
+import java.util.Set;
+
 public class NedException extends RuntimeException {
+
+  public enum ErrorType {
+
+    InvalidTypeClass(4000, "Invalid Type Class"),
+    InvalidTypeValue(4001, "Invalid Type Value"),
+
+    ServerError(5000, "Server error"),
+
+    InvalidErrorType(-1,"");
+
+    private final int errorCode;
+    private final String message;
+
+    private ErrorType(int errorCode, String message) {
+      this.errorCode = errorCode;
+      this.message   = message;
+    }
+
+    public String getMessage() {
+      return message;
+    }
+
+    public int getErrorCode() {
+      return errorCode;
+    }
+
+    public static ErrorType getErrorType(int errorCode) {
+      for (ErrorType errortype : EnumSet.allOf(ErrorType.class))
+        if (errortype.errorCode == errorCode)
+          return errortype;
+      return InvalidErrorType;
+    }
+
+  }
+
+  private ErrorType errorType;
+
+  private Set<String> acceptableValues;
+
+  public ErrorType getErrorType() {
+    return errorType;
+  }
+
+  public Set<String> getAcceptableValues() {
+    return acceptableValues;
+  }
+
+  public NedException(ErrorType errorType) {
+    this(errorType, null);
+  }
+
+  public NedException(ErrorType errorType, Set<String> acceptableValues) {
+    super(errorType.getMessage());
+    this.errorType = errorType;
+    this.acceptableValues = acceptableValues;
+  }
 
   public NedException(String message) {
     super(message);
+    errorType = ErrorType.ServerError;
   }
 
   public NedException(String message, Throwable cause) {
     super(message, cause);
+    errorType = ErrorType.ServerError;
   }
 }

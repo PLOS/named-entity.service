@@ -31,9 +31,14 @@ import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.persist.db.namedentities.tables.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.plos.namedentity.api.NedException.ErrorType;
+import static org.plos.namedentity.api.NedException.ErrorType.*;
 
 import static org.plos.namedentity.persist.db.namedentities.Tables.*;
 
@@ -163,25 +168,40 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   @Override
   public Integer findTypeClass(String description) {
 
-    //TODO - cache type classes and values ?
+    List<Typedescription> typeClasses = findAll(Typedescription.class, 0, Integer.MAX_VALUE);
 
-    for (Typedescription typeClass : findAll(Typedescription.class, 0, Integer.MAX_VALUE)) {
+    for (Typedescription typeClass : typeClasses) {
       if (typeClass.getDescription().equals(description)) {
         return typeClass.getId();
       }
     }
-    throw new NedValidationException("No type class found with description " + description);
+
+    // type class not found. assemble list of valid values to pass to error handler
+    Set<String> lovs = new HashSet<String>();
+    for (Typedescription typeClass : typeClasses) {
+      lovs.add(typeClass.getDescription());
+    }
+    throw new NedValidationException(ErrorType.InvalidTypeClass, lovs);
   }
 
   @Override
   public Integer findTypeValue(Integer typeClassId, String name) {
-    for (Globaltype typeValue : findAll(Globaltype.class, 0, Integer.MAX_VALUE)) {
+
+    List<Globaltype> typeValues = findAll(Globaltype.class, 0, Integer.MAX_VALUE);
+
+    for (Globaltype typeValue : typeValues) {
       if (typeClassId.equals(typeValue.getTypeid()) &&
           typeValue.getShortdescription().equalsIgnoreCase(name)) {
         return typeValue.getId();
       }
     }
-    throw new NedValidationException("No type value found with short description =  " + name);
+
+    // type value not found. assemble list of valid values to pass to error handler
+    Set<String> lovs = new HashSet<String>();
+    for (Globaltype typeValue : typeValues) {
+      lovs.add(typeValue.getShortdescription());
+    }
+    throw new NedValidationException(ErrorType.InvalidTypeValue, lovs);
   }
 
   @Override

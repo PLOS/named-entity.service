@@ -487,7 +487,7 @@ public class CrudServiceTest {
   }
 
   @Test
-  public void testExternalReferencesCRUD() {
+  public void testUniqueIdentifiersCRUD() {
 
     final String ORCID_ID1 = "0000-0001-9430-319X-UIDCRUDSERV";
 

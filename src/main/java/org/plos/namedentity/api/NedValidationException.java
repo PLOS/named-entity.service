@@ -16,6 +16,8 @@
  */
 package org.plos.namedentity.api;
 
+import java.util.Set;
+
 public class NedValidationException extends NedException {
 
   public NedValidationException(String message) {
@@ -24,5 +26,13 @@ public class NedValidationException extends NedException {
 
   public NedValidationException(String message, Throwable cause) {
     super(message, cause);
+  }
+
+  public NedValidationException(ErrorType errorType) {
+    super(errorType, null);
+  }
+
+  public NedValidationException(ErrorType errorType, Set<String> acceptableValues) {
+    super(errorType, acceptableValues);
   }
 }
