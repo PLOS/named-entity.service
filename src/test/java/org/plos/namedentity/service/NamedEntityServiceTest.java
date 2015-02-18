@@ -250,7 +250,7 @@ public class NamedEntityServiceTest {
 
     Uniqueidentifier uidEntity = new Uniqueidentifier();
     uidEntity.setType("ORCID");
-    uidEntity.setUniqueidentifier("0000-0001-9430-319X-SERVIND");
+    uidEntity.setUniqueidentifier("0000-0001-9430-001X");
     uidEntity.setSource("Editorial Manager");
 
     composite.getUniqueidentifiers().add(uidEntity);
@@ -324,7 +324,7 @@ public class NamedEntityServiceTest {
     List<Uniqueidentifier> uidEntities = namedEntityService.findResolvedEntities(nedId, Uniqueidentifier.class);
     assertEquals(2, uidEntities.size());
 
-    Individualprofile individualProfile = namedEntityService.findResolvedEntityByUid("ORCID", "0000-0001-9430-319X-SERVIND", Individualprofile.class);
+    Individualprofile individualProfile = namedEntityService.findResolvedEntityByUid("ORCID", "0000-0001-9430-001X", Individualprofile.class);
 
     assertNotNull(individualProfile);
 

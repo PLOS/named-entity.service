@@ -16,12 +16,11 @@
  */
 package org.plos.namedentity.api.entity;
 
-import org.plos.namedentity.persist.UidTypeEnum;
 import org.plos.namedentity.api.NedValidationException;
-
-import java.util.regex.Pattern;
+import org.plos.namedentity.persist.UidTypeEnum;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.regex.Pattern;
 
 @XmlRootElement
 public class Uniqueidentifier extends Entity {
@@ -30,14 +29,34 @@ public class Uniqueidentifier extends Entity {
   private String  type;
   private String  uniqueidentifier;
 
+  private static Integer salesForceLengthA = 15;
+  private static Integer salesForceLengthB = 18;
+  private static Pattern salesForceRegexp  = Pattern.compile("^[a-zA-Z0-9]*$");
+  private static Pattern orcidRegexp  = Pattern.compile("^([\\d]{4}\\-?){3}[\\d]{3}[\\dxX]$");
+
   @Override
   public void validate() {
 
     if (uniqueidentifier == null || uniqueidentifier.length() < 1)
       throw new NedValidationException("uniqueidentifier is too short");
 
-    if ("Salesforce".equals(type) && !validateSalesforceId(uniqueidentifier))
+    if (UidTypeEnum.SALESFORCE.getName().equals(type)
+        && !validateSalesforceId(uniqueidentifier))
       throw new NedValidationException("invalid salesforce id:" + uniqueidentifier);
+    else if (UidTypeEnum.ORCID.getName().equals(type)
+        && !validateOrcid(uniqueidentifier))
+      throw new NedValidationException("invalid ORCID id:" + uniqueidentifier);
+  }
+
+  private static boolean validateSalesforceId(String salesforceId) {
+    // http://developer.force.com/cookbook/recipe/validating-an-id
+    return ((salesforceId.length() == salesForceLengthA
+        || salesforceId.length() == salesForceLengthB)
+        && salesForceRegexp.matcher(salesforceId).matches());
+  }
+
+  private static boolean validateOrcid(String id) {
+    return ( orcidRegexp.matcher(id).matches() );
   }
 
   public String getType() {
@@ -64,9 +83,4 @@ public class Uniqueidentifier extends Entity {
     this.uniqueidentifier = uniqueidentifier;
   }
 
-  // http://developer.force.com/cookbook/recipe/validating-an-id
-  private boolean validateSalesforceId(String salesforceId) {
-    return ((salesforceId.length() == 15 || salesforceId.length() == 18) 
-             && Pattern.matches("^[a-zA-Z0-9]*$", salesforceId));
-  }
 }
