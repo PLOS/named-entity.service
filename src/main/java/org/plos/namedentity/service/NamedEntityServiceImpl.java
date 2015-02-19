@@ -16,6 +16,8 @@
  */
 package org.plos.namedentity.service;
 
+import static org.plos.namedentity.api.NedException.ErrorType.*;
+
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.persist.NamedEntityDBService;
@@ -192,7 +194,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       return composite;
 
     } catch (Exception e) {
-      throw new NedException("Invalid composite type");
+      throw new NedException(InvalidComposite, e);
     }
   }
 

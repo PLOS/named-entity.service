@@ -23,7 +23,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.plos.namedentity.api.NedException;
-import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.persist.db.namedentities.tables.Globaltypes;
 import org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions;
@@ -429,7 +428,7 @@ public class NamedEntityDBServiceTest {
       savedIndividualProfile.setId(null);
       nedDBSvc.update(savedIndividualProfile);
       fail();
-    } catch (NedValidationException expected) { }
+    } catch (NedException expected) { }
 
     // Restore primary key and try to update again. This should succeed.
     savedIndividualProfile.setId(savedProfileId);

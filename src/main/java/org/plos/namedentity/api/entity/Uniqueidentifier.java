@@ -16,7 +16,9 @@
  */
 package org.plos.namedentity.api.entity;
 
-import org.plos.namedentity.api.NedValidationException;
+import static org.plos.namedentity.api.NedException.ErrorType.*;
+
+import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.persist.UidTypeEnum;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -38,14 +40,14 @@ public class Uniqueidentifier extends Entity {
   public void validate() {
 
     if (uniqueidentifier == null || uniqueidentifier.length() < 1)
-      throw new NedValidationException("uniqueidentifier is too short");
+      throw new NedException(UidValueError, "uniqueidentifier is too short");
 
     if (UidTypeEnum.SALESFORCE.getName().equals(type)
         && !validateSalesforceId(uniqueidentifier))
-      throw new NedValidationException("invalid salesforce id:" + uniqueidentifier);
+      throw new NedException(InvalidSalesforceId, "invalid salesforce id:"+uniqueidentifier);
     else if (UidTypeEnum.ORCID.getName().equals(type)
         && !validateOrcid(uniqueidentifier))
-      throw new NedValidationException("invalid ORCID id:" + uniqueidentifier);
+      throw new NedException(InvalidOrcidId, "invalid ORCID id:" + uniqueidentifier);
   }
 
   private static boolean validateSalesforceId(String salesforceId) {

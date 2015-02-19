@@ -16,8 +16,10 @@
  */
 package org.plos.namedentity.api.entity;
 
+import static org.plos.namedentity.api.NedException.ErrorType.*;
+
 import org.apache.commons.validator.routines.UrlValidator;
-import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.NedException;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -31,7 +33,7 @@ public class Url extends Entity {
   @Override
   public void validate() {
     if (url != null && !urlValidator.isValid(url))
-      throw new NedValidationException("URL not valid (" + url + ")");
+      throw new NedException(InvalidUrl, "URL not valid (" + url + ")");
   }
 
   public String getUrl() {

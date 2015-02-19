@@ -17,16 +17,44 @@
 package org.plos.namedentity.api;
 
 import java.util.EnumSet;
+import java.util.Set;
 
 public class NedException extends RuntimeException {
 
   public enum ErrorType {
 
     InvalidTypeClass(4000, "Invalid Type Class"),
-    InvalidTypeValue(4001, "Invalid Type Value"),
-    EntityNotFound  (4004, "Entity Not Found"),
+    InvalidTypeValue(4010, "Invalid Type Value"),
+    ValidationError (4020, "Validation Error"),
+    EntityNotFound  (4030, "Entity Not Found"),
+    InvalidComposite(4040, "Invalid Composite"),
+    EntityWithNoPK  (4050, "Entity with No Primary Key"),
+    EntityNotDefined(4060, "Entity Not Defined"),
+    UidValueError(4070, "Unique Identifier Value Error"),
+    InvalidSalesforceId(4080, "Invalid Salesforce ID"),
+    InvalidOrcidId(4090, "Invalid ORCID ID"),
+    InvalidUrl(4100, "Invalid URL"),
+
+    FamiliarNameError(4110, "Familiar Name Error"),
+    LegalNameError(4120, "Legal Name Error"),
+
+    FirstnameError(4130, "Firstname Error"),
+    LastnameError(4140, "Lastname Error"),
+    DisplayNameError(4140, "Display Name Error"),
+    InvalidEmail(4150, "Invalid Email"),
+    PhoneNumberError(4160, "Phone Number Error"),
+    RequiredAttributeError(4170, "Required Attribute Error"),
+
+    InvalidCasId(4180, "Invalid CAS ID"),
+
+    // individual entity-level validation
+    I_NoProfileEntities(4400, "No Profile Entities for Individual Composite"),
+    I_NoEmailEntities(4405, "No Email Entities for Individual Composite"),
+      
+    // organization entity-level validation
 
     ServerError     (5000, "Server Error"),
+    DatabaseError   (5010, "Database Error"),
 
     InvalidErrorType(-1,"");
 
@@ -61,49 +89,65 @@ public class NedException extends RuntimeException {
     }
   }
 
-  private ErrorType errorType;    // stores type of error
-  private String    message;      // stores specific error message
+  private ErrorType   errorType;          // stores type of error
+  private String      message;            // stores specific error message
+  private Set<String> acceptableValues;
 
   public ErrorType getErrorType() {
     return errorType;
   }
 
+  public Set<String> getAcceptableValues() {
+    return acceptableValues;
+  }
+
   public NedException(ErrorType errorType) {
-    this.errorType = errorType;
+    this(errorType, null, null);
+  }
+
+  public NedException(ErrorType errorType, Set<String> acceptableValues) {
+    this(errorType, null, null);
+    this.acceptableValues = acceptableValues;
   }
 
   public NedException(ErrorType errorType, String message) {
-    this(errorType);
-    this.message = message;
+    this(errorType, message, null);
+  }
+
+  public NedException(ErrorType errorType, Throwable cause) {
+    this(errorType, null, cause);
   }
 
   public NedException(String message) {
-    this(ErrorType.ServerError, message);
+    this(ErrorType.ServerError, message, null);
   }
 
-  public NedException(String message, Throwable cause) {
-    this(ErrorType.ServerError, concat(message,cause));
+  public NedException(ErrorType errorType, String message, Throwable cause) {
+    super(cause);
+    this.errorType = errorType;
+    this.message   = message;
   }
 
   @Override
   public String getMessage() {
     StringBuilder b = new StringBuilder();
-    if (this.errorType != null) {
-      b.append(errorType.toString());
-    }
-    if (this.message != null) {
-      if (errorType != null) b.append(" ");
-      b.append(this.message);
-    }
-    return b.toString();
-  }
 
-  private static String concat(String m, Throwable t) {
-    StringBuilder b = new StringBuilder();
-    b.append(m);
-    if (t != null) {
-      b.append(". ").append(t.toString()).append(".");
+    if (errorType != null) { b.append(errorType.toString()); }
+
+    if (b.length() > 0) b.append(" ");
+
+    if (message != null) { b.append(message); }
+
+    if (b.length() > 0) b.append(" ");
+
+    if (acceptableValues != null && acceptableValues.size() > 0) {
+      b.append(" Acceptable Values:");
+      for (String value : acceptableValues) {
+        b.append(value).append(",");
+      }
+      b.setLength(b.length() - 1);    // remove trailing comma
     }
+
     return b.toString();
   }
 }

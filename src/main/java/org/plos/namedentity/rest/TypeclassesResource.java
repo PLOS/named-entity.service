@@ -3,7 +3,7 @@ package org.plos.namedentity.rest;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
-import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Globaltype;
 import org.plos.namedentity.api.entity.Typedescription;
 
@@ -70,8 +70,8 @@ public class TypeclassesResource extends BaseResource {
 
       return Response.status(Response.Status.OK).entity(
           crudService.findById(pkId, Typedescription.class)).build();
-    } catch (NedValidationException e) {
-      return validationError(e, "Unable to create Type Class");
+    } catch (NedException e) {
+      return nedError(e, "Unable to create Type Class");
     } catch (Exception e) {
       return serverError(e, "Unable to create Type Class");
     }
@@ -87,8 +87,8 @@ public class TypeclassesResource extends BaseResource {
       return Response.status(Response.Status.OK).entity(
           crudService.findById(typeDescription.getId(),
               Typedescription.class)).build();
-    } catch (NedValidationException e) {
-      return validationError(e, "Unable to update Type Class");
+    } catch (NedException e) {
+      return nedError(e, "Unable to update Type Class");
     } catch (Exception e) {
       return serverError(e, "Unable to update Type Class");
     }
@@ -155,8 +155,8 @@ public class TypeclassesResource extends BaseResource {
       return Response.status(Response.Status.OK).entity(
           crudService.findById(pkId, Globaltype.class)).build();
     }
-    catch(NedValidationException e) {
-      return validationError(e, "Unable to create Type Value");
+    catch(NedException e) {
+      return nedError(e, "Unable to create Type Value");
     }
     catch(Exception e) {
       return serverError(e, "Unable to create Type Value");
@@ -180,8 +180,8 @@ public class TypeclassesResource extends BaseResource {
           globalType.getId(), Globaltype.class);
       return Response.status(Response.Status.OK).entity( entity ).build();
     }
-    catch(NedValidationException e) {
-      return validationError(e, "Unable to update Type Value");
+    catch(NedException e) {
+      return nedError(e, "Unable to update Type Value");
     }
     catch(Exception e) {
       return serverError(e, "Unable to update Type Value");

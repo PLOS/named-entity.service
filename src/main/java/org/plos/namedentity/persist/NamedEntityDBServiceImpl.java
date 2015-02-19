@@ -26,7 +26,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
 import org.plos.namedentity.api.NedException;
-import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.persist.db.namedentities.tables.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +65,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     if (t instanceof Entity) {
       if (((Entity)t).getId() == null) {
-        throw new NedValidationException("Can't update entity without primary key: " + (Entity)t);
+        throw new NedException(EntityWithNoPK, "Can't update entity without primary key: "+(Entity)t);
       }
 
       // in jooq 3.5.1, the field change flag isn't set for null entity pojos
@@ -181,7 +180,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     for (Typedescription typeClass : typeClasses) {
       lovs.add(typeClass.getDescription());
     }
-    throw new NedValidationException(ErrorType.InvalidTypeClass, lovs);
+    throw new NedException(ErrorType.InvalidTypeClass, lovs);
   }
 
   @Override
@@ -202,7 +201,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     for (Globaltype globalType : globalTypesForTypeClass) {
       lovs.add(globalType.getShortdescription());
     }
-    throw new NedValidationException(ErrorType.InvalidTypeValue, lovs);
+    throw new NedException(ErrorType.InvalidTypeValue, lovs);
   }
 
   @Override

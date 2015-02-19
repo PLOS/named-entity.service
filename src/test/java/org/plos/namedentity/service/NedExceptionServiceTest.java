@@ -24,7 +24,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.plos.namedentity.api.NedException.ErrorType;
-import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.persist.NamedEntityDBService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +52,7 @@ public class NedExceptionServiceTest {
     try {
       typeClassID = nedDBSvc.findTypeClass("Named Party Typos");
       fail();
-    } catch (NedValidationException nve) {  // expected
+    } catch (NedException nve) {  // expected
       assertEquals(ErrorType.InvalidTypeClass, nve.getErrorType());
 
       validTypeClasses = nve.getAcceptableValues();
@@ -77,7 +77,7 @@ public class NedExceptionServiceTest {
       typeClassID = nedDBSvc.findTypeClass("Named Party Types");
       typeValueID = nedDBSvc.findTypeValue(typeClassID, "Indix");
       fail();
-    } catch (NedValidationException nve) {  // expected
+    } catch (NedException nve) {  // expected
       assertEquals(ErrorType.InvalidTypeValue, nve.getErrorType());
       validTypeValues = nve.getAcceptableValues();
     }

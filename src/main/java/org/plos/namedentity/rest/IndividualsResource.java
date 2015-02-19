@@ -6,7 +6,7 @@ import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.IndividualComposite;
-import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Role;
@@ -38,8 +38,8 @@ public class IndividualsResource extends NedResource {
     try {
       return Response.status(Response.Status.OK).entity(
           namedEntityService.createComposite(composite, IndividualComposite.class)).build();
-    } catch (NedValidationException e) {
-      return validationError(e, "Unable to create individual");
+    } catch (NedException e) {
+      return nedError(e, "Unable to create individual");
     } catch (Exception e) {
       return serverError(e, "Unable to create individual");
     }
@@ -110,7 +110,7 @@ public class IndividualsResource extends NedResource {
                                 @PathParam("profileId") int profileId) {
 
     if (((List)(getEntities(nedId, Individualprofile.class).getEntity())).size() == 1)
-      return validationError(new NedValidationException("Profile entities cannot be empty"), "Unable to delete profile");
+      return nedError(new NedException("Profile entities cannot be empty"), "Unable to delete profile");
 
     return deleteEntity(nedId, profileId, Individualprofile.class);
   }
@@ -157,7 +157,7 @@ public class IndividualsResource extends NedResource {
     }
 
     if (entityLocation != -1 && casCount == 1)
-      return validationError(new NedValidationException("Can not remove last CAS ID"), "Unable to Uniqueidentifier");
+      return nedError(new NedException("Can not remove last CAS ID"), "Unable to Uniqueidentifier");
 
     return deleteEntity(nedId, id, Uniqueidentifier.class);
   }

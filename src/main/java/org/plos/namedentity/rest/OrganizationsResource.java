@@ -21,7 +21,6 @@ import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.NedException;
-import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.Organization;
 
@@ -48,8 +47,8 @@ public class OrganizationsResource extends NedResource {
     try {
       return Response.status(Response.Status.OK).entity(
           namedEntityService.createComposite(composite, OrganizationComposite.class)).build();
-    } catch (NedValidationException e) {
-      return validationError(e, "Unable to create organization");
+    } catch (NedException e) {
+      return nedError(e, "Unable to create organization");
     } catch (Exception e) {
       return serverError(e, "Unable to create organization");
     }
