@@ -25,7 +25,7 @@ import org.jooq.SelectOnConditionStep;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
-import org.plos.namedentity.api.EntityNotFoundException;
+import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.persist.db.namedentities.tables.*;
@@ -228,7 +228,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .and(GLOBALTYPES.SHORTDESCRIPTION.equal(namedPartyType))
         .and(NAMEDENTITYIDENTIFIERS.ID.equal(nedId)).fetchOne()
       == null)
-        throw new EntityNotFoundException(namedPartyType);
+        throw new NedException(EntityNotFound, namedPartyType);
   }
 
   private Integer findTypeIdByName(TypeClassEnum typeClass, String typeValue) {
@@ -449,7 +449,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .where(u.UNIQUEIDENTIFIER.equal(uid)).and(gt.SHORTDESCRIPTION.equal(srcType)).fetchAny();
 
     if (record == null)
-      throw new EntityNotFoundException("Organization");
+      throw new NedException(EntityNotFound, "Organization");
 
     return record.into(Organization.class);
   }
@@ -481,7 +481,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       .fetchAny();
 
     if (record == null)
-      throw new EntityNotFoundException("Individual");
+      throw new NedException(EntityNotFound, "Individual");
 
     return record.into(Individualprofile.class);
   }
@@ -585,7 +585,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     Record record = select(uid).where(uid.ID.equal(id)).fetchOne();
 
-    if (record == null) throw new EntityNotFoundException("Uniqueidentifier");
+    if (record == null) throw new NedException(EntityNotFound, "Uniqueidentifier");
 
     return record.into(Uniqueidentifier.class);
   }
@@ -596,7 +596,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     Record record = select(i).where(i.ID.equal(individualId)).fetchOne();
 
-    if (record == null) throw new EntityNotFoundException("Individual");
+    if (record == null) throw new NedException(EntityNotFound, "Individual");
 
     return record.into(Individualprofile.class);
   }
@@ -607,7 +607,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     Record record = select(e).where(e.ID.equal(emailId)).fetchOne();
 
-    if (record == null) throw new EntityNotFoundException("Email");
+    if (record == null) throw new NedException(EntityNotFound, "Email");
 
     return record.into(Email.class);
   }
@@ -618,7 +618,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     Record record = select(a).where(a.ID.equal(addressId)).fetchOne();
 
-    if (record == null) throw new EntityNotFoundException("Address");
+    if (record == null) throw new NedException(EntityNotFound, "Address");
 
     return record.into(Address.class);
   }
@@ -629,7 +629,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     Record record = select(r).where(r.ID.equal(roleId)).fetchOne();
 
-    if (record == null) throw new EntityNotFoundException("Role");
+    if (record == null) throw new NedException(EntityNotFound, "Role");
 
     return record.into(Role.class);
   }

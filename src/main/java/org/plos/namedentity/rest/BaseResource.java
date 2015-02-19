@@ -17,7 +17,7 @@
 package org.plos.namedentity.rest;
 
 import org.apache.log4j.Logger;
-import org.plos.namedentity.api.EntityNotFoundException;
+import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.service.CrudService;
 import org.plos.namedentity.service.NamedEntityService;
@@ -43,12 +43,12 @@ public abstract class BaseResource {
   abstract protected String getNamedPartyType();
 
   protected Response entityNotFound(String message) {
-    return Response.status(Response.Status.NOT_FOUND)   // 404
-        .entity("entity not found: " + message)
-        .type(MediaType.TEXT_PLAIN).build();
+    return Response.status(Response.Status.NOT_FOUND)               // 404
+      .entity("entity not found: " + message)
+      .type(MediaType.TEXT_PLAIN).build();
   }
 
-  protected Response entityNotFound(EntityNotFoundException e) {
+  protected Response entityNotFound(NedException e) {
     return entityNotFound(e.getMessage());
   }
 

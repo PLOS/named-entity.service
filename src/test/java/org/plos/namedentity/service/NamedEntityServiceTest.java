@@ -382,7 +382,7 @@ public class NamedEntityServiceTest {
       namedEntityService.createComposite(composite, IndividualComposite.class);
       fail();
     } catch (NedValidationException expected) {
-      Assert.isTrue(expected.getMessage().equals("Email entities can not be empty"));
+      Assert.isTrue(expected.getMessage().contains("Email entities can not be empty"));
     }
 
     List<Email> emails = new ArrayList<>();
@@ -400,7 +400,7 @@ public class NamedEntityServiceTest {
       namedEntityService.createComposite(composite, IndividualComposite.class);
       fail();
     } catch (NedValidationException expected) {
-      Assert.isTrue(expected.getMessage().equals("Profile entities can not be empty"));
+      Assert.isTrue(expected.getMessage().contains("Profile entities can not be empty"));
     }
 
     composite = newCompositeIndividualWithRole();

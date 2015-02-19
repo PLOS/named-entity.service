@@ -16,9 +16,11 @@
  */
 package org.plos.namedentity.rest;
 
+import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
-import org.plos.namedentity.api.EntityNotFoundException;
+import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.Organization;
@@ -62,8 +64,9 @@ public class OrganizationsResource extends NedResource {
       namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findComposite(nedId, OrganizationComposite.class)).build();
-    } catch (EntityNotFoundException e) {
-      return entityNotFound(e);
+    } catch (NedException e) {
+      if (EntityNotFound.equals(e.getErrorType())) { return entityNotFound(e); }
+      throw e;
     } catch (Exception e) {
       return serverError(e, "Unable to read organization composite");
     }
@@ -81,11 +84,11 @@ public class OrganizationsResource extends NedResource {
 
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findComposite(organization.getNedid(), OrganizationComposite.class)).build();
-    } catch (EntityNotFoundException e) {
-      return entityNotFound(e);
+    } catch (NedException e) {
+      if (EntityNotFound.equals(e.getErrorType())) { return entityNotFound(e); }
+      throw e;
     } catch (Exception e) {
       return serverError(e, "Find organization failed");
     }
   }
-
 }

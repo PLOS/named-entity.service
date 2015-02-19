@@ -16,8 +16,10 @@
  */
 package org.plos.namedentity.rest;
 
+import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+
 import com.wordnik.swagger.annotations.ApiOperation;
-import org.plos.namedentity.api.EntityNotFoundException;
+import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Degree;
@@ -198,10 +200,12 @@ public abstract class NedResource extends BaseResource {
 
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findResolvedEntityByKey(pkId, entity.getClass())).build();
-    } catch (EntityNotFoundException e) {
-      return entityNotFound(e);
+
     } catch (NedValidationException e) {
       return validationError(e, "Unable to create " + entity.getClass().getSimpleName());
+    } catch (NedException e) {
+      if (EntityNotFound.equals(e.getErrorType())) { return entityNotFound(e); }
+      throw e;
     } catch (Exception e) {
       return serverError(e, "Unable to create " + entity.getClass().getSimpleName());
     }
@@ -225,10 +229,11 @@ public abstract class NedResource extends BaseResource {
 
       return Response.status(Response.Status.OK).entity(dbEntity).build();
 
-    } catch (EntityNotFoundException e) {
-      return entityNotFound(e);
     } catch (NedValidationException e) {
       return validationError(e, "Unable to update " + entity.getClass().getSimpleName());
+    } catch (NedException e) {
+      if (EntityNotFound.equals(e.getErrorType())) { return entityNotFound(e); }
+      throw e;
     } catch (Exception e) {
       return serverError(e, "Unable to update "  + entity.getClass().getSimpleName());
     }
@@ -246,10 +251,11 @@ public abstract class NedResource extends BaseResource {
 
       return Response.status(Response.Status.NO_CONTENT).build();
 
-    } catch (EntityNotFoundException e) {
-      return entityNotFound(e);
     } catch (NedValidationException e) {
       return validationError(e, "Unable to delete " + child.getSimpleName());
+    } catch (NedException e) {
+      if (EntityNotFound.equals(e.getErrorType())) { return entityNotFound(e); }
+      throw e;
     } catch (Exception e) {
       return serverError(e, "Unable to delete " + child.getSimpleName());
     }
@@ -270,8 +276,9 @@ public abstract class NedResource extends BaseResource {
 
       return entityNotFound(child.getSimpleName() + " " + pkId);
 
-    } catch (EntityNotFoundException e) {
-      return entityNotFound(e);
+    } catch (NedException e) {
+      if (EntityNotFound.equals(e.getErrorType())) { return entityNotFound(e); }
+      throw e;
     } catch (Exception e) {
       return serverError(e, String.format("Find % by id failed", child.getSimpleName()));
     }
@@ -352,8 +359,9 @@ public abstract class NedResource extends BaseResource {
       }
       throw new UnsupportedOperationException("Unsupported child entity: " + child.getSimpleName());
 
-    } catch (EntityNotFoundException e) {
-      return entityNotFound(e);
+    } catch (NedException e) {
+      if (EntityNotFound.equals(e.getErrorType())) { return entityNotFound(e); }
+      throw e;
     } catch (Exception e) {
       return serverError(e, String.format("Find %s by nedId failed", child.getSimpleName()));
     }

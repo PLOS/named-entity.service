@@ -22,7 +22,7 @@ import org.jooq.Result;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.plos.namedentity.api.EntityNotFoundException;
+import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.persist.db.namedentities.tables.Globaltypes;
@@ -47,6 +47,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
 import static org.plos.namedentity.persist.db.namedentities.Tables.GLOBALTYPES;
 import static org.plos.namedentity.persist.db.namedentities.Tables.TYPEDESCRIPTIONS;
 
@@ -720,7 +721,8 @@ public class NamedEntityDBServiceTest {
 
     try {
       nedDBSvc.findResolvedEntityByUid(UidTypeEnum.ORCID.getName(), ORCID_ID, Individualprofile.class);
-    } catch (EntityNotFoundException expected) {
+    } catch (NedException expected) {
+      assertEquals(EntityNotFound, expected.getErrorType());
     }
 
     // Create two individuals with the same Orcid#

@@ -1,8 +1,10 @@
 package org.plos.namedentity.rest;
 
+import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
-import org.plos.namedentity.api.EntityNotFoundException;
+import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedValidationException;
 import org.plos.namedentity.api.entity.Degree;
@@ -52,8 +54,9 @@ public class IndividualsResource extends NedResource {
       namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findComposite(nedId, IndividualComposite.class)).build();
-    } catch (EntityNotFoundException e) {
-      return entityNotFound(e);
+    } catch (NedException e) {
+      if (EntityNotFound.equals(e.getErrorType())) { return entityNotFound(e); }
+      throw e;
     } catch (Exception e) {
       return serverError(e, "Unable to read individual composite");
     }
@@ -71,8 +74,9 @@ public class IndividualsResource extends NedResource {
 
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findComposite(individualProfile.getNedid(), IndividualComposite.class)).build();
-    } catch (EntityNotFoundException e) {
-      return entityNotFound(e);
+    } catch (NedException e) {
+      if (EntityNotFound.equals(e.getErrorType())) { return entityNotFound(e); }
+      throw e;
     } catch (Exception e) {
       return serverError(e, "Find individual failed");
     }
