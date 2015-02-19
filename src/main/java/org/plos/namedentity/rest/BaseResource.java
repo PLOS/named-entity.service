@@ -42,7 +42,6 @@ public abstract class BaseResource {
 
   abstract protected String getNamedPartyType();
 
-
   protected Response entityNotFound(String message) {
     return Response.status(Response.Status.NOT_FOUND)   // 404
         .entity("entity not found: " + message)

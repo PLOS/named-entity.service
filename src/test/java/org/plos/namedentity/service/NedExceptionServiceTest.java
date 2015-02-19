@@ -16,39 +16,26 @@
  */
 package org.plos.namedentity.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.plos.namedentity.api.NedException.ErrorType;
 import org.plos.namedentity.api.NedValidationException;
-import org.plos.namedentity.api.entity.Address;
-import org.plos.namedentity.api.entity.Email;
-import org.plos.namedentity.api.entity.Globaltype;
-import org.plos.namedentity.api.entity.Individualprofile;
-import org.plos.namedentity.api.entity.Organization;
-import org.plos.namedentity.api.entity.Role;
-import org.plos.namedentity.api.entity.Typedescription;
-import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.persist.NamedEntityDBService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import org.plos.namedentity.api.NedException.ErrorType;
-
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
-public class NedExceptionTest {
-
-  @Autowired
-  NamedEntityService namedEntityService;  // inject so can resolve type names to ids
+public class NedExceptionServiceTest {
 
   @Autowired
   CrudService crudService;
@@ -96,11 +83,10 @@ public class NedExceptionTest {
     }
 
     assertTrue(validTypeValues.size() > 1);
-/*
+
     for (String typevalue : validTypeValues) {
       // finder will thrown an exception if class not found
       assertTrue( nedDBSvc.findTypeValue(typeClassID, typevalue) > 0 );
     }
-*/
   }
 }

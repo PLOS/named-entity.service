@@ -17,7 +17,6 @@
 package org.plos.namedentity.api;
 
 import java.util.EnumSet;
-import java.util.Set;
 
 public class NedException extends RuntimeException {
 
@@ -25,21 +24,22 @@ public class NedException extends RuntimeException {
 
     InvalidTypeClass(4000, "Invalid Type Class"),
     InvalidTypeValue(4001, "Invalid Type Value"),
+    EntityNotFound  (4004, "Entity Not Found"),
 
-    ServerError(5000, "Server error"),
+    ServerError     (5000, "Server Error"),
 
     InvalidErrorType(-1,"");
 
-    private final int errorCode;
-    private final String message;
+    private final int    errorCode;
+    private final String errorMessage;
 
-    private ErrorType(int errorCode, String message) {
-      this.errorCode = errorCode;
-      this.message   = message;
+    private ErrorType(int errorCode, String errorMessage) {
+      this.errorCode    = errorCode;
+      this.errorMessage = errorMessage;
     }
 
-    public String getMessage() {
-      return message;
+    public String getErrorMessage() {
+      return errorMessage;
     }
 
     public int getErrorCode() {
@@ -53,37 +53,57 @@ public class NedException extends RuntimeException {
       return InvalidErrorType;
     }
 
+    public String toString() {
+      StringBuilder b = new StringBuilder();
+      b.append("ErrorCode:").append(errorCode).append(" - ");
+      b.append(errorMessage).append(".");
+      return b.toString();
+    }
   }
 
-  private ErrorType errorType;
-
-  private Set<String> acceptableValues;
+  private ErrorType errorType;    // stores type of error
+  private String    message;      // stores specific error message
 
   public ErrorType getErrorType() {
     return errorType;
   }
 
-  public Set<String> getAcceptableValues() {
-    return acceptableValues;
-  }
-
   public NedException(ErrorType errorType) {
-    this(errorType, null);
+    this.errorType = errorType;
   }
 
-  public NedException(ErrorType errorType, Set<String> acceptableValues) {
-    super(errorType.getMessage());
-    this.errorType = errorType;
-    this.acceptableValues = acceptableValues;
+  public NedException(ErrorType errorType, String message) {
+    this(errorType);
+    this.message = message;
   }
 
   public NedException(String message) {
-    super(message);
-    errorType = ErrorType.ServerError;
+    this(ErrorType.ServerError, message);
   }
 
   public NedException(String message, Throwable cause) {
-    super(message, cause);
-    errorType = ErrorType.ServerError;
+    this(ErrorType.ServerError, concat(message,cause));
+  }
+
+  @Override
+  public String getMessage() {
+    StringBuilder b = new StringBuilder();
+    if (this.errorType != null) {
+      b.append(errorType.toString());
+    }
+    if (this.message != null) {
+      if (errorType != null) b.append(" ");
+      b.append(this.message);
+    }
+    return b.toString();
+  }
+
+  private static String concat(String m, Throwable t) {
+    StringBuilder b = new StringBuilder();
+    b.append(m);
+    if (t != null) {
+      b.append(". ").append(t.toString()).append(".");
+    }
+    return b.toString();
   }
 }

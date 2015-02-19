@@ -187,19 +187,20 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   @Override
   public Integer findTypeValue(Integer typeClassId, String name) {
 
-    List<Globaltype> typeValues = findAll(Globaltype.class, 0, Integer.MAX_VALUE);
+    Globaltype globalTypesearchCriteria = new Globaltype();
+    globalTypesearchCriteria.setTypeid(typeClassId);
 
-    for (Globaltype typeValue : typeValues) {
-      if (typeClassId.equals(typeValue.getTypeid()) &&
-          typeValue.getShortdescription().equalsIgnoreCase(name)) {
-        return typeValue.getId();
+    List<Globaltype> globalTypesForTypeClass = findByAttribute(globalTypesearchCriteria);
+    for (Globaltype globalType : globalTypesForTypeClass) {
+      if (globalType.getShortdescription().equalsIgnoreCase(name)) {
+        return globalType.getId();
       }
     }
 
     // type value not found. assemble list of valid values to pass to error handler
     Set<String> lovs = new HashSet<String>();
-    for (Globaltype typeValue : typeValues) {
-      lovs.add(typeValue.getShortdescription());
+    for (Globaltype globalType : globalTypesForTypeClass) {
+      lovs.add(globalType.getShortdescription());
     }
     throw new NedValidationException(ErrorType.InvalidTypeValue, lovs);
   }

@@ -20,6 +20,8 @@ import java.util.Set;
 
 public class NedValidationException extends NedException {
 
+  private Set<String> acceptableValues;
+
   public NedValidationException(String message) {
     super(message);
   }
@@ -29,10 +31,35 @@ public class NedValidationException extends NedException {
   }
 
   public NedValidationException(ErrorType errorType) {
-    super(errorType, null);
+    super(errorType);
+  }
+
+  public NedValidationException(ErrorType errorType, String message) {
+    super(errorType, message);
   }
 
   public NedValidationException(ErrorType errorType, Set<String> acceptableValues) {
-    super(errorType, acceptableValues);
+    super(errorType);
+    this.acceptableValues = acceptableValues;
+  }
+
+  public Set<String> getAcceptableValues() {
+    return acceptableValues;
+  }
+
+  @Override 
+  public String getMessage() {
+    StringBuilder b = new StringBuilder();
+    b.append(super.getMessage());
+
+    if (acceptableValues != null && acceptableValues.size() > 0) {
+      b.append(" Acceptable Values:");
+      for (String value : acceptableValues) {
+        b.append(value).append(",");
+      }
+      // remove trailing comma
+      b.setLength(b.length() - 1);
+    }
+    return b.toString();
   }
 }
