@@ -42,16 +42,6 @@ public abstract class BaseResource {
 
   abstract protected String getNamedPartyType();
 
-  protected Response entityNotFound(String message) {
-    return Response.status(Response.Status.NOT_FOUND)               // 404
-      .entity("entity not found: " + message)
-      .type(MediaType.TEXT_PLAIN).build();
-  }
-
-  protected Response entityNotFound(NedException e) {
-    return entityNotFound(e.getMessage());
-  }
-
   protected Response serverError(Exception e, String message) {
     logger.error("internal error", e);
     return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)

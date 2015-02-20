@@ -264,7 +264,7 @@ public abstract class NedResource extends BaseResource {
         if (entity.getId().equals(pkId))
           return Response.status(Response.Status.OK).entity(entity).build();
 
-      return entityNotFound(child.getSimpleName() + " " + pkId);
+      throw new NedException(EntityNotFound, child.getSimpleName()+" "+pkId);
 
     } catch (NedException e) {
       return nedError(e, String.format("Find %s by id failed (nedId=%d, pkId=%d)",

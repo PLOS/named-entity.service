@@ -20,8 +20,9 @@ import org.eclipse.persistence.jaxb.JAXBContextProperties;
 import org.eclipse.persistence.oxm.json.JsonStructureSource;
 import org.junit.Before;
 import org.junit.Test;
-import org.plos.namedentity.api.NedErrorResponse;
 import org.plos.namedentity.api.IndividualComposite;
+import org.plos.namedentity.api.NedErrorResponse;
+import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
 import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Email;
@@ -31,17 +32,6 @@ import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonReader;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -54,6 +44,17 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonReader;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -67,8 +68,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   private static final String INDIVIDUAL_URI     = "/individuals";
   private static final String ORGANIZATION_URI   = "/organizations";
 
-  private static Integer nedIndividualId = null;
-
+  private static Integer nedIndividualId   = null;
   private static Integer nedOrganizationId = null;
 
   @Before
@@ -112,7 +112,6 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
         nedOrganizationId = composite.getNedid();
       }
-
     }
   }
 
@@ -581,7 +580,6 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals(Response.Status.BAD_REQUEST.getStatusCode(),
         target(ORGANIZATION_URI + "/"+ nedOrganizationId +"/emails/" + email0.getId())
             .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
-
   }
 
   @Test
@@ -669,7 +667,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     response = target(INDIVIDUAL_URI + "/BOGUS_TYPE/BOGUS_VALUE")
         .request(MediaType.APPLICATION_JSON_TYPE).get();
 
-    assertEquals(404, response.getStatus());
+    assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */
@@ -735,6 +733,19 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals(typeClassId, foundTypeClass.getId());
     assertEquals(NEW_TYPE_DESC, foundTypeClass.getDescription());
     assertEquals(NEW_TYPE_USAGE, foundTypeClass.getHowused());
+
+    // test lookup by invalid type class id
+
+    response = target(TYPE_CLASS_URI+"/0").request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+
+    jsonPayload = response.readEntity(String.class);
+
+    NedErrorResponse ner = unmarshalEntity(jsonPayload, NedErrorResponse.class, 
+                                           jsonUnmarshaller(NedErrorResponse.class));
+
+    assertEquals(EntityNotFound.getErrorCode(), ner.errorCode);
 
     /* ------------------------------------------------------------------ */
     /*  FIND (ALL)                                                        */
