@@ -36,6 +36,8 @@ public class TypeclassesResource extends BaseResource {
     try {
       return Response.status(Response.Status.OK).entity(
           crudService.findById(id, Typedescription.class)).build();
+    } catch (NedException e) {
+      return nedError(e, "Find type class by id failed");
     } catch (Exception e) {
       return serverError(e, "Find type class by id failed");
     }
@@ -57,6 +59,8 @@ public class TypeclassesResource extends BaseResource {
               crudService.findAll(Typedescription.class, offset, limit)
           ) {
           }).build();
+    } catch (NedException e) {
+      return nedError(e, "Find all type classes failed");
     } catch (Exception e) {
       return serverError(e, "Find all type classes failed");
     }
@@ -103,7 +107,11 @@ public class TypeclassesResource extends BaseResource {
       entity.setId(id);
       crudService.delete(entity);
       return Response.status(Response.Status.NO_CONTENT).build();
-    } catch (Exception e) {
+    }
+    catch(NedException e) {
+      return nedError(e, "Unable to delete Type Class");
+    }
+    catch (Exception e) {
       return serverError(e, "Unable to delete Type Class");
     }
   }
@@ -120,6 +128,9 @@ public class TypeclassesResource extends BaseResource {
     try {
       return Response.status(Response.Status.OK).entity(
           crudService.findById(typeValueId, Globaltype.class)).build();
+    }
+    catch(NedException e) {
+      return nedError(e, "Find type value by id failed");
     }
     catch(Exception e) {
       return serverError(e, "Find type value by id failed");
@@ -138,6 +149,9 @@ public class TypeclassesResource extends BaseResource {
           new GenericEntity<List<Globaltype>>(
               crudService.findByAttribute(searchCriteria)
           ){}).build();
+    }
+    catch(NedException e) {
+      return nedError(e, "Find type classes for a type class failed");
     }
     catch(Exception e) {
       return serverError(e, "Find type classes for a type class failed");
@@ -170,10 +184,7 @@ public class TypeclassesResource extends BaseResource {
                                    @PathParam("typevalueid") int typeValueId,
                                    Globaltype globalType) {
     try {
-
-
       // TODO: make use of path variables, since they are currently ignored
-
 
       crudService.update( globalType ); // TODO: handle 404 not_found?
       Globaltype entity = crudService.findById(
@@ -198,6 +209,9 @@ public class TypeclassesResource extends BaseResource {
       entity.setId(typeValueId);
       crudService.delete(entity);
       return Response.status(Response.Status.NO_CONTENT).build();
+    }
+    catch(NedException e) {
+      return nedError(e, "Unable to delete Type Value");
     }
     catch(Exception e) {
       return serverError(e, "Unable to delete Type Value");

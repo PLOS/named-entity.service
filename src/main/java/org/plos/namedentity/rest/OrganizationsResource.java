@@ -64,8 +64,7 @@ public class OrganizationsResource extends NedResource {
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findComposite(nedId, OrganizationComposite.class)).build();
     } catch (NedException e) {
-      if (EntityNotFound.equals(e.getErrorType())) { return entityNotFound(e); }
-      throw e;
+      return nedError(e, "Unable to read organization composite");
     } catch (Exception e) {
       return serverError(e, "Unable to read organization composite");
     }
@@ -84,8 +83,7 @@ public class OrganizationsResource extends NedResource {
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findComposite(organization.getNedid(), OrganizationComposite.class)).build();
     } catch (NedException e) {
-      if (EntityNotFound.equals(e.getErrorType())) { return entityNotFound(e); }
-      throw e;
+      return nedError(e, "Find organization failed");
     } catch (Exception e) {
       return serverError(e, "Find organization failed");
     }

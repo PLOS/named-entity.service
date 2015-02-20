@@ -55,8 +55,7 @@ public class IndividualsResource extends NedResource {
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findComposite(nedId, IndividualComposite.class)).build();
     } catch (NedException e) {
-      if (EntityNotFound.equals(e.getErrorType())) { return entityNotFound(e); }
-      throw e;
+      return nedError(e, "Unable to read individual composite");
     } catch (Exception e) {
       return serverError(e, "Unable to read individual composite");
     }
@@ -75,8 +74,7 @@ public class IndividualsResource extends NedResource {
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findComposite(individualProfile.getNedid(), IndividualComposite.class)).build();
     } catch (NedException e) {
-      if (EntityNotFound.equals(e.getErrorType())) { return entityNotFound(e); }
-      throw e;
+      return nedError(e, "Find individual failed");
     } catch (Exception e) {
       return serverError(e, "Find individual failed");
     }
