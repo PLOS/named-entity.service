@@ -24,7 +24,7 @@ import javax.ws.rs.core.Response;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class NedExceptionResourceTest extends SpringContextAwareJerseyTest {
+public class NedExceptionResourceTest extends BaseResourceTest {
 
   private static final String TEST_RESOURCE_PATH = "src/test/resources/";
   private static final String TYPE_CLASS_URI     = "/typeclasses";
@@ -34,5 +34,20 @@ public class NedExceptionResourceTest extends SpringContextAwareJerseyTest {
     Response response  = target(TYPE_CLASS_URI +"/0").request(MediaType.APPLICATION_JSON_TYPE).get();
     String responsePayload = response.readEntity(String.class);
     assertTrue( responsePayload.contains("ErrorCode:4004") );
+
+
+    //response = target(INDIVIDUAL_URI + "/-1/emails")
+                //.request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    //jsonPayload = response.readEntity(String.class);
+
+    //Unmarshaller unmarshaller2 = jsonUnmarshaller(NedErrorResponse.class);
+    //NedErrorResponse ner = unmarshalEntity(jsonPayload, NedErrorResponse.class, unmarshaller2);
+
+    //assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
+        //target(INDIVIDUAL_URI + "/-1/emails")
+            //.request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
+
+
   }
 }

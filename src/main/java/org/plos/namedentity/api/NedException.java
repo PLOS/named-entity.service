@@ -23,40 +23,40 @@ public class NedException extends RuntimeException {
 
   public enum ErrorType {
 
-    InvalidTypeClass(4000, "Invalid Type Class"),
-    InvalidTypeValue(4010, "Invalid Type Value"),
-    ValidationError (4020, "Validation Error"),
-    EntityNotFound  (4030, "Entity Not Found"),
-    InvalidComposite(4040, "Invalid Composite"),
-    EntityWithNoPK  (4050, "Entity with No Primary Key"),
-    EntityNotDefined(4060, "Entity Not Defined"),
-    UidValueError(4070, "Unique Identifier Value Error"),
-    InvalidSalesforceId(4080, "Invalid Salesforce ID"),
-    InvalidOrcidId(4090, "Invalid ORCID ID"),
-    InvalidUrl(4100, "Invalid URL"),
+    InvalidTypeClass       (4000, "Invalid Type Class"),
+    InvalidTypeValue       (4010, "Invalid Type Value"),
+    ValidationError        (4020, "Validation Error"),
+    EntityNotFound         (4030, "Entity Not Found"),
+    InvalidComposite       (4040, "Invalid Composite"),
+    EntityWithNoPK         (4050, "Entity with No Primary Key"),
+    EntityNotDefined       (4060, "Entity Not Defined"),
+    UidValueError          (4070, "Unique Identifier Value Error"),
+    InvalidSalesforceId    (4080, "Invalid Salesforce ID"),
+    InvalidOrcidId         (4090, "Invalid ORCID ID"),
+    InvalidUrl             (4100, "Invalid URL"),
 
-    FamiliarNameError(4110, "Familiar Name Error"),
-    LegalNameError(4120, "Legal Name Error"),
+    FamiliarNameError      (4110, "Familiar Name Error"),
+    LegalNameError         (4120, "Legal Name Error"),
 
-    FirstnameError(4130, "Firstname Error"),
-    LastnameError(4140, "Lastname Error"),
-    DisplayNameError(4140, "Display Name Error"),
-    InvalidEmail(4150, "Invalid Email"),
-    PhoneNumberError(4160, "Phone Number Error"),
-    RequiredAttributeError(4170, "Required Attribute Error"),
+    FirstnameError         (4130, "Firstname Error"),
+    LastnameError          (4140, "Lastname Error"),
+    DisplayNameError       (4140, "Display Name Error"),
+    InvalidEmail           (4150, "Invalid Email"),
+    PhoneNumberError       (4160, "Phone Number Error"),
+    RequiredAttributeError (4170, "Required Attribute Error"),
 
-    InvalidCasId(4180, "Invalid CAS ID"),
+    InvalidCasId           (4180, "Invalid CAS ID"),
 
-    // individual entity-level validation
-    I_NoProfileEntities(4400, "No Profile Entities for Individual Composite"),
-    I_NoEmailEntities(4405, "No Email Entities for Individual Composite"),
-      
+    // individual entity-levl validation
+    I_NoProfileEntities    (4400, "No Profile Entities for Individual Composite"),
+    I_NoEmailEntities      (4405, "No Email Entities for Individual Composite"),
+
     // organization entity-level validation
 
-    ServerError     (5000, "Server Error"),
-    DatabaseError   (5010, "Database Error"),
+    ServerError            (5000, "Server Error"),
+    DatabaseError          (5010, "Database Error"),
 
-    InvalidErrorType(-1,"");
+    InvalidErrorType       (-1,"");
 
     private final int    errorCode;
     private final String errorMessage;
@@ -90,11 +90,15 @@ public class NedException extends RuntimeException {
   }
 
   private ErrorType   errorType;          // stores type of error
-  private String      message;            // stores specific error message
+  private String      detailedMessage;    // stores specific error message
   private Set<String> acceptableValues;
 
   public ErrorType getErrorType() {
     return errorType;
+  }
+
+  public String getDetailedMessage() {
+    return detailedMessage;
   }
 
   public Set<String> getAcceptableValues() {
@@ -125,7 +129,7 @@ public class NedException extends RuntimeException {
   public NedException(ErrorType errorType, String message, Throwable cause) {
     super(cause);
     this.errorType = errorType;
-    this.message   = message;
+    this.detailedMessage = message;
   }
 
   @Override
@@ -136,7 +140,7 @@ public class NedException extends RuntimeException {
 
     if (b.length() > 0) b.append(" ");
 
-    if (message != null) { b.append(message); }
+    if (detailedMessage != null) { b.append(detailedMessage); }
 
     if (b.length() > 0) b.append(" ");
 

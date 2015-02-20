@@ -20,6 +20,7 @@ import org.eclipse.persistence.jaxb.JAXBContextProperties;
 import org.eclipse.persistence.oxm.json.JsonStructureSource;
 import org.junit.Before;
 import org.junit.Test;
+import org.plos.namedentity.api.NedErrorResponse;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.Address;
@@ -59,7 +60,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
+public class NamedEntityResourceTest extends BaseResourceTest {
 
   private static final String TEST_RESOURCE_PATH = "src/test/resources/";
   private static final String TYPE_CLASS_URI     = "/typeclasses";
@@ -560,24 +561,24 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(204, response.getStatus());
 
     /* ------------------------------------------------------------------ */
-    /*  404 ERRORS                                                        */
+    /*  4XX ERRORS                                                        */
     /* ------------------------------------------------------------------ */
 
-    assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
+    assertEquals(Response.Status.BAD_REQUEST.getStatusCode(),
         target(INDIVIDUAL_URI + "/-1/emails")
             .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
 
     // EMAIL CROSSING ENTITY TYPES
 
-    assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
+    assertEquals(Response.Status.BAD_REQUEST.getStatusCode(),
         target(INDIVIDUAL_URI + "/"+ nedOrganizationId +"/emails")
             .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
 
-    assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
+    assertEquals(Response.Status.BAD_REQUEST.getStatusCode(),
         target(ORGANIZATION_URI + "/"+ nedIndividualId +"/emails/" + email0.getId())
             .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
 
-    assertEquals(Response.Status.NOT_FOUND.getStatusCode(),
+    assertEquals(Response.Status.BAD_REQUEST.getStatusCode(),
         target(ORGANIZATION_URI + "/"+ nedOrganizationId +"/emails/" + email0.getId())
             .request(MediaType.APPLICATION_JSON_TYPE).get().getStatus());
 
@@ -875,64 +876,10 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals(UPDATE_TYPE_VAL_SDESC, updatedTypeValue.getShortdescription());
 
     /* ------------------------------------------------------------------ */
-    /*  DELETE                                                           */
+    /*  DELETE                                                            */
     /* ------------------------------------------------------------------ */
 
     response = target(typeValueUri+"/"+newTypeValueId).request(MediaType.APPLICATION_JSON_TYPE).delete();
     assertEquals(204, response.getStatus());
-  }
-
-  private Integer findTypeClassIdByName(String name) throws JAXBException {
-    Response response  = target(TYPE_CLASS_URI).request(MediaType.APPLICATION_JSON_TYPE).get();
-    String jsonPayload = response.readEntity(String.class);
-
-    Unmarshaller unmarshaller = jsonUnmarshaller(Typedescription.class);
-    List<Typedescription> typedescriptions = unmarshalEntities(jsonPayload, Typedescription.class, unmarshaller);
-
-    for (Typedescription typeclass : typedescriptions) {
-      if (typeclass.getDescription().equals(name)) {
-        return typeclass.getId();
-      }
-    }
-    fail("Unable to find TypeClass:"+name);
-    return null;
-  }
-
-  private <T> JAXBContext jsonJaxbContext(Class<T> clazz) throws JAXBException {
-    Map<String, Object> properties = new HashMap<String, Object>(2);
-    properties.put(JAXBContextProperties.MEDIA_TYPE, "application/json");
-    properties.put(JAXBContextProperties.JSON_INCLUDE_ROOT, false);
-    return JAXBContext.newInstance(new Class[]{clazz}, properties);
-  }
-
-  private <T> Unmarshaller jsonUnmarshaller(Class<T> clazz) throws JAXBException {
-    JAXBContext jc = jsonJaxbContext(clazz);
-    return jc.createUnmarshaller();
-  }
-
-  private <T> Marshaller jsonMarshaller(Class<T> clazz) throws JAXBException {
-    JAXBContext jc = jsonJaxbContext(clazz);
-    return jc.createMarshaller();
-  }
-
-  private <T> T unmarshalEntity(String json, Class<T> clazz, Unmarshaller unmarshaller)
-      throws JAXBException {
-    return unmarshaller.unmarshal(new StreamSource(new StringReader(json)), clazz).getValue();
-  }
-
-  @SuppressWarnings("unchecked")
-  private <T> List<T> unmarshalEntities(String json, Class<T> clazz, Unmarshaller unmarshaller)
-      throws JAXBException {
-    JsonReader jsonReader = Json.createReader(new StringReader(json));
-    JsonArray jsonArray = jsonReader.readArray();
-    JsonStructureSource arraySource = new JsonStructureSource(jsonArray);
-    return (List<T>) unmarshaller.unmarshal(arraySource, clazz).getValue();
-  }
-
-  private <T> String writeValueAsString(T t) throws JAXBException {
-    Writer writer = new StringWriter();
-    Marshaller marshaller = jsonMarshaller(t.getClass());
-    marshaller.marshal(t, writer);
-    return writer.toString();
   }
 }
