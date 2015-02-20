@@ -22,7 +22,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedErrorResponse;
-import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
 import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Email;
@@ -60,6 +59,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
 
 public class NamedEntityResourceTest extends BaseResourceTest {
 
@@ -501,6 +501,24 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals(true, email.getIsactive());
 
     String emailURI = emailsURI + "/" + email.getId();
+
+    // test creation with invalid email type
+
+    //String badEmailJson = new String(Files.readAllBytes(Paths.get(
+                                     //TEST_RESOURCE_PATH + "email.invalid-type.json")));
+
+    //response = target(emailsURI)
+      //.request(MediaType.APPLICATION_JSON_TYPE)
+        //.post(Entity.json(emailJson));
+
+    //assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+
+    //jsonPayload = response.readEntity(String.class);
+
+    //NedErrorResponse ner = unmarshalEntity(jsonPayload, NedErrorResponse.class, 
+                                           //jsonUnmarshaller(NedErrorResponse.class));
+
+    //assertEquals(EntityNotFound.getErrorCode(), ner.errorCode);
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY EMAIL ID (PK))                                           */
