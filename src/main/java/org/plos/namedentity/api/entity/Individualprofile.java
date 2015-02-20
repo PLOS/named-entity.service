@@ -19,6 +19,7 @@ package org.plos.namedentity.api.entity;
 import org.plos.namedentity.api.NedValidationException;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.regex.Pattern;
 
 @XmlRootElement
 public class Individualprofile extends Entity {
@@ -40,6 +41,9 @@ public class Individualprofile extends Entity {
 
   private Boolean isactive = true;
 
+  private static Pattern rejectedCharsDisplayName = Pattern.compile("[$&+,:;=?@#|/\\s^~`%<>{}\\[\\]\\\\]");
+  private static Integer displaynameMaxLength = 60;
+
   @Override
   public void validate() {
 
@@ -52,6 +56,11 @@ public class Individualprofile extends Entity {
     if (displayname == null || displayname.length() < 1)
       throw new NedValidationException("displayname is too short");
 
+    if (displayname.length() > displaynameMaxLength)
+      throw new NedValidationException("displayname cannot be longer then " + displaynameMaxLength);
+
+    if (rejectedCharsDisplayName.matcher(displayname).find())
+      throw new NedValidationException("displayname should not container any of the following characters: $ & + , / : ; = ? @ < > # % { } | \\ ^ ~ [ ] ` or a space");
   }
 
   public Boolean getIsactive() {
