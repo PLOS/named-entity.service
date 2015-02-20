@@ -7,8 +7,8 @@
       "lastname"   : "Doe",
       "nameprefix" : "Mrs.",
       "biography"  : "bio",
-      "source"     : "Editorial Manager",
-      "displayname": "jdoe"
+      "source"     : "Ambra",
+      "displayname": "10/8/2014? bogus@g郑超&Gebækaaaمن"
     }
   ],
   "phonenumbers" : [
@@ -18,7 +18,7 @@
       "phonenumber"     : "650-123-4567",
       "type"            : "Office",
       "countrycodetype" : "1",
-      "source"          : "Editorial Manager"
+      "source"          : "Ambra"
     },
     {
       "isprimary"       : "false",
@@ -38,7 +38,7 @@
       "addresstype"     : "Office",
       "postalcode"      : "94501",
       "countrycodetype" : "United States of America",
-      "source"          : "Editorial Manager"
+      "source"          : "Ambra"
     }
   ],
   "emails" : [
@@ -46,13 +46,13 @@
       "isprimary"    : "true",
       "type"         : "Work",
       "emailaddress" : "jane.q.doe.work@foo.com",
-      "source"       : "Editorial Manager"
+      "source"       : "Ambra"
     }
   ],
   "degrees" : [
     {
       "type"   : "MD",
-      "source" : "Editorial Manager"
+      "source" : "Ambra"
     },
     {
       "type"   : "PhD",
@@ -69,7 +69,7 @@
     {
       "type"             : "ORCID",
       "uniqueidentifier" : "0000-0002-9430-000X",
-      "source"           : "Editorial Manager"
+      "source"           : "Ambra"
     },
     {
       "type"             : "Editorial Manager",
@@ -84,6 +84,11 @@
     {
       "type"             : "Salesforce",
       "uniqueidentifier" : "001U0000008Qlfj",
+      "source"           : "Ambra"
+    },
+    {
+      "type"             : "Ambra",
+      "uniqueidentifier" : "1234",
       "source"           : "Ambra"
     }
   ]

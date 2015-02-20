@@ -19,6 +19,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.URLDecoder;
 import java.util.List;
 
 @Path("/individuals")
@@ -86,7 +87,7 @@ public class IndividualsResource extends NedResource {
     try {
 
       Individualprofile p = new Individualprofile();
-      p.setDisplayname(displayName);
+      p.setDisplayname(URLDecoder.decode(displayName, "UTF-8"));
 
       List<Individualprofile> results = crudService.findByAttribute(p);
 

@@ -65,8 +65,7 @@ CREATE TABLE IF NOT EXISTS namedEntities.individualProfiles (
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (namePrefixTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (nameSuffixTypeId) REFERENCES globalTypes(id),
-    UNIQUE (displayName, sourceTypeId),
-    INDEX (displayName)
+    UNIQUE (displayName, sourceTypeId)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.organizations;
