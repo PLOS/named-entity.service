@@ -60,7 +60,7 @@ public class Individualprofile extends Entity {
       throw new NedValidationException("displayname cannot be longer then " + displaynameMaxLength);
 
     if (rejectedCharsDisplayName.matcher(displayname).find())
-      throw new NedValidationException("displayname should not container any of the following characters: $ & + , / : ; = ? @ < > # % { } | \\ ^ ~ [ ] ` or a space");
+      throw new NedValidationException("displayname should not contain any of the following characters: $ & + , / : ; = ? @ < > # % { } | \\ ^ ~ [ ] ` or a space");
   }
 
   public Boolean getIsactive() {
