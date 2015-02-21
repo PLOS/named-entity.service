@@ -45,6 +45,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Calendar;
@@ -167,6 +168,32 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     assertEquals(composite_ig, composite_io);
 
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND INDIVIDUAL BY DISPLAY NAME                                   */
+    /* ------------------------------------------------------------------ */
+
+    String displayname = "10bogus郑超Gebækaaaمن";
+
+    String displaynameEncoded = URLEncoder.encode(displayname, "UTF-8");
+
+    response = target(INDIVIDUAL_URI + "/displayname/" + displaynameEncoded)
+        .request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    jsonPayload = response.readEntity(String.class);
+
+    IndividualComposite composite_id = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
+
+    assertEquals(composite_id, composite_in);
+
+    assertEquals(composite_id, composite_io);
+
+    assertEquals(composite_id.getIndividualprofiles().get(0).getDisplayname(),
+        displayname);
+
+
     /* ------------------------------------------------------------------ */
     /*  FIND ORGANIZATION BY NED ID                                       */
     /* ------------------------------------------------------------------ */
@@ -258,7 +285,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     assertEquals("Q", profile0.getMiddlename());
     assertEquals("Doe", profile0.getLastname());
     assertEquals("III", profile0.getNamesuffix());
-    assertEquals("Editorial Manager", profile0.getSource());
+    assertEquals("Ambra", profile0.getSource());
 
     Individualprofile profile1 = profiles.get(1);
     assertEquals("Jane", profile1.getFirstname());
@@ -530,7 +557,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
     Email email0 = emails.get(0);
     assertEquals("Work", email0.getType());
     assertEquals("jane.q.doe.work@foo.com", email0.getEmailaddress());
-    assertEquals("Editorial Manager", email0.getSource());
+    assertEquals("Ambra", email0.getSource());
     assertEquals(true, email0.getIsactive());
 
     Email email1 = emails.get(1);
@@ -633,7 +660,7 @@ public class NamedEntityResourceTest extends SpringContextAwareJerseyTest {
 
     List<Uniqueidentifier> uids = unmarshalEntities(responseJson, Uniqueidentifier.class,
         jsonUnmarshaller(Uniqueidentifier.class));
-    assertEquals(5, uids.size());
+    assertEquals(6, uids.size());
 
     /* ------------------------------------------------------------------ */
     /*  FIND INDIVIDUAL BY UID                                            */
