@@ -17,13 +17,14 @@
 package org.plos.namedentity.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.plos.namedentity.api.NedException.ErrorType.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.plos.namedentity.api.NedException.ErrorType;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.persist.NamedEntityDBService;
 
@@ -53,7 +54,7 @@ public class NedExceptionServiceTest {
       typeClassID = nedDBSvc.findTypeClass("Named Party Typos");
       fail();
     } catch (NedException nve) {  // expected
-      assertEquals(ErrorType.InvalidTypeClass, nve.getErrorType());
+      assertEquals(InvalidTypeClass, nve.getErrorType());
 
       validTypeClasses = nve.getAcceptableValues();
     }
@@ -78,7 +79,7 @@ public class NedExceptionServiceTest {
       typeValueID = nedDBSvc.findTypeValue(typeClassID, "Indix");
       fail();
     } catch (NedException nve) {  // expected
-      assertEquals(ErrorType.InvalidTypeValue, nve.getErrorType());
+      assertEquals(InvalidTypeValue, nve.getErrorType());
       validTypeValues = nve.getAcceptableValues();
     }
 
@@ -88,5 +89,14 @@ public class NedExceptionServiceTest {
       // finder will thrown an exception if class not found
       assertTrue( nedDBSvc.findTypeValue(typeClassID, typevalue) > 0 );
     }
+  }
+
+  @Test
+  public void testNedExceptionInstantiations() {
+    NedException ne = new NedException(ServerError, "server error", new java.nio.BufferOverflowException());
+    assertTrue( ne.getCause() instanceof java.nio.BufferOverflowException );
+    assertEquals("server error", ne.getDetailedMessage());
+    assertEquals(ServerError, ne.getErrorType());
+    assertNull( ne.getAcceptableValues() );
   }
 }
