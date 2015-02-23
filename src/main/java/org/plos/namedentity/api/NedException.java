@@ -23,35 +23,36 @@ public class NedException extends RuntimeException {
 
   public enum ErrorType {
 
-    InvalidTypeClass       (4000, "Invalid Type Class"),
-    InvalidTypeValue       (4010, "Invalid Type Value"),
-    ValidationError        (4020, "Validation Error"),
-    EntityNotFound         (4030, "Entity Not Found"),
-    InvalidComposite       (4040, "Invalid Composite"),
-    EntityWithNoPK         (4050, "Entity with No Primary Key"),
-    EntityNotDefined       (4060, "Entity Not Defined"),
-    UidValueError          (4070, "Unique Identifier Value Error"),
-    InvalidSalesforceId    (4080, "Invalid Salesforce ID"),
-    InvalidOrcidId         (4090, "Invalid ORCID ID"),
-    InvalidUrl             (4100, "Invalid URL"),
-    InvalidCasId           (4110, "Invalid CAS ID"),
+    // Server Errors
 
-    FamiliarNameError      (4200, "Familiar Name Error"),
-    LegalNameError         (4210, "Legal Name Error"),
+    ServerError            (900, "Server Error"),
+    DatabaseError          (910, "Database Error"),
 
-    FirstnameError         (4220, "Firstname Error"),
-    LastnameError          (4230, "Lastname Error"),
-    DisplayNameError       (4240, "Display Name Error"),
-    InvalidEmail           (4250, "Invalid Email"),
-    PhoneNumberError       (4260, "Phone Number Error"),
-    RequiredAttributeError (4270, "Required Attribute Error"),
+    // Entity/Attribute-Level Validation Errors
 
-    // individual entity-levl validation
-    I_NoProfileEntities    (4300, "No Profile Entities for Individual Composite"),
-    I_NoEmailEntities      (4310, "No Email Entities for Individual Composite"),
+    InvalidTypeClass       (1000, "Invalid Type Class"),
+    InvalidTypeValue       (1010, "Invalid Type Value"),
+    EntityNotFound         (1020, "Entity Not Found"),
+    EntityWithNoPK         (1030, "Entity with No Primary Key"),
+    EntityNotDefined       (1040, "Entity Not Defined"),
+    UidValueError          (1050, "Unique Identifier Value Error"),
+    InvalidSalesforceId    (1060, "Invalid Salesforce ID"),
+    InvalidOrcidId         (1070, "Invalid ORCID ID"),
+    InvalidUrl             (1080, "Invalid URL"),
+    InvalidCasId           (1090, "Invalid CAS ID"),
+    FamiliarNameError      (1100, "Familiar Name Error"),
+    LegalNameError         (1110, "Legal Name Error"),
+    FirstnameError         (1120, "Firstname Error"),
+    LastnameError          (1130, "Lastname Error"),
+    DisplayNameError       (1140, "Display Name Error"),
+    InvalidEmail           (1150, "Invalid Email"),
+    PhoneNumberError       (1160, "Phone Number Error"),
 
-    ServerError            (5000, "Server Error"),
-    DatabaseError          (5010, "Database Error"),
+    // Composite-Level Validation Errors
+
+    NoProfileEntities                (1500, "No Profile Entities for Individual Composite"),
+    NoEmailEntities                  (1510, "No Email Entities for Individual Composite"),
+    IndividualCompositeCasIdRequired (1520, "CAS ID Required"),
 
     InvalidErrorType       (-1,"");
 

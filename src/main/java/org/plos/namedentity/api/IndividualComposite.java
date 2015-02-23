@@ -87,10 +87,10 @@ public class IndividualComposite extends Composite implements Validatable {
     }
 
     if (individualprofiles == null || individualprofiles.size() == 0)
-      throw new NedException(I_NoProfileEntities, "Profile entities can not be empty");
+      throw new NedException(NoProfileEntities, "Profile entities can not be empty");
 
     if (emails == null || emails.size() == 0)
-      throw new NedException(I_NoEmailEntities, "Email entities can not be empty");
+      throw new NedException(NoEmailEntities, "Email entities can not be empty");
 
     boolean casFound = false;
 
@@ -105,9 +105,8 @@ public class IndividualComposite extends Composite implements Validatable {
     }
 
     if (!casFound)
-      throw new NedException(RequiredAttributeError, "CAS ID required");
+      throw new NedException(IndividualCompositeCasIdRequired);
   }
-
 
   public List<Individualprofile> getIndividualprofiles() {
     return individualprofiles;
