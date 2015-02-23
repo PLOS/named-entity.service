@@ -34,24 +34,21 @@ public class NedException extends RuntimeException {
     InvalidSalesforceId    (4080, "Invalid Salesforce ID"),
     InvalidOrcidId         (4090, "Invalid ORCID ID"),
     InvalidUrl             (4100, "Invalid URL"),
+    InvalidCasId           (4110, "Invalid CAS ID"),
 
-    FamiliarNameError      (4110, "Familiar Name Error"),
-    LegalNameError         (4120, "Legal Name Error"),
+    FamiliarNameError      (4200, "Familiar Name Error"),
+    LegalNameError         (4210, "Legal Name Error"),
 
-    FirstnameError         (4130, "Firstname Error"),
-    LastnameError          (4140, "Lastname Error"),
-    DisplayNameError       (4140, "Display Name Error"),
-    InvalidEmail           (4150, "Invalid Email"),
-    PhoneNumberError       (4160, "Phone Number Error"),
-    RequiredAttributeError (4170, "Required Attribute Error"),
-
-    InvalidCasId           (4180, "Invalid CAS ID"),
+    FirstnameError         (4220, "Firstname Error"),
+    LastnameError          (4230, "Lastname Error"),
+    DisplayNameError       (4240, "Display Name Error"),
+    InvalidEmail           (4250, "Invalid Email"),
+    PhoneNumberError       (4260, "Phone Number Error"),
+    RequiredAttributeError (4270, "Required Attribute Error"),
 
     // individual entity-levl validation
-    I_NoProfileEntities    (4400, "No Profile Entities for Individual Composite"),
-    I_NoEmailEntities      (4405, "No Email Entities for Individual Composite"),
-
-    // organization entity-level validation
+    I_NoProfileEntities    (4300, "No Profile Entities for Individual Composite"),
+    I_NoEmailEntities      (4310, "No Email Entities for Individual Composite"),
 
     ServerError            (5000, "Server Error"),
     DatabaseError          (5010, "Database Error"),
@@ -106,16 +103,20 @@ public class NedException extends RuntimeException {
   }
 
   public NedException(ErrorType errorType) {
-    this(errorType, null, null);
+    this(errorType, null, (Throwable)null);
   }
 
   public NedException(ErrorType errorType, Set<String> acceptableValues) {
-    this(errorType, null, null);
+    this(errorType, null, acceptableValues);
+  }
+
+  public NedException(ErrorType errorType, String message, Set<String> acceptableValues) {
+    this(errorType, message, (Throwable)null);
     this.acceptableValues = acceptableValues;
   }
 
   public NedException(ErrorType errorType, String message) {
-    this(errorType, message, null);
+    this(errorType, message, (Throwable)null);
   }
 
   public NedException(ErrorType errorType, Throwable cause) {
@@ -123,7 +124,7 @@ public class NedException extends RuntimeException {
   }
 
   public NedException(String message) {
-    this(ErrorType.ServerError, message, null);
+    this(ErrorType.ServerError, message, (Throwable)null);
   }
 
   public NedException(ErrorType errorType, String message, Throwable cause) {

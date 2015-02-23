@@ -41,8 +41,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonReader;
@@ -59,7 +61,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+import static org.plos.namedentity.api.NedException.ErrorType.*;
 
 public class NamedEntityResourceTest extends BaseResourceTest {
 
@@ -504,21 +506,31 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     // test creation with invalid email type
 
-    //String badEmailJson = new String(Files.readAllBytes(Paths.get(
-                                     //TEST_RESOURCE_PATH + "email.invalid-type.json")));
+    String badEmailJson = new String(Files.readAllBytes(Paths.get(
+                                     TEST_RESOURCE_PATH + "email.invalid-type.json")));
 
-    //response = target(emailsURI)
-      //.request(MediaType.APPLICATION_JSON_TYPE)
-        //.post(Entity.json(emailJson));
+    response = target(emailsURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
+        .post(Entity.json(badEmailJson));
 
-    //assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+    assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
 
-    //jsonPayload = response.readEntity(String.class);
+    jsonPayload = response.readEntity(String.class);
 
-    //NedErrorResponse ner = unmarshalEntity(jsonPayload, NedErrorResponse.class, 
-                                           //jsonUnmarshaller(NedErrorResponse.class));
+    NedErrorResponse ner = unmarshalEntity(jsonPayload, NedErrorResponse.class, 
+                                           jsonUnmarshaller(NedErrorResponse.class));
 
-    //assertEquals(EntityNotFound.getErrorCode(), ner.errorCode);
+    Set<String> expectedEmailTypeValues = new HashSet<String>();
+    for (String emailtype : new String[]{ "Work","Personal" }) {
+      expectedEmailTypeValues.add(emailtype);
+    }
+
+    assertEquals(InvalidTypeValue.getErrorCode(), ner.errorCode);
+
+    assertNotNull(ner.acceptableValues);
+
+    assertTrue( expectedEmailTypeValues.containsAll(ner.acceptableValues) );
+    assertTrue( ner.acceptableValues.containsAll(expectedEmailTypeValues) );
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY EMAIL ID (PK))                                           */

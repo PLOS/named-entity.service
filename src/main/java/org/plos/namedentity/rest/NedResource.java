@@ -255,7 +255,6 @@ public abstract class NedResource extends BaseResource {
   Response getEntity(int nedId, int pkId, Class<S> child) {
 
     try {
-
       namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
 
       List<S> entities = namedEntityService.findResolvedEntities(nedId, child);
@@ -264,11 +263,10 @@ public abstract class NedResource extends BaseResource {
         if (entity.getId().equals(pkId))
           return Response.status(Response.Status.OK).entity(entity).build();
 
-      throw new NedException(EntityNotFound, child.getSimpleName()+" "+pkId);
+      throw new NedException(EntityNotFound, String.format("%s (id=%d)", child.getSimpleName(), pkId));
 
     } catch (NedException e) {
-      return nedError(e, String.format("Find %s by id failed (nedId=%d, pkId=%d)",
-        child.getSimpleName(), nedId, pkId));
+      return nedError(e, "Find by id failed");
         
     } catch (Exception e) {
       return serverError(e, String.format("Find %s by id failed (nedId=%d, pkId=%d)", 

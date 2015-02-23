@@ -180,7 +180,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     for (Typedescription typeClass : typeClasses) {
       lovs.add(typeClass.getDescription());
     }
-    throw new NedException(ErrorType.InvalidTypeClass, lovs);
+    throw new NedException(ErrorType.InvalidTypeClass, "Type Class:"+description, lovs);
   }
 
   @Override
@@ -201,7 +201,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     for (Globaltype globalType : globalTypesForTypeClass) {
       lovs.add(globalType.getShortdescription());
     }
-    throw new NedException(ErrorType.InvalidTypeValue, lovs);
+    throw new NedException(ErrorType.InvalidTypeValue, 
+                           String.format("TypeClassId:%d, TypeValue:%s", typeClassId, name), lovs);
   }
 
   @Override
@@ -448,7 +449,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .where(u.UNIQUEIDENTIFIER.equal(uid)).and(gt.SHORTDESCRIPTION.equal(srcType)).fetchAny();
 
     if (record == null)
-      throw new NedException(EntityNotFound, "Organization");
+      throw new NedException(EntityNotFound, 
+        String.format("Organization (src=%s, uid=%s)", srcType, uid));
 
     return record.into(Organization.class);
   }
@@ -480,7 +482,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       .fetchAny();
 
     if (record == null)
-      throw new NedException(EntityNotFound, "Individual");
+      throw new NedException(EntityNotFound, 
+        String.format("Individual (src=%s, uid=%s)", srcType, uid));
 
     return record.into(Individualprofile.class);
   }
@@ -584,7 +587,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     Record record = select(uid).where(uid.ID.equal(id)).fetchOne();
 
-    if (record == null) throw new NedException(EntityNotFound, "Uniqueidentifier");
+    if (record == null) 
+      throw new NedException(EntityNotFound, String.format("Uniqueidentifier (id=%d)", id));
 
     return record.into(Uniqueidentifier.class);
   }
@@ -595,7 +599,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     Record record = select(i).where(i.ID.equal(individualId)).fetchOne();
 
-    if (record == null) throw new NedException(EntityNotFound, "Individual");
+    if (record == null)
+      throw new NedException(EntityNotFound, String.format("Individual (id=%d)", individualId));
 
     return record.into(Individualprofile.class);
   }
@@ -606,7 +611,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     Record record = select(e).where(e.ID.equal(emailId)).fetchOne();
 
-    if (record == null) throw new NedException(EntityNotFound, "Email");
+    if (record == null)
+      throw new NedException(EntityNotFound, String.format("Email (id=%d)", emailId));
 
     return record.into(Email.class);
   }
@@ -617,7 +623,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     Record record = select(a).where(a.ID.equal(addressId)).fetchOne();
 
-    if (record == null) throw new NedException(EntityNotFound, "Address");
+    if (record == null)
+      throw new NedException(EntityNotFound, String.format("Address (id=%d)", addressId));
 
     return record.into(Address.class);
   }
@@ -628,7 +635,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     Record record = select(r).where(r.ID.equal(roleId)).fetchOne();
 
-    if (record == null) throw new NedException(EntityNotFound, "Role");
+    if (record == null)
+      throw new NedException(EntityNotFound, String.format("Role (id=%d)", roleId));
 
     return record.into(Role.class);
   }

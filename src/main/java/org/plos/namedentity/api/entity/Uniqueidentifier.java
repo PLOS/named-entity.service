@@ -44,7 +44,7 @@ public class Uniqueidentifier extends Entity {
 
     if (UidTypeEnum.SALESFORCE.getName().equals(type)
         && !validateSalesforceId(uniqueidentifier))
-      throw new NedException(InvalidSalesforceId, "invalid salesforce id:"+uniqueidentifier);
+      throw new NedException(InvalidSalesforceId, "invalid salesforce id:" + uniqueidentifier);
     else if (UidTypeEnum.ORCID.getName().equals(type)
         && !validateOrcid(uniqueidentifier))
       throw new NedException(InvalidOrcidId, "invalid ORCID id:" + uniqueidentifier);
