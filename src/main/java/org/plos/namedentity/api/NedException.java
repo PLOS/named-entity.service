@@ -25,28 +25,28 @@ public class NedException extends RuntimeException {
 
     // Server Errors
 
-    ServerError            (900, "Server Error"),
-    DatabaseError          (910, "Database Error"),
+    ServerError                      (900, "Server Error"),
+    DatabaseError                    (910, "Database Error"),
 
     // Entity/Attribute-Level Validation Errors
 
-    InvalidTypeClass       (1000, "Invalid Type Class"),
-    InvalidTypeValue       (1010, "Invalid Type Value"),
-    EntityNotFound         (1020, "Entity Not Found"),
-    EntityWithNoPK         (1030, "Entity with No Primary Key"),
-    EntityNotDefined       (1040, "Entity Not Defined"),
-    UidValueError          (1050, "Unique Identifier Value Error"),
-    InvalidSalesforceId    (1060, "Invalid Salesforce ID"),
-    InvalidOrcidId         (1070, "Invalid ORCID ID"),
-    InvalidUrl             (1080, "Invalid URL"),
-    InvalidCasId           (1090, "Invalid CAS ID"),
-    FamiliarNameError      (1100, "Familiar Name Error"),
-    LegalNameError         (1110, "Legal Name Error"),
-    FirstnameError         (1120, "Firstname Error"),
-    LastnameError          (1130, "Lastname Error"),
-    DisplayNameError       (1140, "Display Name Error"),
-    InvalidEmail           (1150, "Invalid Email"),
-    PhoneNumberError       (1160, "Phone Number Error"),
+    InvalidTypeClass                 (1000, "Invalid Type Class"),
+    InvalidTypeValue                 (1010, "Invalid Type Value"),
+    EntityNotFound                   (1020, "Entity Not Found"),
+    EntityWithNoPK                   (1030, "Entity with No Primary Key"),
+    EntityNotDefined                 (1040, "Entity Not Defined"),
+    UidValueError                    (1050, "Unique Identifier Value Error"),
+    InvalidSalesforceId              (1060, "Invalid Salesforce ID"),
+    InvalidOrcidId                   (1070, "Invalid ORCID ID"),
+    InvalidUrl                       (1080, "Invalid URL"),
+    InvalidCasId                     (1090, "Invalid CAS ID"),
+    FamiliarNameError                (1100, "Familiar Name Error"),
+    LegalNameError                   (1110, "Legal Name Error"),
+    FirstnameError                   (1120, "Firstname Error"),
+    LastnameError                    (1130, "Lastname Error"),
+    DisplayNameError                 (1140, "Display Name Error"),
+    InvalidEmail                     (1150, "Invalid Email"),
+    PhoneNumberError                 (1160, "Phone Number Error"),
 
     // Composite-Level Validation Errors
 
@@ -54,7 +54,7 @@ public class NedException extends RuntimeException {
     NoEmailEntities                  (1510, "No Email Entities for Individual Composite"),
     IndividualCompositeCasIdRequired (1520, "CAS ID Required"),
 
-    InvalidErrorType       (-1,"");
+    InvalidErrorType                 (-1,"");
 
     private final int    errorCode;
     private final String errorMessage;
