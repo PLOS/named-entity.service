@@ -512,6 +512,13 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
 
+    jsonPayload = response.readEntity(String.class);
+
+    NedErrorResponse ner = unmarshalEntity(jsonPayload, NedErrorResponse.class, 
+                                           jsonUnmarshaller(NedErrorResponse.class));
+
+    assertEquals(DupeEmailError.getErrorCode(), ner.errorCode);
+    assertEquals(DupeEmailError.getErrorMessage(), ner.errorMsg);
 
     // test creation with invalid email type
 
@@ -526,8 +533,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     jsonPayload = response.readEntity(String.class);
 
-    NedErrorResponse ner = unmarshalEntity(jsonPayload, NedErrorResponse.class, 
-                                           jsonUnmarshaller(NedErrorResponse.class));
+    ner = unmarshalEntity(jsonPayload, NedErrorResponse.class, jsonUnmarshaller(NedErrorResponse.class));
 
     Set<String> expectedEmailTypeValues = new HashSet<String>();
     for (String emailtype : new String[]{ "Work","Personal" }) {

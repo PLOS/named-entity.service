@@ -21,6 +21,7 @@ import static org.plos.namedentity.api.NedException.ErrorType.*;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.plos.namedentity.api.NedException;
+import org.plos.namedentity.spring.exception.NedExceptionTranslator;
 import org.springframework.core.Ordered;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -59,8 +60,7 @@ public class NamedEntityValidator implements Ordered {
     try {
       returnValue = call.proceed();
     } catch (DataIntegrityViolationException e) {
-      logger.debug("validation exception", e);
-      throw new NedException(DatabaseError, e.getMessage(), e);
+      throw NedExceptionTranslator.translate(e);
     }
 
     /* ------------------------------------------------------------------ */

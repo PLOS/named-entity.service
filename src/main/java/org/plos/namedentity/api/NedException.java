@@ -47,6 +47,7 @@ public class NedException extends RuntimeException {
     DisplayNameError                 (1240, "Display Name Error"),
     InvalidEmail                     (1250, "Invalid Email"),
     PhoneNumberError                 (1260, "Phone Number Error"),
+    DupeEmailError                   (1270, "Duplicate Email Error"),
 
     // Composite-Level Validation Errors
 
