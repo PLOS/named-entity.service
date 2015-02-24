@@ -26,6 +26,8 @@ import javax.inject.Inject;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
+
 public abstract class BaseResource {
 
   protected static Logger logger = Logger.getLogger(BaseResource.class);
@@ -44,9 +46,15 @@ public abstract class BaseResource {
 
   protected Response serverError(Exception e, String message) {
     logger.error("internal error", e);
+
+    NedErrorResponse ner = new NedErrorResponse();
+    ner.failureMsg       = "Internal error";
+    ner.errorCode        = ServerError.getErrorCode();
+    ner.detailedMsg      = e.getMessage();
+
     return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-        .entity(message + ". Internal error. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+                   .entity(ner)
+                   .build();
   }
 
   protected Response nedError(NedException e, String message) {
