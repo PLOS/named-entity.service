@@ -504,6 +504,15 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     String emailURI = emailsURI + "/" + email.getId();
 
+    // create an email using an existing name (will raise of unique constraint violation)
+
+    response = target(emailsURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
+        .post(Entity.json(emailJson));
+
+    assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+
+
     // test creation with invalid email type
 
     String badEmailJson = new String(Files.readAllBytes(Paths.get(
