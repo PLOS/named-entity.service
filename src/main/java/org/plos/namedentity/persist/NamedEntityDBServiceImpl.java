@@ -26,6 +26,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
 import org.plos.namedentity.api.NedException;
+import org.plos.namedentity.api.NedException.ErrorType;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.persist.db.namedentities.tables.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.plos.namedentity.api.NedException.ErrorType;
-import static org.plos.namedentity.api.NedException.ErrorType.*;
-
+import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+import static org.plos.namedentity.api.NedException.ErrorType.EntityWithNoPK;
 import static org.plos.namedentity.persist.db.namedentities.Tables.*;
 
 public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
@@ -228,7 +228,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .and(GLOBALTYPES.SHORTDESCRIPTION.equal(namedPartyType))
         .and(NAMEDENTITYIDENTIFIERS.ID.equal(nedId)).fetchOne()
       == null)
-        throw new NedException(EntityNotFound, namedPartyType);
+        throw new NedException(EntityNotFound, namedPartyType + " not found");
   }
 
   private Integer findTypeIdByName(TypeClassEnum typeClass, String typeValue) {
@@ -450,7 +450,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     if (record == null)
       throw new NedException(EntityNotFound, 
-        String.format("Organization (src=%s, uid=%s)", srcType, uid));
+        String.format("Organization not found with UID type %s and value %s", srcType, uid));
 
     return record.into(Organization.class);
   }
@@ -483,7 +483,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     if (record == null)
       throw new NedException(EntityNotFound, 
-        String.format("Individual (src=%s, uid=%s)", srcType, uid));
+        String.format("Individual not found with UID type %s and value %s", srcType, uid));
 
     return record.into(Individualprofile.class);
   }
@@ -588,7 +588,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     Record record = select(uid).where(uid.ID.equal(id)).fetchOne();
 
     if (record == null) 
-      throw new NedException(EntityNotFound, String.format("Uniqueidentifier (id=%d)", id));
+      throw new NedException(EntityNotFound, String.format("Uniqueidentifier not found with id %d", id));
 
     return record.into(Uniqueidentifier.class);
   }
@@ -600,7 +600,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     Record record = select(i).where(i.ID.equal(individualId)).fetchOne();
 
     if (record == null)
-      throw new NedException(EntityNotFound, String.format("Individual (id=%d)", individualId));
+      throw new NedException(EntityNotFound, String.format("Individual not found with id %d", individualId));
 
     return record.into(Individualprofile.class);
   }
@@ -612,7 +612,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     Record record = select(e).where(e.ID.equal(emailId)).fetchOne();
 
     if (record == null)
-      throw new NedException(EntityNotFound, String.format("Email (id=%d)", emailId));
+      throw new NedException(EntityNotFound, String.format("Email not found with id %d", emailId));
 
     return record.into(Email.class);
   }
@@ -624,7 +624,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     Record record = select(a).where(a.ID.equal(addressId)).fetchOne();
 
     if (record == null)
-      throw new NedException(EntityNotFound, String.format("Address (id=%d)", addressId));
+      throw new NedException(EntityNotFound, String.format("Address not found with id %d", addressId));
 
     return record.into(Address.class);
   }
@@ -636,7 +636,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     Record record = select(r).where(r.ID.equal(roleId)).fetchOne();
 
     if (record == null)
-      throw new NedException(EntityNotFound, String.format("Role (id=%d)", roleId));
+      throw new NedException(EntityNotFound, String.format("Role not found with id %d", roleId));
 
     return record.into(Role.class);
   }
