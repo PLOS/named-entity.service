@@ -21,6 +21,8 @@ package org.plos.namedentity.persist;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.Record1;
+import org.jooq.SelectConditionStep;
 import org.jooq.SelectOnConditionStep;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -218,6 +220,46 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .and(NAMEDENTITYIDENTIFIERS.ID.equal(nedId)).fetchOne()
       == null)
         throw new EntityNotFoundException(namedPartyType);
+  }
+
+  @Override
+  public <T extends Entity> void validate(T t) {
+
+    if (t instanceof Uniqueidentifier) {
+      Uniqueidentifier uid = (Uniqueidentifier)t;
+
+      String[][] validTypePairs = {
+        {"Individual", TypeClassEnum.UID_INDIVIDUAL_TYPES.getName()},
+        {"Organization", TypeClassEnum.UID_ORGANIZATION_TYPES.getName()}
+      };
+
+      for (int i = 0; i < validTypePairs.length; i++) {
+
+        Globaltypes gt1            = GLOBALTYPES.as("gt1");
+        Globaltypes gt2            = GLOBALTYPES.as("gt2");
+        Namedentityidentifiers nei = NAMEDENTITYIDENTIFIERS.as("nei");
+        Uniqueidentifiers u        = UNIQUEIDENTIFIERS.as("u");
+        Typedescriptions td        = TYPEDESCRIPTIONS.as("td");
+
+        SelectConditionStep<Record1<Integer>> query = this.context
+          .selectCount()
+          .from(u)
+          .join(nei).on(u.NEDID.equal(nei.ID))
+          .join(gt1).on(nei.TYPEID.equal(gt1.ID))
+          .and(gt1.SHORTDESCRIPTION.equal( validTypePairs[i][0]) )
+          .join(gt2).on(u.TYPEID.equal(gt2.ID))
+          .join(td).on(gt2.TYPEID.equal(td.ID))
+          .and(td.DESCRIPTION.equal( validTypePairs[i][1]) )
+          .where(u.ID.equal(uid.getId()));
+
+        Integer count = query.fetchOne().value1();
+        if (count > 0) return; // valid uid record
+      }
+      throw new NedValidationException("Invalid uid record");
+    }
+
+    throw new UnsupportedOperationException(
+      "validate() hasn't been implemented for " + t.getClass().getSimpleName());
   }
 
   private Integer findTypeIdByName(TypeClassEnum typeClass, String typeValue) {
@@ -434,7 +476,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .join(u).on(o.NEDID.equal(u.NEDID))
         .join(gt).on(u.TYPEID.equal(gt.ID))
         .join(td).on(gt.TYPEID.equal(td.ID))
-                 .and(td.DESCRIPTION.eq(TypeClassEnum.UNIQUE_IDENTIFIERS.getName()))
+                 .and(td.DESCRIPTION.eq(TypeClassEnum.UID_INDIVIDUAL_TYPES.getName()))
         .where(u.UNIQUEIDENTIFIER.equal(uid)).and(gt.SHORTDESCRIPTION.equal(srcType)).fetchAny();
 
     if (record == null)
@@ -465,7 +507,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       .join(u).on(i.NEDID.equal(u.NEDID))
       .join(gt3).on(u.TYPEID.equal(gt3.ID))
       .join(td).on(gt3.TYPEID.equal(td.ID))
-               .and(td.DESCRIPTION.eq(TypeClassEnum.UNIQUE_IDENTIFIERS.getName()))
+               .and(td.DESCRIPTION.eq(TypeClassEnum.UID_INDIVIDUAL_TYPES.getName()))
       .where(u.UNIQUEIDENTIFIER.equal(uid)).and(gt3.SHORTDESCRIPTION.eq(srcType))
       .fetchAny();
 

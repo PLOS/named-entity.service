@@ -48,4 +48,6 @@ public interface NamedEntityDBService {
   Integer findTypeValue(Integer typeClassId, String name);
 
   void checkNedIdForType(Integer nedId, String namedPartyType);
+
+  <T extends Entity> void validate(T t);
 }

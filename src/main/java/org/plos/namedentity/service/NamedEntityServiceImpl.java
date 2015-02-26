@@ -166,7 +166,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   private Uniqueidentifier resolveReference(Uniqueidentifier entity) {
 
     if (entity.getType() != null)
-      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Unique Identifier Types"), entity.getType()));
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("UID Individual Types"), entity.getType()));
 
     if (entity.getSource() != null)
       entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
