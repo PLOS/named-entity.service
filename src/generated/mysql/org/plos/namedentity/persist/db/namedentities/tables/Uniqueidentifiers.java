@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Uniqueidentifiers extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord> {
 
-	private static final long serialVersionUID = 750991869;
+	private static final long serialVersionUID = -1320030883;
 
 	/**
 	 * The reference instance of <code>namedEntities.uniqueIdentifiers</code>
@@ -49,7 +49,7 @@ public class Uniqueidentifiers extends org.jooq.impl.TableImpl<org.plos.namedent
 	/**
 	 * The column <code>namedEntities.uniqueIdentifiers.uniqueIdentifier</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, java.lang.String> UNIQUEIDENTIFIER = createField("uniqueIdentifier", org.jooq.impl.SQLDataType.CLOB.length(65535), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, java.lang.String> UNIQUEIDENTIFIER = createField("uniqueIdentifier", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
 
 	/**
 	 * The column <code>namedEntities.uniqueIdentifiers.sourceTypeId</code>.
@@ -109,7 +109,7 @@ public class Uniqueidentifiers extends org.jooq.impl.TableImpl<org.plos.namedent
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord>>asList(org.plos.namedentity.persist.db.namedentities.Keys.KEY_UNIQUEIDENTIFIERS_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord>>asList(org.plos.namedentity.persist.db.namedentities.Keys.KEY_UNIQUEIDENTIFIERS_PRIMARY, org.plos.namedentity.persist.db.namedentities.Keys.KEY_UNIQUEIDENTIFIERS_UNIQUEIDENTIFIER);
 	}
 
 	/**

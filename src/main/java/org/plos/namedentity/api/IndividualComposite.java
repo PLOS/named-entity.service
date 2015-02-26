@@ -16,6 +16,8 @@
  */
 package org.plos.namedentity.api;
 
+import static org.plos.namedentity.api.NedException.ErrorType.*;
+
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.validate.Validatable;
 
@@ -85,10 +87,10 @@ public class IndividualComposite extends Composite implements Validatable {
     }
 
     if (individualprofiles == null || individualprofiles.size() == 0)
-      throw new NedValidationException("Profile entities can not be empty");
+      throw new NedException(NoProfileEntities, "Profile entities can not be empty");
 
     if (emails == null || emails.size() == 0)
-      throw new NedValidationException("Email entities can not be empty");
+      throw new NedException(NoEmailEntities, "Email entities can not be empty");
 
     boolean casFound = false;
 
@@ -97,15 +99,14 @@ public class IndividualComposite extends Composite implements Validatable {
         if (uid.getType() != null && uid.getType().equals("CAS")) {
           casFound = true;
           if (uid.getUniqueidentifier() == null || uid.getUniqueidentifier().length() < 2)
-            throw new NedValidationException("CAS ID is too short");
+            throw new NedException(InvalidCasId, "CAS ID is too short");
         }
       }
     }
 
     if (!casFound)
-      throw new NedValidationException("CAS ID required");
+      throw new NedException(IndividualCompositeCasIdRequired);
   }
-
 
   public List<Individualprofile> getIndividualprofiles() {
     return individualprofiles;

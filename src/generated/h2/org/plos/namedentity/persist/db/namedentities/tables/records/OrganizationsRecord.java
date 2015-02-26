@@ -16,143 +16,143 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class OrganizationsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.OrganizationsRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.Byte, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 300182791;
+	private static final long serialVersionUID = -863120889;
 
 	/**
-	 * Setter for <code>namedentities.organizations.id</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.organizations.id</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.organizations.nedid</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.NEDID</code>.
 	 */
 	public void setNedid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.organizations.nedid</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.NEDID</code>.
 	 */
 	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.organizations.typeid</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.TYPEID</code>.
 	 */
 	public void setTypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.organizations.typeid</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.TYPEID</code>.
 	 */
 	public java.lang.Integer getTypeid() {
 		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>namedentities.organizations.familiarname</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.FAMILIARNAME</code>.
 	 */
 	public void setFamiliarname(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.organizations.familiarname</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.FAMILIARNAME</code>.
 	 */
 	public java.lang.String getFamiliarname() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>namedentities.organizations.legalname</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.LEGALNAME</code>.
 	 */
 	public void setLegalname(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.organizations.legalname</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.LEGALNAME</code>.
 	 */
 	public java.lang.String getLegalname() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>namedentities.organizations.maincontactid</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.MAINCONTACTID</code>.
 	 */
 	public void setMaincontactid(java.lang.Integer value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.organizations.maincontactid</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.MAINCONTACTID</code>.
 	 */
 	public java.lang.Integer getMaincontactid() {
 		return (java.lang.Integer) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>namedentities.organizations.sourcetypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.SOURCETYPEID</code>.
 	 */
 	public void setSourcetypeid(java.lang.Integer value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.organizations.sourcetypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.SOURCETYPEID</code>.
 	 */
 	public java.lang.Integer getSourcetypeid() {
 		return (java.lang.Integer) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>namedentities.organizations.isactive</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.ISACTIVE</code>.
 	 */
 	public void setIsactive(java.lang.Byte value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.organizations.isactive</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.ISACTIVE</code>.
 	 */
 	public java.lang.Byte getIsactive() {
 		return (java.lang.Byte) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>namedentities.organizations.created</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.CREATED</code>.
 	 */
 	public void setCreated(java.sql.Timestamp value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.organizations.created</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.CREATED</code>.
 	 */
 	public java.sql.Timestamp getCreated() {
 		return (java.sql.Timestamp) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>namedentities.organizations.lastmodified</code>.
+	 * Setter for <code>NAMEDENTITIES.ORGANIZATIONS.LASTMODIFIED</code>.
 	 */
 	public void setLastmodified(java.sql.Timestamp value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.organizations.lastmodified</code>.
+	 * Getter for <code>NAMEDENTITIES.ORGANIZATIONS.LASTMODIFIED</code>.
 	 */
 	public java.sql.Timestamp getLastmodified() {
 		return (java.sql.Timestamp) getValue(9);

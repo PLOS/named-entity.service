@@ -16,73 +16,73 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class JournalsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord> implements org.jooq.Record5<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1183692607;
+	private static final long serialVersionUID = 373477247;
 
 	/**
-	 * Setter for <code>namedentities.journals.id</code>.
+	 * Setter for <code>NAMEDENTITIES.JOURNALS.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.journals.id</code>.
+	 * Getter for <code>NAMEDENTITIES.JOURNALS.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.journals.nedid</code>.
+	 * Setter for <code>NAMEDENTITIES.JOURNALS.NEDID</code>.
 	 */
 	public void setNedid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.journals.nedid</code>.
+	 * Getter for <code>NAMEDENTITIES.JOURNALS.NEDID</code>.
 	 */
 	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.journals.typeid</code>.
+	 * Setter for <code>NAMEDENTITIES.JOURNALS.TYPEID</code>.
 	 */
 	public void setTypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.journals.typeid</code>.
+	 * Getter for <code>NAMEDENTITIES.JOURNALS.TYPEID</code>.
 	 */
 	public java.lang.Integer getTypeid() {
 		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>namedentities.journals.created</code>.
+	 * Setter for <code>NAMEDENTITIES.JOURNALS.CREATED</code>.
 	 */
 	public void setCreated(java.sql.Timestamp value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.journals.created</code>.
+	 * Getter for <code>NAMEDENTITIES.JOURNALS.CREATED</code>.
 	 */
 	public java.sql.Timestamp getCreated() {
 		return (java.sql.Timestamp) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>namedentities.journals.lastmodified</code>.
+	 * Setter for <code>NAMEDENTITIES.JOURNALS.LASTMODIFIED</code>.
 	 */
 	public void setLastmodified(java.sql.Timestamp value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.journals.lastmodified</code>.
+	 * Getter for <code>NAMEDENTITIES.JOURNALS.LASTMODIFIED</code>.
 	 */
 	public java.sql.Timestamp getLastmodified() {
 		return (java.sql.Timestamp) getValue(4);

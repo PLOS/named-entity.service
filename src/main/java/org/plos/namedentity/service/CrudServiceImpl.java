@@ -16,6 +16,8 @@
  */
 package org.plos.namedentity.service;
 
+import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.persist.NamedEntityDBService;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,8 +48,7 @@ public class CrudServiceImpl implements CrudService {
   public <T> T findById(Integer id, Class<T> clazz) {
     T t = namedEntityDBService.findById(id, clazz);
     if (t == null) {
-      throw new NedException(String.format(
-        "Record not found searching by id (%s)", t.getClass().getName()));
+      throw new NedException(EntityNotFound, String.format("No entity with id=%d (%s)", id, clazz.getSimpleName()));
     }
     return t;
   }

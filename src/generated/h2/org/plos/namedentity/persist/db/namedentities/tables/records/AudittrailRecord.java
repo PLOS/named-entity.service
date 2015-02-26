@@ -16,115 +16,115 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AudittrailRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord> implements org.jooq.Record8<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer> {
 
-	private static final long serialVersionUID = 632355532;
+	private static final long serialVersionUID = -139150708;
 
 	/**
-	 * Setter for <code>namedentities.audittrail.id</code>.
+	 * Setter for <code>NAMEDENTITIES.AUDITTRAIL.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.audittrail.id</code>.
+	 * Getter for <code>NAMEDENTITIES.AUDITTRAIL.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.audittrail.sourcefieldid</code>.
+	 * Setter for <code>NAMEDENTITIES.AUDITTRAIL.SOURCEFIELDID</code>.
 	 */
 	public void setSourcefieldid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.audittrail.sourcefieldid</code>.
+	 * Getter for <code>NAMEDENTITIES.AUDITTRAIL.SOURCEFIELDID</code>.
 	 */
 	public java.lang.Integer getSourcefieldid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.audittrail.rownumber</code>.
+	 * Setter for <code>NAMEDENTITIES.AUDITTRAIL.ROWNUMBER</code>.
 	 */
 	public void setRownumber(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.audittrail.rownumber</code>.
+	 * Getter for <code>NAMEDENTITIES.AUDITTRAIL.ROWNUMBER</code>.
 	 */
 	public java.lang.Integer getRownumber() {
 		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>namedentities.audittrail.oldvalue</code>.
+	 * Setter for <code>NAMEDENTITIES.AUDITTRAIL.OLDVALUE</code>.
 	 */
 	public void setOldvalue(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.audittrail.oldvalue</code>.
+	 * Getter for <code>NAMEDENTITIES.AUDITTRAIL.OLDVALUE</code>.
 	 */
 	public java.lang.String getOldvalue() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>namedentities.audittrail.newvalue</code>.
+	 * Setter for <code>NAMEDENTITIES.AUDITTRAIL.NEWVALUE</code>.
 	 */
 	public void setNewvalue(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.audittrail.newvalue</code>.
+	 * Getter for <code>NAMEDENTITIES.AUDITTRAIL.NEWVALUE</code>.
 	 */
 	public java.lang.String getNewvalue() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>namedentities.audittrail.created</code>.
+	 * Setter for <code>NAMEDENTITIES.AUDITTRAIL.CREATED</code>.
 	 */
 	public void setCreated(java.sql.Timestamp value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.audittrail.created</code>.
+	 * Getter for <code>NAMEDENTITIES.AUDITTRAIL.CREATED</code>.
 	 */
 	public java.sql.Timestamp getCreated() {
 		return (java.sql.Timestamp) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>namedentities.audittrail.lastmodified</code>.
+	 * Setter for <code>NAMEDENTITIES.AUDITTRAIL.LASTMODIFIED</code>.
 	 */
 	public void setLastmodified(java.sql.Timestamp value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.audittrail.lastmodified</code>.
+	 * Getter for <code>NAMEDENTITIES.AUDITTRAIL.LASTMODIFIED</code>.
 	 */
 	public java.sql.Timestamp getLastmodified() {
 		return (java.sql.Timestamp) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>namedentities.audittrail.lastmodifiedby</code>.
+	 * Setter for <code>NAMEDENTITIES.AUDITTRAIL.LASTMODIFIEDBY</code>.
 	 */
 	public void setLastmodifiedby(java.lang.Integer value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.audittrail.lastmodifiedby</code>.
+	 * Getter for <code>NAMEDENTITIES.AUDITTRAIL.LASTMODIFIEDBY</code>.
 	 */
 	public java.lang.Integer getLastmodifiedby() {
 		return (java.lang.Integer) getValue(7);

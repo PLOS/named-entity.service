@@ -16,199 +16,199 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class IndividualprofilesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord> implements org.jooq.Record14<java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Byte, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -1240581902;
+	private static final long serialVersionUID = -99918606;
 
 	/**
-	 * Setter for <code>namedentities.individualprofiles.id</code>.
+	 * Setter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.individualprofiles.id</code>.
+	 * Getter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.individualprofiles.nedid</code>.
+	 * Setter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.NEDID</code>.
 	 */
 	public void setNedid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.individualprofiles.nedid</code>.
+	 * Getter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.NEDID</code>.
 	 */
 	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.individualprofiles.firstname</code>.
+	 * Setter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.FIRSTNAME</code>.
 	 */
 	public void setFirstname(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.individualprofiles.firstname</code>.
+	 * Getter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.FIRSTNAME</code>.
 	 */
 	public java.lang.String getFirstname() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>namedentities.individualprofiles.middlename</code>.
+	 * Setter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.MIDDLENAME</code>.
 	 */
 	public void setMiddlename(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.individualprofiles.middlename</code>.
+	 * Getter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.MIDDLENAME</code>.
 	 */
 	public java.lang.String getMiddlename() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>namedentities.individualprofiles.lastname</code>.
+	 * Setter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.LASTNAME</code>.
 	 */
 	public void setLastname(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.individualprofiles.lastname</code>.
+	 * Getter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.LASTNAME</code>.
 	 */
 	public java.lang.String getLastname() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>namedentities.individualprofiles.nickname</code>.
+	 * Setter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.NICKNAME</code>.
 	 */
 	public void setNickname(java.lang.String value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.individualprofiles.nickname</code>.
+	 * Getter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.NICKNAME</code>.
 	 */
 	public java.lang.String getNickname() {
 		return (java.lang.String) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>namedentities.individualprofiles.nameprefixtypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.NAMEPREFIXTYPEID</code>.
 	 */
 	public void setNameprefixtypeid(java.lang.Integer value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.individualprofiles.nameprefixtypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.NAMEPREFIXTYPEID</code>.
 	 */
 	public java.lang.Integer getNameprefixtypeid() {
 		return (java.lang.Integer) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>namedentities.individualprofiles.namesuffixtypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.NAMESUFFIXTYPEID</code>.
 	 */
 	public void setNamesuffixtypeid(java.lang.Integer value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.individualprofiles.namesuffixtypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.NAMESUFFIXTYPEID</code>.
 	 */
 	public java.lang.Integer getNamesuffixtypeid() {
 		return (java.lang.Integer) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>namedentities.individualprofiles.displayname</code>.
+	 * Setter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.DISPLAYNAME</code>.
 	 */
 	public void setDisplayname(java.lang.String value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.individualprofiles.displayname</code>.
+	 * Getter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.DISPLAYNAME</code>.
 	 */
 	public java.lang.String getDisplayname() {
 		return (java.lang.String) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>namedentities.individualprofiles.biography</code>.
+	 * Setter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.BIOGRAPHY</code>.
 	 */
 	public void setBiography(java.lang.String value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.individualprofiles.biography</code>.
+	 * Getter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.BIOGRAPHY</code>.
 	 */
 	public java.lang.String getBiography() {
 		return (java.lang.String) getValue(9);
 	}
 
 	/**
-	 * Setter for <code>namedentities.individualprofiles.sourcetypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.SOURCETYPEID</code>.
 	 */
 	public void setSourcetypeid(java.lang.Integer value) {
 		setValue(10, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.individualprofiles.sourcetypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.SOURCETYPEID</code>.
 	 */
 	public java.lang.Integer getSourcetypeid() {
 		return (java.lang.Integer) getValue(10);
 	}
 
 	/**
-	 * Setter for <code>namedentities.individualprofiles.isactive</code>.
+	 * Setter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.ISACTIVE</code>.
 	 */
 	public void setIsactive(java.lang.Byte value) {
 		setValue(11, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.individualprofiles.isactive</code>.
+	 * Getter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.ISACTIVE</code>.
 	 */
 	public java.lang.Byte getIsactive() {
 		return (java.lang.Byte) getValue(11);
 	}
 
 	/**
-	 * Setter for <code>namedentities.individualprofiles.created</code>.
+	 * Setter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.CREATED</code>.
 	 */
 	public void setCreated(java.sql.Timestamp value) {
 		setValue(12, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.individualprofiles.created</code>.
+	 * Getter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.CREATED</code>.
 	 */
 	public java.sql.Timestamp getCreated() {
 		return (java.sql.Timestamp) getValue(12);
 	}
 
 	/**
-	 * Setter for <code>namedentities.individualprofiles.lastmodified</code>.
+	 * Setter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.LASTMODIFIED</code>.
 	 */
 	public void setLastmodified(java.sql.Timestamp value) {
 		setValue(13, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.individualprofiles.lastmodified</code>.
+	 * Getter for <code>NAMEDENTITIES.INDIVIDUALPROFILES.LASTMODIFIED</code>.
 	 */
 	public java.sql.Timestamp getLastmodified() {
 		return (java.sql.Timestamp) getValue(13);

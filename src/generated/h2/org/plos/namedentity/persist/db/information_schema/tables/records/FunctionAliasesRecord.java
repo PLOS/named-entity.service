@@ -16,171 +16,171 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FunctionAliasesRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.FunctionAliasesRecord> implements org.jooq.Record12<java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Short, java.lang.String, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 1984286716;
+	private static final long serialVersionUID = -1423393860;
 
 	/**
-	 * Setter for <code>information_schema.function_aliases.alias_catalog</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.ALIAS_CATALOG</code>.
 	 */
 	public void setAliasCatalog(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.function_aliases.alias_catalog</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.ALIAS_CATALOG</code>.
 	 */
 	public java.lang.String getAliasCatalog() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>information_schema.function_aliases.alias_schema</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.ALIAS_SCHEMA</code>.
 	 */
 	public void setAliasSchema(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.function_aliases.alias_schema</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.ALIAS_SCHEMA</code>.
 	 */
 	public java.lang.String getAliasSchema() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>information_schema.function_aliases.alias_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.ALIAS_NAME</code>.
 	 */
 	public void setAliasName(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.function_aliases.alias_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.ALIAS_NAME</code>.
 	 */
 	public java.lang.String getAliasName() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>information_schema.function_aliases.java_class</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.JAVA_CLASS</code>.
 	 */
 	public void setJavaClass(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.function_aliases.java_class</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.JAVA_CLASS</code>.
 	 */
 	public java.lang.String getJavaClass() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>information_schema.function_aliases.java_method</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.JAVA_METHOD</code>.
 	 */
 	public void setJavaMethod(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.function_aliases.java_method</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.JAVA_METHOD</code>.
 	 */
 	public java.lang.String getJavaMethod() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>information_schema.function_aliases.data_type</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.DATA_TYPE</code>.
 	 */
 	public void setDataType(java.lang.Integer value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.function_aliases.data_type</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.DATA_TYPE</code>.
 	 */
 	public java.lang.Integer getDataType() {
 		return (java.lang.Integer) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>information_schema.function_aliases.type_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.TYPE_NAME</code>.
 	 */
 	public void setTypeName(java.lang.String value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.function_aliases.type_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.TYPE_NAME</code>.
 	 */
 	public java.lang.String getTypeName() {
 		return (java.lang.String) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>information_schema.function_aliases.column_count</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.COLUMN_COUNT</code>.
 	 */
 	public void setColumnCount(java.lang.Integer value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.function_aliases.column_count</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.COLUMN_COUNT</code>.
 	 */
 	public java.lang.Integer getColumnCount() {
 		return (java.lang.Integer) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>information_schema.function_aliases.returns_result</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.RETURNS_RESULT</code>.
 	 */
 	public void setReturnsResult(java.lang.Short value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.function_aliases.returns_result</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.RETURNS_RESULT</code>.
 	 */
 	public java.lang.Short getReturnsResult() {
 		return (java.lang.Short) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>information_schema.function_aliases.remarks</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.REMARKS</code>.
 	 */
 	public void setRemarks(java.lang.String value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.function_aliases.remarks</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.REMARKS</code>.
 	 */
 	public java.lang.String getRemarks() {
 		return (java.lang.String) getValue(9);
 	}
 
 	/**
-	 * Setter for <code>information_schema.function_aliases.id</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(10, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.function_aliases.id</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(10);
 	}
 
 	/**
-	 * Setter for <code>information_schema.function_aliases.source</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.SOURCE</code>.
 	 */
 	public void setSource(java.lang.String value) {
 		setValue(11, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.function_aliases.source</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.SOURCE</code>.
 	 */
 	public java.lang.String getSource() {
 		return (java.lang.String) getValue(11);

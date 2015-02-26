@@ -18,7 +18,7 @@ package org.plos.namedentity.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
@@ -153,7 +153,7 @@ public class CrudServiceTest {
     try {
       crudService.create(email);
       fail();
-    } catch (NedValidationException expected) {
+    } catch (NedException expected) {
     }
 
     // Update
@@ -165,7 +165,7 @@ public class CrudServiceTest {
     try {
       crudService.update(email);
       fail();
-    } catch (NedValidationException expected) {
+    } catch (NedException expected) {
     }
   }
 
@@ -192,7 +192,7 @@ public class CrudServiceTest {
     try {
       crudService.create(email);
       fail();
-    } catch (NedValidationException expected) {
+    } catch (NedException expected) {
     }
   }
 
@@ -487,7 +487,7 @@ public class CrudServiceTest {
   }
 
   @Test
-  public void testExternalReferencesCRUD() {
+  public void testUniqueIdentifiersCRUD() {
 
     final String ORCID_ID1 = "0000-0001-9430-005X";
 

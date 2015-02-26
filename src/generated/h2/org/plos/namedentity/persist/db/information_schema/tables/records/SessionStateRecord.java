@@ -16,31 +16,31 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SessionStateRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.SessionStateRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -990546145;
+	private static final long serialVersionUID = -676362465;
 
 	/**
-	 * Setter for <code>information_schema.session_state.key</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.SESSION_STATE.KEY</code>.
 	 */
 	public void setKey(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.session_state.key</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.SESSION_STATE.KEY</code>.
 	 */
 	public java.lang.String getKey() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>information_schema.session_state.sql</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.SESSION_STATE.SQL</code>.
 	 */
 	public void setSql(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.session_state.sql</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.SESSION_STATE.SQL</code>.
 	 */
 	public java.lang.String getSql() {
 		return (java.lang.String) getValue(1);

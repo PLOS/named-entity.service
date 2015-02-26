@@ -24,9 +24,9 @@ import org.springframework.jdbc.support.SQLExceptionTranslator;
 import org.springframework.jdbc.support.SQLStateSQLExceptionTranslator;
 
 /**
- * Transforms a SQLException into a Spring specific DataAccessException. 
+ * Transforms a SQLException into a Spring specific DataAccessException.
  */
-public class ExceptionTranslator extends DefaultExecuteListener {
+public class SqlExceptionTranslator extends DefaultExecuteListener {
 
   private static final long serialVersionUID = -2450323227461061152L;
 

@@ -16,129 +16,129 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class GlobaltypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.GlobaltypesRecord> implements org.jooq.Record9<java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 543831074;
+	private static final long serialVersionUID = 798616546;
 
 	/**
-	 * Setter for <code>namedentities.globaltypes.id</code>.
+	 * Setter for <code>NAMEDENTITIES.GLOBALTYPES.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.globaltypes.id</code>.
+	 * Getter for <code>NAMEDENTITIES.GLOBALTYPES.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.globaltypes.typeid</code>.
+	 * Setter for <code>NAMEDENTITIES.GLOBALTYPES.TYPEID</code>.
 	 */
 	public void setTypeid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.globaltypes.typeid</code>.
+	 * Getter for <code>NAMEDENTITIES.GLOBALTYPES.TYPEID</code>.
 	 */
 	public java.lang.Integer getTypeid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.globaltypes.shortdescription</code>.
+	 * Setter for <code>NAMEDENTITIES.GLOBALTYPES.SHORTDESCRIPTION</code>.
 	 */
 	public void setShortdescription(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.globaltypes.shortdescription</code>.
+	 * Getter for <code>NAMEDENTITIES.GLOBALTYPES.SHORTDESCRIPTION</code>.
 	 */
 	public java.lang.String getShortdescription() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>namedentities.globaltypes.longdescription</code>.
+	 * Setter for <code>NAMEDENTITIES.GLOBALTYPES.LONGDESCRIPTION</code>.
 	 */
 	public void setLongdescription(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.globaltypes.longdescription</code>.
+	 * Getter for <code>NAMEDENTITIES.GLOBALTYPES.LONGDESCRIPTION</code>.
 	 */
 	public java.lang.String getLongdescription() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>namedentities.globaltypes.typecode</code>.
+	 * Setter for <code>NAMEDENTITIES.GLOBALTYPES.TYPECODE</code>.
 	 */
 	public void setTypecode(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.globaltypes.typecode</code>.
+	 * Getter for <code>NAMEDENTITIES.GLOBALTYPES.TYPECODE</code>.
 	 */
 	public java.lang.String getTypecode() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>namedentities.globaltypes.created</code>.
+	 * Setter for <code>NAMEDENTITIES.GLOBALTYPES.CREATED</code>.
 	 */
 	public void setCreated(java.sql.Timestamp value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.globaltypes.created</code>.
+	 * Getter for <code>NAMEDENTITIES.GLOBALTYPES.CREATED</code>.
 	 */
 	public java.sql.Timestamp getCreated() {
 		return (java.sql.Timestamp) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>namedentities.globaltypes.lastmodified</code>.
+	 * Setter for <code>NAMEDENTITIES.GLOBALTYPES.LASTMODIFIED</code>.
 	 */
 	public void setLastmodified(java.sql.Timestamp value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.globaltypes.lastmodified</code>.
+	 * Getter for <code>NAMEDENTITIES.GLOBALTYPES.LASTMODIFIED</code>.
 	 */
 	public java.sql.Timestamp getLastmodified() {
 		return (java.sql.Timestamp) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>namedentities.globaltypes.createdby</code>.
+	 * Setter for <code>NAMEDENTITIES.GLOBALTYPES.CREATEDBY</code>.
 	 */
 	public void setCreatedby(java.lang.Integer value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.globaltypes.createdby</code>.
+	 * Getter for <code>NAMEDENTITIES.GLOBALTYPES.CREATEDBY</code>.
 	 */
 	public java.lang.Integer getCreatedby() {
 		return (java.lang.Integer) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>namedentities.globaltypes.lastmodifiedby</code>.
+	 * Setter for <code>NAMEDENTITIES.GLOBALTYPES.LASTMODIFIEDBY</code>.
 	 */
 	public void setLastmodifiedby(java.lang.Integer value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.globaltypes.lastmodifiedby</code>.
+	 * Getter for <code>NAMEDENTITIES.GLOBALTYPES.LASTMODIFIEDBY</code>.
 	 */
 	public java.lang.Integer getLastmodifiedby() {
 		return (java.lang.Integer) getValue(8);

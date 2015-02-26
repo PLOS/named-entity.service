@@ -2,9 +2,8 @@ package org.plos.namedentity.rest;
 
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
-import org.plos.namedentity.api.EntityNotFoundException;
 import org.plos.namedentity.api.IndividualComposite;
-import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Role;
@@ -36,8 +35,8 @@ public class IndividualsResource extends NedResource {
     try {
       return Response.status(Response.Status.OK).entity(
           namedEntityService.createComposite(composite, IndividualComposite.class)).build();
-    } catch (NedValidationException e) {
-      return validationError(e, "Unable to create individual");
+    } catch (NedException e) {
+      return nedError(e, "Unable to create individual");
     } catch (Exception e) {
       return serverError(e, "Unable to create individual");
     }
@@ -52,8 +51,8 @@ public class IndividualsResource extends NedResource {
       namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findComposite(nedId, IndividualComposite.class)).build();
-    } catch (EntityNotFoundException e) {
-      return entityNotFound(e);
+    } catch (NedException e) {
+      return nedError(e, "Unable to read individual composite");
     } catch (Exception e) {
       return serverError(e, "Unable to read individual composite");
     }
@@ -71,8 +70,8 @@ public class IndividualsResource extends NedResource {
 
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findComposite(individualProfile.getNedid(), IndividualComposite.class)).build();
-    } catch (EntityNotFoundException e) {
-      return entityNotFound(e);
+    } catch (NedException e) {
+      return nedError(e, "Find individual failed");
     } catch (Exception e) {
       return serverError(e, "Find individual failed");
     }
@@ -81,7 +80,7 @@ public class IndividualsResource extends NedResource {
   @GET
   @Path("/displayname/{displayName}")
   @ApiOperation(value = "Read individual by display name", response = IndividualComposite.class)
-  public Response readIndividualByDisplayName
+  public Response readIndividualByDisplayname
       (@PathParam("displayName") String displayName) {
     try {
 
@@ -92,12 +91,12 @@ public class IndividualsResource extends NedResource {
       List<Individualprofile> results = crudService.findByAttribute(p);
 
       if (results.size() == 0)
-        throw new EntityNotFoundException("Individual");
+        throw new NedException(NedException.ErrorType.EntityNotFound, "Individual not found");
 
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findComposite(results.get(0).getNedid(), IndividualComposite.class)).build();
-    } catch (EntityNotFoundException e) {
-      return entityNotFound(e);
+    } catch (NedException e) {
+      return nedError(e, "Find individual failed");
     } catch (Exception e) {
       return serverError(e, "Find individual failed");
     }
@@ -131,7 +130,7 @@ public class IndividualsResource extends NedResource {
                                 @PathParam("profileId") int profileId) {
 
     if (((List)(getEntities(nedId, Individualprofile.class).getEntity())).size() == 1)
-      return validationError(new NedValidationException("Profile entities cannot be empty"), "Unable to delete profile");
+      return nedError(new NedException("Profile entities cannot be empty"), "Unable to delete profile");
 
     return deleteEntity(nedId, profileId, Individualprofile.class);
   }
@@ -178,7 +177,7 @@ public class IndividualsResource extends NedResource {
     }
 
     if (entityLocation != -1 && casCount == 1)
-      return validationError(new NedValidationException("Can not remove last CAS ID"), "Unable to Uniqueidentifier");
+      return nedError(new NedException("Can not remove last CAS ID"), "Unable to Uniqueidentifier");
 
     return deleteEntity(nedId, id, Uniqueidentifier.class);
   }

@@ -1,0 +1,6 @@
+{
+    "isprimary"    : "true",
+    "type"         : "InvalidEmailType",
+    "emailaddress" : "john.q.public.work@foo.com",
+    "source"       : "Ambra"
+}

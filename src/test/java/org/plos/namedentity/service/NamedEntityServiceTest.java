@@ -20,7 +20,7 @@ import org.eclipse.core.runtime.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.plos.namedentity.api.IndividualComposite;
-import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +58,7 @@ public class NamedEntityServiceTest {
       namedEntityService.createComposite(new IndividualComposite(), IndividualComposite.class);
       fail();
     }
-    catch (NedValidationException expected) {
+    catch (NedException expected) {
     }
   }
 
@@ -141,7 +141,7 @@ public class NamedEntityServiceTest {
     try {
       namedEntityService.createComposite(composite, OrganizationComposite.class);
       fail("invalid legal name was not rejected");
-    } catch (NedValidationException e) {
+    } catch (NedException e) {
       // expected
     }
 
@@ -273,7 +273,7 @@ public class NamedEntityServiceTest {
     try {
       namedEntityService.createComposite(composite, IndividualComposite.class);
       fail("invalid URL was not rejected");
-    } catch (NedValidationException expected) {
+    } catch (NedException expected) {
       // expected since url is invalid
     }
 
@@ -362,7 +362,7 @@ public class NamedEntityServiceTest {
       namedEntityService.createComposite(composite, IndividualComposite.class);
       fail();
     }
-    catch (NedValidationException expected) {
+    catch (NedException expected) {
     }
     // verify entities not committed to db. we'll just check email.
     finally {
@@ -381,8 +381,8 @@ public class NamedEntityServiceTest {
     try {
       namedEntityService.createComposite(composite, IndividualComposite.class);
       fail();
-    } catch (NedValidationException expected) {
-      Assert.isTrue(expected.getMessage().equals("Email entities can not be empty"));
+    } catch (NedException expected) {
+      Assert.isTrue(expected.getMessage().contains("Email entities can not be empty"));
     }
 
     List<Email> emails = new ArrayList<>();
@@ -399,8 +399,8 @@ public class NamedEntityServiceTest {
     try {
       namedEntityService.createComposite(composite, IndividualComposite.class);
       fail();
-    } catch (NedValidationException expected) {
-      Assert.isTrue(expected.getMessage().equals("Profile entities can not be empty"));
+    } catch (NedException expected) {
+      Assert.isTrue(expected.getMessage().contains("Profile entities can not be empty"));
     }
 
     composite = newCompositeIndividualWithRole();
@@ -425,7 +425,7 @@ public class NamedEntityServiceTest {
       crudService.create(namedEntityService.resolveValuesToIds(individualProfile));
       fail();
     }
-    catch (NedValidationException expected) {
+    catch (NedException expected) {
       System.out.println(expected.getMessage());
       // first name too short
     }
@@ -526,7 +526,7 @@ public class NamedEntityServiceTest {
       crudService.create(roleEntity);
       fail();
     }
-    catch (NedValidationException expected) {
+    catch (NedException expected) {
       // typeid hasn't been resolved yet, so we expect a not-null
       // constraint to be thrown
     }
@@ -576,7 +576,7 @@ public class NamedEntityServiceTest {
     try {
       crudService.create(addressEntity);
       fail();
-    } catch (NedValidationException e) {
+    } catch (NedException e) {
       // expected since the countrycodeid was not resolved
     }
 
@@ -598,7 +598,7 @@ public class NamedEntityServiceTest {
     try {
       crudService.update(savedEntity2);
       fail();
-    } catch (NedValidationException e) {
+    } catch (NedException e) {
       // expected since entity pojo has no type ids (just type names) 
     }
 

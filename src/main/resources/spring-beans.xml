@@ -37,7 +37,7 @@
         <constructor-arg ref="config" />
     </bean>
     
-    <bean id="exceptionTranslator" class="org.plos.namedentity.spring.exception.ExceptionTranslator" />
+    <bean id="exceptionTranslator" class="org.plos.namedentity.spring.exception.SqlExceptionTranslator" />
     
     <bean class="org.jooq.impl.DefaultConfiguration" name="config">
         <constructor-arg index="0" ref="connectionProvider" />

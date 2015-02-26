@@ -16,7 +16,9 @@
  */
 package org.plos.namedentity.api.entity;
 
-import org.plos.namedentity.api.NedValidationException;
+import static org.plos.namedentity.api.NedException.ErrorType.*;
+
+import org.plos.namedentity.api.NedException;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -35,12 +37,11 @@ public class Organization extends Entity {
   public void validate() {
 
     if (familiarname == null || familiarname.length() < 1)
-      throw new NedValidationException("familiarname is too short");
+      throw new NedException(FamiliarNameError, "familiarname is too short");
 
     if (legalname == null || legalname.length() < 1)
-      throw new NedValidationException("legalname is too short");
-
-  }
+      throw new NedException(LegalNameError, "legalname is too short");
+ }
 
   public Integer getTypeid() {
     return this.typeid;

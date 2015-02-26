@@ -16,73 +16,73 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TypedescriptionsRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.TypedescriptionsRecord> implements org.jooq.Record5<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 99172127;
+	private static final long serialVersionUID = 1207894751;
 
 	/**
-	 * Setter for <code>namedentities.typedescriptions.id</code>.
+	 * Setter for <code>NAMEDENTITIES.TYPEDESCRIPTIONS.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.typedescriptions.id</code>.
+	 * Getter for <code>NAMEDENTITIES.TYPEDESCRIPTIONS.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.typedescriptions.description</code>.
+	 * Setter for <code>NAMEDENTITIES.TYPEDESCRIPTIONS.DESCRIPTION</code>.
 	 */
 	public void setDescription(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.typedescriptions.description</code>.
+	 * Getter for <code>NAMEDENTITIES.TYPEDESCRIPTIONS.DESCRIPTION</code>.
 	 */
 	public java.lang.String getDescription() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.typedescriptions.howused</code>.
+	 * Setter for <code>NAMEDENTITIES.TYPEDESCRIPTIONS.HOWUSED</code>.
 	 */
 	public void setHowused(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.typedescriptions.howused</code>.
+	 * Getter for <code>NAMEDENTITIES.TYPEDESCRIPTIONS.HOWUSED</code>.
 	 */
 	public java.lang.String getHowused() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>namedentities.typedescriptions.created</code>.
+	 * Setter for <code>NAMEDENTITIES.TYPEDESCRIPTIONS.CREATED</code>.
 	 */
 	public void setCreated(java.sql.Timestamp value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.typedescriptions.created</code>.
+	 * Getter for <code>NAMEDENTITIES.TYPEDESCRIPTIONS.CREATED</code>.
 	 */
 	public java.sql.Timestamp getCreated() {
 		return (java.sql.Timestamp) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>namedentities.typedescriptions.lastmodified</code>.
+	 * Setter for <code>NAMEDENTITIES.TYPEDESCRIPTIONS.LASTMODIFIED</code>.
 	 */
 	public void setLastmodified(java.sql.Timestamp value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.typedescriptions.lastmodified</code>.
+	 * Getter for <code>NAMEDENTITIES.TYPEDESCRIPTIONS.LASTMODIFIED</code>.
 	 */
 	public java.sql.Timestamp getLastmodified() {
 		return (java.sql.Timestamp) getValue(4);

@@ -16,45 +16,45 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RolesRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.RolesRecord> implements org.jooq.Record3<java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = 496587725;
+	private static final long serialVersionUID = 1580319757;
 
 	/**
-	 * Setter for <code>information_schema.roles.name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.ROLES.NAME</code>.
 	 */
 	public void setName(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.roles.name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.ROLES.NAME</code>.
 	 */
 	public java.lang.String getName() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>information_schema.roles.remarks</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.ROLES.REMARKS</code>.
 	 */
 	public void setRemarks(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.roles.remarks</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.ROLES.REMARKS</code>.
 	 */
 	public java.lang.String getRemarks() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>information_schema.roles.id</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.ROLES.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.roles.id</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.ROLES.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(2);
