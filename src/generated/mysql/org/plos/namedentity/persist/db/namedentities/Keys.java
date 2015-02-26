@@ -62,6 +62,7 @@ public class Keys {
 	public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord> KEY_SUBJECTAREAS_PRIMARY = UniqueKeys0.KEY_SUBJECTAREAS_PRIMARY;
 	public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.TypedescriptionsRecord> KEY_TYPEDESCRIPTIONS_PRIMARY = UniqueKeys0.KEY_TYPEDESCRIPTIONS_PRIMARY;
 	public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord> KEY_UNIQUEIDENTIFIERS_PRIMARY = UniqueKeys0.KEY_UNIQUEIDENTIFIERS_PRIMARY;
+	public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord> KEY_UNIQUEIDENTIFIERS_UNIQUEIDENTIFIER = UniqueKeys0.KEY_UNIQUEIDENTIFIERS_UNIQUEIDENTIFIER;
 	public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord> KEY_URLS_PRIMARY = UniqueKeys0.KEY_URLS_PRIMARY;
 
 	// -------------------------------------------------------------------------
@@ -150,6 +151,7 @@ public class Keys {
 		public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.SubjectareasRecord> KEY_SUBJECTAREAS_PRIMARY = createUniqueKey(org.plos.namedentity.persist.db.namedentities.tables.Subjectareas.SUBJECTAREAS, org.plos.namedentity.persist.db.namedentities.tables.Subjectareas.SUBJECTAREAS.ID);
 		public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.TypedescriptionsRecord> KEY_TYPEDESCRIPTIONS_PRIMARY = createUniqueKey(org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions.TYPEDESCRIPTIONS, org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions.TYPEDESCRIPTIONS.ID);
 		public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord> KEY_UNIQUEIDENTIFIERS_PRIMARY = createUniqueKey(org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS, org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS.ID);
+		public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord> KEY_UNIQUEIDENTIFIERS_UNIQUEIDENTIFIER = createUniqueKey(org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS, org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS.UNIQUEIDENTIFIER, org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS.SOURCETYPEID, org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS.TYPEID);
 		public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord> KEY_URLS_PRIMARY = createUniqueKey(org.plos.namedentity.persist.db.namedentities.tables.Urls.URLS, org.plos.namedentity.persist.db.namedentities.tables.Urls.URLS.ID);
 	}
 

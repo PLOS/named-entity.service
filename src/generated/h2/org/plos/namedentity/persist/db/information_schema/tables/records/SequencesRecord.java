@@ -16,171 +16,171 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SequencesRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.SequencesRecord> implements org.jooq.Record12<java.lang.String, java.lang.String, java.lang.String, java.lang.Long, java.lang.Long, java.lang.Boolean, java.lang.String, java.lang.Long, java.lang.Long, java.lang.Long, java.lang.Boolean, java.lang.Integer> {
 
-	private static final long serialVersionUID = 351736774;
+	private static final long serialVersionUID = -885456058;
 
 	/**
-	 * Setter for <code>information_schema.sequences.sequence_catalog</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.SEQUENCES.SEQUENCE_CATALOG</code>.
 	 */
 	public void setSequenceCatalog(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.sequences.sequence_catalog</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.SEQUENCES.SEQUENCE_CATALOG</code>.
 	 */
 	public java.lang.String getSequenceCatalog() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>information_schema.sequences.sequence_schema</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.SEQUENCES.SEQUENCE_SCHEMA</code>.
 	 */
 	public void setSequenceSchema(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.sequences.sequence_schema</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.SEQUENCES.SEQUENCE_SCHEMA</code>.
 	 */
 	public java.lang.String getSequenceSchema() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>information_schema.sequences.sequence_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.SEQUENCES.SEQUENCE_NAME</code>.
 	 */
 	public void setSequenceName(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.sequences.sequence_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.SEQUENCES.SEQUENCE_NAME</code>.
 	 */
 	public java.lang.String getSequenceName() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>information_schema.sequences.current_value</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.SEQUENCES.CURRENT_VALUE</code>.
 	 */
 	public void setCurrentValue(java.lang.Long value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.sequences.current_value</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.SEQUENCES.CURRENT_VALUE</code>.
 	 */
 	public java.lang.Long getCurrentValue() {
 		return (java.lang.Long) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>information_schema.sequences.increment</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.SEQUENCES.INCREMENT</code>.
 	 */
 	public void setIncrement(java.lang.Long value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.sequences.increment</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.SEQUENCES.INCREMENT</code>.
 	 */
 	public java.lang.Long getIncrement() {
 		return (java.lang.Long) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>information_schema.sequences.is_generated</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.SEQUENCES.IS_GENERATED</code>.
 	 */
 	public void setIsGenerated(java.lang.Boolean value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.sequences.is_generated</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.SEQUENCES.IS_GENERATED</code>.
 	 */
 	public java.lang.Boolean getIsGenerated() {
 		return (java.lang.Boolean) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>information_schema.sequences.remarks</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.SEQUENCES.REMARKS</code>.
 	 */
 	public void setRemarks(java.lang.String value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.sequences.remarks</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.SEQUENCES.REMARKS</code>.
 	 */
 	public java.lang.String getRemarks() {
 		return (java.lang.String) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>information_schema.sequences.cache</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.SEQUENCES.CACHE</code>.
 	 */
 	public void setCache(java.lang.Long value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.sequences.cache</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.SEQUENCES.CACHE</code>.
 	 */
 	public java.lang.Long getCache() {
 		return (java.lang.Long) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>information_schema.sequences.min_value</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.SEQUENCES.MIN_VALUE</code>.
 	 */
 	public void setMinValue(java.lang.Long value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.sequences.min_value</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.SEQUENCES.MIN_VALUE</code>.
 	 */
 	public java.lang.Long getMinValue() {
 		return (java.lang.Long) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>information_schema.sequences.max_value</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.SEQUENCES.MAX_VALUE</code>.
 	 */
 	public void setMaxValue(java.lang.Long value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.sequences.max_value</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.SEQUENCES.MAX_VALUE</code>.
 	 */
 	public java.lang.Long getMaxValue() {
 		return (java.lang.Long) getValue(9);
 	}
 
 	/**
-	 * Setter for <code>information_schema.sequences.is_cycle</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.SEQUENCES.IS_CYCLE</code>.
 	 */
 	public void setIsCycle(java.lang.Boolean value) {
 		setValue(10, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.sequences.is_cycle</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.SEQUENCES.IS_CYCLE</code>.
 	 */
 	public java.lang.Boolean getIsCycle() {
 		return (java.lang.Boolean) getValue(10);
 	}
 
 	/**
-	 * Setter for <code>information_schema.sequences.id</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.SEQUENCES.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(11, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.sequences.id</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.SEQUENCES.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(11);

@@ -16,10 +16,10 @@ package org.plos.namedentity.persist.db.information_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Schemata extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.information_schema.tables.records.SchemataRecord> {
 
-	private static final long serialVersionUID = -810045568;
+	private static final long serialVersionUID = -820885792;
 
 	/**
-	 * The reference instance of <code>information_schema.schemata</code>
+	 * The reference instance of <code>INFORMATION_SCHEMA.SCHEMATA</code>
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Schemata SCHEMATA = new org.plos.namedentity.persist.db.information_schema.tables.Schemata();
 
@@ -32,54 +32,54 @@ public class Schemata extends org.jooq.impl.TableImpl<org.plos.namedentity.persi
 	}
 
 	/**
-	 * The column <code>information_schema.schemata.catalog_name</code>.
+	 * The column <code>INFORMATION_SCHEMA.SCHEMATA.CATALOG_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SchemataRecord, java.lang.String> CATALOG_NAME = createField("catalog_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SchemataRecord, java.lang.String> CATALOG_NAME = createField("CATALOG_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.schemata.schema_name</code>.
+	 * The column <code>INFORMATION_SCHEMA.SCHEMATA.SCHEMA_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SchemataRecord, java.lang.String> SCHEMA_NAME = createField("schema_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SchemataRecord, java.lang.String> SCHEMA_NAME = createField("SCHEMA_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.schemata.schema_owner</code>.
+	 * The column <code>INFORMATION_SCHEMA.SCHEMATA.SCHEMA_OWNER</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SchemataRecord, java.lang.String> SCHEMA_OWNER = createField("schema_owner", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SchemataRecord, java.lang.String> SCHEMA_OWNER = createField("SCHEMA_OWNER", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.schemata.default_character_set_name</code>.
+	 * The column <code>INFORMATION_SCHEMA.SCHEMATA.DEFAULT_CHARACTER_SET_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SchemataRecord, java.lang.String> DEFAULT_CHARACTER_SET_NAME = createField("default_character_set_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SchemataRecord, java.lang.String> DEFAULT_CHARACTER_SET_NAME = createField("DEFAULT_CHARACTER_SET_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.schemata.default_collation_name</code>.
+	 * The column <code>INFORMATION_SCHEMA.SCHEMATA.DEFAULT_COLLATION_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SchemataRecord, java.lang.String> DEFAULT_COLLATION_NAME = createField("default_collation_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SchemataRecord, java.lang.String> DEFAULT_COLLATION_NAME = createField("DEFAULT_COLLATION_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.schemata.is_default</code>.
+	 * The column <code>INFORMATION_SCHEMA.SCHEMATA.IS_DEFAULT</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SchemataRecord, java.lang.Boolean> IS_DEFAULT = createField("is_default", org.jooq.impl.SQLDataType.BOOLEAN, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SchemataRecord, java.lang.Boolean> IS_DEFAULT = createField("IS_DEFAULT", org.jooq.impl.SQLDataType.BOOLEAN, this, "");
 
 	/**
-	 * The column <code>information_schema.schemata.remarks</code>.
+	 * The column <code>INFORMATION_SCHEMA.SCHEMATA.REMARKS</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SchemataRecord, java.lang.String> REMARKS = createField("remarks", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SchemataRecord, java.lang.String> REMARKS = createField("REMARKS", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.schemata.id</code>.
+	 * The column <code>INFORMATION_SCHEMA.SCHEMATA.ID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SchemataRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SchemataRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * Create a <code>information_schema.schemata</code> table reference
+	 * Create a <code>INFORMATION_SCHEMA.SCHEMATA</code> table reference
 	 */
 	public Schemata() {
-		this("schemata", null);
+		this("SCHEMATA", null);
 	}
 
 	/**
-	 * Create an aliased <code>information_schema.schemata</code> table reference
+	 * Create an aliased <code>INFORMATION_SCHEMA.SCHEMATA</code> table reference
 	 */
 	public Schemata(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.information_schema.tables.Schemata.SCHEMATA);

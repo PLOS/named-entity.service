@@ -25,16 +25,20 @@ import org.jooq.SelectOnConditionStep;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
-import org.plos.namedentity.api.EntityNotFoundException;
-import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.NedException;
+import org.plos.namedentity.api.NedException.ErrorType;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.persist.db.namedentities.tables.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+import static org.plos.namedentity.api.NedException.ErrorType.EntityWithNoPK;
 import static org.plos.namedentity.persist.db.namedentities.Tables.*;
 
 public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
@@ -61,7 +65,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     if (t instanceof Entity) {
       if (((Entity)t).getId() == null) {
-        throw new NedValidationException("Can't update entity without primary key: " + (Entity)t);
+        throw new NedException(EntityWithNoPK, "Can't update entity without primary key: "+(Entity)t);
       }
 
       // in jooq 3.5.1, the field change flag isn't set for null entity pojos
@@ -173,25 +177,42 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   @Override
   public Integer findTypeClass(String description) {
 
-    //TODO - cache type classes and values ?
+    List<Typedescription> typeClasses = findAll(Typedescription.class, 0, Integer.MAX_VALUE);
 
-    for (Typedescription typeClass : findAll(Typedescription.class, 0, Integer.MAX_VALUE)) {
+    for (Typedescription typeClass : typeClasses) {
       if (typeClass.getDescription().equals(description)) {
         return typeClass.getId();
       }
     }
-    throw new NedValidationException("No type class found with description " + description);
+
+    // type class not found. assemble list of valid values to pass to error handler
+    Set<String> lovs = new HashSet<String>();
+    for (Typedescription typeClass : typeClasses) {
+      lovs.add(typeClass.getDescription());
+    }
+    throw new NedException(ErrorType.InvalidTypeClass, "Type Class:"+description, lovs);
   }
 
   @Override
   public Integer findTypeValue(Integer typeClassId, String name) {
-    for (Globaltype typeValue : findAll(Globaltype.class, 0, Integer.MAX_VALUE)) {
-      if (typeClassId.equals(typeValue.getTypeid()) &&
-          typeValue.getShortdescription().equalsIgnoreCase(name)) {
-        return typeValue.getId();
+
+    Globaltype globalTypesearchCriteria = new Globaltype();
+    globalTypesearchCriteria.setTypeid(typeClassId);
+
+    List<Globaltype> globalTypesForTypeClass = findByAttribute(globalTypesearchCriteria);
+    for (Globaltype globalType : globalTypesForTypeClass) {
+      if (globalType.getShortdescription().equalsIgnoreCase(name)) {
+        return globalType.getId();
       }
     }
-    throw new NedValidationException("No type value found with short description =  " + name);
+
+    // type value not found. assemble list of valid values to pass to error handler
+    Set<String> lovs = new HashSet<String>();
+    for (Globaltype globalType : globalTypesForTypeClass) {
+      lovs.add(globalType.getShortdescription());
+    }
+    throw new NedException(ErrorType.InvalidTypeValue, 
+                           String.format("TypeClassId:%d, TypeValue:%s", typeClassId, name), lovs);
   }
 
   @Override
@@ -217,7 +238,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .and(GLOBALTYPES.SHORTDESCRIPTION.equal(namedPartyType))
         .and(NAMEDENTITYIDENTIFIERS.ID.equal(nedId)).fetchOne()
       == null)
-        throw new EntityNotFoundException(namedPartyType);
+        throw new NedException(EntityNotFound, namedPartyType + " not found");
   }
 
   private Integer findTypeIdByName(TypeClassEnum typeClass, String typeValue) {
@@ -438,7 +459,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .where(u.UNIQUEIDENTIFIER.equal(uid)).and(gt.SHORTDESCRIPTION.equal(srcType)).fetchAny();
 
     if (record == null)
-      throw new EntityNotFoundException("Organization");
+      throw new NedException(EntityNotFound, 
+        String.format("Organization not found with UID type %s and value %s", srcType, uid));
 
     return record.into(Organization.class);
   }
@@ -470,7 +492,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       .fetchAny();
 
     if (record == null)
-      throw new EntityNotFoundException("Individual");
+      throw new NedException(EntityNotFound, 
+        String.format("Individual not found with UID type %s and value %s", srcType, uid));
 
     return record.into(Individualprofile.class);
   }
@@ -574,7 +597,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     Record record = select(uid).where(uid.ID.equal(id)).fetchOne();
 
-    if (record == null) throw new EntityNotFoundException("Uniqueidentifier");
+    if (record == null) 
+      throw new NedException(EntityNotFound, String.format("Uniqueidentifier not found with id %d", id));
 
     return record.into(Uniqueidentifier.class);
   }
@@ -585,7 +609,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     Record record = select(i).where(i.ID.equal(individualId)).fetchOne();
 
-    if (record == null) throw new EntityNotFoundException("Individual");
+    if (record == null)
+      throw new NedException(EntityNotFound, String.format("Individual not found with id %d", individualId));
 
     return record.into(Individualprofile.class);
   }
@@ -596,7 +621,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     Record record = select(e).where(e.ID.equal(emailId)).fetchOne();
 
-    if (record == null) throw new EntityNotFoundException("Email");
+    if (record == null)
+      throw new NedException(EntityNotFound, String.format("Email not found with id %d", emailId));
 
     return record.into(Email.class);
   }
@@ -607,7 +633,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     Record record = select(a).where(a.ID.equal(addressId)).fetchOne();
 
-    if (record == null) throw new EntityNotFoundException("Address");
+    if (record == null)
+      throw new NedException(EntityNotFound, String.format("Address not found with id %d", addressId));
 
     return record.into(Address.class);
   }
@@ -618,7 +645,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     Record record = select(r).where(r.ID.equal(roleId)).fetchOne();
 
-    if (record == null) throw new EntityNotFoundException("Role");
+    if (record == null)
+      throw new NedException(EntityNotFound, String.format("Role not found with id %d", roleId));
 
     return record.into(Role.class);
   }

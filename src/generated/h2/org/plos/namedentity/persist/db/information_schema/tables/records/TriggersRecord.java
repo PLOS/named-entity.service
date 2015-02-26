@@ -16,199 +16,199 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TriggersRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.TriggersRecord> implements org.jooq.Record14<java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Boolean, java.lang.String, java.lang.Integer, java.lang.Boolean, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = -826083605;
+	private static final long serialVersionUID = -1541891093;
 
 	/**
-	 * Setter for <code>information_schema.triggers.trigger_catalog</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TRIGGERS.TRIGGER_CATALOG</code>.
 	 */
 	public void setTriggerCatalog(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.triggers.trigger_catalog</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TRIGGERS.TRIGGER_CATALOG</code>.
 	 */
 	public java.lang.String getTriggerCatalog() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>information_schema.triggers.trigger_schema</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TRIGGERS.TRIGGER_SCHEMA</code>.
 	 */
 	public void setTriggerSchema(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.triggers.trigger_schema</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TRIGGERS.TRIGGER_SCHEMA</code>.
 	 */
 	public java.lang.String getTriggerSchema() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>information_schema.triggers.trigger_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TRIGGERS.TRIGGER_NAME</code>.
 	 */
 	public void setTriggerName(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.triggers.trigger_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TRIGGERS.TRIGGER_NAME</code>.
 	 */
 	public java.lang.String getTriggerName() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>information_schema.triggers.trigger_type</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TRIGGERS.TRIGGER_TYPE</code>.
 	 */
 	public void setTriggerType(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.triggers.trigger_type</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TRIGGERS.TRIGGER_TYPE</code>.
 	 */
 	public java.lang.String getTriggerType() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>information_schema.triggers.table_catalog</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TRIGGERS.TABLE_CATALOG</code>.
 	 */
 	public void setTableCatalog(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.triggers.table_catalog</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TRIGGERS.TABLE_CATALOG</code>.
 	 */
 	public java.lang.String getTableCatalog() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>information_schema.triggers.table_schema</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TRIGGERS.TABLE_SCHEMA</code>.
 	 */
 	public void setTableSchema(java.lang.String value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.triggers.table_schema</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TRIGGERS.TABLE_SCHEMA</code>.
 	 */
 	public java.lang.String getTableSchema() {
 		return (java.lang.String) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>information_schema.triggers.table_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TRIGGERS.TABLE_NAME</code>.
 	 */
 	public void setTableName(java.lang.String value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.triggers.table_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TRIGGERS.TABLE_NAME</code>.
 	 */
 	public java.lang.String getTableName() {
 		return (java.lang.String) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>information_schema.triggers.before</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TRIGGERS.BEFORE</code>.
 	 */
 	public void setBefore(java.lang.Boolean value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.triggers.before</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TRIGGERS.BEFORE</code>.
 	 */
 	public java.lang.Boolean getBefore() {
 		return (java.lang.Boolean) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>information_schema.triggers.java_class</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TRIGGERS.JAVA_CLASS</code>.
 	 */
 	public void setJavaClass(java.lang.String value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.triggers.java_class</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TRIGGERS.JAVA_CLASS</code>.
 	 */
 	public java.lang.String getJavaClass() {
 		return (java.lang.String) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>information_schema.triggers.queue_size</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TRIGGERS.QUEUE_SIZE</code>.
 	 */
 	public void setQueueSize(java.lang.Integer value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.triggers.queue_size</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TRIGGERS.QUEUE_SIZE</code>.
 	 */
 	public java.lang.Integer getQueueSize() {
 		return (java.lang.Integer) getValue(9);
 	}
 
 	/**
-	 * Setter for <code>information_schema.triggers.no_wait</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TRIGGERS.NO_WAIT</code>.
 	 */
 	public void setNoWait(java.lang.Boolean value) {
 		setValue(10, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.triggers.no_wait</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TRIGGERS.NO_WAIT</code>.
 	 */
 	public java.lang.Boolean getNoWait() {
 		return (java.lang.Boolean) getValue(10);
 	}
 
 	/**
-	 * Setter for <code>information_schema.triggers.remarks</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TRIGGERS.REMARKS</code>.
 	 */
 	public void setRemarks(java.lang.String value) {
 		setValue(11, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.triggers.remarks</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TRIGGERS.REMARKS</code>.
 	 */
 	public java.lang.String getRemarks() {
 		return (java.lang.String) getValue(11);
 	}
 
 	/**
-	 * Setter for <code>information_schema.triggers.sql</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TRIGGERS.SQL</code>.
 	 */
 	public void setSql(java.lang.String value) {
 		setValue(12, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.triggers.sql</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TRIGGERS.SQL</code>.
 	 */
 	public java.lang.String getSql() {
 		return (java.lang.String) getValue(12);
 	}
 
 	/**
-	 * Setter for <code>information_schema.triggers.id</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.TRIGGERS.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(13, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.triggers.id</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.TRIGGERS.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(13);

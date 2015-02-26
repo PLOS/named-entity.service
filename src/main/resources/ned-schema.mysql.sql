@@ -277,5 +277,5 @@ CREATE TABLE IF NOT EXISTS namedEntities.uniqueIdentifiers (
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id),
-    UNIQUE (typeId, uniqueIdentifier, sourceTypeId)
+    UNIQUE (uniqueIdentifier, sourceTypeId, typeId)
 )   ENGINE=INNODB;

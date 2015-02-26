@@ -16,143 +16,143 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PhonenumbersRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Byte, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 30577101;
+	private static final long serialVersionUID = -660015795;
 
 	/**
-	 * Setter for <code>namedentities.phonenumbers.id</code>.
+	 * Setter for <code>NAMEDENTITIES.PHONENUMBERS.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.phonenumbers.id</code>.
+	 * Getter for <code>NAMEDENTITIES.PHONENUMBERS.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.phonenumbers.nedid</code>.
+	 * Setter for <code>NAMEDENTITIES.PHONENUMBERS.NEDID</code>.
 	 */
 	public void setNedid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.phonenumbers.nedid</code>.
+	 * Getter for <code>NAMEDENTITIES.PHONENUMBERS.NEDID</code>.
 	 */
 	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.phonenumbers.typeid</code>.
+	 * Setter for <code>NAMEDENTITIES.PHONENUMBERS.TYPEID</code>.
 	 */
 	public void setTypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.phonenumbers.typeid</code>.
+	 * Getter for <code>NAMEDENTITIES.PHONENUMBERS.TYPEID</code>.
 	 */
 	public java.lang.Integer getTypeid() {
 		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>namedentities.phonenumbers.countrycodetypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.PHONENUMBERS.COUNTRYCODETYPEID</code>.
 	 */
 	public void setCountrycodetypeid(java.lang.Integer value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.phonenumbers.countrycodetypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.PHONENUMBERS.COUNTRYCODETYPEID</code>.
 	 */
 	public java.lang.Integer getCountrycodetypeid() {
 		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>namedentities.phonenumbers.phonenumber</code>.
+	 * Setter for <code>NAMEDENTITIES.PHONENUMBERS.PHONENUMBER</code>.
 	 */
 	public void setPhonenumber(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.phonenumbers.phonenumber</code>.
+	 * Getter for <code>NAMEDENTITIES.PHONENUMBERS.PHONENUMBER</code>.
 	 */
 	public java.lang.String getPhonenumber() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>namedentities.phonenumbers.extension</code>.
+	 * Setter for <code>NAMEDENTITIES.PHONENUMBERS.EXTENSION</code>.
 	 */
 	public void setExtension(java.lang.String value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.phonenumbers.extension</code>.
+	 * Getter for <code>NAMEDENTITIES.PHONENUMBERS.EXTENSION</code>.
 	 */
 	public java.lang.String getExtension() {
 		return (java.lang.String) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>namedentities.phonenumbers.sourcetypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.PHONENUMBERS.SOURCETYPEID</code>.
 	 */
 	public void setSourcetypeid(java.lang.Integer value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.phonenumbers.sourcetypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.PHONENUMBERS.SOURCETYPEID</code>.
 	 */
 	public java.lang.Integer getSourcetypeid() {
 		return (java.lang.Integer) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>namedentities.phonenumbers.isactive</code>.
+	 * Setter for <code>NAMEDENTITIES.PHONENUMBERS.ISACTIVE</code>.
 	 */
 	public void setIsactive(java.lang.Byte value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.phonenumbers.isactive</code>.
+	 * Getter for <code>NAMEDENTITIES.PHONENUMBERS.ISACTIVE</code>.
 	 */
 	public java.lang.Byte getIsactive() {
 		return (java.lang.Byte) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>namedentities.phonenumbers.created</code>.
+	 * Setter for <code>NAMEDENTITIES.PHONENUMBERS.CREATED</code>.
 	 */
 	public void setCreated(java.sql.Timestamp value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.phonenumbers.created</code>.
+	 * Getter for <code>NAMEDENTITIES.PHONENUMBERS.CREATED</code>.
 	 */
 	public java.sql.Timestamp getCreated() {
 		return (java.sql.Timestamp) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>namedentities.phonenumbers.lastmodified</code>.
+	 * Setter for <code>NAMEDENTITIES.PHONENUMBERS.LASTMODIFIED</code>.
 	 */
 	public void setLastmodified(java.sql.Timestamp value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.phonenumbers.lastmodified</code>.
+	 * Getter for <code>NAMEDENTITIES.PHONENUMBERS.LASTMODIFIED</code>.
 	 */
 	public java.sql.Timestamp getLastmodified() {
 		return (java.sql.Timestamp) getValue(9);

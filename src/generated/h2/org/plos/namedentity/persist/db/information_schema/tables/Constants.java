@@ -16,10 +16,10 @@ package org.plos.namedentity.persist.db.information_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Constants extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.information_schema.tables.records.ConstantsRecord> {
 
-	private static final long serialVersionUID = -370483027;
+	private static final long serialVersionUID = 1812556941;
 
 	/**
-	 * The reference instance of <code>information_schema.constants</code>
+	 * The reference instance of <code>INFORMATION_SCHEMA.CONSTANTS</code>
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Constants CONSTANTS = new org.plos.namedentity.persist.db.information_schema.tables.Constants();
 
@@ -32,49 +32,49 @@ public class Constants extends org.jooq.impl.TableImpl<org.plos.namedentity.pers
 	}
 
 	/**
-	 * The column <code>information_schema.constants.constant_catalog</code>.
+	 * The column <code>INFORMATION_SCHEMA.CONSTANTS.CONSTANT_CATALOG</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.ConstantsRecord, java.lang.String> CONSTANT_CATALOG = createField("constant_catalog", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.ConstantsRecord, java.lang.String> CONSTANT_CATALOG = createField("CONSTANT_CATALOG", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.constants.constant_schema</code>.
+	 * The column <code>INFORMATION_SCHEMA.CONSTANTS.CONSTANT_SCHEMA</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.ConstantsRecord, java.lang.String> CONSTANT_SCHEMA = createField("constant_schema", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.ConstantsRecord, java.lang.String> CONSTANT_SCHEMA = createField("CONSTANT_SCHEMA", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.constants.constant_name</code>.
+	 * The column <code>INFORMATION_SCHEMA.CONSTANTS.CONSTANT_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.ConstantsRecord, java.lang.String> CONSTANT_NAME = createField("constant_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.ConstantsRecord, java.lang.String> CONSTANT_NAME = createField("CONSTANT_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.constants.data_type</code>.
+	 * The column <code>INFORMATION_SCHEMA.CONSTANTS.DATA_TYPE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.ConstantsRecord, java.lang.Integer> DATA_TYPE = createField("data_type", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.ConstantsRecord, java.lang.Integer> DATA_TYPE = createField("DATA_TYPE", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>information_schema.constants.remarks</code>.
+	 * The column <code>INFORMATION_SCHEMA.CONSTANTS.REMARKS</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.ConstantsRecord, java.lang.String> REMARKS = createField("remarks", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.ConstantsRecord, java.lang.String> REMARKS = createField("REMARKS", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.constants.sql</code>.
+	 * The column <code>INFORMATION_SCHEMA.CONSTANTS.SQL</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.ConstantsRecord, java.lang.String> SQL = createField("sql", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.ConstantsRecord, java.lang.String> SQL = createField("SQL", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.constants.id</code>.
+	 * The column <code>INFORMATION_SCHEMA.CONSTANTS.ID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.ConstantsRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.ConstantsRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * Create a <code>information_schema.constants</code> table reference
+	 * Create a <code>INFORMATION_SCHEMA.CONSTANTS</code> table reference
 	 */
 	public Constants() {
-		this("constants", null);
+		this("CONSTANTS", null);
 	}
 
 	/**
-	 * Create an aliased <code>information_schema.constants</code> table reference
+	 * Create an aliased <code>INFORMATION_SCHEMA.CONSTANTS</code> table reference
 	 */
 	public Constants(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.information_schema.tables.Constants.CONSTANTS);

@@ -16,199 +16,199 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CrossReferencesRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.CrossReferencesRecord> implements org.jooq.Record14<java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Short, java.lang.Short, java.lang.Short, java.lang.String, java.lang.String, java.lang.Short> {
 
-	private static final long serialVersionUID = 370264482;
+	private static final long serialVersionUID = 1281886370;
 
 	/**
-	 * Setter for <code>information_schema.cross_references.pktable_catalog</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PKTABLE_CATALOG</code>.
 	 */
 	public void setPktableCatalog(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.cross_references.pktable_catalog</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PKTABLE_CATALOG</code>.
 	 */
 	public java.lang.String getPktableCatalog() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>information_schema.cross_references.pktable_schema</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PKTABLE_SCHEMA</code>.
 	 */
 	public void setPktableSchema(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.cross_references.pktable_schema</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PKTABLE_SCHEMA</code>.
 	 */
 	public java.lang.String getPktableSchema() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>information_schema.cross_references.pktable_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PKTABLE_NAME</code>.
 	 */
 	public void setPktableName(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.cross_references.pktable_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PKTABLE_NAME</code>.
 	 */
 	public java.lang.String getPktableName() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>information_schema.cross_references.pkcolumn_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PKCOLUMN_NAME</code>.
 	 */
 	public void setPkcolumnName(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.cross_references.pkcolumn_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PKCOLUMN_NAME</code>.
 	 */
 	public java.lang.String getPkcolumnName() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>information_schema.cross_references.fktable_catalog</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FKTABLE_CATALOG</code>.
 	 */
 	public void setFktableCatalog(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.cross_references.fktable_catalog</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FKTABLE_CATALOG</code>.
 	 */
 	public java.lang.String getFktableCatalog() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>information_schema.cross_references.fktable_schema</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FKTABLE_SCHEMA</code>.
 	 */
 	public void setFktableSchema(java.lang.String value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.cross_references.fktable_schema</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FKTABLE_SCHEMA</code>.
 	 */
 	public java.lang.String getFktableSchema() {
 		return (java.lang.String) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>information_schema.cross_references.fktable_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FKTABLE_NAME</code>.
 	 */
 	public void setFktableName(java.lang.String value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.cross_references.fktable_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FKTABLE_NAME</code>.
 	 */
 	public java.lang.String getFktableName() {
 		return (java.lang.String) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>information_schema.cross_references.fkcolumn_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FKCOLUMN_NAME</code>.
 	 */
 	public void setFkcolumnName(java.lang.String value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.cross_references.fkcolumn_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FKCOLUMN_NAME</code>.
 	 */
 	public java.lang.String getFkcolumnName() {
 		return (java.lang.String) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>information_schema.cross_references.ordinal_position</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.ORDINAL_POSITION</code>.
 	 */
 	public void setOrdinalPosition(java.lang.Short value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.cross_references.ordinal_position</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.ORDINAL_POSITION</code>.
 	 */
 	public java.lang.Short getOrdinalPosition() {
 		return (java.lang.Short) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>information_schema.cross_references.update_rule</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.UPDATE_RULE</code>.
 	 */
 	public void setUpdateRule(java.lang.Short value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.cross_references.update_rule</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.UPDATE_RULE</code>.
 	 */
 	public java.lang.Short getUpdateRule() {
 		return (java.lang.Short) getValue(9);
 	}
 
 	/**
-	 * Setter for <code>information_schema.cross_references.delete_rule</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.DELETE_RULE</code>.
 	 */
 	public void setDeleteRule(java.lang.Short value) {
 		setValue(10, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.cross_references.delete_rule</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.DELETE_RULE</code>.
 	 */
 	public java.lang.Short getDeleteRule() {
 		return (java.lang.Short) getValue(10);
 	}
 
 	/**
-	 * Setter for <code>information_schema.cross_references.fk_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FK_NAME</code>.
 	 */
 	public void setFkName(java.lang.String value) {
 		setValue(11, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.cross_references.fk_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FK_NAME</code>.
 	 */
 	public java.lang.String getFkName() {
 		return (java.lang.String) getValue(11);
 	}
 
 	/**
-	 * Setter for <code>information_schema.cross_references.pk_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PK_NAME</code>.
 	 */
 	public void setPkName(java.lang.String value) {
 		setValue(12, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.cross_references.pk_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PK_NAME</code>.
 	 */
 	public java.lang.String getPkName() {
 		return (java.lang.String) getValue(12);
 	}
 
 	/**
-	 * Setter for <code>information_schema.cross_references.deferrability</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.DEFERRABILITY</code>.
 	 */
 	public void setDeferrability(java.lang.Short value) {
 		setValue(13, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.cross_references.deferrability</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.CROSS_REFERENCES.DEFERRABILITY</code>.
 	 */
 	public java.lang.Short getDeferrability() {
 		return (java.lang.Short) getValue(13);

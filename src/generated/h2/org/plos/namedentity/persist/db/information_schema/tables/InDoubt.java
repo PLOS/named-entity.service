@@ -16,10 +16,10 @@ package org.plos.namedentity.persist.db.information_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InDoubt extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.information_schema.tables.records.InDoubtRecord> {
 
-	private static final long serialVersionUID = -999055962;
+	private static final long serialVersionUID = -1193144890;
 
 	/**
-	 * The reference instance of <code>information_schema.in_doubt</code>
+	 * The reference instance of <code>INFORMATION_SCHEMA.IN_DOUBT</code>
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.InDoubt IN_DOUBT = new org.plos.namedentity.persist.db.information_schema.tables.InDoubt();
 
@@ -32,24 +32,24 @@ public class InDoubt extends org.jooq.impl.TableImpl<org.plos.namedentity.persis
 	}
 
 	/**
-	 * The column <code>information_schema.in_doubt.transaction</code>.
+	 * The column <code>INFORMATION_SCHEMA.IN_DOUBT.TRANSACTION</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.InDoubtRecord, java.lang.String> TRANSACTION = createField("transaction", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.InDoubtRecord, java.lang.String> TRANSACTION = createField("TRANSACTION", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.in_doubt.state</code>.
+	 * The column <code>INFORMATION_SCHEMA.IN_DOUBT.STATE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.InDoubtRecord, java.lang.String> STATE = createField("state", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.InDoubtRecord, java.lang.String> STATE = createField("STATE", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * Create a <code>information_schema.in_doubt</code> table reference
+	 * Create a <code>INFORMATION_SCHEMA.IN_DOUBT</code> table reference
 	 */
 	public InDoubt() {
-		this("in_doubt", null);
+		this("IN_DOUBT", null);
 	}
 
 	/**
-	 * Create an aliased <code>information_schema.in_doubt</code> table reference
+	 * Create an aliased <code>INFORMATION_SCHEMA.IN_DOUBT</code> table reference
 	 */
 	public InDoubt(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.information_schema.tables.InDoubt.IN_DOUBT);
