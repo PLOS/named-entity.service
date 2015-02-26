@@ -159,6 +159,16 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
           .fetchInto((Class<T>)t.getClass());
       }
       //TODO - lookup by phone number
+    } else if (t instanceof Individualprofile) {
+      Individualprofile p = (Individualprofile)t;
+
+      // lookup by displayName
+      if (p.getDisplayname() != null) {
+        return context
+            .select().from(INDIVIDUALPROFILES)
+            .where(INDIVIDUALPROFILES.DISPLAYNAME.equal( p.getDisplayname()) )
+            .fetchInto((Class<T>)t.getClass());
+      }
     }
 
     throw new UnsupportedOperationException("findByAttribute hasn't been implemented for all types");

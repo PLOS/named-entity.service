@@ -1,10 +1,7 @@
 package org.plos.namedentity.rest;
 
-import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
-
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
-import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Degree;
@@ -73,6 +70,31 @@ public class IndividualsResource extends NedResource {
 
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findComposite(individualProfile.getNedid(), IndividualComposite.class)).build();
+    } catch (NedException e) {
+      return nedError(e, "Find individual failed");
+    } catch (Exception e) {
+      return serverError(e, "Find individual failed");
+    }
+  }
+  
+  @GET
+  @Path("/displayname/{displayName}")
+  @ApiOperation(value = "Read individual by display name", response = IndividualComposite.class)
+  public Response readIndividualByDisplayname
+      (@PathParam("displayName") String displayName) {
+    try {
+
+      Individualprofile p = new Individualprofile();
+
+      p.setDisplayname(displayName);
+
+      List<Individualprofile> results = crudService.findByAttribute(p);
+
+      if (results.size() == 0)
+        throw new NedException(NedException.ErrorType.EntityNotFound, "Individual not found");
+
+      return Response.status(Response.Status.OK).entity(
+          namedEntityService.findComposite(results.get(0).getNedid(), IndividualComposite.class)).build();
     } catch (NedException e) {
       return nedError(e, "Find individual failed");
     } catch (Exception e) {

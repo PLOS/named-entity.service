@@ -21,6 +21,7 @@ import static org.plos.namedentity.api.NedException.ErrorType.*;
 import org.plos.namedentity.api.NedException;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.regex.Pattern;
 
 @XmlRootElement
 public class Individualprofile extends Entity {
@@ -42,17 +43,26 @@ public class Individualprofile extends Entity {
 
   private Boolean isactive = true;
 
+  private static Pattern rejectedCharsDisplayName = Pattern.compile("[$&+,:;=?@#|/\\s^~`%<>{}\\[\\]\\\\]");
+  private static Integer displaynameMaxLength = 60;
+
   @Override
   public void validate() {
 
     if (firstname == null || firstname.length() < 1)
-      throw new NedException(FirstnameError, "firstname is too short");
+      throw new NedException(FirstnameError, "first name is too short");
 
     if (lastname == null || lastname.length() < 1)
-      throw new NedException(LastnameError, "lastname is too short");
+      throw new NedException(LastnameError, "last name is too short");
 
     if (displayname == null || displayname.length() < 1)
-      throw new NedException(DisplayNameError, "displayname is too short");
+      throw new NedException(DisplayNameError, "display name is too short");
+
+    if (displayname.length() > displaynameMaxLength)
+      throw new NedException(DisplayNameError, "display name cannot be longer then " + displaynameMaxLength);
+
+    if (rejectedCharsDisplayName.matcher(displayname).find())
+      throw new NedException(DisplayNameError, "display name can not contain any of the following characters: $ & + , / : ; = ? @ < > # % { } | \\ ^ ~ [ ] ` or a space");
   }
 
   public Boolean getIsactive() {
