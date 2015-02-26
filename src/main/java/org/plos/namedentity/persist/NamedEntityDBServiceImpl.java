@@ -173,6 +173,36 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   }
 
   @Override
+  public <T extends Entity> Integer findTypeClassByInspection(String typename, T t) {
+
+    if (t instanceof Uniqueidentifier) {
+      Uniqueidentifier uid = (Uniqueidentifier)t;
+
+      Globaltypes gt = GLOBALTYPES.as("gt");
+      Namedentityidentifiers nei = NAMEDENTITYIDENTIFIERS.as("nei");
+
+      SelectConditionStep<Record1<String>> query = this.context
+        .select(gt.SHORTDESCRIPTION) 
+        .from(nei)
+        .join(gt).on(gt.ID.equal(nei.TYPEID))
+        .where(nei.ID.equal(uid.getNedid()));
+
+      String entityType = query.fetchOne().value1();
+
+      if ("Individual".equals(entityType)) {
+        return findTypeClass(TypeClassEnum.UID_INDIVIDUAL_TYPES.getName());
+      } else if ("Organization".equals(entityType)) {
+        return findTypeClass(TypeClassEnum.UID_ORGANIZATION_TYPES.getName());
+      }
+
+      throw new NedValidationException("Invalid uid record");
+    }
+
+    throw new UnsupportedOperationException(
+      "findTypeClassByInspection() hasn't been implemented for " + t.getClass().getSimpleName());
+  }
+
+  @Override
   public Integer findTypeClass(String description) {
 
     //TODO - cache type classes and values ?
@@ -476,7 +506,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .join(u).on(o.NEDID.equal(u.NEDID))
         .join(gt).on(u.TYPEID.equal(gt.ID))
         .join(td).on(gt.TYPEID.equal(td.ID))
-                 .and(td.DESCRIPTION.eq(TypeClassEnum.UID_INDIVIDUAL_TYPES.getName()))
+                 .and(td.DESCRIPTION.eq(TypeClassEnum.UID_ORGANIZATION_TYPES.getName()))
         .where(u.UNIQUEIDENTIFIER.equal(uid)).and(gt.SHORTDESCRIPTION.equal(srcType)).fetchAny();
 
     if (record == null)

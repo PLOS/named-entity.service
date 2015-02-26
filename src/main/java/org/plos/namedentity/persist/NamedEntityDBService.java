@@ -43,6 +43,8 @@ public interface NamedEntityDBService {
 
   <T extends Entity> List<T> findResolvedEntities(Integer nedId, Class<T> clazz);
 
+  <T extends Entity> Integer findTypeClassByInspection(String typename, T t);
+
   Integer findTypeClass(String description);
 
   Integer findTypeValue(Integer typeClassId, String name);
