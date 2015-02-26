@@ -16,10 +16,10 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sourcefields extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.SourcefieldsRecord> {
 
-	private static final long serialVersionUID = -1728360032;
+	private static final long serialVersionUID = -98425440;
 
 	/**
-	 * The reference instance of <code>namedentities.sourcefields</code>
+	 * The reference instance of <code>NAMEDENTITIES.SOURCEFIELDS</code>
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Sourcefields SOURCEFIELDS = new org.plos.namedentity.persist.db.namedentities.tables.Sourcefields();
 
@@ -32,39 +32,39 @@ public class Sourcefields extends org.jooq.impl.TableImpl<org.plos.namedentity.p
 	}
 
 	/**
-	 * The column <code>namedentities.sourcefields.id</code>.
+	 * The column <code>NAMEDENTITIES.SOURCEFIELDS.ID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SourcefieldsRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SourcefieldsRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>namedentities.sourcefields.sourcetable</code>.
+	 * The column <code>NAMEDENTITIES.SOURCEFIELDS.SOURCETABLE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SourcefieldsRecord, java.lang.String> SOURCETABLE = createField("sourcetable", org.jooq.impl.SQLDataType.CLOB.length(2147483647).nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SourcefieldsRecord, java.lang.String> SOURCETABLE = createField("SOURCETABLE", org.jooq.impl.SQLDataType.CLOB.length(2147483647).nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.sourcefields.sourcefield</code>.
+	 * The column <code>NAMEDENTITIES.SOURCEFIELDS.SOURCEFIELD</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SourcefieldsRecord, java.lang.String> SOURCEFIELD = createField("sourcefield", org.jooq.impl.SQLDataType.CLOB.length(2147483647).nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SourcefieldsRecord, java.lang.String> SOURCEFIELD = createField("SOURCEFIELD", org.jooq.impl.SQLDataType.CLOB.length(2147483647).nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.sourcefields.created</code>.
+	 * The column <code>NAMEDENTITIES.SOURCEFIELDS.CREATED</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SourcefieldsRecord, java.sql.Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SourcefieldsRecord, java.sql.Timestamp> CREATED = createField("CREATED", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>namedentities.sourcefields.lastmodified</code>.
+	 * The column <code>NAMEDENTITIES.SOURCEFIELDS.LASTMODIFIED</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SourcefieldsRecord, java.sql.Timestamp> LASTMODIFIED = createField("lastmodified", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.SourcefieldsRecord, java.sql.Timestamp> LASTMODIFIED = createField("LASTMODIFIED", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * Create a <code>namedentities.sourcefields</code> table reference
+	 * Create a <code>NAMEDENTITIES.SOURCEFIELDS</code> table reference
 	 */
 	public Sourcefields() {
-		this("sourcefields", null);
+		this("SOURCEFIELDS", null);
 	}
 
 	/**
-	 * Create an aliased <code>namedentities.sourcefields</code> table reference
+	 * Create an aliased <code>NAMEDENTITIES.SOURCEFIELDS</code> table reference
 	 */
 	public Sourcefields(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.namedentities.tables.Sourcefields.SOURCEFIELDS);

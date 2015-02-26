@@ -16,17 +16,17 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CatalogsRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.CatalogsRecord> implements org.jooq.Record1<java.lang.String> {
 
-	private static final long serialVersionUID = -1707329027;
+	private static final long serialVersionUID = -732569219;
 
 	/**
-	 * Setter for <code>information_schema.catalogs.catalog_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.CATALOGS.CATALOG_NAME</code>.
 	 */
 	public void setCatalogName(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.catalogs.catalog_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.CATALOGS.CATALOG_NAME</code>.
 	 */
 	public java.lang.String getCatalogName() {
 		return (java.lang.String) getValue(0);

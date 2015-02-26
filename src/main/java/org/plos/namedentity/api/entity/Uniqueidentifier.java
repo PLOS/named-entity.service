@@ -16,13 +16,15 @@
  */
 package org.plos.namedentity.api.entity;
 
-import static org.plos.namedentity.api.NedException.ErrorType.*;
-
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.persist.UidTypeEnum;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.regex.Pattern;
+
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidOrcidId;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidSalesforceId;
+import static org.plos.namedentity.api.NedException.ErrorType.UidValueError;
 
 @XmlRootElement
 public class Uniqueidentifier extends Entity {
@@ -44,10 +46,10 @@ public class Uniqueidentifier extends Entity {
 
     if (UidTypeEnum.SALESFORCE.getName().equals(type)
         && !validateSalesforceId(uniqueidentifier))
-      throw new NedException(InvalidSalesforceId, "invalid salesforce id:" + uniqueidentifier);
+      throw new NedException(InvalidSalesforceId, "invalid salesforce ID " + uniqueidentifier);
     else if (UidTypeEnum.ORCID.getName().equals(type)
         && !validateOrcid(uniqueidentifier))
-      throw new NedException(InvalidOrcidId, "invalid ORCID id:" + uniqueidentifier);
+      throw new NedException(InvalidOrcidId, "invalid ORCID " + uniqueidentifier);
   }
 
   private static boolean validateSalesforceId(String salesforceId) {

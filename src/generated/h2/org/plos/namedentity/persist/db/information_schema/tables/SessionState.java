@@ -16,10 +16,10 @@ package org.plos.namedentity.persist.db.information_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SessionState extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.information_schema.tables.records.SessionStateRecord> {
 
-	private static final long serialVersionUID = -2072345120;
+	private static final long serialVersionUID = -1318872576;
 
 	/**
-	 * The reference instance of <code>information_schema.session_state</code>
+	 * The reference instance of <code>INFORMATION_SCHEMA.SESSION_STATE</code>
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.SessionState SESSION_STATE = new org.plos.namedentity.persist.db.information_schema.tables.SessionState();
 
@@ -32,24 +32,24 @@ public class SessionState extends org.jooq.impl.TableImpl<org.plos.namedentity.p
 	}
 
 	/**
-	 * The column <code>information_schema.session_state.key</code>.
+	 * The column <code>INFORMATION_SCHEMA.SESSION_STATE.KEY</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SessionStateRecord, java.lang.String> KEY = createField("key", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SessionStateRecord, java.lang.String> KEY = createField("KEY", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.session_state.sql</code>.
+	 * The column <code>INFORMATION_SCHEMA.SESSION_STATE.SQL</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SessionStateRecord, java.lang.String> SQL = createField("sql", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.SessionStateRecord, java.lang.String> SQL = createField("SQL", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * Create a <code>information_schema.session_state</code> table reference
+	 * Create a <code>INFORMATION_SCHEMA.SESSION_STATE</code> table reference
 	 */
 	public SessionState() {
-		this("session_state", null);
+		this("SESSION_STATE", null);
 	}
 
 	/**
-	 * Create an aliased <code>information_schema.session_state</code> table reference
+	 * Create an aliased <code>INFORMATION_SCHEMA.SESSION_STATE</code> table reference
 	 */
 	public SessionState(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.information_schema.tables.SessionState.SESSION_STATE);

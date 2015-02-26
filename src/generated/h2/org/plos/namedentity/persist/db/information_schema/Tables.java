@@ -4,7 +4,7 @@
 package org.plos.namedentity.persist.db.information_schema;
 
 /**
- * Convenience access to all tables in information_schema
+ * Convenience access to all tables in INFORMATION_SCHEMA
  */
 @javax.annotation.Generated(
 	value = {
@@ -17,147 +17,147 @@ package org.plos.namedentity.persist.db.information_schema;
 public class Tables {
 
 	/**
-	 * The table information_schema.query_statistics
+	 * The table INFORMATION_SCHEMA.QUERY_STATISTICS
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.QueryStatistics QUERY_STATISTICS = org.plos.namedentity.persist.db.information_schema.tables.QueryStatistics.QUERY_STATISTICS;
 
 	/**
-	 * The table information_schema.session_state
+	 * The table INFORMATION_SCHEMA.SESSION_STATE
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.SessionState SESSION_STATE = org.plos.namedentity.persist.db.information_schema.tables.SessionState.SESSION_STATE;
 
 	/**
-	 * The table information_schema.locks
+	 * The table INFORMATION_SCHEMA.LOCKS
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Locks LOCKS = org.plos.namedentity.persist.db.information_schema.tables.Locks.LOCKS;
 
 	/**
-	 * The table information_schema.sessions
+	 * The table INFORMATION_SCHEMA.SESSIONS
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Sessions SESSIONS = org.plos.namedentity.persist.db.information_schema.tables.Sessions.SESSIONS;
 
 	/**
-	 * The table information_schema.triggers
+	 * The table INFORMATION_SCHEMA.TRIGGERS
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Triggers TRIGGERS = org.plos.namedentity.persist.db.information_schema.tables.Triggers.TRIGGERS;
 
 	/**
-	 * The table information_schema.domains
+	 * The table INFORMATION_SCHEMA.DOMAINS
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Domains DOMAINS = org.plos.namedentity.persist.db.information_schema.tables.Domains.DOMAINS;
 
 	/**
-	 * The table information_schema.constants
+	 * The table INFORMATION_SCHEMA.CONSTANTS
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Constants CONSTANTS = org.plos.namedentity.persist.db.information_schema.tables.Constants.CONSTANTS;
 
 	/**
-	 * The table information_schema.function_columns
+	 * The table INFORMATION_SCHEMA.FUNCTION_COLUMNS
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.FunctionColumns FUNCTION_COLUMNS = org.plos.namedentity.persist.db.information_schema.tables.FunctionColumns.FUNCTION_COLUMNS;
 
 	/**
-	 * The table information_schema.constraints
+	 * The table INFORMATION_SCHEMA.CONSTRAINTS
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Constraints CONSTRAINTS = org.plos.namedentity.persist.db.information_schema.tables.Constraints.CONSTRAINTS;
 
 	/**
-	 * The table information_schema.cross_references
+	 * The table INFORMATION_SCHEMA.CROSS_REFERENCES
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.CrossReferences CROSS_REFERENCES = org.plos.namedentity.persist.db.information_schema.tables.CrossReferences.CROSS_REFERENCES;
 
 	/**
-	 * The table information_schema.in_doubt
+	 * The table INFORMATION_SCHEMA.IN_DOUBT
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.InDoubt IN_DOUBT = org.plos.namedentity.persist.db.information_schema.tables.InDoubt.IN_DOUBT;
 
 	/**
-	 * The table information_schema.views
+	 * The table INFORMATION_SCHEMA.VIEWS
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Views VIEWS = org.plos.namedentity.persist.db.information_schema.tables.Views.VIEWS;
 
 	/**
-	 * The table information_schema.collations
+	 * The table INFORMATION_SCHEMA.COLLATIONS
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Collations COLLATIONS = org.plos.namedentity.persist.db.information_schema.tables.Collations.COLLATIONS;
 
 	/**
-	 * The table information_schema.column_privileges
+	 * The table INFORMATION_SCHEMA.COLUMN_PRIVILEGES
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.ColumnPrivileges COLUMN_PRIVILEGES = org.plos.namedentity.persist.db.information_schema.tables.ColumnPrivileges.COLUMN_PRIVILEGES;
 
 	/**
-	 * The table information_schema.table_privileges
+	 * The table INFORMATION_SCHEMA.TABLE_PRIVILEGES
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.TablePrivileges TABLE_PRIVILEGES = org.plos.namedentity.persist.db.information_schema.tables.TablePrivileges.TABLE_PRIVILEGES;
 
 	/**
-	 * The table information_schema.schemata
+	 * The table INFORMATION_SCHEMA.SCHEMATA
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Schemata SCHEMATA = org.plos.namedentity.persist.db.information_schema.tables.Schemata.SCHEMATA;
 
 	/**
-	 * The table information_schema.function_aliases
+	 * The table INFORMATION_SCHEMA.FUNCTION_ALIASES
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.FunctionAliases FUNCTION_ALIASES = org.plos.namedentity.persist.db.information_schema.tables.FunctionAliases.FUNCTION_ALIASES;
 
 	/**
-	 * The table information_schema.rights
+	 * The table INFORMATION_SCHEMA.RIGHTS
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Rights RIGHTS = org.plos.namedentity.persist.db.information_schema.tables.Rights.RIGHTS;
 
 	/**
-	 * The table information_schema.roles
+	 * The table INFORMATION_SCHEMA.ROLES
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Roles ROLES = org.plos.namedentity.persist.db.information_schema.tables.Roles.ROLES;
 
 	/**
-	 * The table information_schema.users
+	 * The table INFORMATION_SCHEMA.USERS
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Users USERS = org.plos.namedentity.persist.db.information_schema.tables.Users.USERS;
 
 	/**
-	 * The table information_schema.sequences
+	 * The table INFORMATION_SCHEMA.SEQUENCES
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Sequences SEQUENCES = org.plos.namedentity.persist.db.information_schema.tables.Sequences.SEQUENCES;
 
 	/**
-	 * The table information_schema.help
+	 * The table INFORMATION_SCHEMA.HELP
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Help HELP = org.plos.namedentity.persist.db.information_schema.tables.Help.HELP;
 
 	/**
-	 * The table information_schema.settings
+	 * The table INFORMATION_SCHEMA.SETTINGS
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Settings SETTINGS = org.plos.namedentity.persist.db.information_schema.tables.Settings.SETTINGS;
 
 	/**
-	 * The table information_schema.catalogs
+	 * The table INFORMATION_SCHEMA.CATALOGS
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Catalogs CATALOGS = org.plos.namedentity.persist.db.information_schema.tables.Catalogs.CATALOGS;
 
 	/**
-	 * The table information_schema.type_info
+	 * The table INFORMATION_SCHEMA.TYPE_INFO
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.TypeInfo TYPE_INFO = org.plos.namedentity.persist.db.information_schema.tables.TypeInfo.TYPE_INFO;
 
 	/**
-	 * The table information_schema.table_types
+	 * The table INFORMATION_SCHEMA.TABLE_TYPES
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.TableTypes TABLE_TYPES = org.plos.namedentity.persist.db.information_schema.tables.TableTypes.TABLE_TYPES;
 
 	/**
-	 * The table information_schema.indexes
+	 * The table INFORMATION_SCHEMA.INDEXES
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Indexes INDEXES = org.plos.namedentity.persist.db.information_schema.tables.Indexes.INDEXES;
 
 	/**
-	 * The table information_schema.columns
+	 * The table INFORMATION_SCHEMA.COLUMNS
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Columns COLUMNS = org.plos.namedentity.persist.db.information_schema.tables.Columns.COLUMNS;
 
 	/**
-	 * The table information_schema.tables
+	 * The table INFORMATION_SCHEMA.TABLES
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Tables TABLES = org.plos.namedentity.persist.db.information_schema.tables.Tables.TABLES;
 }

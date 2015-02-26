@@ -16,101 +16,101 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UniqueidentifiersRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord> implements org.jooq.Record7<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -1304491961;
+	private static final long serialVersionUID = 699476743;
 
 	/**
-	 * Setter for <code>namedentities.uniqueidentifiers.id</code>.
+	 * Setter for <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.uniqueidentifiers.id</code>.
+	 * Getter for <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.uniqueidentifiers.nedid</code>.
+	 * Setter for <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.NEDID</code>.
 	 */
 	public void setNedid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.uniqueidentifiers.nedid</code>.
+	 * Getter for <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.NEDID</code>.
 	 */
 	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.uniqueidentifiers.typeid</code>.
+	 * Setter for <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.TYPEID</code>.
 	 */
 	public void setTypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.uniqueidentifiers.typeid</code>.
+	 * Getter for <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.TYPEID</code>.
 	 */
 	public java.lang.Integer getTypeid() {
 		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>namedentities.uniqueidentifiers.uniqueidentifier</code>.
+	 * Setter for <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.UNIQUEIDENTIFIER</code>.
 	 */
 	public void setUniqueidentifier(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.uniqueidentifiers.uniqueidentifier</code>.
+	 * Getter for <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.UNIQUEIDENTIFIER</code>.
 	 */
 	public java.lang.String getUniqueidentifier() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>namedentities.uniqueidentifiers.sourcetypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.SOURCETYPEID</code>.
 	 */
 	public void setSourcetypeid(java.lang.Integer value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.uniqueidentifiers.sourcetypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.SOURCETYPEID</code>.
 	 */
 	public java.lang.Integer getSourcetypeid() {
 		return (java.lang.Integer) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>namedentities.uniqueidentifiers.created</code>.
+	 * Setter for <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.CREATED</code>.
 	 */
 	public void setCreated(java.sql.Timestamp value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.uniqueidentifiers.created</code>.
+	 * Getter for <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.CREATED</code>.
 	 */
 	public java.sql.Timestamp getCreated() {
 		return (java.sql.Timestamp) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>namedentities.uniqueidentifiers.lastmodified</code>.
+	 * Setter for <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.LASTMODIFIED</code>.
 	 */
 	public void setLastmodified(java.sql.Timestamp value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.uniqueidentifiers.lastmodified</code>.
+	 * Getter for <code>NAMEDENTITIES.UNIQUEIDENTIFIERS.LASTMODIFIED</code>.
 	 */
 	public java.sql.Timestamp getLastmodified() {
 		return (java.sql.Timestamp) getValue(6);

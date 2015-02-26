@@ -54,7 +54,7 @@ public class NedExceptionTranslator {
     h2DupeLegalnamePattern = Pattern.compile("^.*Unique index .*violation:.*ORGANIZATIONS\\(LEGALNAME, SOURCETYPEID\\).*$", Pattern.DOTALL);
 
     mysqlDupeUidPattern = Pattern.compile("^.*Duplicate entry '(.*)' for key 'uniqueIdentifier'.*$", Pattern.DOTALL);
-    h2DupeUidPattern = Pattern.compile("^.*Unique index .*violation:.*UNIQUEIDENTIFIERS\\(TYPEID, UNIQUEIDENTIFIER, SOURCETYPEID\\).*$", Pattern.DOTALL);
+    h2DupeUidPattern = Pattern.compile("^.*Unique index .*violation:.*UNIQUEIDENTIFIERS\\(UNIQUEIDENTIFIER, SOURCETYPEID, TYPEID\\).*$", Pattern.DOTALL);
   }
 
   public static NedException translate(DataAccessException dae) {

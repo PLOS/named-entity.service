@@ -16,10 +16,10 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Journals extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord> {
 
-	private static final long serialVersionUID = -2127439478;
+	private static final long serialVersionUID = 76743050;
 
 	/**
-	 * The reference instance of <code>namedentities.journals</code>
+	 * The reference instance of <code>NAMEDENTITIES.JOURNALS</code>
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Journals JOURNALS = new org.plos.namedentity.persist.db.namedentities.tables.Journals();
 
@@ -32,39 +32,39 @@ public class Journals extends org.jooq.impl.TableImpl<org.plos.namedentity.persi
 	}
 
 	/**
-	 * The column <code>namedentities.journals.id</code>.
+	 * The column <code>NAMEDENTITIES.JOURNALS.ID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>namedentities.journals.nedid</code>.
+	 * The column <code>NAMEDENTITIES.JOURNALS.NEDID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord, java.lang.Integer> NEDID = createField("nedid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord, java.lang.Integer> NEDID = createField("NEDID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.journals.typeid</code>.
+	 * The column <code>NAMEDENTITIES.JOURNALS.TYPEID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord, java.lang.Integer> TYPEID = createField("typeid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord, java.lang.Integer> TYPEID = createField("TYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.journals.created</code>.
+	 * The column <code>NAMEDENTITIES.JOURNALS.CREATED</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord, java.sql.Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord, java.sql.Timestamp> CREATED = createField("CREATED", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>namedentities.journals.lastmodified</code>.
+	 * The column <code>NAMEDENTITIES.JOURNALS.LASTMODIFIED</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord, java.sql.Timestamp> LASTMODIFIED = createField("lastmodified", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.JournalsRecord, java.sql.Timestamp> LASTMODIFIED = createField("LASTMODIFIED", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * Create a <code>namedentities.journals</code> table reference
+	 * Create a <code>NAMEDENTITIES.JOURNALS</code> table reference
 	 */
 	public Journals() {
-		this("journals", null);
+		this("JOURNALS", null);
 	}
 
 	/**
-	 * Create an aliased <code>namedentities.journals</code> table reference
+	 * Create an aliased <code>NAMEDENTITIES.JOURNALS</code> table reference
 	 */
 	public Journals(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.namedentities.tables.Journals.JOURNALS);
