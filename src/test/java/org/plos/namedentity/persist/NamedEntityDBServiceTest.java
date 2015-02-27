@@ -835,7 +835,7 @@ public class NamedEntityDBServiceTest {
 
         nedDBSvc.validate(uidEntity);
         fail();
-      } catch (NedValidationException expected) { }
+      } catch (NedException expected) { }
     }
   }
 

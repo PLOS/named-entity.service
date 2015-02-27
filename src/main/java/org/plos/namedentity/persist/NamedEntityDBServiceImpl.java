@@ -198,8 +198,6 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       } else if ("Organization".equals(entityType)) {
         return findTypeClass(TypeClassEnum.UID_ORGANIZATION_TYPES.getName());
       }
-
-      throw new NedValidationException("Invalid uid record");
     }
 
     throw new UnsupportedOperationException(
@@ -306,7 +304,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         Integer count = query.fetchOne().value1();
         if (count > 0) return; // valid uid record
       }
-      throw new NedValidationException("Invalid uid record");
+      throw new NedException(ErrorType.UidValueError, 
+        String.format("Invalid uniqueidentifier type (%s) for entity", uid.getType()));
     }
 
     throw new UnsupportedOperationException(
