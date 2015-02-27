@@ -308,8 +308,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         String.format("Invalid uniqueidentifier type (%s) for entity", uid.getType()));
     }
 
-    throw new UnsupportedOperationException(
-      "validate() hasn't been implemented for " + t.getClass().getSimpleName());
+    // entity is a type we don't yet handle. do nothing.
   }
 
   private Integer findTypeIdByName(TypeClassEnum typeClass, String typeValue) {
