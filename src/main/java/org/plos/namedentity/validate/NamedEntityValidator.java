@@ -32,12 +32,18 @@ public class NamedEntityValidator implements Ordered {
   // allows us to control ordering of advice (ascending priority, 1 highest)
   private int order;
 
+  private EntityPostValidator entityPostValidator;
+
   public int getOrder() {
     return order;
   }
 
   public void setOrder(int order) {
     this.order = order;
+  }
+
+  public void setEntityPostValidator(EntityPostValidator entityPostValidator) {
+    this.entityPostValidator = entityPostValidator;
   }
 
   public Object validate(ProceedingJoinPoint call) throws Throwable {
@@ -67,7 +73,8 @@ public class NamedEntityValidator implements Ordered {
     /*  AFTER-VALIDATION                                                  */
     /* ------------------------------------------------------------------ */
 
-    //TODO - perform after-validation here.
+    // an exception will be thrown if post validation fails
+    entityPostValidator.validate(returnValue);
 
     return returnValue;
   }
