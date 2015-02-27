@@ -17,6 +17,8 @@
 package org.plos.namedentity.persist;
 
 import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.Set;
 
 public enum UidTypeEnum {
 
@@ -40,6 +42,22 @@ public enum UidTypeEnum {
       if (uidtype.name.equals(name))
         return uidtype;
     return INVALID_UID_TYPE;
+  }
+
+  public static Set<String> getOrganizationUidTypeNames() {
+    Set<String> organizationUidTypeNames = new HashSet<>();
+    organizationUidTypeNames.add(RINGGOLD.getName());
+    return organizationUidTypeNames;
+  }
+
+  public static Set<String> getIndividualUidTypeNames() {
+    Set<String> individualUidTypeNames = new HashSet<>();
+    individualUidTypeNames.add(AMBRA.getName());
+    individualUidTypeNames.add(CAS.getName());
+    individualUidTypeNames.add(EDITORIAL_MANAGER.getName());
+    individualUidTypeNames.add(ORCID.getName());
+    individualUidTypeNames.add(SALESFORCE.getName());
+    return individualUidTypeNames;
   }
 
   public String getName() {
