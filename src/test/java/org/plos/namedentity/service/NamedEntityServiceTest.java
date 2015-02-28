@@ -40,6 +40,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.plos.namedentity.api.NedException.ErrorType.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
@@ -656,6 +657,99 @@ public class NamedEntityServiceTest {
     uniqueidentifiers.add(uid);
 
     composite.setUniqueidentifiers(uniqueidentifiers);
+
+    return composite;
+  }
+
+  @Test
+  public void testInvalidUidTypeForIndividual() {
+
+    // Composite #1 (Valid)
+
+    IndividualComposite composite1 = newIndividualComposite();
+    IndividualComposite savedComposite1 = namedEntityService.createComposite(composite1, IndividualComposite.class);
+
+    Integer emailId1   = savedComposite1.getEmails().get(0).getId();
+    Integer profileId1 = savedComposite1.getIndividualprofiles().get(0).getId();
+
+    // Composite #2 (Invalid UID Type, Not Saved, Rolled Back)
+
+    IndividualComposite composite2 = newIndividualComposite();
+
+    List<Uniqueidentifier> uids = composite2.getUniqueidentifiers();
+
+    Uniqueidentifier uid = new Uniqueidentifier();
+    uid.setSource("Ambra");
+    uid.setType("Ringgold");
+    uid.setUniqueidentifier(UUID.randomUUID().toString());
+    uids.add( uid );
+
+    composite2.setUniqueidentifiers(uids);
+
+    try {
+      namedEntityService.createComposite(composite2, IndividualComposite.class);
+    } catch (NedException expected) {
+      assertEquals(InvalidTypeValue, expected.getErrorType());
+    }
+
+    // Composite #3 (Valid)
+
+    IndividualComposite composite3 = newIndividualComposite();
+    IndividualComposite savedComposite3 = namedEntityService.createComposite(composite3, IndividualComposite.class);
+
+    Integer emailId3   = savedComposite3.getEmails().get(0).getId();
+    Integer profileId3 = savedComposite1.getIndividualprofiles().get(0).getId();
+
+    int x = 1;
+  }
+
+  private IndividualComposite newIndividualComposite() {
+    IndividualComposite composite = new IndividualComposite();
+
+    /* ---------------------------------------------------------------------- */
+    /*  PROFILES                                                              */
+    /* ---------------------------------------------------------------------- */
+
+    Individualprofile individualProfile = new Individualprofile();
+    individualProfile.setFirstname("firstname");
+    individualProfile.setLastname("lastname");
+    individualProfile.setDisplayname("displayname"+ UUID.randomUUID().toString());
+    individualProfile.setSource("Editorial Manager");
+
+    List<Individualprofile> individualProfiles = new ArrayList<>();
+    individualProfiles.add(individualProfile);
+
+    composite.setIndividualprofiles(individualProfiles);
+
+    /* ---------------------------------------------------------------------- */
+    /*  EMAILS                                                                */
+    /* ---------------------------------------------------------------------- */
+
+    Email email = new Email();
+    email.setType("Personal");
+    email.setEmailaddress(UUID.randomUUID().toString()+"@foo.com");
+    email.setSource("Editorial Manager");
+
+    List<Email> emails = new ArrayList<>();
+    emails.add(email);
+
+    composite.setEmails(emails);
+
+    /* ---------------------------------------------------------------------- */
+    /*  UNIQUE IDENTIFIERS                                                    */
+    /* ---------------------------------------------------------------------- */
+
+    Uniqueidentifier uid = new Uniqueidentifier();
+    uid.setSource("Ambra");
+    uid.setType("CAS");
+    uid.setUniqueidentifier(UUID.randomUUID().toString());
+
+    List<Uniqueidentifier> uniqueidentifiers = new ArrayList<>();
+    uniqueidentifiers.add(uid);
+
+    composite.setUniqueidentifiers(uniqueidentifiers);
+
+    // return minimal valid individual composite
 
     return composite;
   }
