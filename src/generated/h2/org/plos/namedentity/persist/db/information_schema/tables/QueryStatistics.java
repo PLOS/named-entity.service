@@ -16,10 +16,10 @@ package org.plos.namedentity.persist.db.information_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class QueryStatistics extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord> {
 
-	private static final long serialVersionUID = -1667119060;
+	private static final long serialVersionUID = 1564353740;
 
 	/**
-	 * The reference instance of <code>information_schema.query_statistics</code>
+	 * The reference instance of <code>INFORMATION_SCHEMA.QUERY_STATISTICS</code>
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.QueryStatistics QUERY_STATISTICS = new org.plos.namedentity.persist.db.information_schema.tables.QueryStatistics();
 
@@ -32,74 +32,74 @@ public class QueryStatistics extends org.jooq.impl.TableImpl<org.plos.namedentit
 	}
 
 	/**
-	 * The column <code>information_schema.query_statistics.sql_statement</code>.
+	 * The column <code>INFORMATION_SCHEMA.QUERY_STATISTICS.SQL_STATEMENT</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.String> SQL_STATEMENT = createField("sql_statement", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.String> SQL_STATEMENT = createField("SQL_STATEMENT", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.query_statistics.execution_count</code>.
+	 * The column <code>INFORMATION_SCHEMA.QUERY_STATISTICS.EXECUTION_COUNT</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.Integer> EXECUTION_COUNT = createField("execution_count", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.Integer> EXECUTION_COUNT = createField("EXECUTION_COUNT", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>information_schema.query_statistics.min_execution_time</code>.
+	 * The column <code>INFORMATION_SCHEMA.QUERY_STATISTICS.MIN_EXECUTION_TIME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.Long> MIN_EXECUTION_TIME = createField("min_execution_time", org.jooq.impl.SQLDataType.BIGINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.Long> MIN_EXECUTION_TIME = createField("MIN_EXECUTION_TIME", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
 	/**
-	 * The column <code>information_schema.query_statistics.max_execution_time</code>.
+	 * The column <code>INFORMATION_SCHEMA.QUERY_STATISTICS.MAX_EXECUTION_TIME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.Long> MAX_EXECUTION_TIME = createField("max_execution_time", org.jooq.impl.SQLDataType.BIGINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.Long> MAX_EXECUTION_TIME = createField("MAX_EXECUTION_TIME", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
 	/**
-	 * The column <code>information_schema.query_statistics.cumulative_execution_time</code>.
+	 * The column <code>INFORMATION_SCHEMA.QUERY_STATISTICS.CUMULATIVE_EXECUTION_TIME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.Long> CUMULATIVE_EXECUTION_TIME = createField("cumulative_execution_time", org.jooq.impl.SQLDataType.BIGINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.Long> CUMULATIVE_EXECUTION_TIME = createField("CUMULATIVE_EXECUTION_TIME", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
 	/**
-	 * The column <code>information_schema.query_statistics.average_execution_time</code>.
+	 * The column <code>INFORMATION_SCHEMA.QUERY_STATISTICS.AVERAGE_EXECUTION_TIME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.Double> AVERAGE_EXECUTION_TIME = createField("average_execution_time", org.jooq.impl.SQLDataType.DOUBLE, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.Double> AVERAGE_EXECUTION_TIME = createField("AVERAGE_EXECUTION_TIME", org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
 	/**
-	 * The column <code>information_schema.query_statistics.std_dev_execution_time</code>.
+	 * The column <code>INFORMATION_SCHEMA.QUERY_STATISTICS.STD_DEV_EXECUTION_TIME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.Double> STD_DEV_EXECUTION_TIME = createField("std_dev_execution_time", org.jooq.impl.SQLDataType.DOUBLE, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.Double> STD_DEV_EXECUTION_TIME = createField("STD_DEV_EXECUTION_TIME", org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
 	/**
-	 * The column <code>information_schema.query_statistics.min_row_count</code>.
+	 * The column <code>INFORMATION_SCHEMA.QUERY_STATISTICS.MIN_ROW_COUNT</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.Integer> MIN_ROW_COUNT = createField("min_row_count", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.Integer> MIN_ROW_COUNT = createField("MIN_ROW_COUNT", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>information_schema.query_statistics.max_row_count</code>.
+	 * The column <code>INFORMATION_SCHEMA.QUERY_STATISTICS.MAX_ROW_COUNT</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.Integer> MAX_ROW_COUNT = createField("max_row_count", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.Integer> MAX_ROW_COUNT = createField("MAX_ROW_COUNT", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>information_schema.query_statistics.cumulative_row_count</code>.
+	 * The column <code>INFORMATION_SCHEMA.QUERY_STATISTICS.CUMULATIVE_ROW_COUNT</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.Long> CUMULATIVE_ROW_COUNT = createField("cumulative_row_count", org.jooq.impl.SQLDataType.BIGINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.Long> CUMULATIVE_ROW_COUNT = createField("CUMULATIVE_ROW_COUNT", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
 	/**
-	 * The column <code>information_schema.query_statistics.average_row_count</code>.
+	 * The column <code>INFORMATION_SCHEMA.QUERY_STATISTICS.AVERAGE_ROW_COUNT</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.Double> AVERAGE_ROW_COUNT = createField("average_row_count", org.jooq.impl.SQLDataType.DOUBLE, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.Double> AVERAGE_ROW_COUNT = createField("AVERAGE_ROW_COUNT", org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
 	/**
-	 * The column <code>information_schema.query_statistics.std_dev_row_count</code>.
+	 * The column <code>INFORMATION_SCHEMA.QUERY_STATISTICS.STD_DEV_ROW_COUNT</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.Double> STD_DEV_ROW_COUNT = createField("std_dev_row_count", org.jooq.impl.SQLDataType.DOUBLE, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.QueryStatisticsRecord, java.lang.Double> STD_DEV_ROW_COUNT = createField("STD_DEV_ROW_COUNT", org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
 	/**
-	 * Create a <code>information_schema.query_statistics</code> table reference
+	 * Create a <code>INFORMATION_SCHEMA.QUERY_STATISTICS</code> table reference
 	 */
 	public QueryStatistics() {
-		this("query_statistics", null);
+		this("QUERY_STATISTICS", null);
 	}
 
 	/**
-	 * Create an aliased <code>information_schema.query_statistics</code> table reference
+	 * Create an aliased <code>INFORMATION_SCHEMA.QUERY_STATISTICS</code> table reference
 	 */
 	public QueryStatistics(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.information_schema.tables.QueryStatistics.QUERY_STATISTICS);

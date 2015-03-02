@@ -16,31 +16,31 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SettingsRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.SettingsRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 54473316;
+	private static final long serialVersionUID = -29729180;
 
 	/**
-	 * Setter for <code>information_schema.settings.name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.SETTINGS.NAME</code>.
 	 */
 	public void setName(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.settings.name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.SETTINGS.NAME</code>.
 	 */
 	public java.lang.String getName() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>information_schema.settings.value</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.SETTINGS.VALUE</code>.
 	 */
 	public void setValue(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.settings.value</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.SETTINGS.VALUE</code>.
 	 */
 	public java.lang.String getValue() {
 		return (java.lang.String) getValue(1);

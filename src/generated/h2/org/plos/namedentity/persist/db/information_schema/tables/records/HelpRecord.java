@@ -16,73 +16,73 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class HelpRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.HelpRecord> implements org.jooq.Record5<java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 267201270;
+	private static final long serialVersionUID = -1355072842;
 
 	/**
-	 * Setter for <code>information_schema.help.id</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.HELP.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.help.id</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.HELP.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>information_schema.help.section</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.HELP.SECTION</code>.
 	 */
 	public void setSection(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.help.section</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.HELP.SECTION</code>.
 	 */
 	public java.lang.String getSection() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>information_schema.help.topic</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.HELP.TOPIC</code>.
 	 */
 	public void setTopic(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.help.topic</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.HELP.TOPIC</code>.
 	 */
 	public java.lang.String getTopic() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>information_schema.help.syntax</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.HELP.SYNTAX</code>.
 	 */
 	public void setSyntax(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.help.syntax</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.HELP.SYNTAX</code>.
 	 */
 	public java.lang.String getSyntax() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>information_schema.help.text</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.HELP.TEXT</code>.
 	 */
 	public void setText(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.help.text</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.HELP.TEXT</code>.
 	 */
 	public java.lang.String getText() {
 		return (java.lang.String) getValue(4);

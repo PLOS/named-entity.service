@@ -16,129 +16,129 @@ package org.plos.namedentity.persist.db.information_schema.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ViewsRecord extends org.jooq.impl.TableRecordImpl<org.plos.namedentity.persist.db.information_schema.tables.records.ViewsRecord> implements org.jooq.Record9<java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = 157428973;
+	private static final long serialVersionUID = -1795496659;
 
 	/**
-	 * Setter for <code>information_schema.views.table_catalog</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.VIEWS.TABLE_CATALOG</code>.
 	 */
 	public void setTableCatalog(java.lang.String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.views.table_catalog</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.VIEWS.TABLE_CATALOG</code>.
 	 */
 	public java.lang.String getTableCatalog() {
 		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>information_schema.views.table_schema</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.VIEWS.TABLE_SCHEMA</code>.
 	 */
 	public void setTableSchema(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.views.table_schema</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.VIEWS.TABLE_SCHEMA</code>.
 	 */
 	public java.lang.String getTableSchema() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>information_schema.views.table_name</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.VIEWS.TABLE_NAME</code>.
 	 */
 	public void setTableName(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.views.table_name</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.VIEWS.TABLE_NAME</code>.
 	 */
 	public java.lang.String getTableName() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>information_schema.views.view_definition</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.VIEWS.VIEW_DEFINITION</code>.
 	 */
 	public void setViewDefinition(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.views.view_definition</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.VIEWS.VIEW_DEFINITION</code>.
 	 */
 	public java.lang.String getViewDefinition() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>information_schema.views.check_option</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.VIEWS.CHECK_OPTION</code>.
 	 */
 	public void setCheckOption(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.views.check_option</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.VIEWS.CHECK_OPTION</code>.
 	 */
 	public java.lang.String getCheckOption() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>information_schema.views.is_updatable</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.VIEWS.IS_UPDATABLE</code>.
 	 */
 	public void setIsUpdatable(java.lang.String value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.views.is_updatable</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.VIEWS.IS_UPDATABLE</code>.
 	 */
 	public java.lang.String getIsUpdatable() {
 		return (java.lang.String) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>information_schema.views.status</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.VIEWS.STATUS</code>.
 	 */
 	public void setStatus(java.lang.String value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.views.status</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.VIEWS.STATUS</code>.
 	 */
 	public java.lang.String getStatus() {
 		return (java.lang.String) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>information_schema.views.remarks</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.VIEWS.REMARKS</code>.
 	 */
 	public void setRemarks(java.lang.String value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.views.remarks</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.VIEWS.REMARKS</code>.
 	 */
 	public java.lang.String getRemarks() {
 		return (java.lang.String) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>information_schema.views.id</code>.
+	 * Setter for <code>INFORMATION_SCHEMA.VIEWS.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>information_schema.views.id</code>.
+	 * Getter for <code>INFORMATION_SCHEMA.VIEWS.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(8);

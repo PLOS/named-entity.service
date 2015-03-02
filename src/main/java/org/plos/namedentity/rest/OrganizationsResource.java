@@ -16,10 +16,11 @@
  */
 package org.plos.namedentity.rest;
 
+import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
-import org.plos.namedentity.api.EntityNotFoundException;
-import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.Organization;
 
@@ -46,8 +47,8 @@ public class OrganizationsResource extends NedResource {
     try {
       return Response.status(Response.Status.OK).entity(
           namedEntityService.createComposite(composite, OrganizationComposite.class)).build();
-    } catch (NedValidationException e) {
-      return validationError(e, "Unable to create organization");
+    } catch (NedException e) {
+      return nedError(e, "Unable to create organization");
     } catch (Exception e) {
       return serverError(e, "Unable to create organization");
     }
@@ -62,8 +63,8 @@ public class OrganizationsResource extends NedResource {
       namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findComposite(nedId, OrganizationComposite.class)).build();
-    } catch (EntityNotFoundException e) {
-      return entityNotFound(e);
+    } catch (NedException e) {
+      return nedError(e, "Unable to read organization composite");
     } catch (Exception e) {
       return serverError(e, "Unable to read organization composite");
     }
@@ -81,11 +82,10 @@ public class OrganizationsResource extends NedResource {
 
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findComposite(organization.getNedid(), OrganizationComposite.class)).build();
-    } catch (EntityNotFoundException e) {
-      return entityNotFound(e);
+    } catch (NedException e) {
+      return nedError(e, "Find organization failed");
     } catch (Exception e) {
       return serverError(e, "Find organization failed");
     }
   }
-
 }

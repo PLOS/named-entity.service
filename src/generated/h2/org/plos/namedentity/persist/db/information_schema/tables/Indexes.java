@@ -16,10 +16,10 @@ package org.plos.namedentity.persist.db.information_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Indexes extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord> {
 
-	private static final long serialVersionUID = -134098204;
+	private static final long serialVersionUID = 466816836;
 
 	/**
-	 * The reference instance of <code>information_schema.indexes</code>
+	 * The reference instance of <code>INFORMATION_SCHEMA.INDEXES</code>
 	 */
 	public static final org.plos.namedentity.persist.db.information_schema.tables.Indexes INDEXES = new org.plos.namedentity.persist.db.information_schema.tables.Indexes();
 
@@ -32,119 +32,119 @@ public class Indexes extends org.jooq.impl.TableImpl<org.plos.namedentity.persis
 	}
 
 	/**
-	 * The column <code>information_schema.indexes.table_catalog</code>.
+	 * The column <code>INFORMATION_SCHEMA.INDEXES.TABLE_CATALOG</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> TABLE_CATALOG = createField("table_catalog", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> TABLE_CATALOG = createField("TABLE_CATALOG", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.indexes.table_schema</code>.
+	 * The column <code>INFORMATION_SCHEMA.INDEXES.TABLE_SCHEMA</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> TABLE_SCHEMA = createField("table_schema", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> TABLE_SCHEMA = createField("TABLE_SCHEMA", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.indexes.table_name</code>.
+	 * The column <code>INFORMATION_SCHEMA.INDEXES.TABLE_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> TABLE_NAME = createField("table_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> TABLE_NAME = createField("TABLE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.indexes.non_unique</code>.
+	 * The column <code>INFORMATION_SCHEMA.INDEXES.NON_UNIQUE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.Boolean> NON_UNIQUE = createField("non_unique", org.jooq.impl.SQLDataType.BOOLEAN, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.Boolean> NON_UNIQUE = createField("NON_UNIQUE", org.jooq.impl.SQLDataType.BOOLEAN, this, "");
 
 	/**
-	 * The column <code>information_schema.indexes.index_name</code>.
+	 * The column <code>INFORMATION_SCHEMA.INDEXES.INDEX_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> INDEX_NAME = createField("index_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> INDEX_NAME = createField("INDEX_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.indexes.ordinal_position</code>.
+	 * The column <code>INFORMATION_SCHEMA.INDEXES.ORDINAL_POSITION</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.Short> ORDINAL_POSITION = createField("ordinal_position", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.Short> ORDINAL_POSITION = createField("ORDINAL_POSITION", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
-	 * The column <code>information_schema.indexes.column_name</code>.
+	 * The column <code>INFORMATION_SCHEMA.INDEXES.COLUMN_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> COLUMN_NAME = createField("column_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> COLUMN_NAME = createField("COLUMN_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.indexes.cardinality</code>.
+	 * The column <code>INFORMATION_SCHEMA.INDEXES.CARDINALITY</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.Integer> CARDINALITY = createField("cardinality", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.Integer> CARDINALITY = createField("CARDINALITY", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>information_schema.indexes.primary_key</code>.
+	 * The column <code>INFORMATION_SCHEMA.INDEXES.PRIMARY_KEY</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.Boolean> PRIMARY_KEY = createField("primary_key", org.jooq.impl.SQLDataType.BOOLEAN, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.Boolean> PRIMARY_KEY = createField("PRIMARY_KEY", org.jooq.impl.SQLDataType.BOOLEAN, this, "");
 
 	/**
-	 * The column <code>information_schema.indexes.index_type_name</code>.
+	 * The column <code>INFORMATION_SCHEMA.INDEXES.INDEX_TYPE_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> INDEX_TYPE_NAME = createField("index_type_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> INDEX_TYPE_NAME = createField("INDEX_TYPE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.indexes.is_generated</code>.
+	 * The column <code>INFORMATION_SCHEMA.INDEXES.IS_GENERATED</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.Boolean> IS_GENERATED = createField("is_generated", org.jooq.impl.SQLDataType.BOOLEAN, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.Boolean> IS_GENERATED = createField("IS_GENERATED", org.jooq.impl.SQLDataType.BOOLEAN, this, "");
 
 	/**
-	 * The column <code>information_schema.indexes.index_type</code>.
+	 * The column <code>INFORMATION_SCHEMA.INDEXES.INDEX_TYPE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.Short> INDEX_TYPE = createField("index_type", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.Short> INDEX_TYPE = createField("INDEX_TYPE", org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
 	/**
-	 * The column <code>information_schema.indexes.asc_or_desc</code>.
+	 * The column <code>INFORMATION_SCHEMA.INDEXES.ASC_OR_DESC</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> ASC_OR_DESC = createField("asc_or_desc", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> ASC_OR_DESC = createField("ASC_OR_DESC", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.indexes.pages</code>.
+	 * The column <code>INFORMATION_SCHEMA.INDEXES.PAGES</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.Integer> PAGES = createField("pages", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.Integer> PAGES = createField("PAGES", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>information_schema.indexes.filter_condition</code>.
+	 * The column <code>INFORMATION_SCHEMA.INDEXES.FILTER_CONDITION</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> FILTER_CONDITION = createField("filter_condition", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> FILTER_CONDITION = createField("FILTER_CONDITION", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.indexes.remarks</code>.
+	 * The column <code>INFORMATION_SCHEMA.INDEXES.REMARKS</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> REMARKS = createField("remarks", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> REMARKS = createField("REMARKS", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.indexes.sql</code>.
+	 * The column <code>INFORMATION_SCHEMA.INDEXES.SQL</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> SQL = createField("sql", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> SQL = createField("SQL", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.indexes.id</code>.
+	 * The column <code>INFORMATION_SCHEMA.INDEXES.ID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>information_schema.indexes.sort_type</code>.
+	 * The column <code>INFORMATION_SCHEMA.INDEXES.SORT_TYPE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.Integer> SORT_TYPE = createField("sort_type", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.Integer> SORT_TYPE = createField("SORT_TYPE", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>information_schema.indexes.constraint_name</code>.
+	 * The column <code>INFORMATION_SCHEMA.INDEXES.CONSTRAINT_NAME</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> CONSTRAINT_NAME = createField("constraint_name", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> CONSTRAINT_NAME = createField("CONSTRAINT_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * The column <code>information_schema.indexes.index_class</code>.
+	 * The column <code>INFORMATION_SCHEMA.INDEXES.INDEX_CLASS</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> INDEX_CLASS = createField("index_class", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.information_schema.tables.records.IndexesRecord, java.lang.String> INDEX_CLASS = createField("INDEX_CLASS", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), this, "");
 
 	/**
-	 * Create a <code>information_schema.indexes</code> table reference
+	 * Create a <code>INFORMATION_SCHEMA.INDEXES</code> table reference
 	 */
 	public Indexes() {
-		this("indexes", null);
+		this("INDEXES", null);
 	}
 
 	/**
-	 * Create an aliased <code>information_schema.indexes</code> table reference
+	 * Create an aliased <code>INFORMATION_SCHEMA.INDEXES</code> table reference
 	 */
 	public Indexes(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.information_schema.tables.Indexes.INDEXES);

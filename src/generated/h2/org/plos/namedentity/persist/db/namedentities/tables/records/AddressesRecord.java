@@ -16,241 +16,241 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AddressesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.AddressesRecord> implements org.jooq.Record17<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Byte, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1694975920;
+	private static final long serialVersionUID = -454333776;
 
 	/**
-	 * Setter for <code>namedentities.addresses.id</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.ID</code>.
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.id</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.ID</code>.
 	 */
 	public java.lang.Integer getId() {
 		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.nedid</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.NEDID</code>.
 	 */
 	public void setNedid(java.lang.Integer value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.nedid</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.NEDID</code>.
 	 */
 	public java.lang.Integer getNedid() {
 		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.typeid</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.TYPEID</code>.
 	 */
 	public void setTypeid(java.lang.Integer value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.typeid</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.TYPEID</code>.
 	 */
 	public java.lang.Integer getTypeid() {
 		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.addressline1</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.ADDRESSLINE1</code>.
 	 */
 	public void setAddressline1(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.addressline1</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.ADDRESSLINE1</code>.
 	 */
 	public java.lang.String getAddressline1() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.addressline2</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.ADDRESSLINE2</code>.
 	 */
 	public void setAddressline2(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.addressline2</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.ADDRESSLINE2</code>.
 	 */
 	public java.lang.String getAddressline2() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.addressline3</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.ADDRESSLINE3</code>.
 	 */
 	public void setAddressline3(java.lang.String value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.addressline3</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.ADDRESSLINE3</code>.
 	 */
 	public java.lang.String getAddressline3() {
 		return (java.lang.String) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.city</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.CITY</code>.
 	 */
 	public void setCity(java.lang.String value) {
 		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.city</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.CITY</code>.
 	 */
 	public java.lang.String getCity() {
 		return (java.lang.String) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.statecodetypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.STATECODETYPEID</code>.
 	 */
 	public void setStatecodetypeid(java.lang.Integer value) {
 		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.statecodetypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.STATECODETYPEID</code>.
 	 */
 	public java.lang.Integer getStatecodetypeid() {
 		return (java.lang.Integer) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.countrycodetypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.COUNTRYCODETYPEID</code>.
 	 */
 	public void setCountrycodetypeid(java.lang.Integer value) {
 		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.countrycodetypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.COUNTRYCODETYPEID</code>.
 	 */
 	public java.lang.Integer getCountrycodetypeid() {
 		return (java.lang.Integer) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.postalcode</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.POSTALCODE</code>.
 	 */
 	public void setPostalcode(java.lang.String value) {
 		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.postalcode</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.POSTALCODE</code>.
 	 */
 	public java.lang.String getPostalcode() {
 		return (java.lang.String) getValue(9);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.maincontactnamedentityid</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.MAINCONTACTNAMEDENTITYID</code>.
 	 */
 	public void setMaincontactnamedentityid(java.lang.Integer value) {
 		setValue(10, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.maincontactnamedentityid</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.MAINCONTACTNAMEDENTITYID</code>.
 	 */
 	public java.lang.Integer getMaincontactnamedentityid() {
 		return (java.lang.Integer) getValue(10);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.latitude</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.LATITUDE</code>.
 	 */
 	public void setLatitude(java.lang.Integer value) {
 		setValue(11, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.latitude</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.LATITUDE</code>.
 	 */
 	public java.lang.Integer getLatitude() {
 		return (java.lang.Integer) getValue(11);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.longitude</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.LONGITUDE</code>.
 	 */
 	public void setLongitude(java.lang.Integer value) {
 		setValue(12, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.longitude</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.LONGITUDE</code>.
 	 */
 	public java.lang.Integer getLongitude() {
 		return (java.lang.Integer) getValue(12);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.sourcetypeid</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.SOURCETYPEID</code>.
 	 */
 	public void setSourcetypeid(java.lang.Integer value) {
 		setValue(13, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.sourcetypeid</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.SOURCETYPEID</code>.
 	 */
 	public java.lang.Integer getSourcetypeid() {
 		return (java.lang.Integer) getValue(13);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.isactive</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.ISACTIVE</code>.
 	 */
 	public void setIsactive(java.lang.Byte value) {
 		setValue(14, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.isactive</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.ISACTIVE</code>.
 	 */
 	public java.lang.Byte getIsactive() {
 		return (java.lang.Byte) getValue(14);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.created</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.CREATED</code>.
 	 */
 	public void setCreated(java.sql.Timestamp value) {
 		setValue(15, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.created</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.CREATED</code>.
 	 */
 	public java.sql.Timestamp getCreated() {
 		return (java.sql.Timestamp) getValue(15);
 	}
 
 	/**
-	 * Setter for <code>namedentities.addresses.lastmodified</code>.
+	 * Setter for <code>NAMEDENTITIES.ADDRESSES.LASTMODIFIED</code>.
 	 */
 	public void setLastmodified(java.sql.Timestamp value) {
 		setValue(16, value);
 	}
 
 	/**
-	 * Getter for <code>namedentities.addresses.lastmodified</code>.
+	 * Getter for <code>NAMEDENTITIES.ADDRESSES.LASTMODIFIED</code>.
 	 */
 	public java.sql.Timestamp getLastmodified() {
 		return (java.sql.Timestamp) getValue(16);

@@ -16,10 +16,10 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Phonenumbers extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord> {
 
-	private static final long serialVersionUID = 28980743;
+	private static final long serialVersionUID = -1701641753;
 
 	/**
-	 * The reference instance of <code>namedentities.phonenumbers</code>
+	 * The reference instance of <code>NAMEDENTITIES.PHONENUMBERS</code>
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Phonenumbers PHONENUMBERS = new org.plos.namedentity.persist.db.namedentities.tables.Phonenumbers();
 
@@ -32,64 +32,64 @@ public class Phonenumbers extends org.jooq.impl.TableImpl<org.plos.namedentity.p
 	}
 
 	/**
-	 * The column <code>namedentities.phonenumbers.id</code>.
+	 * The column <code>NAMEDENTITIES.PHONENUMBERS.ID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>namedentities.phonenumbers.nedid</code>.
+	 * The column <code>NAMEDENTITIES.PHONENUMBERS.NEDID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.Integer> NEDID = createField("nedid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.Integer> NEDID = createField("NEDID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.phonenumbers.typeid</code>.
+	 * The column <code>NAMEDENTITIES.PHONENUMBERS.TYPEID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.Integer> TYPEID = createField("typeid", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.Integer> TYPEID = createField("TYPEID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>namedentities.phonenumbers.countrycodetypeid</code>.
+	 * The column <code>NAMEDENTITIES.PHONENUMBERS.COUNTRYCODETYPEID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.Integer> COUNTRYCODETYPEID = createField("countrycodetypeid", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.Integer> COUNTRYCODETYPEID = createField("COUNTRYCODETYPEID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>namedentities.phonenumbers.phonenumber</code>.
+	 * The column <code>NAMEDENTITIES.PHONENUMBERS.PHONENUMBER</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.String> PHONENUMBER = createField("phonenumber", org.jooq.impl.SQLDataType.CLOB.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.String> PHONENUMBER = createField("PHONENUMBER", org.jooq.impl.SQLDataType.CLOB.length(2147483647), this, "");
 
 	/**
-	 * The column <code>namedentities.phonenumbers.extension</code>.
+	 * The column <code>NAMEDENTITIES.PHONENUMBERS.EXTENSION</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.String> EXTENSION = createField("extension", org.jooq.impl.SQLDataType.CLOB.length(2147483647), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.String> EXTENSION = createField("EXTENSION", org.jooq.impl.SQLDataType.CLOB.length(2147483647), this, "");
 
 	/**
-	 * The column <code>namedentities.phonenumbers.sourcetypeid</code>.
+	 * The column <code>NAMEDENTITIES.PHONENUMBERS.SOURCETYPEID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.Integer> SOURCETYPEID = createField("sourcetypeid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.Integer> SOURCETYPEID = createField("SOURCETYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.phonenumbers.isactive</code>.
+	 * The column <code>NAMEDENTITIES.PHONENUMBERS.ISACTIVE</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.Byte> ISACTIVE = createField("isactive", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.Byte> ISACTIVE = createField("ISACTIVE", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.phonenumbers.created</code>.
+	 * The column <code>NAMEDENTITIES.PHONENUMBERS.CREATED</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.sql.Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.sql.Timestamp> CREATED = createField("CREATED", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>namedentities.phonenumbers.lastmodified</code>.
+	 * The column <code>NAMEDENTITIES.PHONENUMBERS.LASTMODIFIED</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.sql.Timestamp> LASTMODIFIED = createField("lastmodified", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.sql.Timestamp> LASTMODIFIED = createField("LASTMODIFIED", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * Create a <code>namedentities.phonenumbers</code> table reference
+	 * Create a <code>NAMEDENTITIES.PHONENUMBERS</code> table reference
 	 */
 	public Phonenumbers() {
-		this("phonenumbers", null);
+		this("PHONENUMBERS", null);
 	}
 
 	/**
-	 * Create an aliased <code>namedentities.phonenumbers</code> table reference
+	 * Create an aliased <code>NAMEDENTITIES.PHONENUMBERS</code> table reference
 	 */
 	public Phonenumbers(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.namedentities.tables.Phonenumbers.PHONENUMBERS);

@@ -16,8 +16,10 @@
  */
 package org.plos.namedentity.api.entity;
 
+import static org.plos.namedentity.api.NedException.ErrorType.*;
+
 import org.apache.commons.validator.routines.EmailValidator;
-import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.NedException;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -36,8 +38,7 @@ public class Email extends Entity {
   public void validate() {
 
     if (emailaddress == null || !emailValidator.isValid(emailaddress))
-      throw new NedValidationException("Email not valid");
-
+      throw new NedException(InvalidEmail, "Email not valid");
   }
 
   public Integer getTypeid() {

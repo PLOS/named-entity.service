@@ -16,10 +16,10 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Degrees extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord> {
 
-	private static final long serialVersionUID = -924802333;
+	private static final long serialVersionUID = -165350653;
 
 	/**
-	 * The reference instance of <code>namedentities.degrees</code>
+	 * The reference instance of <code>NAMEDENTITIES.DEGREES</code>
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Degrees DEGREES = new org.plos.namedentity.persist.db.namedentities.tables.Degrees();
 
@@ -32,44 +32,44 @@ public class Degrees extends org.jooq.impl.TableImpl<org.plos.namedentity.persis
 	}
 
 	/**
-	 * The column <code>namedentities.degrees.id</code>.
+	 * The column <code>NAMEDENTITIES.DEGREES.ID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>namedentities.degrees.nedid</code>.
+	 * The column <code>NAMEDENTITIES.DEGREES.NEDID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> NEDID = createField("nedid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> NEDID = createField("NEDID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.degrees.typeid</code>.
+	 * The column <code>NAMEDENTITIES.DEGREES.TYPEID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> TYPEID = createField("typeid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> TYPEID = createField("TYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.degrees.sourcetypeid</code>.
+	 * The column <code>NAMEDENTITIES.DEGREES.SOURCETYPEID</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> SOURCETYPEID = createField("sourcetypeid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> SOURCETYPEID = createField("SOURCETYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedentities.degrees.created</code>.
+	 * The column <code>NAMEDENTITIES.DEGREES.CREATED</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.sql.Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.sql.Timestamp> CREATED = createField("CREATED", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>namedentities.degrees.lastmodified</code>.
+	 * The column <code>NAMEDENTITIES.DEGREES.LASTMODIFIED</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.sql.Timestamp> LASTMODIFIED = createField("lastmodified", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.sql.Timestamp> LASTMODIFIED = createField("LASTMODIFIED", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * Create a <code>namedentities.degrees</code> table reference
+	 * Create a <code>NAMEDENTITIES.DEGREES</code> table reference
 	 */
 	public Degrees() {
-		this("degrees", null);
+		this("DEGREES", null);
 	}
 
 	/**
-	 * Create an aliased <code>namedentities.degrees</code> table reference
+	 * Create an aliased <code>NAMEDENTITIES.DEGREES</code> table reference
 	 */
 	public Degrees(java.lang.String alias) {
 		this(alias, org.plos.namedentity.persist.db.namedentities.tables.Degrees.DEGREES);

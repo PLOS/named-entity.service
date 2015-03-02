@@ -17,7 +17,7 @@
 package org.plos.namedentity.api.entity;
 
 import org.junit.Test;
-import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.NedException;
 
 import static org.junit.Assert.fail;
 import static org.plos.namedentity.persist.UidTypeEnum.ORCID;
@@ -41,7 +41,7 @@ public class UniqueidentifierTest {
       try { 
         uid.validate();
         fail();
-      } catch (NedValidationException expected) { }
+      } catch (NedException expected) { }
     }
 
     Uniqueidentifier[] okSalesforceIds = {
@@ -84,7 +84,7 @@ public class UniqueidentifierTest {
       try {
         uid.validate();
         fail();
-      } catch (NedValidationException expected) { }
+      } catch (NedException expected) { }
     }
 
     for (Uniqueidentifier uid : goodIds) {

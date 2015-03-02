@@ -4,7 +4,7 @@
 package org.plos.namedentity.persist.db.namedentities;
 
 /**
- * A class modelling foreign key relationships between tables of the <code>namedentities</code> 
+ * A class modelling foreign key relationships between tables of the <code>NAMEDENTITIES</code> 
  * schema
  */
 @javax.annotation.Generated(
@@ -63,6 +63,7 @@ public class Keys {
 	public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord> CONSTRAINT_86 = UniqueKeys0.CONSTRAINT_86;
 	public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord> CONSTRAINT_2 = UniqueKeys0.CONSTRAINT_2;
 	public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord> CONSTRAINT_A = UniqueKeys0.CONSTRAINT_A;
+	public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord> CONSTRAINT_AFD9A = UniqueKeys0.CONSTRAINT_AFD9A;
 
 	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
@@ -151,6 +152,7 @@ public class Keys {
 		public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord> CONSTRAINT_86 = createUniqueKey(org.plos.namedentity.persist.db.namedentities.tables.Degrees.DEGREES, org.plos.namedentity.persist.db.namedentities.tables.Degrees.DEGREES.ID);
 		public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord> CONSTRAINT_2 = createUniqueKey(org.plos.namedentity.persist.db.namedentities.tables.Urls.URLS, org.plos.namedentity.persist.db.namedentities.tables.Urls.URLS.ID);
 		public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord> CONSTRAINT_A = createUniqueKey(org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS, org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS.ID);
+		public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord> CONSTRAINT_AFD9A = createUniqueKey(org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS, org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS.UNIQUEIDENTIFIER, org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS.SOURCETYPEID, org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS.TYPEID);
 	}
 
 	private static class ForeignKeys0 extends org.jooq.impl.AbstractKeys {

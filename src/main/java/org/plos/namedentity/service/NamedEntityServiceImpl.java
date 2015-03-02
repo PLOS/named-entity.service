@@ -16,6 +16,8 @@
  */
 package org.plos.namedentity.service;
 
+import static org.plos.namedentity.api.NedException.ErrorType.*;
+
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.persist.NamedEntityDBService;
@@ -23,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
@@ -191,8 +194,9 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
       return composite;
 
-    } catch (Exception e) {
-      throw new NedException("Invalid composite type");
+    } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+      throw new NedException(ServerError, String.format(
+        "findComposite(): unable to assemble composite (nedid=%d, %s)", nedId, clazz.getSimpleName()));
     }
   }
 

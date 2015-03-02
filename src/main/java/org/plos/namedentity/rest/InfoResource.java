@@ -19,12 +19,17 @@ package org.plos.namedentity.rest;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.ConfigInfo;
+import org.plos.namedentity.api.NedErrorResponse;
+import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.service.InfoService;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 @Path("/service")
 @Api("/service")
@@ -40,6 +45,23 @@ public class InfoResource {
   @ApiOperation(value = "Config info", response = ConfigInfo.class)
   public Response config() {
     return Response.ok(infoService.getConfig()).build();
+  }
+
+  @GET
+  @Path("/errorcodes")
+  @ApiOperation(value = "List possible error codes")
+  public Response errorcodes() {
+
+    List<NedErrorResponse> list = new ArrayList<>();
+
+    for (NedException.ErrorType error : NedException.ErrorType.values()) {
+      NedErrorResponse r = new NedErrorResponse();
+      r.errorCode = error.getErrorCode();
+      r.errorMsg = error.getErrorMessage();
+      list.add(r);
+    }
+
+    return Response.ok(new GenericEntity<List<NedErrorResponse>>(list){}).build();
   }
 
 }

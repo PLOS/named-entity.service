@@ -1,5 +1,7 @@
 package org.plos.namedentity.api;
 
+import static org.plos.namedentity.api.NedException.ErrorType.*;
+
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Composite;
 import org.plos.namedentity.api.entity.Email;
@@ -71,7 +73,7 @@ public class OrganizationComposite extends Composite implements Validatable {
     }
 
     if (organization == null)
-      throw new NedValidationException("Organization needs basic info");
+      throw new NedException(EntityNotDefined, "Organization needs basic info");
 
   }
 

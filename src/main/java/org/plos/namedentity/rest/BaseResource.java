@@ -17,14 +17,16 @@
 package org.plos.namedentity.rest;
 
 import org.apache.log4j.Logger;
-import org.plos.namedentity.api.EntityNotFoundException;
-import org.plos.namedentity.api.NedValidationException;
+import org.plos.namedentity.api.NedErrorResponse;
+import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.service.CrudService;
 import org.plos.namedentity.service.NamedEntityService;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
 
 public abstract class BaseResource {
 
@@ -42,29 +44,23 @@ public abstract class BaseResource {
 
   abstract protected String getNamedPartyType();
 
-
-  protected Response entityNotFound(String message) {
-    return Response.status(Response.Status.NOT_FOUND)   // 404
-        .entity("entity not found: " + message)
-        .type(MediaType.TEXT_PLAIN).build();
-  }
-
-  protected Response entityNotFound(EntityNotFoundException e) {
-    return entityNotFound(e.getMessage());
-  }
-
   protected Response serverError(Exception e, String message) {
     logger.error("internal error", e);
+
+    NedErrorResponse ner = new NedErrorResponse();
+    ner.failureMsg       = "Internal error";
+    ner.errorCode        = ServerError.getErrorCode();
+    ner.detailedMsg      = e.getMessage();
+
     return Response.status(Response.Status.INTERNAL_SERVER_ERROR)   // 5XX (server-side)
-        .entity(message + ". Internal error. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+                   .entity(ner)
+                   .build();
   }
 
-  protected Response validationError(NedValidationException e, String message) {
-    logger.error("validation exception", e);
-    return Response.status(Response.Status.BAD_REQUEST)             // 4XX (client-side)
-        .entity(message + ". Validation failed. Reason: " + e.getMessage())
-        .type(MediaType.TEXT_PLAIN).build();
+  protected Response nedError(NedException e, String message) {
+    logger.error("ned exception", e);                               // 4XX (client-side)
+    return Response.status(Response.Status.BAD_REQUEST)
+                   .entity(new NedErrorResponse(e, message))
+                   .build();
   }
-
 }
