@@ -47,6 +47,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
 import static org.plos.namedentity.persist.db.namedentities.Tables.GLOBALTYPES;
 import static org.plos.namedentity.persist.db.namedentities.Tables.TYPEDESCRIPTIONS;
 
@@ -837,6 +838,33 @@ public class NamedEntityDBServiceTest {
         fail();
       } catch (NedException expected) { }
     }
+  }
+
+  @Test
+  public void testFindTypeClassByInspection() {
+
+    // Unsupported Entity Type
+
+    try {
+      nedDBSvc.findTypeClassByInspection(null, new Email());
+      fail();
+    } catch (UnsupportedOperationException expected) { }
+
+    // Invalid Typename For Entity
+
+    Uniqueidentifier uid = new Uniqueidentifier();
+    try {
+      nedDBSvc.findTypeClassByInspection("bogustypename", uid);
+      fail();
+    } catch (NedException expected) {
+      assertEquals(ServerError, expected.getErrorType()); 
+    }
+
+    // Lookup type in Uniqueidentifier (happy path)
+
+    uid.setNedid( nedDBSvc.newNamedEntityId("Individual") );
+    Integer typeClassId = nedDBSvc.findTypeClassByInspection("type",uid);
+    assertTrue( typeClassId > 0 );
   }
 
   private Integer getSourceTypeId(String source) {

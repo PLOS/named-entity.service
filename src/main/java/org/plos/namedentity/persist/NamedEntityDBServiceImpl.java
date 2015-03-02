@@ -182,22 +182,28 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     if (t instanceof Uniqueidentifier) {
       Uniqueidentifier uid = (Uniqueidentifier)t;
 
-      Globaltypes gt = GLOBALTYPES.as("gt");
-      Namedentityidentifiers nei = NAMEDENTITYIDENTIFIERS.as("nei");
+      if ("type".equals(typename)) {    // UID Type
 
-      SelectConditionStep<Record1<String>> query = this.context
-        .select(gt.SHORTDESCRIPTION) 
-        .from(nei)
-        .join(gt).on(gt.ID.equal(nei.TYPEID))
-        .where(nei.ID.equal(uid.getNedid()));
+        Globaltypes gt = GLOBALTYPES.as("gt");
+        Namedentityidentifiers nei = NAMEDENTITYIDENTIFIERS.as("nei");
 
-      String entityType = query.fetchOne().value1();
+        SelectConditionStep<Record1<String>> query = this.context
+          .select(gt.SHORTDESCRIPTION) 
+          .from(nei)
+          .join(gt).on(gt.ID.equal(nei.TYPEID))
+          .where(nei.ID.equal(uid.getNedid()));
 
-      if ("Individual".equals(entityType)) {
-        return findTypeClass(TypeClassEnum.UID_INDIVIDUAL_TYPES.getName());
-      } else if ("Organization".equals(entityType)) {
-        return findTypeClass(TypeClassEnum.UID_ORGANIZATION_TYPES.getName());
+        String entityType = query.fetchOne().value1();
+
+        if ("Individual".equals(entityType)) {
+          return findTypeClass(TypeClassEnum.UID_INDIVIDUAL_TYPES.getName());
+        } else if ("Organization".equals(entityType)) {
+          return findTypeClass(TypeClassEnum.UID_ORGANIZATION_TYPES.getName());
+        }
       }
+
+      throw new NedException(String.format("Unable to determine type class for entity:%s type-field:%s",
+        t.getClass().getSimpleName(), typename));
     }
 
     throw new UnsupportedOperationException(

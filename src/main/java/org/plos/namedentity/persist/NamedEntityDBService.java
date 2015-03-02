@@ -43,6 +43,14 @@ public interface NamedEntityDBService {
 
   <T extends Entity> List<T> findResolvedEntities(Integer nedId, Class<T> clazz);
 
+  /**
+   * Finds type class for a type field in entity.
+   *
+   * @param typename - type field in entity pojo (attribute name)
+   * @param t        - entity instance
+   *
+   * @return primary key of type class for type field in entity.
+   */
   <T extends Entity> Integer findTypeClassByInspection(String typename, T t);
 
   Integer findTypeClass(String description);
