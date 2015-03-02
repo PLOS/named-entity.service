@@ -756,16 +756,17 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     // TODO: use reflection to set this for all Entities
 
     entityTableMap.put(Address.class, new TablePkPair(ADDRESSES, ADDRESSES.ID));
+    entityTableMap.put(Degree.class, new TablePkPair(DEGREES, DEGREES.ID));
     entityTableMap.put(Email.class, new TablePkPair(EMAILS, EMAILS.ID));
     entityTableMap.put(Globaltype.class, new TablePkPair(GLOBALTYPES, GLOBALTYPES.ID));
     entityTableMap.put(Individualprofile.class, new TablePkPair(INDIVIDUALPROFILES, INDIVIDUALPROFILES.ID));
     entityTableMap.put(Journal.class, new TablePkPair(JOURNALS, JOURNALS.ID));
+    entityTableMap.put(Namedentityidentifier.class, new TablePkPair(NAMEDENTITYIDENTIFIERS, NAMEDENTITYIDENTIFIERS.ID));
+    entityTableMap.put(Organization.class, new TablePkPair(ORGANIZATIONS, ORGANIZATIONS.ID));
     entityTableMap.put(Phonenumber.class, new TablePkPair(PHONENUMBERS, PHONENUMBERS.ID));
     entityTableMap.put(Role.class, new TablePkPair(ROLES, ROLES.ID));
     entityTableMap.put(Typedescription.class, new TablePkPair(TYPEDESCRIPTIONS, TYPEDESCRIPTIONS.ID));
     entityTableMap.put(Uniqueidentifier.class, new TablePkPair(UNIQUEIDENTIFIERS, UNIQUEIDENTIFIERS.ID));
-    entityTableMap.put(Organization.class, new TablePkPair(ORGANIZATIONS, ORGANIZATIONS.ID));
-    entityTableMap.put(Degree.class, new TablePkPair(DEGREES, DEGREES.ID));
     entityTableMap.put(Url.class, new TablePkPair(URLS, URLS.ID));
   }
   private static Table table(Class key) {

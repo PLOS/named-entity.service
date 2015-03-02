@@ -671,6 +671,7 @@ public class NamedEntityServiceTest {
 
     Integer emailId1   = savedComposite1.getEmails().get(0).getId();
     Integer profileId1 = savedComposite1.getIndividualprofiles().get(0).getId();
+    Integer nedId1     = savedComposite1.getEmails().get(0).getNedid();
 
     // Composite #2 (Invalid UID Type, Not Saved, Rolled Back)
 
@@ -698,9 +699,81 @@ public class NamedEntityServiceTest {
     IndividualComposite savedComposite3 = namedEntityService.createComposite(composite3, IndividualComposite.class);
 
     Integer emailId3   = savedComposite3.getEmails().get(0).getId();
-    Integer profileId3 = savedComposite1.getIndividualprofiles().get(0).getId();
+    Integer profileId3 = savedComposite3.getIndividualprofiles().get(0).getId();
+    Integer nedId3     = savedComposite3.getEmails().get(0).getNedid();
 
-    int x = 1;
+    // for composite #2, generated ids should have been burned up when the 
+    // transaction was rolled back (ie, hole exists in sequences). verify this.
+
+    Namedentityidentifier nei = crudService.findById(nedId1, Namedentityidentifier.class);
+    assertEquals(nedId1, nei.getId());
+  
+    try {
+      crudService.findById((nedId1+1), Namedentityidentifier.class);
+    } catch (NedException expected) {
+      assertEquals(EntityNotFound, expected.getErrorType());
+    }
+
+    nei = crudService.findById(nedId3, Namedentityidentifier.class);
+    assertEquals(nedId3, nei.getId());
+
+    assertTrue( (nedId3-nedId1) == 2 );
+    assertTrue( (emailId3-emailId1) == 2 );
+    assertTrue( (profileId3-profileId1) == 2 );
+  }
+
+  @Test
+  public void testInvalidUidTypeForOrganization() {
+
+    // Composite #1 (Valid)
+
+    OrganizationComposite composite1 = newOrganizationComposite();
+    OrganizationComposite savedComposite1 = namedEntityService.createComposite(composite1, OrganizationComposite.class);
+
+    Integer nedId1 = savedComposite1.getNedid();
+
+    // Composite #2 (Invalid UID Type, Not Saved, Rolled Back)
+
+    OrganizationComposite composite2 = newOrganizationComposite();
+
+    Uniqueidentifier uid = new Uniqueidentifier();
+    uid.setSource("Ambra");
+    uid.setType("CAS");
+    uid.setUniqueidentifier(UUID.randomUUID().toString());
+
+    List<Uniqueidentifier> uids = new ArrayList<>() ; uids.add( uid );
+
+    composite2.setUniqueidentifiers(uids);
+
+    try {
+      namedEntityService.createComposite(composite2, OrganizationComposite.class);
+    } catch (NedException expected) {
+      assertEquals(InvalidTypeValue, expected.getErrorType());
+    }
+
+    // Composite #3 (Valid)
+
+    OrganizationComposite composite3 = newOrganizationComposite();
+    OrganizationComposite savedComposite3 = namedEntityService.createComposite(composite3, OrganizationComposite.class);
+
+    Integer nedId3 = savedComposite3.getNedid();
+
+    // for composite #2, generated ids should have been burned up when the 
+    // transaction was rolled back (ie, hole exists in sequences). verify this.
+
+    Namedentityidentifier nei = crudService.findById(nedId1, Namedentityidentifier.class);
+    assertEquals(nedId1, nei.getId());
+
+    try {
+      crudService.findById((nedId1+1), Namedentityidentifier.class);
+    } catch (NedException expected) {
+      assertEquals(EntityNotFound, expected.getErrorType());
+    }
+
+    nei = crudService.findById(nedId3, Namedentityidentifier.class);
+    assertEquals(nedId3, nei.getId());
+
+    assertTrue( (nedId3-nedId1) == 2 );
   }
 
   private IndividualComposite newIndividualComposite() {
