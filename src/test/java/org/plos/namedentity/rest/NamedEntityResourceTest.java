@@ -16,8 +16,6 @@
  */
 package org.plos.namedentity.rest;
 
-import org.eclipse.persistence.jaxb.JAXBContextProperties;
-import org.eclipse.persistence.oxm.json.JsonStructureSource;
 import org.junit.Before;
 import org.junit.Test;
 import org.plos.namedentity.api.IndividualComposite;
@@ -31,38 +29,28 @@ import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonReader;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.stream.StreamSource;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.plos.namedentity.api.NedException.ErrorType.*;
+import static org.plos.namedentity.api.NedException.ErrorType.DupeEmailError;
+import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidTypeValue;
 
 public class NamedEntityResourceTest extends BaseResourceTest {
 
@@ -175,7 +163,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     /*  FIND INDIVIDUAL BY DISPLAY NAME                                   */
     /* ------------------------------------------------------------------ */
 
-    String displayname = "10bogus郑超Gebækaaaمن";
+    String displayname = "jdoe";
 
     String displaynameEncoded = URLEncoder.encode(displayname, "UTF-8");
 
@@ -293,7 +281,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals("Jane", profile1.getFirstname());
     assertEquals("Shmoe", profile1.getLastname());
     assertEquals("Janie", profile1.getNickname());
-    assertEquals("janeshmoe", profile1.getDisplayname());
+    assertEquals("10bogus郑超Gebækaaaمن", profile1.getDisplayname());
     assertEquals("Ambra", profile1.getSource());
 
     /* ------------------------------------------------------------------ */
