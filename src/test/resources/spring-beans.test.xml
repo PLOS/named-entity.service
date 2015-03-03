@@ -27,4 +27,8 @@
     <bean id="namedEntityService" class="org.plos.namedentity.service.NamedEntityServiceImpl">
         <property name="namedEntityDBService" ref="namedEntityDBService" />
     </bean>
+
+    <bean id="entityPostValidator"  class="org.plos.namedentity.validate.EntityPostValidator">
+        <property name="namedEntityDBService" ref="namedEntityDBService" />
+    </bean>
 </beans>
