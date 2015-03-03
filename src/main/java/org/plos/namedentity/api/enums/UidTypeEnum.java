@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.plos.namedentity.persist;
+package org.plos.namedentity.api.enums;
 
 import java.util.EnumSet;
 import java.util.HashSet;
