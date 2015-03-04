@@ -18,10 +18,10 @@ package org.plos.namedentity.api;
 
 import org.plos.namedentity.api.NedException.ErrorType;
 
-import java.util.Set;
-
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Date;
+import java.util.Set;
 
 @XmlRootElement
 public class NedErrorResponse {
@@ -41,7 +41,7 @@ public class NedErrorResponse {
     this.failureMsg = failureMsg;
   }
 
-  @XmlElement(name="problem")
+  @XmlElement(name = "problem")
   public String failureMsg;
 
   public int errorCode;
@@ -51,4 +51,6 @@ public class NedErrorResponse {
   public String detailedMsg;
 
   public Set<String> acceptableValues;
+
+  public Date timestamp = new Date();
 }

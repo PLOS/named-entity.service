@@ -31,6 +31,11 @@ import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.file.Files;
@@ -41,18 +46,14 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.plos.namedentity.api.NedException.ErrorType.*;
+
+import static org.plos.namedentity.api.NedException.ErrorType.DupeEmailError;
+import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidTypeValue;
 
 public class NamedEntityResourceTest extends BaseResourceTest {
 
@@ -165,7 +166,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     /*  FIND INDIVIDUAL BY DISPLAY NAME                                   */
     /* ------------------------------------------------------------------ */
 
-    String displayname = "10bogus郑超Gebækaaaمن";
+    String displayname = "jdoe";
 
     String displaynameEncoded = URLEncoder.encode(displayname, "UTF-8");
 
@@ -283,7 +284,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals("Jane", profile1.getFirstname());
     assertEquals("Shmoe", profile1.getLastname());
     assertEquals("Janie", profile1.getNickname());
-    assertEquals("janeshmoe", profile1.getDisplayname());
+    assertEquals("10bogus郑超Gebækaaaمن", profile1.getDisplayname());
     assertEquals("Ambra", profile1.getSource());
 
     /* ------------------------------------------------------------------ */

@@ -47,8 +47,8 @@ tomcat)
     ;;
 
 dbreset)
-    mysql -u root < src/main/resources/ned-schema.mysql.sql
-    mysql -u root < src/main/resources/ned-data.mysql.sql
+    mysql -u ned < src/main/resources/ned-schema.mysql.sql
+    mysql -u ned < src/main/resources/ned-data.mysql.sql
     ;;
     
 container-start)
@@ -104,4 +104,3 @@ container-test)
     exit 0
     ;;
 esac
-
