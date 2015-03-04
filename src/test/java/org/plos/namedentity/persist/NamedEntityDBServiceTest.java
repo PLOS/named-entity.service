@@ -24,6 +24,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.*;
+import org.plos.namedentity.api.enums.TypeClassEnum;
+import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.persist.db.namedentities.tables.Globaltypes;
 import org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions;
 import org.springframework.beans.factory.annotation.Autowired;
