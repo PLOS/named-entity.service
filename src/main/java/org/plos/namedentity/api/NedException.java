@@ -52,7 +52,6 @@ public class NedException extends RuntimeException {
     DupeLegalnameError               (1290, "Duplicate Legal Name"),
     DupeUidError                     (1300, "Duplicate Unique Identifier"),
 
-
     // Composite-Level Validation Errors
 
     NoProfileEntities                (1500, "No Profile Entities for Individual Composite"),

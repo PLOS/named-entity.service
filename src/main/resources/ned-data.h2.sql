@@ -579,14 +579,17 @@ INSERT INTO namedEntities.globalTypes (typeId, typeCode, shortDescription) VALUE
 INSERT INTO namedEntities.globalTypes (typeId, typeCode, shortDescription) VALUES ((select max(id) from namedEntities.typeDescriptions),'ZM','Zambia');
 INSERT INTO namedEntities.globalTypes (typeId, typeCode, shortDescription) VALUES ((select max(id) from namedEntities.typeDescriptions),'ZW','Zimbabwe');
 
-/* Unique Identifier Types */
-INSERT INTO namedEntities.typeDescriptions(description, howUsed) VALUES ('Unique Identifier Types','Ringgold, ORCID, etc');
-INSERT INTO namedEntities.globalTypes (typeId, shortDescription, typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions),'Ringgold','RG');
+/* Unique Identifier Types (INDIVIDUAL) */
+INSERT INTO namedEntities.typeDescriptions(description, howUsed) VALUES ('UID Individual Types','ORCID, etc');
 INSERT INTO namedEntities.globalTypes (typeId, shortDescription, typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions),'ORCID','ORC');
 INSERT INTO namedEntities.globalTypes (typeId, shortDescription, typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions),'Editorial Manager','EM');
 INSERT INTO namedEntities.globalTypes (typeId, shortDescription, typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions),'CAS','CAS');
 INSERT INTO namedEntities.globalTypes (typeId, shortDescription, typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions),'Salesforce','SF');
 INSERT INTO namedEntities.globalTypes (typeId, shortDescription, typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions),'Ambra','AMB');
+
+/* Unique Identifier Types (ORGANIZATION) */
+INSERT INTO namedEntities.typeDescriptions(description, howUsed) VALUES ('UID Organization Types','Ringgold, etc');
+INSERT INTO namedEntities.globalTypes (typeId, shortDescription, typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions),'Ringgold','RG');
 
 /* State and Province Codes */
 INSERT INTO namedEntities.typeDescriptions(description, howUsed) VALUES ('State and Province Codes','CA, ONT, etc');

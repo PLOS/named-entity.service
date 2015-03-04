@@ -494,7 +494,7 @@ public class CrudServiceTest {
     // lookup id for orcid
 
     Globaltype globalTypesearchCriteria = new Globaltype();
-    globalTypesearchCriteria.setTypeid( nedDBSvc.findTypeClass("Unique Identifier Types") );
+    globalTypesearchCriteria.setTypeid( nedDBSvc.findTypeClass("UID Individual Types") );
     globalTypesearchCriteria.setShortdescription("ORCID");
     List<Globaltype> globalTypesResult = crudService.findByAttribute(globalTypesearchCriteria);
     assertEquals(1, globalTypesResult.size());

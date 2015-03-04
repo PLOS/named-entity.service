@@ -40,6 +40,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.plos.namedentity.api.NedException.ErrorType.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
@@ -656,6 +657,172 @@ public class NamedEntityServiceTest {
     uniqueidentifiers.add(uid);
 
     composite.setUniqueidentifiers(uniqueidentifiers);
+
+    return composite;
+  }
+
+  @Test
+  public void testInvalidUidTypeForIndividual() {
+
+    // Composite #1 (Valid)
+
+    IndividualComposite composite1 = newIndividualComposite();
+    IndividualComposite savedComposite1 = namedEntityService.createComposite(composite1, IndividualComposite.class);
+
+    Uniqueidentifier uid1 = savedComposite1.getUniqueidentifiers().get(0);
+    Integer uidId1 = uid1.getId();
+    Integer nedId1 = uid1.getNedid();
+
+    // Composite #2 (Invalid UID Type, Not Saved, Rolled Back)
+
+    IndividualComposite composite2 = newIndividualComposite();
+
+    List<Uniqueidentifier> uids = composite2.getUniqueidentifiers();
+
+    Uniqueidentifier uid = new Uniqueidentifier();
+    uid.setSource("Ambra");
+    uid.setType("Ringgold");
+    uid.setUniqueidentifier(UUID.randomUUID().toString());
+    uids.add( uid );
+
+    composite2.setUniqueidentifiers(uids);
+
+    try {
+      namedEntityService.createComposite(composite2, IndividualComposite.class);
+    } catch (NedException expected) {
+      assertEquals(InvalidTypeValue, expected.getErrorType());
+    }
+
+    // Composite #3 (Valid)
+
+    IndividualComposite composite3 = newIndividualComposite();
+    IndividualComposite savedComposite3 = namedEntityService.createComposite(composite3, IndividualComposite.class);
+
+    Uniqueidentifier uid3 = savedComposite3.getUniqueidentifiers().get(0);
+    Integer uidId3 = uid3.getId();
+    Integer nedId3 = uid3.getNedid();
+
+    // for composite #2, generated ids should have been burned up when the 
+    // transaction was rolled back (ie, hole exists in sequences). verify this.
+
+    Namedentityidentifier nei = crudService.findById(nedId1, Namedentityidentifier.class);
+    assertEquals(nedId1, nei.getId());
+  
+    try {
+      crudService.findById((nedId1+1), Namedentityidentifier.class);
+    } catch (NedException expected) {
+      assertEquals(EntityNotFound, expected.getErrorType());
+    }
+
+    nei = crudService.findById(nedId3, Namedentityidentifier.class);
+    assertEquals(nedId3, nei.getId());
+
+    assertTrue((nedId3 - nedId1) == 2);
+    // uid insertion is non-deterministic ? difference could be 2 or 3.
+    assertTrue((uidId3 - uidId1) >= 2);
+  }
+
+  @Test
+  public void testInvalidUidTypeForOrganization() {
+
+    // Composite #1 (Valid)
+
+    OrganizationComposite composite1 = newOrganizationComposite();
+    OrganizationComposite savedComposite1 = namedEntityService.createComposite(composite1, OrganizationComposite.class);
+
+    Integer nedId1 = savedComposite1.getNedid();
+
+    // Composite #2 (Invalid UID Type, Not Saved, Rolled Back)
+
+    OrganizationComposite composite2 = newOrganizationComposite();
+
+    Uniqueidentifier uid = new Uniqueidentifier();
+    uid.setSource("Ambra");
+    uid.setType("CAS");
+    uid.setUniqueidentifier(UUID.randomUUID().toString());
+
+    List<Uniqueidentifier> uids = new ArrayList<>() ; uids.add( uid );
+
+    composite2.setUniqueidentifiers(uids);
+
+    try {
+      namedEntityService.createComposite(composite2, OrganizationComposite.class);
+    } catch (NedException expected) {
+      assertEquals(InvalidTypeValue, expected.getErrorType());
+    }
+
+    // Composite #3 (Valid)
+
+    OrganizationComposite composite3 = newOrganizationComposite();
+    OrganizationComposite savedComposite3 = namedEntityService.createComposite(composite3, OrganizationComposite.class);
+
+    Integer nedId3 = savedComposite3.getNedid();
+
+    // for composite #2, generated ids should have been burned up when the 
+    // transaction was rolled back (ie, hole exists in sequences). verify this.
+
+    Namedentityidentifier nei = crudService.findById(nedId1, Namedentityidentifier.class);
+    assertEquals(nedId1, nei.getId());
+
+    try {
+      crudService.findById((nedId1+1), Namedentityidentifier.class);
+    } catch (NedException expected) {
+      assertEquals(EntityNotFound, expected.getErrorType());
+    }
+
+    nei = crudService.findById(nedId3, Namedentityidentifier.class);
+    assertEquals(nedId3, nei.getId());
+
+    assertTrue( (nedId3-nedId1) == 2 );
+  }
+
+  private IndividualComposite newIndividualComposite() {
+    IndividualComposite composite = new IndividualComposite();
+
+    /* ---------------------------------------------------------------------- */
+    /*  PROFILES                                                              */
+    /* ---------------------------------------------------------------------- */
+
+    Individualprofile individualProfile = new Individualprofile();
+    individualProfile.setFirstname("firstname");
+    individualProfile.setLastname("lastname");
+    individualProfile.setDisplayname("displayname"+ UUID.randomUUID().toString());
+    individualProfile.setSource("Editorial Manager");
+
+    List<Individualprofile> individualProfiles = new ArrayList<>();
+    individualProfiles.add(individualProfile);
+
+    composite.setIndividualprofiles(individualProfiles);
+
+    /* ---------------------------------------------------------------------- */
+    /*  EMAILS                                                                */
+    /* ---------------------------------------------------------------------- */
+
+    Email email = new Email();
+    email.setType("Personal");
+    email.setEmailaddress(UUID.randomUUID().toString()+"@foo.com");
+    email.setSource("Editorial Manager");
+
+    List<Email> emails = new ArrayList<>();
+    emails.add(email);
+
+    composite.setEmails(emails);
+
+    /* ---------------------------------------------------------------------- */
+    /*  UNIQUE IDENTIFIERS                                                    */
+    /* ---------------------------------------------------------------------- */
+
+    Uniqueidentifier uid = new Uniqueidentifier();
+    uid.setSource("Ambra");
+    uid.setType("CAS");
+    uid.setUniqueidentifier(UUID.randomUUID().toString());
+
+    List<Uniqueidentifier> uniqueidentifiers = new ArrayList<>();
+    uniqueidentifiers.add(uid);
+
+    composite.setUniqueidentifiers(uniqueidentifiers);
+
+    // return minimal valid individual composite
 
     return composite;
   }

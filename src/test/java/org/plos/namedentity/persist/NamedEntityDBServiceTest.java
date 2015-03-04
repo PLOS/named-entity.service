@@ -47,6 +47,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
 import static org.plos.namedentity.persist.db.namedentities.Tables.GLOBALTYPES;
 import static org.plos.namedentity.persist.db.namedentities.Tables.TYPEDESCRIPTIONS;
 
@@ -726,7 +727,7 @@ public class NamedEntityDBServiceTest {
 
     // Create two individuals with the same Orcid#
 
-    Integer uidIdType = nedDBSvc.findTypeClass("Unique Identifier Types");
+    Integer uidIdType = nedDBSvc.findTypeClass(TypeClassEnum.UID_INDIVIDUAL_TYPES.getName());
 
     Integer orcidTypeId  = nedDBSvc.findTypeValue(uidIdType, UidTypeEnum.ORCID.getName());
     assertNotNull(orcidTypeId);
@@ -780,6 +781,90 @@ public class NamedEntityDBServiceTest {
 
     assertEquals(ORCID_ID, uids.get(0).getUniqueidentifier());
     assertEquals(nedId, uids.get(0).getNedid());
+  }
+
+  @Test
+  public void testValidate() {
+
+    Integer individualNedId       = nedDBSvc.newNamedEntityId("Individual");
+    Integer organizationNedId     = nedDBSvc.newNamedEntityId("Organization");
+
+    Integer individualUidTypeId   = nedDBSvc.findTypeClass("UID Individual Types");
+    Integer orcidTypeId           = nedDBSvc.findTypeValue(individualUidTypeId, UidTypeEnum.ORCID.getName());
+    String  orcidTypeValue        = "0000-0001-9430-319X_UIDSERVICE";
+
+    Integer organizationUidTypeId = nedDBSvc.findTypeClass("UID Organization Types");
+    Integer ringgoldTypeId        = nedDBSvc.findTypeValue(organizationUidTypeId, UidTypeEnum.RINGGOLD.getName());
+    String  ringgoldTypeValue     = "307713"; // ringgold id (aka, p_code)
+
+    Integer[] nedIds = { individualNedId, organizationNedId };
+
+    // VALID ENTITY/UID COMBOS
+
+    Integer[] validUidTypeIds     = { orcidTypeId, ringgoldTypeId };
+    String[]  validUidTypeValues  = { orcidTypeValue, ringgoldTypeValue };
+
+    for (int i = 0; i < nedIds.length; i++) {
+
+      Uniqueidentifier uidEntity = new Uniqueidentifier();
+      uidEntity.setNedid( nedIds[i] );
+      uidEntity.setTypeid( validUidTypeIds[i] );
+      uidEntity.setUniqueidentifier( validUidTypeValues[i]+i );
+      uidEntity.setSourcetypeid( getSourceTypeId(UidTypeEnum.EDITORIAL_MANAGER.getName()) );
+
+      Integer uidId = nedDBSvc.create(uidEntity) ; assertTrue(uidId > 0);
+      uidEntity.setId(uidId);
+
+      nedDBSvc.validate(uidEntity);
+    }
+
+    // *** INVALID ENTITY/UID COMBOS ***
+
+    Integer[] invalidUidTypeIds    = { ringgoldTypeId, orcidTypeId };
+    String[]  invalidUidTypeValues = { ringgoldTypeValue, orcidTypeValue };
+
+    for (int i = 0; i < nedIds.length; i++) {
+      try {
+        Uniqueidentifier uidEntity = new Uniqueidentifier();
+        uidEntity.setNedid( nedIds[i] );
+        uidEntity.setTypeid( invalidUidTypeIds[i] );
+        uidEntity.setUniqueidentifier( invalidUidTypeValues[i]+i );
+        uidEntity.setSourcetypeid( getSourceTypeId(UidTypeEnum.EDITORIAL_MANAGER.getName()) );
+
+        Integer uidId = nedDBSvc.create(uidEntity) ; assertTrue(uidId > 0);
+        uidEntity.setId(uidId);
+
+        nedDBSvc.validate(uidEntity);
+        fail();
+      } catch (NedException expected) { }
+    }
+  }
+
+  @Test
+  public void testFindTypeClassByInspection() {
+
+    // Unsupported Entity Type
+
+    try {
+      nedDBSvc.findTypeClassByInspection(null, new Email());
+      fail();
+    } catch (UnsupportedOperationException expected) { }
+
+    // Invalid Typename For Entity
+
+    Uniqueidentifier uid = new Uniqueidentifier();
+    try {
+      nedDBSvc.findTypeClassByInspection("bogustypename", uid);
+      fail();
+    } catch (NedException expected) {
+      assertEquals(ServerError, expected.getErrorType()); 
+    }
+
+    // Lookup type in Uniqueidentifier (happy path)
+
+    uid.setNedid( nedDBSvc.newNamedEntityId("Individual") );
+    Integer typeClassId = nedDBSvc.findTypeClassByInspection("type",uid);
+    assertTrue( typeClassId > 0 );
   }
 
   private Integer getSourceTypeId(String source) {

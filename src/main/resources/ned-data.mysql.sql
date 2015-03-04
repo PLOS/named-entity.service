@@ -595,15 +595,19 @@ INSERT INTO globalTypes (typeId, typeCode, shortDescription, created) VALUES (@t
 INSERT INTO globalTypes (typeId, typeCode, shortDescription, created) VALUES (@typeIdVar,'ZM','Zambia', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId, typeCode, shortDescription, created) VALUES (@typeIdVar,'ZW','Zimbabwe', CURRENT_TIMESTAMP);
 
-/* Unique Identifier Types */
-INSERT INTO typeDescriptions(description, howUsed) VALUES ('Unique Identifier Types','Ringgold, ORCID, etc');
-SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Unique Identifier Types';
-INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'Ringgold','RG', CURRENT_TIMESTAMP);
+/* Unique Identifier Types (INDIVIDUAL) */
+INSERT INTO typeDescriptions(description, howUsed) VALUES ('UID Individual Types','ORCID, etc');
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='UID Individual Types';
 INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'ORCID','ORC', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'Editorial Manager','EM', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'CAS','CAS', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'Salesforce','SF', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'Ambra','AMB', CURRENT_TIMESTAMP);
+
+/* Unique Identifier Types (ORGANIZATION) */
+INSERT INTO typeDescriptions(description, howUsed) VALUES ('UID Organization Types','ORCID, etc');
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='UID Organization Types';
+INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'Ringgold','RG', CURRENT_TIMESTAMP);
 
 /* State and Province Codes */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('State and Province Codes','CA, ONT, etc');

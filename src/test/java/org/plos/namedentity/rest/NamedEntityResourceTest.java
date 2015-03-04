@@ -18,6 +18,7 @@ package org.plos.namedentity.rest;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedErrorResponse;
 import org.plos.namedentity.api.OrganizationComposite;
@@ -28,6 +29,7 @@ import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.persist.UidTypeEnum;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
@@ -651,7 +653,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     /*  CREATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    String requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "uid.json")));
+    String requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "uid.ambra.json")));
 
     Response response = target(uidsURI)
       .request(MediaType.APPLICATION_JSON_TYPE)
@@ -748,6 +750,58 @@ public class NamedEntityResourceTest extends BaseResourceTest {
         .delete();
 
     assertEquals(204, response.getStatus());
+  }
+
+  @Test
+  public void testInvalidUidTypeForEntity() throws IOException, JAXBException {
+
+    /* ------------------------------------------------------------------ */
+    /*  INDIVIDUAL                                                        */
+    /* ------------------------------------------------------------------ */
+
+    String individualUidsURI = String.format("%s/%d/uids", INDIVIDUAL_URI, nedIndividualId);
+
+    String requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "uid.ringgold.json")));
+
+    Response response = target(individualUidsURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
+        .post(Entity.json(requestJson));
+
+    assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+
+    String responseJson = response.readEntity(String.class);
+
+    NedErrorResponse ner = unmarshalEntity(responseJson, NedErrorResponse.class, 
+                                           jsonUnmarshaller(NedErrorResponse.class));
+
+    assertEquals(InvalidTypeValue.getErrorCode(), ner.errorCode);
+    assertNotNull( ner.acceptableValues );
+    assertTrue( ner.acceptableValues.equals(UidTypeEnum.getIndividualUidTypeNames()) );
+    assertTrue( UidTypeEnum.getIndividualUidTypeNames().equals(ner.acceptableValues) );
+
+    /* ------------------------------------------------------------------ */
+    /*  ORGANIZATION                                                      */
+    /* ------------------------------------------------------------------ */
+
+    String organizationUidsURI = String.format("%s/%d/uids", ORGANIZATION_URI, nedOrganizationId);
+
+    requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "uid.ambra.json")));
+
+    response = target(organizationUidsURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
+        .post(Entity.json(requestJson));
+
+    assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+
+    responseJson = response.readEntity(String.class);
+
+    ner = unmarshalEntity(responseJson, NedErrorResponse.class, 
+                          jsonUnmarshaller(NedErrorResponse.class));
+
+    assertEquals(InvalidTypeValue.getErrorCode(), ner.errorCode);
+
+    assertTrue( ner.acceptableValues.equals(UidTypeEnum.getOrganizationUidTypeNames()) );
+    assertTrue( UidTypeEnum.getOrganizationUidTypeNames().equals(ner.acceptableValues) );
   }
 
   @Test
