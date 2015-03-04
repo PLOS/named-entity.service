@@ -29,7 +29,7 @@ import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
-import org.plos.namedentity.persist.UidTypeEnum;
+import org.plos.namedentity.api.enums.UidTypeEnum;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
@@ -50,6 +50,7 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+
 import static org.plos.namedentity.api.NedException.ErrorType.DupeEmailError;
 import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidTypeValue;

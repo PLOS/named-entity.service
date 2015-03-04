@@ -17,7 +17,7 @@
 package org.plos.namedentity.api.entity;
 
 import org.plos.namedentity.api.NedException;
-import org.plos.namedentity.persist.UidTypeEnum;
+import org.plos.namedentity.api.enums.UidTypeEnum;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.regex.Pattern;

@@ -29,11 +29,11 @@ class DockerTester:
   def containers_up(self):
     # TODO: cd to this directory in order to handled fig remote
     print ("Building containers... (be patient; this may take 5-10 minutes the first time)")
-    self.cmd_stream("fig build && fig up -d")
+    self.cmd_stream("docker-compose build && docker-compose up -d")
 
   def containers_down(self):
     print ("Stopping containers")
-    self.cmd_stream("fig stop && fig rm --force")
+    self.cmd_stream("docker-compose stop && docker-compose rm --force")
 
   def get_container_ip(self, name):
     return self.cmd_read("docker inspect --format '{{ .NetworkSettings.IPAddress }}' %s" % name)

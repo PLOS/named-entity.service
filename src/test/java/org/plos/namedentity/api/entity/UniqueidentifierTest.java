@@ -20,8 +20,8 @@ import org.junit.Test;
 import org.plos.namedentity.api.NedException;
 
 import static org.junit.Assert.fail;
-import static org.plos.namedentity.persist.UidTypeEnum.ORCID;
-import static org.plos.namedentity.persist.UidTypeEnum.SALESFORCE;
+import static org.plos.namedentity.api.enums.UidTypeEnum.ORCID;
+import static org.plos.namedentity.api.enums.UidTypeEnum.SALESFORCE;
 
 public class UniqueidentifierTest {
 

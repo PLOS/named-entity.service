@@ -30,6 +30,7 @@ import org.jooq.UpdatableRecord;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.NedException.ErrorType;
 import org.plos.namedentity.api.entity.*;
+import org.plos.namedentity.api.enums.TypeClassEnum;
 import org.plos.namedentity.persist.db.namedentities.tables.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
