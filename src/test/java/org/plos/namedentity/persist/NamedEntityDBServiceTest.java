@@ -49,6 +49,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidUrl;
 import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
 import static org.plos.namedentity.persist.db.namedentities.Tables.GLOBALTYPES;
 import static org.plos.namedentity.persist.db.namedentities.Tables.TYPEDESCRIPTIONS;
@@ -783,6 +784,60 @@ public class NamedEntityDBServiceTest {
 
     assertEquals(ORCID_ID, uids.get(0).getUniqueidentifier());
     assertEquals(nedId, uids.get(0).getNedid());
+  }
+
+  @Test
+  public void testUrlCRUD() {
+
+    // CREATE : Invalid URL
+
+    try {    
+      Url url = new Url();
+      url.setUrl("htp:/www.plos.org");
+      url.validate();
+    } catch (NedException expected) {
+      assertEquals(InvalidUrl, expected.getErrorType());
+    }
+
+    // CREATE : Valid URL
+
+    Url url = new Url();
+    url.setNedid(1);
+    url.setUrl("http://www.plos.org");
+    url.setSourcetypeid( getSourceTypeId(UidTypeEnum.AMBRA.getName()) );
+
+    url.validate();
+
+    Integer urlId = nedDBSvc.create( url );
+    assertNotNull(urlId);
+
+    // UPDATE
+
+    Url savedUrl = nedDBSvc.findById(urlId, Url.class);
+    savedUrl.setUrl("http://www.plos2.org");
+    assertTrue( nedDBSvc.update(savedUrl) );
+
+    // Get another instance of same address record.
+
+    Url savedUrl2 = nedDBSvc.findById(urlId, Url.class);
+    assertEquals(savedUrl, savedUrl2);
+
+    // FIND ALL URL's 
+
+    List<Url> allUrlsInDb = nedDBSvc.findAll(Url.class, 0, Integer.MAX_VALUE);
+    assertTrue( allUrlsInDb.size() > 0 );
+
+    // FIND BY JOIN-QUERY 
+
+    List<Url> urls = nedDBSvc.findResolvedEntities(savedUrl.getNedid(), Url.class);
+    assertTrue( urls.size() > 0 );
+    assertEquals(url.getNedid(), urls.get(0).getNedid());
+
+    // DELETE
+
+    Url urlToDelete = new Url();
+    urlToDelete.setId(urlId);
+    assertTrue( nedDBSvc.delete(urlToDelete) );
   }
 
   @Test
