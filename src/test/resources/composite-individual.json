@@ -15,14 +15,14 @@
       "biography"       : "bio",
       "source"          : "Ambra",
       "sourcemeta"      : "Ambra, Editorial Manager, Salesforce",
-      "displayname"     : "jdoe1",
+      "displayname"     : "jdoe",
       "displaynamemeta" : "required, must be unique, <= 60 characters",
       "isactive"        : "true"
     }
   ],
   "roles" : [
     {
-      "type"                : "Co-Author",
+      "type"                : "Author",
       "typemeta"            : "Roles: Author, Co-Author, Academic Editor (PLOS ONE), Named Party System Admin",
       "startdate"           : "2015-01-01",
       "enddate"             : "2015-01-22",
@@ -31,7 +31,7 @@
       "source"              : "Editorial Manager"
     },
     {
-      "type"            : "Author",
+      "type"            : "Co-Author",
       "startdate"       : "2015-02-01",
       "applicationtype" : "Editorial Manager",
       "source"          : "Editorial Manager"

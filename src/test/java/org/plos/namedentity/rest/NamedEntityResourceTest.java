@@ -469,8 +469,14 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertTrue(role1.getId() > 0);
     assertEquals(nedIndividualId, role1.getNedid());
     assertEquals("Editorial Manager", role1.getApplicationtype());
-    assertEquals("Academic Editor (PLOS ONE)", role1.getType());
-    assertEquals(START_DATE, role1.getStartdate());
+    assertEquals("Co-Author", role1.getType());
+
+    Role role2 = roles.get(2);
+    assertTrue(role2.getId() > 0);
+    assertEquals(nedIndividualId, role2.getNedid());
+    assertEquals("Editorial Manager", role2.getApplicationtype());
+    assertEquals("Academic Editor (PLOS ONE)", role2.getType());
+    assertEquals(START_DATE, role2.getStartdate());
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */
