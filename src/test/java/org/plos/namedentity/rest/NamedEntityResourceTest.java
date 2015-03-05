@@ -458,7 +458,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     responseJson = response.readEntity(String.class);
 
     List<Role> roles = unmarshalEntities(responseJson, Role.class, unmarshaller);
-    assertEquals(2, roles.size());
+    assertEquals(3, roles.size());
 
     Role role0 = roles.get(0);
     assertTrue(role0.getId() > 0);
