@@ -2,9 +2,11 @@ package org.plos.namedentity.rest;
 
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Degree;
+import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
@@ -16,9 +18,21 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchCriteria;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchQuery;
+import static org.plos.namedentity.api.NedException.ErrorType.TooManyResultsFound;
 
 @Path("/individuals")
 @Api(value="/individuals")
@@ -40,6 +54,76 @@ public class IndividualsResource extends NedResource {
     } catch (Exception e) {
       return serverError(e, "Unable to create individual");
     }
+  }
+
+  @GET
+  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+  @ApiOperation(value = "Find individual matching specified attribute.")
+  public Response findIndividuals(@QueryParam("entity")    String entity,
+                                  @QueryParam("attribute") String attribute,
+                                  @QueryParam("value")     String value) {
+    try {
+      if (isEmptyOrBlank(entity) || isEmptyOrBlank(attribute) || isEmptyOrBlank(value)) {
+        throw new NedException(InvalidSearchQuery);
+      }
+
+      List<Entity> results = crudService.findByAttribute( createSearchCriteria(entity,attribute,value) );
+
+      if (results.size() == 0)
+        throw new NedException(EntityNotFound, "Individual not found");
+      else if (results.size() > 10)
+        throw new NedException(TooManyResultsFound);
+
+      // entity records may refer to the same individual. we can filter these out
+      // by adding ned id's to a set.
+
+      Set<Integer> nedids = new HashSet<>();
+      for (Entity e : results) { nedids.add(e.getNedid()); }
+
+      // lookup composites for ned id's
+
+      List<IndividualComposite> composites = new ArrayList<>();
+      for (Integer nedid : nedids) {
+        composites.add(namedEntityService.findComposite(nedid, IndividualComposite.class));
+      }
+
+      return Response.status(Response.Status.OK).entity(
+        new GenericEntity<List<IndividualComposite>>(composites){}).build();
+
+    } catch (NedException e) {
+      return nedError(e, "findIndividuals() failed");
+    } catch (Exception e) {
+      return serverError(e, "findIndividuals() failed");
+    }
+  }
+
+  // define with package access to facilitate testing
+  Entity createSearchCriteria(String entity, String attribute, String value) {
+
+    String capitalizedEntity = Character.toUpperCase(entity.charAt(0)) + entity.substring(1);
+
+    Class clazz = null;
+    Entity searchEntity = null;
+
+    try {
+      clazz = Class.forName("org.plos.namedentity.api.entity." + capitalizedEntity);
+      searchEntity = (Entity) clazz.newInstance();
+
+      Field field = clazz.getDeclaredField(attribute);
+      field.setAccessible(true);
+      field.set(searchEntity, value);
+    }
+    catch (ClassNotFoundException e) {
+      throw new NedException(InvalidSearchCriteria, "Verify entity name: "+entity);
+    }
+    catch (NoSuchFieldException e) {
+      throw new NedException(InvalidSearchCriteria, "Verify attribute name: "+attribute);
+    }
+    catch (Exception e) {
+      throw new NedException(InvalidSearchCriteria);
+    }
+
+    return searchEntity;
   }
 
   @GET
@@ -91,7 +175,7 @@ public class IndividualsResource extends NedResource {
       List<Individualprofile> results = crudService.findByAttribute(p);
 
       if (results.size() == 0)
-        throw new NedException(NedException.ErrorType.EntityNotFound, "Individual not found");
+        throw new NedException(EntityNotFound, "Individual not found");
 
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findComposite(results.get(0).getNedid(), IndividualComposite.class)).build();
@@ -103,7 +187,7 @@ public class IndividualsResource extends NedResource {
   }
 
   /* ----------------------------------------------------------------------- */
-  /*  PROFILE CRUD                                                              */
+  /*  PROFILE CRUD                                                           */
   /* ----------------------------------------------------------------------- */
 
   @POST
