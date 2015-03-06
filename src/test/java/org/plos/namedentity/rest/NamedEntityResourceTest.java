@@ -226,6 +226,48 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     }
 
     /* ---------------------------------------------------------------------- */
+    /*  FIND BY DISPLAYNAME (UNICODE)                                         */
+    /* ---------------------------------------------------------------------- */
+    /*
+     *    Position   CodePoint     Description             Bytes (13 bytes)
+     *    --------   ---------     ----------------------  -----------------
+     *    1          U+2EC4        Cjk Radical West Two    3 bytes: e2 bb 84
+     *    2          U+2DBA        Ethiopic Syllable Cchi  3 bytes: e2 b6 ba
+     *    3          U+2375        Omega                   3 bytes: e2 8d b5
+     *    4          U+0034        Digit Four (4)          1 byte : 34
+     *    5          U+004D        Captial M               1 byte : 4d
+     *    6          U+00C2        Latin A w/ Cirumflex    2 bytes: c3 82
+     */
+    String unicodeDisplayname = "⻄ⶺ⍵4MÂ";
+
+    response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+      .post(Entity.json(String.format(compositeJsonTemplate(), 
+        unicodeDisplayname, UUID.randomUUID()+"@foo.com", "Ambra", UUID.randomUUID())));
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    response = target(INDIVIDUAL_URI).queryParam("entity","individualprofile")
+                                     .queryParam("attribute","displayname")
+                                     .queryParam("value", unicodeDisplayname)
+                                     .request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    jsonPayload = response.readEntity(String.class);
+
+    composites = unmarshalEntities(jsonPayload, IndividualComposite.class, unmarshaller);
+
+    for (IndividualComposite composite : composites) {
+      boolean foundDisplaynameMatch = false;
+      for (Individualprofile profile : composite.getIndividualprofiles()) {
+        if (unicodeDisplayname.equals(profile.getDisplayname())) {
+          foundDisplaynameMatch = true;
+        }
+      }
+      assertTrue(foundDisplaynameMatch);
+    }
+
+    /* ---------------------------------------------------------------------- */
     /*  FIND BY DISPLAYNAME (400 - ENTITY NOT FOUND)                          */
     /* ---------------------------------------------------------------------- */
 
