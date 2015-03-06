@@ -320,32 +320,6 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     assertEquals(composite_ig, composite_io);
 
-
-    /* ------------------------------------------------------------------ */
-    /*  FIND INDIVIDUAL BY DISPLAY NAME                                   */
-    /* ------------------------------------------------------------------ */
-
-    String displayname = "jdoe";
-
-    String displaynameEncoded = URLEncoder.encode(displayname, "UTF-8");
-
-    response = target(INDIVIDUAL_URI + "/displayname/" + displaynameEncoded)
-        .request(MediaType.APPLICATION_JSON_TYPE).get();
-
-    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-
-    jsonPayload = response.readEntity(String.class);
-
-    IndividualComposite composite_id = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
-
-    assertEquals(composite_id, composite_in);
-
-    assertEquals(composite_id, composite_io);
-
-    assertEquals(composite_id.getIndividualprofiles().get(0).getDisplayname(),
-        displayname);
-
-
     /* ------------------------------------------------------------------ */
     /*  FIND ORGANIZATION BY NED ID                                       */
     /* ------------------------------------------------------------------ */
