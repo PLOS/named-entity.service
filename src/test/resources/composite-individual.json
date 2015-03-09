@@ -1,33 +1,24 @@
 {
-  "individualcomposite-comment" : "required: individualprofile, email, uniqueidentifier(CAS). updated:03/04/15",
   "individualprofiles" : [
     {
       "firstname"       : "Jane",
-      "firstnamemeta"   : "required",
       "middlename"      : "Q",
       "lastname"        : "Doe",
-      "lastnamemeta"    : "required",
       "nickname"        : "jane-ee",
       "nameprefix"      : "Mrs.",
-      "nameprefixmeta"  : "Named Party Prefixes: Mr., Mrs., Dr., Ms., Professor",
       "namesuffix"      : "III",
-      "namesuffixmeta"  : "Named Party Suffixes: II,III",
       "biography"       : "bio",
       "source"          : "Ambra",
-      "sourcemeta"      : "Ambra, Editorial Manager, Salesforce",
       "displayname"     : "jdoe",
-      "displaynamemeta" : "required, must be unique, <= 60 characters",
       "isactive"        : "true"
     }
   ],
   "roles" : [
     {
       "type"                : "Author",
-      "typemeta"            : "Roles: Author, Co-Author, Academic Editor (PLOS ONE), Named Party System Admin",
       "startdate"           : "2015-01-01",
       "enddate"             : "2015-01-22",
       "applicationtype"     : "Editorial Manager",
-      "applicationtypemeta" : "Editorial Manager, Ambra, Named Party DB",
       "source"              : "Editorial Manager"
     },
     {
@@ -40,7 +31,6 @@
   "addresses" : [
     {
       "type"            : "Office",
-      "typemeta"        : "Home, Office",
       "addressline1"    : "123 Maple Street",
       "addressline2"    : "c/o Martha",
       "addressline3"    : "shack behind house",
@@ -55,7 +45,6 @@
   "emails" : [
     {
       "type"         : "Work",
-      "typemeta"     : "Personal, Work",
       "emailaddress" : "jane.q.doe.work@foo.com",
       "source"       : "Ambra",
       "isactive"     : "true"
@@ -64,11 +53,9 @@
   "phonenumbers" : [
     {
       "type"                : "Office",
-      "typemeta"            : "Office, Home, Mobile",
       "phonenumber"         : "650-123-4567",
       "extension"           : "x012",
       "countrycodetype"     : "1",
-      "countrycodetypemeta" : "Type Class: Country Codes for Phone Numbers (ex: 44 - United Kingdom)",
       "source"              : "Ambra",
       "isactive"            : "true"
     }

@@ -34,6 +34,9 @@ import org.plos.namedentity.api.enums.TypeClassEnum;
 import org.plos.namedentity.persist.db.namedentities.tables.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +45,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
 import static org.plos.namedentity.api.NedException.ErrorType.EntityWithNoPK;
+import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
 import static org.plos.namedentity.persist.db.namedentities.Tables.*;
 
 public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
@@ -111,70 +115,46 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
   @Override @SuppressWarnings("unchecked")
   public <T> List<T> findByAttribute(T t) {
-  
-    if (t instanceof Globaltype) {
-      Globaltype gt = (Globaltype)t;
-      if (gt.getTypeid() != null) {
+    return context.select()
+      .from(table(t.getClass()))
+      .where( buildWhereClause(t) )
+      .fetchInto((Class<T>)t.getClass());
+  }
 
-        // lookup a specific type value
-        if (gt.getShortdescription() != null) {
-          return context
-            .select().from(GLOBALTYPES)
-            .where(GLOBALTYPES.TYPEID.equal( gt.getTypeid()) )
-            .and(GLOBALTYPES.SHORTDESCRIPTION.equal(gt.getShortdescription()))
-            .fetchInto((Class<T>)t.getClass());
+  private <T> String buildWhereClause(T t) {
+    StringBuilder where = new StringBuilder();
+    try {
+      List<java.lang.reflect.Field> fields = new ArrayList<>();
+      fields.addAll( Arrays.asList(t.getClass().getDeclaredFields()) );
+      if (t instanceof Entity) {
+        // get nedid, source, and pk from parent
+        fields.addAll( Arrays.asList(t.getClass().getSuperclass().getDeclaredFields()) );
+      }
 
-        // lookup type values for a type class
-        } else {
-          return context
-            .select().from(GLOBALTYPES)
-            .where(GLOBALTYPES.TYPEID.equal( gt.getTypeid()) )
-            .fetchInto((Class<T>)t.getClass());
+      for (java.lang.reflect.Field f : fields) {
+        // ignore static member variables
+        if (Modifier.isStatic(f.getModifiers())) continue;
+
+        f.setAccessible(true);    // allow access to private members
+
+        Object v = f.get(t);      // get attribute value
+
+        if (v != null) {
+          if (where.length() > 0) where.append(" and "); 
+          where.append(f.getName()).append("=");
+          if (v instanceof Number || v instanceof Boolean) {
+            where.append(v);
+          } else {
+            //TODO - if string, check for sql injection
+            where.append("'").append(v).append("'");
+          }
         }
       }
     }
-    else if (t instanceof Email) {
-      Email et = (Email)t;
-
-      // lookup emails for an individual
-      if (et.getNedid() != null) {
-        return context
-          .select().from(EMAILS)
-          .where(EMAILS.NEDID.equal( et.getNedid()) )
-          .fetchInto((Class<T>)t.getClass());
-      }
-      // lookup email by address
-      if (et.getEmailaddress() != null) {
-        return context
-          .select().from(EMAILS)
-          .where(EMAILS.EMAILADDRESS.equal( et.getEmailaddress()) )
-          .fetchInto((Class<T>)t.getClass());
-      }
+    catch (Exception e) {
+      throw new NedException(ServerError, "Problem building filter expression");
     }
-    else if (t instanceof Phonenumber) {
-      Phonenumber pt = (Phonenumber)t;
-
-      // lookup phone numbers for an individual
-      if (pt.getNedid() != null) {
-        return context
-          .select().from(PHONENUMBERS)
-          .where(PHONENUMBERS.NEDID.equal( pt.getNedid()) )
-          .fetchInto((Class<T>)t.getClass());
-      }
-      //TODO - lookup by phone number
-    } else if (t instanceof Individualprofile) {
-      Individualprofile p = (Individualprofile)t;
-
-      // lookup by displayName
-      if (p.getDisplayname() != null) {
-        return context
-            .select().from(INDIVIDUALPROFILES)
-            .where(INDIVIDUALPROFILES.DISPLAYNAME.equal( p.getDisplayname()) )
-            .fetchInto((Class<T>)t.getClass());
-      }
-    }
-
-    throw new UnsupportedOperationException("findByAttribute hasn't been implemented for all types");
+    return where.toString();
   }
 
   @Override

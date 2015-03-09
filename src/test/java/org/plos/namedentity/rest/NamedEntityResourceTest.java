@@ -172,8 +172,11 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     /*  FIND BY EMAILADDRESS (MULTIPLE RECORDS - SAME EMAIL, DIFF SOURCES)    */
     /* ---------------------------------------------------------------------- */
 
+    String compositeJsonTemplate = new String(Files.readAllBytes(
+        Paths.get(TEST_RESOURCE_PATH + "composite-individual.template.json")));
+
     response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
-      .post(Entity.json(String.format(compositeJsonTemplate(), 
+      .post(Entity.json(String.format(compositeJsonTemplate, 
         UUID.randomUUID(), "jane.q.doe.work@foo.com", "Editorial Manager", UUID.randomUUID())));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
@@ -241,7 +244,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     String unicodeDisplayname = "⻄ⶺ⍵4MÂ";
 
     response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
-      .post(Entity.json(String.format(compositeJsonTemplate(), 
+      .post(Entity.json(String.format(compositeJsonTemplate, 
         unicodeDisplayname, UUID.randomUUID()+"@foo.com", "Ambra", UUID.randomUUID())));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
@@ -1193,32 +1196,5 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     Individualprofile profile = (Individualprofile) resource.createSearchCriteria("individualprofile", "displayname", "fumanchu");
     assertEquals("fumanchu", profile.getDisplayname());
-  }
-
-  private String compositeJsonTemplate() {
-    return 
-      "{" +
-      "  \"individualprofiles\" : [" +
-      "    {" +
-      "      \"firstname\"       : \"Jane\"," +
-      "      \"lastname\"        : \"Doe\"," +
-      "      \"source\"          : \"Ambra\"," +
-      "      \"displayname\"     : \"%s\"" +
-      "    }" +
-      "  ]," +
-      "  \"emails\" : [" +
-      "    {" +
-      "      \"emailaddress\" : \"%s\"," +
-      "      \"source\"       : \"%s\"" +
-      "    }" +
-      "  ]," +
-      "  \"uniqueidentifiers\" : [" +
-      "    {" +
-      "      \"type\"             : \"CAS\"," +
-      "      \"uniqueidentifier\" : \"%s\"," +
-      "      \"source\"           : \"Ambra\"" +
-      "    }" +
-      "  ]" +
-      "}";
   }
 }
