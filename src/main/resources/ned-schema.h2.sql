@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS namedEntities.emails (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
     typeId INT NULL,
-    emailAddress VARCHAR(255) NULL,
+    emailAddress VARCHAR(255) NOT NULL,
     sourceTypeId INT NOT NULL,
     isActive TINYINT(1) NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -252,7 +252,7 @@ DROP TABLE IF EXISTS namedEntities.urls;
 CREATE TABLE IF NOT EXISTS namedEntities.urls (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
-    url TEXT NULL,
+    url TEXT NOT NULL,
     sourceTypeId INT NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     lastModified TIMESTAMP NOT NULL AS CURRENT_TIMESTAMP,

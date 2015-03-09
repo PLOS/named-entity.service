@@ -808,6 +808,23 @@ public class NamedEntityDBServiceTest {
       assertEquals(InvalidUrl, expected.getErrorType());
     }
 
+    // CREATE : No URL! 
+
+    try {    
+      Url url = new Url();
+      url.setNedid(1);
+      url.setSourcetypeid( getSourceTypeId(UidTypeEnum.AMBRA.getName()) );
+
+      url.validate();
+
+      nedDBSvc.create( url );
+    }
+    catch (DataIntegrityViolationException expected) {
+      // h2 error code: NULL_NOT_ALLOWED (23502)
+      org.h2.jdbc.JdbcSQLException h2SqlException = (org.h2.jdbc.JdbcSQLException) expected.getRootCause();
+      assertEquals("23502", h2SqlException.getSQLState());
+    }
+
     // CREATE : Valid URL
 
     Url url = new Url();
