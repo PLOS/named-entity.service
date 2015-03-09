@@ -145,7 +145,6 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
           if (v instanceof Number || v instanceof Boolean) {
             where.append(v);
           } else {
-            //TODO - if string, check for sql injection
             where.append("'").append(v).append("'");
           }
         }
