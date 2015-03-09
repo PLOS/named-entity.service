@@ -1,0 +1,23 @@
+{
+  "individualprofiles" : [
+    {
+      "firstname"   : "Jane",
+      "lastname"    : "Doe",
+      "source"      : "Ambra",
+      "displayname" : "%s"
+    }
+  ],
+  "emails" : [
+    {
+      "emailaddress" : "%s",
+      "source"       : "%s"
+    }
+  ],
+  "uniqueidentifiers" : [
+    {
+      "type"             : "CAS",
+      "uniqueidentifier" : "%s",
+      "source"           : "Ambra"
+    }
+  ]
+}

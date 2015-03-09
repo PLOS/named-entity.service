@@ -65,4 +65,8 @@ public abstract class BaseResource {
                    .entity(new NedErrorResponse(e, message))
                    .build();
   }
+
+  protected boolean isEmptyOrBlank(String s) {
+    return s == null || s.trim().isEmpty();
+  }
 }

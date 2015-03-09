@@ -21,6 +21,7 @@ import org.junit.Test;
 
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedErrorResponse;
+import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Email;
@@ -32,6 +33,7 @@ import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBException;
@@ -46,6 +48,7 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -53,6 +56,8 @@ import static org.junit.Assert.assertTrue;
 
 import static org.plos.namedentity.api.NedException.ErrorType.DupeEmailError;
 import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchQuery;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchCriteria;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidTypeValue;
 
 public class NamedEntityResourceTest extends BaseResourceTest {
@@ -110,6 +115,181 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   }
 
   @Test
+  public void testFindIndividuals() throws Exception {
+
+    /* ---------------------------------------------------------------------- */
+    /*  BAD SEARCH QUERY URL                                                  */
+    /* ---------------------------------------------------------------------- */
+
+    WebTarget[] badFindIndividualUrls = {
+      target(INDIVIDUAL_URI),
+      target(INDIVIDUAL_URI).queryParam("entitykey","entityvalue"),
+      target(INDIVIDUAL_URI).queryParam("attributekey","attributevalue").queryParam("valuekey","value")
+    };
+
+    for (WebTarget target : badFindIndividualUrls) {
+      Response response = target.request(MediaType.APPLICATION_JSON_TYPE).get();
+
+      assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+
+      String jsonPayload = response.readEntity(String.class);
+
+      NedErrorResponse ner = unmarshalEntity(jsonPayload, NedErrorResponse.class, 
+                                            jsonUnmarshaller(NedErrorResponse.class));
+
+      assertEquals(InvalidSearchQuery.getErrorCode(), ner.errorCode);
+      assertEquals(InvalidSearchQuery.getErrorMessage(), ner.errorMsg);
+    }
+
+    /* ---------------------------------------------------------------------- */
+    /*  FIND BY EMAILADDRESS                                                  */
+    /* ---------------------------------------------------------------------- */
+
+    Response response = target(INDIVIDUAL_URI).queryParam("entity","email")
+                                              .queryParam("attribute","emailaddress")
+                                              .queryParam("value","jane.q.doe.work@foo.com")
+                                              .request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    String jsonPayload = response.readEntity(String.class);
+
+    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
+    List<IndividualComposite> composites = unmarshalEntities(jsonPayload, IndividualComposite.class, unmarshaller);
+    assertEquals(1, composites.size());
+
+    for (IndividualComposite composite : composites) {
+      boolean foundEmailMatch = false;
+      for (Email email : composite.getEmails()) {
+        if ("jane.q.doe.work@foo.com".equals(email.getEmailaddress())) {
+          foundEmailMatch = true;
+        }
+      }
+      assertTrue(foundEmailMatch);
+    }
+
+    /* ---------------------------------------------------------------------- */
+    /*  FIND BY EMAILADDRESS (MULTIPLE RECORDS - SAME EMAIL, DIFF SOURCES)    */
+    /* ---------------------------------------------------------------------- */
+
+    String compositeJsonTemplate = new String(Files.readAllBytes(
+        Paths.get(TEST_RESOURCE_PATH + "composite-individual.template.json")));
+
+    response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+      .post(Entity.json(String.format(compositeJsonTemplate, 
+        UUID.randomUUID(), "jane.q.doe.work@foo.com", "Editorial Manager", UUID.randomUUID())));
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    response = target(INDIVIDUAL_URI).queryParam("entity","email")
+                                     .queryParam("attribute","emailaddress")
+                                     .queryParam("value","jane.q.doe.work@foo.com")
+                                     .request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    jsonPayload = response.readEntity(String.class);
+
+    composites = unmarshalEntities(jsonPayload, IndividualComposite.class, unmarshaller);
+    assertEquals(2, composites.size());
+
+    for (IndividualComposite composite : composites) {
+      boolean foundEmailMatch = false;
+      for (Email email : composite.getEmails()) {
+        if ("jane.q.doe.work@foo.com".equals(email.getEmailaddress())) {
+          foundEmailMatch = true;
+        }
+      }
+      assertTrue(foundEmailMatch);
+    }
+
+    /* ---------------------------------------------------------------------- */
+    /*  FIND BY DISPLAYNAME                                                   */
+    /* ---------------------------------------------------------------------- */
+
+    response = target(INDIVIDUAL_URI).queryParam("entity","individualprofile")
+                                     .queryParam("attribute","displayname")
+                                     .queryParam("value","jdoe")
+                                     .request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    jsonPayload = response.readEntity(String.class);
+
+    composites = unmarshalEntities(jsonPayload, IndividualComposite.class, unmarshaller);
+
+    for (IndividualComposite composite : composites) {
+      boolean foundDisplaynameMatch = false;
+      for (Individualprofile profile : composite.getIndividualprofiles()) {
+        if ("jdoe".equals(profile.getDisplayname())) {
+          foundDisplaynameMatch = true;
+        }
+      }
+      assertTrue(foundDisplaynameMatch);
+    }
+
+    /* ---------------------------------------------------------------------- */
+    /*  FIND BY DISPLAYNAME (UNICODE)                                         */
+    /* ---------------------------------------------------------------------- */
+    /*
+     *    Position   CodePoint     Description             Bytes (13 bytes)
+     *    --------   ---------     ----------------------  -----------------
+     *    1          U+2EC4        Cjk Radical West Two    3 bytes: e2 bb 84
+     *    2          U+2DBA        Ethiopic Syllable Cchi  3 bytes: e2 b6 ba
+     *    3          U+2375        Omega                   3 bytes: e2 8d b5
+     *    4          U+0034        Digit Four (4)          1 byte : 34
+     *    5          U+004D        Captial M               1 byte : 4d
+     *    6          U+00C2        Latin A w/ Cirumflex    2 bytes: c3 82
+     */
+    String unicodeDisplayname = "⻄ⶺ⍵4MÂ";
+
+    response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+      .post(Entity.json(String.format(compositeJsonTemplate, 
+        unicodeDisplayname, UUID.randomUUID()+"@foo.com", "Ambra", UUID.randomUUID())));
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    response = target(INDIVIDUAL_URI).queryParam("entity","individualprofile")
+                                     .queryParam("attribute","displayname")
+                                     .queryParam("value", unicodeDisplayname)
+                                     .request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    jsonPayload = response.readEntity(String.class);
+
+    composites = unmarshalEntities(jsonPayload, IndividualComposite.class, unmarshaller);
+
+    for (IndividualComposite composite : composites) {
+      boolean foundDisplaynameMatch = false;
+      for (Individualprofile profile : composite.getIndividualprofiles()) {
+        if (unicodeDisplayname.equals(profile.getDisplayname())) {
+          foundDisplaynameMatch = true;
+        }
+      }
+      assertTrue(foundDisplaynameMatch);
+    }
+
+    /* ---------------------------------------------------------------------- */
+    /*  FIND BY DISPLAYNAME (400 - ENTITY NOT FOUND)                          */
+    /* ---------------------------------------------------------------------- */
+
+    response = target(INDIVIDUAL_URI).queryParam("entity","individualprofile")
+                                     .queryParam("attribute","displayname")
+                                     .queryParam("value","bogusdisplayname")
+                                     .request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+
+    jsonPayload = response.readEntity(String.class);
+
+    NedErrorResponse ner = unmarshalEntity(jsonPayload, NedErrorResponse.class, 
+                                           jsonUnmarshaller(NedErrorResponse.class));
+
+    assertEquals(EntityNotFound.getErrorCode(), ner.errorCode);
+  }
+
+  @Test
   public void testCompositeFinders() throws Exception {
 
     Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
@@ -160,32 +340,6 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals(composite_ig, composite_in);
 
     assertEquals(composite_ig, composite_io);
-
-
-    /* ------------------------------------------------------------------ */
-    /*  FIND INDIVIDUAL BY DISPLAY NAME                                   */
-    /* ------------------------------------------------------------------ */
-
-    String displayname = "jdoe";
-
-    String displaynameEncoded = URLEncoder.encode(displayname, "UTF-8");
-
-    response = target(INDIVIDUAL_URI + "/displayname/" + displaynameEncoded)
-        .request(MediaType.APPLICATION_JSON_TYPE).get();
-
-    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-
-    jsonPayload = response.readEntity(String.class);
-
-    IndividualComposite composite_id = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
-
-    assertEquals(composite_id, composite_in);
-
-    assertEquals(composite_id, composite_io);
-
-    assertEquals(composite_id.getIndividualprofiles().get(0).getDisplayname(),
-        displayname);
-
 
     /* ------------------------------------------------------------------ */
     /*  FIND ORGANIZATION BY NED ID                                       */
@@ -458,7 +612,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     responseJson = response.readEntity(String.class);
 
     List<Role> roles = unmarshalEntities(responseJson, Role.class, unmarshaller);
-    assertEquals(2, roles.size());
+    assertEquals(3, roles.size());
 
     Role role0 = roles.get(0);
     assertTrue(role0.getId() > 0);
@@ -469,8 +623,14 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertTrue(role1.getId() > 0);
     assertEquals(nedIndividualId, role1.getNedid());
     assertEquals("Editorial Manager", role1.getApplicationtype());
-    assertEquals("Academic Editor (PLOS ONE)", role1.getType());
-    assertEquals(START_DATE, role1.getStartdate());
+    assertEquals("Co-Author", role1.getType());
+
+    Role role2 = roles.get(2);
+    assertTrue(role2.getId() > 0);
+    assertEquals(nedIndividualId, role2.getNedid());
+    assertEquals("Editorial Manager", role2.getApplicationtype());
+    assertEquals("Academic Editor (PLOS ONE)", role2.getType());
+    assertEquals(START_DATE, role2.getStartdate());
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */
@@ -1007,5 +1167,34 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     response = target(typeValueUri+"/"+newTypeValueId).request(MediaType.APPLICATION_JSON_TYPE).delete();
     assertEquals(204, response.getStatus());
+  }
+
+  @Test
+  public void testCreateSearchCriteria() {
+    IndividualsResource resource = new IndividualsResource();
+
+    // Invalid Classname (entity)
+
+    try {
+      resource.createSearchCriteria("bogus","attribute","value");
+    } catch (NedException expected) {
+      assertEquals(InvalidSearchCriteria, expected.getErrorType());
+      assertTrue( expected.getDetailedMessage().contains("Verify entity name") );
+    }
+
+    // Invalid Attribute
+
+    try {
+      resource.createSearchCriteria("email","attribute","value");
+    } catch (NedException expected) {
+      assertEquals(InvalidSearchCriteria, expected.getErrorType());
+      assertTrue( expected.getDetailedMessage().contains("Verify attribute name") );
+    }
+
+    Email email = (Email) resource.createSearchCriteria("email", "emailaddress", "foo@bar.com");
+    assertEquals("foo@bar.com", email.getEmailaddress());
+
+    Individualprofile profile = (Individualprofile) resource.createSearchCriteria("individualprofile", "displayname", "fumanchu");
+    assertEquals("fumanchu", profile.getDisplayname());
   }
 }

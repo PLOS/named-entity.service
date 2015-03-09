@@ -58,6 +58,12 @@ public class NedException extends RuntimeException {
     NoEmailEntities                  (1510, "No Email Entities for Individual Composite"),
     IndividualCompositeCasIdRequired (1520, "CAS ID Required"),
 
+    // Client-side Errors
+    
+    InvalidSearchQuery               (1800, "Search query requires an entity, an attribute, and a value"),
+    InvalidSearchCriteria            (1810, "Invalid search criteria"),
+    TooManyResultsFound              (1820, "Too Many Results Found"),
+
     InvalidErrorType                 (-1,"");
 
     private final int    errorCode;

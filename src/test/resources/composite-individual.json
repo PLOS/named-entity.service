@@ -1,52 +1,63 @@
 {
   "individualprofiles" : [
     {
-      "firstname"  : "Jane",
-      "middlename" : "Q",
-      "namesuffix" : "III",
-      "lastname"   : "Doe",
-      "nameprefix" : "Mrs.",
-      "biography"  : "bio",
-      "source"     : "Ambra",
-      "displayname": "jdoe"
+      "firstname"       : "Jane",
+      "middlename"      : "Q",
+      "lastname"        : "Doe",
+      "nickname"        : "jane-ee",
+      "nameprefix"      : "Mrs.",
+      "namesuffix"      : "III",
+      "biography"       : "bio",
+      "source"          : "Ambra",
+      "displayname"     : "jdoe",
+      "isactive"        : "true"
     }
   ],
-  "phonenumbers" : [
+  "roles" : [
     {
-      "extension"       : "x012",
-      "isprimary"       : "true",
-      "phonenumber"     : "650-123-4567",
-      "type"            : "Office",
-      "countrycodetype" : "1",
-      "source"          : "Ambra"
+      "type"                : "Author",
+      "startdate"           : "2015-01-01",
+      "enddate"             : "2015-01-22",
+      "applicationtype"     : "Editorial Manager",
+      "source"              : "Editorial Manager"
     },
     {
-      "isprimary"       : "false",
-      "phonenumber"     : "650-111-2222",
-      "type"            : "Mobile",
-      "countrycodetype" : "1",
+      "type"            : "Co-Author",
+      "startdate"       : "2015-02-01",
+      "applicationtype" : "Editorial Manager",
       "source"          : "Editorial Manager"
     }
   ],
   "addresses" : [
     {
       "type"            : "Office",
-      "statecodetype"   : "CA",
-      "isprimary"       : "true",
-      "city"            : "San Francisco",
       "addressline1"    : "123 Maple Street",
-      "addresstype"     : "Office",
+      "addressline2"    : "c/o Martha",
+      "addressline3"    : "shack behind house",
+      "city"            : "San Francisco",
+      "statecodetype"   : "CA",
       "postalcode"      : "94501",
       "countrycodetype" : "United States of America",
-      "source"          : "Ambra"
+      "source"          : "Ambra",
+      "isactive"        : "true"
     }
   ],
   "emails" : [
     {
-      "isprimary"    : "true",
       "type"         : "Work",
       "emailaddress" : "jane.q.doe.work@foo.com",
-      "source"       : "Ambra"
+      "source"       : "Ambra",
+      "isactive"     : "true"
+    }
+  ],
+  "phonenumbers" : [
+    {
+      "type"                : "Office",
+      "phonenumber"         : "650-123-4567",
+      "extension"           : "x012",
+      "countrycodetype"     : "1",
+      "source"              : "Ambra",
+      "isactive"            : "true"
     }
   ],
   "degrees" : [
@@ -59,10 +70,10 @@
       "source" : "Editorial Manager"
     }
   ],
-  "roles" : [
+  "urls" : [
     {
-      "type"   : "Author",
-      "source" : "Editorial Manager"
+      "url"    : "http://www.plos.org",
+      "source" : "Ambra"
     }
   ],
   "uniqueidentifiers" : [
@@ -84,7 +95,7 @@
     {
       "type"             : "Salesforce",
       "uniqueidentifier" : "001U0000008Qlfj",
-      "source"           : "Ambra"
+      "source"           : "Salesforce"
     },
     {
       "type"             : "Ambra",
