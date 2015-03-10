@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Urls extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord> {
 
-	private static final long serialVersionUID = -730092426;
+	private static final long serialVersionUID = -1222372267;
 
 	/**
 	 * The reference instance of <code>namedEntities.urls</code>
@@ -44,7 +44,7 @@ public class Urls extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.d
 	/**
 	 * The column <code>namedEntities.urls.url</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord, java.lang.String> URL = createField("url", org.jooq.impl.SQLDataType.CLOB.length(65535), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord, java.lang.String> URL = createField("url", org.jooq.impl.SQLDataType.CLOB.length(65535).nullable(false), this, "");
 
 	/**
 	 * The column <code>namedEntities.urls.sourceTypeId</code>.
