@@ -32,6 +32,7 @@ import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.api.enums.UidTypeEnum;
+import org.plos.namedentity.service.NamedEntityService;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -53,6 +54,7 @@ import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -1174,7 +1176,10 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   @Test
   public void testCreateSearchCriteriaForIndividual() {
 
+    // Instantiate resource and manually inject dependency
+
     IndividualsResource resource = new IndividualsResource();
+    resource.namedEntityService = (NamedEntityService) SpringContextAwareJerseyTest.getApplicationContext().getBean("namedEntityService");
 
     // Invalid Classname (entity)
 
@@ -1211,12 +1216,20 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     Individualprofile profile = (Individualprofile) resource.createSearchCriteria("individualprofile", "displayname", "fumanchu",IndividualComposite.class);
     assertEquals("fumanchu", profile.getDisplayname());
+
+    Address address = (Address) resource.createSearchCriteria("address", "countrycodetype", "Albania",IndividualComposite.class);
+    assertNotNull(address.getCountrycodetypeid());
+    assertNull( address.getCountrycodetype() );
+    assertTrue( address.getCountrycodetypeid() > 0 );
   }
 
   @Test
   public void testCreateSearchCriteriaForOrganization() {
 
+    // Instantiate resource and manually inject dependency
+
     OrganizationsResource resource = new OrganizationsResource();
+    resource.namedEntityService = (NamedEntityService) SpringContextAwareJerseyTest.getApplicationContext().getBean("namedEntityService");
 
     // Invalid Classname (entity)
 

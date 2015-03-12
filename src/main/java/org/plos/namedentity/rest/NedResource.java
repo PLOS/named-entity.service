@@ -399,6 +399,11 @@ public abstract class NedResource extends BaseResource {
       Field field = entityClass.getDeclaredField(attribute);
       field.setAccessible(true);
       field.set(searchEntity, value);
+
+      namedEntityService.resolveValuesToIds(searchEntity);
+
+      if (attribute.endsWith("type"))
+        field.set(searchEntity, null);
     }
     catch (ClassNotFoundException e) {
       throw new NedException(InvalidSearchCriteria, "Verify entity name: "+entity);
