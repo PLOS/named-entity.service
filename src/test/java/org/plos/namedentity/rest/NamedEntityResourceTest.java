@@ -27,6 +27,7 @@ import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
 import org.plos.namedentity.api.entity.Individualprofile;
+import org.plos.namedentity.api.entity.Organization;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
@@ -53,6 +54,7 @@ import java.util.UUID;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import static org.plos.namedentity.api.NedException.ErrorType.DupeEmailError;
 import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
@@ -1170,13 +1172,15 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   }
 
   @Test
-  public void testCreateSearchCriteria() {
+  public void testCreateSearchCriteriaForIndividual() {
+
     IndividualsResource resource = new IndividualsResource();
 
     // Invalid Classname (entity)
 
     try {
-      resource.createSearchCriteria("bogus","attribute","value");
+      resource.createSearchCriteria("bogus","attribute","value",IndividualComposite.class);
+      fail();
     } catch (NedException expected) {
       assertEquals(InvalidSearchCriteria, expected.getErrorType());
       assertTrue( expected.getDetailedMessage().contains("Verify entity name") );
@@ -1185,16 +1189,69 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     // Invalid Attribute
 
     try {
-      resource.createSearchCriteria("email","attribute","value");
+      resource.createSearchCriteria("email","attribute","value",IndividualComposite.class);
+      fail();
     } catch (NedException expected) {
       assertEquals(InvalidSearchCriteria, expected.getErrorType());
       assertTrue( expected.getDetailedMessage().contains("Verify attribute name") );
     }
 
-    Email email = (Email) resource.createSearchCriteria("email", "emailaddress", "foo@bar.com");
+    // Invalid Entity For Composite 
+
+    try {
+      resource.createSearchCriteria("organization","legalname","abc inc.",IndividualComposite.class);
+      fail();
+    } catch (NedException expected) {
+      assertEquals(InvalidSearchCriteria, expected.getErrorType());
+      assertTrue( expected.getDetailedMessage().matches("^Invalid entity \\(.*\\) for composite type \\(.*\\)$") );
+    }
+
+    Email email = (Email) resource.createSearchCriteria("email", "emailaddress", "foo@bar.com",IndividualComposite.class);
     assertEquals("foo@bar.com", email.getEmailaddress());
 
-    Individualprofile profile = (Individualprofile) resource.createSearchCriteria("individualprofile", "displayname", "fumanchu");
+    Individualprofile profile = (Individualprofile) resource.createSearchCriteria("individualprofile", "displayname", "fumanchu",IndividualComposite.class);
     assertEquals("fumanchu", profile.getDisplayname());
+  }
+
+  @Test
+  public void testCreateSearchCriteriaForOrganization() {
+
+    OrganizationsResource resource = new OrganizationsResource();
+
+    // Invalid Classname (entity)
+
+    try {
+      resource.createSearchCriteria("bogus","attribute","value",OrganizationComposite.class);
+      fail();
+    } catch (NedException expected) {
+      assertEquals(InvalidSearchCriteria, expected.getErrorType());
+      assertTrue( expected.getDetailedMessage().contains("Verify entity name") );
+    }
+
+    // Invalid Attribute
+
+    try {
+      resource.createSearchCriteria("email","attribute","value",OrganizationComposite.class);
+      fail();
+    } catch (NedException expected) {
+      assertEquals(InvalidSearchCriteria, expected.getErrorType());
+      assertTrue( expected.getDetailedMessage().contains("Verify attribute name") );
+    }
+
+    // Invalid Entity For Composite 
+
+    try {
+      resource.createSearchCriteria("individualprofile","displayname","superfunky",OrganizationComposite.class);
+      fail();
+    } catch (NedException expected) {
+      assertEquals(InvalidSearchCriteria, expected.getErrorType());
+      assertTrue( expected.getDetailedMessage().matches("^Invalid entity \\(.*\\) for composite type \\(.*\\)$") );
+    }
+
+    Organization org = (Organization) resource.createSearchCriteria("organization", "legalname", "acme corp.",OrganizationComposite.class);
+    assertEquals("acme corp.", org.getLegalname());
+
+    Email email = (Email) resource.createSearchCriteria("email", "emailaddress", "foo@bar.com",OrganizationComposite.class);
+    assertEquals("foo@bar.com", email.getEmailaddress());
   }
 }

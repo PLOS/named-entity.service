@@ -23,14 +23,12 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
-import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchCriteria;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchQuery;
 import static org.plos.namedentity.api.NedException.ErrorType.TooManyResultsFound;
 
@@ -67,7 +65,7 @@ public class IndividualsResource extends NedResource {
         throw new NedException(InvalidSearchQuery);
       }
 
-      List<Entity> results = crudService.findByAttribute( createSearchCriteria(entity,attribute,value) );
+      List<Entity> results = crudService.findByAttribute( createSearchCriteria(entity,attribute,value,IndividualComposite.class) );
 
       if (results.size() == 0)
         throw new NedException(EntityNotFound, "Individual not found");
@@ -95,35 +93,6 @@ public class IndividualsResource extends NedResource {
     } catch (Exception e) {
       return serverError(e, "findIndividuals() failed");
     }
-  }
-
-  // define with package access to facilitate testing
-  Entity createSearchCriteria(String entity, String attribute, String value) {
-
-    String capitalizedEntity = Character.toUpperCase(entity.charAt(0)) + entity.substring(1);
-
-    Class clazz = null;
-    Entity searchEntity = null;
-
-    try {
-      clazz = Class.forName("org.plos.namedentity.api.entity." + capitalizedEntity);
-      searchEntity = (Entity) clazz.newInstance();
-
-      Field field = clazz.getDeclaredField(attribute);
-      field.setAccessible(true);
-      field.set(searchEntity, value);
-    }
-    catch (ClassNotFoundException e) {
-      throw new NedException(InvalidSearchCriteria, "Verify entity name: "+entity);
-    }
-    catch (NoSuchFieldException e) {
-      throw new NedException(InvalidSearchCriteria, "Verify attribute name: "+attribute);
-    }
-    catch (Exception e) {
-      throw new NedException(InvalidSearchCriteria);
-    }
-
-    return searchEntity;
   }
 
   @GET
