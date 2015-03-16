@@ -53,7 +53,7 @@ dbreset)
     
 container-start)
     cd docker
-    fig up -d
+    docker-compose up -d
     echo MySQL DB = `docker inspect --format '{{ .NetworkSettings.IPAddress }}' docker_neddb_1`:3306
     
     echo "Bringing up NED service..."
@@ -85,7 +85,7 @@ container-start)
     
 container-stop)
     cd docker
-    fig stop && fig rm --force
+    docker-compose stop && docker-compose rm --force
     ;;
 
 container-test)
