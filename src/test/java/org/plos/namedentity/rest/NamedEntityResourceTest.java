@@ -71,6 +71,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   private static final String INDIVIDUAL_URI     = "/individuals";
   private static final String ORGANIZATION_URI   = "/organizations";
 
+  private static IndividualComposite individualComposite = null;
+
   private static Integer nedIndividualId   = null;
   private static Integer nedOrganizationId = null;
 
@@ -94,7 +96,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
         Individualprofile individualProfile = composite.getIndividualprofiles().get(0);
         assertNotNull(individualProfile.getNedid());
 
-        nedIndividualId = individualProfile.getNedid();
+        nedIndividualId     = individualProfile.getNedid();
+        individualComposite = composite;
       }
 
       if (nedOrganizationId == null) {
@@ -1266,5 +1269,33 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     Email email = (Email) resource.createSearchCriteria("email", "emailaddress", "foo@bar.com",OrganizationComposite.class);
     assertEquals("foo@bar.com", email.getEmailaddress());
+  }
+
+  @Test
+  public void testAuthEndpoint() throws Exception {
+
+    final String authURI  = String.format("%s/%d/auth", INDIVIDUAL_URI, nedIndividualId);
+    final String PASSWORD = "super_secret_password";
+
+    /* ------------------------------------------------------------------ */
+    /*  CREATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    String authJsonTemplate = new String(Files.readAllBytes(
+        Paths.get(TEST_RESOURCE_PATH + "auth.template.json")));
+
+    Response response = target(authURI).request(MediaType.APPLICATION_JSON_TYPE)
+      .post(Entity.json(String.format(authJsonTemplate, 
+        nedIndividualId, individualComposite.getEmails().get(0).getId(),
+          PASSWORD)));
+
+    assertEquals(200, response.getStatus());
+
+    //String responseJson = response.readEntity(String.class);
+
+    //Unmarshaller unmarshaller = jsonUnmarshaller(Individualprofile.class);
+    //Individualprofile profile = unmarshalEntity(responseJson, Individualprofile.class, unmarshaller);
+
+    //String profileURI = profilesURI + "/" + profile.getId();
   }
 }

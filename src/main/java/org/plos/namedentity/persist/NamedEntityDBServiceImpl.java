@@ -338,6 +338,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       return (T)findRoleByPrimaryKey(pk);
     if (cname.equals(Uniqueidentifier.class.getCanonicalName()))
       return (T)findUniqueIdsByPrimaryKey(pk);
+    if (cname.equals(Auth.class.getCanonicalName()))
+      return (T)findAuthCasByPrimaryKey(pk);
 
     throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
   }
@@ -432,6 +434,20 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .from(e)
         .leftOuterJoin(gt1).on(e.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(e.SOURCETYPEID.equal(gt2.ID));
+  }
+
+  private SelectOnConditionStep select(Authcas auth) {
+
+    Emails e = EMAILS.as("e");
+
+    return this.context
+        .select(
+            auth.ID, auth.NEDID, auth.EMAILID,
+            e.EMAILADDRESS,
+            auth.AUTHID, auth.PASSWORD, auth.ISACTIVE,
+            auth.CREATED, auth.LASTMODIFIED)
+        .from(auth)
+        .join(e).on(auth.EMAILID.equal(e.ID));
   }
 
   private SelectOnConditionStep select(Addresses a) {
@@ -659,6 +675,18 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     return record.into(Uniqueidentifier.class);
   }
 
+  private Auth findAuthCasByPrimaryKey(Integer id) {
+
+    Authcas auth = AUTHCAS.as("auth");
+
+    Record record = select(auth).where(auth.ID.equal(id)).fetchOne();
+
+    if (record == null) 
+      throw new NedException(EntityNotFound, String.format("Authcas not found with id %d", id));
+
+    return record.into(Auth.class);
+  }
+
   private Individualprofile findIndividualByPrimaryKey(Integer individualId) {
 
     Individualprofiles i   = INDIVIDUALPROFILES.as("i");
@@ -742,7 +770,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     // TODO: use reflection to set this for all Entities
 
     entityTableMap.put(Address.class, new TablePkPair(ADDRESSES, ADDRESSES.ID));
-    entityTableMap.put(org.plos.namedentity.api.entity.Authcas.class, new TablePkPair(AUTHCAS, AUTHCAS.ID));
+    entityTableMap.put(Auth.class, new TablePkPair(AUTHCAS, AUTHCAS.ID));
     entityTableMap.put(Degree.class, new TablePkPair(DEGREES, DEGREES.ID));
     entityTableMap.put(Email.class, new TablePkPair(EMAILS, EMAILS.ID));
     entityTableMap.put(Globaltype.class, new TablePkPair(GLOBALTYPES, GLOBALTYPES.ID));

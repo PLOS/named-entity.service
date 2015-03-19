@@ -20,7 +20,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Address;
-import org.plos.namedentity.api.entity.Authcas;
+import org.plos.namedentity.api.entity.Auth;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
 import org.plos.namedentity.api.entity.Individualprofile;
@@ -560,7 +560,7 @@ public class CrudServiceTest {
 
     final String PASSWORD = "super_secret_password";
 
-    Authcas authEntity = new Authcas();
+    Auth authEntity = new Auth();
     String authId = authEntity.getAuthid();
     assertNotNull(authId);
     assertEquals((32+4), authId.length());

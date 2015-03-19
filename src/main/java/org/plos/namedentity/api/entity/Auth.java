@@ -27,10 +27,11 @@ import java.util.UUID;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Authcas extends Entity {
+public class Auth extends Entity {
 
   private Integer  id;
   private Integer  nedid;
+  private String   email;
   private Integer  emailid;
   private String   authid;
   private String   password;
@@ -39,7 +40,7 @@ public class Authcas extends Entity {
   private Byte     verified;
   private Byte     isactive;
 
-  public Authcas() {
+  public Auth() {
     this.authid = UUID.randomUUID().toString();  // cas id
   }
 
@@ -78,6 +79,14 @@ public class Authcas extends Entity {
 
   public void setEmailid(java.lang.Integer emailid) {
     this.emailid = emailid;
+  }
+
+  public String getEmail() {
+    return this.email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
   }
 
   public java.lang.String getAuthid() {

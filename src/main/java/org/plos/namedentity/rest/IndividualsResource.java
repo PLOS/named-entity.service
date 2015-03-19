@@ -5,7 +5,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
-import org.plos.namedentity.api.entity.Authcas;
+import org.plos.namedentity.api.entity.Auth;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Individualprofile;
@@ -271,8 +271,8 @@ public class IndividualsResource extends NedResource {
 
   @POST
   @Path("/{nedId}/auth")
-  @ApiOperation(value = "Create auth credentials", response = Authcas.class)
-  public Response createAuthCredentials(@PathParam("nedId") int nedId, Authcas authEntity) {
+  @ApiOperation(value = "Create auth credentials", response = Auth.class)
+  public Response createAuthCredentials(@PathParam("nedId") int nedId, Auth authEntity) {
     return createEntity(nedId, authEntity);
   }
 }

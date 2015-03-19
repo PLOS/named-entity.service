@@ -54,6 +54,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       resolveRole((Role) t);
     else if (t instanceof Url)
       resolveUrl((Url) t);
+    else if (t instanceof Auth) 
+      ;  // do nothing
     else
       throw new UnsupportedOperationException("Can not resolve entity for " + t.getClass());
 
