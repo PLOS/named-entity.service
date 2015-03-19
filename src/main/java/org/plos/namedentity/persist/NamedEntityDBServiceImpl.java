@@ -742,6 +742,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     // TODO: use reflection to set this for all Entities
 
     entityTableMap.put(Address.class, new TablePkPair(ADDRESSES, ADDRESSES.ID));
+    entityTableMap.put(org.plos.namedentity.api.entity.Authcas.class, new TablePkPair(AUTHCAS, AUTHCAS.ID));
     entityTableMap.put(Degree.class, new TablePkPair(DEGREES, DEGREES.ID));
     entityTableMap.put(Email.class, new TablePkPair(EMAILS, EMAILS.ID));
     entityTableMap.put(Globaltype.class, new TablePkPair(GLOBALTYPES, GLOBALTYPES.ID));

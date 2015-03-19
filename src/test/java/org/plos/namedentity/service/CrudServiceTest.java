@@ -20,6 +20,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Address;
+import org.plos.namedentity.api.entity.Authcas;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
 import org.plos.namedentity.api.entity.Individualprofile;
@@ -28,6 +29,7 @@ import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.persist.NamedEntityDBService;
+import org.plos.namedentity.service.PasswordDigestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -41,6 +43,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.plos.namedentity.api.NedException.ErrorType.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
@@ -550,6 +553,49 @@ public class CrudServiceTest {
     /* ------------------------------------------------------------------ */
 
     assertTrue( crudService.delete(savedUid) );
+  }
+
+  @Test
+  public void testAuthCasCRUD() {
+
+    final String PASSWORD = "super_secret_password";
+
+    Authcas authEntity = new Authcas();
+    String authId = authEntity.getAuthid();
+    assertNotNull(authId);
+    assertEquals((32+4), authId.length());
+
+    // trying to save auth record without a password should fail.
+
+    try {
+      crudService.create(authEntity);
+      fail();
+    } catch (NedException expected) {
+      assertEquals(PasswordError, expected.getErrorType());
+    }
+
+    // fill in auth record attributes and try again.
+
+    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+
+    Email email = new Email();
+    email.setNedid(nedId);
+    email.setType("Work");
+    email.setEmailaddress(UUID.randomUUID().toString()+"@foo.com");
+    email.setSource("Editorial Manager");
+    namedEntityService.resolveValuesToIds(email);
+
+    Integer emailId = crudService.create(email);
+    assertNotNull( emailId );
+
+    authEntity.setPassword(PASSWORD);
+    authEntity.setNedid(nedId);
+    authEntity.setEmailid(emailId);
+
+    Integer authEntityId = crudService.create(authEntity);
+    assertNotNull( authEntityId );
+
+    assertTrue(new PasswordDigestService().verifyPassword(PASSWORD, authEntity.getPassword()));
   }
 
   private java.sql.Date dateNow() {

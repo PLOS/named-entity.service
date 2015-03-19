@@ -1,0 +1,130 @@
+/*
+ * Copyright (c) 2006-2014 by Public Library of Science
+ * http://plos.org
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.plos.namedentity.api.entity;
+
+import static org.plos.namedentity.api.NedException.ErrorType.*;
+
+import org.plos.namedentity.api.NedException;
+
+import org.plos.namedentity.service.PasswordDigestService;
+
+import java.util.UUID;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+public class Authcas extends Entity {
+
+  private Integer  id;
+  private Integer  nedid;
+  private Integer  emailid;
+  private String   authid;
+  private String   password;
+  private Byte     passwordreset;
+  private String   verificationtoken;
+  private Byte     verified;
+  private Byte     isactive;
+
+  public Authcas() {
+    this.authid = UUID.randomUUID().toString();  // cas id
+  }
+
+  @Override
+  public void validate() {
+
+    if (password == null || password.length() < 1) {
+      throw new NedException(PasswordError, "password is too short");
+    }
+
+    //TODO - apply other password constraints here.
+
+    // hash password before storing
+    password = new PasswordDigestService().generateDigest(password);
+  }
+
+  public java.lang.Integer getId() {
+    return this.id;
+  }
+
+  public void setId(java.lang.Integer id) {
+    this.id = id;
+  }
+
+  public java.lang.Integer getNedid() {
+    return this.nedid;
+  }
+
+  public void setNedid(java.lang.Integer nedid) {
+    this.nedid = nedid;
+  }
+
+  public java.lang.Integer getEmailid() {
+    return this.emailid;
+  }
+
+  public void setEmailid(java.lang.Integer emailid) {
+    this.emailid = emailid;
+  }
+
+  public java.lang.String getAuthid() {
+    return this.authid;
+  }
+
+  public void setAuthid(java.lang.String authid) {
+    this.authid = authid;
+  }
+
+  public java.lang.String getPassword() {
+    return this.password;
+  }
+
+  public void setPassword(java.lang.String plainTextPassword) {
+    this.password = plainTextPassword;
+  }
+
+  public java.lang.Byte getPasswordreset() {
+    return this.passwordreset;
+  }
+
+  public void setPasswordreset(java.lang.Byte passwordreset) {
+    this.passwordreset = passwordreset;
+  }
+
+  public java.lang.String getVerificationtoken() {
+    return this.verificationtoken;
+  }
+
+  public void setVerificationtoken(java.lang.String verificationtoken) {
+    this.verificationtoken = verificationtoken;
+  }
+
+  public java.lang.Byte getVerified() {
+    return this.verified;
+  }
+
+  public void setVerified(java.lang.Byte verified) {
+    this.verified = verified;
+  }
+
+  public java.lang.Byte getIsactive() {
+    return this.isactive;
+  }
+
+  public void setIsactive(java.lang.Byte isactive) {
+    this.isactive = isactive;
+  }
+}
