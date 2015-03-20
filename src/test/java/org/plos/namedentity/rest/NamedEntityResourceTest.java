@@ -24,6 +24,7 @@ import org.plos.namedentity.api.NedErrorResponse;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.Address;
+import org.plos.namedentity.api.entity.Auth;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
 import org.plos.namedentity.api.entity.Individualprofile;
@@ -33,6 +34,7 @@ import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.service.NamedEntityService;
+import org.plos.namedentity.service.PasswordDigestService;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -1281,21 +1283,31 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     /*  CREATE                                                            */
     /* ------------------------------------------------------------------ */
 
+    Integer emailid     = individualComposite.getEmails().get(0).getId();
+    String emailaddress = individualComposite.getEmails().get(0).getEmailaddress();
+
     String authJsonTemplate = new String(Files.readAllBytes(
-        Paths.get(TEST_RESOURCE_PATH + "auth.template.json")));
+      Paths.get(TEST_RESOURCE_PATH + "auth.template.json")));
 
     Response response = target(authURI).request(MediaType.APPLICATION_JSON_TYPE)
       .post(Entity.json(String.format(authJsonTemplate, 
-        nedIndividualId, individualComposite.getEmails().get(0).getId(),
-          PASSWORD)));
+        nedIndividualId, emailid, PASSWORD)));
 
     assertEquals(200, response.getStatus());
 
-    //String responseJson = response.readEntity(String.class);
+    String responseJson = response.readEntity(String.class);
 
-    //Unmarshaller unmarshaller = jsonUnmarshaller(Individualprofile.class);
-    //Individualprofile profile = unmarshalEntity(responseJson, Individualprofile.class, unmarshaller);
+    Auth auth = unmarshalEntity(responseJson, Auth.class, jsonUnmarshaller(Auth.class));
 
-    //String profileURI = profilesURI + "/" + profile.getId();
+    assertTrue( auth.getId() > 0 );
+    assertTrue(new PasswordDigestService().verifyPassword(PASSWORD, auth.getPassword()));
+    assertEquals(36, auth.getAuthid().length());
+    assertEquals(nedIndividualId, auth.getNedid());
+    assertEquals(emailaddress, auth.getEmail());
+    assertTrue( auth.getIsactive().equals((byte)1) );
+    assertEquals(emailid, auth.getEmailid());
+    assertEquals(emailaddress, auth.getEmail());
+
+    int x = 1;
   }
 }

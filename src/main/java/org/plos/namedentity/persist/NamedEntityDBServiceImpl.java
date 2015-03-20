@@ -379,6 +379,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       return (List<T>)findDegreesByNedId(nedId);
     if (cname.equals(Url.class.getCanonicalName()))
       return (List<T>)findUrlsByNedId(nedId);
+    if (cname.equals(Auth.class.getCanonicalName()))
+      return (List<T>)findAuthByNedId(nedId);
 
     throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
 
@@ -443,7 +445,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     return this.context
         .select(
             auth.ID, auth.NEDID, auth.EMAILID,
-            e.EMAILADDRESS,
+            e.EMAILADDRESS.as("email"),
             auth.AUTHID, auth.PASSWORD, auth.ISACTIVE,
             auth.CREATED, auth.LASTMODIFIED)
         .from(auth)
@@ -661,6 +663,24 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .where(u.NEDID.equal(nedId))
         .fetch()
         .into(Url.class);
+  }
+
+  private List<Auth> findAuthByNedId(Integer nedId) {
+
+    Authcas a = AUTHCAS.as("a");
+    Emails  e = EMAILS.as("e");
+
+    return this.context
+        .select(
+            a.ID, a.NEDID, a.EMAILID,
+            e.EMAILADDRESS.as("email"),
+            a.AUTHID, a.PASSWORD, a.ISACTIVE,
+            a.CREATED, a.LASTMODIFIED)
+        .from(a)
+        .join(e).on(a.EMAILID.equal(e.ID))
+        .where(a.NEDID.equal(nedId))
+        .fetch()
+        .into(Auth.class);
   }
 
   private Uniqueidentifier findUniqueIdsByPrimaryKey(Integer id) {

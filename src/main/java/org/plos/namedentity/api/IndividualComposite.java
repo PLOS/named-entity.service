@@ -21,14 +21,19 @@ import static org.plos.namedentity.api.NedException.ErrorType.*;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.validate.Validatable;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import java.util.HashMap;
+
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 @XmlRootElement
 public class IndividualComposite extends Composite implements Validatable {
+
+  @XmlElement(name = "credentials")
+  private List<Auth>              auth;
 
   private List<Individualprofile> individualprofiles;
   private List<Role>              roles;
@@ -47,7 +52,11 @@ public class IndividualComposite extends Composite implements Validatable {
 
   @XmlTransient
   public Map<Class, List<? extends Entity>> getAsMap() {
-    Map<Class, List<? extends Entity>> map = new HashMap<>();
+
+    // preserve insertion order so that email inserts before auth record 
+    // during composite creation. auth record has a foreign key to email record.
+
+    Map<Class, List<? extends Entity>> map = new LinkedHashMap<>();
 
     map.put(Individualprofile.class, individualprofiles);
     map.put(Role.class, roles);
@@ -57,6 +66,7 @@ public class IndividualComposite extends Composite implements Validatable {
     map.put(Uniqueidentifier.class, uniqueidentifiers);
     map.put(Degree.class, degrees);
     map.put(Url.class, urls);
+    map.put(Auth.class, auth);
 
     return map;
   }
@@ -64,13 +74,14 @@ public class IndividualComposite extends Composite implements Validatable {
   @SuppressWarnings("unchecked")
   public void setFromMap(Map<Class, List<? extends Entity>> map) {
     individualprofiles = (List<Individualprofile>) map.get(Individualprofile.class);
-    roles = (List<Role>) map.get(Role.class);
-    addresses = (List<Address>) map.get(Address.class);
-    emails = (List<Email>) map.get(Email.class);
-    phonenumbers = (List<Phonenumber>) map.get(Phonenumber.class);
-    uniqueidentifiers = (List<Uniqueidentifier>) map.get(Uniqueidentifier.class);
-    degrees = (List<Degree>) map.get(Degree.class);
-    urls = (List<Url>) map.get(Url.class);
+    roles              = (List<Role>) map.get(Role.class);
+    addresses          = (List<Address>) map.get(Address.class);
+    emails             = (List<Email>) map.get(Email.class);
+    phonenumbers       = (List<Phonenumber>) map.get(Phonenumber.class);
+    uniqueidentifiers  = (List<Uniqueidentifier>) map.get(Uniqueidentifier.class);
+    degrees            = (List<Degree>) map.get(Degree.class);
+    urls               = (List<Url>) map.get(Url.class);
+    auth               = (List<Auth>) map.get(Auth.class);
   }
 
   @Override

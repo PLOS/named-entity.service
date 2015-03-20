@@ -40,8 +40,10 @@ public abstract class Composite {
       Integer sum = 0;
 
       if (entities != null)
-        for (Entity entity : entities)
+        for (Entity entity : entities) {
           sum += entity.hashCode();
+          System.out.println("entity=" + entity + " hc=" + entity.hashCode());
+        }
 
       array[i++] = sum;
     }

@@ -20,6 +20,7 @@ import static org.plos.namedentity.api.NedException.ErrorType.*;
 
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.*;
+import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.persist.NamedEntityDBService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,7 +56,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     else if (t instanceof Url)
       resolveUrl((Url) t);
     else if (t instanceof Auth) 
-      ;  // do nothing
+      resolveAuth((Auth) t);
     else
       throw new UnsupportedOperationException("Can not resolve entity for " + t.getClass());
 
@@ -154,6 +155,18 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     return entity;
   }
 
+  private Auth resolveAuth(Auth entity) {
+
+    if (entity.getEmail() != null) {
+      Email searchCriteria = new Email();
+      searchCriteria.setEmailaddress( entity.getEmail() );
+      List<Email> searchResult = nedDBSvc.findByAttribute(searchCriteria);
+      //TODO - implement error handling
+      entity.setEmailid( searchResult.get(0).getId() );
+    }
+    return entity;
+  }
+
   private Role resolveRole(Role entity) {
 
     if (entity.getApplicationtype() != null)
@@ -220,7 +233,6 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     return findComposite(nedId, clazz);
   }
-
 
   @Override
   public <T extends Entity> List<T> findResolvedEntities(Integer nedId, Class<T> clazz) {

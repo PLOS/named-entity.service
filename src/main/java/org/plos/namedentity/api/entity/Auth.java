@@ -18,6 +18,10 @@ package org.plos.namedentity.api.entity;
 
 import static org.plos.namedentity.api.NedException.ErrorType.*;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import org.plos.namedentity.api.NedException;
 
 import org.plos.namedentity.service.PasswordDigestService;
@@ -44,6 +48,27 @@ public class Auth extends Entity {
     this.authid = UUID.randomUUID().toString();  // cas id
   }
 
+  private static String EXCLUDED_FIELDS[] = {
+    "authid",
+    "created",
+    "emailid",
+    "id",
+    "isactive",
+    "lastmodified",
+    "nedid",
+    "password"
+  };
+
+  @Override
+  public boolean equals(Object o) {
+    return EqualsBuilder.reflectionEquals(this, o, EXCLUDED_FIELDS);
+  }
+
+  @Override
+  public int hashCode() {
+    return HashCodeBuilder.reflectionHashCode(this, EXCLUDED_FIELDS);
+  }
+
   @Override
   public void validate() {
 
@@ -53,8 +78,10 @@ public class Auth extends Entity {
 
     //TODO - apply other password constraints here.
 
-    // hash password before storing
-    password = new PasswordDigestService().generateDigest(password);
+    // hash password before storing, if not already digested.
+    if (password.length() != 128) {
+      password = new PasswordDigestService().generateDigest(password);
+    }
   }
 
   public java.lang.Integer getId() {
