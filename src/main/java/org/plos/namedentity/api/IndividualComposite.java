@@ -53,8 +53,9 @@ public class IndividualComposite extends Composite implements Validatable {
   @XmlTransient
   public Map<Class, List<? extends Entity>> getAsMap() {
 
-    // preserve insertion order so that email inserts before auth record 
-    // during composite creation. auth record has a foreign key to email record.
+    // use a linked map to preserve insertion order. this will ensure
+    // that email inserts before auth record during composite creation
+    // (auth record has a foreign key to email record)
 
     Map<Class, List<? extends Entity>> map = new LinkedHashMap<>();
 
@@ -117,6 +118,14 @@ public class IndividualComposite extends Composite implements Validatable {
 
     if (!casFound)
       throw new NedException(IndividualCompositeCasIdRequired);
+  }
+
+  public List<Auth> getAuth() {
+    return auth;
+  }
+
+  public void setAuth(List<Auth> auth) {
+    this.auth = auth;
   }
 
   public List<Individualprofile> getIndividualprofiles() {

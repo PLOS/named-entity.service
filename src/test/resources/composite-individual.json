@@ -1,7 +1,7 @@
 {
   "credentials" : [
     {
-      "password" : "plos",
+      "password" : "secret_password",
       "email"    : "jane.q.doe.work@foo.com"
     }
   ],

@@ -264,15 +264,4 @@ public class IndividualsResource extends NedResource {
   public Response getRoles(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Role.class);
   }
-
-  /* ----------------------------------------------------------------------- */
-  /*  AUTHENTICATION CREDENTIALS (CAS)                                       */
-  /* ----------------------------------------------------------------------- */
-
-  @POST
-  @Path("/{nedId}/auth")
-  @ApiOperation(value = "Create auth credentials", response = Auth.class)
-  public Response createAuthCredentials(@PathParam("nedId") int nedId, Auth authEntity) {
-    return createEntity(nedId, authEntity);
-  }
 }

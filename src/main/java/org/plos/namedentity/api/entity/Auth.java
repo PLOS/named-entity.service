@@ -50,23 +50,19 @@ public class Auth extends Entity {
 
   private static String EXCLUDED_FIELDS[] = {
     "authid",
-    "created",
     "emailid",
-    "id",
     "isactive",
-    "lastmodified",
-    "nedid",
     "password"
   };
 
   @Override
   public boolean equals(Object o) {
-    return EqualsBuilder.reflectionEquals(this, o, EXCLUDED_FIELDS);
+    return EqualsBuilder.reflectionEquals(this, o, concat(Entity.EXCLUDED_FIELDS, Auth.EXCLUDED_FIELDS));
   }
 
   @Override
   public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this, EXCLUDED_FIELDS);
+    return HashCodeBuilder.reflectionHashCode(this, concat(Entity.EXCLUDED_FIELDS, Auth.EXCLUDED_FIELDS));
   }
 
   @Override
@@ -162,5 +158,12 @@ public class Auth extends Entity {
 
   public void setIsactive(java.lang.Byte isactive) {
     this.isactive = isactive;
+  }
+
+  private String[] concat(String[] a, String[] b) {
+    String[] c = new String[a.length + b.length];
+    System.arraycopy(a, 0, c, 0, a.length);
+    System.arraycopy(b, 0, c, a.length, b.length);
+    return c;
   }
 }

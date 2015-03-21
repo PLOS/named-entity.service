@@ -72,8 +72,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   private static final String TYPE_CLASS_URI     = "/typeclasses";
   private static final String INDIVIDUAL_URI     = "/individuals";
   private static final String ORGANIZATION_URI   = "/organizations";
-
-  private static IndividualComposite individualComposite = null;
+  private static final String PASSWORD           = "secret_password";
 
   private static Integer nedIndividualId   = null;
   private static Integer nedOrganizationId = null;
@@ -98,8 +97,9 @@ public class NamedEntityResourceTest extends BaseResourceTest {
         Individualprofile individualProfile = composite.getIndividualprofiles().get(0);
         assertNotNull(individualProfile.getNedid());
 
-        nedIndividualId     = individualProfile.getNedid();
-        individualComposite = composite;
+        nedIndividualId = individualProfile.getNedid();
+
+        assertAuth(composite.getAuth().get(0));
       }
 
       if (nedOrganizationId == null) {
@@ -1273,41 +1273,13 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals("foo@bar.com", email.getEmailaddress());
   }
 
-  @Test
-  public void testAuthEndpoint() throws Exception {
-
-    final String authURI  = String.format("%s/%d/auth", INDIVIDUAL_URI, nedIndividualId);
-    final String PASSWORD = "super_secret_password";
-
-    /* ------------------------------------------------------------------ */
-    /*  CREATE                                                            */
-    /* ------------------------------------------------------------------ */
-
-    Integer emailid     = individualComposite.getEmails().get(0).getId();
-    String emailaddress = individualComposite.getEmails().get(0).getEmailaddress();
-
-    String authJsonTemplate = new String(Files.readAllBytes(
-      Paths.get(TEST_RESOURCE_PATH + "auth.template.json")));
-
-    Response response = target(authURI).request(MediaType.APPLICATION_JSON_TYPE)
-      .post(Entity.json(String.format(authJsonTemplate, 
-        nedIndividualId, emailid, PASSWORD)));
-
-    assertEquals(200, response.getStatus());
-
-    String responseJson = response.readEntity(String.class);
-
-    Auth auth = unmarshalEntity(responseJson, Auth.class, jsonUnmarshaller(Auth.class));
-
+  private void assertAuth(Auth auth) {
     assertTrue( auth.getId() > 0 );
     assertTrue(new PasswordDigestService().verifyPassword(PASSWORD, auth.getPassword()));
     assertEquals(36, auth.getAuthid().length());
     assertEquals(nedIndividualId, auth.getNedid());
-    assertEquals(emailaddress, auth.getEmail());
+    assertEquals("jane.q.doe.work@foo.com", auth.getEmail());
+    assertTrue( auth.getEmailid() > 0 );
     assertTrue( auth.getIsactive().equals((byte)1) );
-    assertEquals(emailid, auth.getEmailid());
-    assertEquals(emailaddress, auth.getEmail());
-
-    int x = 1;
   }
 }
