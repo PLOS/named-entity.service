@@ -42,7 +42,6 @@ public abstract class Composite {
       if (entities != null)
         for (Entity entity : entities) {
           sum += entity.hashCode();
-          System.out.println("entity=" + entity + " hc=" + entity.hashCode());
         }
 
       array[i++] = sum;

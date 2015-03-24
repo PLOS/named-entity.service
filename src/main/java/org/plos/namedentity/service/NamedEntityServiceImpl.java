@@ -161,7 +161,12 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       Email searchCriteria = new Email();
       searchCriteria.setEmailaddress( entity.getEmail() );
       List<Email> searchResult = nedDBSvc.findByAttribute(searchCriteria);
-      //TODO - implement error handling
+      
+      if (searchResult.size() != 1) {
+        throw new NedException(ServerError, String.format(
+          "Expected to find one email for %s. Found %d.", 
+            entity.getEmail(), searchResult.size()));
+      }
       entity.setEmailid( searchResult.get(0).getId() );
     }
     return entity;
