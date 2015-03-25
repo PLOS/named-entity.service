@@ -33,8 +33,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Auth extends Entity {
 
-  private Integer  id;
-  private Integer  nedid;
   private String   email;
   private Integer  emailid;
   private String   authid;
@@ -78,22 +76,6 @@ public class Auth extends Entity {
     if (password.length() != 128) {
       password = new PasswordDigestService().generateDigest(password);
     }
-  }
-
-  public java.lang.Integer getId() {
-    return this.id;
-  }
-
-  public void setId(java.lang.Integer id) {
-    this.id = id;
-  }
-
-  public java.lang.Integer getNedid() {
-    return this.nedid;
-  }
-
-  public void setNedid(java.lang.Integer nedid) {
-    this.nedid = nedid;
   }
 
   public java.lang.Integer getEmailid() {
