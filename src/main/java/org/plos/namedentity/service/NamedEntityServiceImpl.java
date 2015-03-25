@@ -18,9 +18,10 @@ package org.plos.namedentity.service;
 
 import static org.plos.namedentity.api.NedException.ErrorType.*;
 
+import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.*;
-import org.plos.namedentity.api.IndividualComposite;
+import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.persist.NamedEntityDBService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -160,6 +161,10 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     if (entity.getEmail() != null) {
       Email searchCriteria = new Email();
       searchCriteria.setEmailaddress( entity.getEmail() );
+
+      searchCriteria.setSourcetypeid(nedDBSvc.findTypeValue(
+        nedDBSvc.findTypeClass("Source Applications"), UidTypeEnum.AMBRA.getName()));
+
       List<Email> searchResult = nedDBSvc.findByAttribute(searchCriteria);
       
       if (searchResult.size() != 1) {
