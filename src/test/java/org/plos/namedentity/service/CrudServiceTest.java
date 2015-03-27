@@ -565,13 +565,18 @@ public class CrudServiceTest {
     assertNotNull(authId);
     assertEquals((32+4), authId.length());
 
-    // trying to save auth record without a password should fail.
+    // trying to save auth record with invalid password should fail.
 
-    try {
-      crudService.create(authEntity);
-      fail();
-    } catch (NedException expected) {
-      assertEquals(PasswordError, expected.getErrorType());
+    String[] invalidPasswords = { null, "", "123" };
+
+    for (String badPassword : invalidPasswords) {
+      try { 
+        authEntity.setPassword(badPassword);
+        crudService.create(authEntity);
+        fail();
+      } catch (NedException expected) {
+        assertEquals(PasswordError, expected.getErrorType());
+      }
     }
 
     // fill in auth record attributes and try again.

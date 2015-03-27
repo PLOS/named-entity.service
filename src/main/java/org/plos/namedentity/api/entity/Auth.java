@@ -66,11 +66,9 @@ public class Auth extends Entity {
   @Override
   public void validate() {
 
-    if (password == null || password.length() < 1) {
-      throw new NedException(PasswordError, "password is too short");
+    if (password == null || password.length() < 6) {
+      throw new NedException(PasswordError, "password must be at least 6 characters.");
     }
-
-    //TODO - apply other password constraints here.
 
     // hash password before storing, if not already digested.
     if (password.length() != 128) {
