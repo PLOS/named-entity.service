@@ -5,6 +5,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
+import org.plos.namedentity.api.entity.Auth;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Individualprofile;

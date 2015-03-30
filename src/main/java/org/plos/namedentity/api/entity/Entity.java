@@ -29,7 +29,7 @@ public abstract class Entity implements Validatable {
   //        want new fields excluded from equals/hashcode operations,
   //        you will need to manually add attribute names to this list.
 
-  private static String EXCLUDED_FIELDS[] = {
+  protected static String EXCLUDED_FIELDS[] = {
     "applicationtypeid",
     "countrycodetypeid",
     "created",

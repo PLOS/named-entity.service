@@ -24,6 +24,7 @@ import org.plos.namedentity.api.NedErrorResponse;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.Address;
+import org.plos.namedentity.api.entity.Auth;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
 import org.plos.namedentity.api.entity.Individualprofile;
@@ -70,6 +71,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   private static final String TYPE_CLASS_URI     = "/typeclasses";
   private static final String INDIVIDUAL_URI     = "/individuals";
   private static final String ORGANIZATION_URI   = "/organizations";
+  private static final String PASSWORD           = "secret_password";
 
   private static Integer nedIndividualId   = null;
   private static Integer nedOrganizationId = null;
@@ -95,6 +97,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
         assertNotNull(individualProfile.getNedid());
 
         nedIndividualId = individualProfile.getNedid();
+
+        assertAuth(composite.getAuth().get(0));
       }
 
       if (nedOrganizationId == null) {
@@ -1266,5 +1270,15 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     Email email = (Email) resource.createSearchCriteria("email", "emailaddress", "foo@bar.com",OrganizationComposite.class);
     assertEquals("foo@bar.com", email.getEmailaddress());
+  }
+
+  private void assertAuth(Auth auth) {
+    // note: password not marshalled to json (ie, not in response)
+    assertTrue( auth.getId() > 0 );
+    assertEquals(36, auth.getAuthid().length());
+    assertEquals(nedIndividualId, auth.getNedid());
+    assertEquals("jane.q.doe.work@foo.com", auth.getEmail());
+    assertTrue( auth.getEmailid() > 0 );
+    assertTrue( auth.getIsactive().equals((byte)1) );
   }
 }

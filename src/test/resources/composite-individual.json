@@ -1,4 +1,10 @@
 {
+  "credentials" : [
+    {
+      "password" : "secret_password",
+      "email"    : "jane.q.doe.work@foo.com"
+    }
+  ],
   "individualprofiles" : [
     {
       "firstname"       : "Jane",

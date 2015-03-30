@@ -18,8 +18,10 @@ package org.plos.namedentity.service;
 
 import static org.plos.namedentity.api.NedException.ErrorType.*;
 
+import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.*;
+import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.persist.NamedEntityDBService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,6 +56,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       resolveRole((Role) t);
     else if (t instanceof Url)
       resolveUrl((Url) t);
+    else if (t instanceof Auth) 
+      resolveAuth((Auth) t);
     else
       throw new UnsupportedOperationException("Can not resolve entity for " + t.getClass());
 
@@ -152,6 +156,27 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     return entity;
   }
 
+  private Auth resolveAuth(Auth entity) {
+
+    if (entity.getEmail() != null) {
+      Email searchCriteria = new Email();
+      searchCriteria.setEmailaddress( entity.getEmail() );
+
+      searchCriteria.setSourcetypeid(nedDBSvc.findTypeValue(
+        nedDBSvc.findTypeClass("Source Applications"), UidTypeEnum.AMBRA.getName()));
+
+      List<Email> searchResult = nedDBSvc.findByAttribute(searchCriteria);
+      
+      if (searchResult.size() != 1) {
+        throw new NedException(ServerError, String.format(
+          "Expected to find one email for %s. Found %d.", 
+            entity.getEmail(), searchResult.size()));
+      }
+      entity.setEmailid( searchResult.get(0).getId() );
+    }
+    return entity;
+  }
+
   private Role resolveRole(Role entity) {
 
     if (entity.getApplicationtype() != null)
@@ -218,7 +243,6 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     return findComposite(nedId, clazz);
   }
-
 
   @Override
   public <T extends Entity> List<T> findResolvedEntities(Integer nedId, Class<T> clazz) {
