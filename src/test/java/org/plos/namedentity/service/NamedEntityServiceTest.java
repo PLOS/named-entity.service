@@ -119,7 +119,7 @@ public class NamedEntityServiceTest {
     Email workEmail = new Email();
     workEmail.setType("Work");
     workEmail.setEmailaddress("fu.manchu.work@foo.com");
-    workEmail.setSource("Ambra");
+    workEmail.setSource("Editorial Manager");
     emails.add( workEmail );
 
     composite.setEmails( emails );
@@ -173,7 +173,7 @@ public class NamedEntityServiceTest {
     Email workEmail = new Email();
     workEmail.setType("Work");
     workEmail.setEmailaddress("fu.manchu.work@foo.com");
-    workEmail.setSource("Editorial Manager");
+    workEmail.setSource("Ambra");
     emails.add( workEmail );
 
     Email personalEmail = new Email();
@@ -183,6 +183,19 @@ public class NamedEntityServiceTest {
     emails.add( personalEmail );
 
     composite.setEmails( emails );
+
+    /* ------------------------------------------------------------------ */
+    /*  AUTH                                                              */
+    /* ------------------------------------------------------------------ */
+
+    List<Auth> auths = new ArrayList<>();
+
+    Auth auth = new Auth();
+    auth.setEmail(workEmail.getEmailaddress());
+    auth.setPlainTextPassword("password123");
+    auths.add( auth );
+
+    composite.setAuth( auths );
 
     /* ------------------------------------------------------------------ */
     /*  PHONE NUMBERS                                                     */
@@ -391,7 +404,7 @@ public class NamedEntityServiceTest {
     Email workEmail = new Email();
     workEmail.setType("Work");
     workEmail.setEmailaddress("valid@email.com");
-    workEmail.setSource("Editorial Manager");
+    workEmail.setSource("Ambra");
     emails.add( workEmail );
 
     composite.setEmails( emails );
@@ -406,6 +419,24 @@ public class NamedEntityServiceTest {
 
     composite = newCompositeIndividualWithRole();
     composite.setEmails( emails );
+
+    try {
+      namedEntityService.createComposite(composite, IndividualComposite.class);
+      fail();
+    } catch (NedException expected) {
+      Assert.isTrue(expected.getMessage().contains("User credentials can not be empty"));
+    }
+
+    composite = newCompositeIndividualWithRole();
+    composite.setEmails( emails );
+
+    List<Auth> auths = new ArrayList<>();
+    Auth auth = new Auth();
+    auth.setEmail(workEmail.getEmailaddress());
+    auth.setPlainTextPassword("password123");
+    auths.add( auth );
+
+    composite.setAuth( auths );
 
     namedEntityService.createComposite(composite, IndividualComposite.class);
   }
@@ -801,12 +832,25 @@ public class NamedEntityServiceTest {
     Email email = new Email();
     email.setType("Personal");
     email.setEmailaddress(UUID.randomUUID().toString()+"@foo.com");
-    email.setSource("Editorial Manager");
+    email.setSource("Ambra");
 
     List<Email> emails = new ArrayList<>();
     emails.add(email);
 
     composite.setEmails(emails);
+
+    /* ------------------------------------------------------------------ */
+    /*  AUTH                                                              */
+    /* ------------------------------------------------------------------ */
+
+    Auth auth = new Auth();
+    auth.setEmail(email.getEmailaddress());
+    auth.setPlainTextPassword("password123");
+
+    List<Auth> auths = new ArrayList<>();
+    auths.add(auth);
+
+    composite.setAuth(auths);
 
     /* ---------------------------------------------------------------------- */
     /*  UNIQUE IDENTIFIERS                                                    */

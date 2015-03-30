@@ -59,7 +59,7 @@ public class NedException extends RuntimeException {
 
     NoProfileEntities                (1500, "No Profile Entities for Individual Composite"),
     NoEmailEntities                  (1510, "No Email Entities for Individual Composite"),
-    IndividualCompositeCasIdRequired (1520, "CAS ID Required"),
+    NoAuthEntity                     (1520, "No Auth Entity for Individual Composite"),
 
     // Client-side Errors
     

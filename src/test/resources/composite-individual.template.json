@@ -19,5 +19,11 @@
       "uniqueidentifier" : "%s",
       "source"           : "Ambra"
     }
+  ],
+  "credentials" : [
+    {
+      "password"     : "%s",
+      "email"        : "%s"
+    }
   ]
 }

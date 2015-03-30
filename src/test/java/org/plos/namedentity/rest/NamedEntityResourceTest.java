@@ -185,7 +185,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
       .post(Entity.json(String.format(compositeJsonTemplate, 
-        UUID.randomUUID(), "jane.q.doe.work@foo.com", "Editorial Manager", UUID.randomUUID())));
+        UUID.randomUUID(), "jane.q.doe.work@foo.com", "Editorial Manager", 
+          UUID.randomUUID(), "secret_password", "jane.q.doe.work@foo.com")));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
@@ -251,9 +252,12 @@ public class NamedEntityResourceTest extends BaseResourceTest {
      */
     String unicodeDisplayname = "⻄ⶺ⍵4MÂ";
 
+    String uuidEmailaddress = UUID.randomUUID()+"@foo.com";
+
     response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
       .post(Entity.json(String.format(compositeJsonTemplate, 
-        unicodeDisplayname, UUID.randomUUID()+"@foo.com", "Ambra", UUID.randomUUID())));
+        unicodeDisplayname, uuidEmailaddress, "Ambra", UUID.randomUUID(),
+          "secret_password", uuidEmailaddress)));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
