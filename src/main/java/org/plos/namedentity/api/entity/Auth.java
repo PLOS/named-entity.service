@@ -27,16 +27,31 @@ import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.service.PasswordDigestService;
 
 import java.util.UUID;
+import java.util.regex.Pattern;
 
+import javax.persistence.Column;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Auth extends Entity {
 
+  private static final int PASSWORD_DIGEST_LENGTH        = 128;
+  private static final int LEGACY_PASSWORD_DIGEST_LENGTH = 70;
+
+  private static final Pattern passwordDigestRegexp = Pattern.compile("^[0-9a-f]+$");
+
   private String   email;
   private Integer  emailid;
   private String   authid;
+
+  // plain text password is a transient attribute used to generate the secure
+  // password and in marshalling from json to pojo entity (not stored in db)
+  private String   plainTextPassword;
+
+  // digested password (salt + hashed password) stored in db
   private String   password;
+
   private Byte     passwordreset;
   private String   verificationtoken;
   private Byte     verified;
@@ -50,7 +65,8 @@ public class Auth extends Entity {
     "authid",
     "emailid",
     "isactive",
-    "password"
+    "password",
+    "plainTextPassword"
   };
 
   @Override
@@ -65,15 +81,7 @@ public class Auth extends Entity {
 
   @Override
   public void validate() {
-
-    if (password == null || password.length() < 6) {
-      throw new NedException(PasswordError, "password must be at least 6 characters.");
-    }
-
-    // hash password before storing, if not already digested.
-    if (password.length() != 128) {
-      password = new PasswordDigestService().generateDigest(password);
-    }
+    validatePasswordDigest(this.password);
   }
 
   public java.lang.Integer getEmailid() {
@@ -100,12 +108,21 @@ public class Auth extends Entity {
     this.authid = authid;
   }
 
-  public java.lang.String getPassword() {
-    return this.password;
+  @XmlElement(name = "password")
+  public String getPlainTextPassword() { return this.plainTextPassword; }
+
+  @XmlElement(name = "password")
+  public void setPlainTextPassword(String plainTextPassword) {
+    validatePlainTextPassword(plainTextPassword);
+    this.plainTextPassword = plainTextPassword; 
+    setPassword(new PasswordDigestService().generateDigest(plainTextPassword));
   }
 
-  public void setPassword(java.lang.String plainTextPassword) {
-    this.password = plainTextPassword;
+  public String getPassword() {
+    return this.password;
+  }
+  public void setPassword(String hashedPassword) {
+    this.password = hashedPassword;
   }
 
   public java.lang.Byte getPasswordreset() {
@@ -145,5 +162,36 @@ public class Auth extends Entity {
     System.arraycopy(a, 0, c, 0, a.length);
     System.arraycopy(b, 0, c, a.length, b.length);
     return c;
+  }
+
+  private void validatePlainTextPassword(String password) {
+    if (password == null || password.length() < 6) {
+      throw new NedException(PasswordError, "password must be at least 6 characters.");
+    }
+  }
+
+  private void validatePasswordDigest(String password) {
+    if (password == null) {
+      throw new NedException(PasswordError, "undefined password. this is a required field.");
+    }
+    if ( !isValidDigestFormat(password) ) {
+      throw new NedException(DigestPasswordError, String.format(
+        "invalid encoded password (length:%d)", password.length()));
+    }
+    if (plainTextPassword != null) {
+      boolean verifyResult = new PasswordDigestService().verifyPassword(plainTextPassword, password);
+      if (!verifyResult) {
+        throw new NedException(TamperedPasswordError, "secure password doesn't match input password");
+      }
+    }
+  }
+
+  boolean isValidDigestFormat(String password) {
+    if (passwordDigestRegexp.matcher(password).matches() &&
+        (password.length() == PASSWORD_DIGEST_LENGTH || 
+         password.length() == LEGACY_PASSWORD_DIGEST_LENGTH)) {
+      return true;
+    }
+    return false;
   }
 }

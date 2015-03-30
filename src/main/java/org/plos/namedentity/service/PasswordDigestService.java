@@ -17,7 +17,6 @@
 package org.plos.namedentity.service;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hasher;
@@ -26,6 +25,7 @@ import com.google.common.io.BaseEncoding;
 import org.apache.log4j.Logger;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Random;
@@ -49,7 +49,7 @@ public class PasswordDigestService {
     assert SECURE_SALT_LENGTH != LEGACY_SALT_LENGTH;
   }
 
-  private static final Charset BYTE_ENCODING = Charsets.UTF_8;
+  private static final Charset BYTE_ENCODING = StandardCharsets.UTF_8;
   private static final BaseEncoding STRING_ENCODING = BaseEncoding.base16().lowerCase();
 
   private final Random random;

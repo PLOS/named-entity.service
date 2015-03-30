@@ -52,6 +52,8 @@ public class NedException extends RuntimeException {
     DupeLegalnameError               (1290, "Duplicate Legal Name"),
     DupeUidError                     (1300, "Duplicate Unique Identifier"),
     PasswordError                    (1310, "Password Error"),
+    DigestPasswordError              (1320, "Password Storage Error"),
+    TamperedPasswordError            (1330, "Tampered Password Error"),
 
     // Composite-Level Validation Errors
 

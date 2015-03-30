@@ -34,7 +34,6 @@ import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.service.NamedEntityService;
-import org.plos.namedentity.service.PasswordDigestService;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -1274,8 +1273,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   }
 
   private void assertAuth(Auth auth) {
+    // note: password not marshalled to json (ie, not in response)
     assertTrue( auth.getId() > 0 );
-    assertTrue(new PasswordDigestService().verifyPassword(PASSWORD, auth.getPassword()));
     assertEquals(36, auth.getAuthid().length());
     assertEquals(nedIndividualId, auth.getNedid());
     assertEquals("jane.q.doe.work@foo.com", auth.getEmail());

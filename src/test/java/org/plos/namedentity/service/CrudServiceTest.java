@@ -565,13 +565,23 @@ public class CrudServiceTest {
     assertNotNull(authId);
     assertEquals((32+4), authId.length());
 
-    // trying to save auth record with invalid password should fail.
+    // try to save auth record with null password fields
 
-    String[] invalidPasswords = { null, "", "123" };
+    try { 
+      crudService.create(authEntity);
+      fail();
+    } catch (NedException expected) {
+      assertEquals(PasswordError, expected.getErrorType());
+      assertTrue(expected.getDetailedMessage().startsWith("undefined password"));
+    }
 
-    for (String badPassword : invalidPasswords) {
+    // try to save auth record with invalid input password
+
+    String[] invalidInputPasswords = { null, "", "123" };
+
+    for (String badPassword : invalidInputPasswords) {
       try { 
-        authEntity.setPassword(badPassword);
+        authEntity.setPlainTextPassword(badPassword);
         crudService.create(authEntity);
         fail();
       } catch (NedException expected) {
@@ -579,7 +589,7 @@ public class CrudServiceTest {
       }
     }
 
-    // fill in auth record attributes and try again.
+    // fill in auth record attributes and try again (happy path)
 
     Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
@@ -593,14 +603,40 @@ public class CrudServiceTest {
     Integer emailId = crudService.create(email);
     assertNotNull( emailId );
 
-    authEntity.setPassword(PASSWORD);
-    authEntity.setNedid(nedId);
     authEntity.setEmailid(emailId);
+    authEntity.setNedid(nedId);
+
+    authEntity.setPlainTextPassword(PASSWORD);
+    assertTrue(new PasswordDigestService().verifyPassword(PASSWORD, authEntity.getPassword()));
 
     Integer authEntityId = crudService.create(authEntity);
     assertNotNull( authEntityId );
+    Auth savedAuth = crudService.findById(authEntityId, Auth.class);
 
-    assertTrue(new PasswordDigestService().verifyPassword(PASSWORD, authEntity.getPassword()));
+    assertEquals(authEntity.getPassword(), savedAuth.getPassword());
+    assertTrue(new PasswordDigestService().verifyPassword(PASSWORD, savedAuth.getPassword()));
+
+    // verify auth validation (invalid hash length)
+
+    try { 
+      authEntity.setPlainTextPassword(PASSWORD);
+      authEntity.setPassword( authEntity.getPassword()+"0" );
+      crudService.create(authEntity);
+      fail();
+    } catch (NedException expected) {
+      assertEquals(DigestPasswordError, expected.getErrorType());
+    }
+
+    // verify auth validation (tampered hash)
+
+    try { 
+      authEntity.setPlainTextPassword(PASSWORD);
+      authEntity.setPassword( modifyHashPassword(authEntity.getPassword()) );
+      crudService.create(authEntity);
+      fail();
+    } catch (NedException expected) {
+      assertEquals(TamperedPasswordError, expected.getErrorType());
+    }
   }
 
   private java.sql.Date dateNow() {
@@ -611,5 +647,16 @@ public class CrudServiceTest {
     cal.set(Calendar.SECOND, 0);
     cal.set(Calendar.MILLISECOND, 0);
     return new java.sql.Date( cal.getTimeInMillis() );
+  }
+
+  private String modifyHashPassword(String password) {
+    // modify secure password preserving hex representation
+    char[] chars = password.toCharArray();
+    int hexValue = Integer.parseInt(String.valueOf(chars[0]), 16);
+
+    // get next hex with rollover
+    String nextHex = Integer.toHexString( (hexValue+1) % 16 );
+    chars[0] = nextHex.charAt(0);
+    return new String(chars);
   }
 }
