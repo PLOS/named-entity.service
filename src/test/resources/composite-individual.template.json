@@ -13,13 +13,6 @@
       "source"       : "%s"
     }
   ],
-  "uniqueidentifiers" : [
-    {
-      "type"             : "CAS",
-      "uniqueidentifier" : "%s",
-      "source"           : "Ambra"
-    }
-  ],
   "credentials" : [
     {
       "password"     : "%s",

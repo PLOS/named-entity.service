@@ -583,7 +583,6 @@ INSERT INTO namedEntities.globalTypes (typeId, typeCode, shortDescription) VALUE
 INSERT INTO namedEntities.typeDescriptions(description, howUsed) VALUES ('UID Individual Types','ORCID, etc');
 INSERT INTO namedEntities.globalTypes (typeId, shortDescription, typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions),'ORCID','ORC');
 INSERT INTO namedEntities.globalTypes (typeId, shortDescription, typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions),'Editorial Manager','EM');
-INSERT INTO namedEntities.globalTypes (typeId, shortDescription, typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions),'CAS','CAS');
 INSERT INTO namedEntities.globalTypes (typeId, shortDescription, typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions),'Salesforce','SF');
 INSERT INTO namedEntities.globalTypes (typeId, shortDescription, typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions),'Ambra','AMB');
 

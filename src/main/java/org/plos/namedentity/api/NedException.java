@@ -39,7 +39,6 @@ public class NedException extends RuntimeException {
     InvalidSalesforceId              (1160, "Invalid Salesforce ID"),
     InvalidOrcidId                   (1170, "Invalid ORCID ID"),
     InvalidUrl                       (1180, "Invalid URL"),
-    InvalidCasId                     (1190, "Invalid CAS ID"),
     FamiliarNameError                (1200, "Familiar Name Error"),
     LegalNameError                   (1210, "Legal Name Error"),
     FirstnameError                   (1220, "Firstname Error"),

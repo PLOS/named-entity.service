@@ -30,6 +30,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -73,9 +74,6 @@ public class NamedEntityServiceTest {
 
     composite2.getIndividualprofiles().get(0).setDisplayname(
         composite1.getIndividualprofiles().get(0).getDisplayname());
-
-    composite2.getUniqueidentifiers().get(0).setUniqueidentifier(
-      composite1.getUniqueidentifiers().get(0).getUniqueidentifier());
 
     assertEquals(composite1, composite2);
 
@@ -262,12 +260,15 @@ public class NamedEntityServiceTest {
     /*  UNIQUE IDENTIFIERS                                                */
     /* ------------------------------------------------------------------ */
 
-    Uniqueidentifier uidEntity = new Uniqueidentifier();
-    uidEntity.setType("ORCID");
-    uidEntity.setUniqueidentifier("0000-0001-9430-001X");
-    uidEntity.setSource("Editorial Manager");
+    List<Uniqueidentifier> uids = new ArrayList<>();
 
-    composite.getUniqueidentifiers().add(uidEntity);
+    Uniqueidentifier uid = new Uniqueidentifier();
+    uid.setType("ORCID");
+    uid.setUniqueidentifier("0000-0001-9430-001X");
+    uid.setSource("Editorial Manager");
+    uids.add(uid);
+
+    composite.setUniqueidentifiers( uids );
 
     /* ------------------------------------------------------------------ */
     /*  URLS                                                              */
@@ -336,7 +337,7 @@ public class NamedEntityServiceTest {
     assertEquals(1, roleEntities.size());
 
     List<Uniqueidentifier> uidEntities = namedEntityService.findResolvedEntities(nedId, Uniqueidentifier.class);
-    assertEquals(2, uidEntities.size());
+    assertEquals(1, uidEntities.size());
 
     Individualprofile individualProfile = namedEntityService.findResolvedEntityByUid("ORCID", "0000-0001-9430-001X", Individualprofile.class);
 
@@ -681,8 +682,8 @@ public class NamedEntityServiceTest {
 
     Uniqueidentifier uid = new Uniqueidentifier();
     uid.setSource("Ambra");
-    uid.setType("CAS");
-    uid.setUniqueidentifier(UUID.randomUUID().toString());
+    uid.setType("Ambra");
+    uid.setUniqueidentifier(String.valueOf(new Date().getTime()));
 
     List<Uniqueidentifier> uniqueidentifiers = new ArrayList<>();
     uniqueidentifiers.add(uid);
@@ -839,9 +840,9 @@ public class NamedEntityServiceTest {
 
     composite.setEmails(emails);
 
-    /* ------------------------------------------------------------------ */
-    /*  AUTH                                                              */
-    /* ------------------------------------------------------------------ */
+    /* ---------------------------------------------------------------------- */
+    /*  AUTH                                                                  */
+    /* ---------------------------------------------------------------------- */
 
     Auth auth = new Auth();
     auth.setEmail(email.getEmailaddress());
@@ -858,8 +859,8 @@ public class NamedEntityServiceTest {
 
     Uniqueidentifier uid = new Uniqueidentifier();
     uid.setSource("Ambra");
-    uid.setType("CAS");
-    uid.setUniqueidentifier(UUID.randomUUID().toString());
+    uid.setType("Ambra");
+    uid.setUniqueidentifier(String.valueOf(new Date().getTime()));
 
     List<Uniqueidentifier> uniqueidentifiers = new ArrayList<>();
     uniqueidentifiers.add(uid);

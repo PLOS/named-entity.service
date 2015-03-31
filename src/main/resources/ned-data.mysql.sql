@@ -600,7 +600,6 @@ INSERT INTO typeDescriptions(description, howUsed) VALUES ('UID Individual Types
 SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='UID Individual Types';
 INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'ORCID','ORC', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'Editorial Manager','EM', CURRENT_TIMESTAMP);
-INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'CAS','CAS', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'Salesforce','SF', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId, shortDescription, typeCode, created) VALUES (@typeIdVar,'Ambra','AMB', CURRENT_TIMESTAMP);
 
