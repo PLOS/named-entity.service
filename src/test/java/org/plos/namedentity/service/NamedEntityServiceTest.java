@@ -30,6 +30,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -74,9 +75,6 @@ public class NamedEntityServiceTest {
     composite2.getIndividualprofiles().get(0).setDisplayname(
         composite1.getIndividualprofiles().get(0).getDisplayname());
 
-    composite2.getUniqueidentifiers().get(0).setUniqueidentifier(
-      composite1.getUniqueidentifiers().get(0).getUniqueidentifier());
-
     assertEquals(composite1, composite2);
 
     List<Email> emails = new ArrayList<>();
@@ -119,7 +117,7 @@ public class NamedEntityServiceTest {
     Email workEmail = new Email();
     workEmail.setType("Work");
     workEmail.setEmailaddress("fu.manchu.work@foo.com");
-    workEmail.setSource("Ambra");
+    workEmail.setSource("Editorial Manager");
     emails.add( workEmail );
 
     composite.setEmails( emails );
@@ -173,7 +171,7 @@ public class NamedEntityServiceTest {
     Email workEmail = new Email();
     workEmail.setType("Work");
     workEmail.setEmailaddress("fu.manchu.work@foo.com");
-    workEmail.setSource("Editorial Manager");
+    workEmail.setSource("Ambra");
     emails.add( workEmail );
 
     Email personalEmail = new Email();
@@ -183,6 +181,19 @@ public class NamedEntityServiceTest {
     emails.add( personalEmail );
 
     composite.setEmails( emails );
+
+    /* ------------------------------------------------------------------ */
+    /*  AUTH                                                              */
+    /* ------------------------------------------------------------------ */
+
+    List<Auth> auths = new ArrayList<>();
+
+    Auth auth = new Auth();
+    auth.setEmail(workEmail.getEmailaddress());
+    auth.setPlainTextPassword("password123");
+    auths.add( auth );
+
+    composite.setAuth( auths );
 
     /* ------------------------------------------------------------------ */
     /*  PHONE NUMBERS                                                     */
@@ -249,12 +260,15 @@ public class NamedEntityServiceTest {
     /*  UNIQUE IDENTIFIERS                                                */
     /* ------------------------------------------------------------------ */
 
-    Uniqueidentifier uidEntity = new Uniqueidentifier();
-    uidEntity.setType("ORCID");
-    uidEntity.setUniqueidentifier("0000-0001-9430-001X");
-    uidEntity.setSource("Editorial Manager");
+    List<Uniqueidentifier> uids = new ArrayList<>();
 
-    composite.getUniqueidentifiers().add(uidEntity);
+    Uniqueidentifier uid = new Uniqueidentifier();
+    uid.setType("ORCID");
+    uid.setUniqueidentifier("0000-0001-9430-001X");
+    uid.setSource("Editorial Manager");
+    uids.add(uid);
+
+    composite.setUniqueidentifiers( uids );
 
     /* ------------------------------------------------------------------ */
     /*  URLS                                                              */
@@ -323,7 +337,7 @@ public class NamedEntityServiceTest {
     assertEquals(1, roleEntities.size());
 
     List<Uniqueidentifier> uidEntities = namedEntityService.findResolvedEntities(nedId, Uniqueidentifier.class);
-    assertEquals(2, uidEntities.size());
+    assertEquals(1, uidEntities.size());
 
     Individualprofile individualProfile = namedEntityService.findResolvedEntityByUid("ORCID", "0000-0001-9430-001X", Individualprofile.class);
 
@@ -391,7 +405,7 @@ public class NamedEntityServiceTest {
     Email workEmail = new Email();
     workEmail.setType("Work");
     workEmail.setEmailaddress("valid@email.com");
-    workEmail.setSource("Editorial Manager");
+    workEmail.setSource("Ambra");
     emails.add( workEmail );
 
     composite.setEmails( emails );
@@ -406,6 +420,24 @@ public class NamedEntityServiceTest {
 
     composite = newCompositeIndividualWithRole();
     composite.setEmails( emails );
+
+    try {
+      namedEntityService.createComposite(composite, IndividualComposite.class);
+      fail();
+    } catch (NedException expected) {
+      Assert.isTrue(expected.getMessage().contains("User credentials can not be empty"));
+    }
+
+    composite = newCompositeIndividualWithRole();
+    composite.setEmails( emails );
+
+    List<Auth> auths = new ArrayList<>();
+    Auth auth = new Auth();
+    auth.setEmail(workEmail.getEmailaddress());
+    auth.setPlainTextPassword("password123");
+    auths.add( auth );
+
+    composite.setAuth( auths );
 
     namedEntityService.createComposite(composite, IndividualComposite.class);
   }
@@ -650,8 +682,8 @@ public class NamedEntityServiceTest {
 
     Uniqueidentifier uid = new Uniqueidentifier();
     uid.setSource("Ambra");
-    uid.setType("CAS");
-    uid.setUniqueidentifier(UUID.randomUUID().toString());
+    uid.setType("Ambra");
+    uid.setUniqueidentifier(String.valueOf(new Date().getTime()));
 
     List<Uniqueidentifier> uniqueidentifiers = new ArrayList<>();
     uniqueidentifiers.add(uid);
@@ -801,7 +833,7 @@ public class NamedEntityServiceTest {
     Email email = new Email();
     email.setType("Personal");
     email.setEmailaddress(UUID.randomUUID().toString()+"@foo.com");
-    email.setSource("Editorial Manager");
+    email.setSource("Ambra");
 
     List<Email> emails = new ArrayList<>();
     emails.add(email);
@@ -809,13 +841,26 @@ public class NamedEntityServiceTest {
     composite.setEmails(emails);
 
     /* ---------------------------------------------------------------------- */
+    /*  AUTH                                                                  */
+    /* ---------------------------------------------------------------------- */
+
+    Auth auth = new Auth();
+    auth.setEmail(email.getEmailaddress());
+    auth.setPlainTextPassword("password123");
+
+    List<Auth> auths = new ArrayList<>();
+    auths.add(auth);
+
+    composite.setAuth(auths);
+
+    /* ---------------------------------------------------------------------- */
     /*  UNIQUE IDENTIFIERS                                                    */
     /* ---------------------------------------------------------------------- */
 
     Uniqueidentifier uid = new Uniqueidentifier();
     uid.setSource("Ambra");
-    uid.setType("CAS");
-    uid.setUniqueidentifier(UUID.randomUUID().toString());
+    uid.setType("Ambra");
+    uid.setUniqueidentifier(String.valueOf(new Date().getTime()));
 
     List<Uniqueidentifier> uniqueidentifiers = new ArrayList<>();
     uniqueidentifiers.add(uid);

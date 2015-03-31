@@ -130,6 +130,28 @@ public class IndividualsResource extends NedResource {
       return serverError(e, "Find individual failed");
     }
   }
+
+  @GET
+  @Path("/CAS/{casId}")
+  @ApiOperation(value = "Read individual by CAS ID", response = IndividualComposite.class)
+  public Response readIndividualByCasId(@PathParam("casId") String casId) {
+    try {
+
+      List<Entity> results = crudService.findByAttribute( createSearchCriteria("auth","authid",casId,IndividualComposite.class) );
+
+      if (results.size() == 0)
+        throw new NedException(EntityNotFound, "Individual not found with CAS id: " + casId);
+
+      Auth auth = (Auth) results.get(0);
+
+      return Response.status(Response.Status.OK).entity(
+          namedEntityService.findComposite(auth.getNedid(), IndividualComposite.class)).build();
+    } catch (NedException e) {
+      return nedError(e, "Find individual by CAS id failed");
+    } catch (Exception e) {
+      return serverError(e, "Find individual by CAS id failed");
+    }
+  }
   
   /* ----------------------------------------------------------------------- */
   /*  PROFILE CRUD                                                           */
@@ -187,27 +209,7 @@ public class IndividualsResource extends NedResource {
   @DELETE
   @Path("/{nedId}/uids/{id}")
   @ApiOperation(value = "Delete UID")
-  public Response deleteUid(@PathParam("nedId") int nedId,
-                            @PathParam("id") int id) {
-
-    int casCount = 0;
-
-    int entityLocation = -1;
-
-    List<Uniqueidentifier> uids = ((List<Uniqueidentifier>)(getEntities(nedId, Uniqueidentifier.class).getEntity()));
-
-    for (int i=0; i<uids.size(); i++) {
-      Uniqueidentifier uid = uids.get(i);
-      if (uid.getType().equals("CAS")) {
-        casCount++;
-        if (uid.getId() == id)
-          entityLocation = i;
-      }
-    }
-
-    if (entityLocation != -1 && casCount == 1)
-      return nedError(new NedException("Can not remove last CAS ID"), "Unable to Uniqueidentifier");
-
+  public Response deleteUid(@PathParam("nedId") int nedId, @PathParam("id") int id) {
     return deleteEntity(nedId, id, Uniqueidentifier.class);
   }
 

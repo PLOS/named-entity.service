@@ -104,20 +104,8 @@ public class IndividualComposite extends Composite implements Validatable {
     if (emails == null || emails.size() == 0)
       throw new NedException(NoEmailEntities, "Email entities can not be empty");
 
-    boolean casFound = false;
-
-    if (uniqueidentifiers != null) {
-      for (Uniqueidentifier uid : uniqueidentifiers) {
-        if (uid.getType() != null && uid.getType().equals("CAS")) {
-          casFound = true;
-          if (uid.getUniqueidentifier() == null || uid.getUniqueidentifier().length() < 2)
-            throw new NedException(InvalidCasId, "CAS ID is too short");
-        }
-      }
-    }
-
-    if (!casFound)
-      throw new NedException(IndividualCompositeCasIdRequired);
+    if (auth == null || auth.size() == 0)
+      throw new NedException(NoAuthEntity, "User credentials can not be empty");
   }
 
   public List<Auth> getAuth() {

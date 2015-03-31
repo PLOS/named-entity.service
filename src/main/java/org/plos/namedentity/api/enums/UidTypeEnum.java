@@ -25,7 +25,6 @@ public enum UidTypeEnum {
   RINGGOLD("Ringgold"),
   ORCID("ORCID"),
   EDITORIAL_MANAGER("Editorial Manager"),
-  CAS("CAS"),
   SALESFORCE("Salesforce"),
   AMBRA("Ambra"),
   INVALID_UID_TYPE("");
@@ -53,7 +52,6 @@ public enum UidTypeEnum {
   public static Set<String> getIndividualUidTypeNames() {
     Set<String> individualUidTypeNames = new HashSet<>();
     individualUidTypeNames.add(AMBRA.getName());
-    individualUidTypeNames.add(CAS.getName());
     individualUidTypeNames.add(EDITORIAL_MANAGER.getName());
     individualUidTypeNames.add(ORCID.getName());
     individualUidTypeNames.add(SALESFORCE.getName());
