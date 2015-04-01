@@ -81,6 +81,7 @@ public class Auth extends Entity {
 
   @Override
   public void validate() {
+    validatePlainTextPassword(this.plainTextPassword);
     validatePasswordDigest(this.password);
   }
 
@@ -113,14 +114,16 @@ public class Auth extends Entity {
 
   @XmlElement(name = "password")
   public void setPlainTextPassword(String plainTextPassword) {
-    validatePlainTextPassword(plainTextPassword);
-    this.plainTextPassword = plainTextPassword; 
-    setPassword(new PasswordDigestService().generateDigest(plainTextPassword));
+    this.plainTextPassword = plainTextPassword;
+    if (plainTextPassword != null) {
+      setPassword(new PasswordDigestService().generateDigest(plainTextPassword));
+    }
   }
 
   public String getPassword() {
     return this.password;
   }
+  // setter called from plaintext setter or jooq populating pojo from db.
   public void setPassword(String hashedPassword) {
     this.password = hashedPassword;
   }
@@ -165,8 +168,9 @@ public class Auth extends Entity {
   }
 
   private void validatePlainTextPassword(String password) {
-    if (password == null || password.length() < 6) {
-      throw new NedException(PasswordError, "password must be at least 6 characters.");
+    // only validate if not null
+    if (password != null && password.length() < 6) {
+      throw new NedException(PasswordLengthError, "password must be at least 6 characters.");
     }
   }
 

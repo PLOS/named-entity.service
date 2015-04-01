@@ -53,6 +53,7 @@ public class NedException extends RuntimeException {
     PasswordError                    (1310, "Password Error"),
     DigestPasswordError              (1320, "Password Storage Error"),
     TamperedPasswordError            (1330, "Tampered Password Error"),
+    PasswordLengthError              (1340, "Password Format Error"),
 
     // Composite-Level Validation Errors
 

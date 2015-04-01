@@ -572,12 +572,11 @@ public class CrudServiceTest {
       fail();
     } catch (NedException expected) {
       assertEquals(PasswordError, expected.getErrorType());
-      assertTrue(expected.getDetailedMessage().startsWith("undefined password"));
     }
 
     // try to save auth record with invalid input password
 
-    String[] invalidInputPasswords = { null, "", "123" };
+    String[] invalidInputPasswords = { "", "123" };
 
     for (String badPassword : invalidInputPasswords) {
       try { 
@@ -585,7 +584,7 @@ public class CrudServiceTest {
         crudService.create(authEntity);
         fail();
       } catch (NedException expected) {
-        assertEquals(PasswordError, expected.getErrorType());
+        assertEquals(PasswordLengthError, expected.getErrorType());
       }
     }
 
