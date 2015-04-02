@@ -51,19 +51,25 @@ public class AuthTest {
     // invalid cas id's
 
     String[] badCasids = {
-      "QKWVMXWCOYHJ8WTC9I0",
-      "A2D95A5E-5C9B-EB5F-8CE8-E459759571EB",
-      "a2d95a5e5c9beb5f8ce8e459759571eb",
+      "QKWVMXWCOYHJ8WTC9I0ABCDDDAD",
       "a2d95a5e-5c9b-eb5f-8ce8-e459759571ebX",
+      "a2d95a5e-$$$$-@@@@-%%%%-e459759571eb",
     };
 
-    for (String casid : badCasids) {
+    String[] expectedError = {
+      "can not be shorter then",
+      "can not be longer then",
+      "contains invalid characters"
+    };
+
+    for (int i = 0; i < badCasids.length; i++) {
       try {
-        auth.setAuthid(casid) ; validateAuthid(auth) ; 
+        auth.setAuthid(badCasids[i]) ; validateAuthid(auth) ; 
         fail();
       } catch (InvocationTargetException ite) {
         NedException ne = (NedException) ite.getCause();
         assertEquals(InvalidCasId, ne.getErrorType());
+        assertTrue(ne.getDetailedMessage().contains(expectedError[i]));
       }
     }
   }

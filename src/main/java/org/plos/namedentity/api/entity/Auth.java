@@ -39,12 +39,11 @@ public class Auth extends Entity {
   private static final int PASSWORD_DIGEST_LENGTH        = 128;
   private static final int LEGACY_PASSWORD_DIGEST_LENGTH = 70;
 
-  private static final int UUID_CAS_ID_LENGTH            = 36;
-  private static final int MIN_AMBRA_CAS_ID_LENGTH       = 29;
+  private static final int CASID_MIN_LENGTH = 28;
+  private static final int CASID_MAX_LENGTH = 36;
 
+  private static final Pattern casRegex = Pattern.compile("^[A-Za-z0-9-]+$");
   private static final Pattern passwordDigestRegexp = Pattern.compile("^[0-9a-f]+$");
-  private static final Pattern uuidCasIdRegexp      = Pattern.compile("^[0-9a-f-]+$");
-  private static final Pattern ambraCasIdRegexp     = Pattern.compile("^[0-9A-Z]+$");
 
   private String   email;
   private Integer  emailid;
@@ -181,15 +180,14 @@ public class Auth extends Entity {
       throw new NedException(CasIdError, "undefined cas id. this is a required field.");
     }
 
-    if (uuidCasIdRegexp.matcher(casid).matches() && casid.length() == UUID_CAS_ID_LENGTH) {
-      return; // valid uuid format
-    }
+    if (casid.length() < CASID_MIN_LENGTH)
+      throw new NedException(InvalidCasId, "CAS ID can not be shorter then " + CASID_MIN_LENGTH + " characters");
 
-    if (ambraCasIdRegexp.matcher(casid).matches() && casid.length() >= MIN_AMBRA_CAS_ID_LENGTH) {
-      return; // valid ambra-generated format
-    }
+    if (casid.length() > CASID_MAX_LENGTH)
+      throw new NedException(InvalidCasId, "CAS ID can not be longer then " + CASID_MAX_LENGTH + " characters");
 
-    throw new NedException(InvalidCasId, "Unrecognized CAS ID: " + casid);
+    if (!casRegex.matcher(casid).matches())
+      throw new NedException(InvalidCasId, "CAS ID contains invalid characters");
   }
 
   private void validatePlainTextPassword(String password) {
