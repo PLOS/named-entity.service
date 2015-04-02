@@ -39,6 +39,10 @@ public class Auth extends Entity {
   private static final int PASSWORD_DIGEST_LENGTH        = 128;
   private static final int LEGACY_PASSWORD_DIGEST_LENGTH = 70;
 
+  private static final int CASID_MIN_LENGTH = 28;
+  private static final int CASID_MAX_LENGTH = 36;
+
+  private static final Pattern casRegex = Pattern.compile("^[A-Za-z0-9-]+$");
   private static final Pattern passwordDigestRegexp = Pattern.compile("^[0-9a-f]+$");
 
   private String   email;
@@ -81,6 +85,7 @@ public class Auth extends Entity {
 
   @Override
   public void validate() {
+    validateAuthid(this.authid);
     validatePlainTextPassword(this.plainTextPassword);
     validatePasswordDigest(this.password);
   }
@@ -123,7 +128,10 @@ public class Auth extends Entity {
   public String getPassword() {
     return this.password;
   }
-  // setter called from plaintext setter or jooq populating pojo from db.
+
+  // setter called from 1. plaintext setter, 2. jooq populating pojo from db,
+  // and 3. etl migrating ambra password.
+  @XmlElement(name = "password_digest")
   public void setPassword(String hashedPassword) {
     this.password = hashedPassword;
   }
@@ -165,6 +173,21 @@ public class Auth extends Entity {
     System.arraycopy(a, 0, c, 0, a.length);
     System.arraycopy(b, 0, c, a.length, b.length);
     return c;
+  }
+
+  private void validateAuthid(String casid) {
+    if (casid == null) {
+      throw new NedException(CasIdError, "undefined cas id. this is a required field.");
+    }
+
+    if (casid.length() < CASID_MIN_LENGTH)
+      throw new NedException(InvalidCasId, "CAS ID can not be shorter then " + CASID_MIN_LENGTH + " characters");
+
+    if (casid.length() > CASID_MAX_LENGTH)
+      throw new NedException(InvalidCasId, "CAS ID can not be longer then " + CASID_MAX_LENGTH + " characters");
+
+    if (!casRegex.matcher(casid).matches())
+      throw new NedException(InvalidCasId, "CAS ID contains invalid characters");
   }
 
   private void validatePlainTextPassword(String password) {

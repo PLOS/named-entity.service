@@ -1333,6 +1333,31 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals("foo@bar.com", email.getEmailaddress());
   }
 
+  @Test
+  public void testCasIdAndPasswordDigestInCompositePayload() throws IOException, JAXBException {
+
+    String compositeJsonTemplate = new String(Files.readAllBytes(
+      Paths.get(TEST_RESOURCE_PATH + "composite-individual-casid-digest.template.json")));
+
+    final String ambraEmail = "passwordtest@foo.com";
+    final String ambraCasId = "a2d95a5e-5c9b-eb5f-8ce8-e459759571eb";
+    final String ambraPasswordDigest = "5abecb9ef097e93c8181e1ffefd1be409f5c9e7d3e335119498714e20008e00c851e6fcd45a063676097ce539c915096012b864a616c8dc2465e51cf29b3881e";
+
+    Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+      .post(Entity.json(String.format(compositeJsonTemplate, 
+        UUID.randomUUID(), ambraEmail, "Ambra", ambraCasId, ambraPasswordDigest, ambraEmail)));
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    String jsonPayload = response.readEntity(String.class);
+
+    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
+    IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
+    Auth auth = composite.getAuth().get(0);
+    assertEquals(ambraCasId, auth.getAuthid());
+    assertEquals(ambraPasswordDigest, auth.getPassword());
+  }
+
   private void assertAuth(Auth auth) {
     // note: password not marshalled to json (ie, not in response)
     assertTrue( auth.getId() > 0 );
