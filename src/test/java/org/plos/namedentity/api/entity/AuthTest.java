@@ -16,14 +16,69 @@
  */
 package org.plos.namedentity.api.entity;
 
+import static org.plos.namedentity.api.NedException.ErrorType.*;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import org.plos.namedentity.api.NedException;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import org.junit.Test;
 
 public class AuthTest {
 
   private Auth auth = new Auth();
+
+  @Test
+  public void testInvalidCasId() throws Exception {
+
+    // undefined cas id (null)
+
+    try {
+      auth.setAuthid(null) ; validateAuthid(auth) ; 
+      fail();
+    } catch (InvocationTargetException ite) {
+      // Reflection wraps any exception thrown by a method.
+      NedException ne = (NedException) ite.getCause();
+      assertEquals(CasIdError, ne.getErrorType());
+    }
+
+    // invalid cas id's
+
+    String[] badCasids = {
+      "QKWVMXWCOYHJ8WTC9I0",
+      "A2D95A5E-5C9B-EB5F-8CE8-E459759571EB",
+      "a2d95a5e5c9beb5f8ce8e459759571eb",
+      "a2d95a5e-5c9b-eb5f-8ce8-e459759571ebX",
+    };
+
+    for (String casid : badCasids) {
+      try {
+        auth.setAuthid(casid) ; validateAuthid(auth) ; 
+        fail();
+      } catch (InvocationTargetException ite) {
+        NedException ne = (NedException) ite.getCause();
+        assertEquals(InvalidCasId, ne.getErrorType());
+      }
+    }
+  }
+
+  @Test
+  public void testValidCasId() throws Exception {
+    String[] okCasids = {
+      "QKWVMXWCOYHJ8WTC9I0LUI2ETIFK0",
+      "a2d95a5e-5c9b-eb5f-8ce8-e459759571eb",
+    };
+
+    for (String casid : okCasids) {
+      auth.setAuthid(casid) ; validateAuthid(auth) ; 
+    }
+  }
 
   @Test
   public void testInvalidDigestFormat() {
@@ -47,5 +102,11 @@ public class AuthTest {
     for (String password : okPasswords) {
       assertTrue( auth.isValidDigestFormat(password) );
     }
+  }
+
+  private void validateAuthid(Auth auth) throws Exception {
+    Method m = Auth.class.getDeclaredMethod("validateAuthid", new Class[]{String.class});
+    m.setAccessible(true);
+    m.invoke(auth, auth.getAuthid());
   }
 }

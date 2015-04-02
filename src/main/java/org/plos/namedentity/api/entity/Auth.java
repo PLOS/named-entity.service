@@ -39,7 +39,12 @@ public class Auth extends Entity {
   private static final int PASSWORD_DIGEST_LENGTH        = 128;
   private static final int LEGACY_PASSWORD_DIGEST_LENGTH = 70;
 
+  private static final int UUID_CAS_ID_LENGTH            = 36;
+  private static final int MIN_AMBRA_CAS_ID_LENGTH       = 29;
+
   private static final Pattern passwordDigestRegexp = Pattern.compile("^[0-9a-f]+$");
+  private static final Pattern uuidCasIdRegexp      = Pattern.compile("^[0-9a-f-]+$");
+  private static final Pattern ambraCasIdRegexp     = Pattern.compile("^[0-9A-Z]+$");
 
   private String   email;
   private Integer  emailid;
@@ -81,6 +86,7 @@ public class Auth extends Entity {
 
   @Override
   public void validate() {
+    validateAuthid(this.authid);
     validatePasswordDigest(this.password);
   }
 
@@ -121,6 +127,8 @@ public class Auth extends Entity {
   public String getPassword() {
     return this.password;
   }
+  // allow etl a way to set an existing cas id (ex: ambra migration)
+  @XmlElement(name = "password_digest")
   public void setPassword(String hashedPassword) {
     this.password = hashedPassword;
   }
@@ -162,6 +170,22 @@ public class Auth extends Entity {
     System.arraycopy(a, 0, c, 0, a.length);
     System.arraycopy(b, 0, c, a.length, b.length);
     return c;
+  }
+
+  private void validateAuthid(String casid) {
+    if (casid == null) {
+      throw new NedException(CasIdError, "undefined cas id. this is a required field.");
+    }
+
+    if (uuidCasIdRegexp.matcher(casid).matches() && casid.length() == UUID_CAS_ID_LENGTH) {
+      return; // valid uuid format
+    }
+
+    if (ambraCasIdRegexp.matcher(casid).matches() && casid.length() >= MIN_AMBRA_CAS_ID_LENGTH) {
+      return; // valid ambra-generated format
+    }
+
+    throw new NedException(InvalidCasId, "Unrecognized CAS ID: " + casid);
   }
 
   private void validatePlainTextPassword(String password) {
