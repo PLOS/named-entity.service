@@ -338,6 +338,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       return (T)findRoleByPrimaryKey(pk);
     if (cname.equals(Uniqueidentifier.class.getCanonicalName()))
       return (T)findUniqueIdsByPrimaryKey(pk);
+    if (cname.equals(Auth.class.getCanonicalName()))
+      return (T)findAuthCasByPrimaryKey(pk);
 
     throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
   }
@@ -377,6 +379,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       return (List<T>)findDegreesByNedId(nedId);
     if (cname.equals(Url.class.getCanonicalName()))
       return (List<T>)findUrlsByNedId(nedId);
+    if (cname.equals(Auth.class.getCanonicalName()))
+      return (List<T>)findAuthByNedId(nedId);
 
     throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
 
@@ -432,6 +436,20 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .from(e)
         .leftOuterJoin(gt1).on(e.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(e.SOURCETYPEID.equal(gt2.ID));
+  }
+
+  private SelectOnConditionStep select(Authcas auth) {
+
+    Emails e = EMAILS.as("e");
+
+    return this.context
+        .select(
+            auth.ID, auth.NEDID, auth.EMAILID,
+            e.EMAILADDRESS.as("email"),
+            auth.AUTHID, auth.PASSWORD, auth.ISACTIVE,
+            auth.CREATED, auth.LASTMODIFIED)
+        .from(auth)
+        .join(e).on(auth.EMAILID.equal(e.ID));
   }
 
   private SelectOnConditionStep select(Addresses a) {
@@ -647,6 +665,24 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .into(Url.class);
   }
 
+  private List<Auth> findAuthByNedId(Integer nedId) {
+
+    Authcas a = AUTHCAS.as("a");
+    Emails  e = EMAILS.as("e");
+
+    return this.context
+        .select(
+            a.ID, a.NEDID, a.EMAILID,
+            e.EMAILADDRESS.as("email"),
+            a.AUTHID, a.PASSWORD, a.ISACTIVE,
+            a.CREATED, a.LASTMODIFIED)
+        .from(a)
+        .join(e).on(a.EMAILID.equal(e.ID))
+        .where(a.NEDID.equal(nedId))
+        .fetch()
+        .into(Auth.class);
+  }
+
   private Uniqueidentifier findUniqueIdsByPrimaryKey(Integer id) {
 
     Uniqueidentifiers uid = UNIQUEIDENTIFIERS.as("uid");
@@ -657,6 +693,18 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       throw new NedException(EntityNotFound, String.format("Uniqueidentifier not found with id %d", id));
 
     return record.into(Uniqueidentifier.class);
+  }
+
+  private Auth findAuthCasByPrimaryKey(Integer id) {
+
+    Authcas auth = AUTHCAS.as("auth");
+
+    Record record = select(auth).where(auth.ID.equal(id)).fetchOne();
+
+    if (record == null) 
+      throw new NedException(EntityNotFound, String.format("Authcas not found with id %d", id));
+
+    return record.into(Auth.class);
   }
 
   private Individualprofile findIndividualByPrimaryKey(Integer individualId) {
@@ -742,6 +790,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     // TODO: use reflection to set this for all Entities
 
     entityTableMap.put(Address.class, new TablePkPair(ADDRESSES, ADDRESSES.ID));
+    entityTableMap.put(Auth.class, new TablePkPair(AUTHCAS, AUTHCAS.ID));
     entityTableMap.put(Degree.class, new TablePkPair(DEGREES, DEGREES.ID));
     entityTableMap.put(Email.class, new TablePkPair(EMAILS, EMAILS.ID));
     entityTableMap.put(Globaltype.class, new TablePkPair(GLOBALTYPES, GLOBALTYPES.ID));

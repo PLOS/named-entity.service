@@ -20,6 +20,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Address;
+import org.plos.namedentity.api.entity.Auth;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
 import org.plos.namedentity.api.entity.Individualprofile;
@@ -28,6 +29,7 @@ import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.persist.NamedEntityDBService;
+import org.plos.namedentity.service.PasswordDigestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -41,6 +43,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.plos.namedentity.api.NedException.ErrorType.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
@@ -552,6 +555,90 @@ public class CrudServiceTest {
     assertTrue( crudService.delete(savedUid) );
   }
 
+  @Test
+  public void testAuthCasCRUD() {
+
+    final String PASSWORD = "super_secret_password";
+
+    Auth authEntity = new Auth();
+    String authId = authEntity.getAuthid();
+    assertNotNull(authId);
+    assertEquals((32+4), authId.length());
+
+    // try to save auth record with null password fields
+
+    try { 
+      crudService.create(authEntity);
+      fail();
+    } catch (NedException expected) {
+      assertEquals(PasswordError, expected.getErrorType());
+      assertTrue(expected.getDetailedMessage().startsWith("undefined password"));
+    }
+
+    // try to save auth record with invalid input password
+
+    String[] invalidInputPasswords = { null, "", "123" };
+
+    for (String badPassword : invalidInputPasswords) {
+      try { 
+        authEntity.setPlainTextPassword(badPassword);
+        crudService.create(authEntity);
+        fail();
+      } catch (NedException expected) {
+        assertEquals(PasswordError, expected.getErrorType());
+      }
+    }
+
+    // fill in auth record attributes and try again (happy path)
+
+    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+
+    Email email = new Email();
+    email.setNedid(nedId);
+    email.setType("Work");
+    email.setEmailaddress(UUID.randomUUID().toString()+"@foo.com");
+    email.setSource("Editorial Manager");
+    namedEntityService.resolveValuesToIds(email);
+
+    Integer emailId = crudService.create(email);
+    assertNotNull( emailId );
+
+    authEntity.setEmailid(emailId);
+    authEntity.setNedid(nedId);
+
+    authEntity.setPlainTextPassword(PASSWORD);
+    assertTrue(new PasswordDigestService().verifyPassword(PASSWORD, authEntity.getPassword()));
+
+    Integer authEntityId = crudService.create(authEntity);
+    assertNotNull( authEntityId );
+    Auth savedAuth = crudService.findById(authEntityId, Auth.class);
+
+    assertEquals(authEntity.getPassword(), savedAuth.getPassword());
+    assertTrue(new PasswordDigestService().verifyPassword(PASSWORD, savedAuth.getPassword()));
+
+    // verify auth validation (invalid hash length)
+
+    try { 
+      authEntity.setPlainTextPassword(PASSWORD);
+      authEntity.setPassword( authEntity.getPassword()+"0" );
+      crudService.create(authEntity);
+      fail();
+    } catch (NedException expected) {
+      assertEquals(DigestPasswordError, expected.getErrorType());
+    }
+
+    // verify auth validation (tampered hash)
+
+    try { 
+      authEntity.setPlainTextPassword(PASSWORD);
+      authEntity.setPassword( modifyHashPassword(authEntity.getPassword()) );
+      crudService.create(authEntity);
+      fail();
+    } catch (NedException expected) {
+      assertEquals(TamperedPasswordError, expected.getErrorType());
+    }
+  }
+
   private java.sql.Date dateNow() {
     Calendar cal = Calendar.getInstance();
     cal.setTime(new java.util.Date());
@@ -560,5 +647,16 @@ public class CrudServiceTest {
     cal.set(Calendar.SECOND, 0);
     cal.set(Calendar.MILLISECOND, 0);
     return new java.sql.Date( cal.getTimeInMillis() );
+  }
+
+  private String modifyHashPassword(String password) {
+    // modify secure password preserving hex representation
+    char[] chars = password.toCharArray();
+    int hexValue = Integer.parseInt(String.valueOf(chars[0]), 16);
+
+    // get next hex with rollover
+    String nextHex = Integer.toHexString( (hexValue+1) % 16 );
+    chars[0] = nextHex.charAt(0);
+    return new String(chars);
   }
 }

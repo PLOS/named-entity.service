@@ -27,6 +27,11 @@ public class Tables {
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Audittrail AUDITTRAIL = org.plos.namedentity.persist.db.namedentities.tables.Audittrail.AUDITTRAIL;
 
 	/**
+	 * The table namedEntities.authCas
+	 */
+	public static final org.plos.namedentity.persist.db.namedentities.tables.Authcas AUTHCAS = org.plos.namedentity.persist.db.namedentities.tables.Authcas.AUTHCAS;
+
+	/**
 	 * The table namedEntities.degrees
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Degrees DEGREES = org.plos.namedentity.persist.db.namedentities.tables.Degrees.DEGREES;

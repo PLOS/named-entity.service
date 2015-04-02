@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Emails extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord> {
 
-	private static final long serialVersionUID = 855309878;
+	private static final long serialVersionUID = -542760999;
 
 	/**
 	 * The reference instance of <code>NAMEDENTITIES.EMAILS</code>
@@ -55,6 +55,11 @@ public class Emails extends org.jooq.impl.TableImpl<org.plos.namedentity.persist
 	 * The column <code>NAMEDENTITIES.EMAILS.SOURCETYPEID</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Integer> SOURCETYPEID = createField("SOURCETYPEID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
+	 * The column <code>NAMEDENTITIES.EMAILS.VERIFIED</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.EmailsRecord, java.lang.Byte> VERIFIED = createField("VERIFIED", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>NAMEDENTITIES.EMAILS.ISACTIVE</code>.

@@ -24,6 +24,7 @@ import org.plos.namedentity.api.NedErrorResponse;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.Address;
+import org.plos.namedentity.api.entity.Auth;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
 import org.plos.namedentity.api.entity.Individualprofile;
@@ -70,6 +71,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   private static final String TYPE_CLASS_URI     = "/typeclasses";
   private static final String INDIVIDUAL_URI     = "/individuals";
   private static final String ORGANIZATION_URI   = "/organizations";
+  private static final String PASSWORD           = "secret_password";
 
   private static Integer nedIndividualId   = null;
   private static Integer nedOrganizationId = null;
@@ -95,6 +97,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
         assertNotNull(individualProfile.getNedid());
 
         nedIndividualId = individualProfile.getNedid();
+
+        assertAuth(composite.getAuth().get(0));
       }
 
       if (nedOrganizationId == null) {
@@ -181,7 +185,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
       .post(Entity.json(String.format(compositeJsonTemplate, 
-        UUID.randomUUID(), "jane.q.doe.work@foo.com", "Editorial Manager", UUID.randomUUID())));
+        UUID.randomUUID(), "jane.q.doe.work@foo.com", "Editorial Manager", 
+          "secret_password", "jane.q.doe.work@foo.com")));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
@@ -247,9 +252,11 @@ public class NamedEntityResourceTest extends BaseResourceTest {
      */
     String unicodeDisplayname = "⻄ⶺ⍵4MÂ";
 
+    String uuidEmailaddress = UUID.randomUUID()+"@foo.com";
+
     response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
       .post(Entity.json(String.format(compositeJsonTemplate, 
-        unicodeDisplayname, UUID.randomUUID()+"@foo.com", "Ambra", UUID.randomUUID())));
+        unicodeDisplayname, uuidEmailaddress, "Ambra", "secret_password", uuidEmailaddress)));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
@@ -859,23 +866,24 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     List<Uniqueidentifier> uids = unmarshalEntities(responseJson, Uniqueidentifier.class,
         jsonUnmarshaller(Uniqueidentifier.class));
-    assertEquals(6, uids.size());
+    assertEquals(5, uids.size());
 
     /* ------------------------------------------------------------------ */
-    /*  FIND INDIVIDUAL BY UID                                            */
+    /*  FIND INDIVIDUAL BY UID (not CAS ID)                               */
     /* ------------------------------------------------------------------ */
 
     String[] uidTypes = new String[] {
-      "ORCID", "Editorial Manager", "CAS", "Salesforce", "Ambra"
+      "ORCID", "Editorial Manager", "Salesforce", "Ambra"
     };
 
     String[] uidValues = new String[] {
       "0000-0002-9430-000X",
       "PONE-579386",
-      "3BBFE34C8EEF46FEA1E0DA3339DF1EC9",
       "001U0000008Qlfj",
       "421649"
     };
+
+    String casId = null;
 
     for (int i = 0; i < uidTypes.length; i++) {
       response = target(INDIVIDUAL_URI+"/"+uidTypes[i]+"/"+uidValues[i])
@@ -888,7 +896,25 @@ public class NamedEntityResourceTest extends BaseResourceTest {
         IndividualComposite.class, jsonUnmarshaller(IndividualComposite.class));
 
       assertNotNull(individualComposite);
+
+      // grab cas id for next test below
+      if (casId == null) casId = individualComposite.getAuth().get(0).getAuthid();
     }
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND INDIVIDUAL BY CAS ID                                         */
+    /* ------------------------------------------------------------------ */
+
+    response = target(INDIVIDUAL_URI+"/CAS/"+casId)
+        .request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(200, response.getStatus());
+    responseJson = response.readEntity(String.class);
+
+    IndividualComposite individualComposite = unmarshalEntity(responseJson, 
+      IndividualComposite.class, jsonUnmarshaller(IndividualComposite.class));
+
+    assertNotNull(individualComposite);
 
     // invalid uid lookup
     response = target(INDIVIDUAL_URI + "/BOGUS_TYPE/BOGUS_VALUE")
@@ -1266,5 +1292,15 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     Email email = (Email) resource.createSearchCriteria("email", "emailaddress", "foo@bar.com",OrganizationComposite.class);
     assertEquals("foo@bar.com", email.getEmailaddress());
+  }
+
+  private void assertAuth(Auth auth) {
+    // note: password not marshalled to json (ie, not in response)
+    assertTrue( auth.getId() > 0 );
+    assertEquals(36, auth.getAuthid().length());
+    assertEquals(nedIndividualId, auth.getNedid());
+    assertEquals("jane.q.doe.work@foo.com", auth.getEmail());
+    assertTrue( auth.getEmailid() > 0 );
+    assertTrue( auth.getIsactive().equals((byte)1) );
   }
 }

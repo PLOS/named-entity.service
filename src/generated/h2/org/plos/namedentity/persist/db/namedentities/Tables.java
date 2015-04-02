@@ -100,4 +100,9 @@ public class Tables {
 	 * The table NAMEDENTITIES.UNIQUEIDENTIFIERS
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers UNIQUEIDENTIFIERS = org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS;
+
+	/**
+	 * The table NAMEDENTITIES.AUTHCAS
+	 */
+	public static final org.plos.namedentity.persist.db.namedentities.tables.Authcas AUTHCAS = org.plos.namedentity.persist.db.namedentities.tables.Authcas.AUTHCAS;
 }
