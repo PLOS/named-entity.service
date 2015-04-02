@@ -87,6 +87,7 @@ public class Auth extends Entity {
   @Override
   public void validate() {
     validateAuthid(this.authid);
+    validatePlainTextPassword(this.plainTextPassword);
     validatePasswordDigest(this.password);
   }
 
@@ -119,15 +120,18 @@ public class Auth extends Entity {
 
   @XmlElement(name = "password")
   public void setPlainTextPassword(String plainTextPassword) {
-    validatePlainTextPassword(plainTextPassword);
-    this.plainTextPassword = plainTextPassword; 
-    setPassword(new PasswordDigestService().generateDigest(plainTextPassword));
+    this.plainTextPassword = plainTextPassword;
+    if (plainTextPassword != null) {
+      setPassword(new PasswordDigestService().generateDigest(plainTextPassword));
+    }
   }
 
   public String getPassword() {
     return this.password;
   }
-  // allow etl a way to set an existing cas id (ex: ambra migration)
+
+  // setter called from 1. plaintext setter, 2. jooq populating pojo from db,
+  // and 3. etl migrating ambra password.
   @XmlElement(name = "password_digest")
   public void setPassword(String hashedPassword) {
     this.password = hashedPassword;
@@ -189,8 +193,9 @@ public class Auth extends Entity {
   }
 
   private void validatePlainTextPassword(String password) {
-    if (password == null || password.length() < 6) {
-      throw new NedException(PasswordError, "password must be at least 6 characters.");
+    // only validate if not null
+    if (password != null && password.length() < 6) {
+      throw new NedException(PasswordLengthError, "password must be at least 6 characters.");
     }
   }
 
