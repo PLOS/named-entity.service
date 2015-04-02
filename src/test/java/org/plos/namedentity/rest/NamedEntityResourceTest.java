@@ -59,11 +59,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import static org.plos.namedentity.api.NedException.ErrorType.DupeEmailError;
-import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
-import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchQuery;
-import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchCriteria;
-import static org.plos.namedentity.api.NedException.ErrorType.InvalidTypeValue;
+import static org.plos.namedentity.api.NedException.ErrorType.*;
 
 public class NamedEntityResourceTest extends BaseResourceTest {
 
@@ -941,6 +937,49 @@ public class NamedEntityResourceTest extends BaseResourceTest {
         .delete();
 
     assertEquals(204, response.getStatus());
+  }
+
+  @Test
+  public void testInvalidPassword() throws IOException, JAXBException {
+
+    String compositeJsonTemplate = new String(Files.readAllBytes(
+      Paths.get(TEST_RESOURCE_PATH + "composite-individual.template.json")));
+
+    // test invalid "password" value in json payload
+
+    for (String badPassword : new String[]{ "", "123" }) {
+
+      Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+        .post(Entity.json(String.format(compositeJsonTemplate, 
+          UUID.randomUUID(), "passwordtest@foo.com", "Ambra", badPassword, "passwordtest@foo.com")));
+
+      assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+
+      String responseJson  = response.readEntity(String.class);
+
+      NedErrorResponse ner = unmarshalEntity(responseJson, NedErrorResponse.class,
+                                             jsonUnmarshaller(NedErrorResponse.class));
+
+      assertEquals(PasswordLengthError.getErrorCode(), ner.errorCode);
+    }
+
+    // test no "password" attribute in json payload
+
+    StringBuilder b = new StringBuilder(compositeJsonTemplate);
+    String compositeJsonNoPassword = b.delete(b.indexOf("password"), b.lastIndexOf("email")).toString();
+
+    Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+      .post(Entity.json(String.format(compositeJsonNoPassword, 
+        UUID.randomUUID(), "passwordtest@foo.com", "Ambra", "passwordtest@foo.com")));
+
+    assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+
+    String responseJson  = response.readEntity(String.class);
+
+    NedErrorResponse ner = unmarshalEntity(responseJson, NedErrorResponse.class,
+                                           jsonUnmarshaller(NedErrorResponse.class));
+
+    assertEquals(PasswordError.getErrorCode(), ner.errorCode);
   }
 
   @Test
