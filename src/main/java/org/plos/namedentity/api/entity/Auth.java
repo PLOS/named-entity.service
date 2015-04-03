@@ -36,6 +36,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Auth extends Entity {
 
+  // password constants migrated from Ambra project (org.ambraproject.service.user.RegistrationConstants)
+  public static final int PASSWORD_MIN_LENGTH = 6;
+  public static final int PASSWORD_MAX_LENGTH = 255;
+
   private static final int PASSWORD_DIGEST_LENGTH        = 128;
   private static final int LEGACY_PASSWORD_DIGEST_LENGTH = 70;
 
@@ -192,8 +196,8 @@ public class Auth extends Entity {
 
   private void validatePlainTextPassword(String password) {
     // only validate if not null
-    if (password != null && password.length() < 6) {
-      throw new NedException(PasswordLengthError, "password must be at least 6 characters.");
+    if (password != null && password.length() < PASSWORD_MIN_LENGTH) {
+      throw new NedException(PasswordLengthError, "password must be at least "+PASSWORD_MIN_LENGTH+" characters.");
     }
   }
 
