@@ -18,6 +18,7 @@ package org.plos.namedentity.service;
 
 import static org.plos.namedentity.api.NedException.ErrorType.*;
 
+import org.apache.log4j.Logger;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.*;
@@ -30,8 +31,12 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 
 public class NamedEntityServiceImpl implements NamedEntityService {
+
+  private static Logger logger = Logger.getLogger(NamedEntityServiceImpl.class);
 
   @Inject private NamedEntityDBService nedDBSvc;
 
@@ -81,7 +86,73 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       entity.setNamesuffixtypeid(suffixTypeId);
     }
 
+    if (entity.getDisplayname() == null) {
+      entity.setDisplayname( generateDisplayname(entity, new Random()) );
+    }
+
     return entity;
+  }
+
+  private String generateDisplayname(Individualprofile entity, Random rand) {
+
+    final int MAX_TRIES_PER_PHASE = 100;
+    final int MAX_TRIES_GIVE_UP   = 300;
+
+    final int MIN_VAL = 100;
+    final int MAX_VAL = 800;
+
+    // initial range to select unique number
+    int min = MIN_VAL; int max = MAX_VAL;
+
+    int count = 0;
+
+    try {
+      entity.validateFirstname() ; entity.validateLastname() ;
+
+      // construct base name : first character of firstname + lastname
+      StringBuilder basename = new StringBuilder();
+      basename.append( Character.toLowerCase(entity.getFirstname().charAt(0)) );
+      basename.append( entity.getLastname() );
+
+      while (true) {
+        StringBuilder displayname = new StringBuilder();
+        displayname.append( basename );
+
+        // nextInt is exclusive at top end, so add 1 to make it inclusive
+        displayname.append( rand.nextInt((max-min)+1)+min );
+
+        Individualprofile profileCriteria = new Individualprofile();
+        profileCriteria.setDisplayname( displayname.toString() );
+        List<Individualprofile> profilesResult = nedDBSvc.findByAttribute(profileCriteria);
+        if (profilesResult.size() == 0) {
+          return displayname.toString();   // displayname is available
+        }
+
+        count++;  // increment attempt
+
+        if (count == MAX_TRIES_GIVE_UP) {
+
+          // we've exhausted generation attempts. what to do? throw our hands up
+          // and return a displayname comprised of initials + uuid.
+
+          StringBuilder b = new StringBuilder();
+          b.append( Character.toLowerCase(entity.getFirstname().charAt(0)) );
+          b.append( Character.toLowerCase(entity.getLastname().charAt(0)) );
+          b.append("--");
+          b.append( UUID.randomUUID().toString() );
+          return b.toString();
+        }
+
+        if (count % MAX_TRIES_PER_PHASE == 0) {
+          min = min * 10; 
+          max = max * 10; 
+        }
+      }
+    }
+    catch (NedException e) {
+      // name validation failed. abort generation.
+    }
+    return null;
   }
 
   private Organization resolveOrganization(Organization entity) {
