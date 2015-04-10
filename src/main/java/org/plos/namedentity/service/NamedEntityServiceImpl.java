@@ -110,7 +110,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       StringBuilder basename = new StringBuilder();
       basename.append( Character.toLowerCase(entity.getFirstname().charAt(0)) );
 
-      String lname = entity.getLastname();
+      String lname = entity.getLastname().toLowerCase();
       basename.append( lname.length() > MAX_LNAME_LEN ? lname.substring(0,MAX_LNAME_LEN) : lname );
 
       int count = 0;
