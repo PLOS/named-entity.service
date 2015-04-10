@@ -140,6 +140,11 @@ public class NamedEntityServiceImpl implements NamedEntityService {
           b.append( Character.toLowerCase(entity.getLastname().charAt(0)) );
           b.append("--");
           b.append( UUID.randomUUID().toString() );
+
+          logger.warn(String.format("Exhausted displayname generation with random " +
+            "number for firstname:%s lastname:%s. Generating uuid-variant: %s", 
+              entity.getFirstname(), entity.getLastname(), b.toString()));
+
           return b.toString();
         }
 

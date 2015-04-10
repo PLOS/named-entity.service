@@ -151,7 +151,7 @@ public class Individualprofile extends Entity {
       throw new NedException(LastnameError, "last name is too short");
   }
 
-  public void validateDisplayname() {
+  private void validateDisplayname() {
     if (displayname == null || displayname.length() < 1)
       throw new NedException(DisplayNameError, "display name is too short");
 
