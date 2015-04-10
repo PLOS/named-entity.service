@@ -452,18 +452,12 @@ public class NamedEntityServiceTest {
     namedEntityService.createComposite(composite, IndividualComposite.class);
   }
 
-  private Random getRandomMock() {
-    Random mockRandom = Mockito.mock(Random.class);
-    when( mockRandom.nextInt(anyInt()) ).thenReturn(0);
-    return mockRandom;
-  }
-
   @Test
   public void testProfileDisplaynameGeneration() throws Exception {
 
-    Random mockRandom = getRandomMock();
+    Random mockRandom = getRandomMock(0);
 
-    // test displayname generation without proper first and last names.
+    // test displayname generation without complete names.
 
     Individualprofile profile = new Individualprofile();
     assertNull( invokeGenerateDisplayname(profile,mockRandom) );
@@ -471,15 +465,15 @@ public class NamedEntityServiceTest {
     profile.setFirstname("firstname");
     assertNull( invokeGenerateDisplayname(profile,mockRandom) );
 
+    // define proper profile with a displayname that will collide with 
+    // initial generated name.
+
     profile.setLastname("lastname");
     profile.setDisplayname("flastname100");
     profile.setNameprefix("Mr.");
     profile.setNamesuffix("III");
     profile.setSource("Editorial Manager");
     profile.setNedid(1);
-
-    // insert profile into db with a displayname that will collide with 
-    // initial generated name.
 
     Integer profileId = crudService.create( namedEntityService.resolveValuesToIds(profile) );
     assertNotNull( profileId );
@@ -504,7 +498,7 @@ public class NamedEntityServiceTest {
     // random numbers in range 100 - 800) plus second-range check (100 random
     // numbers in range 1000 - 8000).
 
-    Random mockRandom2 = getRandomMock();
+    Random mockRandom2 = getRandomMock(0);
 
     profile.setDisplayname( invokeGenerateDisplayname(profile,mockRandom2) );
     verify(mockRandom2, times(201)).nextInt(anyInt());
@@ -516,11 +510,11 @@ public class NamedEntityServiceTest {
     assertEquals("flastname10000", savedEntity.getDisplayname());
 
     // generate displayname. this will exercise 1st, 2nd, and 3rd range checks. 
-    // The third-range check selects 100 numbers in range 10,000 - 80,000.
+    // The third-range check selects 100 numbers in the range 10,000 - 80,000.
     // This exhausts names generated with a random number, and falls back to
-    // generating name with initials plus uuid! 
+    // generating name with initials plus uuid.
 
-    Random mockRandom3 = getRandomMock();
+    Random mockRandom3 = getRandomMock(0);
 
     profile.setDisplayname( invokeGenerateDisplayname(profile,mockRandom3) );
     verify(mockRandom3, times(300)).nextInt(anyInt());
@@ -536,6 +530,12 @@ public class NamedEntityServiceTest {
     String displayname = savedEntity.getDisplayname();
     assertTrue( displayname.startsWith("fl--") );
     assertEquals((2+2+36), displayname.length());
+  }
+
+  private Random getRandomMock(int returnVal) {
+    Random mockRandom = Mockito.mock(Random.class);
+    when( mockRandom.nextInt(anyInt()) ).thenReturn( returnVal );
+    return mockRandom;
   }
 
   @Test

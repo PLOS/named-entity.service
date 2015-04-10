@@ -101,11 +101,6 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     final int MIN_VAL = 100;
     final int MAX_VAL = 800;
 
-    // initial range to select unique number
-    int min = MIN_VAL; int max = MAX_VAL;
-
-    int count = 0;
-
     try {
       entity.validateFirstname() ; entity.validateLastname() ;
 
@@ -113,6 +108,11 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       StringBuilder basename = new StringBuilder();
       basename.append( Character.toLowerCase(entity.getFirstname().charAt(0)) );
       basename.append( entity.getLastname() );
+
+      // initial range to select unique number
+      int min = MIN_VAL; int max = MAX_VAL;
+
+      int count = 0;
 
       while (true) {
         StringBuilder displayname = new StringBuilder();
@@ -144,8 +144,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
         }
 
         if (count % MAX_TRIES_PER_PHASE == 0) {
-          min = min * 10; 
-          max = max * 10; 
+          min = min * 10;
+          max = max * 10;
         }
       }
     }
