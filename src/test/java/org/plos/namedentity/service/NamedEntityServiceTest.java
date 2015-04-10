@@ -453,21 +453,12 @@ public class NamedEntityServiceTest {
   }
 
   @Test
-  public void testProfileDisplaynameGeneration() throws Exception {
+  public void testProfileDisplaynameGenerationWithUuid() throws Exception {
 
-    Random mockRandom = getRandomMock(0);
-
-    // test displayname generation without complete names.
+    // define profile with a displayname that will collide with generated name.
 
     Individualprofile profile = new Individualprofile();
-    assertNull( invokeGenerateDisplayname(profile,mockRandom) );
-
     profile.setFirstname("firstname");
-    assertNull( invokeGenerateDisplayname(profile,mockRandom) );
-
-    // define proper profile with a displayname that will collide with 
-    // initial generated name.
-
     profile.setLastname("lastname");
     profile.setDisplayname("flastname100");
     profile.setNameprefix("Mr.");
@@ -481,43 +472,17 @@ public class NamedEntityServiceTest {
     Individualprofile savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
     assertEquals("flastname100", savedEntity.getDisplayname());
 
-    // generate displayname. this will exercise first-range check (ie, 100
-    // random numbers in the range 100 - 800). Random mock allows us to set
-    // random value to 0 for all of these.
+    // mock Random so that it will return the same value every time. this will
+    // ensure that the same displayname gets generated everytime it's called
+    // which will collide with the displayname inserted above. this will exercise 
+    // the entire range check (ie, 100 random numbers in the range 100-999) and 
+    // fall back to generating a name with initials plus uuid.
+
+    Random mockRandom = Mockito.mock(Random.class);
+    when( mockRandom.nextInt(anyInt()) ).thenReturn(0);
 
     profile.setDisplayname( invokeGenerateDisplayname(profile,mockRandom) );
-    verify(mockRandom, times(101)).nextInt(anyInt());
-
-    profileId = crudService.create( namedEntityService.resolveValuesToIds(profile) );
-    assertNotNull( profileId );
-
-    savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
-    assertEquals("flastname1000", savedEntity.getDisplayname());
-
-    // generate displayname. this will exercise first-range check (ie, 100
-    // random numbers in range 100 - 800) plus second-range check (100 random
-    // numbers in range 1000 - 8000).
-
-    Random mockRandom2 = getRandomMock(0);
-
-    profile.setDisplayname( invokeGenerateDisplayname(profile,mockRandom2) );
-    verify(mockRandom2, times(201)).nextInt(anyInt());
-
-    profileId = crudService.create( namedEntityService.resolveValuesToIds(profile) );
-    assertNotNull( profileId );
-
-    savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
-    assertEquals("flastname10000", savedEntity.getDisplayname());
-
-    // generate displayname. this will exercise 1st, 2nd, and 3rd range checks. 
-    // The third-range check selects 100 numbers in the range 10,000 - 80,000.
-    // This exhausts names generated with a random number, and falls back to
-    // generating name with initials plus uuid.
-
-    Random mockRandom3 = getRandomMock(0);
-
-    profile.setDisplayname( invokeGenerateDisplayname(profile,mockRandom3) );
-    verify(mockRandom3, times(300)).nextInt(anyInt());
+    verify(mockRandom, times(100)).nextInt(anyInt());
 
     profileId = crudService.create( namedEntityService.resolveValuesToIds(profile) );
     assertNotNull( profileId );
@@ -525,17 +490,40 @@ public class NamedEntityServiceTest {
     savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
 
     // retrieve displayname which should be initials plus uuid (final effort)
-    // ex: "fl--0d657619-7f1d-4f8b-9b61-2456a151906a"
+    // ex: "fl-0d6576197f1d4f8b9b612456a151906a"
 
     String displayname = savedEntity.getDisplayname();
-    assertTrue( displayname.startsWith("fl--") );
-    assertEquals((2+2+36), displayname.length());
+    assertTrue( displayname.startsWith("fl-") );
+    assertEquals((3+32), displayname.length());
   }
 
-  private Random getRandomMock(int returnVal) {
-    Random mockRandom = Mockito.mock(Random.class);
-    when( mockRandom.nextInt(anyInt()) ).thenReturn( returnVal );
-    return mockRandom;
+  @Test
+  public void testProfileDisplaynameGenerationWithRandomNumber() throws Exception {
+
+    // test displayname generation without complete names. is ok to pass null
+    // for Random param.
+
+    Individualprofile profile = new Individualprofile();
+    assertNull( invokeGenerateDisplayname(profile,null) );
+
+    profile.setFirstname("firstname");
+    assertNull( invokeGenerateDisplayname(profile,null) );
+
+    // define profile entity. displayname will be generated during creation.
+
+    profile.setLastname("lastname");
+    profile.setNameprefix("Mr.");
+    profile.setNamesuffix("III");
+    profile.setSource("Editorial Manager");
+    profile.setNedid(1);
+
+    Integer profileId = crudService.create( namedEntityService.resolveValuesToIds(profile) );
+    assertNotNull( profileId );
+
+    Individualprofile savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
+    String displayname = savedEntity.getDisplayname();
+    assertNotNull( displayname );
+    assertTrue( displayname.matches("flastname[1-9][0-9][0-9]") );
   }
 
   @Test

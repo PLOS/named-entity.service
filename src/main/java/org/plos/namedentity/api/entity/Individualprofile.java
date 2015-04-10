@@ -26,6 +26,8 @@ import java.util.regex.Pattern;
 @XmlRootElement
 public class Individualprofile extends Entity {
 
+  public static final Integer DISPLAYNAME_MAX_LENGTH = 60;
+
   private String  firstname;
   private String  middlename;
   private String  lastname;
@@ -44,7 +46,6 @@ public class Individualprofile extends Entity {
   private Boolean isactive = true;
 
   private static Pattern rejectedCharsDisplayName = Pattern.compile("[$&+,:;=?@#|/\\s^~`%<>{}\\[\\]\\\\]");
-  private static Integer displaynameMaxLength = 60;
 
   @Override
   public void validate() {
@@ -155,8 +156,8 @@ public class Individualprofile extends Entity {
     if (displayname == null || displayname.length() < 1)
       throw new NedException(DisplayNameError, "display name is too short");
 
-    if (displayname.length() > displaynameMaxLength)
-      throw new NedException(DisplayNameError, "display name cannot be longer then " + displaynameMaxLength);
+    if (displayname.length() > DISPLAYNAME_MAX_LENGTH)
+      throw new NedException(DisplayNameError, "display name cannot be longer then " + DISPLAYNAME_MAX_LENGTH);
 
     if (rejectedCharsDisplayName.matcher(displayname).find())
       throw new NedException(DisplayNameError, "display name can not contain any of the following characters: $ & + , / : ; = ? @ < > # % { } | \\ ^ ~ [ ] ` or a space");

@@ -17,6 +17,7 @@
 package org.plos.namedentity.service;
 
 import static org.plos.namedentity.api.NedException.ErrorType.*;
+import static org.plos.namedentity.api.entity.Individualprofile.DISPLAYNAME_MAX_LENGTH;
 
 import org.apache.log4j.Logger;
 import org.plos.namedentity.api.IndividualComposite;
@@ -95,22 +96,22 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   private String generateDisplayname(Individualprofile entity, Random rand) {
 
-    final int MAX_TRIES_PER_PHASE = 100;
-    final int MAX_TRIES_GIVE_UP   = 300;
+    final int MAX_TRIES = 100;
+    final int MIN_VAL   = 100;
+    final int MAX_VAL   = 999;
 
-    final int MIN_VAL = 100;
-    final int MAX_VAL = 800;
+    // (max displayname length) - (uuid length) - (initial of firstname)
+    final int MAX_LNAME_LEN = (DISPLAYNAME_MAX_LENGTH - 32 - 1);
 
     try {
       entity.validateFirstname() ; entity.validateLastname() ;
 
-      // construct base name : first character of firstname + lastname
+      // base name = first char of firstname + lastname (possibly truncated)
       StringBuilder basename = new StringBuilder();
       basename.append( Character.toLowerCase(entity.getFirstname().charAt(0)) );
-      basename.append( entity.getLastname() );
 
-      // initial range to select unique number
-      int min = MIN_VAL; int max = MAX_VAL;
+      String lname = entity.getLastname();
+      basename.append( lname.length() > MAX_LNAME_LEN ? lname.substring(0,MAX_LNAME_LEN) : lname );
 
       int count = 0;
 
@@ -119,7 +120,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
         displayname.append( basename );
 
         // nextInt is exclusive at top end, so add 1 to make it inclusive
-        displayname.append( rand.nextInt((max-min)+1)+min );
+        displayname.append( rand.nextInt((MAX_VAL-MIN_VAL)+1)+MIN_VAL );
 
         Individualprofile profileCriteria = new Individualprofile();
         profileCriteria.setDisplayname( displayname.toString() );
@@ -128,29 +129,22 @@ public class NamedEntityServiceImpl implements NamedEntityService {
           return displayname.toString();   // displayname is available
         }
 
-        count++;  // increment attempt
+        if (++count == MAX_TRIES) {
 
-        if (count == MAX_TRIES_GIVE_UP) {
-
-          // we've exhausted generation attempts. what to do? throw our hands up
-          // and return a displayname comprised of initials + uuid.
+          // we've exhausted generation attempts with random number. fall back
+          // to initials plus uuid (w/o dashes).
 
           StringBuilder b = new StringBuilder();
           b.append( Character.toLowerCase(entity.getFirstname().charAt(0)) );
           b.append( Character.toLowerCase(entity.getLastname().charAt(0)) );
-          b.append("--");
-          b.append( UUID.randomUUID().toString() );
+          b.append("-");
+          b.append( UUID.randomUUID().toString().replaceAll("-","") );
 
           logger.warn(String.format("Exhausted displayname generation with random " +
             "number for firstname:%s lastname:%s. Generating uuid-variant: %s", 
               entity.getFirstname(), entity.getLastname(), b.toString()));
 
           return b.toString();
-        }
-
-        if (count % MAX_TRIES_PER_PHASE == 0) {
-          min = min * 10;
-          max = max * 10;
         }
       }
     }
