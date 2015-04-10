@@ -493,8 +493,8 @@ public class NamedEntityServiceTest {
     // ex: "fl-0d6576197f1d4f8b9b612456a151906a"
 
     String displayname = savedEntity.getDisplayname();
-    assertTrue( displayname.startsWith("fl-") );
-    assertEquals((3+32), displayname.length());
+    assertTrue( displayname.startsWith("flastname-") );
+    assertEquals((10+32), displayname.length());
   }
 
   @Test
@@ -511,7 +511,7 @@ public class NamedEntityServiceTest {
 
     // define profile entity. displayname will be generated during creation.
 
-    profile.setLastname("lastname");
+    profile.setLastname("abcdefghijklmnopqrstuvwxyz0123456789");
     profile.setNameprefix("Mr.");
     profile.setNamesuffix("III");
     profile.setSource("Editorial Manager");
@@ -523,7 +523,7 @@ public class NamedEntityServiceTest {
     Individualprofile savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
     String displayname = savedEntity.getDisplayname();
     assertNotNull( displayname );
-    assertTrue( displayname.matches("flastname[1-9][0-9][0-9]") );
+    assertTrue( displayname.matches("fabcdefghijklmnopqrstuvwxyz0[1-9][0-9][0-9]") );
   }
 
   @Test

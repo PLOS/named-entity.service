@@ -134,17 +134,15 @@ public class NamedEntityServiceImpl implements NamedEntityService {
           // we've exhausted generation attempts with random number. fall back
           // to initials plus uuid (w/o dashes).
 
-          StringBuilder b = new StringBuilder();
-          b.append( Character.toLowerCase(entity.getFirstname().charAt(0)) );
-          b.append( Character.toLowerCase(entity.getLastname().charAt(0)) );
-          b.append("-");
-          b.append( UUID.randomUUID().toString().replaceAll("-","") );
+          displayname.setLength(0);
+          displayname.append( basename ).append("-");
+          displayname.append( UUID.randomUUID().toString().replaceAll("-","") );
 
           logger.warn(String.format("Exhausted displayname generation with random " +
             "number for firstname:%s lastname:%s. Generating uuid-variant: %s", 
-              entity.getFirstname(), entity.getLastname(), b.toString()));
+              entity.getFirstname(), entity.getLastname(), displayname.toString()));
 
-          return b.toString();
+          return displayname.toString();
         }
       }
     }
