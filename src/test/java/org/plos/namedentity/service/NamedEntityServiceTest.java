@@ -19,19 +19,23 @@ package org.plos.namedentity.service;
 import org.eclipse.core.runtime.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.*;
+import org.springframework.aop.framework.Advised;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
@@ -41,6 +45,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.plos.namedentity.api.NedException.ErrorType.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -52,6 +60,8 @@ public class NamedEntityServiceTest {
 
   @Autowired
   CrudService crudService;
+
+
 
   @Test
   public void testCreateIndividualCompositeWithoutName() {
@@ -440,6 +450,80 @@ public class NamedEntityServiceTest {
     composite.setAuth( auths );
 
     namedEntityService.createComposite(composite, IndividualComposite.class);
+  }
+
+  @Test
+  public void testProfileDisplaynameGenerationWithUuid() throws Exception {
+
+    // define profile with a displayname that will collide with generated name.
+
+    Individualprofile profile = new Individualprofile();
+    profile.setFirstname("firstname");
+    profile.setLastname("lastname");
+    profile.setDisplayname("flastname100");
+    profile.setNameprefix("Mr.");
+    profile.setNamesuffix("III");
+    profile.setSource("Editorial Manager");
+    profile.setNedid(1);
+
+    Integer profileId = crudService.create( namedEntityService.resolveValuesToIds(profile) );
+    assertNotNull( profileId );
+
+    Individualprofile savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
+    assertEquals("flastname100", savedEntity.getDisplayname());
+
+    // mock Random so that it will return the same value every time. this will
+    // ensure that the same displayname gets generated everytime it's called
+    // which will collide with the displayname inserted above. this will exercise 
+    // the entire range check (ie, 100 random numbers in the range 100-999) and 
+    // fall back to generating a name with initials plus uuid.
+
+    Random mockRandom = Mockito.mock(Random.class);
+    when( mockRandom.nextInt(anyInt()) ).thenReturn(0);
+
+    profile.setDisplayname( invokeGenerateDisplayname(profile,mockRandom) );
+    verify(mockRandom, times(100)).nextInt(anyInt());
+
+    profileId = crudService.create( namedEntityService.resolveValuesToIds(profile) );
+    assertNotNull( profileId );
+
+    savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
+
+    // retrieve displayname which should be initials plus uuid (final effort)
+    // ex: "fl-0d6576197f1d4f8b9b612456a151906a"
+
+    String displayname = savedEntity.getDisplayname();
+    assertTrue( displayname.startsWith("flastname-") );
+    assertEquals((10+32), displayname.length());
+  }
+
+  @Test
+  public void testProfileDisplaynameGenerationWithRandomNumber() throws Exception {
+
+    // test displayname generation without complete names. is ok to pass null
+    // for Random param.
+
+    Individualprofile profile = new Individualprofile();
+    assertNull( invokeGenerateDisplayname(profile,null) );
+
+    profile.setFirstname("firstname");
+    assertNull( invokeGenerateDisplayname(profile,null) );
+
+    // define profile entity. displayname will be generated during creation.
+
+    profile.setLastname("abcdefghijklmnopqrstuvwxyz0123456789");
+    profile.setNameprefix("Mr.");
+    profile.setNamesuffix("III");
+    profile.setSource("Editorial Manager");
+    profile.setNedid(1);
+
+    Integer profileId = crudService.create( namedEntityService.resolveValuesToIds(profile) );
+    assertNotNull( profileId );
+
+    Individualprofile savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
+    String displayname = savedEntity.getDisplayname();
+    assertNotNull( displayname );
+    assertTrue( displayname.matches("fabcdefghijklmnopqrstuvwxyz0[1-9][0-9][0-9]") );
   }
 
   @Test
@@ -890,5 +974,18 @@ public class NamedEntityServiceTest {
     cal.set(Calendar.SECOND, 0);
     cal.set(Calendar.MILLISECOND, 0);
     return new java.sql.Date( cal.getTimeInMillis() );
+  }
+
+  private String invokeGenerateDisplayname(Individualprofile entity, Random rand) throws Exception {
+    Method m = NamedEntityServiceImpl.class.getDeclaredMethod("generateDisplayname", 
+      new Class[]{ Individualprofile.class, Random.class });
+
+    org.springframework.aop.framework.Advised o = (org.springframework.aop.framework.Advised)this.namedEntityService;
+
+    // do a bit of voodoo to get namedEntityService obj stuffed in a spring proxy
+    NamedEntityService namedEntityService = (NamedEntityService)((Advised)this.namedEntityService).getTargetSource().getTarget();
+
+    m.setAccessible(true);
+    return (String) m.invoke(namedEntityService, entity, rand);
   }
 }

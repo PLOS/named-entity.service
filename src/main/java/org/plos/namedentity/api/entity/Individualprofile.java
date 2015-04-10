@@ -26,6 +26,8 @@ import java.util.regex.Pattern;
 @XmlRootElement
 public class Individualprofile extends Entity {
 
+  public static final Integer DISPLAYNAME_MAX_LENGTH = 60;
+
   private String  firstname;
   private String  middlename;
   private String  lastname;
@@ -44,25 +46,12 @@ public class Individualprofile extends Entity {
   private Boolean isactive = true;
 
   private static Pattern rejectedCharsDisplayName = Pattern.compile("[$&+,:;=?@#|/\\s^~`%<>{}\\[\\]\\\\]");
-  private static Integer displaynameMaxLength = 60;
 
   @Override
   public void validate() {
-
-    if (firstname == null || firstname.length() < 1)
-      throw new NedException(FirstnameError, "first name is too short");
-
-    if (lastname == null || lastname.length() < 1)
-      throw new NedException(LastnameError, "last name is too short");
-
-    if (displayname == null || displayname.length() < 1)
-      throw new NedException(DisplayNameError, "display name is too short");
-
-    if (displayname.length() > displaynameMaxLength)
-      throw new NedException(DisplayNameError, "display name cannot be longer then " + displaynameMaxLength);
-
-    if (rejectedCharsDisplayName.matcher(displayname).find())
-      throw new NedException(DisplayNameError, "display name can not contain any of the following characters: $ & + , / : ; = ? @ < > # % { } | \\ ^ ~ [ ] ` or a space");
+    validateFirstname();
+    validateLastname();
+    validateDisplayname();
   }
 
   public Boolean getIsactive() {
@@ -151,5 +140,26 @@ public class Individualprofile extends Entity {
 
   public void setBiography(String biography) {
     this.biography = biography;
+  }
+
+  public void validateFirstname() {
+    if (firstname == null || firstname.length() < 1)
+      throw new NedException(FirstnameError, "first name is too short");
+  }
+
+  public void validateLastname() {
+    if (lastname == null || lastname.length() < 1)
+      throw new NedException(LastnameError, "last name is too short");
+  }
+
+  private void validateDisplayname() {
+    if (displayname == null || displayname.length() < 1)
+      throw new NedException(DisplayNameError, "display name is too short");
+
+    if (displayname.length() > DISPLAYNAME_MAX_LENGTH)
+      throw new NedException(DisplayNameError, "display name cannot be longer then " + DISPLAYNAME_MAX_LENGTH);
+
+    if (rejectedCharsDisplayName.matcher(displayname).find())
+      throw new NedException(DisplayNameError, "display name can not contain any of the following characters: $ & + , / : ; = ? @ < > # % { } | \\ ^ ~ [ ] ` or a space");
   }
 }
