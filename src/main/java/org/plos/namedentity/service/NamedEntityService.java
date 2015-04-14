@@ -18,8 +18,10 @@ package org.plos.namedentity.service;
 
 import org.plos.namedentity.api.entity.Composite;
 import org.plos.namedentity.api.entity.Entity;
+import org.plos.namedentity.api.entity.Individualprofile;
 
 import java.util.List;
+import java.util.Random;
 
 /* -------------------------------------------------------------------------- */
 /*   Named Entity Service High-Level Convenience API                          */
@@ -82,6 +84,7 @@ public interface NamedEntityService {
    */
   public <T extends Entity> T resolveValuesToIds(T t);
 
+
   /**
    * Check to make sure the given NedId exists for the namedPartyType
    * (ie - Individual). If the ID does not exist, an exception is thrown.
@@ -90,4 +93,15 @@ public interface NamedEntityService {
    * @param namedPartyType
    */
   public void checkNedIdForType(Integer nedId, String namedPartyType);
+
+
+  /**
+   * Generates unique displayname from first and last names in profile entity.
+   *
+   * @param profile Profile entity to generate displayname for
+   * @param rand    Random number generator
+   *
+   * @return        generated displayname if successful, null otherwise.
+   */
+  public String generateDisplayname(Individualprofile profile, Random rand);
 }

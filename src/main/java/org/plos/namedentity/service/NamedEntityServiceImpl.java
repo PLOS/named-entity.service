@@ -87,14 +87,10 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       entity.setNamesuffixtypeid(suffixTypeId);
     }
 
-    if (entity.getDisplayname() == null) {
-      entity.setDisplayname( generateDisplayname(entity, new Random()) );
-    }
-
     return entity;
   }
 
-  private String generateDisplayname(Individualprofile entity, Random rand) {
+  public String generateDisplayname(Individualprofile entity, Random rand) {
 
     final int MAX_TRIES = 100;
     final int MIN_VAL   = 100;
