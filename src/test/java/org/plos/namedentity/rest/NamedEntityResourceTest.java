@@ -983,6 +983,45 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   }
 
   @Test
+  public void testDisplaynameError() throws IOException, JAXBException {
+
+    // PS-897: autogenerate displayname error
+    String compositeJson = "{" +
+        "  \"individualprofiles\" : [" +
+        "    {" +
+        "      \"firstname\"   : \"supercalifragilisticexpialidocious\"," +
+        "      \"lastname\"    : \"Chlorobenzylidenemalononitrile\"," +
+        "      \"source\"      : \"Ambra\"" +
+        "    }" +
+        "  ]," +
+        "  \"emails\" : [" +
+        "    {" +
+        "      \"emailaddress\" : \"supercalifragilisticexpialidocious.chlorobenzylidenemalononitrile@foo.com\"," +
+        "      \"source\"       : \"Ambra\"" +
+        "    }" +
+        "  ]," +
+        "  \"credentials\" : [" +
+        "    {" +
+        "      \"password\"     : \"ABC127757\"," +
+        "      \"email\"        : \"supercalifragilisticexpialidocious.chlorobenzylidenemalononitrile@foo.com\"" +
+        "    }" +
+        "  ]" +
+        "}";
+
+    Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+      .post(Entity.json(compositeJson));
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    String jsonPayload = response.readEntity(String.class);
+
+    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
+    IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
+    Individualprofile individualProfile = composite.getIndividualprofiles().get(0);
+    assertNotNull(individualProfile.getDisplayname());
+  }
+
+  @Test
   public void testInvalidUidTypeForEntity() throws IOException, JAXBException {
 
     /* ------------------------------------------------------------------ */

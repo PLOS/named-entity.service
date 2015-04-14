@@ -481,7 +481,7 @@ public class NamedEntityServiceTest {
     Random mockRandom = Mockito.mock(Random.class);
     when( mockRandom.nextInt(anyInt()) ).thenReturn(0);
 
-    profile.setDisplayname( invokeGenerateDisplayname(profile,mockRandom) );
+    profile.setDisplayname( namedEntityService.generateDisplayname(profile,mockRandom) );
     verify(mockRandom, times(100)).nextInt(anyInt());
 
     profileId = crudService.create( namedEntityService.resolveValuesToIds(profile) );
@@ -504,10 +504,10 @@ public class NamedEntityServiceTest {
     // for Random param.
 
     Individualprofile profile = new Individualprofile();
-    assertNull( invokeGenerateDisplayname(profile,null) );
+    assertNull( namedEntityService.generateDisplayname(profile,null) );
 
     profile.setFirstname("firstname");
-    assertNull( invokeGenerateDisplayname(profile,null) );
+    assertNull( namedEntityService.generateDisplayname(profile,null) );
 
     // define profile entity. displayname will be generated during creation.
 
@@ -516,6 +516,10 @@ public class NamedEntityServiceTest {
     profile.setNamesuffix("III");
     profile.setSource("Editorial Manager");
     profile.setNedid(1);
+
+    assertNull( profile.getDisplayname() );
+    profile.setDisplayname( namedEntityService.generateDisplayname(profile, new Random()) );
+    assertNotNull( profile.getDisplayname() );
 
     Integer profileId = crudService.create( namedEntityService.resolveValuesToIds(profile) );
     assertNotNull( profileId );
@@ -974,18 +978,5 @@ public class NamedEntityServiceTest {
     cal.set(Calendar.SECOND, 0);
     cal.set(Calendar.MILLISECOND, 0);
     return new java.sql.Date( cal.getTimeInMillis() );
-  }
-
-  private String invokeGenerateDisplayname(Individualprofile entity, Random rand) throws Exception {
-    Method m = NamedEntityServiceImpl.class.getDeclaredMethod("generateDisplayname", 
-      new Class[]{ Individualprofile.class, Random.class });
-
-    org.springframework.aop.framework.Advised o = (org.springframework.aop.framework.Advised)this.namedEntityService;
-
-    // do a bit of voodoo to get namedEntityService obj stuffed in a spring proxy
-    NamedEntityService namedEntityService = (NamedEntityService)((Advised)this.namedEntityService).getTargetSource().getTarget();
-
-    m.setAccessible(true);
-    return (String) m.invoke(namedEntityService, entity, rand);
   }
 }

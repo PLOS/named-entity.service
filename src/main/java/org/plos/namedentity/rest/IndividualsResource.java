@@ -27,6 +27,7 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
@@ -46,12 +47,24 @@ public class IndividualsResource extends NedResource {
   @ApiOperation(value = "Create individual", response = IndividualComposite.class)
   public Response createIndividual(IndividualComposite composite) {
     try {
+      generateDisplaynameIfEmpty( composite );
+
       return Response.status(Response.Status.OK).entity(
           namedEntityService.createComposite(composite, IndividualComposite.class)).build();
     } catch (NedException e) {
       return nedError(e, "Unable to create individual");
     } catch (Exception e) {
       return serverError(e, "Unable to create individual");
+    }
+  }
+
+  private void generateDisplaynameIfEmpty(IndividualComposite composite) {
+    List<Individualprofile> profiles = composite.getIndividualprofiles();
+    if (profiles != null & profiles.size() > 0) {
+      Individualprofile profile = profiles.get(0);
+      if ( isEmptyOrBlank(profile.getDisplayname()) ) {
+        profile.setDisplayname( namedEntityService.generateDisplayname(profile, new Random()) );
+      }
     }
   }
 
