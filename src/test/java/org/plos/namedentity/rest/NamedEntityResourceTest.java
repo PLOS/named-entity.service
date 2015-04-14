@@ -986,27 +986,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   public void testDisplaynameError() throws IOException, JAXBException {
 
     // PS-897: autogenerate displayname error
-    String compositeJson = "{" +
-        "  \"individualprofiles\" : [" +
-        "    {" +
-        "      \"firstname\"   : \"supercalifragilisticexpialidocious\"," +
-        "      \"lastname\"    : \"Chlorobenzylidenemalononitrile\"," +
-        "      \"source\"      : \"Ambra\"" +
-        "    }" +
-        "  ]," +
-        "  \"emails\" : [" +
-        "    {" +
-        "      \"emailaddress\" : \"supercalifragilisticexpialidocious.chlorobenzylidenemalononitrile@foo.com\"," +
-        "      \"source\"       : \"Ambra\"" +
-        "    }" +
-        "  ]," +
-        "  \"credentials\" : [" +
-        "    {" +
-        "      \"password\"     : \"ABC127757\"," +
-        "      \"email\"        : \"supercalifragilisticexpialidocious.chlorobenzylidenemalononitrile@foo.com\"" +
-        "    }" +
-        "  ]" +
-        "}";
+    String compositeJson = new String(Files.readAllBytes(
+      Paths.get(TEST_RESOURCE_PATH + "composite-displayname-test.json")));
 
     Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
       .post(Entity.json(compositeJson));
