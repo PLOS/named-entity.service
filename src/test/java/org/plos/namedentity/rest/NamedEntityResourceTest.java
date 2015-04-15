@@ -1378,6 +1378,65 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals(ambraPasswordDigest, auth.getPassword());
   }
 
+  @Test
+  public void testAuthCRUD() throws IOException, JAXBException {
+
+    String authsURI = String.format("%s/%d/auth", INDIVIDUAL_URI, nedIndividualId);
+
+    // CREATE:TODO 
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY NED ID)                                                  */
+    /* ------------------------------------------------------------------ */
+
+    Response response = target(authsURI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    String responseJson = response.readEntity(String.class);
+
+    Unmarshaller unmarshaller = jsonUnmarshaller(Auth.class);
+    List<Auth> auths = unmarshalEntities(responseJson, Auth.class, unmarshaller);
+    Auth auth = auths.get(0);
+
+    assertNotNull( auth.getAuthid() );
+    assertNotNull( auth.getPassword() );
+    assertNull( auth.getVerificationtoken() );
+    assertTrue( auth.getVerified().equals((byte)0) );
+    assertTrue( auth.getPasswordreset().equals((byte)0) );
+    assertEquals("jane.q.doe.work@foo.com", auth.getEmail());
+    assertEquals(128, auth.getPassword().length());
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    auth.setVerified((byte)1);
+    auth.setPasswordreset((byte)1);
+    auth.setVerificationtoken("0123456789abcdef");
+
+    response = target( authsURI+"/"+auth.getId() )
+      .request(MediaType.APPLICATION_JSON_TYPE)
+        .put(Entity.json(writeValueAsString(auth)));
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    responseJson = response.readEntity(String.class);
+
+    auth = unmarshalEntity(responseJson, Auth.class, unmarshaller);
+
+    assertNotNull( auth.getAuthid() );
+    assertNotNull( auth.getPassword() );
+    assertEquals("0123456789abcdef", auth.getVerificationtoken());
+    assertTrue( auth.getVerified().equals((byte)1) );
+    assertTrue( auth.getPasswordreset().equals((byte)1) );
+    assertEquals("jane.q.doe.work@foo.com", auth.getEmail());
+    assertEquals(128, auth.getPassword().length());
+
+    // DELETE:TODO
+  }
+
+
   private void assertAuth(Auth auth) {
     // note: password not marshalled to json (ie, not in response)
     assertTrue( auth.getId() > 0 );

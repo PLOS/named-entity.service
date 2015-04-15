@@ -279,4 +279,24 @@ public class IndividualsResource extends NedResource {
   public Response getRoles(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Role.class);
   }
+
+  /* ----------------------------------------------------------------------- */
+  /*  AUTH CRUD                                                              */
+  /* ----------------------------------------------------------------------- */
+
+  @GET
+  @Path("/{nedId}/auth")
+  @ApiOperation(value = "List auth record(s)")
+  public Response getAuthRecord(@PathParam("nedId") int nedId) {
+    return getEntities(nedId, Auth.class);
+  }
+
+  @PUT
+  @Path("/{nedId}/auth/{authId}")
+  @ApiOperation(value = "Update auth record", response = Auth.class)
+  public Response updateAuthRecord(@PathParam("nedId") int nedId,
+                                   @PathParam("authId") int authId,
+                                   Auth authEntity) {
+    return updateEntity(nedId, authId, authEntity);
+  }
 }

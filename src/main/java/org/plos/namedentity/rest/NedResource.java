@@ -22,6 +22,7 @@ import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchCrite
 import com.wordnik.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Address;
+import org.plos.namedentity.api.entity.Auth;
 import org.plos.namedentity.api.entity.Composite;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Email;
@@ -339,6 +340,12 @@ public abstract class NedResource extends BaseResource {
         return Response.status(Response.Status.OK).entity(
             new GenericEntity<List<Url>>(
                 namedEntityService.findResolvedEntities(nedId, Url.class)
+            ){}).build();
+      }
+      else if (cname.equals(Auth.class.getCanonicalName())) {
+        return Response.status(Response.Status.OK).entity(
+            new GenericEntity<List<Auth>>(
+                namedEntityService.findResolvedEntities(nedId, Auth.class)
             ){}).build();
       }
       else if (cname.equals(Uniqueidentifier.class.getCanonicalName())) {
