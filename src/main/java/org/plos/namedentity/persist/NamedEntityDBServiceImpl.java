@@ -447,7 +447,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
             auth.ID, auth.NEDID, auth.EMAILID,
             e.EMAILADDRESS.as("email"),
             auth.AUTHID, auth.PASSWORD, auth.ISACTIVE,
-            auth.CREATED, auth.LASTMODIFIED)
+            auth.PASSWORDRESET, auth.VERIFICATIONTOKEN,
+            auth.VERIFIED, auth.CREATED, auth.LASTMODIFIED)
         .from(auth)
         .join(e).on(auth.EMAILID.equal(e.ID));
   }
@@ -675,7 +676,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
             a.ID, a.NEDID, a.EMAILID,
             e.EMAILADDRESS.as("email"),
             a.AUTHID, a.PASSWORD, a.ISACTIVE,
-            a.CREATED, a.LASTMODIFIED)
+            a.PASSWORDRESET, a.VERIFICATIONTOKEN,
+            a.VERIFIED, a.CREATED, a.LASTMODIFIED)
         .from(a)
         .join(e).on(a.EMAILID.equal(e.ID))
         .where(a.NEDID.equal(nedId))
