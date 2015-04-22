@@ -39,7 +39,7 @@ class NedEtlDataTester:
     r = requests.get("%s/service/config" % self.ned_url)
     data = json.loads(r.text)
     print (data)
-    assert(data['version'])
+    assert data['version']
 
     self.test_ambra_happy_row()
     print ("FINISHED test_ambra_happy_row")
@@ -71,10 +71,10 @@ class NedEtlDataTester:
     self.load_sql_data('data/happy_row.sql')
     log = self.run_etl()
 
-    assert (log == "")  # since there should not be errors
+    assert log == "", log  # since there should not be errors
 
     r = requests.get("%s/individuals/Editorial Manager/PONE-1111" % self.ned_url)
-    assert(r.status_code == requests.codes.ok)
+    assert r.status_code == requests.codes.ok, r.text
     self.ambra_db_conn.close()
 
   def test_ambra_bad_email(self):
@@ -86,8 +86,8 @@ class NedEtlDataTester:
     # TODO: assert grep for a line with both "Skipping Push" and "Email not valid" and "bad@email"
 
     r = requests.get("%s/individuals/Editorial Manager/PONE-5555" % self.ned_url)
-    assert(r.status_code == requests.codes.bad_request, r.json())
-    assert(r.json()[u'errorCode'] == 1000)
+    assert r.status_code == requests.codes.bad_request, r.json()
+    assert r.json()[u'errorCode'] == 1000
     self.ambra_db_conn.close()
     
     

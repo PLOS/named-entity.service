@@ -1,7 +1,7 @@
 NED Integration tests in Docker
 ===============================
 
-To run these tests cd into this directory and run ./run_tests.py
+To run these tests cd into this directory and run ./run_api_tests.py
 
 Make sure you have built the service war file BEFORE running these tests. If you use the ned.sh script in the above directory, it will automatically build the war before running the docker tests.
 

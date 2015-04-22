@@ -32,7 +32,7 @@ args = docopt(__doc__, version=1)
 
 etl_jar = args['--etl_jar']
 
-# change to the script directory to run fig
+# change to the script directory to run compose
 os.chdir(os.path.dirname(__file__))
 
 if not etl_jar:
@@ -47,10 +47,16 @@ print ("ETL jar: " + etl_jar)
 
 dt = docker_tester.DockerTester()
 
+# build the API
+cwd = os.getcwd()
+os.chdir("..")
+dt.cmd_return("bash compile.sh")
+os.chdir(cwd)
+
 dt.containers_up()
 
 ambra_mysql_ip = dt.get_container_ip("etltest_ambradb_1")
-ned_service_ip = dt.get_container_ip("etltest_nedsvc_1")
+ned_service_ip = dt.get_container_ip("etltest_nedapi_1")
 ned_db_ip = dt.get_container_ip("etltest_neddb_1")
 ned_base_url = "http://%s:8080" % ned_service_ip
 
@@ -59,7 +65,7 @@ dt.wait_for_process("mysql -h %s -u dummyuser --password=password -e exit" % amb
 print ("Database ready")
 
 print ("Checking NED database container at %s" % ned_db_ip)
-dt.wait_for_process("mysql -h %s -u ned namedEntities -e exit" % ned_db_ip)
+dt.wait_for_process("mysql -h %s -u ned namedEntities -pned -e exit" % ned_db_ip)
 print ("Database ready")
 
 print ("Checking NED service container at %s" % ned_base_url)

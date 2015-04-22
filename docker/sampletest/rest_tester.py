@@ -16,16 +16,15 @@ class NedRestTester:
 
     r = requests.get("%s/service/config" % self.base_url)
     data = json.loads(r.text)
-    assert(data['version'])
+    assert data['version']
 
     r = requests.get("%s/typeclasses" % self.base_url)
     data = json.loads(r.text)
-    assert(len(data) > 10)
-    assert(r.status_code == requests.codes.ok)
+    assert len(data) > 10
+    assert r.status_code == requests.codes.ok
     
     r = requests.get("%s/typeclasses/2" % self.base_url)
-    assert(r.status_code == requests.codes.ok)
+    assert r.status_code == requests.codes.ok
 
     r = requests.get("%s/boguspath" % self.base_url)
-    assert(r.status_code == requests.codes.not_found)
-    
+    assert r.status_code == requests.codes.not_found

@@ -4,25 +4,30 @@ __author__ = 'jfinger'
 import os, sys
 import docker_tester
 
-# change to the script directory to run fig
+# change to the script directory to run compose
 os.chdir(os.path.dirname(__file__))
 
 dt = docker_tester.DockerTester()
 
+dt.cmd_return("bash compile.sh")
 dt.containers_up()
 
 # TODO: check for the presence of .war before starting
 
-service_ip = dt.get_container_ip("docker_nedsvc_1")
+service_ip = dt.get_container_ip("docker_nedapi_1")
 db_ip = dt.get_container_ip("docker_neddb_1")
 base_url = "http://%s:8080" % service_ip
 
 print ("Checking database container at %s" % db_ip)
-dt.wait_for_process("mysql -h %s -u ned namedEntities -e exit" % db_ip)
+if not dt.wait_for_process("mysql -h %s -u ned namedEntities -pned -e exit" % db_ip):
+	sys.exit("Database was never ready")
+
 print ("Database ready")
 
 print ("Checking service container at %s" % base_url)
-dt.wait_for_web("%s/service/config" % base_url)
+if not dt.wait_for_web("%s/service/config" % base_url):
+	sys.exit("Service was never ready")
+
 print ("Service is up, running tests")
 
 try:
