@@ -32,6 +32,8 @@ echo "Finished creating user."
 
 # set up tomcat
 
+mv ${BUILD_DIR}/context.xml ${CATALINA_HOME}/conf/context.xml
+
 echo Deleting contents of webapps/
 rm -rf ${CATALINA_HOME}/webapps/*
 
