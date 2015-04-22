@@ -1,9 +1,5 @@
 #!/bin/bash
 
-BACKGROUND=""
+./compile.sh
 
-if [ "$1" = "background" ]; then
-	BACKGROUND="-d"
-fi
-
-docker-compose rm --force -v && docker-compose build && docker-compose up $BACKGROUND
+docker-compose rm --force -v && docker-compose build && docker-compose up
