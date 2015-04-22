@@ -1,6 +1,6 @@
 
 insert into userProfile (userProfileID, authId, userProfileURI, realName, givenNames, surName, title, email, displayName, suffix, password)
-    values (1, '34MJNXIPNEX99YZZ4QOP1MTFBN3Y27KA', 'http://gooduri.com/1', 'realname', 'givenname1', 'surname1', 'title1', 'good@email.com', 'displayname1', 'suffix1', 'encryptedpassword');
+    values (1, '34MJNXIPNEX99YZZ4QOP1MTFBN3Y27KA', 'http://gooduri.com/1', 'realname', 'givenname1', 'surname1', 'title1', 'good@email.com', 'displayname1', 'suffix1', '6584abbf44d354572af470f6de0d48c11d595968636b75b38006e5a60043b6641aeba7');
 
 insert into userOrcid (userProfileID, orcid) values (1,'0000-0002-9430-100X');
 
