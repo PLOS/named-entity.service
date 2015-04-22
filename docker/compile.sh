@@ -38,5 +38,3 @@ fi
 cp ../src/main/resources/ned-*.mysql.sql build
 
 ls build
-
-docker-compose rm --force -v && docker-compose build && docker-compose up

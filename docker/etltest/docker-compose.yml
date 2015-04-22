@@ -1,14 +1,23 @@
-neddb:
-    build: ../neddb.percona
-    volumes:
-         - ../../src/main/resources:/mysql_schema
-
-nedsvc:
-    build: ../nedsvc
-    volumes:
-        - ../../target:/build 
-    links:
-        - neddb:neddb
-
 ambradb:
     build: ambra.mysql
+
+    # TODO: use compose 1.2 inheritance here
+
+neddb:
+    image: percona:5.6
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+
+nedapi:
+    build: ..
+    # image: docker_nedapi
+    links:
+      - neddb:neddb
+    ports:
+      - "8080:8080"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_NED_USER=ned
+      - MYSQL_NED_PASSWORD=ned
+      - MYSQL_HOSTNAME=neddb
+      - MYSQL_DATABASE=namedEntities

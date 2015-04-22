@@ -6,8 +6,6 @@ import subprocess
 import os
 from time import sleep
 
-# NOTE: This is a dummy class to be replaced with external tests created by QA
-
 class DockerTester:
 
   def __init__(self):
@@ -30,6 +28,7 @@ class DockerTester:
     # TODO: cd to this directory in order to handle docker-compose remote
     print ("Building containers... (be patient; this may take 5-10 minutes the first time)")
     self.cmd_stream("docker-compose build && docker-compose up -d")
+    # self.cmd_stream("bash up.sh background")
 
   def containers_down(self):
     print ("Stopping containers")
@@ -44,10 +43,12 @@ class DockerTester:
       proc_return = self.cmd_return(command)
 
       if proc_return == 0:
-        break
+        return True
 
       print ("not ready ... waiting %d seconds" % self.wait_secs)
       sleep (self.wait_secs)
+
+    return False
 
   def wait_for_web(self, url):
 
@@ -57,7 +58,7 @@ class DockerTester:
         r = requests.get(url)
       except requests.exceptions.ConnectionError, e:
         print (e)
-        print ("not ready ... waiting %d seconds" % self.wait_secs)
+        print ("site not ready ... waiting %d seconds" % self.wait_secs)
         sleep (self.wait_secs)
         continue
 
@@ -68,4 +69,6 @@ class DockerTester:
         
       print (json.dumps(r.text, sort_keys=True, indent=4))
 
-      break
+      return True
+
+    return False
