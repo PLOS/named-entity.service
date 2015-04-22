@@ -118,8 +118,9 @@ CREATE TABLE IF NOT EXISTS namedEntities.emails (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
     typeId INT NULL,
-    emailAddress VARCHAR(255) NULL,
+    emailAddress VARCHAR(255) NOT NULL,
     sourceTypeId INT NOT NULL,
+    verified TINYINT(1) NOT NULL DEFAULT 0,
     isActive TINYINT(1) NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     lastModified TIMESTAMP NOT NULL AS CURRENT_TIMESTAMP,
@@ -252,7 +253,7 @@ DROP TABLE IF EXISTS namedEntities.urls;
 CREATE TABLE IF NOT EXISTS namedEntities.urls (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
-    url TEXT NULL,
+    url TEXT NOT NULL,
     sourceTypeId INT NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     lastModified TIMESTAMP NOT NULL AS CURRENT_TIMESTAMP,
@@ -275,4 +276,23 @@ CREATE TABLE IF NOT EXISTS namedEntities.uniqueIdentifiers (
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id),
     UNIQUE (uniqueIdentifier, sourceTypeId, typeId)
+)   ENGINE=INNODB;
+
+DROP TABLE IF EXISTS namedEntities.authCas;
+CREATE TABLE IF NOT EXISTS namedEntities.authCas (
+    id INT NOT NULL AUTO_INCREMENT,
+    nedId INT NOT NULL,
+    emailId INT NOT NULL,
+    authId VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    passwordReset TINYINT(1) NOT NULL DEFAULT 0,
+    verificationToken VARCHAR(255) NULL,
+    verified TINYINT(1) NOT NULL DEFAULT 0,
+    isActive TINYINT(1) NOT NULL DEFAULT 1,
+    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    lastModified TIMESTAMP NOT NULL AS CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (emailId) REFERENCES emails(id),
+    UNIQUE (authId)
 )   ENGINE=INNODB;

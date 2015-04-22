@@ -31,8 +31,9 @@ public class Email extends Entity {
   private String  type;
   private Integer typeid;
 
-  private String emailaddress;
-  private Boolean isactive  = true;
+  private String  emailaddress;
+  private Boolean verified = false;
+  private Boolean isactive = true;
 
   @Override
   public void validate() {
@@ -55,6 +56,14 @@ public class Email extends Entity {
 
   public void setEmailaddress(java.lang.String emailaddress) {
     this.emailaddress = emailaddress;
+  }
+
+  public Boolean getVerified() {
+    return this.verified;
+  }
+
+  public void setVerified(Boolean verified) {
+    this.verified = verified;
   }
 
   public Boolean getIsactive() {

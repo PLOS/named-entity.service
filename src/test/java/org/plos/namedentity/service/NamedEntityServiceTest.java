@@ -19,18 +19,23 @@ package org.plos.namedentity.service;
 import org.eclipse.core.runtime.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.*;
+import org.springframework.aop.framework.Advised;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
@@ -40,6 +45,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.plos.namedentity.api.NedException.ErrorType.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -51,6 +60,8 @@ public class NamedEntityServiceTest {
 
   @Autowired
   CrudService crudService;
+
+
 
   @Test
   public void testCreateIndividualCompositeWithoutName() {
@@ -73,9 +84,6 @@ public class NamedEntityServiceTest {
 
     composite2.getIndividualprofiles().get(0).setDisplayname(
         composite1.getIndividualprofiles().get(0).getDisplayname());
-
-    composite2.getUniqueidentifiers().get(0).setUniqueidentifier(
-      composite1.getUniqueidentifiers().get(0).getUniqueidentifier());
 
     assertEquals(composite1, composite2);
 
@@ -119,7 +127,7 @@ public class NamedEntityServiceTest {
     Email workEmail = new Email();
     workEmail.setType("Work");
     workEmail.setEmailaddress("fu.manchu.work@foo.com");
-    workEmail.setSource("Ambra");
+    workEmail.setSource("Editorial Manager");
     emails.add( workEmail );
 
     composite.setEmails( emails );
@@ -173,7 +181,7 @@ public class NamedEntityServiceTest {
     Email workEmail = new Email();
     workEmail.setType("Work");
     workEmail.setEmailaddress("fu.manchu.work@foo.com");
-    workEmail.setSource("Editorial Manager");
+    workEmail.setSource("Ambra");
     emails.add( workEmail );
 
     Email personalEmail = new Email();
@@ -183,6 +191,19 @@ public class NamedEntityServiceTest {
     emails.add( personalEmail );
 
     composite.setEmails( emails );
+
+    /* ------------------------------------------------------------------ */
+    /*  AUTH                                                              */
+    /* ------------------------------------------------------------------ */
+
+    List<Auth> auths = new ArrayList<>();
+
+    Auth auth = new Auth();
+    auth.setEmail(workEmail.getEmailaddress());
+    auth.setPlainTextPassword("password123");
+    auths.add( auth );
+
+    composite.setAuth( auths );
 
     /* ------------------------------------------------------------------ */
     /*  PHONE NUMBERS                                                     */
@@ -249,12 +270,15 @@ public class NamedEntityServiceTest {
     /*  UNIQUE IDENTIFIERS                                                */
     /* ------------------------------------------------------------------ */
 
-    Uniqueidentifier uidEntity = new Uniqueidentifier();
-    uidEntity.setType("ORCID");
-    uidEntity.setUniqueidentifier("0000-0001-9430-001X");
-    uidEntity.setSource("Editorial Manager");
+    List<Uniqueidentifier> uids = new ArrayList<>();
 
-    composite.getUniqueidentifiers().add(uidEntity);
+    Uniqueidentifier uid = new Uniqueidentifier();
+    uid.setType("ORCID");
+    uid.setUniqueidentifier("0000-0001-9430-001X");
+    uid.setSource("Editorial Manager");
+    uids.add(uid);
+
+    composite.setUniqueidentifiers( uids );
 
     /* ------------------------------------------------------------------ */
     /*  URLS                                                              */
@@ -323,7 +347,7 @@ public class NamedEntityServiceTest {
     assertEquals(1, roleEntities.size());
 
     List<Uniqueidentifier> uidEntities = namedEntityService.findResolvedEntities(nedId, Uniqueidentifier.class);
-    assertEquals(2, uidEntities.size());
+    assertEquals(1, uidEntities.size());
 
     Individualprofile individualProfile = namedEntityService.findResolvedEntityByUid("ORCID", "0000-0001-9430-001X", Individualprofile.class);
 
@@ -391,7 +415,7 @@ public class NamedEntityServiceTest {
     Email workEmail = new Email();
     workEmail.setType("Work");
     workEmail.setEmailaddress("valid@email.com");
-    workEmail.setSource("Editorial Manager");
+    workEmail.setSource("Ambra");
     emails.add( workEmail );
 
     composite.setEmails( emails );
@@ -407,7 +431,103 @@ public class NamedEntityServiceTest {
     composite = newCompositeIndividualWithRole();
     composite.setEmails( emails );
 
+    try {
+      namedEntityService.createComposite(composite, IndividualComposite.class);
+      fail();
+    } catch (NedException expected) {
+      Assert.isTrue(expected.getMessage().contains("User credentials can not be empty"));
+    }
+
+    composite = newCompositeIndividualWithRole();
+    composite.setEmails( emails );
+
+    List<Auth> auths = new ArrayList<>();
+    Auth auth = new Auth();
+    auth.setEmail(workEmail.getEmailaddress());
+    auth.setPlainTextPassword("password123");
+    auths.add( auth );
+
+    composite.setAuth( auths );
+
     namedEntityService.createComposite(composite, IndividualComposite.class);
+  }
+
+  @Test
+  public void testProfileDisplaynameGenerationWithUuid() throws Exception {
+
+    // define profile with a displayname that will collide with generated name.
+
+    Individualprofile profile = new Individualprofile();
+    profile.setFirstname("firstname");
+    profile.setLastname("lastname");
+    profile.setDisplayname("flastname100");
+    profile.setNameprefix("Mr.");
+    profile.setNamesuffix("III");
+    profile.setSource("Editorial Manager");
+    profile.setNedid(1);
+
+    Integer profileId = crudService.create( namedEntityService.resolveValuesToIds(profile) );
+    assertNotNull( profileId );
+
+    Individualprofile savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
+    assertEquals("flastname100", savedEntity.getDisplayname());
+
+    // mock Random so that it will return the same value every time. this will
+    // ensure that the same displayname gets generated everytime it's called
+    // which will collide with the displayname inserted above. this will exercise 
+    // the entire range check (ie, 100 random numbers in the range 100-999) and 
+    // fall back to generating a name with initials plus uuid.
+
+    Random mockRandom = Mockito.mock(Random.class);
+    when( mockRandom.nextInt(anyInt()) ).thenReturn(0);
+
+    profile.setDisplayname( namedEntityService.generateDisplayname(profile,mockRandom) );
+    verify(mockRandom, times(100)).nextInt(anyInt());
+
+    profileId = crudService.create( namedEntityService.resolveValuesToIds(profile) );
+    assertNotNull( profileId );
+
+    savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
+
+    // retrieve displayname which should be initials plus uuid (final effort)
+    // ex: "fl-0d6576197f1d4f8b9b612456a151906a"
+
+    String displayname = savedEntity.getDisplayname();
+    assertTrue( displayname.startsWith("flastname-") );
+    assertEquals((10+32), displayname.length());
+  }
+
+  @Test
+  public void testProfileDisplaynameGenerationWithRandomNumber() throws Exception {
+
+    // test displayname generation without complete names. is ok to pass null
+    // for Random param.
+
+    Individualprofile profile = new Individualprofile();
+    assertNull( namedEntityService.generateDisplayname(profile,null) );
+
+    profile.setFirstname("firstname");
+    assertNull( namedEntityService.generateDisplayname(profile,null) );
+
+    // define profile entity. displayname will be generated during creation.
+
+    profile.setLastname("abcdefghijklmnopqrstuvwxyz0123456789");
+    profile.setNameprefix("Mr.");
+    profile.setNamesuffix("III");
+    profile.setSource("Editorial Manager");
+    profile.setNedid(1);
+
+    assertNull( profile.getDisplayname() );
+    profile.setDisplayname( namedEntityService.generateDisplayname(profile, new Random()) );
+    assertNotNull( profile.getDisplayname() );
+
+    Integer profileId = crudService.create( namedEntityService.resolveValuesToIds(profile) );
+    assertNotNull( profileId );
+
+    Individualprofile savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
+    String displayname = savedEntity.getDisplayname();
+    assertNotNull( displayname );
+    assertTrue( displayname.matches("fabcdefghijklmnopqrstuvwxyz0[1-9][0-9][0-9]") );
   }
 
   @Test
@@ -650,8 +770,8 @@ public class NamedEntityServiceTest {
 
     Uniqueidentifier uid = new Uniqueidentifier();
     uid.setSource("Ambra");
-    uid.setType("CAS");
-    uid.setUniqueidentifier(UUID.randomUUID().toString());
+    uid.setType("Ambra");
+    uid.setUniqueidentifier(String.valueOf(new Date().getTime()));
 
     List<Uniqueidentifier> uniqueidentifiers = new ArrayList<>();
     uniqueidentifiers.add(uid);
@@ -801,7 +921,7 @@ public class NamedEntityServiceTest {
     Email email = new Email();
     email.setType("Personal");
     email.setEmailaddress(UUID.randomUUID().toString()+"@foo.com");
-    email.setSource("Editorial Manager");
+    email.setSource("Ambra");
 
     List<Email> emails = new ArrayList<>();
     emails.add(email);
@@ -809,13 +929,26 @@ public class NamedEntityServiceTest {
     composite.setEmails(emails);
 
     /* ---------------------------------------------------------------------- */
+    /*  AUTH                                                                  */
+    /* ---------------------------------------------------------------------- */
+
+    Auth auth = new Auth();
+    auth.setEmail(email.getEmailaddress());
+    auth.setPlainTextPassword("password123");
+
+    List<Auth> auths = new ArrayList<>();
+    auths.add(auth);
+
+    composite.setAuth(auths);
+
+    /* ---------------------------------------------------------------------- */
     /*  UNIQUE IDENTIFIERS                                                    */
     /* ---------------------------------------------------------------------- */
 
     Uniqueidentifier uid = new Uniqueidentifier();
     uid.setSource("Ambra");
-    uid.setType("CAS");
-    uid.setUniqueidentifier(UUID.randomUUID().toString());
+    uid.setType("Ambra");
+    uid.setUniqueidentifier(String.valueOf(new Date().getTime()));
 
     List<Uniqueidentifier> uniqueidentifiers = new ArrayList<>();
     uniqueidentifiers.add(uid);

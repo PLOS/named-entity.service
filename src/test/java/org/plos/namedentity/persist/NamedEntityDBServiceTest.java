@@ -258,12 +258,13 @@ public class NamedEntityDBServiceTest {
   @Test
   public void testEmailsCRUD() {
 
+    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
     Integer emailTypeClassId = nedDBSvc.findTypeClass("Email Address Types");
 
     // CREATE Work Email
 
     Email workEmail = new Email();
-    workEmail.setNedid(1);
+    workEmail.setNedid(nedId);
     workEmail.setTypeid(nedDBSvc.findTypeValue(emailTypeClassId, "Work"));
     workEmail.setEmailaddress("walter.work@foo.com");
     workEmail.setSourcetypeid( getSourceTypeId(UidTypeEnum.EDITORIAL_MANAGER.getName()) );
@@ -329,7 +330,7 @@ public class NamedEntityDBServiceTest {
     // CREATE Home Email
 
     Email homeEmail = new Email();
-    homeEmail.setNedid(1);
+    homeEmail.setNedid(nedId);
     homeEmail.setTypeid(nedDBSvc.findTypeValue(emailTypeClassId, "Personal"));
     homeEmail.setEmailaddress("walter.home@foo.com");
     homeEmail.setSourcetypeid( getSourceTypeId(UidTypeEnum.EDITORIAL_MANAGER.getName()) );
@@ -351,19 +352,27 @@ public class NamedEntityDBServiceTest {
 
     Email emailSearchByAddress = new Email();
     emailSearchByAddress.setEmailaddress("super.walter.work@foo.com");
+    emailSearchByAddress.setIsactive(false);
     List<Email> foundEmails = nedDBSvc.findByAttribute(emailSearchByAddress);
     assertEquals(1, foundEmails.size());
     assertEquals("super.walter.work@foo.com", foundEmails.get(0).getEmailaddress());
 
-    // FIND BY ATTRIBUTE (Lookup email addresses for an individual)
+    // FIND BY ATTRIBUTE (Lookup email addresses by nedid)
+    // Do 3 lookups: only active, only inactive, both active and inactive
+    
+    Boolean[] isactiveFilter = { true, false, null };
+    int[]     expectedEmailCount = { 1, 1, 2 };
 
-    Email emailSearchByIndividual = new Email();
-    emailSearchByIndividual.setNedid(1);
-    List<Email> foundEmails2 = nedDBSvc.findByAttribute(emailSearchByIndividual);
-    assertEquals(2, foundEmails2.size());
+    for (int i = 0; i < expectedEmailCount.length; i++) {
+      Email emailSearchByIndividual = new Email();
+      emailSearchByIndividual.setNedid(nedId);
+      emailSearchByIndividual.setIsactive( isactiveFilter[i] );
+      List<Email> foundEmails2 = nedDBSvc.findByAttribute(emailSearchByIndividual);
+      assertEquals(expectedEmailCount[i], foundEmails2.size());
 
-    for (Email email : allEmailsInDB) {
-      assertTrue( allEmailsInDB.contains(email) );
+      for (Email email : allEmailsInDB) {
+        assertTrue( allEmailsInDB.contains(email) );
+      }
     }
 
     // FIND BY PRIMARY KEY
@@ -372,7 +381,7 @@ public class NamedEntityDBServiceTest {
       assertNotNull( nedDBSvc.findResolvedEntityByKey(email.getId(), Email.class) );
     }
     // FIND BY JOIN-QUERY 
-    List<Email> emails = nedDBSvc.findResolvedEntities(foundEmails2.get(0).getNedid(), Email.class);
+    List<Email> emails = nedDBSvc.findResolvedEntities(nedId, Email.class);
 
     assertTrue( emails.size() > 0 );
     assertNotNull(emails.get(0).getNedid());
@@ -797,6 +806,23 @@ public class NamedEntityDBServiceTest {
       url.validate();
     } catch (NedException expected) {
       assertEquals(InvalidUrl, expected.getErrorType());
+    }
+
+    // CREATE : No URL! 
+
+    try {    
+      Url url = new Url();
+      url.setNedid(1);
+      url.setSourcetypeid( getSourceTypeId(UidTypeEnum.AMBRA.getName()) );
+
+      url.validate();
+
+      nedDBSvc.create( url );
+    }
+    catch (DataIntegrityViolationException expected) {
+      // h2 error code: NULL_NOT_ALLOWED (23502)
+      org.h2.jdbc.JdbcSQLException h2SqlException = (org.h2.jdbc.JdbcSQLException) expected.getRootCause();
+      assertEquals("23502", h2SqlException.getSQLState());
     }
 
     // CREATE : Valid URL

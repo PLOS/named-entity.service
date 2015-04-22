@@ -1,0 +1,23 @@
+{
+  "individualprofiles" : [
+    {
+      "firstname"   : "Jane",
+      "lastname"    : "Doe",
+      "source"      : "Ambra",
+      "displayname" : "%s"
+    }
+  ],
+  "emails" : [
+    {
+      "emailaddress" : "%s",
+      "source"       : "%s"
+    }
+  ],
+  "credentials" : [
+    {
+      "authid"          : "%s",
+      "password_digest" : "%s",
+      "email"           : "%s"
+    }
+  ]
+}

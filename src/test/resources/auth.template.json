@@ -1,0 +1,5 @@
+{
+    "nedid"    : %d,
+    "emailid"  : %d,
+    "password" : "%s"
+}

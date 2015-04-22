@@ -1,0 +1,21 @@
+{
+  "individualprofiles" : [
+    {
+      "firstname"   : "supercalifragilisticexpialidocious",
+      "lastname"    : "Chlorobenzylidenemalononitrile",
+      "source"      : "Ambra"
+    }
+  ],
+  "emails" : [
+    {
+      "emailaddress" : "supercalifragilisticexpialidocious.chlorobenzylidenemalononitrile@foo.com",
+      "source"       : "Ambra"
+    }
+  ],
+  "credentials" : [
+    {
+      "password"     : "ABC127757",
+      "email"        : "supercalifragilisticexpialidocious.chlorobenzylidenemalononitrile@foo.com"
+    }
+  ]
+}

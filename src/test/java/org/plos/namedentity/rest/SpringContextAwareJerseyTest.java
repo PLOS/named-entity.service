@@ -21,11 +21,16 @@ import org.plos.namedentity.spring.config.ContextConfig;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.AfterClass;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public abstract class SpringContextAwareJerseyTest extends JerseyTest {
 
   private static ClassPathXmlApplicationContext context;
+
+  public static ApplicationContext getApplicationContext() {
+    return context;
+  }
 
   @Override
   protected javax.ws.rs.core.Application configure() {

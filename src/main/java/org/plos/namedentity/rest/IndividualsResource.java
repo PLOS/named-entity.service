@@ -2,9 +2,12 @@ package org.plos.namedentity.rest;
 
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
+import org.plos.namedentity.api.entity.Auth;
 import org.plos.namedentity.api.entity.Degree;
+import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
@@ -16,9 +19,20 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
+
+import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchQuery;
+import static org.plos.namedentity.api.NedException.ErrorType.TooManyResultsFound;
 
 @Path("/individuals")
 @Api(value="/individuals")
@@ -33,12 +47,65 @@ public class IndividualsResource extends NedResource {
   @ApiOperation(value = "Create individual", response = IndividualComposite.class)
   public Response createIndividual(IndividualComposite composite) {
     try {
+      generateDisplaynameIfEmpty( composite );
+
       return Response.status(Response.Status.OK).entity(
           namedEntityService.createComposite(composite, IndividualComposite.class)).build();
     } catch (NedException e) {
       return nedError(e, "Unable to create individual");
     } catch (Exception e) {
       return serverError(e, "Unable to create individual");
+    }
+  }
+
+  private void generateDisplaynameIfEmpty(IndividualComposite composite) {
+    List<Individualprofile> profiles = composite.getIndividualprofiles();
+    if (profiles != null & profiles.size() > 0) {
+      Individualprofile profile = profiles.get(0);
+      if ( isEmptyOrBlank(profile.getDisplayname()) ) {
+        profile.setDisplayname( namedEntityService.generateDisplayname(profile, new Random()) );
+      }
+    }
+  }
+
+  @GET
+  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+  @ApiOperation(value = "Find individual matching specified attribute.")
+  public Response findIndividuals(@QueryParam("entity")    String entity,
+                                  @QueryParam("attribute") String attribute,
+                                  @QueryParam("value")     String value) {
+    try {
+      if (isEmptyOrBlank(entity) || isEmptyOrBlank(attribute) || isEmptyOrBlank(value)) {
+        throw new NedException(InvalidSearchQuery);
+      }
+
+      List<Entity> results = crudService.findByAttribute( createSearchCriteria(entity,attribute,value,IndividualComposite.class) );
+
+      if (results.size() == 0)
+        throw new NedException(EntityNotFound, "Individual not found");
+      else if (results.size() > 10)
+        throw new NedException(TooManyResultsFound);
+
+      // entity records may refer to the same individual. we can filter these out
+      // by adding ned id's to a set.
+
+      Set<Integer> nedids = new HashSet<>();
+      for (Entity e : results) { nedids.add(e.getNedid()); }
+
+      // lookup composites for ned id's
+
+      List<IndividualComposite> composites = new ArrayList<>();
+      for (Integer nedid : nedids) {
+        composites.add(namedEntityService.findComposite(nedid, IndividualComposite.class));
+      }
+
+      return Response.status(Response.Status.OK).entity(
+        new GenericEntity<List<IndividualComposite>>(composites){}).build();
+
+    } catch (NedException e) {
+      return nedError(e, "findIndividuals() failed");
+    } catch (Exception e) {
+      return serverError(e, "findIndividuals() failed");
     }
   }
 
@@ -76,34 +143,31 @@ public class IndividualsResource extends NedResource {
       return serverError(e, "Find individual failed");
     }
   }
-  
+
   @GET
-  @Path("/displayname/{displayName}")
-  @ApiOperation(value = "Read individual by display name", response = IndividualComposite.class)
-  public Response readIndividualByDisplayname
-      (@PathParam("displayName") String displayName) {
+  @Path("/CAS/{casId}")
+  @ApiOperation(value = "Read individual by CAS ID", response = IndividualComposite.class)
+  public Response readIndividualByCasId(@PathParam("casId") String casId) {
     try {
 
-      Individualprofile p = new Individualprofile();
-
-      p.setDisplayname(displayName);
-
-      List<Individualprofile> results = crudService.findByAttribute(p);
+      List<Entity> results = crudService.findByAttribute( createSearchCriteria("auth","authid",casId,IndividualComposite.class) );
 
       if (results.size() == 0)
-        throw new NedException(NedException.ErrorType.EntityNotFound, "Individual not found");
+        throw new NedException(EntityNotFound, "Individual not found with CAS id: " + casId);
+
+      Auth auth = (Auth) results.get(0);
 
       return Response.status(Response.Status.OK).entity(
-          namedEntityService.findComposite(results.get(0).getNedid(), IndividualComposite.class)).build();
+          namedEntityService.findComposite(auth.getNedid(), IndividualComposite.class)).build();
     } catch (NedException e) {
-      return nedError(e, "Find individual failed");
+      return nedError(e, "Find individual by CAS id failed");
     } catch (Exception e) {
-      return serverError(e, "Find individual failed");
+      return serverError(e, "Find individual by CAS id failed");
     }
   }
-
+  
   /* ----------------------------------------------------------------------- */
-  /*  PROFILE CRUD                                                              */
+  /*  PROFILE CRUD                                                           */
   /* ----------------------------------------------------------------------- */
 
   @POST
@@ -158,27 +222,7 @@ public class IndividualsResource extends NedResource {
   @DELETE
   @Path("/{nedId}/uids/{id}")
   @ApiOperation(value = "Delete UID")
-  public Response deleteUid(@PathParam("nedId") int nedId,
-                            @PathParam("id") int id) {
-
-    int casCount = 0;
-
-    int entityLocation = -1;
-
-    List<Uniqueidentifier> uids = ((List<Uniqueidentifier>)(getEntities(nedId, Uniqueidentifier.class).getEntity()));
-
-    for (int i=0; i<uids.size(); i++) {
-      Uniqueidentifier uid = uids.get(i);
-      if (uid.getType().equals("CAS")) {
-        casCount++;
-        if (uid.getId() == id)
-          entityLocation = i;
-      }
-    }
-
-    if (entityLocation != -1 && casCount == 1)
-      return nedError(new NedException("Can not remove last CAS ID"), "Unable to Uniqueidentifier");
-
+  public Response deleteUid(@PathParam("nedId") int nedId, @PathParam("id") int id) {
     return deleteEntity(nedId, id, Uniqueidentifier.class);
   }
 
@@ -234,5 +278,25 @@ public class IndividualsResource extends NedResource {
   @ApiOperation(value = "List roles")
   public Response getRoles(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Role.class);
+  }
+
+  /* ----------------------------------------------------------------------- */
+  /*  AUTH CRUD                                                              */
+  /* ----------------------------------------------------------------------- */
+
+  @GET
+  @Path("/{nedId}/auth")
+  @ApiOperation(value = "List auth record(s)")
+  public Response getAuthRecord(@PathParam("nedId") int nedId) {
+    return getEntities(nedId, Auth.class);
+  }
+
+  @PUT
+  @Path("/{nedId}/auth/{authId}")
+  @ApiOperation(value = "Update auth record", response = Auth.class)
+  public Response updateAuthRecord(@PathParam("nedId") int nedId,
+                                   @PathParam("authId") int authId,
+                                   Auth authEntity) {
+    return updateEntity(nedId, authId, authEntity);
   }
 }

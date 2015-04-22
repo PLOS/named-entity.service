@@ -10,7 +10,7 @@ This python script will spin up docker containers of mysql and the ned service. 
 Requirements
 ------------
 * docker >= 1.3 (www.docker.com)
-* fig >= 0.5.2 (www.fig.sh)
+* docker-compose
 * python 2.7 (see script imports for required libraries)
 
 It is recommended that you set up docker to run as a user instead of requiring sudo. See documentation (https://docs.docker.com/installation/ubuntulinux/#giving-non-root-access).

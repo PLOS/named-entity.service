@@ -34,6 +34,9 @@ import org.plos.namedentity.api.enums.TypeClassEnum;
 import org.plos.namedentity.persist.db.namedentities.tables.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +45,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
 import static org.plos.namedentity.api.NedException.ErrorType.EntityWithNoPK;
+import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
 import static org.plos.namedentity.persist.db.namedentities.Tables.*;
 
 public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
@@ -111,70 +115,45 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
   @Override @SuppressWarnings("unchecked")
   public <T> List<T> findByAttribute(T t) {
-  
-    if (t instanceof Globaltype) {
-      Globaltype gt = (Globaltype)t;
-      if (gt.getTypeid() != null) {
+    return context.select()
+      .from(table(t.getClass()))
+      .where( buildWhereClause(t) )
+      .fetchInto((Class<T>)t.getClass());
+  }
 
-        // lookup a specific type value
-        if (gt.getShortdescription() != null) {
-          return context
-            .select().from(GLOBALTYPES)
-            .where(GLOBALTYPES.TYPEID.equal( gt.getTypeid()) )
-            .and(GLOBALTYPES.SHORTDESCRIPTION.equal(gt.getShortdescription()))
-            .fetchInto((Class<T>)t.getClass());
+  private <T> String buildWhereClause(T t) {
+    StringBuilder where = new StringBuilder();
+    try {
+      List<java.lang.reflect.Field> fields = new ArrayList<>();
+      fields.addAll( Arrays.asList(t.getClass().getDeclaredFields()) );
+      if (t instanceof Entity) {
+        // get nedid, source, and pk from parent
+        fields.addAll( Arrays.asList(t.getClass().getSuperclass().getDeclaredFields()) );
+      }
 
-        // lookup type values for a type class
-        } else {
-          return context
-            .select().from(GLOBALTYPES)
-            .where(GLOBALTYPES.TYPEID.equal( gt.getTypeid()) )
-            .fetchInto((Class<T>)t.getClass());
+      for (java.lang.reflect.Field f : fields) {
+        // ignore static member variables
+        if (Modifier.isStatic(f.getModifiers())) continue;
+
+        f.setAccessible(true);    // allow access to private members
+
+        Object v = f.get(t);      // get attribute value
+
+        if (v != null) {
+          if (where.length() > 0) where.append(" and "); 
+          where.append(f.getName()).append("=");
+          if (v instanceof Number || v instanceof Boolean) {
+            where.append(v);
+          } else {
+            where.append("'").append(v).append("'");
+          }
         }
       }
     }
-    else if (t instanceof Email) {
-      Email et = (Email)t;
-
-      // lookup emails for an individual
-      if (et.getNedid() != null) {
-        return context
-          .select().from(EMAILS)
-          .where(EMAILS.NEDID.equal( et.getNedid()) )
-          .fetchInto((Class<T>)t.getClass());
-      }
-      // lookup email by address
-      if (et.getEmailaddress() != null) {
-        return context
-          .select().from(EMAILS)
-          .where(EMAILS.EMAILADDRESS.equal( et.getEmailaddress()) )
-          .fetchInto((Class<T>)t.getClass());
-      }
+    catch (Exception e) {
+      throw new NedException(ServerError, "Problem building filter expression");
     }
-    else if (t instanceof Phonenumber) {
-      Phonenumber pt = (Phonenumber)t;
-
-      // lookup phone numbers for an individual
-      if (pt.getNedid() != null) {
-        return context
-          .select().from(PHONENUMBERS)
-          .where(PHONENUMBERS.NEDID.equal( pt.getNedid()) )
-          .fetchInto((Class<T>)t.getClass());
-      }
-      //TODO - lookup by phone number
-    } else if (t instanceof Individualprofile) {
-      Individualprofile p = (Individualprofile)t;
-
-      // lookup by displayName
-      if (p.getDisplayname() != null) {
-        return context
-            .select().from(INDIVIDUALPROFILES)
-            .where(INDIVIDUALPROFILES.DISPLAYNAME.equal( p.getDisplayname()) )
-            .fetchInto((Class<T>)t.getClass());
-      }
-    }
-
-    throw new UnsupportedOperationException("findByAttribute hasn't been implemented for all types");
+    return where.toString();
   }
 
   @Override
@@ -359,6 +338,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       return (T)findRoleByPrimaryKey(pk);
     if (cname.equals(Uniqueidentifier.class.getCanonicalName()))
       return (T)findUniqueIdsByPrimaryKey(pk);
+    if (cname.equals(Auth.class.getCanonicalName()))
+      return (T)findAuthCasByPrimaryKey(pk);
 
     throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
   }
@@ -398,6 +379,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       return (List<T>)findDegreesByNedId(nedId);
     if (cname.equals(Url.class.getCanonicalName()))
       return (List<T>)findUrlsByNedId(nedId);
+    if (cname.equals(Auth.class.getCanonicalName()))
+      return (List<T>)findAuthByNedId(nedId);
 
     throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
 
@@ -453,6 +436,21 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .from(e)
         .leftOuterJoin(gt1).on(e.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(e.SOURCETYPEID.equal(gt2.ID));
+  }
+
+  private SelectOnConditionStep select(Authcas auth) {
+
+    Emails e = EMAILS.as("e");
+
+    return this.context
+        .select(
+            auth.ID, auth.NEDID, auth.EMAILID,
+            e.EMAILADDRESS.as("email"),
+            auth.AUTHID, auth.PASSWORD, auth.ISACTIVE,
+            auth.PASSWORDRESET, auth.VERIFICATIONTOKEN,
+            auth.VERIFIED, auth.CREATED, auth.LASTMODIFIED)
+        .from(auth)
+        .join(e).on(auth.EMAILID.equal(e.ID));
   }
 
   private SelectOnConditionStep select(Addresses a) {
@@ -668,6 +666,25 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .into(Url.class);
   }
 
+  private List<Auth> findAuthByNedId(Integer nedId) {
+
+    Authcas a = AUTHCAS.as("a");
+    Emails  e = EMAILS.as("e");
+
+    return this.context
+        .select(
+            a.ID, a.NEDID, a.EMAILID,
+            e.EMAILADDRESS.as("email"),
+            a.AUTHID, a.PASSWORD, a.ISACTIVE,
+            a.PASSWORDRESET, a.VERIFICATIONTOKEN,
+            a.VERIFIED, a.CREATED, a.LASTMODIFIED)
+        .from(a)
+        .join(e).on(a.EMAILID.equal(e.ID))
+        .where(a.NEDID.equal(nedId))
+        .fetch()
+        .into(Auth.class);
+  }
+
   private Uniqueidentifier findUniqueIdsByPrimaryKey(Integer id) {
 
     Uniqueidentifiers uid = UNIQUEIDENTIFIERS.as("uid");
@@ -678,6 +695,18 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       throw new NedException(EntityNotFound, String.format("Uniqueidentifier not found with id %d", id));
 
     return record.into(Uniqueidentifier.class);
+  }
+
+  private Auth findAuthCasByPrimaryKey(Integer id) {
+
+    Authcas auth = AUTHCAS.as("auth");
+
+    Record record = select(auth).where(auth.ID.equal(id)).fetchOne();
+
+    if (record == null) 
+      throw new NedException(EntityNotFound, String.format("Authcas not found with id %d", id));
+
+    return record.into(Auth.class);
   }
 
   private Individualprofile findIndividualByPrimaryKey(Integer individualId) {
@@ -763,6 +792,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     // TODO: use reflection to set this for all Entities
 
     entityTableMap.put(Address.class, new TablePkPair(ADDRESSES, ADDRESSES.ID));
+    entityTableMap.put(Auth.class, new TablePkPair(AUTHCAS, AUTHCAS.ID));
     entityTableMap.put(Degree.class, new TablePkPair(DEGREES, DEGREES.ID));
     entityTableMap.put(Email.class, new TablePkPair(EMAILS, EMAILS.ID));
     entityTableMap.put(Globaltype.class, new TablePkPair(GLOBALTYPES, GLOBALTYPES.ID));

@@ -17,9 +17,13 @@
 package org.plos.namedentity.service;
 
 import static org.plos.namedentity.api.NedException.ErrorType.*;
+import static org.plos.namedentity.api.entity.Individualprofile.DISPLAYNAME_MAX_LENGTH;
 
+import org.apache.log4j.Logger;
+import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.*;
+import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.persist.NamedEntityDBService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,8 +32,12 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 
 public class NamedEntityServiceImpl implements NamedEntityService {
+
+  private static Logger logger = Logger.getLogger(NamedEntityServiceImpl.class);
 
   @Inject private NamedEntityDBService nedDBSvc;
 
@@ -54,6 +62,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       resolveRole((Role) t);
     else if (t instanceof Url)
       resolveUrl((Url) t);
+    else if (t instanceof Auth) 
+      resolveAuth((Auth) t);
     else
       throw new UnsupportedOperationException("Can not resolve entity for " + t.getClass());
 
@@ -78,6 +88,64 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     }
 
     return entity;
+  }
+
+  public String generateDisplayname(Individualprofile entity, Random rand) {
+
+    final int MAX_TRIES = 100;
+    final int MIN_VAL   = 100;
+    final int MAX_VAL   = 999;
+
+    // (max displayname length) - (uuid length) - (initial of firstname)
+    final int MAX_LNAME_LEN = (DISPLAYNAME_MAX_LENGTH - 32 - 1);
+
+    try {
+      entity.validateFirstname() ; entity.validateLastname() ;
+
+      // base name = first char of firstname + lastname (possibly truncated)
+      StringBuilder basename = new StringBuilder();
+      basename.append( Character.toLowerCase(entity.getFirstname().charAt(0)) );
+
+      String lname = entity.getLastname().toLowerCase();
+      basename.append( lname.length() > MAX_LNAME_LEN ? lname.substring(0,MAX_LNAME_LEN) : lname );
+
+      int count = 0;
+
+      while (true) {
+        StringBuilder displayname = new StringBuilder();
+        displayname.append( basename );
+
+        // nextInt is exclusive at top end, so add 1 to make it inclusive
+        displayname.append( rand.nextInt((MAX_VAL-MIN_VAL)+1)+MIN_VAL );
+
+        Individualprofile profileCriteria = new Individualprofile();
+        profileCriteria.setDisplayname( displayname.toString() );
+        List<Individualprofile> profilesResult = nedDBSvc.findByAttribute(profileCriteria);
+        if (profilesResult.size() == 0) {
+          return displayname.toString();   // displayname is available
+        }
+
+        if (++count == MAX_TRIES) {
+
+          // we've exhausted generation attempts with random number. fall back
+          // to initials plus uuid (w/o dashes).
+
+          displayname.setLength(0);
+          displayname.append( basename ).append("-");
+          displayname.append( UUID.randomUUID().toString().replaceAll("-","") );
+
+          logger.warn(String.format("Exhausted displayname generation with random " +
+            "number for firstname:%s lastname:%s. Generating uuid-variant: %s", 
+              entity.getFirstname(), entity.getLastname(), displayname.toString()));
+
+          return displayname.toString();
+        }
+      }
+    }
+    catch (NedException e) {
+      // name validation failed. abort generation.
+    }
+    return null;
   }
 
   private Organization resolveOrganization(Organization entity) {
@@ -152,6 +220,27 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     return entity;
   }
 
+  private Auth resolveAuth(Auth entity) {
+
+    if (entity.getEmail() != null) {
+      Email searchCriteria = new Email();
+      searchCriteria.setEmailaddress( entity.getEmail() );
+
+      searchCriteria.setSourcetypeid(nedDBSvc.findTypeValue(
+        nedDBSvc.findTypeClass("Source Applications"), UidTypeEnum.AMBRA.getName()));
+
+      List<Email> searchResult = nedDBSvc.findByAttribute(searchCriteria);
+      
+      if (searchResult.size() != 1) {
+        throw new NedException(ServerError, String.format(
+          "Expected to find one email for %s. Found %d.", 
+            entity.getEmail(), searchResult.size()));
+      }
+      entity.setEmailid( searchResult.get(0).getId() );
+    }
+    return entity;
+  }
+
   private Role resolveRole(Role entity) {
 
     if (entity.getApplicationtype() != null)
@@ -218,7 +307,6 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     return findComposite(nedId, clazz);
   }
-
 
   @Override
   public <T extends Entity> List<T> findResolvedEntities(Integer nedId, Class<T> clazz) {

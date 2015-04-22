@@ -17,10 +17,13 @@
 package org.plos.namedentity.rest;
 
 import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchCriteria;
 
 import com.wordnik.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Address;
+import org.plos.namedentity.api.entity.Auth;
+import org.plos.namedentity.api.entity.Composite;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Entity;
@@ -38,6 +41,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 public abstract class NedResource extends BaseResource {
@@ -336,6 +342,12 @@ public abstract class NedResource extends BaseResource {
                 namedEntityService.findResolvedEntities(nedId, Url.class)
             ){}).build();
       }
+      else if (cname.equals(Auth.class.getCanonicalName())) {
+        return Response.status(Response.Status.OK).entity(
+            new GenericEntity<List<Auth>>(
+                namedEntityService.findResolvedEntities(nedId, Auth.class)
+            ){}).build();
+      }
       else if (cname.equals(Uniqueidentifier.class.getCanonicalName())) {
         return Response.status(Response.Status.OK).entity(
             new GenericEntity<List<Uniqueidentifier>>(
@@ -354,5 +366,64 @@ public abstract class NedResource extends BaseResource {
     } catch (Exception e) {
       return serverError(e, String.format("Find %s by nedId failed", child.getSimpleName()));
     }
+  }
+
+  protected <T extends Composite>
+  Entity createSearchCriteria(String entity, String attribute, String value, Class<T> compositeClass) {
+
+    String capitalizedEntity = Character.toUpperCase(entity.charAt(0)) + entity.substring(1);
+
+    Entity searchEntity = null;
+
+    try {
+      Class entityClass = Class.forName("org.plos.namedentity.api.entity." + capitalizedEntity);
+      searchEntity = (Entity) entityClass.newInstance();
+
+      // we were able to instantiate entity. verify is a member of composite.
+
+      boolean validEntityForComposite = false;
+
+      for (Field f : compositeClass.getDeclaredFields()) {
+        Class<?> compositeMemberClass = null;
+
+        if (List.class.isAssignableFrom(f.getType())) {
+          ParameterizedType paramType = (ParameterizedType) f.getGenericType();
+          compositeMemberClass = (Class<?>) paramType.getActualTypeArguments()[0];
+        } else {
+          compositeMemberClass = f.getType();
+        }
+
+        if (compositeMemberClass.getCanonicalName().equals(entityClass.getCanonicalName())) {
+          validEntityForComposite = true ; break ;
+        }
+      }
+
+      if (!validEntityForComposite) {
+        throw new NedException(InvalidSearchCriteria, String.format("Invalid entity (%s) for composite type (%s)",
+          entityClass.getSimpleName(), compositeClass.getSimpleName()));
+      }
+
+      Field field = entityClass.getDeclaredField(attribute);
+      field.setAccessible(true);
+      field.set(searchEntity, value);
+
+      namedEntityService.resolveValuesToIds(searchEntity);
+
+      if (attribute.endsWith("type"))
+        field.set(searchEntity, null);
+    }
+    catch (ClassNotFoundException e) {
+      throw new NedException(InvalidSearchCriteria, "Verify entity name: "+entity);
+    }
+    catch (NoSuchFieldException e) {
+      throw new NedException(InvalidSearchCriteria, "Verify attribute name: "+attribute);
+    }
+    catch (NedException e) {
+      throw e;
+    }
+    catch (Exception e) {
+      throw new NedException(InvalidSearchCriteria);
+    }
+    return searchEntity;
   }
 }
