@@ -28,7 +28,6 @@ class DockerTester:
     # TODO: cd to this directory in order to handle docker-compose remote
     print ("Building containers... (be patient; this may take 5-10 minutes the first time)")
     self.cmd_stream("docker-compose build && docker-compose up -d")
-    # self.cmd_stream("bash up.sh background")
 
   def containers_down(self):
     print ("Stopping containers")
