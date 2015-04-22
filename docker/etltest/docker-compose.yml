@@ -1,7 +1,7 @@
 ambradb:
     build: ambra.mysql
 
-    # TODO: use compose 1.2 inheritance here
+    # TODO: use compose 1.2 inheritance here?
 
 neddb:
     image: percona:5.6

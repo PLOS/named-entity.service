@@ -47,16 +47,11 @@ print ("ETL jar: " + etl_jar)
 
 dt = docker_tester.DockerTester()
 
+# build the API
 cwd = os.path.dirname(os.path.realpath(__file__))
-
-print(os.getcwd() + "\n")
 os.chdir("..")
-print ("START COMPILE")
 dt.cmd_return("bash compile.sh")
 os.chdir(cwd)
-print(os.getcwd() + "\n")
-
-print ("STOP COMPILE")
 
 dt.containers_up()
 
