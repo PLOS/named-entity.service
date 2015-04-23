@@ -1,0 +1,6 @@
+nedbuilder:
+    build: .
+    volumes:
+      - ../..:/src
+      - /root/.m2   # cache maven cache to docker volume for future builds
+      - /build      # to serve out the compiled assets once finished

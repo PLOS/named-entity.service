@@ -2,8 +2,8 @@ FROM maven:3.3-jdk-8
 
 WORKDIR /src
 
-CMD mkdir build
+RUN mkdir /build
 
-CMD ["./ned.sh", "package"]
+ADD docker_runscript.bash /docker_runscript.bash
 
-CMD ["copy", "target/*.?ar", "build"]
+CMD ["bash", "/docker_runscript.bash"]
