@@ -15,3 +15,11 @@ nedapi:
       - MYSQL_NED_PASSWORD=ned
       - MYSQL_HOSTNAME=neddb
       - MYSQL_DATABASE=namedEntities
+
+nedbuilder:
+    # build: builder
+    image: maven:3.3-jdk-8
+    command: cd /src && ./ned.sh package
+    volumes:
+      - ..:/src
+      # - /root/.m2 # cache maven cache to docker volume for future builds
