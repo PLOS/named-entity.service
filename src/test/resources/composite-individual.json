@@ -55,6 +55,13 @@
       "source"       : "Ambra",
       "verified"     : "false",
       "isactive"     : "true"
+    },
+    {
+      "type"         : "Work",
+      "emailaddress" : "jane.q.doe.defunct@foo.com",
+      "source"       : "Ambra",
+      "verified"     : "true",
+      "isactive"     : "false"
     }
   ],
   "phonenumbers" : [
