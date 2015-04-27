@@ -53,6 +53,7 @@
       "type"         : "Work",
       "emailaddress" : "jane.q.doe.work@foo.com",
       "source"       : "Ambra",
+      "verified"     : "false",
       "isactive"     : "true"
     }
   ],

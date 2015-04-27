@@ -272,7 +272,6 @@ public class NamedEntityDBServiceTest {
     assertNull(workEmail.getId());
     assertNotNull(workEmail.getNedid());
     assertNotNull(workEmail.getTypeid());
-    assertEquals(true, workEmail.getIsactive());
 
     Integer workEmailId = nedDBSvc.create( workEmail );
     assertNotNull(workEmailId);
@@ -338,7 +337,6 @@ public class NamedEntityDBServiceTest {
     assertNull(homeEmail.getId());
     assertNotNull(homeEmail.getNedid());
     assertNotNull(homeEmail.getTypeid());
-    assertEquals(true, homeEmail.getIsactive());
 
     Integer homeEmailId = nedDBSvc.create( homeEmail );
     assertNotNull(homeEmailId);

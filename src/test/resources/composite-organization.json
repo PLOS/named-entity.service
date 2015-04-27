@@ -14,7 +14,9 @@
     {
       "type"         : "Work",
       "emailaddress" : "info@berkeley.edu",
-      "source"       : "Ambra"
+      "source"       : "Ambra",
+      "verified"     : "false",
+      "isactive"     : "true"
     }
   ],
   "addresses" : [
