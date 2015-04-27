@@ -43,7 +43,7 @@ public class Individualprofile extends Entity {
 
   private String biography;
 
-  private Boolean isactive = true;
+  private Boolean isactive;
 
   private static Pattern rejectedCharsDisplayName = Pattern.compile("[$&+,:;=?@#|/\\s^~`%<>{}\\[\\]\\\\]");
 

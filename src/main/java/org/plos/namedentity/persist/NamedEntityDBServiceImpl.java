@@ -423,7 +423,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
             gt1.SHORTDESCRIPTION.as("nameprefix"),
             gt2.SHORTDESCRIPTION.as("namesuffix"),
             gt5.SHORTDESCRIPTION.as("source"),
-            i.CREATED, i.LASTMODIFIED)
+            i.ISACTIVE, i.CREATED, i.LASTMODIFIED)
         .from(i)
         .leftOuterJoin(gt1).on(i.NAMEPREFIXTYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(i.NAMESUFFIXTYPEID.equal(gt2.ID))
@@ -477,7 +477,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
             gt2.SHORTDESCRIPTION.as("statecodetype"),
             gt3.SHORTDESCRIPTION.as("countrycodetype"),
             gt4.SHORTDESCRIPTION.as("source"),
-            a.CREATED, a.LASTMODIFIED)
+            a.ISACTIVE, a.CREATED, a.LASTMODIFIED)
         .from(a)
         .leftOuterJoin(gt1).on(a.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(a.STATECODETYPEID.equal(gt2.ID))
@@ -629,7 +629,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
             gt1.SHORTDESCRIPTION.as("type"),
             gt2.SHORTDESCRIPTION.as("countrycodetype"),
             gt3.SHORTDESCRIPTION.as("source"),
-            p.CREATED, p.LASTMODIFIED)
+            p.ISACTIVE, p.CREATED, p.LASTMODIFIED)
         .from(p)
         .leftOuterJoin(gt1).on(p.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(p.COUNTRYCODETYPEID.equal(gt2.ID))

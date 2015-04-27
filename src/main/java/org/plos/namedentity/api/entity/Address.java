@@ -42,8 +42,8 @@ public class Address extends Entity {
 
   private Integer latitude;
   private Integer longitude;
-  private Boolean isactive = true;
-  
+  private Boolean isactive;
+
   public Integer getTypeid() {
     return this.typeid;
   }

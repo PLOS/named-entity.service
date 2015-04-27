@@ -556,7 +556,6 @@ public class NamedEntityDBServiceTest {
 
     assertNull(officePhone.getId());
     assertNotNull(officePhone.getNedid());
-    assertTrue(officePhone.getIsactive());
 
     Integer officePhoneId = nedDBSvc.create( officePhone );
     assertNotNull(officePhoneId);
@@ -623,7 +622,6 @@ public class NamedEntityDBServiceTest {
 
     assertNull(address.getId());
     assertNotNull(address.getNedid());
-    assertEquals(true, address.getIsactive());
 
     Integer addressId = nedDBSvc.create( address );
     assertNotNull(addressId);
