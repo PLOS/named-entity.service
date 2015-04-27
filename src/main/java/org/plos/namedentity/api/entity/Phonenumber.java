@@ -33,7 +33,7 @@ public class Phonenumber extends Entity {
   private String phonenumber;
   private String extension;
 
-  private Boolean isactive = true;
+  private Boolean isactive;
 
   @Override
   public void validate() {

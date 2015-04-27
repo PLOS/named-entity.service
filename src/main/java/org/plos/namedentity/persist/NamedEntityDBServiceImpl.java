@@ -75,15 +75,23 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         throw new NedException(EntityWithNoPK, "Can't update entity without primary key: "+(Entity)t);
       }
 
-      // in jooq 3.5.1, the field change flag isn't set for null entity pojos
-      // values. this seems different behavior from 3.4.1 which did this for all
-      // attributes. let's manually control this for now by explicitly setting 
-      // the changed flag for all attributes except created and lastmodified.
+      // in jooq 3.5.1, the field change flag isn't set for null entity pojo
+      // values. this is different behavior from 3.4.1 which did set this for all
+      // attributes. let's manually control this for now by ...
+      //   
+      //   1. ignoring created and lastmodified timestamp attributes
+      //   2. updating boolean attributes only if set (ie, modified)
+      //   3. setting the changed flag for all other attributes
 
       for (Field<?> f : record.fields()) {
         String fieldName = f.getName();
         if (fieldName.equalsIgnoreCase("created") || fieldName.equalsIgnoreCase("lastmodified")) {
           record.changed(fieldName,false);
+        }
+        else if (fieldName.equalsIgnoreCase("isactive") ||
+                 fieldName.equalsIgnoreCase("verified") ||
+                 fieldName.equalsIgnoreCase("passwordreset")) {
+          // do nothing. honor changed flag setting for this attribute.
         } else {
           record.changed(fieldName,true);
         }
@@ -415,7 +423,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
             gt1.SHORTDESCRIPTION.as("nameprefix"),
             gt2.SHORTDESCRIPTION.as("namesuffix"),
             gt5.SHORTDESCRIPTION.as("source"),
-            i.CREATED, i.LASTMODIFIED)
+            i.ISACTIVE, i.CREATED, i.LASTMODIFIED)
         .from(i)
         .leftOuterJoin(gt1).on(i.NAMEPREFIXTYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(i.NAMESUFFIXTYPEID.equal(gt2.ID))
@@ -432,7 +440,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
             e.ID, e.NEDID,
             e.EMAILADDRESS, gt1.SHORTDESCRIPTION.as("type"),
             gt2.SHORTDESCRIPTION.as("source"),
-            e.CREATED, e.LASTMODIFIED)
+            e.VERIFIED, e.ISACTIVE, e.CREATED, e.LASTMODIFIED)
         .from(e)
         .leftOuterJoin(gt1).on(e.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(e.SOURCETYPEID.equal(gt2.ID));
@@ -469,7 +477,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
             gt2.SHORTDESCRIPTION.as("statecodetype"),
             gt3.SHORTDESCRIPTION.as("countrycodetype"),
             gt4.SHORTDESCRIPTION.as("source"),
-            a.CREATED, a.LASTMODIFIED)
+            a.ISACTIVE, a.CREATED, a.LASTMODIFIED)
         .from(a)
         .leftOuterJoin(gt1).on(a.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(a.STATECODETYPEID.equal(gt2.ID))
@@ -621,7 +629,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
             gt1.SHORTDESCRIPTION.as("type"),
             gt2.SHORTDESCRIPTION.as("countrycodetype"),
             gt3.SHORTDESCRIPTION.as("source"),
-            p.CREATED, p.LASTMODIFIED)
+            p.ISACTIVE, p.CREATED, p.LASTMODIFIED)
         .from(p)
         .leftOuterJoin(gt1).on(p.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(p.COUNTRYCODETYPEID.equal(gt2.ID))

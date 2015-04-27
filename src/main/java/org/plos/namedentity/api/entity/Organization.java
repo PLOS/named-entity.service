@@ -31,7 +31,7 @@ public class Organization extends Entity {
   private String  familiarname;
   private String  legalname;
   private Integer maincontactid;
-  private Boolean isactive = true;
+  private Boolean isactive;
 
   @Override
   public void validate() {
