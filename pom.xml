@@ -24,6 +24,8 @@
     <org.springframework.version>3.2.2.RELEASE</org.springframework.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <tomcat.jdbc.version>7.0.54</tomcat.jdbc.version>
+
+    <buildDirectory>${project.basedir}/target</buildDirectory>
   </properties>
 
   <dependencies>
@@ -214,6 +216,8 @@
   <build>
     <finalName>${project.artifactId}-${project.version}</finalName>
 
+    <directory>${buildDirectory}</directory>
+
     <resources>
       <resource>
         <directory>src/main/resources/</directory>
@@ -347,6 +351,9 @@
       </dependencies>
       <build>
         <!-- The resources element will replace available properties in all matching resources -->
+
+        <directory>${buildDirectory}</directory>
+        
         <resources>
           <resource>
             <filtering>true</filtering>
