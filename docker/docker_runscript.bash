@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BUILD_DIR=/root
+BUILD_DIR=/build
 
 # wait for DB to be ready for schema
 
