@@ -8,4 +8,4 @@ RUN pip install requests # MySQL-python
 
 ADD * /root/
 
-CMD ["python", "/root/run_api_tests.py"]
+# CMD ["python", "/root/run_api_tests.py"]

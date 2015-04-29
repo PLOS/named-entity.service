@@ -9,12 +9,6 @@ os.chdir(os.path.dirname(__file__))
 
 dt = docker_tester.DockerTester()
 
-# print ("Building service")
-# dt.cmd_stream("cd builder && docker-compose build && docker-compose up")
-#
-# dt.containers_up()
-
-
 base_url = "http://nedapi:8080"
 
 # db_ip = "neddb"
@@ -33,31 +27,29 @@ if not dt.wait_for_web("%s/service/config" % base_url):
 
 print ("Service is up, running tests")
 
+# try:
+
 try:
 
+  # NOTE to run the sample do:
+  # > PYTHONPATH=$PYTHONPATH:/path/to/your/etl_data_tester/dir/ ./run_api_tests.py
+  #
+  # If you do not specify a path to your tests, the ones in sampletest/ will run
+
   try:
+    user_paths = os.environ['PYTHONPATH'].split(os.pathsep)
+  except KeyError:
+    sys.path.append("sampletest")
 
-    # NOTE to run the sample do:
-    # > PYTHONPATH=$PYTHONPATH:/path/to/your/etl_data_tester/dir/ ./run_api_tests.py
-    #
-    # If you do not specify a path to your tests, the ones in sampletest/ will run
+  import rest_tester
 
-    try:
-      user_paths = os.environ['PYTHONPATH'].split(os.pathsep)
-    except KeyError:
-      sys.path.append("sampletest")
+  print ("Running external REST tests")
+  t = rest_tester.NedRestTester(base_url)
+  t.run()
+except ImportError, e:
+  print ("===== Skipping external REST tests since none were found ====")
 
-    import rest_tester
-
-    print ("Running external REST tests")
-    t = rest_tester.NedRestTester(base_url)
-    t.run()
-  except ImportError, e:
-    print ("===== Skipping external REST tests since none were found ====")
-
-  print ("TESTS PASSED")
-except Exception, e:
-  print ("TEST FAILED")
-  print (e)
-# finally:
-#   dt.containers_down()
+print ("TESTS PASSED")
+# except Exception, e:
+#   print ("TEST FAILED")
+#   print (e)
