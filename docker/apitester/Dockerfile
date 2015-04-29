@@ -1,5 +1,11 @@
-FROM python:2.7-slim
+FROM python:2.7
 
-pip install json
+# RUN apt-get install -y  libmysqlclient-dev #python-dev
 
-# TODO: run a script
+RUN apt-get update && apt-get install -y mysql-client  # TODO: replace with python
+
+RUN pip install requests # MySQL-python
+
+ADD * /root/
+
+CMD ["python", "/root/run_api_tests.py"]

@@ -2,6 +2,17 @@
 
 BUILD_DIR=/build
 
+# TODO: complain if BUILD_DIR is not found
+
+BUILDFILES=$(ls ${BUILD_DIR}/*|wc -l)
+
+if [ $BUILDFILES -eq 0 ] ; then
+  echo "$BUILD_DIR is empty"
+  exit 1
+fi
+
+ls $BUILD_DIR
+
 # wait for DB to be ready for schema
 
 MYSQL="mysql --default-character-set=utf8 -h ${MYSQL_HOSTNAME} -u root -p${MYSQL_ROOT_PASSWORD}"
@@ -32,7 +43,14 @@ echo "Finished creating user."
 
 # set up tomcat
 
-mv ${BUILD_DIR}/context.xml ${CATALINA_HOME}/conf/context.xml
+# TODO: complain if context.xml is not found in build
+#if [ -f "${BUILD_DIR}/context.xml" ] ; then
+#  echo ${BUILD_DIR}/context.xml not found
+#  cat ${BUILD_DIR}/context.xml
+#  exit 1
+#fi
+
+cp ${BUILD_DIR}/context.xml ${CATALINA_HOME}/conf/context.xml
 
 echo Deleting contents of webapps/
 rm -rf ${CATALINA_HOME}/webapps/*

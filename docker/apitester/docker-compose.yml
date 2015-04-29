@@ -1,14 +1,12 @@
 neddb:
-  image: percona:5.6
-  environment:
-    - MYSQL_ROOT_PASSWORD=root
+  extends:
+    file: ../docker-compose.yml
+    service: neddb
 
 nedapi:
-  build: .
+  build: ..
   links:
     - neddb:neddb
-  ports:
-    - "8081:8080"
   volumes_from:
     - builder_nedbuilder_1
   environment:
@@ -17,3 +15,9 @@ nedapi:
     - MYSQL_NED_PASSWORD=ned
     - MYSQL_HOSTNAME=neddb
     - MYSQL_DATABASE=namedEntities
+
+nedapitester:
+  build: .
+  links:
+    - nedapi:nedapi   # this is what we are testing against
+    - neddb:neddb     # needed because we need to wait for it to be ready
