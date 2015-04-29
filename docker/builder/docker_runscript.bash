@@ -5,8 +5,10 @@ CONTEXTFILE=$BUILDDIR/context.xml
 
 rm $BUILDDIR/*
 
+echo Building NED
+
 cd /src
-./ned.sh package
+./ned.sh install
 
 echo target dir:
 ls target
@@ -33,6 +35,18 @@ rm -rf target
 
 #echo $CONTEXTFILE
 #cat $CONTEXTFILE
+
+
+echo Building ETL
+
+cd /etl
+mvn clean package
+
+cp target/*.jar $BUILDDIR
+ln -s named-entity-etl-*-jar-with-dependencies.jar $BUILDDIR/etl.jar
+
+rm -rf target
+
 
 echo $BUILDDIR dir:
 ls -l $BUILDDIR
