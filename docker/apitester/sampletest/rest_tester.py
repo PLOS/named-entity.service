@@ -18,7 +18,7 @@ class NedRestTester:
     data = json.loads(r.text)
     assert data['version']
 
-    r = requests.get("%s/typeclasses" % self.base_url)
+    r = requests.get("%s/typeclassesXXX" % self.base_url)
     data = json.loads(r.text)
     assert len(data) > 10
     assert r.status_code == requests.codes.ok

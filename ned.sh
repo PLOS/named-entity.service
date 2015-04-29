@@ -53,7 +53,7 @@ dbreset)
     
 container-start)
     cd docker/builder
-    docker-compose build && docker-compose up
+    ./ned-build.sh
     cd ..
     docker-compose build && docker-compose up -d
 
