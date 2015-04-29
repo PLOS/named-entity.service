@@ -1,8 +1,9 @@
 {
-  "type": "University",
-  "familiarname": "UC Berkeley",
-  "legalname": "University of California, Berkeley",
-  "source":"Ambra",
+  "type"         : "University",
+  "familiarname" : "UC Berkeley",
+  "legalname"    : "University of California, Berkeley",
+  "source"       : "Ambra",
+  "isactive"     : "true",
   "uniqueidentifiers": [
     {
       "type": "Ringgold",
@@ -14,7 +15,9 @@
     {
       "type"         : "Work",
       "emailaddress" : "info@berkeley.edu",
-      "source"       : "Ambra"
+      "source"       : "Ambra",
+      "verified"     : "false",
+      "isactive"     : "true"
     }
   ],
   "addresses" : [
@@ -26,7 +29,8 @@
       "addresstype"     : "Office",
       "postalcode"      : "94501",
       "countrycodetype" : "United States of America",
-      "source"          : "Editorial Manager"
+      "source"          : "Editorial Manager",
+      "isactive"        : "true"
     }
   ],
   "phonenumbers" : [
@@ -36,14 +40,16 @@
       "phonenumber"     : "650-123-4567",
       "type"            : "Office",
       "countrycodetype" : "1",
-      "source"          : "Editorial Manager"
+      "source"          : "Editorial Manager",
+      "isactive"        : "true"
     },
     {
       "isprimary"       : "false",
       "phonenumber"     : "650-111-2222",
       "type"            : "Mobile",
       "countrycodetype" : "1",
-      "source"          : "Editorial Manager"
+      "source"          : "Editorial Manager",
+      "isactive"        : "true"
     }
   ]
 }

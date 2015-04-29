@@ -146,7 +146,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     }
 
     /* ---------------------------------------------------------------------- */
-    /*  FIND BY EMAILADDRESS                                                  */
+    /*  FIND BY EMAILADDRESS (Verified:N, Active:Y)                           */
     /* ---------------------------------------------------------------------- */
 
     Response response = target(INDIVIDUAL_URI).queryParam("entity","email")
@@ -166,6 +166,31 @@ public class NamedEntityResourceTest extends BaseResourceTest {
       boolean foundEmailMatch = false;
       for (Email email : composite.getEmails()) {
         if ("jane.q.doe.work@foo.com".equals(email.getEmailaddress())) {
+          foundEmailMatch = true;
+        }
+      }
+      assertTrue(foundEmailMatch);
+    }
+
+    /* ---------------------------------------------------------------------- */
+    /*  FIND BY EMAILADDRESS (Verified:Y, Active:N)                           */
+    /* ---------------------------------------------------------------------- */
+
+    response = target(INDIVIDUAL_URI).queryParam("entity","email")
+                                     .queryParam("attribute","emailaddress")
+                                     .queryParam("value","jane.q.doe.defunct@foo.com")
+                                     .request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    jsonPayload = response.readEntity(String.class);
+    composites  = unmarshalEntities(jsonPayload, IndividualComposite.class, unmarshaller);
+    assertEquals(1, composites.size());
+
+    for (IndividualComposite composite : composites) {
+      boolean foundEmailMatch = false;
+      for (Email email : composite.getEmails()) {
+        if ("jane.q.doe.defunct@foo.com".equals(email.getEmailaddress())) {
           foundEmailMatch = true;
         }
       }
@@ -755,19 +780,28 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     jsonPayload = response.readEntity(String.class);
 
     List<Email> emails = unmarshalEntities(jsonPayload, Email.class, unmarshaller);
-    assertEquals(2, emails.size());
+    assertEquals(3, emails.size());
 
     Email email0 = emails.get(0);
     assertEquals("Work", email0.getType());
     assertEquals("jane.q.doe.work@foo.com", email0.getEmailaddress());
     assertEquals("Ambra", email0.getSource());
+    assertEquals(false, email0.getVerified());
     assertEquals(true, email0.getIsactive());
 
     Email email1 = emails.get(1);
-    assertEquals("Personal", email1.getType());
-    assertEquals("jane.q.doe.personal@foo.com", email1.getEmailaddress());
+    assertEquals("Work", email1.getType());
+    assertEquals("jane.q.doe.defunct@foo.com", email1.getEmailaddress());
     assertEquals("Ambra", email1.getSource());
-    assertEquals(true, email1.getIsactive());
+    assertEquals(true, email1.getVerified());
+    assertEquals(false, email1.getIsactive());
+
+    Email email2 = emails.get(2);
+    assertEquals("Personal", email2.getType());
+    assertEquals("jane.q.doe.personal@foo.com", email2.getEmailaddress());
+    assertEquals("Ambra", email2.getSource());
+    assertEquals(false, email2.getVerified());
+    assertEquals(true, email2.getIsactive());
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */
