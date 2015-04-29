@@ -39,11 +39,13 @@ rm -rf target
 
 echo Building ETL
 
-cd /etl
+cd /etl/lib
+./install-jars-in-local-mvn-repo.sh
+cd ..
 mvn clean package
 
 cp target/*.jar $BUILDDIR
-ln -s named-entity-etl-*-jar-with-dependencies.jar $BUILDDIR/etl.jar
+ln -s named-entity-etl-*-jar-with-dependencies.jar $BUILDDIR/ned-etl.jar
 
 rm -rf target
 
