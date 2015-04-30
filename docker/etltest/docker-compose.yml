@@ -23,3 +23,11 @@ nedapi:
       - MYSQL_NED_PASSWORD=ned
       - MYSQL_HOSTNAME=neddb
       - MYSQL_DATABASE=namedEntities
+
+nedetltester:
+    build: .
+    links:
+      - nedapi:nedapi
+      - ambradb:ambradb
+    volumes_from:
+      - builder_nedbuilder_1

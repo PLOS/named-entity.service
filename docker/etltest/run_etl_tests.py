@@ -28,45 +28,47 @@ import docker_tester
 
 # MAIN
 
-args = docopt(__doc__, version=1)
+# args = docopt(__doc__, version=1)
+#
+# etl_jar = args['--etl_jar']
+#
+# # change to the script directory to run compose
+# os.chdir(os.path.dirname(__file__))
+#
+# if not etl_jar:
+#   jars = glob.glob("../../../named-entity.etl/target/named-entity-etl-*-jar-with-dependencies.jar")
+#   if len(jars) == 0:
+#     raise Exception('No ETL jar found')
+#   etl_jar = jars[0]
+#
+# assert os.path.isfile(etl_jar), "jar not found: " + etl_jar
+#
+# print ("ETL jar: " + etl_jar)
 
-etl_jar = args['--etl_jar']
-
-# change to the script directory to run compose
-os.chdir(os.path.dirname(__file__))
-
-if not etl_jar:
-  jars = glob.glob("../../../named-entity.etl/target/named-entity-etl-*-jar-with-dependencies.jar")
-  if len(jars) == 0:
-    raise Exception('No ETL jar found')
-  etl_jar = jars[0]
-
-assert os.path.isfile(etl_jar), "jar not found: " + etl_jar
-
-print ("ETL jar: " + etl_jar)
+etl_jar = "/build/named-entity-etl-0.4.0-SNAPSHOT-jar-with-dependencies.jar"
 
 dt = docker_tester.DockerTester()
 
-# build the API
-cwd = os.getcwd()
-os.chdir("..")
-dt.cmd_return("bash compile.sh")
-os.chdir(cwd)
+# # build the API
+# cwd = os.getcwd()
+# os.chdir("..")
+# dt.cmd_return("bash compile.sh")
+# os.chdir(cwd)
+#
+# dt.containers_up()
 
-dt.containers_up()
-
-ambra_mysql_ip = dt.get_container_ip("etltest_ambradb_1")
-ned_service_ip = dt.get_container_ip("etltest_nedapi_1")
-ned_db_ip = dt.get_container_ip("etltest_neddb_1")
+ambra_mysql_ip = "ambradb"
+ned_service_ip = "nedapi"
+ned_db_ip = "neddb"
 ned_base_url = "http://%s:8080" % ned_service_ip
 
 print ("Checking AMBRA database container at %s" % ambra_mysql_ip)
 dt.wait_for_process("mysql -h %s -u dummyuser --password=password -e exit" % ambra_mysql_ip)
 print ("Database ready")
 
-print ("Checking NED database container at %s" % ned_db_ip)
-dt.wait_for_process("mysql -h %s -u ned namedEntities -pned -e exit" % ned_db_ip)
-print ("Database ready")
+# print ("Checking NED database container at %s" % ned_db_ip)
+# dt.wait_for_process("mysql -h %s -u ned namedEntities -pned -e exit" % ned_db_ip)
+# print ("Database ready")
 
 print ("Checking NED service container at %s" % ned_base_url)
 dt.wait_for_web("%s/service/config" % ned_base_url)
@@ -97,5 +99,5 @@ except Exception, e:
   print ("TEST FAILED")
   print (e)
   traceback.print_exc(file=sys.stdout)
-finally:
-  dt.containers_down()
+# finally:
+#   dt.containers_down()
