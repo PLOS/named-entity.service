@@ -45,7 +45,7 @@ cd ..
 mvn clean package
 
 cp target/*.jar $BUILDDIR
-ln -s named-entity-etl-*-jar-with-dependencies.jar $BUILDDIR/ned-etl.jar
+ln -s $BUILDDIR/named-entity-etl-*-jar-with-dependencies.jar $BUILDDIR/ned-etl.jar
 
 rm -rf target
 

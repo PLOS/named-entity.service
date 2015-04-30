@@ -1,61 +1,20 @@
 #!/usr/bin/python
-"""
-Data tests for NED etl
-
-Usage:
-  run_tests.py [options]
-
-Options:
-  --etl_jar=<path>    The path to the the ETL jar file
-
-"""
 
 __author__ = 'jfinger'
 
-import glob
-import os, sys
-from docopt import docopt
+import os, sys, inspect
 import traceback
-import os,sys,inspect
-
-# a little magic to import from the parent directory without a package
-
-currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parentdir = os.path.dirname(currentdir)
-sys.path.insert(0,parentdir) 
-
 import docker_tester
 
 # MAIN
 
-# args = docopt(__doc__, version=1)
-#
-# etl_jar = args['--etl_jar']
-#
-# # change to the script directory to run compose
-# os.chdir(os.path.dirname(__file__))
-#
-# if not etl_jar:
-#   jars = glob.glob("../../../named-entity.etl/target/named-entity-etl-*-jar-with-dependencies.jar")
-#   if len(jars) == 0:
-#     raise Exception('No ETL jar found')
-#   etl_jar = jars[0]
-#
-# assert os.path.isfile(etl_jar), "jar not found: " + etl_jar
-#
-# print ("ETL jar: " + etl_jar)
+etl_jar = "/build/ned-etl.jar"
 
-etl_jar = "/build/named-entity-etl-0.4.0-SNAPSHOT-jar-with-dependencies.jar"
+if not os.path.exists(etl_jar):
+  print ("ETL jar not found: %s" % etl_jar)
+  raise
 
 dt = docker_tester.DockerTester()
-
-# # build the API
-# cwd = os.getcwd()
-# os.chdir("..")
-# dt.cmd_return("bash compile.sh")
-# os.chdir(cwd)
-#
-# dt.containers_up()
 
 ambra_mysql_ip = "ambradb"
 ned_service_ip = "nedapi"
@@ -99,5 +58,5 @@ except Exception, e:
   print ("TEST FAILED")
   print (e)
   traceback.print_exc(file=sys.stdout)
-# finally:
-#   dt.containers_down()
+  raise
+
