@@ -94,12 +94,10 @@ container-stop)
 container-test)
     cd docker/apitester
     time ./ned-test.sh
-    echo exit status: $?
 
-#    echo "RUNNING ETL TESTS"
-#    time docker/etltest/run_etl_tests.py
+    cd ../etltester
+    time ./ned-test.sh
     ;;
-    
 
 *)
     echo -e "\nUsage: `basename $0` (codegen-h2|codegen-mysql|dbreset|install|package|test|tomcat|container-start|container-stop|container-test)"

@@ -8,7 +8,7 @@ nedapi:
   links:
     - neddb:neddb
   volumes_from:
-    - builder_nedbuilder_1
+    - nedbuild
   environment:
     - MYSQL_ROOT_PASSWORD=root
     - MYSQL_NED_USER=ned
