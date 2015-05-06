@@ -1,17 +1,14 @@
 NED Integration tests in Docker
 ===============================
 
-To run these tests cd into this directory and run ./run_api_tests.py
+To run these tests cd into apitester directory and run ./ned-test.sh
 
-Make sure you have built the service war file BEFORE running these tests. If you use the ned.sh script in the above directory, it will automatically build the war before running the docker tests.
-
-This python script will spin up docker containers of mysql and the ned service. It will then make some rest level requests, validate the responses, tear down the containers and quit.
+This apitest container will use an internal python script against running docker containers of mysql and the ned service. It will then make some rest level requests, validate the responses, tear down the containers and quit.
 
 Requirements
 ------------
 * docker >= 1.3 (www.docker.com)
 * docker-compose
-* python 2.7 (see script imports for required libraries)
 
 It is recommended that you set up docker to run as a user instead of requiring sudo. See documentation (https://docs.docker.com/installation/ubuntulinux/#giving-non-root-access).
 

@@ -52,13 +52,16 @@ dbreset)
     ;;
     
 container-start)
-    cd docker
-    docker-compose up -d
+    cd docker/builder
+    ./ned-build.sh
+    cd ..
+    docker-compose build && docker-compose up -d
+
     echo MySQL DB = `docker inspect --format '{{ .NetworkSettings.IPAddress }}' docker_neddb_1`:3306
-    
+
     echo "Bringing up NED service..."
 
-    SERVICE_IP=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' docker_nedsvc_1`
+    SERVICE_IP=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' docker_nedapi_1`
 
     CURL_CMD="curl http://${SERVICE_IP}:8080/service/config"
 
@@ -78,7 +81,7 @@ container-start)
     done;
 
     echo NED Service = http://${SERVICE_IP}:8080
-    
+
     echo Launching web browser  # Linux desktop only
     xdg-open "http://${SERVICE_IP}:8080"
     ;;
@@ -89,14 +92,12 @@ container-stop)
     ;;
 
 container-test)
-    MVN_TARGETS="clean install" do_mvn
-    echo "RUNNING API TESTS"
-    time docker/run_api_tests.py
+    cd docker/apitester
+    time ./ned-test.sh
 
-    echo "RUNNING ETL TESTS"
-    time docker/etltest/run_etl_tests.py
+    cd ../etltester
+    time ./ned-test.sh
     ;;
-    
 
 *)
     echo -e "\nUsage: `basename $0` (codegen-h2|codegen-mysql|dbreset|install|package|test|tomcat|container-start|container-stop|container-test)"

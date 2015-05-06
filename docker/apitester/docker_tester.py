@@ -24,17 +24,17 @@ class DockerTester:
     while proc.poll() is None:
       print (proc.stdout.readline().rstrip())
 
-  def containers_up(self):
-    # TODO: cd to this directory in order to handle docker-compose remote
-    print ("Building containers... (be patient; this may take 5-10 minutes the first time)")
-    self.cmd_stream("docker-compose build && docker-compose up -d")
-
-  def containers_down(self):
-    print ("Stopping containers")
-    self.cmd_stream("docker-compose stop && docker-compose rm --force")
-
-  def get_container_ip(self, name):
-    return self.cmd_read("docker inspect --format '{{ .NetworkSettings.IPAddress }}' %s" % name)
+  # def containers_up(self):
+  #   # TODO: cd to this directory in order to handle docker-compose remote
+  #   print ("Building containers... (be patient; this may take 5-10 minutes the first time)")
+  #   self.cmd_stream("docker-compose build && docker-compose up -d")
+  #
+  # def containers_down(self):
+  #   print ("Stopping containers")
+  #   self.cmd_stream("docker-compose stop && docker-compose rm --force")
+  #
+  # def get_container_ip(self, name):
+  #   return self.cmd_read("docker inspect --format '{{ .NetworkSettings.IPAddress }}' %s" % name)
 
   def wait_for_process(self, command):
 
@@ -61,9 +61,9 @@ class DockerTester:
         sleep (self.wait_secs)
         continue
 
-      print (r)
-      
       if r.status_code != requests.codes.ok:
+        print (r)
+        sleep (self.wait_secs)
         continue
         
       print (json.dumps(r.text, sort_keys=True, indent=4))
