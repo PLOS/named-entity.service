@@ -11,23 +11,11 @@ dt = docker_tester.DockerTester()
 
 base_url = "http://nedapi:8080"
 
-# db_ip = "neddb"
-#
-# print ("Checking database container at %s" % db_ip)
-#
-# # TODO: can this be done in python instead of shell?
-# if not dt.wait_for_process("mysql -h %s -u ned namedEntities -pned -e exit" % db_ip):
-#   sys.exit("Database was never ready")
-#
-# print ("Database ready")
-
 print ("Checking service container at %s" % base_url)
 if not dt.wait_for_web("%s/service/config" % base_url):
   sys.exit("Service was never ready")
 
 print ("Service is up, running tests")
-
-# try:
 
 try:
 
@@ -50,6 +38,3 @@ except ImportError, e:
   print ("===== Skipping external REST tests since none were found ====")
 
 print ("TESTS PASSED")
-# except Exception, e:
-#   print ("TEST FAILED")
-#   print (e)

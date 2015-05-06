@@ -19,5 +19,3 @@ WORKDIR /root
 COPY * /root/
 COPY data /root/data
 COPY sampletest /root/sampletest
-
-# CMD ["python", "/root/run_api_tests.py"]
