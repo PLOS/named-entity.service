@@ -20,6 +20,10 @@
        <property name="namedEntityDBService" ref="namedEntityDBService" />
     </bean>
 
+    <bean id="ringgoldDBService" class="org.plos.namedentity.persist.RinggoldDBServiceImpl">
+       <property name="context" ref="dsl" />
+    </bean>
+
     <bean id="namedEntityDBService" class="org.plos.namedentity.persist.NamedEntityDBServiceImpl">
        <property name="context" ref="dsl" />
     </bean>

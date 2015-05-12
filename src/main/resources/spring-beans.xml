@@ -57,6 +57,7 @@
         <constructor-arg index="7"><null /></constructor-arg>
     </bean>
 
+    <bean id="ringgoldDBService"    class="org.plos.namedentity.persist.RinggoldDBServiceImpl"/>
     <bean id="namedEntityDBService" class="org.plos.namedentity.persist.NamedEntityDBServiceImpl"/>
     <bean id="crudService"          class="org.plos.namedentity.service.CrudServiceImpl"/>
     <bean id="namedEntityService"   class="org.plos.namedentity.service.NamedEntityServiceImpl"/>
