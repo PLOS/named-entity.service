@@ -115,8 +115,10 @@ public class NamedEntityServiceImpl implements NamedEntityService {
         StringBuilder displayname = new StringBuilder();
         displayname.append( basename );
 
-        // nextInt is exclusive at top end, so add 1 to make it inclusive
-        displayname.append( rand.nextInt((MAX_VAL-MIN_VAL)+1)+MIN_VAL );
+        if (count > 0) {
+          // nextInt is exclusive at top end, so add 1 to make it inclusive
+          displayname.append( rand.nextInt((MAX_VAL-MIN_VAL)+1)+MIN_VAL );
+        }
 
         Individualprofile profileCriteria = new Individualprofile();
         profileCriteria.setDisplayname( displayname.toString() );

@@ -455,22 +455,28 @@ public class NamedEntityServiceTest {
   @Test
   public void testProfileDisplaynameGenerationWithUuid() throws Exception {
 
-    // define profile with a displayname that will collide with generated name.
+    String[] displaynames = {
+      "flastname",    // basename
+      "flastname100"  // a displayname that will collide with generated names
+    };
 
     Individualprofile profile = new Individualprofile();
-    profile.setFirstname("firstname");
-    profile.setLastname("lastname");
-    profile.setDisplayname("flastname100");
-    profile.setNameprefix("Mr.");
-    profile.setNamesuffix("III");
-    profile.setSource("Editorial Manager");
-    profile.setNedid(1);
 
-    Integer profileId = crudService.create( namedEntityService.resolveValuesToIds(profile) );
-    assertNotNull( profileId );
+    for (String displayname : displaynames) {
+      profile.setFirstname("firstname");
+      profile.setLastname("lastname");
+      profile.setDisplayname(displayname);
+      profile.setNameprefix("Mr.");
+      profile.setNamesuffix("III");
+      profile.setSource("Editorial Manager");
+      profile.setNedid(1);
 
-    Individualprofile savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
-    assertEquals("flastname100", savedEntity.getDisplayname());
+      Integer profileId = crudService.create( namedEntityService.resolveValuesToIds(profile) );
+      assertNotNull( profileId );
+
+      Individualprofile savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
+      assertEquals(displayname, savedEntity.getDisplayname());
+    }
 
     // mock Random so that it will return the same value every time. this will
     // ensure that the same displayname gets generated everytime it's called
@@ -482,12 +488,13 @@ public class NamedEntityServiceTest {
     when( mockRandom.nextInt(anyInt()) ).thenReturn(0);
 
     profile.setDisplayname( namedEntityService.generateDisplayname(profile,mockRandom) );
-    verify(mockRandom, times(100)).nextInt(anyInt());
+    // first check was against basename without random number.
+    verify(mockRandom, times(99)).nextInt(anyInt());
 
-    profileId = crudService.create( namedEntityService.resolveValuesToIds(profile) );
+    Integer profileId = crudService.create( namedEntityService.resolveValuesToIds(profile) );
     assertNotNull( profileId );
 
-    savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
+    Individualprofile savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
 
     // retrieve displayname which should be initials plus uuid (final effort)
     // ex: "fl-0d6576197f1d4f8b9b612456a151906a"
@@ -498,7 +505,7 @@ public class NamedEntityServiceTest {
   }
 
   @Test
-  public void testProfileDisplaynameGenerationWithRandomNumber() throws Exception {
+  public void testProfileDisplaynameGeneration() throws Exception {
 
     // test displayname generation without complete names. is ok to pass null
     // for Random param.
@@ -511,23 +518,33 @@ public class NamedEntityServiceTest {
 
     // define profile entity. displayname will be generated during creation.
 
-    profile.setLastname("abcdefghijklmnopqrstuvwxyz0123456789");
-    profile.setNameprefix("Mr.");
-    profile.setNamesuffix("III");
-    profile.setSource("Editorial Manager");
-    profile.setNedid(1);
+    for (int i = 0; i < 2; i++) {
 
-    assertNull( profile.getDisplayname() );
-    profile.setDisplayname( namedEntityService.generateDisplayname(profile, new Random()) );
-    assertNotNull( profile.getDisplayname() );
+      profile = new Individualprofile();
+      profile.setFirstname("firstname");
+      profile.setLastname("abcdefghijklmnopqrstuvwxyz0123456789");
+      profile.setNameprefix("Mr.");
+      profile.setNamesuffix("III");
+      profile.setSource("Editorial Manager");
+      profile.setNedid(1);
 
-    Integer profileId = crudService.create( namedEntityService.resolveValuesToIds(profile) );
-    assertNotNull( profileId );
+      assertNull( profile.getDisplayname() );
+      profile.setDisplayname( namedEntityService.generateDisplayname(profile, new Random()) );
+      assertNotNull( profile.getDisplayname() );
 
-    Individualprofile savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
-    String displayname = savedEntity.getDisplayname();
-    assertNotNull( displayname );
-    assertTrue( displayname.matches("fabcdefghijklmnopqrstuvwxyz0[1-9][0-9][0-9]") );
+      Integer profileId = crudService.create( namedEntityService.resolveValuesToIds(profile) );
+      assertNotNull( profileId );
+
+      Individualprofile savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
+      String displayname = savedEntity.getDisplayname();
+      assertNotNull( displayname );
+
+      if (i == 0) {   // displayname should be basename w/o random number
+        assertTrue( displayname.equals("fabcdefghijklmnopqrstuvwxyz0") );
+      } else {
+        assertTrue( displayname.matches("fabcdefghijklmnopqrstuvwxyz0[1-9][0-9][0-9]") );
+      }
+    }
   }
 
   @Test
