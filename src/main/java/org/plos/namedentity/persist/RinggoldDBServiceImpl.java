@@ -16,17 +16,10 @@
  */
 package org.plos.namedentity.persist;
 
-// to reduce verbosity, static import generated tables and jooq functions
-
 import org.jooq.DSLContext;
-import org.jooq.Field;
 import org.jooq.Record;
-import org.jooq.Record1;
-import org.jooq.SelectConditionStep;
-import org.jooq.SelectOnConditionStep;
 import org.jooq.Table;
 import org.jooq.TableField;
-import org.jooq.UpdatableRecord;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.ringgold.*;
 import org.plos.namedentity.persist.db.ringgold.tables.*;
@@ -35,10 +28,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
@@ -62,6 +53,7 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
                       .where(pkField(clazz).equal(id))
                       .fetchOne();
 
+    // TODO - throw a EntityNotFound exception instead?
     return (r != null ? r.into(clazz) : null);
   }
 
@@ -89,12 +81,7 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
 
         if (v != null) {
           if (where.length() > 0) where.append(" and "); 
-          where.append(f.getName()).append("=");
-          if (v instanceof Number || v instanceof Boolean) {
-            where.append(v);
-          } else {
-            where.append("'").append(v).append("'");
-          }
+          where.append( whereCondition(f.getName(), v, t.getClass()) ); 
         }
       }
     }
@@ -104,43 +91,26 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
     return where.toString();
   }
 
-  private boolean isEmptyOrBlank(String s) {
-    return s == null || s.trim().isEmpty();
-  }
-
-  /* ------------------------------------------------------------------------ */
-  /*  RINGGOLD QUERIES                                                        */
-  /* ------------------------------------------------------------------------ */
-
-  @SuppressWarnings("unchecked")
-  public <T> List<T> findInstitutionByName(String name, Class<T> clazz) {
+  private <T> String whereCondition(String field, Object value, Class<T> clazz) {
     String cname = clazz.getCanonicalName();
+    if (cname.equals(Institution.class.getCanonicalName())) {
 
-    if (cname.equals(Institution.class.getCanonicalName()))
-      return (List<T>)findInstitutionByName(name);
+      if (field.equals("name")) {
+        return String.format("LOWER(%s) LIKE LOWER('%%%s%%')",field,value);
+      }
+    } else {
+      throw new UnsupportedOperationException("Unsupported entity " + cname);
+    }
 
-    throw new UnsupportedOperationException("Can not resolve institution for " + clazz);
-  }
-
-  private List<Institution> findInstitutionByName(String name) {
-
-    name = name + "%";
-
-    Parents p = PARENTS.as("p");
-    Tiers   t = TIERS.as("t");
-
-    return this.context
-      .select(p.P_CODE, p.GP_CODE, p.NAME, p.CITY, p.STATE, p.COUNTRY, p.TYPE)
-      .from(p)
-      .join(t).on(p.P_CODE.equal(t.P_CODE))
-      .where(p.GP_CODE.equal(Long.valueOf(0)))
-      .and(t.TIER.like("A%")).and(p.NAME.like(name))
-      .fetch()
-      .into(Institution.class);
-
-    //if (record == null)
-      //throw new NedException(EntityNotFound, 
-        //String.format("Organization not found with UID type %s and value %s", srcType, uid));
+    // default handler
+    StringBuilder condition = new StringBuilder();
+    condition.append(field).append("=");
+    if (value instanceof Number || value instanceof Boolean) {
+      condition.append(value);
+    } else {
+      condition.append("'").append(value).append("'");
+    }
+    return condition.toString();
   }
 
   /* ---------------------------------------------------------------------- */

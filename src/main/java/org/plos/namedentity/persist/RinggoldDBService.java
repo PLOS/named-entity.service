@@ -25,6 +25,4 @@ public interface RinggoldDBService {
   <T> T findById(Integer id, Class<T> clazz);
 
   <T> List<T> findByAttribute(T t);
-
-  <T> List<T> findInstitutionByName(String name, Class<T> clazz);
 }

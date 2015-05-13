@@ -23,13 +23,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Institution {
 
+  private Integer rec_id;     // primary key
   private Integer p_code;     // parent code (aka, ringgold id)
   private Integer gp_code;    // grandparent code
   private String  name;
-
   private String  type;
-  private String  tier;
-
   private String  city;
   private String  state;
   private String  country;
@@ -46,13 +44,6 @@ public class Institution {
   }
   public void setType(String type) {
       this.type = type;
-  }
-  
-  public String getTier() {
-      return tier;
-  }
-  public void setTier(String tier) {
-      this.tier = tier;
   }
   
   public String getCity() {
@@ -90,9 +81,16 @@ public class Institution {
       this.gp_code = gp_code;
   }
 
+  public Integer getRecId() {
+      return rec_id;
+  }
+  
+  public void setRecId(Integer rec_id) {
+      this.rec_id = rec_id;
+  }
+
   @Override
   public String toString() {
     return ToStringBuilder.reflectionToString(this);
   }
-  
 }

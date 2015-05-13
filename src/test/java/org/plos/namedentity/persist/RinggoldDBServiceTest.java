@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2014 by Public Library of Science
+ * Copyright (c) 2006-2015 by Public Library of Science
  * http://plos.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,18 +21,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.plos.namedentity.api.ringgold.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
@@ -42,60 +37,46 @@ public class RinggoldDBServiceTest {
   @Autowired DSLContext        context;
 
   @Test
-  public void testRinggoldFinders() {
-    // Find all type classes
+  public void testFindAll() {
     List<Institution> institutions = ringgoldDBSvc.findAll(Institution.class, 0, Integer.MAX_VALUE);
-    assertTrue(institutions.size() > 0);
+    assertEquals(32, institutions.size());
+  }
 
-for (Institution i : institutions) {
-  System.out.println(i);
-}
+  @Test
+  public void testFindById() {
+    Institution institution = ringgoldDBSvc.findById(1, Institution.class);
+    assertEquals(Integer.valueOf(1), institution.getRecId());
+    assertEquals("Stanford University", institution.getName());
+    assertEquals("Stanford", institution.getCity());
+    assertEquals("CA", institution.getState());
+    assertEquals("US", institution.getCountry());
+    assertEquals("academic", institution.getType());
 
-/*
-    // CREATE
-    Typedescription typedescription = new Typedescription();
-    typedescription.setDescription("New Type Class");
-    typedescription.setHowused("Yada yada");
+    assertNull( ringgoldDBSvc.findById(9999, Institution.class) );
+  }
 
-    Integer newTypeClassId = ringgoldDBSvc.create( typedescription );
-    assertNotNull(newTypeClassId);
+  @Test
+  public void testFindByAttribute() {
+    Institution ifilter = new Institution();
+    ifilter.setName("stanford");
+    List<Institution> institutions = ringgoldDBSvc.findByAttribute(ifilter);
+    assertEquals(30, institutions.size());
 
-    // UPDATE description.
-    Typedescription entity = ringgoldDBSvc.findById(newTypeClassId, Typedescription.class);
-    entity.setDescription( entity.getDescription() + "2");
-    assertTrue( ringgoldDBSvc.update(entity) );
+    ifilter.setState("CA");
+    institutions = ringgoldDBSvc.findByAttribute(ifilter);
+    assertEquals(27, institutions.size());
 
-    // Get another instance of same type class
-    Typedescription entity2 = ringgoldDBSvc.findById(newTypeClassId, Typedescription.class);
-    assertEquals(entity, entity2);
+    ifilter.setType("academic/earth");
+    institutions = ringgoldDBSvc.findByAttribute(ifilter);
+    assertEquals(3, institutions.size());
 
-    // Find all type classes
-    List<Typedescription> typeClasses = ringgoldDBSvc.findAll(Typedescription.class, 0, Integer.MAX_VALUE);
-    assertTrue(typeClasses.size() >= 20);
+    ifilter.setState("VOODOO");
+    institutions = ringgoldDBSvc.findByAttribute(ifilter);
+    assertEquals(0, institutions.size());
 
-    // Try to find a type class which doesn't exist
-    Typedescription entity3 = ringgoldDBSvc.findById(666, Typedescription.class);
-    assertNull(entity3);
-
-    // DELETE. we should be able to delete newly added type class because
-    // it doesn't have any values associated with it (ie, has no globaltypes).
-
-    Typedescription typeDescription = new Typedescription();
-    typeDescription.setId(newTypeClassId);
-
-    assertTrue( ringgoldDBSvc.delete(typeDescription) );
-
-    // However, trying to delete a type class with type values should 
-    // raise a foreign key constraint exception.
-
-    try {
-      typeDescription.setId(1);
-      ringgoldDBSvc.delete(typeDescription);
-      fail();
-    }
-    catch (DataAccessException ignore) {
-      // declarative transaction will rollback changes on exception
-    }
-*/
+    Institution ifilter2 = new Institution();
+    ifilter2.setName("STANFORD Medicine");
+    institutions = ringgoldDBSvc.findByAttribute(ifilter2);
+    assertEquals(1, institutions.size());
   }
 }
