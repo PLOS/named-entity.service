@@ -20,8 +20,6 @@ import java.util.List;
 
 public interface RinggoldDBService {
 
-  <T> List<T> findAll(Class<T> clazz, Integer offset, Integer limit);
-
   <T> T findById(Integer id, Class<T> clazz);
 
   <T> List<T> findByAttribute(T t);

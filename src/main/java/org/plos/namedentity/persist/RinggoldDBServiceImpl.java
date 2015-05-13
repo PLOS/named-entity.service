@@ -43,11 +43,6 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
   }
 
   @Override
-  public <T> List<T> findAll(Class<T> clazz, Integer offset, Integer limit) {
-    return context.select().from(table(clazz)).limit(limit).offset(offset).fetchInto(clazz);
-  }
-
-  @Override
   public <T> T findById(Integer id, Class<T> clazz) {
     Record r = context.select().from(table(clazz))
                       .where(pkField(clazz).equal(id))

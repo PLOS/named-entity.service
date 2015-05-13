@@ -37,12 +37,6 @@ public class RinggoldDBServiceTest {
   @Autowired DSLContext        context;
 
   @Test
-  public void testFindAll() {
-    List<Institution> institutions = ringgoldDBSvc.findAll(Institution.class, 0, Integer.MAX_VALUE);
-    assertEquals(32, institutions.size());
-  }
-
-  @Test
   public void testFindById() {
     Institution institution = ringgoldDBSvc.findById(1, Institution.class);
     assertEquals(Integer.valueOf(1), institution.getRecId());
