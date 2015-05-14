@@ -416,7 +416,14 @@
                 <name>org.jooq.util.mysql.MySQLDatabase</name>
                 <includes>.*</includes>
                 <excludes/>
-                <inputSchema>namedEntities</inputSchema>
+                <schemata>
+                  <schema>
+                    <inputSchema>namedEntities</inputSchema>
+                  </schema>
+                  <schema>
+                    <inputSchema>ringgold</inputSchema>
+                  </schema>
+                </schemata>
               </database>
               <generate>
                 <deprecated>false</deprecated>
@@ -427,7 +434,7 @@
                 <!--<validationAnnotations>true</validationAnnotations>-->
               </generate>
               <target>
-                <packageName>org.plos.namedentity.persist.db.namedentities</packageName>
+                <packageName>org.plos.namedentity.persist.db</packageName>
                 <directory>src/generated/mysql</directory>
               </target>
               </generator>
