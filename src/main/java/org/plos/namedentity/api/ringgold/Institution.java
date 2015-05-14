@@ -18,7 +18,9 @@ package org.plos.namedentity.api.ringgold;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @XmlRootElement
 public class Institution {
@@ -67,25 +69,26 @@ public class Institution {
       this.country = country;
   }
   
+  @XmlElement(name = "institution-id")
   public Integer getPCode() {
       return p_code;
   }
+  @XmlElement(name = "institution-id")
   public void setPCode(Integer p_code) {
       this.p_code = p_code;
   }
   
-  public Integer getGpCode() {
+  @XmlTransient public Integer getGpCode() {
       return gp_code;
   }
-  public void setGpCode(Integer gp_code) {
+  @XmlTransient public void setGpCode(Integer gp_code) {
       this.gp_code = gp_code;
   }
 
-  public Integer getRecId() {
+  @XmlTransient public Integer getRecId() {
       return rec_id;
   }
-  
-  public void setRecId(Integer rec_id) {
+  @XmlTransient public void setRecId(Integer rec_id) {
       this.rec_id = rec_id;
   }
 
