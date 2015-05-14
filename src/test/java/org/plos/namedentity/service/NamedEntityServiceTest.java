@@ -61,8 +61,6 @@ public class NamedEntityServiceTest {
   @Autowired
   CrudService crudService;
 
-
-
   @Test
   public void testCreateIndividualCompositeWithoutName() {
     // triggers phase 1 validation failure

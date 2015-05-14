@@ -34,7 +34,7 @@ import static org.plos.namedentity.api.NedException.ErrorType.*;
 public class RinggoldServiceTest {
 
   @Autowired
-  CrudService ringgoldService;
+  RinggoldService ringgoldService;
 
   @Test
   public void testFindById() {

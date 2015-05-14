@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import java.util.List;
 
-public class RinggoldServiceImpl implements CrudService {
+public class RinggoldServiceImpl implements RinggoldService {
 
   @Inject private RinggoldDBService ringgoldDBService; 
 
@@ -49,25 +49,5 @@ public class RinggoldServiceImpl implements CrudService {
   
   public void setRinggoldDBService(RinggoldDBService ringgoldDBService) {
     this.ringgoldDBService = ringgoldDBService;
-  }
-
-  @Override @Transactional
-  public <T> Integer create(T t) {
-    throw new UnsupportedOperationException("not implemented");
-  }
-
-  @Override @Transactional
-  public <T> boolean update(T t) {
-    throw new UnsupportedOperationException("not implemented");
-  }
-
-  @Override @Transactional
-  public <T> boolean delete(T t) {
-    throw new UnsupportedOperationException("not implemented");
-  }
-
-  @Override
-  public <T> List<T> findAll(Class<T> clazz, Integer offset, Integer limit) {
-    throw new UnsupportedOperationException("not implemented");
   }
 }
