@@ -49,8 +49,16 @@ tomcat)
 dbreset)
     mysql -u ned < src/main/resources/ned-schema.mysql.sql
     mysql -u ned < src/main/resources/ned-data.mysql.sql
+    mysql -u ned < src/main/resources/ringgold-schema.mysql.sql
     ;;
-    
+
+db-ringgold-data)
+    echo -e "\nImporting Ringgold data ... (this may take a few minutes)"
+    gunzip src/main/resources/ringgold-data.mysql.sql.gz
+    time mysql -u ned < src/main/resources/ringgold-data.mysql.sql
+    gzip src/main/resources/ringgold-data.mysql.sql
+    ;;
+
 container-start)
     cd docker/builder
     ./ned-build.sh
@@ -100,7 +108,7 @@ container-test)
     ;;
 
 *)
-    echo -e "\nUsage: `basename $0` (codegen-h2|codegen-mysql|dbreset|install|package|test|tomcat|container-start|container-stop|container-test)"
+    echo -e "\nUsage: `basename $0` (codegen-h2|codegen-mysql|dbreset|db-ringgold-data|install|package|test|tomcat|container-start|container-stop|container-test)"
     echo -e "\n  tomcat url -> http://localhost:8080\n"
     exit 0
     ;;
