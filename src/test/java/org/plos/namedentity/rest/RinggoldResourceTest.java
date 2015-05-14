@@ -26,6 +26,8 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.Unmarshaller;
+
+import java.lang.reflect.*;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -79,7 +81,10 @@ public class RinggoldResourceTest extends BaseResourceTest {
   @Test
   public void testInstitutionFindMany() throws Exception {
 
-    Response response = target(INSTITUTIONSEARCH_URI).queryParam("substring","stanford")
+    final String  INSTITUTION_SUBSTRING = "stanford";
+    final Integer NEW_INSTITUTION_RESULT_LIMIT = 5;
+
+    Response response = target(INSTITUTIONSEARCH_URI).queryParam("substring",INSTITUTION_SUBSTRING)
                                                      .request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
@@ -91,8 +96,23 @@ public class RinggoldResourceTest extends BaseResourceTest {
     assertEquals(30, institutions.size());
 
     for (Institution institution : institutions) {
-      assertTrue(institution.getName().toLowerCase().contains("stanford"));
+      assertTrue(institution.getName().toLowerCase().contains(INSTITUTION_SUBSTRING));
     }
+
+    // results should be truncated if exceed limit. test this with a smaller limit.
+
+    Field institutionsResultLimit = RinggoldResource.class.getDeclaredField("INSTITUTIONS_RESULT_LIMIT");
+    institutionsResultLimit.set(null, NEW_INSTITUTION_RESULT_LIMIT);
+
+    response = target(INSTITUTIONSEARCH_URI).queryParam("substring",INSTITUTION_SUBSTRING)
+                                            .request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    jsonPayload = response.readEntity(String.class);
+
+    institutions = unmarshalEntities(jsonPayload, Institution.class, unmarshaller);
+    assertEquals(NEW_INSTITUTION_RESULT_LIMIT, Integer.valueOf(institutions.size()));
   }
 
   @Test

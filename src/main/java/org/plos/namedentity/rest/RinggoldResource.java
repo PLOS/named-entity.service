@@ -43,6 +43,8 @@ import static org.plos.namedentity.api.NedException.ErrorType.TooManyResultsFoun
 @Api("/institutionsearch")
 public class RinggoldResource {
 
+  static Integer INSTITUTIONS_RESULT_LIMIT = 100;
+
   private static Logger logger = Logger.getLogger(RinggoldResource.class);
 
   @Inject protected RinggoldService ringgoldService;
@@ -63,8 +65,8 @@ public class RinggoldResource {
 
       if (results.size() == 0)
         throw new NedException(EntityNotFound, "Institution not found");
-      else if (results.size() > 100)
-        throw new NedException(TooManyResultsFound);
+      else if (results.size() > INSTITUTIONS_RESULT_LIMIT)
+        results = results.subList(0, INSTITUTIONS_RESULT_LIMIT);
 
       return Response.status(Response.Status.OK).entity(
         new GenericEntity<List<Institution>>(results){}).build();
