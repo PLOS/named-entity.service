@@ -48,7 +48,6 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
                       .where(pkField(clazz).equal(id))
                       .fetchOne();
 
-    // TODO - throw a EntityNotFound exception instead?
     return (r != null ? r.into(clazz) : null);
   }
 
