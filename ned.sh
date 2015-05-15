@@ -54,7 +54,11 @@ dbreset)
 
 db-ringgold)
     echo -e "\nImporting Ringgold ... (this may take a few minutes)"
-    ./src/main/resources/import-ringgold.sh && mysql -u ned < src/main/resources/PLOS_Identify_*_utf8.sql && echo "Finished"
+    ./src/main/resources/import-ringgold.sh &&                        \
+        mysql -u ned < src/main/resources/PLOS_Identify_*_utf8.sql && \
+        rm -f src/main/resources/PLOS_Identify_*_utf8.sql &&          \
+        rm -f src/main/resources/PLOS_Identify_*_counts.txt &&        \
+        echo "Finished"
     ;;
 
 container-start)
