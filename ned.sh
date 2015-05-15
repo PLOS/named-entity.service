@@ -52,11 +52,9 @@ dbreset)
     mysql -u ned < src/main/resources/ringgold-schema.mysql.sql
     ;;
 
-db-ringgold-data)
-    echo -e "\nImporting Ringgold data ... (this may take a few minutes)"
-    gunzip src/main/resources/ringgold-data.mysql.sql.gz
-    time mysql -u ned < src/main/resources/ringgold-data.mysql.sql
-    gzip src/main/resources/ringgold-data.mysql.sql
+db-ringgold)
+    echo -e "\nImporting Ringgold ... (this may take a few minutes)"
+    ./src/main/resources/import-ringgold.sh && mysql -u ned < src/main/resources/PLOS_Identify_*_utf8.sql && echo "Finished"
     ;;
 
 container-start)
@@ -108,7 +106,7 @@ container-test)
     ;;
 
 *)
-    echo -e "\nUsage: `basename $0` (codegen-h2|codegen-mysql|dbreset|db-ringgold-data|install|package|test|tomcat|container-start|container-stop|container-test)"
+    echo -e "\nUsage: `basename $0` (codegen-h2|codegen-mysql|dbreset|db-ringgold|install|package|test|tomcat|container-start|container-stop|container-test)"
     echo -e "\n  tomcat url -> http://localhost:8080\n"
     exit 0
     ;;
