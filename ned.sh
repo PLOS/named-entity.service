@@ -49,7 +49,6 @@ tomcat)
 dbreset)
     mysql -u ned < src/main/resources/ned-schema.mysql.sql
     mysql -u ned < src/main/resources/ned-data.mysql.sql
-    mysql -u ned < src/main/resources/ringgold-schema.mysql.sql
     ;;
 
 db-ringgold)
