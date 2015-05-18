@@ -13,8 +13,12 @@ set up the database by running the following in MySql
     
     create user 'ned'@'localhost' identified by '';
     grant all privileges on namedEntities.* to ned@'localhost';
+    grant all privileges on ringgold.* to NED@'localhost';
+
     create user 'ned'@'%' identified by '';
     grant all privileges on namedEntities.* to ned@'%';
+    grant all privileges on ringgold.* to ned@'%';
+
     flush privileges;
     
 Running
