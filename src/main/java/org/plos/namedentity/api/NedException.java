@@ -68,6 +68,7 @@ public class NedException extends RuntimeException {
     InvalidSearchQuery               (1800, "Search query requires an entity, an attribute, and a value"),
     InvalidSearchCriteria            (1810, "Invalid search criteria"),
     TooManyResultsFound              (1820, "Too Many Results Found"),
+    InvalidInstitutionQuery          (1830, "Institution query requires a substring parameter"),
 
     InvalidErrorType                 (-1,"");
 
