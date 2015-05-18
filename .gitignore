@@ -10,5 +10,3 @@ debug.sh
 mdb.ini
 target
 *.pyc
-PLOS_Identify_*_utf8.sql
-PLOS_Identify_*_counts.txt

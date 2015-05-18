@@ -1,9 +1,50 @@
 #!/bin/bash
 
+shopt -s nullglob
+
 function do_mvn {
     echo "mvn -P ${MVN_PROFILE} ${MVN_TARGETS}"
     # tip: add -X to debug 
     mvn -P ${MVN_PROFILE} ${MVN_TARGETS}
+}
+
+function check_ringgold_env {
+    if [[ -z ${RINGGOLD_DB_DIR} ]]; then
+        echo -e "\nUndefined RINGGOLD_DB_DIR (ex: export RINGGOLD_DB_DIR=~/work)\n"
+        exit 1
+    fi
+    if [[ ! -d ${RINGGOLD_DB_DIR} ]]; then
+        echo -e "\nRINGGOLD_DB_DIR : invalid directory (${RINGGOLD_DB_DIR})\n"
+        exit 1
+    fi
+}
+
+function import_ringgold {
+    cd "${RINGGOLD_DB_DIR}"
+
+    rm -f PLOS_Identify_*_utf8.sql
+    rm -f PLOS_Identify_*_counts.txt
+
+    ringgold_zip=(PLOS_Identify_*.zip)
+
+    if [ ${#ringgold_zip[@]} -ne 1 ]; then
+        echo -e "\nUnexpected # of Ringgold zip's found (expected:1 found:${#ringgold_zip[@]}). Aborting.\n"
+        exit 1
+    fi
+
+    unzip -o $ringgold_zip
+    ringgold_sql=(PLOS_Identify_*_utf8.sql)
+
+    # rename ringgold schema: identify_test -> ringgold
+    sed -i 's/identify_test/ringgold/g' $ringgold_sql
+
+    # remove "_new" from table names
+    sed -i 's/_new / /g' $ringgold_sql
+
+    echo -e "\nImporting Ringgold ... (this may take a few minutes)"
+    mysql -u ned < $ringgold_sql
+
+    echo "Finished"
 }
 
 MVN_DEFAULT_TARGET=${1:-clean}
@@ -52,12 +93,8 @@ dbreset)
     ;;
 
 db-ringgold)
-    echo -e "\nImporting Ringgold ... (this may take a few minutes)"
-    ./src/main/resources/import-ringgold.sh &&                        \
-        mysql -u ned < src/main/resources/PLOS_Identify_*_utf8.sql && \
-        rm -f src/main/resources/PLOS_Identify_*_utf8.sql &&          \
-        rm -f src/main/resources/PLOS_Identify_*_counts.txt &&        \
-        echo "Finished"
+    check_ringgold_env
+    import_ringgold
     ;;
 
 container-start)
