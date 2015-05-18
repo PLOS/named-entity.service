@@ -18,9 +18,7 @@ package org.plos.namedentity.rest;
 
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
-import org.apache.log4j.Logger;
 import org.plos.namedentity.api.ringgold.Institution;
-import org.plos.namedentity.api.NedErrorResponse;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.service.RinggoldService;
 
@@ -37,15 +35,12 @@ import java.util.List;
 import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidInstitutionQuery;
 import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
-import static org.plos.namedentity.api.NedException.ErrorType.TooManyResultsFound;
 
 @Path("/institutionsearch")
 @Api("/institutionsearch")
-public class RinggoldResource {
+public class RinggoldResource extends BaseResource {
 
   static Integer INSTITUTIONS_RESULT_LIMIT = 100;
-
-  private static Logger logger = Logger.getLogger(RinggoldResource.class);
 
   @Inject protected RinggoldService ringgoldService;
 
@@ -78,30 +73,7 @@ public class RinggoldResource {
     }
   }
 
-  private Response serverError(Exception e, String message) {
-    logger.error("internal error", e);
-
-    NedErrorResponse ner = new NedErrorResponse();
-    ner.failureMsg       = "Internal error";
-    ner.errorCode        = ServerError.getErrorCode();
-    ner.detailedMsg      = message;
-
-    // 5XX (server-side)
-    return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                   .entity(ner)
-                   .build();
-  }
-
-  private Response nedError(NedException e, String message) {
-    logger.error("ned exception", e);
-
-    // 4XX (client-side)
-    return Response.status(Response.Status.BAD_REQUEST)
-                   .entity(new NedErrorResponse(e, message))
-                   .build();
-  }
-
-  protected boolean isEmptyOrBlank(String s) {
-    return s == null || s.trim().isEmpty();
+  protected String getNamedPartyType() {
+    throw new UnsupportedOperationException("not implemented");
   }
 }
