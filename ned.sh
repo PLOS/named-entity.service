@@ -47,6 +47,21 @@ function import_ringgold {
     echo "Finished"
 }
 
+function deploy_jar {
+    ned_jar=(./target/$1-*.jar)
+
+    # get groupId and version from pom. 
+    # repositoryId = server id in your mvn settings.xml
+    mvn -P ${MVN_PROFILE} deploy:deploy-file -DpomFile=./pom.xml \
+        -DartifactId=$1 \
+        -Dpackaging=jar \
+        -Dfile=${ned_jar} \
+        -DrepositoryId=ambra \
+        -Durl=sftp://maven.ambraproject.org/home/maven2/repository/release
+
+    echo "Deployed ${ned_jar}"
+}
+
 MVN_DEFAULT_TARGET=${1:-clean}
 
 MVN_PROFILE=mysql
@@ -81,6 +96,14 @@ install)
     MVN_TARGETS="clean install"
     do_mvn
     ;;
+
+deploy)
+    MVN_TARGETS="clean install"
+    do_mvn
+    deploy_jar "named-entity-pojos"
+    deploy_jar "named-entity-password"
+    ;;
+
 
 tomcat)
     MVN_TARGETS="clean tomcat:run"
@@ -146,7 +169,7 @@ container-test)
     ;;
 
 *)
-    echo -e "\nUsage: `basename $0` (codegen-h2|codegen-mysql|dbreset|db-ringgold|install|package|test|tomcat|container-start|container-stop|container-test)"
+    echo -e "\nUsage: `basename $0` (codegen-h2|codegen-mysql|dbreset|db-ringgold|install|deploy|package|test|tomcat|container-start|container-stop|container-test)"
     echo -e "\n  tomcat url -> http://localhost:8080\n"
     exit 0
     ;;
