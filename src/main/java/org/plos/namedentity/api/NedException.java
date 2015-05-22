@@ -55,28 +55,28 @@ public class NedException extends RuntimeException {
     PasswordError                    (1310, "Password Error"),
     DigestPasswordError              (1320, "Password Storage Error"),
     TamperedPasswordError            (1330, "Tampered Password Error"),
-    PasswordLengthError              (1340, "Password Format Error"),
+    PasswordFormatError              (1340, "Password Format Error"),
 
     // Composite-Level Validation Errors
 
-    NoProfileEntities                (1500, "No Profile Entities for Individual Composite"),
-    NoEmailEntities                  (1510, "No Email Entities for Individual Composite"),
-    NoAuthEntity                     (1520, "No Auth Entity for Individual Composite"),
+    NoProfileEntities(1500, "No Profile Entities for Individual Composite"),
+    NoEmailEntities(1510, "No Email Entities for Individual Composite"),
+    NoAuthEntity(1520, "No Auth Entity for Individual Composite"),
 
     // Client-side Errors
-    
-    InvalidSearchQuery               (1800, "Search query requires an entity, an attribute, and a value"),
-    InvalidSearchCriteria            (1810, "Invalid search criteria"),
-    TooManyResultsFound              (1820, "Too Many Results Found"),
-    InvalidInstitutionQuery          (1830, "Institution query requires a substring parameter"),
 
-    InvalidErrorType                 (-1,"");
+    InvalidSearchQuery(1800, "Search query requires an entity, an attribute, and a value"),
+    InvalidSearchCriteria(1810, "Invalid search criteria"),
+    TooManyResultsFound(1820, "Too Many Results Found"),
+    InvalidInstitutionQuery(1830, "Institution query requires a substring parameter"),
+
+    InvalidErrorType(-1, "");
 
     private final int    errorCode;
     private final String errorMessage;
 
     private ErrorType(int errorCode, String errorMessage) {
-      this.errorCode    = errorCode;
+      this.errorCode = errorCode;
       this.errorMessage = errorMessage;
     }
 
@@ -120,7 +120,7 @@ public class NedException extends RuntimeException {
   }
 
   public NedException(ErrorType errorType) {
-    this(errorType, null, (Throwable)null);
+    this(errorType, null, (Throwable) null);
   }
 
   public NedException(ErrorType errorType, Set<String> acceptableValues) {
@@ -128,12 +128,12 @@ public class NedException extends RuntimeException {
   }
 
   public NedException(ErrorType errorType, String message, Set<String> acceptableValues) {
-    this(errorType, message, (Throwable)null);
+    this(errorType, message, (Throwable) null);
     this.acceptableValues = acceptableValues;
   }
 
   public NedException(ErrorType errorType, String message) {
-    this(errorType, message, (Throwable)null);
+    this(errorType, message, (Throwable) null);
   }
 
   public NedException(ErrorType errorType, Throwable cause) {
@@ -141,7 +141,7 @@ public class NedException extends RuntimeException {
   }
 
   public NedException(String message) {
-    this(ErrorType.ServerError, message, (Throwable)null);
+    this(ErrorType.ServerError, message, (Throwable) null);
   }
 
   public NedException(ErrorType errorType, String message, Throwable cause) {

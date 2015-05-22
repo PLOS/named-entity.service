@@ -42,7 +42,6 @@ import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Calendar;
@@ -207,7 +206,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
       .post(Entity.json(String.format(compositeJsonTemplate, 
         UUID.randomUUID(), "jane.q.doe.work@foo.com", "Editorial Manager", 
-          "secret_password", "jane.q.doe.work@foo.com")));
+          "secret_password4", "jane.q.doe.work@foo.com")));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
@@ -277,7 +276,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
       .post(Entity.json(String.format(compositeJsonTemplate, 
-        unicodeDisplayname, uuidEmailaddress, "Ambra", "secret_password", uuidEmailaddress)));
+        unicodeDisplayname, uuidEmailaddress, "Ambra", "secret_password5", uuidEmailaddress)));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
@@ -994,7 +993,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
       NedErrorResponse ner = unmarshalEntity(responseJson, NedErrorResponse.class,
                                              jsonUnmarshaller(NedErrorResponse.class));
 
-      assertEquals(PasswordLengthError.getErrorCode(), ner.errorCode);
+      assertEquals(PasswordFormatError.getErrorCode(), ner.errorCode);
     }
 
     // test no "password" attribute in json payload

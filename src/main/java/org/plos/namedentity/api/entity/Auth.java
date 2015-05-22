@@ -16,31 +16,29 @@
  */
 package org.plos.namedentity.api.entity;
 
-import static org.plos.namedentity.api.NedException.ErrorType.*;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import org.plos.namedentity.api.NedException;
-
 import org.plos.namedentity.service.PasswordDigestService;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-import javax.persistence.Column;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import static org.plos.namedentity.api.NedException.ErrorType.CasIdError;
+import static org.plos.namedentity.api.NedException.ErrorType.DigestPasswordError;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidCasId;
+import static org.plos.namedentity.api.NedException.ErrorType.PasswordError;
+import static org.plos.namedentity.api.NedException.ErrorType.PasswordFormatError;
+import static org.plos.namedentity.api.NedException.ErrorType.TamperedPasswordError;
 
 @XmlRootElement
 public class Auth extends Entity {
 
-  // password constants migrated from Ambra project (org.ambraproject.service.user.RegistrationConstants)
-  public static final int PASSWORD_MIN_LENGTH = 6;
-  public static final int PASSWORD_MAX_LENGTH = 255;
+  public static final int PASSWORD_MIN_LENGTH = 8;
 
-  private static final int PASSWORD_DIGEST_LENGTH        = 128;
+  private static final int PASSWORD_DIGEST_LENGTH = 128;
   private static final int LEGACY_PASSWORD_DIGEST_LENGTH = 70;
 
   private static final int CASID_MIN_LENGTH = 28;
@@ -48,6 +46,8 @@ public class Auth extends Entity {
 
   private static final Pattern casRegex = Pattern.compile("^[A-Za-z0-9-]+$");
   private static final Pattern passwordDigestRegexp = Pattern.compile("^[0-9a-f]+$");
+
+  private static final Pattern passwordRegexp = Pattern.compile("(\\d+\\D+)|(\\D+\\d+)");
 
   private String   email;
   private Integer  emailid;
@@ -196,8 +196,11 @@ public class Auth extends Entity {
 
   private void validatePlainTextPassword(String password) {
     // only validate if not null
-    if (password != null && password.length() < PASSWORD_MIN_LENGTH) {
-      throw new NedException(PasswordLengthError, "password must be at least "+PASSWORD_MIN_LENGTH+" characters.");
+    if (password != null) {
+      if (password.length() < PASSWORD_MIN_LENGTH)
+        throw new NedException(PasswordFormatError, "password must be at least "+PASSWORD_MIN_LENGTH+" characters");
+      if (!passwordRegexp.matcher(password).find())
+        throw new NedException(PasswordFormatError, "password must contain at least one number and one non-number");
     }
   }
 
@@ -218,11 +221,8 @@ public class Auth extends Entity {
   }
 
   boolean isValidDigestFormat(String password) {
-    if (passwordDigestRegexp.matcher(password).matches() &&
+    return (passwordDigestRegexp.matcher(password).matches() &&
         (password.length() == PASSWORD_DIGEST_LENGTH || 
-         password.length() == LEGACY_PASSWORD_DIGEST_LENGTH)) {
-      return true;
-    }
-    return false;
+         password.length() == LEGACY_PASSWORD_DIGEST_LENGTH));
   }
 }

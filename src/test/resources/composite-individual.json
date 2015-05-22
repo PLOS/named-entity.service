@@ -1,7 +1,7 @@
 {
   "credentials" : [
     {
-      "password" : "secret_password",
+      "password" : "secret_password1",
       "email"    : "jane.q.doe.work@foo.com"
     }
   ],
