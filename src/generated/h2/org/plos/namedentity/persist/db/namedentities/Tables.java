@@ -105,4 +105,9 @@ public class Tables {
 	 * The table NAMEDENTITIES.AUTHCAS
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Authcas AUTHCAS = org.plos.namedentity.persist.db.namedentities.tables.Authcas.AUTHCAS;
+
+	/**
+	 * The table NAMEDENTITIES.CONSUMERS
+	 */
+	public static final org.plos.namedentity.persist.db.namedentities.tables.Consumers CONSUMERS = org.plos.namedentity.persist.db.namedentities.tables.Consumers.CONSUMERS;
 }

@@ -22,6 +22,7 @@ import org.jooq.Result;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.plos.namedentity.api.Consumer;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.api.enums.TypeClassEnum;
@@ -860,6 +861,24 @@ public class NamedEntityDBServiceTest {
     Url urlToDelete = new Url();
     urlToDelete.setId(urlId);
     assertTrue( nedDBSvc.delete(urlToDelete) );
+  }
+
+  @Test
+  public void testConsumerTableFinders() {
+
+    List<Consumer> allConsumersInDb = nedDBSvc.findAll(Consumer.class, 0, Integer.MAX_VALUE);
+    assertTrue( allConsumersInDb.size() > 0 );
+
+    String[] registeredApps = { "tahi", "akita", "etl" };
+
+    for (String app : registeredApps) {
+      Consumer filter = new Consumer();
+      filter.setName(app);
+      List<Consumer> consumers = nedDBSvc.findByAttribute(filter);
+      assertEquals(1, consumers.size());
+      assertEquals(app, consumers.get(0).getName());
+      assertEquals("abc", consumers.get(0).getPassword());
+    }
   }
 
   @Test
