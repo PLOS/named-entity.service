@@ -613,3 +613,8 @@ INSERT INTO namedEntities.namedEntityIdentifiers(id,typeId) VALUES (1,1);
 
 INSERT INTO namedEntities.individualProfiles (id, nedId, firstName, lastName, displayName, biography, sourceTypeId, isActive)
     VALUES (1,1,'NED','NED','NED','bio',78,1);
+
+/* Consumers */
+INSERT INTO namedEntities.consumers (name, password) VALUES ('tahi', 'abc');
+INSERT INTO namedEntities.consumers (name, password) VALUES ('akita', 'abc');
+INSERT INTO namedEntities.consumers (name, password) VALUES ('etl', 'abc');

@@ -57,13 +57,18 @@
         <constructor-arg index="7"><null /></constructor-arg>
     </bean>
 
-    <bean id="ringgoldDBService"    class="org.plos.namedentity.persist.RinggoldDBServiceImpl"/>
-    <bean id="namedEntityDBService" class="org.plos.namedentity.persist.NamedEntityDBServiceImpl"/>
+    <bean id="authenticationFilter" class="org.plos.namedentity.filter.AuthenticationFilter">
+        <property name="authService" ref="authService"/>
+    </bean>
+
+    <bean id="authService"          class="org.plos.namedentity.service.AuthServiceImpl"/>
     <bean id="crudService"          class="org.plos.namedentity.service.CrudServiceImpl"/>
-    <bean id="ringgoldService"      class="org.plos.namedentity.service.RinggoldServiceImpl"/>
-    <bean id="namedEntityService"   class="org.plos.namedentity.service.NamedEntityServiceImpl"/>
-    <bean id="infoService"          class="org.plos.namedentity.service.InfoService" />
     <bean id="entityPostValidator"  class="org.plos.namedentity.validate.EntityPostValidator" />
+    <bean id="infoService"          class="org.plos.namedentity.service.InfoService" />
+    <bean id="namedEntityDBService" class="org.plos.namedentity.persist.NamedEntityDBServiceImpl"/>
+    <bean id="namedEntityService"   class="org.plos.namedentity.service.NamedEntityServiceImpl"/>
+    <bean id="ringgoldDBService"    class="org.plos.namedentity.persist.RinggoldDBServiceImpl"/>
+    <bean id="ringgoldService"      class="org.plos.namedentity.service.RinggoldServiceImpl"/>
 
     <bean id="validator" class="org.plos.namedentity.validate.NamedEntityValidator">
         <!-- execute after the Transactional advice (hence higher order number) -->
