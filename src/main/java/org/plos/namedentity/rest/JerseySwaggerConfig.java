@@ -11,7 +11,7 @@ public class JerseySwaggerConfig extends HttpServlet {
 
 // ConfigFactory.config().setBasePath("http://www.foo.com/");
     ApiInfo info = new ApiInfo(
-        "Named Entity Database API", // title
+        null,//"Named Entity Database API", // title
         null, // description
         null, // TOS URL
         null, // Contact
