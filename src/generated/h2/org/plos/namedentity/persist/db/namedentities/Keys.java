@@ -39,6 +39,7 @@ public class Keys {
 	public static final org.jooq.Identity<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord, java.lang.Integer> IDENTITY_URLS = Identities0.IDENTITY_URLS;
 	public static final org.jooq.Identity<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, java.lang.Integer> IDENTITY_UNIQUEIDENTIFIERS = Identities0.IDENTITY_UNIQUEIDENTIFIERS;
 	public static final org.jooq.Identity<org.plos.namedentity.persist.db.namedentities.tables.records.AuthcasRecord, java.lang.Integer> IDENTITY_AUTHCAS = Identities0.IDENTITY_AUTHCAS;
+	public static final org.jooq.Identity<org.plos.namedentity.persist.db.namedentities.tables.records.ConsumersRecord, java.lang.Integer> IDENTITY_CONSUMERS = Identities0.IDENTITY_CONSUMERS;
 
 	// -------------------------------------------------------------------------
 	// UNIQUE and PRIMARY KEY definitions
@@ -67,6 +68,8 @@ public class Keys {
 	public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord> CONSTRAINT_AFD9A = UniqueKeys0.CONSTRAINT_AFD9A;
 	public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.AuthcasRecord> CONSTRAINT_44 = UniqueKeys0.CONSTRAINT_44;
 	public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.AuthcasRecord> CONSTRAINT_4426D = UniqueKeys0.CONSTRAINT_4426D;
+	public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.ConsumersRecord> CONSTRAINT_8D = UniqueKeys0.CONSTRAINT_8D;
+	public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.ConsumersRecord> CONSTRAINT_8D0 = UniqueKeys0.CONSTRAINT_8D0;
 
 	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
@@ -135,6 +138,7 @@ public class Keys {
 		public static org.jooq.Identity<org.plos.namedentity.persist.db.namedentities.tables.records.UrlsRecord, java.lang.Integer> IDENTITY_URLS = createIdentity(org.plos.namedentity.persist.db.namedentities.tables.Urls.URLS, org.plos.namedentity.persist.db.namedentities.tables.Urls.URLS.ID);
 		public static org.jooq.Identity<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord, java.lang.Integer> IDENTITY_UNIQUEIDENTIFIERS = createIdentity(org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS, org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS.ID);
 		public static org.jooq.Identity<org.plos.namedentity.persist.db.namedentities.tables.records.AuthcasRecord, java.lang.Integer> IDENTITY_AUTHCAS = createIdentity(org.plos.namedentity.persist.db.namedentities.tables.Authcas.AUTHCAS, org.plos.namedentity.persist.db.namedentities.tables.Authcas.AUTHCAS.ID);
+		public static org.jooq.Identity<org.plos.namedentity.persist.db.namedentities.tables.records.ConsumersRecord, java.lang.Integer> IDENTITY_CONSUMERS = createIdentity(org.plos.namedentity.persist.db.namedentities.tables.Consumers.CONSUMERS, org.plos.namedentity.persist.db.namedentities.tables.Consumers.CONSUMERS.ID);
 	}
 
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
@@ -161,6 +165,8 @@ public class Keys {
 		public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.UniqueidentifiersRecord> CONSTRAINT_AFD9A = createUniqueKey(org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS, org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS.UNIQUEIDENTIFIER, org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS.SOURCETYPEID, org.plos.namedentity.persist.db.namedentities.tables.Uniqueidentifiers.UNIQUEIDENTIFIERS.TYPEID);
 		public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.AuthcasRecord> CONSTRAINT_44 = createUniqueKey(org.plos.namedentity.persist.db.namedentities.tables.Authcas.AUTHCAS, org.plos.namedentity.persist.db.namedentities.tables.Authcas.AUTHCAS.ID);
 		public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.AuthcasRecord> CONSTRAINT_4426D = createUniqueKey(org.plos.namedentity.persist.db.namedentities.tables.Authcas.AUTHCAS, org.plos.namedentity.persist.db.namedentities.tables.Authcas.AUTHCAS.AUTHID);
+		public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.ConsumersRecord> CONSTRAINT_8D = createUniqueKey(org.plos.namedentity.persist.db.namedentities.tables.Consumers.CONSUMERS, org.plos.namedentity.persist.db.namedentities.tables.Consumers.CONSUMERS.ID);
+		public static final org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.ConsumersRecord> CONSTRAINT_8D0 = createUniqueKey(org.plos.namedentity.persist.db.namedentities.tables.Consumers.CONSUMERS, org.plos.namedentity.persist.db.namedentities.tables.Consumers.CONSUMERS.NAME);
 	}
 
 	private static class ForeignKeys0 extends org.jooq.impl.AbstractKeys {

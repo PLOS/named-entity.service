@@ -22,6 +22,7 @@ import org.jooq.Result;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.plos.namedentity.api.Consumer;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.api.enums.TypeClassEnum;
@@ -32,6 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.TransactionStatus;
@@ -860,6 +862,28 @@ public class NamedEntityDBServiceTest {
     Url urlToDelete = new Url();
     urlToDelete.setId(urlId);
     assertTrue( nedDBSvc.delete(urlToDelete) );
+  }
+
+  @Test
+  public void testConsumerTableFinders() {
+
+    List<Consumer> allConsumersInDb = nedDBSvc.findAll(Consumer.class, 0, Integer.MAX_VALUE);
+    assertTrue( allConsumersInDb.size() > 0 );
+
+    String[] registeredApps = { "tahi", "akita", "etl" };
+
+    for (String app : registeredApps) {
+      Consumer filter = new Consumer();
+      filter.setName(app);
+      List<Consumer> consumers = nedDBSvc.findByAttribute(filter);
+      assertEquals(1, consumers.size());
+      assertEquals(app, consumers.get(0).getName());
+      assertTrue(BCrypt.checkpw(app, consumers.get(0).getPassword()));
+    }
+
+    Consumer filter = new Consumer() ; filter.setName("bleck");
+    List<Consumer> consumers = nedDBSvc.findByAttribute(filter);
+    assertEquals(0, consumers.size());
   }
 
   @Test

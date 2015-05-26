@@ -27,6 +27,7 @@ import org.jooq.SelectOnConditionStep;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
+import org.plos.namedentity.api.Consumer;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.NedException.ErrorType;
 import org.plos.namedentity.api.entity.*;
@@ -801,6 +802,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     entityTableMap.put(Address.class, new TablePkPair(ADDRESSES, ADDRESSES.ID));
     entityTableMap.put(Auth.class, new TablePkPair(AUTHCAS, AUTHCAS.ID));
+    entityTableMap.put(Consumer.class, new TablePkPair(CONSUMERS, CONSUMERS.ID));
     entityTableMap.put(Degree.class, new TablePkPair(DEGREES, DEGREES.ID));
     entityTableMap.put(Email.class, new TablePkPair(EMAILS, EMAILS.ID));
     entityTableMap.put(Globaltype.class, new TablePkPair(GLOBALTYPES, GLOBALTYPES.ID));
