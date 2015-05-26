@@ -16,18 +16,16 @@
  */
 package org.plos.namedentity.spring.security;
 
-import org.springframework.security.crypto.bcrypt.BCrypt;
-
-public class Util {
+public class BCrypt {
 
   public static String hashPassword(String plaintext, int complexity) {
-    return BCrypt.hashpw(plaintext, BCrypt.gensalt(complexity));
+    return org.springframework.security.crypto.bcrypt.BCrypt.hashpw(plaintext,
+           org.springframework.security.crypto.bcrypt.BCrypt.gensalt(complexity));
   }
 
-  public static void main (String [] args)
-  {
+  public static void main(String [] args) {
     // computational complexity used when generating salt (range:4-31)
     int complexity = (args.length == 2) ? Integer.parseInt(args[1]) : 4;
-    System.out.println("Hashed Password = " + hashPassword(args[0], complexity));
+    System.out.println(hashPassword(args[0], complexity));
   }
 }

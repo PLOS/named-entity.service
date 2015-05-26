@@ -20,6 +20,13 @@ set up the database by running the following in MySql
     grant all privileges on ringgold.* to ned@'%';
 
     flush privileges;
+
+Adding userapps
+---------------
+
+Applications that use NED must identify themselves. This is done with HTTP Basic auth, and there are fields for the appname and password on the swagger interface. To insert a userapp into the database, run this:
+
+    ./ned.sh insertapp appname password
     
 Running
 -------

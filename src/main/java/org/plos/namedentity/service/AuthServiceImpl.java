@@ -16,22 +16,19 @@
  */
 package org.plos.namedentity.service;
 
+import org.plos.namedentity.api.Consumer;
+import org.plos.namedentity.persist.NamedEntityDBService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.plos.namedentity.api.Consumer;
-import org.plos.namedentity.api.NedException;
-import org.plos.namedentity.persist.NamedEntityDBService;
-
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.inject.Inject;
 
 public class AuthServiceImpl implements AuthService {
 
