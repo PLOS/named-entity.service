@@ -615,6 +615,6 @@ INSERT INTO namedEntities.individualProfiles (id, nedId, firstName, lastName, di
     VALUES (1,1,'NED','NED','NED','bio',78,1);
 
 /* Consumers */
-INSERT INTO namedEntities.consumers (name, password) VALUES ('tahi', 'abc');
-INSERT INTO namedEntities.consumers (name, password) VALUES ('akita', 'abc');
-INSERT INTO namedEntities.consumers (name, password) VALUES ('etl', 'abc');
+INSERT INTO namedEntities.consumers (name, password) VALUES ('tahi' ,/*tahi*/  '$2a$04$8HIFWewGAkrJDGAvCktCUunEm0Mb2Tz100zGRcJ.SVMQqqkGXZt0G');
+INSERT INTO namedEntities.consumers (name, password) VALUES ('akita',/*akita*/ '$2a$04$bhCH3yv8auaZpzW0ZGwrHOdIkJpFQwCABXZnd8fo7B4LyIE1MMxve');
+INSERT INTO namedEntities.consumers (name, password) VALUES ('etl'  ,/*etl*/   '$2a$04$.sb5zU1tnhxJc2.4IvAu3uahi6NZdjNWzcDkxttY22JFrHc/IgrKu');

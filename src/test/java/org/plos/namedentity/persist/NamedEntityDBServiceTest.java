@@ -33,6 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.TransactionStatus;
@@ -877,8 +878,12 @@ public class NamedEntityDBServiceTest {
       List<Consumer> consumers = nedDBSvc.findByAttribute(filter);
       assertEquals(1, consumers.size());
       assertEquals(app, consumers.get(0).getName());
-      assertEquals("abc", consumers.get(0).getPassword());
+      assertTrue(BCrypt.checkpw(app, consumers.get(0).getPassword()));
     }
+
+    Consumer filter = new Consumer() ; filter.setName("bleck");
+    List<Consumer> consumers = nedDBSvc.findByAttribute(filter);
+    assertEquals(0, consumers.size());
   }
 
   @Test

@@ -19,16 +19,24 @@ package org.plos.namedentity.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.plos.namedentity.api.Consumer;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.persist.NamedEntityDBService;
 
-import javax.inject.Inject;
-import java.util.List;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+
 import java.io.IOException;
 import java.util.Base64;
+import java.util.List;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.inject.Inject;
 
 public class AuthServiceImpl implements AuthService {
+
+  // credentials expected to be HTTP basic authentication ( ex: Basic YWRtaW46YWRtaW4= )
+  private static Pattern httpBasicAuthRegexp = Pattern.compile("^Basic\\s+([a-zA-Z0-9+/]+={0,2})$");
 
   private static final Logger log = LoggerFactory.getLogger(AuthServiceImpl.class);
 
@@ -39,26 +47,41 @@ public class AuthServiceImpl implements AuthService {
 
     if (credentials == null) return false;
 
-    // credentials expected to be basic authentication format.
-    // example :  Basic YWRtaW46YWRtaW4=
-    final String encodedUserPassword = credentials.replaceFirst("Basic ","");
-    String usernameAndPassword = null;
+    Matcher matcher = httpBasicAuthRegexp.matcher(credentials);
+    if (!matcher.find()) {
+      log.warn("Invalid credentials: " + credentials);
+      return false;
+    }
+    // group 0 matches entire string
+    final String encodedUsernamePassword = matcher.group(1);
+
+    String usernamePassword = null;
     try {
-      byte[] decodedBytes = Base64.getDecoder().decode(encodedUserPassword);
-      usernameAndPassword = new String(decodedBytes, "UTF-8");
+      byte[] decodedBytes = Base64.getDecoder().decode(encodedUsernamePassword);
+      usernamePassword = new String(decodedBytes, "UTF-8");
     } catch (IOException e) {
       log.error("Problem decoding credentials", e);
       return false;
     }
 
-    final StringTokenizer tokenizer = new StringTokenizer(usernameAndPassword,":");
+    final StringTokenizer tokenizer = new StringTokenizer(usernamePassword,":");
+    int tokenCount = tokenizer.countTokens();
+    if (tokenCount != 2) {
+      log.warn(String.format(
+        "Unexpected count when tokenizing credentials. Expected:2 Found:%d", tokenCount));
+      return false;
+    }
+
     final String username = tokenizer.nextToken();
     final String password = tokenizer.nextToken();
 
-    //boolean authenticationStatus = "admin".equals(username)
-        //&& "admin".equals(password);
-    //return authenticationStatus;
-    return true;
+    Consumer filter = new Consumer();
+    filter.setName(username);
+    List<Consumer> consumers = namedEntityDBService.findByAttribute(filter);
+    if (consumers.size() == 0) {
+      return false; // user not found
+    }
+    return (BCrypt.checkpw(password, consumers.get(0).getPassword()));
   }
 
   public NamedEntityDBService getNamedEntityDBService() {
