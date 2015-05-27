@@ -6,14 +6,17 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Auth;
+import org.plos.namedentity.api.entity.Composite;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.service.AuthServiceImpl;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -27,6 +30,7 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -45,9 +49,12 @@ public class IndividualsResource extends NedResource {
 
   @POST
   @ApiOperation(value = "Create individual", response = IndividualComposite.class)
-  public Response createIndividual(IndividualComposite composite) {
+  public Response createIndividual(IndividualComposite composite,
+                                   @HeaderParam("Authorization") String credentials) {
     try {
-      generateDisplaynameIfEmpty( composite );
+      generateDisplaynameIfEmpty(composite);
+
+      setCreateAndLastModifiedBy(credentials,composite);
 
       return Response.status(Response.Status.OK).entity(
           namedEntityService.createComposite(composite, IndividualComposite.class)).build();
@@ -55,6 +62,22 @@ public class IndividualsResource extends NedResource {
       return nedError(e, "Unable to create individual");
     } catch (Exception e) {
       return serverError(e, "Unable to create individual");
+    }
+  }
+
+  private <T extends Composite>
+  void setCreateAndLastModifiedBy(String authHeader, T composite) {
+    Map<String,String> credentials = authService.parseCredentials(authHeader);
+
+    Map<Class, List<? extends Entity>> compositeMap = composite.getAsMap();
+
+    for (List<? extends Entity> entities : compositeMap.values()) {
+      if (entities != null) {
+        for (Entity entity : entities) {
+          entity.setCreatedbyname(credentials.get("username"));
+          entity.setLastmodifiedbyname(credentials.get("username"));
+        }
+      }
     }
   }
 
@@ -173,8 +196,10 @@ public class IndividualsResource extends NedResource {
   @POST
   @Path("/{nedId}/individualprofiles")
   @ApiOperation(value = "Add profile", response = Individualprofile.class)
-  public Response addProfile(@PathParam("nedId") int nedId, Individualprofile entity) {
-    return createEntity(nedId, entity);
+  public Response addProfile(@PathParam("nedId") int nedId, Individualprofile entity,
+                             @HeaderParam("Authorization") String credentials) {
+    //return createEntity(nedId, entity);
+    return createEntity(nedId, entity, credentials);
   }
 
   @PUT
@@ -182,9 +207,11 @@ public class IndividualsResource extends NedResource {
   @ApiOperation(value = "Update a profile", response = Individualprofile.class)
   public Response updateProfile(@PathParam("nedId") int nedId,
                                 @PathParam("profileId") int profileId,
+                                @HeaderParam("Authorization") String credentials,
                                 Individualprofile entity) {
 
-    return updateEntity(nedId, profileId, entity);
+    //return updateEntity(nedId, profileId, entity);
+    return updateEntity(nedId, profileId, entity, credentials);
   }
 
   @DELETE
@@ -244,8 +271,10 @@ public class IndividualsResource extends NedResource {
   @POST
   @Path("/{nedId}/roles")
   @ApiOperation(value = "Create role", response = Role.class)
-  public Response createRole(@PathParam("nedId") int nedId, Role roleEntity) {
-    return createEntity(nedId, roleEntity);
+  public Response createRole(@PathParam("nedId") int nedId, Role roleEntity,
+                             @HeaderParam("Authorization") String credentials) {
+    //return createEntity(nedId, roleEntity);
+    return createEntity(nedId, roleEntity, credentials);
   }
 
   @PUT
@@ -253,8 +282,10 @@ public class IndividualsResource extends NedResource {
   @ApiOperation(value = "Update role", response = Role.class)
   public Response updateRole(@PathParam("nedId") int nedId, 
                              @PathParam("roleId") int roleId, 
+                             @HeaderParam("Authorization") String credentials,
                              Role roleEntity) {
-    return updateEntity(nedId, roleId, roleEntity);
+    //return updateEntity(nedId, roleId, roleEntity);
+    return updateEntity(nedId, roleId, roleEntity, credentials);
   }
 
   @DELETE
@@ -296,7 +327,9 @@ public class IndividualsResource extends NedResource {
   @ApiOperation(value = "Update auth record", response = Auth.class)
   public Response updateAuthRecord(@PathParam("nedId") int nedId,
                                    @PathParam("authId") int authId,
+                                   @HeaderParam("Authorization") String credentials,
                                    Auth authEntity) {
-    return updateEntity(nedId, authId, authEntity);
+    //return updateEntity(nedId, authId, authEntity);
+    return updateEntity(nedId, authId, authEntity, credentials);
   }
 }

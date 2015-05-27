@@ -38,13 +38,16 @@ import org.plos.namedentity.service.NamedEntityService;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -81,6 +84,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
             Paths.get(TEST_RESOURCE_PATH + "composite-individual.json")));
 
         Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+            .header(HttpHeaders.AUTHORIZATION, basicAuthString("akita","akita"))
             .post(Entity.json(compositeIndividualJson));
 
         assertEquals(200, response.getStatus());
@@ -102,6 +106,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
             Paths.get(TEST_RESOURCE_PATH + "composite-organization.json")));
 
         Response response = target(ORGANIZATION_URI).request(MediaType.APPLICATION_JSON_TYPE)
+            .header(HttpHeaders.AUTHORIZATION, basicAuthString("akita","akita"))
             .post(Entity.json(compositeJson));
 
         assertEquals(200, response.getStatus());
@@ -132,7 +137,9 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     };
 
     for (WebTarget target : badFindIndividualUrls) {
-      Response response = target.request(MediaType.APPLICATION_JSON_TYPE).get();
+      Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
+                                .header(HttpHeaders.AUTHORIZATION, basicAuthString("akita","akita"))
+                                .get();
 
       assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
 
@@ -1479,5 +1486,12 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals("jane.q.doe.work@foo.com", auth.getEmail());
     assertTrue( auth.getEmailid() > 0 );
     assertTrue( auth.getIsactive().equals((byte)1) );
+  }
+
+  private String basicAuthString(String username, String password) {
+    return "Basic " + 
+      Base64.getEncoder()
+        .encodeToString((username+":"+password)
+          .getBytes(StandardCharsets.UTF_8));
   }
 }

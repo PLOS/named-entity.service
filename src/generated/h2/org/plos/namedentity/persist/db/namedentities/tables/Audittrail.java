@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Audittrail extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord> {
 
-	private static final long serialVersionUID = -509261586;
+	private static final long serialVersionUID = -674755339;
 
 	/**
 	 * The reference instance of <code>NAMEDENTITIES.AUDITTRAIL</code>
@@ -60,6 +60,11 @@ public class Audittrail extends org.jooq.impl.TableImpl<org.plos.namedentity.per
 	 * The column <code>NAMEDENTITIES.AUDITTRAIL.CREATED</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord, java.sql.Timestamp> CREATED = createField("CREATED", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+
+	/**
+	 * The column <code>NAMEDENTITIES.AUDITTRAIL.CREATEDBY</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AudittrailRecord, java.lang.Integer> CREATEDBY = createField("CREATEDBY", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>NAMEDENTITIES.AUDITTRAIL.LASTMODIFIED</code>.

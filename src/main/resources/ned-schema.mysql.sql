@@ -45,6 +45,17 @@ CREATE TABLE IF NOT EXISTS namedEntities.namedEntityIdentifiers (
     FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
+DROP TABLE IF EXISTS namedEntities.consumers;
+CREATE TABLE IF NOT EXISTS namedEntities.consumers (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE (name)
+)   ENGINE=INNODB;
+
 DROP TABLE IF EXISTS namedEntities.individualProfiles;
 CREATE TABLE IF NOT EXISTS namedEntities.individualProfiles (
     id INT NOT NULL AUTO_INCREMENT,
@@ -339,15 +350,4 @@ CREATE TABLE IF NOT EXISTS namedEntities.authCas (
     FOREIGN KEY (createdBy) REFERENCES consumers(id),
     FOREIGN KEY (lastModifiedBy) REFERENCES consumers(id),
     UNIQUE (authId)
-)   ENGINE=INNODB;
-
-DROP TABLE IF EXISTS namedEntities.consumers;
-CREATE TABLE IF NOT EXISTS namedEntities.consumers (
-    id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (id),
-    UNIQUE (name)
 )   ENGINE=INNODB;

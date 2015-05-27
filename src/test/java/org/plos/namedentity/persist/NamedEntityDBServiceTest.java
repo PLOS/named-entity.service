@@ -265,7 +265,7 @@ public class NamedEntityDBServiceTest {
 
     // CREATE Work Email
 
-    Email workEmail = new Email();
+    Email workEmail = _(new Email());
     workEmail.setNedid(nedId);
     workEmail.setTypeid(nedDBSvc.findTypeValue(emailTypeClassId, "Work"));
     workEmail.setEmailaddress("walter.work@foo.com");
@@ -330,7 +330,7 @@ public class NamedEntityDBServiceTest {
 
     // CREATE Home Email
 
-    Email homeEmail = new Email();
+    Email homeEmail = _(new Email());
     homeEmail.setNedid(nedId);
     homeEmail.setTypeid(nedDBSvc.findTypeValue(emailTypeClassId, "Personal"));
     homeEmail.setEmailaddress("walter.home@foo.com");
@@ -416,7 +416,7 @@ public class NamedEntityDBServiceTest {
     Integer langTypeId       = nedDBSvc.findTypeValue(langTypeClassId, "Italian")      ; assertNotNull(langTypeClassId)        ;
     Integer commMethodTypeId = nedDBSvc.findTypeValue(commMethodsTypeClassId, "Email") ; assertNotNull(commMethodsTypeClassId) ;
 
-    Individualprofile individualProfile = new Individualprofile();
+    Individualprofile individualProfile = _(new Individualprofile());
     individualProfile.setNedid(nedId);
     individualProfile.setFirstname("firstname");
     individualProfile.setMiddlename("middlename");
@@ -482,7 +482,7 @@ public class NamedEntityDBServiceTest {
 
     Integer organizationTypeId = nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Organization Types"), "University");
 
-    Organization organization = new Organization();
+    Organization organization = _(new Organization());
     organization.setNedid(nedId);
     organization.setTypeid(organizationTypeId);
     organization.setFamiliarname("familiarname");
@@ -523,7 +523,7 @@ public class NamedEntityDBServiceTest {
     Integer usaCountryCodeTypeId = nedDBSvc.findTypeValue(countryCodeTypeClassId, "01");
     assertNotNull(usaCountryCodeTypeId); 
 
-    Phonenumber mobilePhone = new Phonenumber();
+    Phonenumber mobilePhone = _(new Phonenumber());
     mobilePhone.setNedid(1);
     mobilePhone.setTypeid(mobilePhoneTypeId);
     mobilePhone.setCountrycodetypeid(usaCountryCodeTypeId);
@@ -549,7 +549,7 @@ public class NamedEntityDBServiceTest {
 
     // CREATE (Office Phone)
 
-    Phonenumber officePhone = new Phonenumber();
+    Phonenumber officePhone = _(new Phonenumber());
     officePhone.setNedid(1);
     officePhone.setTypeid(officePhoneTypeId);
     officePhone.setCountrycodetypeid(usaCountryCodeTypeId);
@@ -610,7 +610,7 @@ public class NamedEntityDBServiceTest {
     Integer countryTypeId       = nedDBSvc.findTypeValue(countryTypeClassId, "United States of America"); assertNotNull(countryTypeId)      ;
     Integer stateCodeTypeId     = nedDBSvc.findTypeValue(stateCodeTypeClassId, "CA")                    ; assertNotNull(stateCodeTypeId)    ;
 
-    Address address = new Address();
+    Address address = _(new Address());
     address.setNedid(1);
     address.setTypeid(officeAddressTypeId);
     address.setAddressline1("addressline1");
@@ -669,7 +669,7 @@ public class NamedEntityDBServiceTest {
     Integer srcAppTypeId = nedDBSvc.findTypeValue(srcAppTypeClassId, UidTypeEnum.EDITORIAL_MANAGER.getName()); assertNotNull(srcAppTypeId);
     Integer roleTypeId   = nedDBSvc.findTypeValue(roleTypeClassId, "Author")             ; assertNotNull(roleTypeId)  ;
 
-    Role authorRole = new Role();
+    Role authorRole = _(new Role());
     authorRole.setNedid(1);
     authorRole.setApplicationtypeid(srcAppTypeId);
     authorRole.setTypeid(roleTypeId);
@@ -744,7 +744,7 @@ public class NamedEntityDBServiceTest {
 
     Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
-    Individualprofile individualProfile = new Individualprofile();
+    Individualprofile individualProfile = _(new Individualprofile());
     individualProfile.setNedid(nedId);
     individualProfile.setFirstname("firstname");
     individualProfile.setMiddlename("middlename");
@@ -754,7 +754,7 @@ public class NamedEntityDBServiceTest {
 
     assertNotNull(nedDBSvc.create(individualProfile));
 
-    Uniqueidentifier uidEntity1 = new Uniqueidentifier();
+    Uniqueidentifier uidEntity1 = _(new Uniqueidentifier());
     uidEntity1.setNedid(nedId);
     uidEntity1.setTypeid(orcidTypeId);
     uidEntity1.setUniqueidentifier(ORCID_ID);
@@ -825,7 +825,7 @@ public class NamedEntityDBServiceTest {
 
     // CREATE : Valid URL
 
-    Url url = new Url();
+    Url url = _(new Url());
     url.setNedid(1);
     url.setUrl("http://www.plos.org");
     url.setSourcetypeid( getSourceTypeId(UidTypeEnum.AMBRA.getName()) );
@@ -909,7 +909,7 @@ public class NamedEntityDBServiceTest {
 
     for (int i = 0; i < nedIds.length; i++) {
 
-      Uniqueidentifier uidEntity = new Uniqueidentifier();
+      Uniqueidentifier uidEntity = _(new Uniqueidentifier());
       uidEntity.setNedid( nedIds[i] );
       uidEntity.setTypeid( validUidTypeIds[i] );
       uidEntity.setUniqueidentifier( validUidTypeValues[i]+i );
@@ -928,7 +928,7 @@ public class NamedEntityDBServiceTest {
 
     for (int i = 0; i < nedIds.length; i++) {
       try {
-        Uniqueidentifier uidEntity = new Uniqueidentifier();
+        Uniqueidentifier uidEntity = _(new Uniqueidentifier());
         uidEntity.setNedid( nedIds[i] );
         uidEntity.setTypeid( invalidUidTypeIds[i] );
         uidEntity.setUniqueidentifier( invalidUidTypeValues[i]+i );
@@ -990,5 +990,13 @@ public class NamedEntityDBServiceTest {
     cal.set(Calendar.SECOND, 0);
     cal.set(Calendar.MILLISECOND, 0);
     return new java.sql.Date( cal.getTimeInMillis() );
+  }
+
+  // decorator function to endow entity with core attribute values, such as createdby.
+  private <S extends Entity>
+  S _(S entity) {
+    entity.setCreatedby(1);
+    entity.setLastmodifiedby(1);
+    return entity;
   }
 }

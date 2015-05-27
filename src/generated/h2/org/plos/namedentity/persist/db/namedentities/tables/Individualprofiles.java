@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Individualprofiles extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord> {
 
-	private static final long serialVersionUID = 2012171155;
+	private static final long serialVersionUID = -1238938630;
 
 	/**
 	 * The reference instance of <code>NAMEDENTITIES.INDIVIDUALPROFILES</code>
@@ -97,9 +97,19 @@ public class Individualprofiles extends org.jooq.impl.TableImpl<org.plos.nameden
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord, java.sql.Timestamp> CREATED = createField("CREATED", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
+	 * The column <code>NAMEDENTITIES.INDIVIDUALPROFILES.CREATEDBY</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord, java.lang.Integer> CREATEDBY = createField("CREATEDBY", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
 	 * The column <code>NAMEDENTITIES.INDIVIDUALPROFILES.LASTMODIFIED</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord, java.sql.Timestamp> LASTMODIFIED = createField("LASTMODIFIED", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+
+	/**
+	 * The column <code>NAMEDENTITIES.INDIVIDUALPROFILES.LASTMODIFIEDBY</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord, java.lang.Integer> LASTMODIFIEDBY = createField("LASTMODIFIEDBY", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>NAMEDENTITIES.INDIVIDUALPROFILES</code> table reference
@@ -136,7 +146,7 @@ public class Individualprofiles extends org.jooq.impl.TableImpl<org.plos.nameden
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord> getPrimaryKey() {
-		return org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8;
+		return org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_88;
 	}
 
 	/**
@@ -144,7 +154,7 @@ public class Individualprofiles extends org.jooq.impl.TableImpl<org.plos.nameden
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_888881);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_88, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_88888183_1);
 	}
 
 	/**
@@ -152,7 +162,7 @@ public class Individualprofiles extends org.jooq.impl.TableImpl<org.plos.nameden
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_88, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8888, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_88888, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_888);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_888, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_88888, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_888881, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8888, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8888818, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_88888183_0);
 	}
 
 	/**
