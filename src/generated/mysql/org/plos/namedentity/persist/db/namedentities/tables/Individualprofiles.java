@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Individualprofiles extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord> {
 
-	private static final long serialVersionUID = -10778302;
+	private static final long serialVersionUID = 1720877730;
 
 	/**
 	 * The reference instance of <code>namedEntities.individualProfiles</code>
@@ -97,9 +97,19 @@ public class Individualprofiles extends org.jooq.impl.TableImpl<org.plos.nameden
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord, java.sql.Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
+	 * The column <code>namedEntities.individualProfiles.createdBy</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord, java.lang.Integer> CREATEDBY = createField("createdBy", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
 	 * The column <code>namedEntities.individualProfiles.lastModified</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord, java.sql.Timestamp> LASTMODIFIED = createField("lastModified", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+
+	/**
+	 * The column <code>namedEntities.individualProfiles.lastModifiedBy</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord, java.lang.Integer> LASTMODIFIEDBY = createField("lastModifiedBy", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>namedEntities.individualProfiles</code> table reference
@@ -152,7 +162,7 @@ public class Individualprofiles extends org.jooq.impl.TableImpl<org.plos.nameden
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.INDIVIDUALPROFILES_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.INDIVIDUALPROFILES_IBFK_3, org.plos.namedentity.persist.db.namedentities.Keys.INDIVIDUALPROFILES_IBFK_4, org.plos.namedentity.persist.db.namedentities.Keys.INDIVIDUALPROFILES_IBFK_2);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.IndividualprofilesRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.INDIVIDUALPROFILES_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.INDIVIDUALPROFILES_IBFK_3, org.plos.namedentity.persist.db.namedentities.Keys.INDIVIDUALPROFILES_IBFK_4, org.plos.namedentity.persist.db.namedentities.Keys.INDIVIDUALPROFILES_IBFK_2, org.plos.namedentity.persist.db.namedentities.Keys.INDIVIDUALPROFILES_IBFK_5, org.plos.namedentity.persist.db.namedentities.Keys.INDIVIDUALPROFILES_IBFK_6);
 	}
 
 	/**
