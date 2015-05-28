@@ -32,7 +32,6 @@ import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.api.entity.Url;
-import org.plos.namedentity.service.AuthServiceImpl;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
