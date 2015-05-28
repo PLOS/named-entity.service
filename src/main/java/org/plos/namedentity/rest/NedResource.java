@@ -58,25 +58,29 @@ public abstract class NedResource extends BaseResource {
   @POST
   @Path("/{nedId}/emails")
   @ApiOperation(value = "Create email", response = Email.class)
-  public Response createEmail(@PathParam("nedId") int nedId, Email emailEntity,
+  public Response createEmail(@PathParam("nedId") int nedId,
+                              Email emailEntity,
                               @HeaderParam("Authorization") String credentials) {
-    //return createEntity(nedId, emailEntity);
+
     return createEntity(nedId, emailEntity, credentials);
   }
 
   @PUT
   @Path("/{nedId}/emails/{emailId}")
   @ApiOperation(value = "Update email", response = Email.class)
-  public Response updateEmail(@PathParam("nedId") int nedId, @PathParam("emailId") int emailId, 
-                              Email emailEntity, @HeaderParam("Authorization") String credentials) {
-    //return updateEntity(nedId, emailId, emailEntity);
+  public Response updateEmail(@PathParam("nedId")   int nedId,
+                              @PathParam("emailId") int emailId,
+                              Email emailEntity, 
+                              @HeaderParam("Authorization") String credentials) {
+
     return updateEntity(nedId, emailId, emailEntity, credentials);
   }
 
   @DELETE
   @Path("/{nedId}/emails/{emailId}")
   @ApiOperation(value = "Delete email")
-  public Response deleteEmail(@PathParam("nedId") int nedId, @PathParam("emailId") int emailId) {
+  public Response deleteEmail(@PathParam("nedId")   int nedId,
+                              @PathParam("emailId") int emailId) {
 
     if (((List)(getEntities(nedId, Email.class).getEntity())).size() == 1)
       return nedError(new NedException("Email entities cannot be empty"), "Unable to delete email");
@@ -87,7 +91,7 @@ public abstract class NedResource extends BaseResource {
   @GET
   @Path("/{nedId}/emails/{emailId}")
   @ApiOperation(value = "Read email", response = Email.class)
-  public Response getEmail(@PathParam("nedId") int nedId,
+  public Response getEmail(@PathParam("nedId")   int nedId,
                            @PathParam("emailId") int emailId) {
     return getEntity(nedId, emailId, Email.class);
   }
@@ -99,7 +103,6 @@ public abstract class NedResource extends BaseResource {
     return getEntities(nedId, Email.class);
   }
 
-
   /* ----------------------------------------------------------------------- */
   /*  ADDRESS CRUD                                                           */
   /* ----------------------------------------------------------------------- */
@@ -107,25 +110,28 @@ public abstract class NedResource extends BaseResource {
   @POST
   @Path("/{nedId}/addresses")
   @ApiOperation(value = "Create address", response = Address.class)
-  public Response createAddress(@PathParam("nedId") int nedId, Address addressEntity,
+  public Response createAddress(@PathParam("nedId") int nedId,
+                                Address addressEntity,
                                 @HeaderParam("Authorization") String credentials) {
-    //return createEntity(nedId, addressEntity);
+
     return createEntity(nedId, addressEntity, credentials);
   }
 
   @PUT
   @Path("/{nedId}/addresses/{addressId}")
   @ApiOperation(value = "Update address", response = Address.class)
-  public Response updateAddress(@PathParam("nedId") int nedId, @PathParam("addressId") int addressId,
-                                Address addressEntity, @HeaderParam("Authorization") String credentials) {
-    //return updateEntity(nedId, addressId, addressEntity);
+  public Response updateAddress(@PathParam("nedId")     int nedId,
+                                @PathParam("addressId") int addressId,
+                                Address addressEntity,
+                                @HeaderParam("Authorization") String credentials) {
+
     return updateEntity(nedId, addressId, addressEntity, credentials);
   }
 
   @DELETE
   @Path("/{nedId}/addresses/{addressId}")
   @ApiOperation(value = "Delete address")
-  public Response deleteAddress(@PathParam("nedId") int nedId,
+  public Response deleteAddress(@PathParam("nedId")     int nedId,
                                 @PathParam("addressId") int addressId) {
     return deleteEntity(nedId, addressId, Address.class);
   }
@@ -133,7 +139,7 @@ public abstract class NedResource extends BaseResource {
   @GET
   @Path("/{nedId}/addresses/{addressId}")
   @ApiOperation(value = "Read address", response = Address.class)
-  public Response getAddress(@PathParam("nedId") int nedId,
+  public Response getAddress(@PathParam("nedId")     int nedId,
                              @PathParam("addressId") int addressId) {
     return getEntity(nedId, addressId, Address.class);
   }
@@ -163,9 +169,9 @@ public abstract class NedResource extends BaseResource {
   @POST
   @Path("/{nedId}/uids")
   @ApiOperation(value = "Create UID", response = Uniqueidentifier.class)
-  public Response createUid(@PathParam("nedId") int nedId, Uniqueidentifier entity,
+  public Response createUid(@PathParam("nedId") int nedId,
+                            Uniqueidentifier entity,
                             @HeaderParam("Authorization") String credentials) {
-    //return createEntity(nedId, entity);
     return createEntity(nedId, entity, credentials);
   }
 
@@ -173,10 +179,9 @@ public abstract class NedResource extends BaseResource {
   @Path("/{nedId}/uids/{id}")
   @ApiOperation(value = "Update UID", response = Uniqueidentifier.class)
   public Response updateUid(@PathParam("nedId") int nedId,
-                            @PathParam("id") int id,
+                            @PathParam("id")    int id,
                             @HeaderParam("Authorization") String credentials,
                             Uniqueidentifier entity) {
-    //return updateEntity(nedId, id, entity);
     return updateEntity(nedId, id, entity, credentials);
   }
 
@@ -184,7 +189,7 @@ public abstract class NedResource extends BaseResource {
   @Path("/{nedId}/uids/{id}")
   @ApiOperation(value = "Read uid", response = Uniqueidentifier.class)
   public Response getUid(@PathParam("nedId") int nedId,
-                         @PathParam("id") int id) {
+                         @PathParam("id")    int id) {
     return getEntity(nedId, id, Uniqueidentifier.class);
   }
 
@@ -199,16 +204,10 @@ public abstract class NedResource extends BaseResource {
 
   protected <S extends Entity>
   Response createEntity(int nedId, S entity, String authHeader) {
-    setCreateAndLastModifiedBy(authHeader,entity,true);
-    return createEntity(nedId, entity);
-  }
-
-  protected <S extends Entity>
-  Response createEntity(int nedId, S entity) {
-
     try {
-
       namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
+
+      setCreatedAndLastModifiedBy(authHeader,entity,true);
 
       entity.setNedid(nedId);
 
@@ -228,16 +227,12 @@ public abstract class NedResource extends BaseResource {
 
   protected <S extends Entity>
   Response updateEntity(int nedId, int pkId, S entity, String authHeader) {
-    setCreateAndLastModifiedBy(authHeader,entity,false);
-    return updateEntity(nedId, pkId, entity);
-  }
-
-  protected <S extends Entity>
-  Response updateEntity(int nedId, int pkId, S entity) {
 
     try {
 
       namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
+
+      setCreatedAndLastModifiedBy(authHeader,entity,false);
 
       entity.setId(pkId);
       entity.setNedid(nedId);
@@ -292,7 +287,7 @@ public abstract class NedResource extends BaseResource {
 
     } catch (NedException e) {
       return nedError(e, "Find by id failed");
-        
+
     } catch (Exception e) {
       return serverError(e, String.format("Find %s by id failed (nedId=%d, pkId=%d)", 
         child.getSimpleName(), nedId, pkId));
@@ -447,7 +442,7 @@ public abstract class NedResource extends BaseResource {
   }
 
   protected <S extends Entity>
-  void setCreateAndLastModifiedBy(String authHeader, S entity, boolean create) {
+  void setCreatedAndLastModifiedBy(String authHeader, S entity, boolean create) {
     Map<String,String> credentials = authService.parseCredentials(authHeader);
     if (create) {
       entity.setCreatedbyname(credentials.get("username"));
@@ -456,7 +451,7 @@ public abstract class NedResource extends BaseResource {
   }
 
   protected <T extends Composite>
-  void setCreateAndLastModifiedBy(String authHeader, T composite) {
+  void setCreatedAndLastModifiedBy(String authHeader, T composite) {
     Map<String,String> credentials = authService.parseCredentials(authHeader);
 
     Map<Class, List<? extends Entity>> compositeMap = composite.getAsMap();

@@ -3,8 +3,9 @@ Named Entity Database
 
 NED is a web service for hosting information about people and organizations. It provides a REST API backed my a MySQL database.
 
-Dependencies
+Requirements
 ------------
+
 NED depends on Java 1.8 (compile/run)
 
 Database Setup

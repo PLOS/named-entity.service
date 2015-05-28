@@ -47,7 +47,7 @@ public class OrganizationsResource extends NedResource {
   public Response createOrganization(OrganizationComposite composite,
                                      @HeaderParam("Authorization") String credentials) {
     try {
-      setCreateAndLastModifiedBy(credentials,composite);
+      setCreatedAndLastModifiedBy(credentials,composite);
       return Response.status(Response.Status.OK).entity(
           namedEntityService.createComposite(composite, OrganizationComposite.class)).build();
     } catch (NedException e) {
@@ -76,10 +76,9 @@ public class OrganizationsResource extends NedResource {
   @GET
   @Path("/{uidType}/{uidValue}")
   @ApiOperation(value = "Read organization by UID", response = OrganizationComposite.class)
-  public Response readOrganizationByUid(@PathParam("uidType") String uidType,
-                                       @PathParam("uidValue") String uidValue) {
+  public Response readOrganizationByUid(@PathParam("uidType")  String uidType,
+                                        @PathParam("uidValue") String uidValue) {
     try {
-
       Organization organization = namedEntityService.findResolvedEntityByUid(
           uidType, uidValue, Organization.class);
 
