@@ -36,6 +36,7 @@ import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.service.NamedEntityService;
 
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.HttpHeaders;
@@ -83,9 +84,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
         String compositeIndividualJson = new String(Files.readAllBytes(
             Paths.get(TEST_RESOURCE_PATH + "composite-individual.json")));
 
-        Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
-            .header(HttpHeaders.AUTHORIZATION, basicAuthString("akita","akita"))
-            .post(Entity.json(compositeIndividualJson));
+        Response response = buildRequestDefaultAuth(INDIVIDUAL_URI)
+                              .post(Entity.json(compositeIndividualJson));
 
         assertEquals(200, response.getStatus());
 
@@ -105,9 +105,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
         String compositeJson = new String(Files.readAllBytes(
             Paths.get(TEST_RESOURCE_PATH + "composite-organization.json")));
 
-        Response response = target(ORGANIZATION_URI).request(MediaType.APPLICATION_JSON_TYPE)
-            .header(HttpHeaders.AUTHORIZATION, basicAuthString("akita","akita"))
-            .post(Entity.json(compositeJson));
+        Response response = buildRequestDefaultAuth(ORGANIZATION_URI)
+                              .post(Entity.json(compositeJson));
 
         assertEquals(200, response.getStatus());
 
@@ -137,9 +136,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     };
 
     for (WebTarget target : badFindIndividualUrls) {
-      Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
-                                .header(HttpHeaders.AUTHORIZATION, basicAuthString("akita","akita"))
-                                .get();
+      Response response = target.request(MediaType.APPLICATION_JSON_TYPE).get();
 
       assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
 
@@ -211,10 +208,10 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     String compositeJsonTemplate = new String(Files.readAllBytes(
         Paths.get(TEST_RESOURCE_PATH + "composite-individual.template.json")));
 
-    response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
-      .post(Entity.json(String.format(compositeJsonTemplate, 
-        UUID.randomUUID(), "jane.q.doe.work@foo.com", "Editorial Manager", 
-          "secret_password", "jane.q.doe.work@foo.com")));
+    response = buildRequestDefaultAuth(INDIVIDUAL_URI)
+                .post(Entity.json(String.format(compositeJsonTemplate, 
+                  UUID.randomUUID(), "jane.q.doe.work@foo.com", "Editorial Manager", 
+                  "secret_password", "jane.q.doe.work@foo.com")));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
@@ -282,9 +279,9 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     String uuidEmailaddress = UUID.randomUUID()+"@foo.com";
 
-    response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
-      .post(Entity.json(String.format(compositeJsonTemplate, 
-        unicodeDisplayname, uuidEmailaddress, "Ambra", "secret_password", uuidEmailaddress)));
+    response = buildRequestDefaultAuth(INDIVIDUAL_URI)
+                .post(Entity.json(String.format(compositeJsonTemplate,
+                  unicodeDisplayname, uuidEmailaddress, "Ambra", "secret_password", uuidEmailaddress)));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
@@ -427,9 +424,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     String requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "individualprofile.json")));
 
-    Response response = target(profilesURI)
-      .request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(requestJson));
+    Response response = buildRequestDefaultAuth(profilesURI).post(Entity.json(requestJson));
 
     assertEquals(200, response.getStatus());
 
@@ -489,9 +484,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     // marshall pojo to json
     String updateIndividualProfileJson = writeValueAsString(profile);
 
-    response = target(profileURI)
-      .request(MediaType.APPLICATION_JSON_TYPE)
-        .put(Entity.json(updateIndividualProfileJson));
+    response = buildRequestDefaultAuth(profileURI)
+                .put(Entity.json(updateIndividualProfileJson));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
@@ -521,9 +515,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     String requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "address.json")));
 
-    Response response = target(addressesURI)
-      .request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(requestJson));
+    Response response = buildRequestDefaultAuth(addressesURI).post(Entity.json(requestJson));
 
     assertEquals(200, response.getStatus());
 
@@ -579,8 +571,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    response = target(addressURI).request(MediaType.APPLICATION_JSON_TYPE)
-        .put(Entity.json(writeValueAsString(foundAddress)));
+    response = buildRequestDefaultAuth(addressURI)
+                .put(Entity.json(writeValueAsString(foundAddress)));
 
     assertEquals(200, response.getStatus());
 
@@ -608,9 +600,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     String requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "role.json")));
 
-    Response response = target(rolesURI)
-      .request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(requestJson));
+    Response response = buildRequestDefaultAuth(rolesURI).post(Entity.json(requestJson));
 
     assertEquals(200, response.getStatus());
 
@@ -675,9 +665,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    response = target(roleURI)
-      .request(MediaType.APPLICATION_JSON_TYPE)
-        .put(Entity.json(writeValueAsString(role)));
+    response = buildRequestDefaultAuth(roleURI).put(Entity.json(writeValueAsString(role)));
 
     assertEquals(200, response.getStatus());
 
@@ -703,9 +691,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     String emailJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "email.json")));
 
-    Response response = target(emailsURI)
-      .request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(emailJson));
+    Response response = buildRequestDefaultAuth(emailsURI).post(Entity.json(emailJson));
 
     assertEquals(200, response.getStatus());
 
@@ -723,9 +709,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     // create an email using an existing name (will raise of unique constraint violation)
 
-    response = target(emailsURI)
-      .request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(emailJson));
+    response = buildRequestDefaultAuth(emailsURI).post(Entity.json(emailJson));
 
     assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
 
@@ -742,9 +726,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     String badEmailJson = new String(Files.readAllBytes(Paths.get(
                                      TEST_RESOURCE_PATH + "email.invalid-type.json")));
 
-    response = target(emailsURI)
-      .request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(badEmailJson));
+    response = buildRequestDefaultAuth(emailsURI).post(Entity.json(badEmailJson));
 
     assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
 
@@ -814,9 +796,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    response = target(emailURI)
-      .request(MediaType.APPLICATION_JSON_TYPE)
-        .put(Entity.json(writeValueAsString(email)));
+    response = buildRequestDefaultAuth(emailURI).put(Entity.json(writeValueAsString(email)));
 
     assertEquals(200, response.getStatus());
 
@@ -864,9 +844,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     String requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "uid.ambra.json")));
 
-    Response response = target(uidsURI)
-      .request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(requestJson));
+    Response response = buildRequestDefaultAuth(uidsURI).post(Entity.json(requestJson));
 
     assertEquals(200, response.getStatus());
 
@@ -963,9 +941,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    response = target(uidURI)
-      .request(MediaType.APPLICATION_JSON_TYPE)
-        .put(Entity.json(writeValueAsString(foundUid)));
+    response = buildRequestDefaultAuth(uidURI).put(Entity.json(writeValueAsString(foundUid)));
 
     assertEquals(200, response.getStatus());
 
@@ -990,7 +966,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     for (String badPassword : new String[]{ "", "123" }) {
 
-      Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+      Response response = buildRequestDefaultAuth(INDIVIDUAL_URI)
         .post(Entity.json(String.format(compositeJsonTemplate, 
           UUID.randomUUID(), "passwordtest@foo.com", "Ambra", badPassword, "passwordtest@foo.com")));
 
@@ -1009,7 +985,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     StringBuilder b = new StringBuilder(compositeJsonTemplate);
     String compositeJsonNoPassword = b.delete(b.indexOf("password"), b.lastIndexOf("email")).toString();
 
-    Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+    Response response = buildRequestDefaultAuth(INDIVIDUAL_URI)
       .post(Entity.json(String.format(compositeJsonNoPassword, 
         UUID.randomUUID(), "passwordtest@foo.com", "Ambra", "passwordtest@foo.com")));
 
@@ -1030,8 +1006,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     String compositeJson = new String(Files.readAllBytes(
       Paths.get(TEST_RESOURCE_PATH + "composite-displayname-test.json")));
 
-    Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
-      .post(Entity.json(compositeJson));
+    Response response = buildRequestDefaultAuth(INDIVIDUAL_URI).post(Entity.json(compositeJson));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
@@ -1054,9 +1029,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     String requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "uid.ringgold.json")));
 
-    Response response = target(individualUidsURI)
-      .request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(requestJson));
+    Response response = buildRequestDefaultAuth(individualUidsURI).post(Entity.json(requestJson));
 
     assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
 
@@ -1078,9 +1051,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "uid.ambra.json")));
 
-    response = target(organizationUidsURI)
-      .request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(requestJson));
+    response = buildRequestDefaultAuth(organizationUidsURI).post(Entity.json(requestJson));
 
     assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
 
@@ -1404,7 +1375,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     final String ambraCasId = "a2d95a5e-5c9b-eb5f-8ce8-e459759571eb";
     final String ambraPasswordDigest = "5abecb9ef097e93c8181e1ffefd1be409f5c9e7d3e335119498714e20008e00c851e6fcd45a063676097ce539c915096012b864a616c8dc2465e51cf29b3881e";
 
-    Response response = target(INDIVIDUAL_URI).request(MediaType.APPLICATION_JSON_TYPE)
+    Response response = buildRequestDefaultAuth(INDIVIDUAL_URI)
       .post(Entity.json(String.format(compositeJsonTemplate, 
         UUID.randomUUID(), ambraEmail, "Ambra", ambraCasId, ambraPasswordDigest, ambraEmail)));
 
@@ -1456,9 +1427,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     auth.setPasswordreset((byte)1);
     auth.setVerificationtoken("0123456789abcdef");
 
-    response = target( authsURI+"/"+auth.getId() )
-      .request(MediaType.APPLICATION_JSON_TYPE)
-        .put(Entity.json(writeValueAsString(auth)));
+    response = buildRequestDefaultAuth( authsURI+"/"+auth.getId() )
+                .put(Entity.json(writeValueAsString(auth)));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
@@ -1477,7 +1447,6 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     // DELETE:TODO
   }
 
-
   private void assertAuth(Auth auth) {
     // note: password not marshalled to json (ie, not in response)
     assertTrue( auth.getId() > 0 );
@@ -1488,10 +1457,26 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertTrue( auth.getIsactive().equals((byte)1) );
   }
 
+  private Invocation.Builder buildRequestDefaultAuth(String uri) {
+    return buildRequest(uri, "akita", "akita");
+  }
+  private Invocation.Builder buildRequest(String uri, String username, String password) {
+    Invocation.Builder builder = target(uri).request(MediaType.APPLICATION_JSON_TYPE);
+
+    if (!isEmptyOrBlank(username) && !isEmptyOrBlank(password)) {
+        builder.header(HttpHeaders.AUTHORIZATION, basicAuthString(username,password));
+    }
+    return builder;
+  }
+
   private String basicAuthString(String username, String password) {
     return "Basic " + 
       Base64.getEncoder()
         .encodeToString((username+":"+password)
           .getBytes(StandardCharsets.UTF_8));
+  }
+
+  private boolean isEmptyOrBlank(String s) {
+    return s == null || s.trim().isEmpty();
   }
 }

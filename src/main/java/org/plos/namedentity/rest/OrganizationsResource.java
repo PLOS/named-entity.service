@@ -25,6 +25,7 @@ import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.Organization;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -43,8 +44,10 @@ public class OrganizationsResource extends NedResource {
 
   @POST
   @ApiOperation(value = "Create organization", response = OrganizationComposite.class)
-  public Response createOrganization(OrganizationComposite composite) {
+  public Response createOrganization(OrganizationComposite composite,
+                                     @HeaderParam("Authorization") String credentials) {
     try {
+      setCreateAndLastModifiedBy(credentials,composite);
       return Response.status(Response.Status.OK).entity(
           namedEntityService.createComposite(composite, OrganizationComposite.class)).build();
     } catch (NedException e) {

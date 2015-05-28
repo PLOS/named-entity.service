@@ -454,4 +454,20 @@ public abstract class NedResource extends BaseResource {
     }
     entity.setLastmodifiedbyname(credentials.get("username"));
   }
+
+  protected <T extends Composite>
+  void setCreateAndLastModifiedBy(String authHeader, T composite) {
+    Map<String,String> credentials = authService.parseCredentials(authHeader);
+
+    Map<Class, List<? extends Entity>> compositeMap = composite.getAsMap();
+
+    for (List<? extends Entity> entities : compositeMap.values()) {
+      if (entities != null) {
+        for (Entity entity : entities) {
+          entity.setCreatedbyname(credentials.get("username"));
+          entity.setLastmodifiedbyname(credentials.get("username"));
+        }
+      }
+    }
+  }
 }
