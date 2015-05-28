@@ -81,15 +81,19 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       // attributes. let's manually control this for now by ...
       //   
       //   1. ignoring created and lastmodified timestamp attributes
-      //   2. ignoring createdby and lastmodifiedby attributes
-      //   3. updating boolean attributes only if set (ie, modified)
-      //   4. setting the changed flag for all other attributes
+      //   2. ignoring createdby (recognized when inserting, not updating)
+      //   3. updating lastmodifiedby if not null
+      //   4. updating boolean attributes only if set (ie, modified)
+      //   5. setting the changed flag for all other attributes
 
       for (Field<?> f : record.fields()) {
         String fieldName = f.getName();
-        if (fieldName.equalsIgnoreCase("created")   || fieldName.equalsIgnoreCase("lastmodified") ||
-            fieldName.equalsIgnoreCase("createdby") || fieldName.equalsIgnoreCase("lastmodifiedby")) {
+        if (fieldName.equalsIgnoreCase("created") || fieldName.equalsIgnoreCase("lastmodified") ||
+            fieldName.equalsIgnoreCase("createdby")) {
           record.changed(fieldName,false);
+        }
+        else if (fieldName.equalsIgnoreCase("lastmodifiedby")) {
+          record.changed(fieldName, (record.getValue(f) == null) ? false : true);
         }
         else if (fieldName.equalsIgnoreCase("isactive") ||
                  fieldName.equalsIgnoreCase("verified") ||
