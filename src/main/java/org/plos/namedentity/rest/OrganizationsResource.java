@@ -45,9 +45,9 @@ public class OrganizationsResource extends NedResource {
   @POST
   @ApiOperation(value = "Create organization", response = OrganizationComposite.class)
   public Response createOrganization(OrganizationComposite composite,
-                                     @HeaderParam("Authorization") String credentials) {
+                                     @HeaderParam("Authorization") String authstring) {
     try {
-      setCreatedAndLastModifiedBy(credentials,composite);
+      setCreatedAndLastModifiedBy(authstring,composite);
       return Response.status(Response.Status.OK).entity(
           namedEntityService.createComposite(composite, OrganizationComposite.class)).build();
     } catch (NedException e) {

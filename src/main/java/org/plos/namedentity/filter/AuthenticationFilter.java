@@ -41,9 +41,9 @@ public class AuthenticationFilter implements javax.servlet.Filter {
   {
     if (request instanceof HttpServletRequest) {
       HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-      String credentials = httpServletRequest.getHeader(AUTHENTICATION_HEADER);
+      String consumerCredentials = httpServletRequest.getHeader(AUTHENTICATION_HEADER);
 
-      if (authService.authenticate(credentials)) {
+      if (authService.authenticate(consumerCredentials)) {
         filter.doFilter(request, response);
       } else {
         if (response instanceof HttpServletResponse) {

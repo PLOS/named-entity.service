@@ -49,11 +49,11 @@ public class AuthServiceImpl implements AuthService {
     Map<String,String> credentials = parseCredentials(encodedCredentials);
     if (credentials == null) return false;
 
-    final String username = credentials.get("username");
+    final String appname  = credentials.get("appname");
     final String password = credentials.get("password");
 
     Consumer filter = new Consumer();
-    filter.setName(username);
+    filter.setName(appname);
     List<Consumer> consumers = namedEntityDBService.findByAttribute(filter);
     if (consumers.size() == 0) {
       return false; // user not found
@@ -98,7 +98,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     Map<String,String> credentials = new HashMap<String,String>();
-    credentials.put("username", tokenizer.nextToken());
+    credentials.put("appname", tokenizer.nextToken());
     credentials.put("password", tokenizer.nextToken());
     return credentials;
   }
