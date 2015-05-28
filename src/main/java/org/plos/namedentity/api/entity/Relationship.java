@@ -24,11 +24,10 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @XmlRootElement
-public class Relationship {
+public class Relationship extends Entity {
 
-  private Integer id;
-  private Integer masternamedentityid;
-  private Integer childnamedentityid;
+  private Integer nedidrelated;
+
   private Integer typeid;
   private String  type;
   private String  title;
@@ -52,27 +51,27 @@ public class Relationship {
     this.id = id;
   }
 
-  public java.lang.Integer getMasternamedentityid() {
-    return this.masternamedentityid;
+  public Integer getNedidrelated() {
+    return nedidrelated;
   }
 
-  public void setMasternamedentityid(java.lang.Integer masternamedentityid) {
-    this.masternamedentityid = masternamedentityid;
+  public void setNedidrelated(Integer nedidrelated) {
+    this.nedidrelated = nedidrelated;
   }
 
-  public java.lang.Integer getChildnamedentityid() {
-    return this.childnamedentityid;
+  public String getTitle() {
+    return title;
   }
 
-  public void setChildnamedentityid(java.lang.Integer childnamedentityid) {
-    this.childnamedentityid = childnamedentityid;
+  public void setTitle(String title) {
+    this.title = title;
   }
 
-  public java.lang.Integer getTypeid() {
+  public Integer getTypeid() {
     return this.typeid;
   }
 
-  public void setTypeid(java.lang.Integer typeid) {
+  public void setTypeid(Integer typeid) {
     this.typeid = typeid;
   }
 
@@ -123,11 +122,11 @@ public class Relationship {
   public void setLastmodifiedby(java.lang.Integer lastmodifiedby) {
     this.lastmodifiedby = lastmodifiedby;
   }
-  
+
   public String getType() {
       return type;
   }
-  
+
   public void setType(String type) {
       this.type = type;
   }

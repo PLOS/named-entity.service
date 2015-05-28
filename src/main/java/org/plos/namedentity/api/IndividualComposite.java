@@ -16,18 +16,19 @@
  */
 package org.plos.namedentity.api;
 
-import static org.plos.namedentity.api.NedException.ErrorType.*;
-
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.validate.Validatable;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.plos.namedentity.api.NedException.ErrorType.NoAuthEntity;
+import static org.plos.namedentity.api.NedException.ErrorType.NoEmailEntities;
+import static org.plos.namedentity.api.NedException.ErrorType.NoProfileEntities;
 
 @XmlRootElement
 public class IndividualComposite extends Composite implements Validatable {
@@ -43,6 +44,7 @@ public class IndividualComposite extends Composite implements Validatable {
   private List<Uniqueidentifier>  uniqueidentifiers;
   private List<Degree>            degrees;
   private List<Url>               urls;
+  private List<Relationship>      relationships;
 
   public static String typeName = "Individual";
 
@@ -68,6 +70,7 @@ public class IndividualComposite extends Composite implements Validatable {
     map.put(Degree.class, degrees);
     map.put(Url.class, urls);
     map.put(Auth.class, auth);
+    map.put(Relationship.class, relationships);
 
     return map;
   }
@@ -83,6 +86,7 @@ public class IndividualComposite extends Composite implements Validatable {
     degrees            = (List<Degree>) map.get(Degree.class);
     urls               = (List<Url>) map.get(Url.class);
     auth               = (List<Auth>) map.get(Auth.class);
+    relationships      = (List<Relationship>) map.get(Relationship.class);
   }
 
   @Override
@@ -180,4 +184,11 @@ public class IndividualComposite extends Composite implements Validatable {
     this.uniqueidentifiers = uniqueidentifiers;
   }
 
+  public List<Relationship> getRelationships() {
+    return relationships;
+  }
+
+  public void setRelationships(List<Relationship> relationships) {
+    this.relationships = relationships;
+  }
 }

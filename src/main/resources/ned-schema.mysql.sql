@@ -176,9 +176,10 @@ DROP TABLE IF EXISTS namedEntities.relationships;
 CREATE TABLE IF NOT EXISTS namedEntities.relationships (
     id INT NOT NULL AUTO_INCREMENT,
     typeId INT NOT NULL,
-    masterNamedEntityId INT NOT NULL,
-    childNamedEntityId INT NOT NULL,
+    nedId INT NOT NULL,
+    nedIdRelated INT NOT NULL,
     title TEXT NULL,
+    sourceTypeId INT NOT NULL,
     startDate DATE NULL,
     endDate DATE NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

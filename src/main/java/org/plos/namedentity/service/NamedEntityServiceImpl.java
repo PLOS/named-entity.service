@@ -16,11 +16,7 @@
  */
 package org.plos.namedentity.service;
 
-import static org.plos.namedentity.api.NedException.ErrorType.*;
-import static org.plos.namedentity.api.entity.Individualprofile.DISPLAYNAME_MAX_LENGTH;
-
 import org.apache.log4j.Logger;
-import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.api.enums.UidTypeEnum;
@@ -34,6 +30,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
+
+import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
+import static org.plos.namedentity.api.entity.Individualprofile.DISPLAYNAME_MAX_LENGTH;
 
 public class NamedEntityServiceImpl implements NamedEntityService {
 
@@ -62,8 +61,10 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       resolveRole((Role) t);
     else if (t instanceof Url)
       resolveUrl((Url) t);
-    else if (t instanceof Auth) 
+    else if (t instanceof Auth)
       resolveAuth((Auth) t);
+    else if (t instanceof Relationship)
+      resolveIndividualRelationship((Relationship) t);
     else
       throw new UnsupportedOperationException("Can not resolve entity for " + t.getClass());
 
@@ -199,6 +200,19 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     if (entity.getSource() != null)
       entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
+
+    return entity;
+  }
+
+  private Relationship resolveIndividualRelationship(Relationship entity) {
+
+    if (entity.getType() != null)
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Relationship Types"), entity.getType()));
+
+    if (entity.getSource() != null)
+      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
+
+    // TODO: resolve master and child
 
     return entity;
   }
