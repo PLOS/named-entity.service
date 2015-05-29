@@ -723,6 +723,59 @@ public class NamedEntityDBServiceTest {
   }
 
   @Test
+  public void testRelationshipCRUD() {
+
+    // CREATE
+
+    Integer relationshipTypeClassId = nedDBSvc.findTypeClass("Relationship Types");
+    Integer relationshipTypeId = nedDBSvc.findTypeValue(relationshipTypeClassId, "Organization-Author");
+    assertNotNull(relationshipTypeId);
+
+    Relationship orgAuthRel = new Relationship();
+    orgAuthRel.setTypeid(relationshipTypeId);
+    orgAuthRel.setNedid(2);        /* seeded organization */
+    orgAuthRel.setNedidrelated(1); /* seeded individual   */
+    orgAuthRel.setStartdate(dateNow());
+    orgAuthRel.setSourcetypeid( getSourceTypeId(UidTypeEnum.EDITORIAL_MANAGER.getName()) );
+
+    Integer relationshipId = nedDBSvc.create( orgAuthRel );
+    assertNotNull(relationshipId);
+
+    // UPDATE
+
+    Relationship savedRelationship = nedDBSvc.findById(relationshipId, Relationship.class);
+
+    savedRelationship.setEnddate(dateNow());
+
+    assertTrue( nedDBSvc.update(savedRelationship) );
+
+    // Get another instance of same relationship record
+
+    Relationship savedRelationship2 = nedDBSvc.findById(relationshipId, Relationship.class);
+    assertEquals(savedRelationship, savedRelationship2);
+    assertEquals(savedRelationship.getStartdate(), savedRelationship2.getStartdate());
+    assertEquals(savedRelationship.getEnddate(), savedRelationship2.getEnddate());
+
+    // FIND ALL Relationships
+
+    List<Relationship> allRelationshipsInDb = nedDBSvc.findAll(Relationship.class, 0, Integer.MAX_VALUE);
+    assertTrue( allRelationshipsInDb.size() > 0 );
+
+    // FIND BY JOIN-QUERY 
+
+    List<Relationship> relationships = nedDBSvc.findResolvedEntities(savedRelationship.getNedid(), Relationship.class);
+    Relationship relationship = relationships.get(0);
+    assertEquals("Organization-Author", relationship.getType());
+    assertEquals(orgAuthRel.getNedid(), relationship.getNedid());
+
+    // DELETE
+
+    Relationship relationshipToDelete = new Relationship();
+    relationshipToDelete.setId(relationshipId);
+    assertTrue( nedDBSvc.delete(relationshipToDelete) );
+  }
+
+  @Test
   public void testUniqueIdentifiersCRUD() {
 
     final String ORCID_ID = "0000-0001-9430-319X_UIDSERVICE";

@@ -17,62 +17,62 @@ package org.plos.namedentity.persist.db.ringgold;
 public class Sequences {
 
 	/**
-	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_04F3C65D_FF50_4123_898B_6E54134D5940</code>
+	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_2E1A0B81_6378_4923_8180_A16EFE5E333E</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_04F3C65D_FF50_4123_898B_6E54134D5940 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_04F3C65D_FF50_4123_898B_6E54134D5940", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_2E1A0B81_6378_4923_8180_A16EFE5E333E = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_2E1A0B81_6378_4923_8180_A16EFE5E333E", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_07BFC5D6_C91D_4144_BC44_A2D4F7AE88DD</code>
+	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_315A4B84_2978_4B52_AFB4_D401EC13DA82</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_07BFC5D6_C91D_4144_BC44_A2D4F7AE88DD = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_07BFC5D6_C91D_4144_BC44_A2D4F7AE88DD", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_315A4B84_2978_4B52_AFB4_D401EC13DA82 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_315A4B84_2978_4B52_AFB4_D401EC13DA82", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_223084C1_5414_49AD_80F1_F46F7270BA81</code>
+	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_40426F96_CCFE_4987_9D9F_E82FD62EFF9E</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_223084C1_5414_49AD_80F1_F46F7270BA81 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_223084C1_5414_49AD_80F1_F46F7270BA81", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_40426F96_CCFE_4987_9D9F_E82FD62EFF9E = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_40426F96_CCFE_4987_9D9F_E82FD62EFF9E", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_3CBB0D82_9EF6_4805_907C_D5F4B731A095</code>
+	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_40E24C2E_3E67_44F7_A4B4_334E700DE306</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_3CBB0D82_9EF6_4805_907C_D5F4B731A095 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_3CBB0D82_9EF6_4805_907C_D5F4B731A095", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_40E24C2E_3E67_44F7_A4B4_334E700DE306 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_40E24C2E_3E67_44F7_A4B4_334E700DE306", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_463D3BC9_DD5E_4230_BEF6_0C6AB38A96E5</code>
+	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_4A8F5669_1F1B_4A57_A4CF_D82CA285CF54</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_463D3BC9_DD5E_4230_BEF6_0C6AB38A96E5 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_463D3BC9_DD5E_4230_BEF6_0C6AB38A96E5", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_4A8F5669_1F1B_4A57_A4CF_D82CA285CF54 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_4A8F5669_1F1B_4A57_A4CF_D82CA285CF54", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_6264056E_480F_4589_B701_1C35AD7E09A2</code>
+	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_648FE55E_A904_4828_B935_4F5C8CEBED8B</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_6264056E_480F_4589_B701_1C35AD7E09A2 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_6264056E_480F_4589_B701_1C35AD7E09A2", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_648FE55E_A904_4828_B935_4F5C8CEBED8B = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_648FE55E_A904_4828_B935_4F5C8CEBED8B", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_6499E7F2_D471_4E8B_92D2_F10A2F77FDCB</code>
+	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_959CABE5_7D20_4955_B031_10BF448AE4EB</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_6499E7F2_D471_4E8B_92D2_F10A2F77FDCB = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_6499E7F2_D471_4E8B_92D2_F10A2F77FDCB", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_959CABE5_7D20_4955_B031_10BF448AE4EB = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_959CABE5_7D20_4955_B031_10BF448AE4EB", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_669CE25B_1E6D_46F7_A484_D8FB7D55A642</code>
+	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_B6FBD31D_4F68_4A7C_A3BC_7A1F28EF564E</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_669CE25B_1E6D_46F7_A484_D8FB7D55A642 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_669CE25B_1E6D_46F7_A484_D8FB7D55A642", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_B6FBD31D_4F68_4A7C_A3BC_7A1F28EF564E = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_B6FBD31D_4F68_4A7C_A3BC_7A1F28EF564E", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_8BB3DCFC_6400_4D6F_8406_A4CE512177C0</code>
+	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_C95B3097_D120_4558_84C9_396FBC53C0E9</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_8BB3DCFC_6400_4D6F_8406_A4CE512177C0 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_8BB3DCFC_6400_4D6F_8406_A4CE512177C0", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_C95B3097_D120_4558_84C9_396FBC53C0E9 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_C95B3097_D120_4558_84C9_396FBC53C0E9", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_B90E45A3_7F3E_4711_94BC_EF4A93C16EB6</code>
+	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_D2A2BB2D_3490_4A46_8943_C7A8E7237858</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_B90E45A3_7F3E_4711_94BC_EF4A93C16EB6 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_B90E45A3_7F3E_4711_94BC_EF4A93C16EB6", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_D2A2BB2D_3490_4A46_8943_C7A8E7237858 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_D2A2BB2D_3490_4A46_8943_C7A8E7237858", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_BDF3676C_D538_4012_BD1C_559AE141437B</code>
+	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_DCB73248_52F9_4828_93BB_0857493EA96E</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_BDF3676C_D538_4012_BD1C_559AE141437B = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_BDF3676C_D538_4012_BD1C_559AE141437B", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_DCB73248_52F9_4828_93BB_0857493EA96E = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_DCB73248_52F9_4828_93BB_0857493EA96E", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_DADA8B40_9A59_49E4_9DD1_436530B17C1E</code>
+	 * The sequence <code>RINGGOLD.SYSTEM_SEQUENCE_F480950A_431B_437D_9560_CB6665CFAC8D</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_DADA8B40_9A59_49E4_9DD1_436530B17C1E = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_DADA8B40_9A59_49E4_9DD1_436530B17C1E", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_F480950A_431B_437D_9560_CB6665CFAC8D = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_F480950A_431B_437D_9560_CB6665CFAC8D", org.plos.namedentity.persist.db.ringgold.Ringgold.RINGGOLD, org.jooq.impl.SQLDataType.BIGINT);
 }

@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Relationships extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord> {
 
-	private static final long serialVersionUID = 112084729;
+	private static final long serialVersionUID = -1148243491;
 
 	/**
 	 * The reference instance of <code>NAMEDENTITIES.RELATIONSHIPS</code>
@@ -142,7 +142,7 @@ public class Relationships extends org.jooq.impl.TableImpl<org.plos.namedentity.
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_D5E);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_D5E, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_D5E8, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_D5E86);
 	}
 
 	/**

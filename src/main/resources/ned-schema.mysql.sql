@@ -187,7 +187,9 @@ CREATE TABLE IF NOT EXISTS namedEntities.relationships (
     createdBy INT NULL,
     lastModifiedBy INT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (typeId) REFERENCES globalTypes(id)
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (nedIdRelated) REFERENCES namedEntityIdentifiers(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.sourceFields;

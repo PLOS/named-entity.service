@@ -609,10 +609,29 @@ INSERT INTO namedEntities.typeDescriptions(description, howUsed) VALUES ('Degree
 INSERT INTO namedEntities.globalTypes (typeId, shortDescription, typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions),'PhD','PHD');
 INSERT INTO namedEntities.globalTypes (typeId, shortDescription, typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions),'MD','MD');
 
-INSERT INTO namedEntities.namedEntityIdentifiers(id,typeId) VALUES (1,1);
+/* Seed Individual Entity */
+INSERT INTO namedEntities.namedEntityIdentifiers(id,typeId)
+  VALUES (1, (select gt.id from namedEntities.globalTypes gt
+                join namedEntities.typeDescriptions td on gt.typeid = td.id
+               where td.description='Named Party Types' and gt.shortDescription='Individual'));
 
-INSERT INTO namedEntities.individualProfiles (id, nedId, firstName, lastName, displayName, biography, sourceTypeId, isActive)
-    VALUES (1,1,'NED','NED','NED','bio',78,1);
+INSERT INTO namedEntities.individualProfiles (id, nedId, firstName, lastName, displayName, biography, isActive, sourceTypeId)
+  VALUES (1,1,'NED','NED','NED','bio',1,
+    (select gt.id from namedEntities.globalTypes gt
+       join namedEntities.typeDescriptions td on gt.typeid = td.id
+      where td.description='Source Applications' and gt.shortDescription='Ambra'));
+
+/* Seed Organization Entity */
+INSERT INTO namedEntities.namedEntityIdentifiers(id,typeId)
+  VALUES (2, (select gt.id from namedEntities.globalTypes gt
+                join namedEntities.typeDescriptions td on gt.typeid = td.id
+               where td.description='Named Party Types' and gt.shortDescription='Organization'));
+
+INSERT INTO  namedEntities.organizations (id, nedId, familiarName, legalName, isActive, sourceTypeId)
+  VALUES (1,2,'ABC Inc (FN)','ABC Inc (LN)',1,
+    (select gt.id from namedEntities.globalTypes gt
+       join namedEntities.typeDescriptions td on gt.typeid = td.id
+      where td.description='Source Applications' and gt.shortDescription='Ambra'));
 
 /* Consumers */
 INSERT INTO namedEntities.consumers (name, password) VALUES ('tahi' ,/*tahi*/  '$2a$04$8HIFWewGAkrJDGAvCktCUunEm0Mb2Tz100zGRcJ.SVMQqqkGXZt0G');
