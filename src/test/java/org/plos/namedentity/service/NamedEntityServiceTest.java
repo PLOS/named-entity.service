@@ -24,12 +24,10 @@ import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.*;
-import org.springframework.aop.framework.Advised;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,7 +47,8 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.plos.namedentity.api.NedException.ErrorType.*;
+import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidTypeValue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
@@ -113,6 +112,51 @@ public class NamedEntityServiceTest {
     composite2.setEmails( emails );
 
     assertEquals(composite1, composite2);
+  }
+
+  @Test
+  public void testCreateIndividualWithOrgRelationship() {
+
+    OrganizationComposite orgComposite = newOrganizationComposite();
+
+    OrganizationComposite responseComposite = namedEntityService.createComposite(orgComposite, OrganizationComposite.class);
+
+    IndividualComposite individualComposite = newIndividualComposite();
+
+    Relationship relationship = new Relationship();
+//    relationship.setType();
+
+    // TODO: populate relationship
+
+
+
+
+    List<Relationship> relationships = new ArrayList<>();
+    relationships.add(relationship);
+    individualComposite.setRelationships(relationships);
+
+    //namedEntityService.createComposite(individualComposite, IndividualComposite.class);
+
+    // TODO: look at the composite returned to make sure the relationship is set
+
+    // TODO: do a seperate fetch outside of the composite to see if the relationship can be found
+
+  }
+
+  @Test
+  public void testUpdateIndividualWithOrgRelationship() {
+
+
+    // TODO: create an individual and an org in seperate composites
+    // insert a new relationship into the individual linking to the org
+
+
+
+
+
+
+
+
   }
 
   @Test
