@@ -6,14 +6,17 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Auth;
+import org.plos.namedentity.api.entity.Composite;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.service.AuthServiceImpl;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -27,6 +30,7 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -45,9 +49,12 @@ public class IndividualsResource extends NedResource {
 
   @POST
   @ApiOperation(value = "Create individual", response = IndividualComposite.class)
-  public Response createIndividual(IndividualComposite composite) {
+  public Response createIndividual(IndividualComposite composite,
+                                   @HeaderParam("Authorization") String authstring) {
     try {
-      generateDisplaynameIfEmpty( composite );
+      generateDisplaynameIfEmpty(composite);
+
+      setCreatedAndLastModifiedBy(authstring,composite);
 
       return Response.status(Response.Status.OK).entity(
           namedEntityService.createComposite(composite, IndividualComposite.class)).build();
@@ -173,25 +180,29 @@ public class IndividualsResource extends NedResource {
   @POST
   @Path("/{nedId}/individualprofiles")
   @ApiOperation(value = "Add profile", response = Individualprofile.class)
-  public Response addProfile(@PathParam("nedId") int nedId, Individualprofile entity) {
-    return createEntity(nedId, entity);
+  public Response addProfile(@PathParam("nedId") int nedId,
+                             Individualprofile entity,
+                             @HeaderParam("Authorization") String authstring) {
+    return createEntity(nedId, entity, authstring);
   }
 
   @PUT
   @Path("/{nedId}/individualprofiles/{profileId}")
   @ApiOperation(value = "Update a profile", response = Individualprofile.class)
-  public Response updateProfile(@PathParam("nedId") int nedId,
+  public Response updateProfile(@PathParam("nedId")     int nedId,
                                 @PathParam("profileId") int profileId,
+                                @HeaderParam("Authorization") String authstring,
                                 Individualprofile entity) {
-
-    return updateEntity(nedId, profileId, entity);
+    return updateEntity(nedId, profileId, entity, authstring);
   }
 
   @DELETE
   @Path("/{nedId}/individualprofiles/{profileId}")
   @ApiOperation(value = "Delete a profile")
-  public Response deleteProfile(@PathParam("nedId") int nedId,
-                                @PathParam("profileId") int profileId) {
+  public Response deleteProfile(@PathParam("nedId")     int nedId,
+                                @PathParam("profileId") int profileId,
+                                @HeaderParam("Authorization") String authstring) {
+    //TODO: process authstring
 
     if (((List)(getEntities(nedId, Individualprofile.class).getEntity())).size() == 1)
       return nedError(new NedException("Profile entities cannot be empty"), "Unable to delete profile");
@@ -202,7 +213,7 @@ public class IndividualsResource extends NedResource {
   @GET
   @Path("/{nedId}/individualprofiles/{profileId}")
   @ApiOperation(value = "Read profile", response = Individualprofile.class)
-  public Response getProfile(@PathParam("nedId") int nedId,
+  public Response getProfile(@PathParam("nedId")     int nedId,
                              @PathParam("profileId") int profileId) {
     return getEntity(nedId, profileId, Individualprofile.class);
   }
@@ -214,7 +225,6 @@ public class IndividualsResource extends NedResource {
     return getEntities(nedId, Individualprofile.class);
   }
 
-
   /* ----------------------------------------------------------------------- */
   /*  UIDS                                                                   */
   /* ----------------------------------------------------------------------- */
@@ -222,7 +232,10 @@ public class IndividualsResource extends NedResource {
   @DELETE
   @Path("/{nedId}/uids/{id}")
   @ApiOperation(value = "Delete UID")
-  public Response deleteUid(@PathParam("nedId") int nedId, @PathParam("id") int id) {
+  public Response deleteUid(@PathParam("nedId") int nedId,
+                            @PathParam("id")    int id,
+                            @HeaderParam("Authorization") String authstring) {
+    //TODO: process authstring
     return deleteEntity(nedId, id, Uniqueidentifier.class);
   }
 
@@ -244,31 +257,36 @@ public class IndividualsResource extends NedResource {
   @POST
   @Path("/{nedId}/roles")
   @ApiOperation(value = "Create role", response = Role.class)
-  public Response createRole(@PathParam("nedId") int nedId, Role roleEntity) {
-    return createEntity(nedId, roleEntity);
+  public Response createRole(@PathParam("nedId") int nedId,
+                             Role roleEntity,
+                             @HeaderParam("Authorization") String authstring) {
+    return createEntity(nedId, roleEntity, authstring);
   }
 
   @PUT
   @Path("/{nedId}/roles/{roleId}")
   @ApiOperation(value = "Update role", response = Role.class)
-  public Response updateRole(@PathParam("nedId") int nedId, 
-                             @PathParam("roleId") int roleId, 
+  public Response updateRole(@PathParam("nedId") int nedId,
+                             @PathParam("roleId") int roleId,
+                             @HeaderParam("Authorization") String authstring,
                              Role roleEntity) {
-    return updateEntity(nedId, roleId, roleEntity);
+    return updateEntity(nedId, roleId, roleEntity, authstring);
   }
 
   @DELETE
   @Path("/{nedId}/roles/{roleId}")
   @ApiOperation(value = "Delete role")
-  public Response deleteRole(@PathParam("nedId") int nedId, 
-                             @PathParam("roleId") int roleId) {
+  public Response deleteRole(@PathParam("nedId")  int nedId,
+                             @PathParam("roleId") int roleId,
+                             @HeaderParam("Authorization") String authstring) {
+    //TODO: process authstring
     return deleteEntity(nedId, roleId, Role.class);
   }
 
   @GET
   @Path("/{nedId}/roles/{roleId}")
   @ApiOperation(value = "Read role", response = Role.class)
-  public Response getRole(@PathParam("nedId") int nedId,
+  public Response getRole(@PathParam("nedId")  int nedId,
                           @PathParam("roleId") int roleId) {
     return getEntity(nedId, roleId, Role.class);
   }
@@ -294,9 +312,10 @@ public class IndividualsResource extends NedResource {
   @PUT
   @Path("/{nedId}/auth/{authId}")
   @ApiOperation(value = "Update auth record", response = Auth.class)
-  public Response updateAuthRecord(@PathParam("nedId") int nedId,
+  public Response updateAuthRecord(@PathParam("nedId")  int nedId,
                                    @PathParam("authId") int authId,
+                                   @HeaderParam("Authorization") String authstring,
                                    Auth authEntity) {
-    return updateEntity(nedId, authId, authEntity);
+    return updateEntity(nedId, authId, authEntity, authstring);
   }
 }

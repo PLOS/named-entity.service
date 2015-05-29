@@ -22,6 +22,7 @@ import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Auth;
 import org.plos.namedentity.api.entity.Email;
+import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Globaltype;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Organization;
@@ -64,7 +65,7 @@ public class CrudServiceTest {
     Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
     // CREATE
-    Individualprofile individualProfile = new Individualprofile();
+    Individualprofile individualProfile = _(new Individualprofile());
     individualProfile.setNedid(nedId);
     individualProfile.setFirstname("firstname");
     individualProfile.setLastname("lastname");
@@ -99,7 +100,7 @@ public class CrudServiceTest {
 
     Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
-    Organization organization = new Organization();
+    Organization organization = _(new Organization());
     organization.setNedid(nedId);
     organization.setLegalname("legal name"+ UUID.randomUUID().toString());
     organization.setFamiliarname("familiar name");
@@ -135,7 +136,7 @@ public class CrudServiceTest {
 
     Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
-    Individualprofile individualProfile = new Individualprofile();
+    Individualprofile individualProfile = _(new Individualprofile());
     individualProfile.setNedid(nedId);
     individualProfile.setFirstname("firstname");
     individualProfile.setLastname("lastname");
@@ -146,7 +147,7 @@ public class CrudServiceTest {
     crudService.create(individualProfile);
 
     // Create
-    Email email = new Email();
+    Email email = _(new Email());
     email.setNedid(nedId);
     email.setType("Work");
     email.setEmailaddress("bill@microsoft");
@@ -177,7 +178,7 @@ public class CrudServiceTest {
 
     Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
-    Individualprofile individualProfile = new Individualprofile();
+    Individualprofile individualProfile = _(new Individualprofile());
     individualProfile.setNedid(nedId);
     individualProfile.setFirstname("firstname");
     individualProfile.setLastname("lastname");
@@ -328,7 +329,7 @@ public class CrudServiceTest {
 
     // create pojo
 
-    Email newEmail = new Email();
+    Email newEmail = _(new Email());
     newEmail.setNedid(1);
     newEmail.setTypeid(emailTypeId);
     newEmail.setEmailaddress("walter@foo.com");
@@ -387,7 +388,7 @@ public class CrudServiceTest {
     /*  CREATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    Role newRole = new Role();
+    Role newRole = _(new Role());
     newRole.setNedid(1);
     newRole.setApplicationtype("Editorial Manager");
     newRole.setType("Academic Editor (PLOS ONE)");
@@ -438,7 +439,7 @@ public class CrudServiceTest {
     /*  CREATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    Address newAddress = new Address();
+    Address newAddress = _(new Address());
     newAddress.setNedid(1);
     newAddress.setType("Office");
     newAddress.setAddressline1("addressline 1");
@@ -509,7 +510,7 @@ public class CrudServiceTest {
     /*  CREATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    Uniqueidentifier uidEntity = new Uniqueidentifier();
+    Uniqueidentifier uidEntity = _(new Uniqueidentifier());
     uidEntity.setNedid(1);
     uidEntity.setType("ORCID");
     uidEntity.setUniqueidentifier(ORCID_ID1);
@@ -560,7 +561,7 @@ public class CrudServiceTest {
 
     final String PASSWORD = "super_secret_password";
 
-    Auth authEntity = new Auth();
+    Auth authEntity = _(new Auth());
     String authId = authEntity.getAuthid();
     assertNotNull(authId);
     assertEquals((32+4), authId.length());
@@ -592,7 +593,7 @@ public class CrudServiceTest {
 
     Integer nedId = nedDBSvc.newNamedEntityId("Individual");
 
-    Email email = new Email();
+    Email email = _(new Email());
     email.setNedid(nedId);
     email.setType("Work");
     email.setEmailaddress(UUID.randomUUID().toString()+"@foo.com");
@@ -657,5 +658,13 @@ public class CrudServiceTest {
     String nextHex = Integer.toHexString( (hexValue+1) % 16 );
     chars[0] = nextHex.charAt(0);
     return new String(chars);
+  }
+
+  // decorator function to endow entity with core attribute values, such as createdby.
+  private <S extends Entity>
+  S _(S entity) {
+    entity.setCreatedby(1);
+    entity.setLastmodifiedby(1);
+    return entity;
   }
 }

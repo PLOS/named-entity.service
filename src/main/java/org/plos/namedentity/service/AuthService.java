@@ -16,6 +16,10 @@
  */
 package org.plos.namedentity.service;
 
+import java.util.Map;
+
 public interface AuthService {
-  boolean authenticate(String credentials);
+
+  boolean authenticate     (String credentials);
+  Map     parseCredentials (String encodedCredentials);
 }

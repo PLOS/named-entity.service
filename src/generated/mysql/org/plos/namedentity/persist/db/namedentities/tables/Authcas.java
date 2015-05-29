@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Authcas extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.AuthcasRecord> {
 
-	private static final long serialVersionUID = -1643244857;
+	private static final long serialVersionUID = 112254925;
 
 	/**
 	 * The reference instance of <code>namedEntities.authCas</code>
@@ -82,9 +82,19 @@ public class Authcas extends org.jooq.impl.TableImpl<org.plos.namedentity.persis
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AuthcasRecord, java.sql.Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
+	 * The column <code>namedEntities.authCas.createdBy</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AuthcasRecord, java.lang.Integer> CREATEDBY = createField("createdBy", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
 	 * The column <code>namedEntities.authCas.lastModified</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AuthcasRecord, java.sql.Timestamp> LASTMODIFIED = createField("lastModified", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+
+	/**
+	 * The column <code>namedEntities.authCas.lastModifiedBy</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AuthcasRecord, java.lang.Integer> LASTMODIFIEDBY = createField("lastModifiedBy", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>namedEntities.authCas</code> table reference
@@ -137,7 +147,7 @@ public class Authcas extends org.jooq.impl.TableImpl<org.plos.namedentity.persis
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.AuthcasRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.AuthcasRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.AUTHCAS_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.AUTHCAS_IBFK_2);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.AuthcasRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.AUTHCAS_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.AUTHCAS_IBFK_2, org.plos.namedentity.persist.db.namedentities.Keys.AUTHCAS_IBFK_3, org.plos.namedentity.persist.db.namedentities.Keys.AUTHCAS_IBFK_4);
 	}
 
 	/**
