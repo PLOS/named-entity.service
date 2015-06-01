@@ -350,7 +350,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     if (cname.equals(Auth.class.getCanonicalName()))
       return (T)findAuthCasByPrimaryKey(pk);
     if (cname.equals(Relationship.class.getCanonicalName()))
-      return (T)findRelatinshipByPrimaryKey(pk);
+      return (T)findRelationshipByPrimaryKey(pk);
 
     throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
   }
@@ -393,7 +393,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     if (cname.equals(Auth.class.getCanonicalName()))
       return (List<T>)findAuthByNedId(nedId);
     if (cname.equals(Relationship.class.getCanonicalName()))
-      return (List<T>)findRelationshipByNedId(nedId);
+      return (List<T>)findRelationshipsByNedId(nedId);
 
     throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
 
@@ -717,11 +717,13 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .into(Auth.class);
   }
 
-  private List<Relationship> findRelationshipByNedId(Integer nedId) {
+  private List<Relationship> findRelationshipsByNedId(Integer nedId) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
     Relationships r = RELATIONSHIPS.as("r");
+
+    // fetch ALL relationships that this entity participates (nedid OR nedidrelated)
 
     return this.context
         .select(
@@ -733,7 +735,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .from(r)
         .leftOuterJoin(gt1).on(r.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(r.SOURCETYPEID.equal(gt2.ID))
-        .where(r.NEDID.equal(nedId))
+        .where(r.NEDID.equal(nedId)).or(r.NEDIDRELATED.equal(nedId))
         .fetch()
         .into(Relationship.class);
   }
@@ -762,7 +764,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     return record.into(Auth.class);
   }
 
-  private Relationship findRelatinshipByPrimaryKey(Integer id) {
+  private Relationship findRelationshipByPrimaryKey(Integer id) {
 
     Relationships rel = RELATIONSHIPS.as("r");
 

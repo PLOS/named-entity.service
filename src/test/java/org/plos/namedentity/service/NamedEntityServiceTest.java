@@ -150,7 +150,9 @@ public class NamedEntityServiceTest {
   @Test
   public void testRelationshipEntityCrud() {
 
-    // CREATE relationship entity. we don't expect the address type to persist.
+    /* ---------------------------------------------------------------------- */
+    /*  CREATE Relationship #1                                                */
+    /* ---------------------------------------------------------------------- */
 
     Relationship relationshipEntity = new Relationship();
     relationshipEntity.setNedid(1);        /* seeded individual   */
@@ -171,24 +173,45 @@ public class NamedEntityServiceTest {
     // try again but this time use type resolver. remember that type names are
     // resolved by joins when querying database -- need foreign key to get name.
 
-    Integer createRelationshipId = crudService.create( namedEntityService.resolveValuesToIds(relationshipEntity) );
-    assertNotNull( createRelationshipId );
+    Integer relationshipId1 = crudService.create( namedEntityService.resolveValuesToIds(relationshipEntity) );
+    assertNotNull( relationshipId1 );
 
-    Relationship savedEntity = namedEntityService.findResolvedEntityByKey(createRelationshipId, Relationship.class);
-    assertEquals("Individual Affiliated with Organization", savedEntity.getType());
+    Relationship savedEntity1 = namedEntityService.findResolvedEntityByKey(relationshipId1, Relationship.class);
+    assertEquals("Individual Affiliated with Organization", savedEntity1.getType());
 
     // UPDATE relationship entity.
 
     java.sql.Date enddate = dateNow();
-    savedEntity.setEnddate(enddate);
-    assertTrue( crudService.update(namedEntityService.resolveValuesToIds(savedEntity)) );
+    savedEntity1.setEnddate(enddate);
+    assertTrue( crudService.update(namedEntityService.resolveValuesToIds(savedEntity1)) );
 
-    Relationship savedEntity2 = namedEntityService.findResolvedEntityByKey(createRelationshipId, Relationship.class);
-    assertEquals(enddate, savedEntity2.getEnddate());
+    savedEntity1 = namedEntityService.findResolvedEntityByKey(relationshipId1, Relationship.class);
+    assertEquals(enddate, savedEntity1.getEnddate());
 
-    // DELETE.
+    /* ---------------------------------------------------------------------- */
+    /*  CREATE Relationship #2                                                */
+    /* ---------------------------------------------------------------------- */
 
-    assertTrue( crudService.delete(savedEntity) );
+    relationshipEntity = new Relationship();
+    relationshipEntity.setNedid(2);        /* seeded organization */
+    relationshipEntity.setNedidrelated(1); /* seeded individual   */
+    relationshipEntity.setType("Organization-Author");
+    relationshipEntity.setStartdate( dateNow() );
+    relationshipEntity.setSource("Ambra");
+
+    Integer relationshipId2 = crudService.create( namedEntityService.resolveValuesToIds(relationshipEntity) );
+    assertNotNull( relationshipId2 );
+
+    // Lookup by nedid should return all relationships entity participates in.
+
+    List<Relationship> allRelationshipsForEntity = namedEntityService.findResolvedEntities(1, Relationship.class);
+    assertEquals(2, allRelationshipsForEntity.size());
+
+    // DELETE
+
+    for (Relationship r : allRelationshipsForEntity) {
+      assertTrue( crudService.delete(r) );
+    }
   }
 
   @Test
