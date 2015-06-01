@@ -212,8 +212,6 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     if (entity.getSource() != null)
       entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
 
-    // TODO: resolve master and child
-
     return entity;
   }
 

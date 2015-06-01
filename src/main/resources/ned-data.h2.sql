@@ -81,6 +81,7 @@ INSERT INTO namedEntities.globalTypes (typeId,shortDescription,longDescription,t
 INSERT INTO namedEntities.globalTypes (typeId,shortDescription,longDescription,typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions), 'AE-Author', NULL, 'AEAU');
 INSERT INTO namedEntities.globalTypes (typeId,shortDescription,longDescription,typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions), 'Organization-Author', NULL, 'ORAU');
 INSERT INTO namedEntities.globalTypes (typeId,shortDescription,longDescription,typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions), 'AE-Reviewer', NULL, 'AERV');
+INSERT INTO namedEntities.globalTypes (typeId,shortDescription,longDescription,typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions), 'Individual Affiliated with Organization', NULL, 'I-AFF-O');
 
 /* Country Codes for Phone Numbers */
 INSERT INTO namedEntities.typeDescriptions(description, howUsed) VALUES ('Country Codes for Phone Numbers','01, 44, etc');

@@ -117,30 +117,34 @@ public class NamedEntityServiceTest {
   @Test
   public void testCreateIndividualWithOrgRelationship() {
 
+    // org composite with type names (unresolved)
     OrganizationComposite orgComposite = newOrganizationComposite();
 
-    OrganizationComposite responseComposite = namedEntityService.createComposite(orgComposite, OrganizationComposite.class);
+    // save and read org from database (resolved composite)
+    OrganizationComposite savedOrgComposite = namedEntityService.createComposite(orgComposite, OrganizationComposite.class);
 
+    // individual composite with type names (unresovled)
     IndividualComposite individualComposite = newIndividualComposite();
 
+    // define relationship. explicitly set nedid of org. nedid of individual
+    // will be set during composite creation.
+
     Relationship relationship = new Relationship();
-//    relationship.setType();
-
-    // TODO: populate relationship
-
-
-
+    relationship.setType("Individual Affiliated with Organization");
+    relationship.setNedidrelated(savedOrgComposite.getNedid());
+    relationship.setSource("Ambra");
 
     List<Relationship> relationships = new ArrayList<>();
     relationships.add(relationship);
     individualComposite.setRelationships(relationships);
 
-    //namedEntityService.createComposite(individualComposite, IndividualComposite.class);
+    IndividualComposite savedIndividualComposite = namedEntityService.createComposite(individualComposite, IndividualComposite.class);
 
-    // TODO: look at the composite returned to make sure the relationship is set
-
-    // TODO: do a seperate fetch outside of the composite to see if the relationship can be found
-
+    List<Relationship> savedIndividualRelationships = savedIndividualComposite.getRelationships();
+    assertEquals(1, savedIndividualRelationships.size());
+    assertNotNull( savedIndividualComposite.getEmails().get(0).getNedid() );
+    assertEquals( savedOrgComposite.getNedid(), savedIndividualRelationships.get(0).getNedidrelated() );
+    assertEquals("Individual Affiliated with Organization", savedIndividualRelationships.get(0).getType());
   }
 
   @Test
