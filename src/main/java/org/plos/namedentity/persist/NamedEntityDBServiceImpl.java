@@ -463,6 +463,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
             r.ID, r.NEDID, r.NEDIDRELATED,
             gt1.SHORTDESCRIPTION.as("type"),
             gt2.SHORTDESCRIPTION.as("source"),
+            r.TITLE, r.STARTDATE, r.ENDDATE,
             r.CREATED, r.LASTMODIFIED)
         .from(r)
         .leftOuterJoin(gt1).on(r.TYPEID.equal(gt1.ID))

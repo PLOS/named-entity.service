@@ -148,19 +148,47 @@ public class NamedEntityServiceTest {
   }
 
   @Test
-  public void testUpdateIndividualWithOrgRelationship() {
+  public void testRelationshipEntityCrud() {
 
+    // CREATE relationship entity. we don't expect the address type to persist.
 
-    // TODO: create an individual and an org in seperate composites
-    // insert a new relationship into the individual linking to the org
+    Relationship relationshipEntity = new Relationship();
+    relationshipEntity.setNedid(1);        /* seeded individual   */
+    relationshipEntity.setNedidrelated(2); /* seeded organization */
+    relationshipEntity.setType("Individual Affiliated with Organization");
+    relationshipEntity.setStartdate( dateNow() );
+    relationshipEntity.setSource("Ambra");
 
+    try {
+      crudService.create(relationshipEntity);
+      fail();
+    }
+    catch (NedException expected) {
+      // typeid hasn't been resolved yet, so we expect a not-null
+      // constraint to be thrown
+    }
 
+    // try again but this time use type resolver. remember that type names are
+    // resolved by joins when querying database -- need foreign key to get name.
 
+    Integer createRelationshipId = crudService.create( namedEntityService.resolveValuesToIds(relationshipEntity) );
+    assertNotNull( createRelationshipId );
 
+    Relationship savedEntity = namedEntityService.findResolvedEntityByKey(createRelationshipId, Relationship.class);
+    assertEquals("Individual Affiliated with Organization", savedEntity.getType());
 
+    // UPDATE relationship entity.
 
+    java.sql.Date enddate = dateNow();
+    savedEntity.setEnddate(enddate);
+    assertTrue( crudService.update(namedEntityService.resolveValuesToIds(savedEntity)) );
 
+    Relationship savedEntity2 = namedEntityService.findResolvedEntityByKey(createRelationshipId, Relationship.class);
+    assertEquals(enddate, savedEntity2.getEnddate());
 
+    // DELETE.
+
+    assertTrue( crudService.delete(savedEntity) );
   }
 
   @Test
