@@ -44,7 +44,6 @@ import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -71,7 +70,6 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   private static final String TYPE_CLASS_URI     = "/typeclasses";
   private static final String INDIVIDUAL_URI     = "/individuals";
   private static final String ORGANIZATION_URI   = "/organizations";
-  private static final String PASSWORD           = "secret_password";
 
   private static Integer nedIndividualId   = null;
   private static Integer nedOrganizationId = null;
@@ -211,7 +209,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     response = buildRequestDefaultAuth(INDIVIDUAL_URI)
                 .post(Entity.json(String.format(compositeJsonTemplate, 
                   UUID.randomUUID(), "jane.q.doe.work@foo.com", "Editorial Manager", 
-                  "secret_password", "jane.q.doe.work@foo.com")));
+                  "secret_password4", "jane.q.doe.work@foo.com")));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
@@ -281,7 +279,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     response = buildRequestDefaultAuth(INDIVIDUAL_URI)
                 .post(Entity.json(String.format(compositeJsonTemplate,
-                  unicodeDisplayname, uuidEmailaddress, "Ambra", "secret_password", uuidEmailaddress)));
+                  unicodeDisplayname, uuidEmailaddress, "Ambra", "secret_password5", uuidEmailaddress)));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
@@ -977,7 +975,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
       NedErrorResponse ner = unmarshalEntity(responseJson, NedErrorResponse.class,
                                              jsonUnmarshaller(NedErrorResponse.class));
 
-      assertEquals(PasswordLengthError.getErrorCode(), ner.errorCode);
+      assertEquals(PasswordFormatError.getErrorCode(), ner.errorCode);
     }
 
     // test no "password" attribute in json payload

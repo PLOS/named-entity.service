@@ -16,19 +16,19 @@
  */
 package org.plos.namedentity.api.entity;
 
-import static org.plos.namedentity.api.NedException.ErrorType.*;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
+import org.junit.Test;
 import org.plos.namedentity.api.NedException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.plos.namedentity.api.NedException.ErrorType.CasIdError;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidCasId;
+import static org.plos.namedentity.api.NedException.ErrorType.PasswordFormatError;
 
 public class AuthTest {
 
@@ -107,6 +107,43 @@ public class AuthTest {
 
     for (String password : okPasswords) {
       assertTrue( auth.isValidDigestFormat(password) );
+    }
+  }
+
+  @Test
+  public void testValidPlaintextPasswordFormat() {
+
+    Auth auth = new Auth();
+    auth.setAuthid("QKWVMXWCOYHJ8WTC9I0LUI2ETIFK0");
+    auth.setPassword("0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef012345");
+
+    String[] validPasswords = {
+        "1aaaaaaa",
+        "qwqwe1ee",
+        "aaaaaaa1",
+        "1111111&"
+    };
+
+    String[] invalidPasswords = {
+        "a",
+        "1",
+        "aaaaaaaa",
+        "&&&&&&&&"
+    };
+
+    for (String password : validPasswords) {
+      auth.setPlainTextPassword(password);
+      auth.validate();
+    }
+
+    for (String password : invalidPasswords) {
+      auth.setPlainTextPassword(password);
+      try {
+        auth.validate();
+        fail();
+      } catch (NedException e) {
+        assertEquals(e.getErrorType(), PasswordFormatError);
+      }
     }
   }
 

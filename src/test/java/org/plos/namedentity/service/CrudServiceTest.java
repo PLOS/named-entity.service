@@ -30,7 +30,6 @@ import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.persist.NamedEntityDBService;
-import org.plos.namedentity.service.PasswordDigestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -559,7 +558,7 @@ public class CrudServiceTest {
   @Test
   public void testAuthCasCRUD() {
 
-    final String PASSWORD = "super_secret_password";
+    final String PASSWORD = "super_secret_password1";
 
     Auth authEntity = _(new Auth());
     String authId = authEntity.getAuthid();
@@ -585,7 +584,7 @@ public class CrudServiceTest {
         crudService.create(authEntity);
         fail();
       } catch (NedException expected) {
-        assertEquals(PasswordLengthError, expected.getErrorType());
+        assertEquals(PasswordFormatError, expected.getErrorType());
       }
     }
 
