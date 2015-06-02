@@ -1,0 +1,7 @@
+{
+    "type"            : "%s",
+    "nedid"           : %d,
+    "nedidrelated"    : %d,
+    "startdate"       : "%s",
+    "source"          : "Ambra"
+}

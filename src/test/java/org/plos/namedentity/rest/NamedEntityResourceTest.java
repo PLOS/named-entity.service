@@ -19,6 +19,7 @@ package org.plos.namedentity.rest;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.plos.namedentity.api.adapter.DateAdapter;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedErrorResponse;
 import org.plos.namedentity.api.NedException;
@@ -29,6 +30,7 @@ import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Globaltype;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Organization;
+import org.plos.namedentity.api.entity.Relationship;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
@@ -52,6 +54,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -60,6 +64,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import static org.plos.namedentity.api.NedException.ErrorType.*;
+import static java.lang.Integer.parseInt;
 
 public class NamedEntityResourceTest extends BaseResourceTest {
 
@@ -71,6 +76,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
   private static Integer nedIndividualId   = null;
   private static Integer nedOrganizationId = null;
+
+  private DateAdapter dateAdapter;
 
   @Before
   public void setup() throws Exception {
@@ -115,6 +122,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
         nedOrganizationId = composite.getNedid();
       }
+
+      dateAdapter = new DateAdapter();
     }
   }
 
@@ -589,11 +598,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   public void testRoleCrud() throws IOException, JAXBException {
 
     String rolesURI = String.format("%s/%d/roles", INDIVIDUAL_URI, nedIndividualId);
-
-    Calendar cal = new GregorianCalendar();   // Jun 30, 2014 00:00:00 local time
-    cal.set(2014, (6 - 1), 30, 0, 0, 0);      // month is 0-based, so subtract 1
-    cal.set(Calendar.MILLISECOND, 0);
-    Date START_DATE = cal.getTime();
+    Date START_DATE = getDate(6, 30, 2014);
 
     /* ------------------------------------------------------------------ */
     /*  CREATE                                                            */
@@ -683,6 +688,121 @@ public class NamedEntityResourceTest extends BaseResourceTest {
         .delete();
 
     assertEquals(204, response.getStatus());
+  }
+
+  @Test
+  public void testRelationshipCrud() throws Exception {
+
+    String relationshipsURI = String.format("%s/%d/relationships", INDIVIDUAL_URI, nedIndividualId);
+
+    Relationship[] relationships = new Relationship[2];
+      Relationship r = new Relationship();
+      r.setType("Individual Affiliated with Organization");
+      r.setNedid(nedIndividualId);
+      r.setNedidrelated(nedOrganizationId);
+      r.setStartdate( dateAdapter.unmarshal("2015-06-30"));
+    relationships[0] = r;
+      r = new Relationship();
+      r.setType("Organization-Author");
+      r.setNedid(nedOrganizationId);
+      r.setNedidrelated(nedIndividualId);
+      r.setStartdate( dateAdapter.unmarshal("2015-01-15"));
+    relationships[1] = r;
+
+    /* ------------------------------------------------------------------ */
+    /*  CREATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    String relationshipJsonTemplate = new String(Files.readAllBytes(
+      Paths.get(TEST_RESOURCE_PATH + "relationship.template.json")));
+
+    for (int i = 0; i < relationships.length; i++) {
+
+      Response response = target(relationshipsURI).request(MediaType.APPLICATION_JSON_TYPE)
+        .post(Entity.json(String.format(relationshipJsonTemplate, 
+          relationships[i].getType(), relationships[i].getNedid(),
+          relationships[i].getNedidrelated(), relationships[i].getStartdate())));
+
+      assertEquals(200, response.getStatus());
+
+      String responseJson = response.readEntity(String.class);
+
+      Unmarshaller unmarshaller = jsonUnmarshaller(Relationship.class);
+      Relationship relationship = unmarshalEntity(responseJson, Relationship.class, unmarshaller);
+
+      assertTrue( relationship.getId() > 0 );
+      assertEquals(relationships[i].getNedid(), relationship.getNedid());
+      assertEquals(relationships[i].getNedidrelated(), relationship.getNedidrelated());
+      assertEquals(relationships[i].getType(), relationship.getType());
+      assertEquals(relationships[i].getStartdate(), relationship.getStartdate());
+
+      relationships[i].setId(relationship.getId());
+    }
+
+    String relationshipURI = relationshipsURI + "/" + relationships[0].getId(); 
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY RELATIONSHIP ID (PK))                                    */
+    /* ------------------------------------------------------------------ */
+
+    //Response response = target(relationshipURI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    //assertEquals(200, response.getStatus());
+
+    //responseJson = response.readEntity(String.class);
+
+    //Relationship foundRelationship = unmarshalEntity(responseJson, Relationship.class, unmarshaller);
+    //assertEquals(relationships[0], foundRelationship);
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY NED ID)                                                  */
+    /* ------------------------------------------------------------------ */
+
+    //response = target(relationshipsURI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    //assertEquals(200, response.getStatus());
+
+    //responseJson = response.readEntity(String.class);
+
+    //List<Role> roles = unmarshalEntities(responseJson, Role.class, unmarshaller);
+    //assertEquals(3, roles.size());
+
+    //Role role0 = roles.get(0);
+    //assertTrue(role0.getId() > 0);
+    //assertEquals(nedIndividualId, role0.getNedid());
+    //assertEquals("Author", role0.getType());
+
+    //Role role1 = roles.get(1);
+    //assertTrue(role1.getId() > 0);
+    //assertEquals(nedIndividualId, role1.getNedid());
+    //assertEquals("Editorial Manager", role1.getApplicationtype());
+    //assertEquals("Co-Author", role1.getType());
+
+    //Role role2 = roles.get(2);
+    //assertTrue(role2.getId() > 0);
+    //assertEquals(nedIndividualId, role2.getNedid());
+    //assertEquals("Editorial Manager", role2.getApplicationtype());
+    //assertEquals("Academic Editor (PLOS ONE)", role2.getType());
+    //assertEquals(START_DATE, role2.getStartdate());
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    //response = target(relationshipURI)
+      //.request(MediaType.APPLICATION_JSON_TYPE)
+        //.put(Entity.json(writeValueAsString(role)));
+
+    //assertEquals(200, response.getStatus());
+
+    /* ------------------------------------------------------------------ */
+    /*  DELETE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    //response = target(relationshipURI)
+      //.request(MediaType.APPLICATION_JSON_TYPE)
+        //.delete();
+
+    //assertEquals(204, response.getStatus());
   }
 
   @Test
@@ -1470,7 +1590,6 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     // DELETE:TODO
   }
 
-
   private void assertAuth(Auth auth) {
     // note: password not marshalled to json (ie, not in response)
     assertTrue( auth.getId() > 0 );
@@ -1479,5 +1598,21 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals("jane.q.doe.work@foo.com", auth.getEmail());
     assertTrue( auth.getEmailid() > 0 );
     assertTrue( auth.getIsactive().equals((byte)1) );
+  }
+
+  private Date getDate(String datestring) {
+    Matcher m = Pattern.compile("^([0-9]{4})-([0-9]{2})-([0-9]{2})$").matcher(datestring);
+    if (m.find()) {
+      /* group(1)=yyyy, group(2)=mm, group(3)=dd */
+      return getDate(parseInt(m.group(2),10), parseInt(m.group(3),10), parseInt(m.group(1)));
+    }
+    return null;
+  }
+
+  private Date getDate(int month, int day, int year) {
+    Calendar cal = new GregorianCalendar();
+    cal.set(year, (month - 1), day, 0, 0, 0); // month is 0-based, so subtract 1
+    cal.set(Calendar.MILLISECOND, 0);
+    return cal.getTime();                     // returns date @ 00:00:00 local time
   }
 }

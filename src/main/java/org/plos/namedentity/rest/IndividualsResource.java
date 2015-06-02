@@ -9,6 +9,7 @@ import org.plos.namedentity.api.entity.Auth;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Individualprofile;
+import org.plos.namedentity.api.entity.Relationship;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 
@@ -278,6 +279,49 @@ public class IndividualsResource extends NedResource {
   @ApiOperation(value = "List roles")
   public Response getRoles(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Role.class);
+  }
+
+  /* ----------------------------------------------------------------------- */
+  /*  RELATIONSHIP CRUD                                                      */
+  /* ----------------------------------------------------------------------- */
+
+  @POST
+  @Path("/{nedId}/relationships")
+  @ApiOperation(value = "Create relationship", response = Relationship.class)
+  public Response createRelationship(@PathParam("nedId") int nedId, Relationship relationshipEntity) {
+    return createEntity(nedId, relationshipEntity);
+  }
+
+  @PUT
+  @Path("/{nedId}/relationships/{relationshipId}")
+  @ApiOperation(value = "Update relationship", response = Relationship.class)
+  public Response updateRelationship(@PathParam("nedId")          int nedId,
+                                     @PathParam("relationshipId") int relationshipId,
+                                     Relationship relationshipEntity) {
+    return updateEntity(nedId, relationshipId, relationshipEntity);
+  }
+
+  @DELETE
+  @Path("/{nedId}/relationships/{relationshipId}")
+  @ApiOperation(value = "Delete relationship")
+  public Response deleteRelationship(@PathParam("nedId")          int nedId,
+                                     @PathParam("relationshipId") int relationshipId) {
+    return deleteEntity(nedId, relationshipId, Relationship.class);
+  }
+
+  @GET
+  @Path("/{nedId}/relationships/{relationshipId}")
+  @ApiOperation(value = "Read relationship", response = Relationship.class)
+  public Response getRelationship(@PathParam("nedId")          int nedId,
+                                  @PathParam("relationshipId") int relationshipId) {
+    return getEntity(nedId, relationshipId, Relationship.class);
+  }
+
+  @GET
+  @Path("/{nedId}/relationships")
+  @ApiOperation(value = "List relationships")
+  public Response getRelationship(@PathParam("nedId") int nedId) {
+    return getEntities(nedId, Relationship.class);
   }
 
   /* ----------------------------------------------------------------------- */
