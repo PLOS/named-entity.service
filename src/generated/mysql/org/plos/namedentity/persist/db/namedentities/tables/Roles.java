@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Roles extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord> {
 
-	private static final long serialVersionUID = 2105779479;
+	private static final long serialVersionUID = -1477602922;
 
 	/**
 	 * The reference instance of <code>namedEntities.roles</code>
@@ -72,19 +72,19 @@ public class Roles extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.sql.Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
+	 * The column <code>namedEntities.roles.createdBy</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.lang.Integer> CREATEDBY = createField("createdBy", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
 	 * The column <code>namedEntities.roles.lastModified</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.sql.Timestamp> LASTMODIFIED = createField("lastModified", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>namedEntities.roles.createdBy</code>.
-	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.lang.Integer> CREATEDBY = createField("createdBy", org.jooq.impl.SQLDataType.INTEGER, this, "");
-
-	/**
 	 * The column <code>namedEntities.roles.lastModifiedBy</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.lang.Integer> LASTMODIFIEDBY = createField("lastModifiedBy", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, java.lang.Integer> LASTMODIFIEDBY = createField("lastModifiedBy", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>namedEntities.roles</code> table reference
@@ -137,7 +137,7 @@ public class Roles extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_2, org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_4, org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_3);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.RolesRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_2, org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_4, org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_3, org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_5, org.plos.namedentity.persist.db.namedentities.Keys.ROLES_IBFK_6);
 	}
 
 	/**

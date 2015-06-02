@@ -27,6 +27,7 @@ import org.jooq.SelectOnConditionStep;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UpdatableRecord;
+import org.plos.namedentity.api.Consumer;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.NedException.ErrorType;
 import org.plos.namedentity.api.entity.*;
@@ -80,13 +81,19 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       // attributes. let's manually control this for now by ...
       //   
       //   1. ignoring created and lastmodified timestamp attributes
-      //   2. updating boolean attributes only if set (ie, modified)
-      //   3. setting the changed flag for all other attributes
+      //   2. ignoring createdby (recognized when inserting, not updating)
+      //   3. updating lastmodifiedby if not null
+      //   4. updating boolean attributes only if set (ie, modified)
+      //   5. setting the changed flag for all other attributes
 
       for (Field<?> f : record.fields()) {
         String fieldName = f.getName();
-        if (fieldName.equalsIgnoreCase("created") || fieldName.equalsIgnoreCase("lastmodified")) {
+        if (fieldName.equalsIgnoreCase("created") || fieldName.equalsIgnoreCase("lastmodified") ||
+            fieldName.equalsIgnoreCase("createdby")) {
           record.changed(fieldName,false);
+        }
+        else if (fieldName.equalsIgnoreCase("lastmodifiedby")) {
+          record.changed(fieldName, (record.getValue(f) == null) ? false : true);
         }
         else if (fieldName.equalsIgnoreCase("isactive") ||
                  fieldName.equalsIgnoreCase("verified") ||
@@ -801,6 +808,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     entityTableMap.put(Address.class, new TablePkPair(ADDRESSES, ADDRESSES.ID));
     entityTableMap.put(Auth.class, new TablePkPair(AUTHCAS, AUTHCAS.ID));
+    entityTableMap.put(Consumer.class, new TablePkPair(CONSUMERS, CONSUMERS.ID));
     entityTableMap.put(Degree.class, new TablePkPair(DEGREES, DEGREES.ID));
     entityTableMap.put(Email.class, new TablePkPair(EMAILS, EMAILS.ID));
     entityTableMap.put(Globaltype.class, new TablePkPair(GLOBALTYPES, GLOBALTYPES.ID));

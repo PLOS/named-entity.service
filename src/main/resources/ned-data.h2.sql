@@ -1,3 +1,7 @@
+/* Consumers */
+INSERT INTO namedEntities.consumers (id,name,password) VALUES (1,'akita',/*akita*/ '$2a$04$bhCH3yv8auaZpzW0ZGwrHOdIkJpFQwCABXZnd8fo7B4LyIE1MMxve');
+INSERT INTO namedEntities.consumers (id,name,password) VALUES (2,'tahi' ,/*tahi*/  '$2a$04$8HIFWewGAkrJDGAvCktCUunEm0Mb2Tz100zGRcJ.SVMQqqkGXZt0G');
+INSERT INTO namedEntities.consumers (id,name,password) VALUES (3,'etl'  ,/*etl*/   '$2a$04$.sb5zU1tnhxJc2.4IvAu3uahi6NZdjNWzcDkxttY22JFrHc/IgrKu');
 
 /* Named Party Types */
 INSERT INTO namedEntities.typeDescriptions(description,howUsed) VALUES ('Named Party Types','Individual, Organization');
@@ -611,5 +615,7 @@ INSERT INTO namedEntities.globalTypes (typeId, shortDescription, typeCode) VALUE
 
 INSERT INTO namedEntities.namedEntityIdentifiers(id,typeId) VALUES (1,1);
 
-INSERT INTO namedEntities.individualProfiles (id, nedId, firstName, lastName, displayName, biography, sourceTypeId, isActive)
-    VALUES (1,1,'NED','NED','NED','bio',78,1);
+INSERT INTO namedEntities.individualProfiles 
+    (id, nedId, firstName, lastName, displayName, biography, sourceTypeId, isActive, createdBy, lastModifiedBy)
+VALUES
+    (1,1,'NED','NED','NED','bio',78,1,1,1);

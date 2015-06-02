@@ -20,6 +20,7 @@ import static org.plos.namedentity.api.NedException.ErrorType.*;
 import static org.plos.namedentity.api.entity.Individualprofile.DISPLAYNAME_MAX_LENGTH;
 
 import org.apache.log4j.Logger;
+import org.plos.namedentity.api.Consumer;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.*;
@@ -43,6 +44,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
 
   public <T extends Entity> T resolveValuesToIds(T t) {
+
+    resolveCreatedAndLastmodifiedBy(t);
 
     if (t instanceof Individualprofile)
       resolveProfile((Individualprofile) t);
@@ -68,6 +71,15 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       throw new UnsupportedOperationException("Can not resolve entity for " + t.getClass());
 
     return t;
+  }
+
+  private <T extends Entity> void resolveCreatedAndLastmodifiedBy(T entity) {
+    if (entity.getCreatedbyname() != null) {
+      entity.setCreatedby( findAppuserId(entity.getCreatedbyname()) );
+    }
+    if (entity.getLastmodifiedbyname() != null) {
+      entity.setLastmodifiedby( findAppuserId(entity.getLastmodifiedbyname()) );
+    }
   }
 
   private Individualprofile resolveProfile(Individualprofile entity) {
@@ -336,5 +348,16 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     
   public void setNamedEntityDBService(NamedEntityDBService nedDBSvc) {
     this.nedDBSvc = nedDBSvc;
+  }
+
+  private Integer findAppuserId(String username) {
+    //TODO: cache app users in memory.
+    Consumer filter = new Consumer();
+    filter.setName(username);
+    List<Consumer> consumers = nedDBSvc.findByAttribute(filter);
+    if (consumers.size() == 0) {
+      throw new NedException(ServerError, "Unknown application user: "+username);
+    }
+    return consumers.get(0).getId();
   }
 }

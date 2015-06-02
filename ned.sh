@@ -104,6 +104,32 @@ deploy)
     deploy_jar "named-entity-password"
     ;;
 
+insertapp)
+
+    echo INSERT APP
+
+    if [[ -z $2 ]]; then
+        echo -e "Error: App name not specified"
+        exit 1
+    fi
+
+    if [[ -z $3 ]]; then
+        echo -e "Error: App password not specified"
+        exit 1
+    fi
+
+    if [[ ! -f "target/test-classes/org/plos/namedentity/spring/security/BCrypt.class" ]]; then
+        mvn -P h2 test-compile
+    fi
+
+    HASHED=$(mvn -q -P h2 exec:java -Dexec.mainClass=org.plos.namedentity.spring.security.BCrypt -Dexec.args="$3")
+
+    echo Inserting app: $2 with hashed password: $HASHED
+
+    echo "REPLACE INTO namedEntities.consumers (name, password) VALUES ('$2','$HASHED');" | mysql -u ned
+
+    ;;
+
 
 tomcat)
     MVN_TARGETS="clean tomcat:run"
@@ -169,7 +195,7 @@ container-test)
     ;;
 
 *)
-    echo -e "\nUsage: `basename $0` (codegen-h2|codegen-mysql|dbreset|db-ringgold|install|deploy|package|test|tomcat|container-start|container-stop|container-test)"
+    echo -e "\nUsage: `basename $0` (codegen-h2|codegen-mysql|dbreset|db-ringgold|insertapp|install|deploy|package|test|tomcat|container-start|container-stop|container-test)"
     echo -e "\n  tomcat url -> http://localhost:8080\n"
     exit 0
     ;;

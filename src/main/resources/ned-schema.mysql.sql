@@ -45,6 +45,17 @@ CREATE TABLE IF NOT EXISTS namedEntities.namedEntityIdentifiers (
     FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
+DROP TABLE IF EXISTS namedEntities.consumers;
+CREATE TABLE IF NOT EXISTS namedEntities.consumers (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE (name)
+)   ENGINE=INNODB;
+
 DROP TABLE IF EXISTS namedEntities.individualProfiles;
 CREATE TABLE IF NOT EXISTS namedEntities.individualProfiles (
     id INT NOT NULL AUTO_INCREMENT,
@@ -60,12 +71,16 @@ CREATE TABLE IF NOT EXISTS namedEntities.individualProfiles (
     sourceTypeId INT NOT NULL,
     isActive TINYINT(1) NOT NULL DEFAULT 1,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    createdBy INT NOT NULL,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    lastModifiedBy INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (namePrefixTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (nameSuffixTypeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (createdBy) REFERENCES consumers(id),
+    FOREIGN KEY (lastModifiedBy) REFERENCES consumers(id),
     UNIQUE (displayName, sourceTypeId),
     INDEX (displayName)
 )   ENGINE=INNODB;
@@ -81,12 +96,16 @@ CREATE TABLE IF NOT EXISTS namedEntities.organizations (
     sourceTypeId INT NOT NULL,
     isActive TINYINT(1) NOT NULL DEFAULT 1,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    createdBy INT NOT NULL,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    lastModifiedBy INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id),
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (mainContactId) REFERENCES individualProfiles(nedId),
+    FOREIGN KEY (createdBy) REFERENCES consumers(id),
+    FOREIGN KEY (lastModifiedBy) REFERENCES consumers(id),
     UNIQUE (legalName, sourceTypeId)
 )   ENGINE=INNODB;
 
@@ -108,11 +127,15 @@ CREATE TABLE IF NOT EXISTS namedEntities.addresses (
     sourceTypeId INT NOT NULL,
     isActive TINYINT(1) NOT NULL DEFAULT 1,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    createdBy INT NOT NULL,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    lastModifiedBy INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
-    FOREIGN KEY (typeId) REFERENCES globalTypes(id)
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (createdBy) REFERENCES consumers(id),
+    FOREIGN KEY (lastModifiedBy) REFERENCES consumers(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.emails;
@@ -125,11 +148,15 @@ CREATE TABLE IF NOT EXISTS namedEntities.emails (
     verified TINYINT(1) NOT NULL DEFAULT 0,
     isActive TINYINT(1) NOT NULL DEFAULT 1,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    createdBy INT NOT NULL,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    lastModifiedBy INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (createdBy) REFERENCES consumers(id),
+    FOREIGN KEY (lastModifiedBy) REFERENCES consumers(id),
     UNIQUE (emailAddress, sourceTypeId)
 )   ENGINE=INNODB;
 
@@ -144,12 +171,16 @@ CREATE TABLE IF NOT EXISTS namedEntities.phoneNumbers (
     sourceTypeId INT NOT NULL,
     isActive TINYINT(1) NOT NULL DEFAULT 1,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    createdBy INT NOT NULL,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    lastModifiedBy INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id),
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
-    FOREIGN KEY (countryCodeTypeId) REFERENCES globalTypes(id)
+    FOREIGN KEY (countryCodeTypeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (createdBy) REFERENCES consumers(id),
+    FOREIGN KEY (lastModifiedBy) REFERENCES consumers(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.roles;
@@ -162,14 +193,16 @@ CREATE TABLE IF NOT EXISTS namedEntities.roles (
     endDate DATE NULL,
     sourceTypeId INT NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    createdBy INT NOT NULL,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    createdBy INT NULL,
-    lastModifiedBy INT NULL,
+    lastModifiedBy INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id),
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
-    FOREIGN KEY (applicationTypeId) REFERENCES globalTypes(id)
+    FOREIGN KEY (applicationTypeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (createdBy) REFERENCES consumers(id),
+    FOREIGN KEY (lastModifiedBy) REFERENCES consumers(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.relationships;
@@ -182,11 +215,13 @@ CREATE TABLE IF NOT EXISTS namedEntities.relationships (
     startDate DATE NULL,
     endDate DATE NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    createdBy INT NOT NULL,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    createdBy INT NULL,
-    lastModifiedBy INT NULL,
+    lastModifiedBy INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (typeId) REFERENCES globalTypes(id)
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (createdBy) REFERENCES consumers(id),
+    FOREIGN KEY (lastModifiedBy) REFERENCES consumers(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.sourceFields;
@@ -245,11 +280,15 @@ CREATE TABLE IF NOT EXISTS namedEntities.degrees (
     typeId INT NOT NULL,
     sourceTypeId INT NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    createdBy INT NOT NULL,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    lastModifiedBy INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
-    FOREIGN KEY (typeId) REFERENCES globalTypes(id)
+    FOREIGN KEY (typeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (createdBy) REFERENCES consumers(id),
+    FOREIGN KEY (lastModifiedBy) REFERENCES consumers(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.urls;
@@ -259,10 +298,14 @@ CREATE TABLE IF NOT EXISTS namedEntities.urls (
     url TEXT NOT NULL,
     sourceTypeId INT NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    createdBy INT NOT NULL,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    lastModifiedBy INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
-    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id)
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (createdBy) REFERENCES consumers(id),
+    FOREIGN KEY (lastModifiedBy) REFERENCES consumers(id)
 )   ENGINE=INNODB;
 
 DROP TABLE IF EXISTS namedEntities.uniqueIdentifiers;
@@ -273,11 +316,15 @@ CREATE TABLE IF NOT EXISTS namedEntities.uniqueIdentifiers (
     uniqueIdentifier VARCHAR(255) NOT NULL,
     sourceTypeId INT NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    createdBy INT NOT NULL,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    lastModifiedBy INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (sourceTypeId) REFERENCES globalTypes(id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (createdBy) REFERENCES consumers(id),
+    FOREIGN KEY (lastModifiedBy) REFERENCES consumers(id),
     UNIQUE (uniqueIdentifier, sourceTypeId, typeId)
 )   ENGINE=INNODB;
 
@@ -294,9 +341,13 @@ CREATE TABLE IF NOT EXISTS namedEntities.authCas (
     verified TINYINT(1) NOT NULL DEFAULT 0,
     isActive TINYINT(1) NOT NULL DEFAULT 1,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    createdBy INT NOT NULL,
     lastModified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    lastModifiedBy INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (emailId) REFERENCES emails(id),
+    FOREIGN KEY (createdBy) REFERENCES consumers(id),
+    FOREIGN KEY (lastModifiedBy) REFERENCES consumers(id),
     UNIQUE (authId)
 )   ENGINE=INNODB;

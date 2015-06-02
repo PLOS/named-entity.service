@@ -20,6 +20,12 @@ public abstract class Entity implements Validatable {
   protected Timestamp created;
   protected Timestamp lastmodified;
 
+  protected Integer   createdby;
+  protected String    createdbyname;
+
+  protected Integer   lastmodifiedby;
+  protected String    lastmodifiedbyname;
+
   // exclude creation/update timestamps and global type foreign keys
   // from comparison (equals) and identity (hashcode). by convention,
   // all global type fk's are suffixed with typeid. hmmm... would be
@@ -33,8 +39,12 @@ public abstract class Entity implements Validatable {
     "applicationtypeid",
     "countrycodetypeid",
     "created",
+    "createdby",
+    "createdbyname",
     "id",
     "lastmodified",
+    "lastmodifiedby",
+    "lastmodifiedbyname",
     "nameprefixtypeid",
     "namesuffixtypeid",
     "nedid",
@@ -104,11 +114,43 @@ public abstract class Entity implements Validatable {
   }
 
   @XmlTransient
+  public Integer getCreatedby() {
+    return createdby;
+  }
+  public void setCreatedby(Integer createdby) {
+    this.createdby = createdby;
+  }
+
+  @XmlTransient
+  public String getCreatedbyname() {
+      return createdbyname;
+  }
+  public void setCreatedbyname(String createdbyname) {
+      this.createdbyname = createdbyname;
+  }
+
+  @XmlTransient
   public Timestamp getLastmodified() {
     return this.lastmodified;
   }
 
   public void setLastmodified(Timestamp lastmodified) {
     this.lastmodified = lastmodified;
+  }
+
+  @XmlTransient
+  public Integer getLastmodifiedby() {
+    return lastmodifiedby;
+  }
+  public void setLastmodifiedby(Integer lastmodifiedby) {
+    this.lastmodifiedby = lastmodifiedby;
+  }
+  
+  @XmlTransient
+  public String getLastmodifiedbyname() {
+      return lastmodifiedbyname;
+  }
+  public void setLastmodifiedbyname(String lastmodifiedbyname) {
+      this.lastmodifiedbyname = lastmodifiedbyname;
   }
 }

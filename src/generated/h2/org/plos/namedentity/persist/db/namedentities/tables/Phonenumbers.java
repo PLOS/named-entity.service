@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Phonenumbers extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord> {
 
-	private static final long serialVersionUID = -1791493662;
+	private static final long serialVersionUID = -975258299;
 
 	/**
 	 * The reference instance of <code>NAMEDENTITIES.PHONENUMBERS</code>
@@ -77,9 +77,19 @@ public class Phonenumbers extends org.jooq.impl.TableImpl<org.plos.namedentity.p
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.sql.Timestamp> CREATED = createField("CREATED", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
+	 * The column <code>NAMEDENTITIES.PHONENUMBERS.CREATEDBY</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.Integer> CREATEDBY = createField("CREATEDBY", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
 	 * The column <code>NAMEDENTITIES.PHONENUMBERS.LASTMODIFIED</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.sql.Timestamp> LASTMODIFIED = createField("LASTMODIFIED", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+
+	/**
+	 * The column <code>NAMEDENTITIES.PHONENUMBERS.LASTMODIFIEDBY</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, java.lang.Integer> LASTMODIFIEDBY = createField("LASTMODIFIEDBY", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>NAMEDENTITIES.PHONENUMBERS</code> table reference
@@ -132,7 +142,7 @@ public class Phonenumbers extends org.jooq.impl.TableImpl<org.plos.namedentity.p
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8A9, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8A98, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8A98E1, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8A98E);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.PhonenumbersRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8A9, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8A98, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8A98E1, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8A98E, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8A98E11, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8A98E11C_0);
 	}
 
 	/**

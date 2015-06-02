@@ -32,6 +32,11 @@ public class Tables {
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Namedentityidentifiers NAMEDENTITYIDENTIFIERS = org.plos.namedentity.persist.db.namedentities.tables.Namedentityidentifiers.NAMEDENTITYIDENTIFIERS;
 
 	/**
+	 * The table NAMEDENTITIES.CONSUMERS
+	 */
+	public static final org.plos.namedentity.persist.db.namedentities.tables.Consumers CONSUMERS = org.plos.namedentity.persist.db.namedentities.tables.Consumers.CONSUMERS;
+
+	/**
 	 * The table NAMEDENTITIES.INDIVIDUALPROFILES
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Individualprofiles INDIVIDUALPROFILES = org.plos.namedentity.persist.db.namedentities.tables.Individualprofiles.INDIVIDUALPROFILES;

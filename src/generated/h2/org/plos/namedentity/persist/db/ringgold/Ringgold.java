@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.ringgold;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Ringgold extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 1191286919;
+	private static final long serialVersionUID = 1057121969;
 
 	/**
 	 * The reference instance of <code>RINGGOLD</code>
@@ -39,18 +39,18 @@ public class Ringgold extends org.jooq.impl.SchemaImpl {
 
 	private final java.util.List<org.jooq.Sequence<?>> getSequences0() {
 		return java.util.Arrays.<org.jooq.Sequence<?>>asList(
-			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_322F45EF_D405_4AB4_9CCC_764BF3BA8281,
-			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_3BE3C908_4D76_407D_BF71_44D6FD60F9F6,
-			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_49B080FD_0BBE_481C_AA29_8ADAECC0106E,
-			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_660661EC_4D2E_467C_BEC1_CCED410E2D06,
-			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_6FB718FD_169A_46C5_A86A_35C5179E1601,
-			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_7253094A_1255_4047_877A_DC241CE2BCA7,
-			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_850EE3E7_F19F_4CD3_89D6_E6810E58E0CD,
-			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_9961CC8F_139A_40BC_BBE2_A63D30AA2CB8,
-			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_BEEF151F_C98D_407D_BD61_FD3C1C0B82BC,
-			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_C2952FB6_4AF4_4B5F_AD81_E4709E18287B,
-			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_E750D87E_7E67_4573_BBA8_53B41C571BF2,
-			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_FB7FD667_B5A4_47B4_A7AB_F65E9B9EB985);
+			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_159624C6_E35C_40D8_9D1B_E9C5E3C6861A,
+			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_15F4CB2C_013B_422E_8A75_F69FE6EDEF94,
+			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_21024AF4_4E2F_4B79_A4D4_D84C4A87F1F0,
+			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_3208ADE5_4AE7_46DE_BBD1_F5E73B59D1D2,
+			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_3534C1A7_2A3F_43B4_B323_AF49E74D58D2,
+			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_46CC08FA_AB43_4F44_9917_7B5B38028D20,
+			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_727164EE_0422_4D2B_9B58_46DFC874765F,
+			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_8883834C_734F_4DD8_800C_66928F176E4C,
+			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_A93EDDA7_21A3_414F_9831_67A786E2F583,
+			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_BE308688_34A0_4DA1_89F1_90AB53A1F3D3,
+			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_C520CF26_C01B_41A8_A101_872C730E8E33,
+			org.plos.namedentity.persist.db.ringgold.Sequences.SYSTEM_SEQUENCE_F9F4F862_8982_47E4_AE43_D54340A2194D);
 	}
 
 	@Override

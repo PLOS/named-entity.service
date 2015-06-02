@@ -32,6 +32,11 @@ public class Tables {
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Authcas AUTHCAS = org.plos.namedentity.persist.db.namedentities.tables.Authcas.AUTHCAS;
 
 	/**
+	 * The table namedEntities.consumers
+	 */
+	public static final org.plos.namedentity.persist.db.namedentities.tables.Consumers CONSUMERS = org.plos.namedentity.persist.db.namedentities.tables.Consumers.CONSUMERS;
+
+	/**
 	 * The table namedEntities.degrees
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Degrees DEGREES = org.plos.namedentity.persist.db.namedentities.tables.Degrees.DEGREES;
