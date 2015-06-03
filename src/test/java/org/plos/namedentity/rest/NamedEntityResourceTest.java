@@ -695,19 +695,11 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     String relationshipsURI = String.format("%s/%d/relationships", INDIVIDUAL_URI, nedIndividualId);
 
-    Relationship[] relationships = new Relationship[2];
-      Relationship r = new Relationship();
-      r.setType("Individual Affiliated with Organization");
-      r.setNedidrelated(nedOrganizationId);
-      r.setStartdate( dateAdapter.unmarshal("2015-06-30"));
-      r.setSource("Ambra");
-    relationships[0] = r;
-      r = new Relationship();
-      r.setType("Individual Affiliated with Organization");
-      r.setNedidrelated(2); /* seeded organization */
-      r.setStartdate( dateAdapter.unmarshal("2015-01-15"));
-      r.setSource("Ambra");
-    relationships[1] = r;
+    Relationship relationship = new Relationship();
+    relationship.setType("Individual Affiliated with Organization");
+    relationship.setNedidrelated(nedOrganizationId);
+    relationship.setStartdate( dateAdapter.unmarshal("2015-06-30"));
+    relationship.setSource("Ambra");
 
     Unmarshaller unmarshaller = jsonUnmarshaller(Relationship.class);
 
@@ -718,41 +710,38 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     String relationshipJsonTemplate = new String(Files.readAllBytes(
       Paths.get(TEST_RESOURCE_PATH + "relationship.template.json")));
 
-    for (int i = 0; i < relationships.length; i++) {
+    Response response = target(relationshipsURI).request(MediaType.APPLICATION_JSON_TYPE)
+      .post(Entity.json(String.format(relationshipJsonTemplate,
+        relationship.getType(), relationship.getNedidrelated(),
+          dateAdapter.marshal(relationship.getStartdate()))));
 
-      Response response = target(relationshipsURI).request(MediaType.APPLICATION_JSON_TYPE)
-        .post(Entity.json(String.format(relationshipJsonTemplate, 
-          relationships[i].getType(), relationships[i].getNedidrelated(), 
-            dateAdapter.marshal(relationships[i].getStartdate()))));
+    assertEquals(200, response.getStatus());
 
-      assertEquals(200, response.getStatus());
+    String responseJson = response.readEntity(String.class);
 
-      String responseJson = response.readEntity(String.class);
+    Relationship savedRelationship = unmarshalEntity(responseJson, Relationship.class, unmarshaller);
 
-      Relationship relationship = unmarshalEntity(responseJson, Relationship.class, unmarshaller);
+    assertTrue( savedRelationship.getId() > 0 );
+    assertEquals(nedIndividualId, savedRelationship.getNedid());
+    assertEquals(relationship.getNedidrelated(), savedRelationship.getNedidrelated());
+    assertEquals(relationship.getType(), savedRelationship.getType());
+    assertEquals(relationship.getStartdate(), savedRelationship.getStartdate());
 
-      assertTrue( relationship.getId() > 0 );
-      assertEquals(nedIndividualId, relationship.getNedid());
-      assertEquals(relationships[i].getNedidrelated(), relationship.getNedidrelated());
-      assertEquals(relationships[i].getType(), relationship.getType());
-      assertEquals(relationships[i].getStartdate(), relationship.getStartdate());
+    relationship.setId(savedRelationship.getId());
 
-      relationships[i].setId(relationship.getId());
-    }
-
-    String relationshipURI = relationshipsURI + "/" + relationships[0].getId();
+    String relationshipURI = relationshipsURI + "/" + relationship.getId();
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY RELATIONSHIP ID (PK))                                    */
     /* ------------------------------------------------------------------ */
 
-    Response response = target(relationshipURI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    response = target(relationshipURI).request(MediaType.APPLICATION_JSON_TYPE).get();
     assertEquals(200, response.getStatus());
 
-    String responseJson = response.readEntity(String.class);
+    responseJson = response.readEntity(String.class);
 
     Relationship foundRelationship = unmarshalEntity(responseJson, Relationship.class, unmarshaller);
-    assertEquals(relationships[0], foundRelationship);
+    assertEquals(relationship, foundRelationship);
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY NED ID)                                                  */
@@ -765,11 +754,10 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     responseJson = response.readEntity(String.class);
 
     List<Relationship> nedidRelationships = unmarshalEntities(responseJson, Relationship.class, unmarshaller);
-    assertEquals(2, nedidRelationships.size());
 
-    for (int i = 0; i < relationships.length; i++) {
-      assertTrue(nedidRelationships.contains(relationships[i]));
-    }
+    // why 2? there is also a relationship defined in the individual composite created in setup().
+    assertEquals(2, nedidRelationships.size());
+    assertTrue(nedidRelationships.contains(relationship));
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */
@@ -777,7 +765,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     response = target(relationshipURI)
       .request(MediaType.APPLICATION_JSON_TYPE)
-        .put(Entity.json(writeValueAsString(relationships[0])));
+        .put(Entity.json(writeValueAsString(relationship)));
 
     assertEquals(200, response.getStatus());
 

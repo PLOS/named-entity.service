@@ -34,6 +34,14 @@
       "source"          : "Editorial Manager"
     }
   ],
+  "relationships" : [
+    {
+      "type"                : "Individual Affiliated with Organization",
+      "nedidrelated"        : "2",
+      "startdate"           : "2015-01-15",
+      "source"              : "Ambra"
+    }
+  ],
   "addresses" : [
     {
       "type"            : "Office",
