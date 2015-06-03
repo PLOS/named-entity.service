@@ -25,6 +25,7 @@ import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.Organization;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -43,8 +44,10 @@ public class OrganizationsResource extends NedResource {
 
   @POST
   @ApiOperation(value = "Create organization", response = OrganizationComposite.class)
-  public Response createOrganization(OrganizationComposite composite) {
+  public Response createOrganization(OrganizationComposite composite,
+                                     @HeaderParam("Authorization") String authstring) {
     try {
+      setCreatedAndLastModifiedBy(authstring,composite);
       return Response.status(Response.Status.OK).entity(
           namedEntityService.createComposite(composite, OrganizationComposite.class)).build();
     } catch (NedException e) {
@@ -73,10 +76,9 @@ public class OrganizationsResource extends NedResource {
   @GET
   @Path("/{uidType}/{uidValue}")
   @ApiOperation(value = "Read organization by UID", response = OrganizationComposite.class)
-  public Response readOrganizationByUid(@PathParam("uidType") String uidType,
-                                       @PathParam("uidValue") String uidValue) {
+  public Response readOrganizationByUid(@PathParam("uidType")  String uidType,
+                                        @PathParam("uidValue") String uidValue) {
     try {
-
       Organization organization = namedEntityService.findResolvedEntityByUid(
           uidType, uidValue, Organization.class);
 

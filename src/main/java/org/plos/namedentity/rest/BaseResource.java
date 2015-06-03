@@ -19,6 +19,7 @@ package org.plos.namedentity.rest;
 import org.apache.log4j.Logger;
 import org.plos.namedentity.api.NedErrorResponse;
 import org.plos.namedentity.api.NedException;
+import org.plos.namedentity.service.AuthService;
 import org.plos.namedentity.service.CrudService;
 import org.plos.namedentity.service.NamedEntityService;
 
@@ -35,11 +36,11 @@ public abstract class BaseResource {
 
   protected static final Integer DEFAULT_RESULT_COUNT = 50;
 
-  @Inject
-  protected CrudService crudService;
+  @Inject protected AuthService authService;
 
-  @Inject
-  protected NamedEntityService namedEntityService;
+  @Inject protected CrudService crudService;
+
+  @Inject protected NamedEntityService namedEntityService;
 
   abstract protected String getNamedPartyType();
 

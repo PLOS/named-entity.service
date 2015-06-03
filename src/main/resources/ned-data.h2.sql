@@ -1,3 +1,7 @@
+/* Consumers */
+INSERT INTO namedEntities.consumers (id,name,password) VALUES (1,'akita',/*akita*/ '$2a$04$bhCH3yv8auaZpzW0ZGwrHOdIkJpFQwCABXZnd8fo7B4LyIE1MMxve');
+INSERT INTO namedEntities.consumers (id,name,password) VALUES (2,'tahi' ,/*tahi*/  '$2a$04$8HIFWewGAkrJDGAvCktCUunEm0Mb2Tz100zGRcJ.SVMQqqkGXZt0G');
+INSERT INTO namedEntities.consumers (id,name,password) VALUES (3,'etl'  ,/*etl*/   '$2a$04$.sb5zU1tnhxJc2.4IvAu3uahi6NZdjNWzcDkxttY22JFrHc/IgrKu');
 
 /* Named Party Types */
 INSERT INTO namedEntities.typeDescriptions(description,howUsed) VALUES ('Named Party Types','Individual, Organization');
@@ -633,8 +637,3 @@ INSERT INTO  namedEntities.organizations (id, nedId, familiarName, legalName, is
     (select gt.id from namedEntities.globalTypes gt
        join namedEntities.typeDescriptions td on gt.typeid = td.id
       where td.description='Source Applications' and gt.shortDescription='Ambra'));
-
-/* Consumers */
-INSERT INTO namedEntities.consumers (name, password) VALUES ('tahi' ,/*tahi*/  '$2a$04$8HIFWewGAkrJDGAvCktCUunEm0Mb2Tz100zGRcJ.SVMQqqkGXZt0G');
-INSERT INTO namedEntities.consumers (name, password) VALUES ('akita',/*akita*/ '$2a$04$bhCH3yv8auaZpzW0ZGwrHOdIkJpFQwCABXZnd8fo7B4LyIE1MMxve');
-INSERT INTO namedEntities.consumers (name, password) VALUES ('etl'  ,/*etl*/   '$2a$04$.sb5zU1tnhxJc2.4IvAu3uahi6NZdjNWzcDkxttY22JFrHc/IgrKu');

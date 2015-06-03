@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Degrees extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord> {
 
-	private static final long serialVersionUID = -1099396027;
+	private static final long serialVersionUID = 1099977541;
 
 	/**
 	 * The reference instance of <code>namedEntities.degrees</code>
@@ -57,9 +57,19 @@ public class Degrees extends org.jooq.impl.TableImpl<org.plos.namedentity.persis
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.sql.Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
+	 * The column <code>namedEntities.degrees.createdBy</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> CREATEDBY = createField("createdBy", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+	/**
 	 * The column <code>namedEntities.degrees.lastModified</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.sql.Timestamp> LASTMODIFIED = createField("lastModified", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+
+	/**
+	 * The column <code>namedEntities.degrees.lastModifiedBy</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> LASTMODIFIEDBY = createField("lastModifiedBy", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * Create a <code>namedEntities.degrees</code> table reference
@@ -112,7 +122,7 @@ public class Degrees extends org.jooq.impl.TableImpl<org.plos.namedentity.persis
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.DEGREES_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.DEGREES_IBFK_3, org.plos.namedentity.persist.db.namedentities.Keys.DEGREES_IBFK_2);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.DEGREES_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.DEGREES_IBFK_3, org.plos.namedentity.persist.db.namedentities.Keys.DEGREES_IBFK_2, org.plos.namedentity.persist.db.namedentities.Keys.DEGREES_IBFK_4, org.plos.namedentity.persist.db.namedentities.Keys.DEGREES_IBFK_5);
 	}
 
 	/**

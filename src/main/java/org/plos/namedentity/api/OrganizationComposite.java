@@ -199,4 +199,11 @@ public class OrganizationComposite extends Composite implements Validatable {
     organization.setLastmodified(lastmodified);
   }
 
+  public void setCreatedby(String username) {
+    organization.setCreatedbyname(username);
+  }
+
+  public void setLastmodifiedby(String username) {
+    organization.setLastmodifiedbyname(username);
+  }
 }

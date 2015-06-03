@@ -90,13 +90,13 @@ public class NamedEntityServiceTest {
     workEmail.setType("Work");
     workEmail.setEmailaddress("fu.manchu.work@foo.com");
     workEmail.setSource("Editorial Manager");
-    emails.add( workEmail );
+    emails.add(_(workEmail));
 
     Email personalEmail = new Email();
     personalEmail.setType("Personal");
     personalEmail.setEmailaddress("fu.manchu.home@foo.com");
     personalEmail.setSource("Editorial Manager");
-    emails.add( personalEmail );
+    emails.add(_(personalEmail));
 
     composite1.setEmails( emails );
     assertNotEquals(composite1, composite2);
@@ -106,8 +106,8 @@ public class NamedEntityServiceTest {
 
     // list order should not affect equality
     emails = new ArrayList<>();
-    emails.add( personalEmail );
-    emails.add( workEmail );
+    emails.add(_(personalEmail));
+    emails.add(_(workEmail));
 
     composite2.setEmails( emails );
 
@@ -225,7 +225,7 @@ public class NamedEntityServiceTest {
     workEmail.setType("Work");
     workEmail.setEmailaddress("fu.manchu.work@foo.com");
     workEmail.setSource("Editorial Manager");
-    emails.add( workEmail );
+    emails.add(_(workEmail));
 
     composite.setEmails( emails );
 
@@ -236,7 +236,7 @@ public class NamedEntityServiceTest {
     uidEntity.setUniqueidentifier("1234");
     uidEntity.setSource("Ambra");
 
-    uniqueidentifiers.add(uidEntity);
+    uniqueidentifiers.add(_(uidEntity));
 
     composite.setUniqueidentifiers(uniqueidentifiers);
 
@@ -279,13 +279,13 @@ public class NamedEntityServiceTest {
     workEmail.setType("Work");
     workEmail.setEmailaddress("fu.manchu.work@foo.com");
     workEmail.setSource("Ambra");
-    emails.add( workEmail );
+    emails.add(_(workEmail));
 
     Email personalEmail = new Email();
     personalEmail.setType("Personal");
     personalEmail.setEmailaddress("fu.manchu.home@foo.com");
     personalEmail.setSource("Editorial Manager");
-    emails.add( personalEmail );
+    emails.add(_(personalEmail));
 
     composite.setEmails( emails );
 
@@ -298,7 +298,7 @@ public class NamedEntityServiceTest {
     Auth auth = new Auth();
     auth.setEmail(workEmail.getEmailaddress());
     auth.setPlainTextPassword("password123");
-    auths.add( auth );
+    auths.add(_(auth));
 
     composite.setAuth( auths );
 
@@ -313,21 +313,21 @@ public class NamedEntityServiceTest {
     officePhone.setCountrycodetype("01");
     officePhone.setPhonenumber("123-456-7890");
     officePhone.setSource("Editorial Manager");
-    phonenumbers.add( officePhone );
+    phonenumbers.add(_(officePhone));
 
     Phonenumber mobilePhone = new Phonenumber();
     mobilePhone.setType("Mobile");
     mobilePhone.setCountrycodetype("01");
     mobilePhone.setPhonenumber("123-444-0011");
     mobilePhone.setSource("Editorial Manager");
-    phonenumbers.add( mobilePhone );
+    phonenumbers.add(_(mobilePhone));
 
     Phonenumber homePhone = new Phonenumber();
     homePhone.setType("Home");
     homePhone.setCountrycodetype("01");
     homePhone.setPhonenumber("123-555-6666");
     homePhone.setSource("Editorial Manager");
-    phonenumbers.add( homePhone );
+    phonenumbers.add(_(homePhone));
 
     composite.setPhonenumbers( phonenumbers );
 
@@ -346,7 +346,7 @@ public class NamedEntityServiceTest {
     officeAddress.setCountrycodetype("United States of America");
     officeAddress.setPostalcode("1234567");
     officeAddress.setSource("Editorial Manager");
-    addresses.add( officeAddress );
+    addresses.add(_(officeAddress));
 
     composite.setAddresses( addresses );
 
@@ -359,7 +359,7 @@ public class NamedEntityServiceTest {
     Degree degree = new Degree();
     degree.setType("MD");
     degree.setSource("Editorial Manager");
-    degrees.add(degree);
+    degrees.add(_(degree));
 
     composite.setDegrees( degrees );
 
@@ -373,7 +373,7 @@ public class NamedEntityServiceTest {
     uid.setType("ORCID");
     uid.setUniqueidentifier("0000-0001-9430-001X");
     uid.setSource("Editorial Manager");
-    uids.add(uid);
+    uids.add(_(uid));
 
     composite.setUniqueidentifiers( uids );
 
@@ -386,7 +386,7 @@ public class NamedEntityServiceTest {
     url.setUrl("http://goodurl.org");
     url.setUrl("httpXX://badurl.org");
     url.setSource("Editorial Manager");
-    urls.add(url);
+    urls.add(_(url));
 
     composite.setUrls(urls);
 
@@ -402,7 +402,7 @@ public class NamedEntityServiceTest {
     urls = new ArrayList<>();
     url.setUrl("http://newgoodurl.org");
     url.setSource("Editorial Manager");
-    urls.add(url);
+    urls.add(_(url));
 
     composite.setUrls(urls);
 
@@ -476,7 +476,7 @@ public class NamedEntityServiceTest {
     workEmail.setType("Work");
     workEmail.setEmailaddress("invalid@email");
     workEmail.setSource("Editorial Manager");
-    emails.add( workEmail );
+    emails.add(_(workEmail));
 
     composite.setEmails( emails );
 
@@ -513,7 +513,7 @@ public class NamedEntityServiceTest {
     workEmail.setType("Work");
     workEmail.setEmailaddress("valid@email.com");
     workEmail.setSource("Ambra");
-    emails.add( workEmail );
+    emails.add(_(workEmail));
 
     composite.setEmails( emails );
     composite.setIndividualprofiles(null);
@@ -542,7 +542,7 @@ public class NamedEntityServiceTest {
     Auth auth = new Auth();
     auth.setEmail(workEmail.getEmailaddress());
     auth.setPlainTextPassword("password123");
-    auths.add( auth );
+    auths.add(_(auth));
 
     composite.setAuth( auths );
 
@@ -568,7 +568,7 @@ public class NamedEntityServiceTest {
       profile.setSource("Editorial Manager");
       profile.setNedid(1);
 
-      Integer profileId = crudService.create( namedEntityService.resolveValuesToIds(profile) );
+      Integer profileId = crudService.create( namedEntityService.resolveValuesToIds(_(profile)) );
       assertNotNull( profileId );
 
       Individualprofile savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
@@ -588,7 +588,7 @@ public class NamedEntityServiceTest {
     // first check was against basename without random number.
     verify(mockRandom, times(99)).nextInt(anyInt());
 
-    Integer profileId = crudService.create( namedEntityService.resolveValuesToIds(profile) );
+    Integer profileId = crudService.create( namedEntityService.resolveValuesToIds(_(profile)) );
     assertNotNull( profileId );
 
     Individualprofile savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
@@ -629,7 +629,7 @@ public class NamedEntityServiceTest {
       profile.setDisplayname( namedEntityService.generateDisplayname(profile, new Random()) );
       assertNotNull( profile.getDisplayname() );
 
-      Integer profileId = crudService.create( namedEntityService.resolveValuesToIds(profile) );
+      Integer profileId = crudService.create( namedEntityService.resolveValuesToIds(_(profile)) );
       assertNotNull( profileId );
 
       Individualprofile savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
@@ -657,7 +657,7 @@ public class NamedEntityServiceTest {
     individualProfile.setNedid(1);
 
     try {
-      crudService.create(namedEntityService.resolveValuesToIds(individualProfile));
+      crudService.create(namedEntityService.resolveValuesToIds(_(individualProfile)));
       fail();
     }
     catch (NedException expected) {
@@ -667,7 +667,7 @@ public class NamedEntityServiceTest {
 
     individualProfile.setFirstname("firstname");
 
-    Integer profileId = crudService.create( namedEntityService.resolveValuesToIds(individualProfile) );
+    Integer profileId = crudService.create( namedEntityService.resolveValuesToIds(_(individualProfile)) );
     assertNotNull( profileId );
 
     Individualprofile savedEntity = namedEntityService.findResolvedEntityByKey(profileId, Individualprofile.class);
@@ -678,7 +678,7 @@ public class NamedEntityServiceTest {
     individualProfile.setId(profileId);
     individualProfile.setFirstname("firstname2");
 
-    assertTrue(crudService.update(namedEntityService.resolveValuesToIds(individualProfile)));
+    assertTrue(crudService.update(namedEntityService.resolveValuesToIds(_(individualProfile,false))));
 
     // DELETE
 
@@ -696,7 +696,7 @@ public class NamedEntityServiceTest {
     emailEntity.setEmailaddress("bill_1@microsoft.com");
     emailEntity.setSource("Editorial Manager");
 
-    Integer createEmailId = crudService.create(namedEntityService.resolveValuesToIds(emailEntity));
+    Integer createEmailId = crudService.create(namedEntityService.resolveValuesToIds(_(emailEntity)));
     assertNotNull( createEmailId );
 
     Email savedEntity = namedEntityService.findResolvedEntityByKey(createEmailId, Email.class);
@@ -709,7 +709,7 @@ public class NamedEntityServiceTest {
 
     emailEntity.setEmailaddress("bill_2@microsoft.com");
 
-    Integer createEmailId2 = crudService.create(emailEntity);
+    Integer createEmailId2 = crudService.create(_(emailEntity));
     assertNotNull( createEmailId2 );
 
     Email savedEntity2 = namedEntityService.findResolvedEntityByKey(createEmailId2, Email.class);
@@ -721,7 +721,7 @@ public class NamedEntityServiceTest {
     emailEntity.setTypeid(null);
     emailEntity.setEmailaddress("bill_3@microsoft.com");
     emailEntity.setId(createEmailId);
-    assertTrue( crudService.update(emailEntity) );
+    assertTrue( crudService.update(_(emailEntity,false)) );
 
     Email savedEntity3 = namedEntityService.findResolvedEntityByKey(createEmailId, Email.class);
     assertNull( savedEntity3.getType() );
@@ -730,7 +730,7 @@ public class NamedEntityServiceTest {
 
     namedEntityService.resolveValuesToIds(emailEntity);
 
-    assertTrue( crudService.update(emailEntity) );
+    assertTrue( crudService.update(_(emailEntity,false)) );
 
     Email savedEntity4 = namedEntityService.findResolvedEntityByKey(createEmailId, Email.class);
     assertNotNull( savedEntity4.getType() );
@@ -758,7 +758,7 @@ public class NamedEntityServiceTest {
     roleEntity.setSource("Editorial Manager");
 
     try {
-      crudService.create(roleEntity);
+      crudService.create(_(roleEntity));
       fail();
     }
     catch (NedException expected) {
@@ -769,7 +769,7 @@ public class NamedEntityServiceTest {
     // try again but this time use type resolver. remember that type names are
     // resolved by joins when querying database -- need foreign key to get name.
     
-    Integer createRoleId = crudService.create( namedEntityService.resolveValuesToIds(roleEntity) );
+    Integer createRoleId = crudService.create( namedEntityService.resolveValuesToIds(_(roleEntity)) );
     assertNotNull( createRoleId );
 
     Role savedEntity = namedEntityService.findResolvedEntityByKey(createRoleId, Role.class);
@@ -781,7 +781,7 @@ public class NamedEntityServiceTest {
     roleEntity.setId(createRoleId); 
     roleEntity.setApplicationtypeid(null);
     roleEntity.setTypeid(null); 
-    assertTrue( crudService.update(namedEntityService.resolveValuesToIds(roleEntity)) );
+    assertTrue( crudService.update(namedEntityService.resolveValuesToIds(_(roleEntity,false))) );
 
     Role savedEntity2 = namedEntityService.findResolvedEntityByKey(createRoleId, Role.class);
     assertNotNull( savedEntity2.getType() );
@@ -809,7 +809,7 @@ public class NamedEntityServiceTest {
     addressEntity.setSource("Editorial Manager");
 
     try {
-      crudService.create(addressEntity);
+      crudService.create(_(addressEntity));
       fail();
     } catch (NedException e) {
       // expected since the countrycodeid was not resolved
@@ -818,7 +818,7 @@ public class NamedEntityServiceTest {
     // try again but this time use type resolver. remember that type names are
     // resolved by joins when querying database -- need foreign key to get name.
     
-    Integer createAddressId2 = crudService.create( namedEntityService.resolveValuesToIds(addressEntity) );
+    Integer createAddressId2 = crudService.create( namedEntityService.resolveValuesToIds(_(addressEntity)) );
     assertNotNull( createAddressId2 );
 
     Address savedEntity2 = namedEntityService.findResolvedEntityByKey(createAddressId2, Address.class);
@@ -831,7 +831,7 @@ public class NamedEntityServiceTest {
     savedEntity2.setPostalcode("66666");
 
     try {
-      crudService.update(savedEntity2);
+      crudService.update(_(savedEntity2,false));
       fail();
     } catch (NedException e) {
       // expected since entity pojo has no type ids (just type names) 
@@ -839,7 +839,7 @@ public class NamedEntityServiceTest {
 
     // try again with type resolver.
 
-    assertTrue( crudService.update(namedEntityService.resolveValuesToIds(savedEntity2)) );
+    assertTrue( crudService.update(namedEntityService.resolveValuesToIds(_(savedEntity2,false))) );
 
     Address savedEntity3 = namedEntityService.findResolvedEntityByKey(createAddressId2, Address.class);
     assertEquals("66666", savedEntity3.getPostalcode());
@@ -865,7 +865,7 @@ public class NamedEntityServiceTest {
     individualProfile.setSource("Editorial Manager");
 
     List<Individualprofile> individualProfiles = new ArrayList<>();
-    individualProfiles.add(individualProfile);
+    individualProfiles.add(_(individualProfile));
 
     composite.setIndividualprofiles(individualProfiles);
 
@@ -878,7 +878,7 @@ public class NamedEntityServiceTest {
     author.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
     author.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
     author.setSource("Editorial Manager");
-    roles.add(author);
+    roles.add(_(author));
 
     composite.setRoles(roles);
 
@@ -888,7 +888,7 @@ public class NamedEntityServiceTest {
     uid.setUniqueidentifier(String.valueOf(new Date().getTime()));
 
     List<Uniqueidentifier> uniqueidentifiers = new ArrayList<>();
-    uniqueidentifiers.add(uid);
+    uniqueidentifiers.add(_(uid));
 
     composite.setUniqueidentifiers(uniqueidentifiers);
 
@@ -917,7 +917,7 @@ public class NamedEntityServiceTest {
     uid.setSource("Ambra");
     uid.setType("Ringgold");
     uid.setUniqueidentifier(UUID.randomUUID().toString());
-    uids.add( uid );
+    uids.add(_(uid));
 
     composite2.setUniqueidentifiers(uids);
 
@@ -975,7 +975,7 @@ public class NamedEntityServiceTest {
     uid.setType("CAS");
     uid.setUniqueidentifier(UUID.randomUUID().toString());
 
-    List<Uniqueidentifier> uids = new ArrayList<>() ; uids.add( uid );
+    List<Uniqueidentifier> uids = new ArrayList<>() ; uids.add(_(uid));
 
     composite2.setUniqueidentifiers(uids);
 
@@ -1024,7 +1024,7 @@ public class NamedEntityServiceTest {
     individualProfile.setSource("Editorial Manager");
 
     List<Individualprofile> individualProfiles = new ArrayList<>();
-    individualProfiles.add(individualProfile);
+    individualProfiles.add(_(individualProfile));
 
     composite.setIndividualprofiles(individualProfiles);
 
@@ -1038,7 +1038,7 @@ public class NamedEntityServiceTest {
     email.setSource("Ambra");
 
     List<Email> emails = new ArrayList<>();
-    emails.add(email);
+    emails.add(_(email));
 
     composite.setEmails(emails);
 
@@ -1051,7 +1051,7 @@ public class NamedEntityServiceTest {
     auth.setPlainTextPassword("password123");
 
     List<Auth> auths = new ArrayList<>();
-    auths.add(auth);
+    auths.add(_(auth));
 
     composite.setAuth(auths);
 
@@ -1065,7 +1065,7 @@ public class NamedEntityServiceTest {
     uid.setUniqueidentifier(String.valueOf(new Date().getTime()));
 
     List<Uniqueidentifier> uniqueidentifiers = new ArrayList<>();
-    uniqueidentifiers.add(uid);
+    uniqueidentifiers.add(_(uid));
 
     composite.setUniqueidentifiers(uniqueidentifiers);
 
@@ -1080,6 +1080,8 @@ public class NamedEntityServiceTest {
     composite.setLegalname("legal name"+UUID.randomUUID().toString());
     composite.setFamiliarname("familiar name");
     composite.setSource("Ambra");
+    composite.setCreatedby("tahi");
+    composite.setLastmodifiedby("tahi");
 
     return composite;
   }
@@ -1092,5 +1094,16 @@ public class NamedEntityServiceTest {
     cal.set(Calendar.SECOND, 0);
     cal.set(Calendar.MILLISECOND, 0);
     return new java.sql.Date( cal.getTimeInMillis() );
+  }
+
+  // decorator to stamp created and last modified by fields
+  private <S extends Entity> S _(S entity) {
+    return _(entity,true);
+  }
+  private <S extends Entity>
+  S _(S entity, boolean create) {
+    entity.setCreatedbyname( create?"akita":null );
+    entity.setLastmodifiedbyname("akita");
+    return entity;
   }
 }

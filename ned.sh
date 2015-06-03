@@ -122,7 +122,7 @@ insertapp)
         mvn -P h2 test-compile
     fi
 
-    HASHED=$(mvn -q -P h2 exec:java -Dexec.classpathScope=test -Dexec.mainClass=org.plos.namedentity.spring.security.BCrypt -Dexec.args="$3")
+    HASHED=$(mvn -q -P h2 exec:java -Dexec.mainClass=org.plos.namedentity.spring.security.BCrypt -Dexec.args="$3")
 
     echo Inserting app: $2 with hashed password: $HASHED
 

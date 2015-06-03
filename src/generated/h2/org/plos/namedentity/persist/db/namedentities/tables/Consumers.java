@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Consumers extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.ConsumersRecord> {
 
-	private static final long serialVersionUID = 493732504;
+	private static final long serialVersionUID = -1178402656;
 
 	/**
 	 * The reference instance of <code>NAMEDENTITIES.CONSUMERS</code>
@@ -91,7 +91,7 @@ public class Consumers extends org.jooq.impl.TableImpl<org.plos.namedentity.pers
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.ConsumersRecord> getPrimaryKey() {
-		return org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8D;
+		return org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8;
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class Consumers extends org.jooq.impl.TableImpl<org.plos.namedentity.pers
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.ConsumersRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.ConsumersRecord>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8D, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8D0);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.plos.namedentity.persist.db.namedentities.tables.records.ConsumersRecord>>asList(org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8, org.plos.namedentity.persist.db.namedentities.Keys.CONSTRAINT_8D);
 	}
 
 	/**

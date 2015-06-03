@@ -25,7 +25,9 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,40 +42,18 @@ public class AuthServiceImpl implements AuthService {
   @Inject private NamedEntityDBService namedEntityDBService; 
 
   @Override
-  public boolean authenticate(String credentials) {
+  public boolean authenticate(String encodedCredentials) {
 
+    if (encodedCredentials == null) return false;
+
+    Map<String,String> credentials = parseCredentials(encodedCredentials);
     if (credentials == null) return false;
 
-    Matcher matcher = httpBasicAuthRegexp.matcher(credentials);
-    if (!matcher.find()) {
-      log.warn("Invalid credentials: " + credentials);
-      return false;
-    }
-    // group 0 matches entire string
-    final String encodedUsernamePassword = matcher.group(1);
-
-    String usernamePassword = null;
-    try {
-      byte[] decodedBytes = Base64.getDecoder().decode(encodedUsernamePassword);
-      usernamePassword = new String(decodedBytes, "UTF-8");
-    } catch (IOException e) {
-      log.error("Problem decoding credentials", e);
-      return false;
-    }
-
-    final StringTokenizer tokenizer = new StringTokenizer(usernamePassword,":");
-    int tokenCount = tokenizer.countTokens();
-    if (tokenCount != 2) {
-      log.warn(String.format(
-        "Unexpected count when tokenizing credentials. Expected:2 Found:%d", tokenCount));
-      return false;
-    }
-
-    final String username = tokenizer.nextToken();
-    final String password = tokenizer.nextToken();
+    final String appname  = credentials.get("appname");
+    final String password = credentials.get("password");
 
     Consumer filter = new Consumer();
-    filter.setName(username);
+    filter.setName(appname);
     List<Consumer> consumers = namedEntityDBService.findByAttribute(filter);
     if (consumers.size() == 0) {
       return false; // user not found
@@ -87,5 +67,39 @@ public class AuthServiceImpl implements AuthService {
 
   public void setNamedEntityDBService(NamedEntityDBService namedEntityDBService) {
     this.namedEntityDBService = namedEntityDBService;
+  }
+
+  @Override
+  public Map parseCredentials(String encodedCredentials) {
+
+    Matcher matcher = httpBasicAuthRegexp.matcher(encodedCredentials);
+    if (!matcher.find()) {
+      log.warn("Invalid credentials: " + encodedCredentials);
+      return null;
+    }
+    // group 0 matches entire string
+    final String encodedUsernamePassword = matcher.group(1);
+
+    String usernamePassword = null;
+    try {
+      byte[] decodedBytes = Base64.getDecoder().decode(encodedUsernamePassword);
+      usernamePassword = new String(decodedBytes, "UTF-8");
+    } catch (IOException e) {
+      log.error("Problem decoding credentials", e);
+      return null;
+    }
+
+    final StringTokenizer tokenizer = new StringTokenizer(usernamePassword,":");
+    int tokenCount = tokenizer.countTokens();
+    if (tokenCount != 2) {
+      log.warn(String.format(
+        "Unexpected count when tokenizing credentials. Expected:2 Found:%d", tokenCount));
+      return null;
+    }
+
+    Map<String,String> credentials = new HashMap<String,String>();
+    credentials.put("appname", tokenizer.nextToken());
+    credentials.put("password", tokenizer.nextToken());
+    return credentials;
   }
 }
