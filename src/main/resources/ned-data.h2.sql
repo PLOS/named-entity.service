@@ -620,8 +620,8 @@ INSERT INTO namedEntities.namedEntityIdentifiers(id,typeId)
                 join namedEntities.typeDescriptions td on gt.typeid = td.id
                where td.description='Named Party Types' and gt.shortDescription='Individual'));
 
-INSERT INTO namedEntities.individualProfiles (id, nedId, firstName, lastName, displayName, biography, isActive, sourceTypeId)
-  VALUES (1,1,'NED','NED','NED','bio',1,
+INSERT INTO namedEntities.individualProfiles (id, nedId, firstName, lastName, displayName, biography, isActive, createdBy, lastModifiedBy, sourceTypeId)
+  VALUES (1,1,'NED','NED','NED','bio',1,1,1,
     (select gt.id from namedEntities.globalTypes gt
        join namedEntities.typeDescriptions td on gt.typeid = td.id
       where td.description='Source Applications' and gt.shortDescription='Ambra'));
@@ -632,8 +632,8 @@ INSERT INTO namedEntities.namedEntityIdentifiers(id,typeId)
                 join namedEntities.typeDescriptions td on gt.typeid = td.id
                where td.description='Named Party Types' and gt.shortDescription='Organization'));
 
-INSERT INTO  namedEntities.organizations (id, nedId, familiarName, legalName, isActive, sourceTypeId)
-  VALUES (1,2,'ABC Inc (FN)','ABC Inc (LN)',1,
+INSERT INTO  namedEntities.organizations (id, nedId, familiarName, legalName, isActive, createdBy, lastModifiedBy, sourceTypeId)
+  VALUES (1,2,'ABC Inc (FN)','ABC Inc (LN)',1,1,1,
     (select gt.id from namedEntities.globalTypes gt
        join namedEntities.typeDescriptions td on gt.typeid = td.id
       where td.description='Source Applications' and gt.shortDescription='Ambra'));

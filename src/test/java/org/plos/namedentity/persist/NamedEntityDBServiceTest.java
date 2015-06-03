@@ -735,7 +735,7 @@ public class NamedEntityDBServiceTest {
     // side. relationship should still be found when querying all relationships for
     // individual by ned id (below).
 
-    Relationship orgAuthRel = new Relationship();
+    Relationship orgAuthRel = _(new Relationship());
     orgAuthRel.setTypeid(relationshipTypeId);
     orgAuthRel.setNedid(2);        /* seeded organization */
     orgAuthRel.setNedidrelated(1); /* seeded individual   */

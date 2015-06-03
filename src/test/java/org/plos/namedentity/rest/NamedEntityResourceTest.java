@@ -703,7 +703,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     String relationshipJsonTemplate = new String(Files.readAllBytes(
       Paths.get(TEST_RESOURCE_PATH + "relationship.template.json")));
 
-    Response response = target(relationshipsURI).request(MediaType.APPLICATION_JSON_TYPE)
+    Response response = buildRequestDefaultAuth(relationshipsURI)
       .post(Entity.json(String.format(relationshipJsonTemplate,
         relationship.getType(), relationship.getNedidrelated(),
           dateAdapter.marshal(relationship.getStartdate()))));
@@ -756,9 +756,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    response = target(relationshipURI)
-      .request(MediaType.APPLICATION_JSON_TYPE)
-        .put(Entity.json(writeValueAsString(relationship)));
+    response = buildRequestDefaultAuth(relationshipURI)
+      .put(Entity.json(writeValueAsString(relationship)));
 
     assertEquals(200, response.getStatus());
 

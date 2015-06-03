@@ -306,8 +306,10 @@ public class IndividualsResource extends NedResource {
   @POST
   @Path("/{nedId}/relationships")
   @ApiOperation(value = "Create relationship", response = Relationship.class)
-  public Response createRelationship(@PathParam("nedId") int nedId, Relationship relationshipEntity) {
-    return createEntity(nedId, relationshipEntity);
+  public Response createRelationship(@PathParam("nedId") int nedId,
+                                     Relationship relationshipEntity,
+                                     @HeaderParam("Authorization") String authstring) {
+    return createEntity(nedId, relationshipEntity, authstring);
   }
 
   @PUT
@@ -315,15 +317,18 @@ public class IndividualsResource extends NedResource {
   @ApiOperation(value = "Update relationship", response = Relationship.class)
   public Response updateRelationship(@PathParam("nedId")          int nedId,
                                      @PathParam("relationshipId") int relationshipId,
+                                     @HeaderParam("Authorization") String authstring,
                                      Relationship relationshipEntity) {
-    return updateEntity(nedId, relationshipId, relationshipEntity);
+    return updateEntity(nedId, relationshipId, relationshipEntity, authstring);
   }
 
   @DELETE
   @Path("/{nedId}/relationships/{relationshipId}")
   @ApiOperation(value = "Delete relationship")
   public Response deleteRelationship(@PathParam("nedId")          int nedId,
-                                     @PathParam("relationshipId") int relationshipId) {
+                                     @PathParam("relationshipId") int relationshipId,
+                                     @HeaderParam("Authorization") String authstring) {
+    //TODO: process authstring
     return deleteEntity(nedId, relationshipId, Relationship.class);
   }
 

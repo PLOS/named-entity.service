@@ -17,97 +17,97 @@ package org.plos.namedentity.persist.db.namedentities;
 public class Sequences {
 
 	/**
-	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_00758BBF_D7D6_4BB3_A8E4_C6D15A3DF64E</code>
+	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_212E11E8_926B_4C43_A976_B4E4A13B5186</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_00758BBF_D7D6_4BB3_A8E4_C6D15A3DF64E = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_00758BBF_D7D6_4BB3_A8E4_C6D15A3DF64E", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_212E11E8_926B_4C43_A976_B4E4A13B5186 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_212E11E8_926B_4C43_A976_B4E4A13B5186", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_0280E922_983A_45DA_9862_730C34BE167D</code>
+	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_27B979CF_90BB_4BF3_971A_D58DC3ED8F3C</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_0280E922_983A_45DA_9862_730C34BE167D = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_0280E922_983A_45DA_9862_730C34BE167D", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_27B979CF_90BB_4BF3_971A_D58DC3ED8F3C = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_27B979CF_90BB_4BF3_971A_D58DC3ED8F3C", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_1B70BDF1_29D4_4B62_80D0_82951D999E9E</code>
+	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_2A5F65F5_E0D1_4EB4_9FDF_49665C145CF2</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_1B70BDF1_29D4_4B62_80D0_82951D999E9E = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_1B70BDF1_29D4_4B62_80D0_82951D999E9E", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_2A5F65F5_E0D1_4EB4_9FDF_49665C145CF2 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_2A5F65F5_E0D1_4EB4_9FDF_49665C145CF2", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_2744E399_6E19_4182_ADC9_20F1B53B7AAD</code>
+	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_35731126_788D_48FE_A1A1_D029AA3E099C</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_2744E399_6E19_4182_ADC9_20F1B53B7AAD = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_2744E399_6E19_4182_ADC9_20F1B53B7AAD", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_35731126_788D_48FE_A1A1_D029AA3E099C = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_35731126_788D_48FE_A1A1_D029AA3E099C", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_2B34413A_3828_4860_B561_579E570B6143</code>
+	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_43A7ADC9_5373_4C53_8CA1_BE020486C357</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_2B34413A_3828_4860_B561_579E570B6143 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_2B34413A_3828_4860_B561_579E570B6143", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_43A7ADC9_5373_4C53_8CA1_BE020486C357 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_43A7ADC9_5373_4C53_8CA1_BE020486C357", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_3692C353_AB18_4B04_A5C0_3B33F6A4D204</code>
+	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_53C43964_0320_43B1_81FB_FDD7E8A2D0B6</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_3692C353_AB18_4B04_A5C0_3B33F6A4D204 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_3692C353_AB18_4B04_A5C0_3B33F6A4D204", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_53C43964_0320_43B1_81FB_FDD7E8A2D0B6 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_53C43964_0320_43B1_81FB_FDD7E8A2D0B6", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_55894040_1CB0_407B_8F78_8BDDA0ED03CD</code>
+	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_55B3B152_6A96_45FC_9BC3_6500F9FB7E37</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_55894040_1CB0_407B_8F78_8BDDA0ED03CD = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_55894040_1CB0_407B_8F78_8BDDA0ED03CD", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_55B3B152_6A96_45FC_9BC3_6500F9FB7E37 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_55B3B152_6A96_45FC_9BC3_6500F9FB7E37", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_5613C7E1_035C_4A3F_8DD0_23E5FAB3F1D6</code>
+	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_6A7D3514_0BED_45FA_99CD_E52A29BF230B</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_5613C7E1_035C_4A3F_8DD0_23E5FAB3F1D6 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_5613C7E1_035C_4A3F_8DD0_23E5FAB3F1D6", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_6A7D3514_0BED_45FA_99CD_E52A29BF230B = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_6A7D3514_0BED_45FA_99CD_E52A29BF230B", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_62F4D19F_8427_461D_8211_1EE998DBBCDE</code>
+	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_739E8F34_79B5_40C2_AA38_E5264CFFD8DA</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_62F4D19F_8427_461D_8211_1EE998DBBCDE = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_62F4D19F_8427_461D_8211_1EE998DBBCDE", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_739E8F34_79B5_40C2_AA38_E5264CFFD8DA = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_739E8F34_79B5_40C2_AA38_E5264CFFD8DA", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_6D3173F9_B976_4ADD_948B_6B96370572FC</code>
+	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_7C9726CF_0600_4DE0_9FDE_94D63B6AB060</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_6D3173F9_B976_4ADD_948B_6B96370572FC = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_6D3173F9_B976_4ADD_948B_6B96370572FC", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_7C9726CF_0600_4DE0_9FDE_94D63B6AB060 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_7C9726CF_0600_4DE0_9FDE_94D63B6AB060", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_7330730A_D605_40D6_80FD_6109D3E3AFB9</code>
+	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_800CDFF1_169D_4929_9C6C_A112AC9739C3</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_7330730A_D605_40D6_80FD_6109D3E3AFB9 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_7330730A_D605_40D6_80FD_6109D3E3AFB9", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_800CDFF1_169D_4929_9C6C_A112AC9739C3 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_800CDFF1_169D_4929_9C6C_A112AC9739C3", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_864C3795_3D1A_4763_990E_5A5DE3CDF4C2</code>
+	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_AA4CF302_4EFD_4485_A773_0A1D21B61267</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_864C3795_3D1A_4763_990E_5A5DE3CDF4C2 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_864C3795_3D1A_4763_990E_5A5DE3CDF4C2", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_AA4CF302_4EFD_4485_A773_0A1D21B61267 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_AA4CF302_4EFD_4485_A773_0A1D21B61267", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_86F7F8AB_A909_445F_8B2C_E8C9B9498BCF</code>
+	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_B48D6A9D_0424_496B_BE0C_E236537D92DF</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_86F7F8AB_A909_445F_8B2C_E8C9B9498BCF = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_86F7F8AB_A909_445F_8B2C_E8C9B9498BCF", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_B48D6A9D_0424_496B_BE0C_E236537D92DF = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_B48D6A9D_0424_496B_BE0C_E236537D92DF", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_A2C97657_1E09_41F7_A4F1_2672344EC4F0</code>
+	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_BE2BBD92_9E60_4C00_8E5F_3F529F8ACF23</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_A2C97657_1E09_41F7_A4F1_2672344EC4F0 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_A2C97657_1E09_41F7_A4F1_2672344EC4F0", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_BE2BBD92_9E60_4C00_8E5F_3F529F8ACF23 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_BE2BBD92_9E60_4C00_8E5F_3F529F8ACF23", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_BA50995A_2998_474C_ABEF_EBE0CD49D8D4</code>
+	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_C3E6BD2B_3C5E_4CD6_B4C1_B0118328A948</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_BA50995A_2998_474C_ABEF_EBE0CD49D8D4 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_BA50995A_2998_474C_ABEF_EBE0CD49D8D4", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_C3E6BD2B_3C5E_4CD6_B4C1_B0118328A948 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_C3E6BD2B_3C5E_4CD6_B4C1_B0118328A948", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_C0E03C23_F4C4_40C1_A3AB_C07CFCA62B78</code>
+	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_CB931D50_E19E_4EDE_943B_BB189208FFE1</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_C0E03C23_F4C4_40C1_A3AB_C07CFCA62B78 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_C0E03C23_F4C4_40C1_A3AB_C07CFCA62B78", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_CB931D50_E19E_4EDE_943B_BB189208FFE1 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_CB931D50_E19E_4EDE_943B_BB189208FFE1", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_F077EB87_4561_46AB_99A4_4CF018B179B1</code>
+	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_CED0DC2E_B552_47A7_A87D_CF44DE4E60B6</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_F077EB87_4561_46AB_99A4_4CF018B179B1 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_F077EB87_4561_46AB_99A4_4CF018B179B1", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_CED0DC2E_B552_47A7_A87D_CF44DE4E60B6 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_CED0DC2E_B552_47A7_A87D_CF44DE4E60B6", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_F0FAFFAE_E8E8_4FED_8CF5_16B6C143D435</code>
+	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_F2D31128_450E_464E_BFB0_1F6FF81DF2AC</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_F0FAFFAE_E8E8_4FED_8CF5_16B6C143D435 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_F0FAFFAE_E8E8_4FED_8CF5_16B6C143D435", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_F2D31128_450E_464E_BFB0_1F6FF81DF2AC = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_F2D31128_450E_464E_BFB0_1F6FF81DF2AC", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_F4D0C900_A5AB_4672_B45E_A3828D458963</code>
+	 * The sequence <code>NAMEDENTITIES.SYSTEM_SEQUENCE_FD16BDBF_8F52_4E98_B0D0_A7A1121A98FB</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_F4D0C900_A5AB_4672_B45E_A3828D458963 = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_F4D0C900_A5AB_4672_B45E_A3828D458963", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
+	public static final org.jooq.Sequence<java.lang.Long> SYSTEM_SEQUENCE_FD16BDBF_8F52_4E98_B0D0_A7A1121A98FB = new org.jooq.impl.SequenceImpl<java.lang.Long>("SYSTEM_SEQUENCE_FD16BDBF_8F52_4E98_B0D0_A7A1121A98FB", org.plos.namedentity.persist.db.namedentities.Namedentities.NAMEDENTITIES, org.jooq.impl.SQLDataType.BIGINT);
 }

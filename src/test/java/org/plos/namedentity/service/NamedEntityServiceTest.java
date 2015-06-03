@@ -135,7 +135,7 @@ public class NamedEntityServiceTest {
     relationship.setSource("Ambra");
 
     List<Relationship> relationships = new ArrayList<>();
-    relationships.add(relationship);
+    relationships.add(_(relationship));
     individualComposite.setRelationships(relationships);
 
     IndividualComposite savedIndividualComposite = namedEntityService.createComposite(individualComposite, IndividualComposite.class);
@@ -162,7 +162,7 @@ public class NamedEntityServiceTest {
     relationshipEntity.setSource("Ambra");
 
     try {
-      crudService.create(relationshipEntity);
+      crudService.create(_(relationshipEntity));
       fail();
     }
     catch (NedException expected) {
@@ -173,7 +173,7 @@ public class NamedEntityServiceTest {
     // try again but this time use type resolver. remember that type names are
     // resolved by joins when querying database -- need foreign key to get name.
 
-    Integer relationshipId1 = crudService.create( namedEntityService.resolveValuesToIds(relationshipEntity) );
+    Integer relationshipId1 = crudService.create( namedEntityService.resolveValuesToIds(_(relationshipEntity)) );
     assertNotNull( relationshipId1 );
 
     Relationship savedEntity1 = namedEntityService.findResolvedEntityByKey(relationshipId1, Relationship.class);
@@ -183,7 +183,7 @@ public class NamedEntityServiceTest {
 
     java.sql.Date enddate = dateNow();
     savedEntity1.setEnddate(enddate);
-    assertTrue( crudService.update(namedEntityService.resolveValuesToIds(savedEntity1)) );
+    assertTrue( crudService.update(namedEntityService.resolveValuesToIds(_(savedEntity1))) );
 
     savedEntity1 = namedEntityService.findResolvedEntityByKey(relationshipId1, Relationship.class);
     assertEquals(enddate, savedEntity1.getEnddate());
@@ -199,7 +199,7 @@ public class NamedEntityServiceTest {
     relationshipEntity.setStartdate( dateNow() );
     relationshipEntity.setSource("Ambra");
 
-    Integer relationshipId2 = crudService.create( namedEntityService.resolveValuesToIds(relationshipEntity) );
+    Integer relationshipId2 = crudService.create( namedEntityService.resolveValuesToIds(_(relationshipEntity)) );
     assertNotNull( relationshipId2 );
 
     // Lookup by nedid should return all relationships entity participates in.
