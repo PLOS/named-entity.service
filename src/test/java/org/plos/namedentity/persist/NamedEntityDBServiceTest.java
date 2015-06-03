@@ -731,6 +731,10 @@ public class NamedEntityDBServiceTest {
     Integer relationshipTypeId = nedDBSvc.findTypeValue(relationshipTypeClassId, "Organization-Author");
     assertNotNull(relationshipTypeId);
 
+    // create a relationship where individual participates on the "related" id
+    // side. relationship should still be found when querying all relationships for
+    // individual by ned id (below).
+
     Relationship orgAuthRel = new Relationship();
     orgAuthRel.setTypeid(relationshipTypeId);
     orgAuthRel.setNedid(2);        /* seeded organization */
@@ -764,9 +768,25 @@ public class NamedEntityDBServiceTest {
     // FIND BY JOIN-QUERY 
 
     List<Relationship> relationships = nedDBSvc.findResolvedEntities(savedRelationship.getNedid(), Relationship.class);
-    Relationship relationship = relationships.get(0);
-    assertEquals("Organization-Author", relationship.getType());
-    assertEquals(orgAuthRel.getNedid(), relationship.getNedid());
+
+    // relationship set size may vary depending how test is run. if all tests
+    // are run, size will be 2 (new relationship above + relationship defined in
+    // composite). size will only be 1 if this test class is run standalone. a
+    // bit brittle; refactor.
+
+    assertTrue(relationships.size() > 0);
+
+    boolean foundRelationship = false;
+    for (Relationship r : relationships) {
+      if (r.getId().equals(relationshipId)) {
+        assertEquals(orgAuthRel.getNedidrelated(), r.getNedidrelated());
+        assertEquals(relationshipId, r.getId());
+        assertEquals(orgAuthRel.getNedid(), r.getNedid());
+        assertEquals(orgAuthRel.getStartdate(), r.getStartdate());
+        foundRelationship = true;
+      }
+    }
+    if (!foundRelationship) fail();
 
     // DELETE
 
