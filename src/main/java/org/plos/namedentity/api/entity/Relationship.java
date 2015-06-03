@@ -38,19 +38,6 @@ public class Relationship extends Entity {
   @XmlJavaTypeAdapter(DateAdapter.class)
   private Date enddate;
 
-  private Timestamp created;
-  private Timestamp lastmodified;
-  private Integer   createdby;
-  private Integer   lastmodifiedby;
-
-  public java.lang.Integer getId() {
-    return this.id;
-  }
-
-  public void setId(java.lang.Integer id) {
-    this.id = id;
-  }
-
   public Integer getNedidrelated() {
     return nedidrelated;
   }
@@ -89,38 +76,6 @@ public class Relationship extends Entity {
 
   public void setEnddate(Date enddate) {
     this.enddate = enddate;
-  }
-
-  public java.sql.Timestamp getCreated() {
-    return this.created;
-  }
-
-  public void setCreated(java.sql.Timestamp created) {
-    this.created = created;
-  }
-
-  public java.sql.Timestamp getLastmodified() {
-    return this.lastmodified;
-  }
-
-  public void setLastmodified(java.sql.Timestamp lastmodified) {
-    this.lastmodified = lastmodified;
-  }
-
-  public java.lang.Integer getCreatedby() {
-    return this.createdby;
-  }
-
-  public void setCreatedby(java.lang.Integer createdby) {
-    this.createdby = createdby;
-  }
-
-  public java.lang.Integer getLastmodifiedby() {
-    return this.lastmodifiedby;
-  }
-
-  public void setLastmodifiedby(java.lang.Integer lastmodifiedby) {
-    this.lastmodifiedby = lastmodifiedby;
   }
 
   public String getType() {

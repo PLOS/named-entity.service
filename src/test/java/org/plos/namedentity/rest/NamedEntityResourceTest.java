@@ -698,16 +698,18 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     Relationship[] relationships = new Relationship[2];
       Relationship r = new Relationship();
       r.setType("Individual Affiliated with Organization");
-      r.setNedid(nedIndividualId);
       r.setNedidrelated(nedOrganizationId);
       r.setStartdate( dateAdapter.unmarshal("2015-06-30"));
+      r.setSource("Ambra");
     relationships[0] = r;
       r = new Relationship();
-      r.setType("Organization-Author");
-      r.setNedid(nedOrganizationId);
-      r.setNedidrelated(nedIndividualId);
+      r.setType("Individual Affiliated with Organization");
+      r.setNedidrelated(2); /* seeded organization */
       r.setStartdate( dateAdapter.unmarshal("2015-01-15"));
+      r.setSource("Ambra");
     relationships[1] = r;
+
+    Unmarshaller unmarshaller = jsonUnmarshaller(Relationship.class);
 
     /* ------------------------------------------------------------------ */
     /*  CREATE                                                            */
@@ -720,18 +722,17 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
       Response response = target(relationshipsURI).request(MediaType.APPLICATION_JSON_TYPE)
         .post(Entity.json(String.format(relationshipJsonTemplate, 
-          relationships[i].getType(), relationships[i].getNedid(),
-          relationships[i].getNedidrelated(), relationships[i].getStartdate())));
+          relationships[i].getType(), relationships[i].getNedidrelated(), 
+            dateAdapter.marshal(relationships[i].getStartdate()))));
 
       assertEquals(200, response.getStatus());
 
       String responseJson = response.readEntity(String.class);
 
-      Unmarshaller unmarshaller = jsonUnmarshaller(Relationship.class);
       Relationship relationship = unmarshalEntity(responseJson, Relationship.class, unmarshaller);
 
       assertTrue( relationship.getId() > 0 );
-      assertEquals(relationships[i].getNedid(), relationship.getNedid());
+      assertEquals(nedIndividualId, relationship.getNedid());
       assertEquals(relationships[i].getNedidrelated(), relationship.getNedidrelated());
       assertEquals(relationships[i].getType(), relationship.getType());
       assertEquals(relationships[i].getStartdate(), relationship.getStartdate());
@@ -739,70 +740,56 @@ public class NamedEntityResourceTest extends BaseResourceTest {
       relationships[i].setId(relationship.getId());
     }
 
-    String relationshipURI = relationshipsURI + "/" + relationships[0].getId(); 
+    String relationshipURI = relationshipsURI + "/" + relationships[0].getId();
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY RELATIONSHIP ID (PK))                                    */
     /* ------------------------------------------------------------------ */
 
-    //Response response = target(relationshipURI).request(MediaType.APPLICATION_JSON_TYPE).get();
-    //assertEquals(200, response.getStatus());
+    Response response = target(relationshipURI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    assertEquals(200, response.getStatus());
 
-    //responseJson = response.readEntity(String.class);
+    String responseJson = response.readEntity(String.class);
 
-    //Relationship foundRelationship = unmarshalEntity(responseJson, Relationship.class, unmarshaller);
-    //assertEquals(relationships[0], foundRelationship);
+    Relationship foundRelationship = unmarshalEntity(responseJson, Relationship.class, unmarshaller);
+    assertEquals(relationships[0], foundRelationship);
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY NED ID)                                                  */
     /* ------------------------------------------------------------------ */
 
-    //response = target(relationshipsURI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    response = target(relationshipsURI).request(MediaType.APPLICATION_JSON_TYPE).get();
 
-    //assertEquals(200, response.getStatus());
+    assertEquals(200, response.getStatus());
 
-    //responseJson = response.readEntity(String.class);
+    responseJson = response.readEntity(String.class);
 
-    //List<Role> roles = unmarshalEntities(responseJson, Role.class, unmarshaller);
-    //assertEquals(3, roles.size());
+    List<Relationship> nedidRelationships = unmarshalEntities(responseJson, Relationship.class, unmarshaller);
+    assertEquals(2, nedidRelationships.size());
 
-    //Role role0 = roles.get(0);
-    //assertTrue(role0.getId() > 0);
-    //assertEquals(nedIndividualId, role0.getNedid());
-    //assertEquals("Author", role0.getType());
-
-    //Role role1 = roles.get(1);
-    //assertTrue(role1.getId() > 0);
-    //assertEquals(nedIndividualId, role1.getNedid());
-    //assertEquals("Editorial Manager", role1.getApplicationtype());
-    //assertEquals("Co-Author", role1.getType());
-
-    //Role role2 = roles.get(2);
-    //assertTrue(role2.getId() > 0);
-    //assertEquals(nedIndividualId, role2.getNedid());
-    //assertEquals("Editorial Manager", role2.getApplicationtype());
-    //assertEquals("Academic Editor (PLOS ONE)", role2.getType());
-    //assertEquals(START_DATE, role2.getStartdate());
+    for (int i = 0; i < relationships.length; i++) {
+      assertTrue(nedidRelationships.contains(relationships[i]));
+    }
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    //response = target(relationshipURI)
-      //.request(MediaType.APPLICATION_JSON_TYPE)
-        //.put(Entity.json(writeValueAsString(role)));
+    response = target(relationshipURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
+        .put(Entity.json(writeValueAsString(relationships[0])));
 
-    //assertEquals(200, response.getStatus());
+    assertEquals(200, response.getStatus());
 
     /* ------------------------------------------------------------------ */
     /*  DELETE                                                            */
     /* ------------------------------------------------------------------ */
 
-    //response = target(relationshipURI)
-      //.request(MediaType.APPLICATION_JSON_TYPE)
-        //.delete();
+    response = target(relationshipURI)
+      .request(MediaType.APPLICATION_JSON_TYPE)
+        .delete();
 
-    //assertEquals(204, response.getStatus());
+    assertEquals(204, response.getStatus());
   }
 
   @Test
