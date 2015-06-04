@@ -462,7 +462,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
 
-    // TODO: resolve master and child names here?
+    // TODO: resolve nedid names here?
+    // nedid's can be either an individual or organization.
 
     return this.context
         .select(
