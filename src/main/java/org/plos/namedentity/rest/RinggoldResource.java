@@ -58,7 +58,9 @@ public class RinggoldResource extends BaseResource {
 
       List<Institution> results = ringgoldService.findByAttribute(ifilter);
 
-      if (results.size() > INSTITUTIONS_RESULT_LIMIT)
+      if (results.size() == 0)
+        throw new NedException(EntityNotFound, "Institution not found");
+      else if (results.size() > INSTITUTIONS_RESULT_LIMIT)
         results = results.subList(0, INSTITUTIONS_RESULT_LIMIT);
 
       return Response.status(Response.Status.OK).entity(
