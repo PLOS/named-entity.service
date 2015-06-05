@@ -355,6 +355,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       return (T)findUniqueIdsByPrimaryKey(pk);
     if (cname.equals(Auth.class.getCanonicalName()))
       return (T)findAuthCasByPrimaryKey(pk);
+    if (cname.equals(Relationship.class.getCanonicalName()))
+      return (T)findRelationshipByPrimaryKey(pk);
 
     throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
   }
@@ -396,6 +398,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       return (List<T>)findUrlsByNedId(nedId);
     if (cname.equals(Auth.class.getCanonicalName()))
       return (List<T>)findAuthByNedId(nedId);
+    if (cname.equals(Relationship.class.getCanonicalName()))
+      return (List<T>)findRelationshipsByNedId(nedId);
 
     throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
 
@@ -451,6 +455,26 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .from(e)
         .leftOuterJoin(gt1).on(e.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(e.SOURCETYPEID.equal(gt2.ID));
+  }
+
+  private SelectOnConditionStep select(Relationships r) {
+
+    Globaltypes gt1 = GLOBALTYPES.as("gt1");
+    Globaltypes gt2 = GLOBALTYPES.as("gt2");
+
+    // TODO: resolve nedid names here?
+    // nedid's can be either an individual or organization.
+
+    return this.context
+        .select(
+            r.ID, r.NEDID, r.NEDIDRELATED,
+            gt1.SHORTDESCRIPTION.as("type"),
+            gt2.SHORTDESCRIPTION.as("source"),
+            r.TITLE, r.STARTDATE, r.ENDDATE,
+            r.CREATED, r.LASTMODIFIED)
+        .from(r)
+        .leftOuterJoin(gt1).on(r.TYPEID.equal(gt1.ID))
+        .leftOuterJoin(gt2).on(r.SOURCETYPEID.equal(gt2.ID));
   }
 
   private SelectOnConditionStep select(Authcas auth) {
@@ -700,6 +724,29 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .into(Auth.class);
   }
 
+  private List<Relationship> findRelationshipsByNedId(Integer nedId) {
+
+    Globaltypes gt1 = GLOBALTYPES.as("gt1");
+    Globaltypes gt2 = GLOBALTYPES.as("gt2");
+    Relationships r = RELATIONSHIPS.as("r");
+
+    // fetch ALL relationships that this entity participates (nedid OR nedidrelated)
+
+    return this.context
+        .select(
+            r.ID, r.NEDID, r.NEDIDRELATED,
+            gt1.SHORTDESCRIPTION.as("type"),
+            gt2.SHORTDESCRIPTION.as("source"),
+            r.TITLE, r.STARTDATE, r.ENDDATE,
+            r.CREATED, r.LASTMODIFIED)
+        .from(r)
+        .leftOuterJoin(gt1).on(r.TYPEID.equal(gt1.ID))
+        .leftOuterJoin(gt2).on(r.SOURCETYPEID.equal(gt2.ID))
+        .where(r.NEDID.equal(nedId)).or(r.NEDIDRELATED.equal(nedId))
+        .fetch()
+        .into(Relationship.class);
+  }
+
   private Uniqueidentifier findUniqueIdsByPrimaryKey(Integer id) {
 
     Uniqueidentifiers uid = UNIQUEIDENTIFIERS.as("uid");
@@ -722,6 +769,18 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       throw new NedException(EntityNotFound, String.format("Authcas not found with id %d", id));
 
     return record.into(Auth.class);
+  }
+
+  private Relationship findRelationshipByPrimaryKey(Integer id) {
+
+    Relationships rel = RELATIONSHIPS.as("r");
+
+    Record record = select(rel).where(rel.ID.equal(id)).fetchOne();
+
+    if (record == null)
+      throw new NedException(EntityNotFound, String.format("Relationship not found with id %d", id));
+
+    return record.into(Relationship.class);
   }
 
   private Individualprofile findIndividualByPrimaryKey(Integer individualId) {
@@ -821,6 +880,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     entityTableMap.put(Typedescription.class, new TablePkPair(TYPEDESCRIPTIONS, TYPEDESCRIPTIONS.ID));
     entityTableMap.put(Uniqueidentifier.class, new TablePkPair(UNIQUEIDENTIFIERS, UNIQUEIDENTIFIERS.ID));
     entityTableMap.put(Url.class, new TablePkPair(URLS, URLS.ID));
+    entityTableMap.put(Relationship.class, new TablePkPair(RELATIONSHIPS, RELATIONSHIPS.ID));
   }
   private static Table table(Class key) {
     return entityTableMap.get(key).table();

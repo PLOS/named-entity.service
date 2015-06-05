@@ -115,6 +115,106 @@ public class NamedEntityServiceTest {
   }
 
   @Test
+  public void testCreateIndividualWithOrgRelationship() {
+
+    // org composite with type names (unresolved)
+    OrganizationComposite orgComposite = newOrganizationComposite();
+
+    // save and read org from database (resolved composite)
+    OrganizationComposite savedOrgComposite = namedEntityService.createComposite(orgComposite, OrganizationComposite.class);
+
+    // individual composite with type names (unresovled)
+    IndividualComposite individualComposite = newIndividualComposite();
+
+    // define relationship. explicitly set nedid of org. nedid of individual
+    // will be set during composite creation.
+
+    Relationship relationship = new Relationship();
+    relationship.setType("Individual Affiliated with Organization");
+    relationship.setNedidrelated(savedOrgComposite.getNedid());
+    relationship.setSource("Ambra");
+
+    List<Relationship> relationships = new ArrayList<>();
+    relationships.add(_(relationship));
+    individualComposite.setRelationships(relationships);
+
+    IndividualComposite savedIndividualComposite = namedEntityService.createComposite(individualComposite, IndividualComposite.class);
+
+    List<Relationship> savedIndividualRelationships = savedIndividualComposite.getRelationships();
+    assertEquals(1, savedIndividualRelationships.size());
+    assertNotNull( savedIndividualComposite.getEmails().get(0).getNedid() );
+    assertEquals( savedOrgComposite.getNedid(), savedIndividualRelationships.get(0).getNedidrelated() );
+    assertEquals("Individual Affiliated with Organization", savedIndividualRelationships.get(0).getType());
+  }
+
+  @Test
+  public void testRelationshipEntityCrud() {
+
+    /* ---------------------------------------------------------------------- */
+    /*  CREATE Relationship #1                                                */
+    /* ---------------------------------------------------------------------- */
+
+    Relationship relationshipEntity = new Relationship();
+    relationshipEntity.setNedid(1);        /* seeded individual   */
+    relationshipEntity.setNedidrelated(2); /* seeded organization */
+    relationshipEntity.setType("Individual Affiliated with Organization");
+    relationshipEntity.setStartdate( dateNow() );
+    relationshipEntity.setSource("Ambra");
+
+    try {
+      crudService.create(_(relationshipEntity));
+      fail();
+    }
+    catch (NedException expected) {
+      // typeid hasn't been resolved yet, so we expect a not-null
+      // constraint to be thrown
+    }
+
+    // try again but this time use type resolver. remember that type names are
+    // resolved by joins when querying database -- need foreign key to get name.
+
+    Integer relationshipId1 = crudService.create( namedEntityService.resolveValuesToIds(_(relationshipEntity)) );
+    assertNotNull( relationshipId1 );
+
+    Relationship savedEntity1 = namedEntityService.findResolvedEntityByKey(relationshipId1, Relationship.class);
+    assertEquals("Individual Affiliated with Organization", savedEntity1.getType());
+
+    // UPDATE relationship entity.
+
+    java.sql.Date enddate = dateNow();
+    savedEntity1.setEnddate(enddate);
+    assertTrue( crudService.update(namedEntityService.resolveValuesToIds(_(savedEntity1))) );
+
+    savedEntity1 = namedEntityService.findResolvedEntityByKey(relationshipId1, Relationship.class);
+    assertEquals(enddate, savedEntity1.getEnddate());
+
+    /* ---------------------------------------------------------------------- */
+    /*  CREATE Relationship #2                                                */
+    /* ---------------------------------------------------------------------- */
+
+    relationshipEntity = new Relationship();
+    relationshipEntity.setNedid(2);        /* seeded organization */
+    relationshipEntity.setNedidrelated(1); /* seeded individual   */
+    relationshipEntity.setType("Organization-Author");
+    relationshipEntity.setStartdate( dateNow() );
+    relationshipEntity.setSource("Ambra");
+
+    Integer relationshipId2 = crudService.create( namedEntityService.resolveValuesToIds(_(relationshipEntity)) );
+    assertNotNull( relationshipId2 );
+
+    // Lookup by nedid should return all relationships entity participates in.
+
+    List<Relationship> allRelationshipsForEntity = namedEntityService.findResolvedEntities(1, Relationship.class);
+    assertEquals(2, allRelationshipsForEntity.size());
+
+    // DELETE
+
+    for (Relationship r : allRelationshipsForEntity) {
+      assertTrue( crudService.delete(r) );
+    }
+  }
+
+  @Test
   public void testCreateOrganizationComposite() {
 
     OrganizationComposite composite = newOrganizationComposite();

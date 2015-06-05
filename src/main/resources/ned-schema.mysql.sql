@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS namedEntities.addresses (
     addressLine2 TEXT NULL,
     addressLine3 TEXT NULL,
     city TEXT NULL,
-    stateCodeTypeId INT NULL,  
+    stateCodeTypeId INT NULL,
     countryCodeTypeId INT NOT NULL,
     postalCode TEXT NULL,
     mainContactNamedEntityId INT NULL,
@@ -209,9 +209,10 @@ DROP TABLE IF EXISTS namedEntities.relationships;
 CREATE TABLE IF NOT EXISTS namedEntities.relationships (
     id INT NOT NULL AUTO_INCREMENT,
     typeId INT NOT NULL,
-    masterNamedEntityId INT NOT NULL,
-    childNamedEntityId INT NOT NULL,
+    nedId INT NOT NULL,
+    nedIdRelated INT NOT NULL,
     title TEXT NULL,
+    sourceTypeId INT NOT NULL,
     startDate DATE NULL,
     endDate DATE NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -220,6 +221,8 @@ CREATE TABLE IF NOT EXISTS namedEntities.relationships (
     lastModifiedBy INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (typeId) REFERENCES globalTypes(id),
+    FOREIGN KEY (nedId) REFERENCES namedEntityIdentifiers(id),
+    FOREIGN KEY (nedIdRelated) REFERENCES namedEntityIdentifiers(id),
     FOREIGN KEY (createdBy) REFERENCES consumers(id),
     FOREIGN KEY (lastModifiedBy) REFERENCES consumers(id)
 )   ENGINE=INNODB;

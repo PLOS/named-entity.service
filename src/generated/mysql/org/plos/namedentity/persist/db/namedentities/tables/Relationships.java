@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Relationships extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord> {
 
-	private static final long serialVersionUID = -248057257;
+	private static final long serialVersionUID = 1847553476;
 
 	/**
 	 * The reference instance of <code>namedEntities.relationships</code>
@@ -42,19 +42,24 @@ public class Relationships extends org.jooq.impl.TableImpl<org.plos.namedentity.
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> TYPEID = createField("typeId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedEntities.relationships.masterNamedEntityId</code>.
+	 * The column <code>namedEntities.relationships.nedId</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> MASTERNAMEDENTITYID = createField("masterNamedEntityId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> NEDID = createField("nedId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedEntities.relationships.childNamedEntityId</code>.
+	 * The column <code>namedEntities.relationships.nedIdRelated</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> CHILDNAMEDENTITYID = createField("childNamedEntityId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> NEDIDRELATED = createField("nedIdRelated", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>namedEntities.relationships.title</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.CLOB.length(65535), this, "");
+
+	/**
+	 * The column <code>namedEntities.relationships.sourceTypeId</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, java.lang.Integer> SOURCETYPEID = createField("sourceTypeId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>namedEntities.relationships.startDate</code>.
@@ -137,7 +142,7 @@ public class Relationships extends org.jooq.impl.TableImpl<org.plos.namedentity.
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.RELATIONSHIPS_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.RELATIONSHIPS_IBFK_2, org.plos.namedentity.persist.db.namedentities.Keys.RELATIONSHIPS_IBFK_3);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.RelationshipsRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.RELATIONSHIPS_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.RELATIONSHIPS_IBFK_2, org.plos.namedentity.persist.db.namedentities.Keys.RELATIONSHIPS_IBFK_3, org.plos.namedentity.persist.db.namedentities.Keys.RELATIONSHIPS_IBFK_4, org.plos.namedentity.persist.db.namedentities.Keys.RELATIONSHIPS_IBFK_5);
 	}
 
 	/**

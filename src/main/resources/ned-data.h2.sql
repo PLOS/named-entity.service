@@ -85,6 +85,7 @@ INSERT INTO namedEntities.globalTypes (typeId,shortDescription,longDescription,t
 INSERT INTO namedEntities.globalTypes (typeId,shortDescription,longDescription,typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions), 'AE-Author', NULL, 'AEAU');
 INSERT INTO namedEntities.globalTypes (typeId,shortDescription,longDescription,typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions), 'Organization-Author', NULL, 'ORAU');
 INSERT INTO namedEntities.globalTypes (typeId,shortDescription,longDescription,typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions), 'AE-Reviewer', NULL, 'AERV');
+INSERT INTO namedEntities.globalTypes (typeId,shortDescription,longDescription,typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions), 'Individual Affiliated with Organization', NULL, 'I-AFF-O');
 
 /* Country Codes for Phone Numbers */
 INSERT INTO namedEntities.typeDescriptions(description, howUsed) VALUES ('Country Codes for Phone Numbers','01, 44, etc');
@@ -613,9 +614,26 @@ INSERT INTO namedEntities.typeDescriptions(description, howUsed) VALUES ('Degree
 INSERT INTO namedEntities.globalTypes (typeId, shortDescription, typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions),'PhD','PHD');
 INSERT INTO namedEntities.globalTypes (typeId, shortDescription, typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions),'MD','MD');
 
-INSERT INTO namedEntities.namedEntityIdentifiers(id,typeId) VALUES (1,1);
+/* Seed Individual Entity */
+INSERT INTO namedEntities.namedEntityIdentifiers(id,typeId)
+  VALUES (1, (select gt.id from namedEntities.globalTypes gt
+                join namedEntities.typeDescriptions td on gt.typeid = td.id
+               where td.description='Named Party Types' and gt.shortDescription='Individual'));
 
-INSERT INTO namedEntities.individualProfiles 
-    (id, nedId, firstName, lastName, displayName, biography, sourceTypeId, isActive, createdBy, lastModifiedBy)
-VALUES
-    (1,1,'NED','NED','NED','bio',78,1,1,1);
+INSERT INTO namedEntities.individualProfiles (id, nedId, firstName, lastName, displayName, biography, isActive, createdBy, lastModifiedBy, sourceTypeId)
+  VALUES (1,1,'NED','NED','NED','bio',1,1,1,
+    (select gt.id from namedEntities.globalTypes gt
+       join namedEntities.typeDescriptions td on gt.typeid = td.id
+      where td.description='Source Applications' and gt.shortDescription='Ambra'));
+
+/* Seed Organization Entity */
+INSERT INTO namedEntities.namedEntityIdentifiers(id,typeId)
+  VALUES (2, (select gt.id from namedEntities.globalTypes gt
+                join namedEntities.typeDescriptions td on gt.typeid = td.id
+               where td.description='Named Party Types' and gt.shortDescription='Organization'));
+
+INSERT INTO  namedEntities.organizations (id, nedId, familiarName, legalName, isActive, createdBy, lastModifiedBy, sourceTypeId)
+  VALUES (1,2,'ABC Inc (FN)','ABC Inc (LN)',1,1,1,
+    (select gt.id from namedEntities.globalTypes gt
+       join namedEntities.typeDescriptions td on gt.typeid = td.id
+      where td.description='Source Applications' and gt.shortDescription='Ambra'));

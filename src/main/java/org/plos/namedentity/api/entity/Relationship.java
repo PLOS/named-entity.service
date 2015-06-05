@@ -24,11 +24,10 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @XmlRootElement
-public class Relationship {
+public class Relationship extends Entity {
 
-  private Integer id;
-  private Integer masternamedentityid;
-  private Integer childnamedentityid;
+  private Integer nedidrelated;
+
   private Integer typeid;
   private String  type;
   private String  title;
@@ -39,40 +38,27 @@ public class Relationship {
   @XmlJavaTypeAdapter(DateAdapter.class)
   private Date enddate;
 
-  private Timestamp created;
-  private Timestamp lastmodified;
-  private Integer   createdby;
-  private Integer   lastmodifiedby;
-
-  public java.lang.Integer getId() {
-    return this.id;
+  public Integer getNedidrelated() {
+    return nedidrelated;
   }
 
-  public void setId(java.lang.Integer id) {
-    this.id = id;
+  public void setNedidrelated(Integer nedidrelated) {
+    this.nedidrelated = nedidrelated;
   }
 
-  public java.lang.Integer getMasternamedentityid() {
-    return this.masternamedentityid;
+  public String getTitle() {
+    return title;
   }
 
-  public void setMasternamedentityid(java.lang.Integer masternamedentityid) {
-    this.masternamedentityid = masternamedentityid;
+  public void setTitle(String title) {
+    this.title = title;
   }
 
-  public java.lang.Integer getChildnamedentityid() {
-    return this.childnamedentityid;
-  }
-
-  public void setChildnamedentityid(java.lang.Integer childnamedentityid) {
-    this.childnamedentityid = childnamedentityid;
-  }
-
-  public java.lang.Integer getTypeid() {
+  public Integer getTypeid() {
     return this.typeid;
   }
 
-  public void setTypeid(java.lang.Integer typeid) {
+  public void setTypeid(Integer typeid) {
     this.typeid = typeid;
   }
 
@@ -92,42 +78,10 @@ public class Relationship {
     this.enddate = enddate;
   }
 
-  public java.sql.Timestamp getCreated() {
-    return this.created;
-  }
-
-  public void setCreated(java.sql.Timestamp created) {
-    this.created = created;
-  }
-
-  public java.sql.Timestamp getLastmodified() {
-    return this.lastmodified;
-  }
-
-  public void setLastmodified(java.sql.Timestamp lastmodified) {
-    this.lastmodified = lastmodified;
-  }
-
-  public java.lang.Integer getCreatedby() {
-    return this.createdby;
-  }
-
-  public void setCreatedby(java.lang.Integer createdby) {
-    this.createdby = createdby;
-  }
-
-  public java.lang.Integer getLastmodifiedby() {
-    return this.lastmodifiedby;
-  }
-
-  public void setLastmodifiedby(java.lang.Integer lastmodifiedby) {
-    this.lastmodifiedby = lastmodifiedby;
-  }
-  
   public String getType() {
       return type;
   }
-  
+
   public void setType(String type) {
       this.type = type;
   }

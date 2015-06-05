@@ -723,6 +723,79 @@ public class NamedEntityDBServiceTest {
   }
 
   @Test
+  public void testRelationshipCRUD() {
+
+    // CREATE
+
+    Integer relationshipTypeClassId = nedDBSvc.findTypeClass("Relationship Types");
+    Integer relationshipTypeId = nedDBSvc.findTypeValue(relationshipTypeClassId, "Organization-Author");
+    assertNotNull(relationshipTypeId);
+
+    // create a relationship where individual participates on the "related" id
+    // side. relationship should still be found when querying all relationships for
+    // individual by ned id (below).
+
+    Relationship orgAuthRel = _(new Relationship());
+    orgAuthRel.setTypeid(relationshipTypeId);
+    orgAuthRel.setNedid(2);        /* seeded organization */
+    orgAuthRel.setNedidrelated(1); /* seeded individual   */
+    orgAuthRel.setStartdate(dateNow());
+    orgAuthRel.setSourcetypeid( getSourceTypeId(UidTypeEnum.EDITORIAL_MANAGER.getName()) );
+
+    Integer relationshipId = nedDBSvc.create( orgAuthRel );
+    assertNotNull(relationshipId);
+
+    // UPDATE
+
+    Relationship savedRelationship = nedDBSvc.findById(relationshipId, Relationship.class);
+
+    savedRelationship.setEnddate(dateNow());
+
+    assertTrue( nedDBSvc.update(savedRelationship) );
+
+    // Get another instance of same relationship record
+
+    Relationship savedRelationship2 = nedDBSvc.findById(relationshipId, Relationship.class);
+    assertEquals(savedRelationship, savedRelationship2);
+    assertEquals(savedRelationship.getStartdate(), savedRelationship2.getStartdate());
+    assertEquals(savedRelationship.getEnddate(), savedRelationship2.getEnddate());
+
+    // FIND ALL Relationships
+
+    List<Relationship> allRelationshipsInDb = nedDBSvc.findAll(Relationship.class, 0, Integer.MAX_VALUE);
+    assertTrue( allRelationshipsInDb.size() > 0 );
+
+    // FIND BY JOIN-QUERY 
+
+    List<Relationship> relationships = nedDBSvc.findResolvedEntities(savedRelationship.getNedid(), Relationship.class);
+
+    // relationship set size may vary depending how test is run. if all tests
+    // are run, size will be 2 (new relationship above + relationship defined in
+    // composite). size will only be 1 if this test class is run standalone. a
+    // bit brittle; refactor.
+
+    assertTrue(relationships.size() > 0);
+
+    boolean foundRelationship = false;
+    for (Relationship r : relationships) {
+      if (r.getId().equals(relationshipId)) {
+        assertEquals(orgAuthRel.getNedidrelated(), r.getNedidrelated());
+        assertEquals(relationshipId, r.getId());
+        assertEquals(orgAuthRel.getNedid(), r.getNedid());
+        assertEquals(orgAuthRel.getStartdate(), r.getStartdate());
+        foundRelationship = true;
+      }
+    }
+    if (!foundRelationship) fail();
+
+    // DELETE
+
+    Relationship relationshipToDelete = new Relationship();
+    relationshipToDelete.setId(relationshipId);
+    assertTrue( nedDBSvc.delete(relationshipToDelete) );
+  }
+
+  @Test
   public void testUniqueIdentifiersCRUD() {
 
     final String ORCID_ID = "0000-0001-9430-319X_UIDSERVICE";

@@ -10,6 +10,7 @@ import org.plos.namedentity.api.entity.Composite;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Individualprofile;
+import org.plos.namedentity.api.entity.Relationship;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.service.AuthServiceImpl;
@@ -296,6 +297,54 @@ public class IndividualsResource extends NedResource {
   @ApiOperation(value = "List roles")
   public Response getRoles(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Role.class);
+  }
+
+  /* ----------------------------------------------------------------------- */
+  /*  RELATIONSHIP CRUD                                                      */
+  /* ----------------------------------------------------------------------- */
+
+  @POST
+  @Path("/{nedId}/relationships")
+  @ApiOperation(value = "Create relationship", response = Relationship.class)
+  public Response createRelationship(@PathParam("nedId") int nedId,
+                                     Relationship relationshipEntity,
+                                     @HeaderParam("Authorization") String authstring) {
+    return createEntity(nedId, relationshipEntity, authstring);
+  }
+
+  @PUT
+  @Path("/{nedId}/relationships/{relationshipId}")
+  @ApiOperation(value = "Update relationship", response = Relationship.class)
+  public Response updateRelationship(@PathParam("nedId")          int nedId,
+                                     @PathParam("relationshipId") int relationshipId,
+                                     @HeaderParam("Authorization") String authstring,
+                                     Relationship relationshipEntity) {
+    return updateEntity(nedId, relationshipId, relationshipEntity, authstring);
+  }
+
+  @DELETE
+  @Path("/{nedId}/relationships/{relationshipId}")
+  @ApiOperation(value = "Delete relationship")
+  public Response deleteRelationship(@PathParam("nedId")          int nedId,
+                                     @PathParam("relationshipId") int relationshipId,
+                                     @HeaderParam("Authorization") String authstring) {
+    //TODO: process authstring
+    return deleteEntity(nedId, relationshipId, Relationship.class);
+  }
+
+  @GET
+  @Path("/{nedId}/relationships/{relationshipId}")
+  @ApiOperation(value = "Read relationship", response = Relationship.class)
+  public Response getRelationship(@PathParam("nedId")          int nedId,
+                                  @PathParam("relationshipId") int relationshipId) {
+    return getEntity(nedId, relationshipId, Relationship.class);
+  }
+
+  @GET
+  @Path("/{nedId}/relationships")
+  @ApiOperation(value = "List relationships")
+  public Response getRelationship(@PathParam("nedId") int nedId) {
+    return getEntities(nedId, Relationship.class);
   }
 
   /* ----------------------------------------------------------------------- */

@@ -29,6 +29,7 @@ import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Phonenumber;
+import org.plos.namedentity.api.entity.Relationship;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.api.entity.Url;
@@ -339,6 +340,12 @@ public abstract class NedResource extends BaseResource {
         return Response.status(Response.Status.OK).entity(
             new GenericEntity<List<Phonenumber>>(
                 namedEntityService.findResolvedEntities(nedId, Phonenumber.class)
+            ){}).build();
+      }
+      else if (cname.equals(Relationship.class.getCanonicalName())) {
+        return Response.status(Response.Status.OK).entity(
+            new GenericEntity<List<Relationship>>(
+                namedEntityService.findResolvedEntities(nedId, Relationship.class)
             ){}).build();
       }
       else if (cname.equals(Role.class.getCanonicalName())) {

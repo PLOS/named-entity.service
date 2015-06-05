@@ -93,6 +93,7 @@ INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,create
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'AE-Author', NULL, 'AEAU', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Organization-Author', NULL, 'ORAU', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'AE-Reviewer', NULL, 'AERV', CURRENT_TIMESTAMP);
+INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Individual Affiliated with Organization', NULL, 'I-AFF-O', CURRENT_TIMESTAMP);
 
 /* Country Codes for Phone Numbers */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Country Codes for Phone Numbers','01, 44, etc');
