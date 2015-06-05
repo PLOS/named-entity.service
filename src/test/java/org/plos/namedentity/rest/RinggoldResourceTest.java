@@ -68,14 +68,13 @@ public class RinggoldResourceTest extends BaseResourceTest {
     Response response = target(INSTITUTIONSEARCH_URI).queryParam("substring","stanford typo doh")
                                                      .request(MediaType.APPLICATION_JSON_TYPE).get();
 
-    assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
     String jsonPayload = response.readEntity(String.class);
 
-    NedErrorResponse ner = unmarshalEntity(jsonPayload, NedErrorResponse.class, 
-                                           jsonUnmarshaller(NedErrorResponse.class));
-
-    assertEquals(EntityNotFound.getErrorCode(), ner.errorCode);
+    Unmarshaller unmarshaller = jsonUnmarshaller(Institution.class);
+    List<Institution> institutions = unmarshalEntities(jsonPayload, Institution.class, unmarshaller);
+    assertEquals(0, institutions.size());
   }
 
   @Test
