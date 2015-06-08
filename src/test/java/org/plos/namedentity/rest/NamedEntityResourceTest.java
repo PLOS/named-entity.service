@@ -150,8 +150,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
       NedErrorResponse ner = unmarshalEntity(jsonPayload, NedErrorResponse.class, 
                                             jsonUnmarshaller(NedErrorResponse.class));
 
-      assertEquals(InvalidSearchQuery.getErrorCode(), ner.errorCode);
-      assertEquals(InvalidSearchQuery.getErrorMessage(), ner.errorMsg);
+      assertEquals(InvalidInstitutionSearchQuery.getErrorCode(), ner.errorCode);
+      assertEquals(InvalidInstitutionSearchQuery.getErrorMessage(), ner.errorMsg);
     }
 
     /* ---------------------------------------------------------------------- */

@@ -16,12 +16,11 @@
  */
 package org.plos.namedentity.rest;
 
-import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
-
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.OrganizationComposite;
+import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Organization;
 
 import javax.ws.rs.GET;
@@ -30,8 +29,19 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidOrganizationSearchQuery;
+import static org.plos.namedentity.api.NedException.ErrorType.TooManyResultsFound;
+
 
 @Path("/organizations")
 @Api("/organizations")
@@ -54,6 +64,47 @@ public class OrganizationsResource extends NedResource {
       return nedError(e, "Unable to create organization");
     } catch (Exception e) {
       return serverError(e, "Unable to create organization");
+    }
+  }
+
+  @GET
+  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+  @ApiOperation(value = "Find organizations matching specified attribute.")
+  public Response findOrganizations(@QueryParam("attribute") String attribute,
+                                    @QueryParam("value")     String value) {
+
+    try {
+      if (isEmptyOrBlank(attribute) || isEmptyOrBlank(value)) {
+        throw new NedException(InvalidOrganizationSearchQuery);
+      }
+
+      List<Entity> results = crudService.findByAttribute( createSearchCriteria("organization",attribute,value,OrganizationComposite.class) );
+
+      if (results.size() == 0)
+        throw new NedException(EntityNotFound, "Organization not found");
+      else if (results.size() > 10)
+        throw new NedException(TooManyResultsFound);
+
+      // entity records may refer to the same individual. we can filter these out
+      // by adding ned id's to a set.
+
+      Set<Integer> nedids = new HashSet<>();
+      for (Entity e : results) { nedids.add(e.getNedid()); }
+
+      // lookup composites for ned id's
+
+      List<OrganizationComposite> composites = new ArrayList<>();
+      for (Integer nedid : nedids) {
+        composites.add(namedEntityService.findComposite(nedid, OrganizationComposite.class));
+      }
+
+      return Response.status(Response.Status.OK).entity(
+          new GenericEntity<List<OrganizationComposite>>(composites){}).build();
+
+    } catch (NedException e) {
+      return nedError(e, "findOrganizations() failed");
+    } catch (Exception e) {
+      return serverError(e, "findOrganizations() failed");
     }
   }
 
