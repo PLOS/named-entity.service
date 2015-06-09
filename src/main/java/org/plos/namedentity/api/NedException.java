@@ -71,6 +71,8 @@ public class NedException extends RuntimeException {
     InvalidInstitutionQuery(1830, "Institution query requires a substring parameter"),
     InvalidOrganizationSearchQuery(1850, "Search query requires an attribute, and a value"),
 
+    InstitutionNotFound(1860, "Institution not found with that ID"),
+
     InvalidErrorType(-1, "");
 
     private final int    errorCode;

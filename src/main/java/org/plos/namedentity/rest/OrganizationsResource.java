@@ -22,7 +22,11 @@ import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Organization;
+import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.api.ringgold.Institution;
+import org.plos.namedentity.service.RinggoldService;
 
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -38,14 +42,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
-import static org.plos.namedentity.api.NedException.ErrorType.InvalidOrganizationSearchQuery;
-import static org.plos.namedentity.api.NedException.ErrorType.TooManyResultsFound;
+import static org.plos.namedentity.api.NedException.ErrorType.*;
 
 
 @Path("/organizations")
 @Api("/organizations")
 public class OrganizationsResource extends NedResource {
+
+  @Inject
+  protected RinggoldService ringgoldService;
 
   @Override
   protected String getNamedPartyType() {
@@ -57,7 +62,34 @@ public class OrganizationsResource extends NedResource {
   public Response createOrganization(OrganizationComposite composite,
                                      @HeaderParam("Authorization") String authstring) {
     try {
-      setCreatedAndLastModifiedBy(authstring,composite);
+      setCreatedAndLastModifiedBy(authstring, composite);
+
+      List<Uniqueidentifier> uids = composite.getUniqueidentifiers();
+
+      if (uids != null) {
+        for (Uniqueidentifier uid : uids) {
+          if (uid.getType().equalsIgnoreCase("Ringgold")) {
+            Integer ringgold_pcode = Integer.parseInt(uid.getUniqueidentifier());
+
+            Institution ifilter = new Institution();
+            ifilter.setPCode(ringgold_pcode);
+
+            List<Institution> results = ringgoldService.findByAttribute(ifilter);
+
+            if (results.size() == 0)
+              throw new NedException(InstitutionNotFound);
+
+            for (Institution ins : results) {
+              composite.setLegalname(ins.getName());
+              composite.setFamiliarname(ins.getName());
+              // TODO: populate address here or leave it to a mysql view
+            }
+
+            break;
+          }
+        }
+      }
+
       return Response.status(Response.Status.OK).entity(
           namedEntityService.createComposite(composite, OrganizationComposite.class)).build();
     } catch (NedException e) {
@@ -71,14 +103,14 @@ public class OrganizationsResource extends NedResource {
   @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   @ApiOperation(value = "Find organizations matching specified attribute.")
   public Response findOrganizations(@QueryParam("attribute") String attribute,
-                                    @QueryParam("value")     String value) {
+                                    @QueryParam("value") String value) {
 
     try {
       if (isEmptyOrBlank(attribute) || isEmptyOrBlank(value)) {
         throw new NedException(InvalidOrganizationSearchQuery);
       }
 
-      List<Entity> results = crudService.findByAttribute( createSearchCriteria("organization",attribute,value,OrganizationComposite.class) );
+      List<Entity> results = crudService.findByAttribute(createSearchCriteria("organization", attribute, value, OrganizationComposite.class));
 
       if (results.size() == 0)
         throw new NedException(EntityNotFound, "Organization not found");
@@ -89,7 +121,8 @@ public class OrganizationsResource extends NedResource {
       // by adding ned id's to a set.
 
       Set<Integer> nedids = new HashSet<>();
-      for (Entity e : results) { nedids.add(e.getNedid()); }
+      for (Entity e : results) {
+        nedids.add(e.getNedid()); }
 
       // lookup composites for ned id's
 
