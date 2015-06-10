@@ -18,30 +18,20 @@ package org.plos.namedentity.rest;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import org.plos.namedentity.api.adapter.DateAdapter;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedErrorResponse;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.OrganizationComposite;
-import org.plos.namedentity.api.entity.Address;
-import org.plos.namedentity.api.entity.Auth;
-import org.plos.namedentity.api.entity.Email;
-import org.plos.namedentity.api.entity.Globaltype;
-import org.plos.namedentity.api.entity.Individualprofile;
-import org.plos.namedentity.api.entity.Organization;
-import org.plos.namedentity.api.entity.Relationship;
-import org.plos.namedentity.api.entity.Role;
-import org.plos.namedentity.api.entity.Typedescription;
-import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.api.adapter.DateAdapter;
+import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.service.NamedEntityService;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -63,9 +53,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
-import static org.plos.namedentity.api.NedException.ErrorType.*;
-import static java.lang.Integer.parseInt;
+import static org.plos.namedentity.api.NedException.ErrorType.DupeEmailError;
+import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidInstitutionSearchQuery;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchCriteria;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidTypeValue;
+import static org.plos.namedentity.api.NedException.ErrorType.PasswordError;
+import static org.plos.namedentity.api.NedException.ErrorType.PasswordFormatError;
 
 public class NamedEntityResourceTest extends BaseResourceTest {
 
@@ -404,7 +398,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     /*  FIND ORGANIZATION BY GUID                                         */
     /* ------------------------------------------------------------------ */
 
-    response = target(ORGANIZATION_URI + "/Ringgold/123")
+    response = target(ORGANIZATION_URI + "/Ringgold/6429")
         .request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());

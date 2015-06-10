@@ -90,7 +90,7 @@ public class OrganizationsResource extends NedResource {
             });
 
       List<Entity> results = crudService.findByAttribute(createSearchCriteria("organization", "legalname", composite.getLegalname(), OrganizationComposite.class));
-      
+
       if (results.size() == 0)
         return Response.status(Response.Status.OK).entity(
             namedEntityService.createComposite(composite, OrganizationComposite.class)).build();
