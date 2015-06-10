@@ -74,12 +74,12 @@ public class OrganizationsResource extends NedResource {
             Institution ifilter = new Institution();
             ifilter.setPCode(ringgold_pcode);
 
-            List<Institution> results = ringgoldService.findByAttribute(ifilter);
+            List<Institution> ringgoldResults = ringgoldService.findByAttribute(ifilter);
 
-            if (results.size() == 0)
+            if (ringgoldResults.size() == 0)
               throw new NedException(InstitutionNotFound);
 
-            for (Institution ins : results) {
+            for (Institution ins : ringgoldResults) {
               composite.setLegalname(ins.getName());
               composite.setFamiliarname(ins.getName());
               // TODO: populate address here or leave it to a mysql view
@@ -90,8 +90,16 @@ public class OrganizationsResource extends NedResource {
         }
       }
 
+      List<Entity> results = crudService.findByAttribute(createSearchCriteria("organization", "legalname", composite.getLegalname(), OrganizationComposite.class));
+
+
+      if (results.size() == 0)
+        return Response.status(Response.Status.OK).entity(
+            namedEntityService.createComposite(composite, OrganizationComposite.class)).build();
+
       return Response.status(Response.Status.OK).entity(
-          namedEntityService.createComposite(composite, OrganizationComposite.class)).build();
+          namedEntityService.findComposite(results.get(0).getNedid(), OrganizationComposite.class)).build();
+      
     } catch (NedException e) {
       return nedError(e, "Unable to create organization");
     } catch (Exception e) {
@@ -122,7 +130,8 @@ public class OrganizationsResource extends NedResource {
 
       Set<Integer> nedids = new HashSet<>();
       for (Entity e : results) {
-        nedids.add(e.getNedid()); }
+        nedids.add(e.getNedid());
+      }
 
       // lookup composites for ned id's
 
