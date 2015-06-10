@@ -42,7 +42,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.plos.namedentity.api.NedException.ErrorType.*;
+import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+import static org.plos.namedentity.api.NedException.ErrorType.InstitutionNotFound;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidOrganizationSearchQuery;
+import static org.plos.namedentity.api.NedException.ErrorType.TooManyResultsFound;
 
 
 @Path("/organizations")
@@ -66,40 +69,35 @@ public class OrganizationsResource extends NedResource {
 
       List<Uniqueidentifier> uids = composite.getUniqueidentifiers();
 
-      if (uids != null) {
-        for (Uniqueidentifier uid : uids) {
-          if (uid.getType().equalsIgnoreCase("Ringgold")) {
-            Integer ringgold_pcode = Integer.parseInt(uid.getUniqueidentifier());
+      if (uids != null)
+        uids.stream().filter(uid -> uid.getType().equalsIgnoreCase("Ringgold")).findFirst().ifPresent(
+            uid -> {
+              Integer ringgold_pcode = Integer.parseInt(uid.getUniqueidentifier());
 
-            Institution ifilter = new Institution();
-            ifilter.setPCode(ringgold_pcode);
+              Institution ifilter = new Institution();
+              ifilter.setPCode(ringgold_pcode);
 
-            List<Institution> ringgoldResults = ringgoldService.findByAttribute(ifilter);
+              List<Institution> ringgoldResults = ringgoldService.findByAttribute(ifilter);
 
-            if (ringgoldResults.size() == 0)
-              throw new NedException(InstitutionNotFound);
+              if (ringgoldResults.size() == 0)
+                throw new NedException(InstitutionNotFound);
 
-            for (Institution ins : ringgoldResults) {
-              composite.setLegalname(ins.getName());
-              composite.setFamiliarname(ins.getName());
-              // TODO: populate address here or leave it to a mysql view
-            }
-
-            break;
-          }
-        }
-      }
+              for (Institution ins : ringgoldResults) {
+                composite.setLegalname(ins.getName());
+                composite.setFamiliarname(ins.getName());
+                // TODO: populate address here or leave it to a mysql view
+              }
+            });
 
       List<Entity> results = crudService.findByAttribute(createSearchCriteria("organization", "legalname", composite.getLegalname(), OrganizationComposite.class));
-
-
+      
       if (results.size() == 0)
         return Response.status(Response.Status.OK).entity(
             namedEntityService.createComposite(composite, OrganizationComposite.class)).build();
 
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findComposite(results.get(0).getNedid(), OrganizationComposite.class)).build();
-      
+
     } catch (NedException e) {
       return nedError(e, "Unable to create organization");
     } catch (Exception e) {
