@@ -122,6 +122,45 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   }
 
   @Test
+  public void createOrgWithoutRinggoldId() throws Exception {
+
+
+    OrganizationComposite c = new OrganizationComposite();
+    c.setType("University");
+    c.setLegalname("Unknown university");
+
+
+//    Response response = buildRequestDefaultAuth(ORGANIZATION_URI)
+//        .post(Entity.json(compositeJson));
+//
+//
+//    assertEquals(200, response.getStatus());
+
+
+
+
+  }
+
+
+  @Test
+  public void createOrgWithRinggoldId() throws Exception {
+
+
+
+  }
+
+
+
+
+  // TODO: other ringgold cases
+
+
+
+
+
+
+
+  @Test
   public void testFindIndividuals() throws Exception {
 
     /* ---------------------------------------------------------------------- */

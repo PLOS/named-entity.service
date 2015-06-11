@@ -23,6 +23,7 @@ import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Organization;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.api.ringgold.Institution;
 import org.plos.namedentity.service.RinggoldService;
 
@@ -85,9 +86,35 @@ public class OrganizationsResource extends NedResource {
               for (Institution ins : ringgoldResults) {
                 composite.setLegalname(ins.getName());
                 composite.setFamiliarname(ins.getName());
+
+                // TODO: search orgs for ringgold uid and return
+
+
+                try {
+                  composite.setNedid(namedEntityService.findResolvedEntityByUid(UidTypeEnum.RINGGOLD.getName(), uid.getUniqueidentifier(), Organization.class).getNedid());
+                }
+                catch (NedException e) {
+                  // if it is not found, dont bother setting a value
+                  ;
+                }
+
+
                 // TODO: populate address here or leave it to a mysql view
               }
             });
+
+
+
+
+      // TODO: handle the case where the ringgold ID is in the UIDs table, but is not associated with an existing NEDID? wait. is this possible?
+
+
+
+
+
+      if (composite.getNedid()  != null)
+        return Response.status(Response.Status.OK).entity(
+          namedEntityService.findComposite(composite.getNedid(), OrganizationComposite.class)).build();
 
       List<Entity> results = crudService.findByAttribute(createSearchCriteria("organization", "legalname", composite.getLegalname(), OrganizationComposite.class));
 
