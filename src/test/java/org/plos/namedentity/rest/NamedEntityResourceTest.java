@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
@@ -68,7 +69,10 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   private static final String INDIVIDUAL_URI     = "/individuals";
   private static final String ORGANIZATION_URI   = "/organizations";
 
+  private static final String PLOS_SROUCE = "Ambra";
+
   private static Integer nedIndividualId   = null;
+
   private static Integer nedOrganizationId = null;
 
   private DateAdapter dateAdapter;
@@ -124,41 +128,105 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   @Test
   public void createOrgWithoutRinggoldId() throws Exception {
 
+    Unmarshaller unmarshaller = jsonUnmarshaller(OrganizationComposite.class);
 
-    OrganizationComposite c = new OrganizationComposite();
-    c.setType("University");
-    c.setLegalname("Unknown university");
+    OrganizationComposite composite_in = new OrganizationComposite();
+    composite_in.setLegalname("Unknown university");
+    composite_in.setSource(PLOS_SROUCE);
+    composite_in.setFamiliarname(composite_in.getLegalname());
 
+    Response response = buildRequestDefaultAuth(ORGANIZATION_URI)
+        .post(Entity.json(writeValueAsString(composite_in)));
 
-//    Response response = buildRequestDefaultAuth(ORGANIZATION_URI)
-//        .post(Entity.json(compositeJson));
-//
-//
-//    assertEquals(200, response.getStatus());
+    String responseJson = response.readEntity(String.class);
 
+    OrganizationComposite composite_out = unmarshalEntity(responseJson, OrganizationComposite.class, unmarshaller);
 
+    assertEquals(responseJson, 200, response.getStatus());
 
+    // inserting it again should return the already existing org instead of an error
+
+    response = buildRequestDefaultAuth(ORGANIZATION_URI)
+        .post(Entity.json(writeValueAsString(composite_in)));
+
+    responseJson = response.readEntity(String.class);
+
+    OrganizationComposite composite_out2 = unmarshalEntity(responseJson, OrganizationComposite.class, unmarshaller);
+
+    assertEquals(responseJson, 200, response.getStatus());
+
+    assertEquals(responseJson, composite_out.getNedid(), composite_out2.getNedid());
+
+    assertEquals(responseJson, composite_in.getLegalname(), composite_out2.getLegalname());
+
+    assertEquals(responseJson, composite_out.getLegalname(), composite_out2.getLegalname());
 
   }
-
 
   @Test
-  public void createOrgWithRinggoldId() throws Exception {
+  public void createOrgWithBadRinggoldId() throws Exception {
 
+    OrganizationComposite composite_in = new OrganizationComposite();
+    composite_in.setLegalname("Unknown university 2");
+    composite_in.setSource(PLOS_SROUCE);
+    composite_in.setFamiliarname(composite_in.getLegalname());
 
+    Uniqueidentifier uid = new Uniqueidentifier();
+    uid.setType("Ringgold");
+    uid.setSource(PLOS_SROUCE);
+    uid.setUniqueidentifier("0000000");
+    List<Uniqueidentifier> uids = new ArrayList<>();
+    uids.add(uid);
+
+    composite_in.setUniqueidentifiers(uids);
+
+    Response response = buildRequestDefaultAuth(ORGANIZATION_URI)
+        .post(Entity.json(writeValueAsString(composite_in)));
+
+    String responseJson = response.readEntity(String.class);
+
+    NedErrorResponse ner = unmarshalEntity(responseJson, NedErrorResponse.class,
+        jsonUnmarshaller(NedErrorResponse.class));
+
+    assertEquals(responseJson, NedException.ErrorType.InstitutionNotFound.getErrorCode(), ner.errorCode);
 
   }
 
+  @Test
+  public void createOrgWithGoodRinggoldId() throws Exception {
 
+    Unmarshaller unmarshaller = jsonUnmarshaller(OrganizationComposite.class);
 
+    OrganizationComposite composite_in = new OrganizationComposite();
+    composite_in.setLegalname("Unknown university 3");
+    composite_in.setSource(PLOS_SROUCE);
+    composite_in.setFamiliarname(composite_in.getLegalname());
 
-  // TODO: other ringgold cases
+    Uniqueidentifier uid = new Uniqueidentifier();
+    uid.setType("Ringgold");
+    uid.setSource(PLOS_SROUCE);
+    uid.setUniqueidentifier("6429");
+    List<Uniqueidentifier> uids = new ArrayList<>();
+    uids.add(uid);
 
+    composite_in.setUniqueidentifiers(uids);
 
+    Response response = buildRequestDefaultAuth(ORGANIZATION_URI)
+        .post(Entity.json(writeValueAsString(composite_in)));
 
+    String responseJson = response.readEntity(String.class);
 
+    OrganizationComposite composite_out = unmarshalEntity(responseJson, OrganizationComposite.class, unmarshaller);
 
+    assertEquals(responseJson, 200, response.getStatus());
 
+    // the name should be overwritten from Ringgold data
+
+    assertEquals(composite_out.getFamiliarname(), "Stanford University");
+
+    assertEquals(composite_out.getUniqueidentifiers().get(0).getUniqueidentifier(),uid.getUniqueidentifier());
+
+  }
 
   @Test
   public void testFindIndividuals() throws Exception {
@@ -504,14 +572,14 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals("Q", profile0.getMiddlename());
     assertEquals("Doe", profile0.getLastname());
     assertEquals("III", profile0.getNamesuffix());
-    assertEquals("Ambra", profile0.getSource());
+    assertEquals(PLOS_SROUCE, profile0.getSource());
 
     Individualprofile profile1 = profiles.get(1);
     assertEquals("Jane", profile1.getFirstname());
     assertEquals("Shmoe", profile1.getLastname());
     assertEquals("Janie", profile1.getNickname());
     assertEquals("10bogus郑超Gebækaaaمن", profile1.getDisplayname());
-    assertEquals("Ambra", profile1.getSource());
+    assertEquals(PLOS_SROUCE, profile1.getSource());
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */
@@ -723,7 +791,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     relationship.setType("Individual Affiliated with Organization");
     relationship.setNedidrelated(nedOrganizationId);
     relationship.setStartdate( dateAdapter.unmarshal("2015-06-30"));
-    relationship.setSource("Ambra");
+    relationship.setSource(PLOS_SROUCE);
 
     Unmarshaller unmarshaller = jsonUnmarshaller(Relationship.class);
 
@@ -897,21 +965,21 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     Email email0 = emails.get(0);
     assertEquals("Work", email0.getType());
     assertEquals("jane.q.doe.work@foo.com", email0.getEmailaddress());
-    assertEquals("Ambra", email0.getSource());
+    assertEquals(PLOS_SROUCE, email0.getSource());
     assertEquals(false, email0.getVerified());
     assertEquals(true, email0.getIsactive());
 
     Email email1 = emails.get(1);
     assertEquals("Work", email1.getType());
     assertEquals("jane.q.doe.defunct@foo.com", email1.getEmailaddress());
-    assertEquals("Ambra", email1.getSource());
+    assertEquals(PLOS_SROUCE, email1.getSource());
     assertEquals(true, email1.getVerified());
     assertEquals(false, email1.getIsactive());
 
     Email email2 = emails.get(2);
     assertEquals("Personal", email2.getType());
     assertEquals("jane.q.doe.personal@foo.com", email2.getEmailaddress());
-    assertEquals("Ambra", email2.getSource());
+    assertEquals(PLOS_SROUCE, email2.getSource());
     assertEquals(false, email2.getVerified());
     assertEquals(true, email2.getIsactive());
 

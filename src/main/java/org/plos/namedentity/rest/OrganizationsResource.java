@@ -80,48 +80,41 @@ public class OrganizationsResource extends NedResource {
 
               List<Institution> ringgoldResults = ringgoldService.findByAttribute(ifilter);
 
+              // if Ringgold ID is not found in DB, error out
               if (ringgoldResults.size() == 0)
                 throw new NedException(InstitutionNotFound);
 
-              for (Institution ins : ringgoldResults) {
-                composite.setLegalname(ins.getName());
-                composite.setFamiliarname(ins.getName());
+              // replace the name in the input with name from Ringgold
+              Institution ins = ringgoldResults.get(0);
 
-                // TODO: search orgs for ringgold uid and return
+              composite.setLegalname(ins.getName());
+              composite.setFamiliarname(ins.getName());
 
-
-                try {
-                  composite.setNedid(namedEntityService.findResolvedEntityByUid(UidTypeEnum.RINGGOLD.getName(), uid.getUniqueidentifier(), Organization.class).getNedid());
-                }
-                catch (NedException e) {
-                  // if it is not found, dont bother setting a value
-                  ;
-                }
-
-
-                // TODO: populate address here or leave it to a mysql view
+              // look to see if an org already references this Ringgold ID
+              try {
+                composite.setNedid(namedEntityService.findResolvedEntityByUid(UidTypeEnum.RINGGOLD.getName(), uid.getUniqueidentifier(), Organization.class).getNedid());
               }
+              catch (NedException e) {
+                // if org is not found, no big deal
+              }
+
+              // TODO: populate address here or leave it to a mysql view for reporting
+
             });
 
-
-
-
-      // TODO: handle the case where the ringgold ID is in the UIDs table, but is not associated with an existing NEDID? wait. is this possible?
-
-
-
-
-
-      if (composite.getNedid()  != null)
+      // if the org exists in NED already, just return it
+      if (composite.getNedid() != null)
         return Response.status(Response.Status.OK).entity(
           namedEntityService.findComposite(composite.getNedid(), OrganizationComposite.class)).build();
 
       List<Entity> results = crudService.findByAttribute(createSearchCriteria("organization", "legalname", composite.getLegalname(), OrganizationComposite.class));
 
+      // if the org does not exist by name, insert into DB
       if (results.size() == 0)
         return Response.status(Response.Status.OK).entity(
             namedEntityService.createComposite(composite, OrganizationComposite.class)).build();
 
+      // else return the already existing org
       return Response.status(Response.Status.OK).entity(
           namedEntityService.findComposite(results.get(0).getNedid(), OrganizationComposite.class)).build();
 
