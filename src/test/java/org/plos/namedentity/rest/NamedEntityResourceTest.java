@@ -56,7 +56,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.plos.namedentity.api.NedException.ErrorType.DupeEmailError;
 import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
-import static org.plos.namedentity.api.NedException.ErrorType.InvalidInstitutionSearchQuery;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidIndividualSearchQuery;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchCriteria;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidTypeValue;
 import static org.plos.namedentity.api.NedException.ErrorType.PasswordError;
@@ -69,9 +69,9 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   private static final String INDIVIDUAL_URI     = "/individuals";
   private static final String ORGANIZATION_URI   = "/organizations";
 
-  private static final String PLOS_SROUCE = "Ambra";
+  private static final String PLOS_SOURCE = "Ambra";
 
-  private static Integer nedIndividualId   = null;
+  private static Integer nedIndividualId = null;
 
   private static Integer nedOrganizationId = null;
 
@@ -86,7 +86,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
             Paths.get(TEST_RESOURCE_PATH + "composite-individual.json")));
 
         Response response = buildRequestDefaultAuth(INDIVIDUAL_URI)
-                              .post(Entity.json(compositeIndividualJson));
+            .post(Entity.json(compositeIndividualJson));
 
         assertEquals(200, response.getStatus());
 
@@ -107,7 +107,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
             Paths.get(TEST_RESOURCE_PATH + "composite-organization.json")));
 
         Response response = buildRequestDefaultAuth(ORGANIZATION_URI)
-                              .post(Entity.json(compositeJson));
+            .post(Entity.json(compositeJson));
 
         assertEquals(200, response.getStatus());
 
@@ -132,7 +132,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     OrganizationComposite composite_in = new OrganizationComposite();
     composite_in.setLegalname("Unknown university");
-    composite_in.setSource(PLOS_SROUCE);
+    composite_in.setSource(PLOS_SOURCE);
     composite_in.setFamiliarname(composite_in.getLegalname());
 
     Response response = buildRequestDefaultAuth(ORGANIZATION_URI)
@@ -168,12 +168,12 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     OrganizationComposite composite_in = new OrganizationComposite();
     composite_in.setLegalname("Unknown university 2");
-    composite_in.setSource(PLOS_SROUCE);
+    composite_in.setSource(PLOS_SOURCE);
     composite_in.setFamiliarname(composite_in.getLegalname());
 
     Uniqueidentifier uid = new Uniqueidentifier();
     uid.setType("Ringgold");
-    uid.setSource(PLOS_SROUCE);
+    uid.setSource(PLOS_SOURCE);
     uid.setUniqueidentifier("0000000");
     List<Uniqueidentifier> uids = new ArrayList<>();
     uids.add(uid);
@@ -199,12 +199,12 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     OrganizationComposite composite_in = new OrganizationComposite();
     composite_in.setLegalname("Unknown university 3");
-    composite_in.setSource(PLOS_SROUCE);
+    composite_in.setSource(PLOS_SOURCE);
     composite_in.setFamiliarname(composite_in.getLegalname());
 
     Uniqueidentifier uid = new Uniqueidentifier();
     uid.setType("Ringgold");
-    uid.setSource(PLOS_SROUCE);
+    uid.setSource(PLOS_SOURCE);
     uid.setUniqueidentifier("6429");
     List<Uniqueidentifier> uids = new ArrayList<>();
     uids.add(uid);
@@ -251,8 +251,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
       NedErrorResponse ner = unmarshalEntity(jsonPayload, NedErrorResponse.class, 
                                             jsonUnmarshaller(NedErrorResponse.class));
 
-      assertEquals(InvalidInstitutionSearchQuery.getErrorCode(), ner.errorCode);
-      assertEquals(InvalidInstitutionSearchQuery.getErrorMessage(), ner.errorMsg);
+      assertEquals(InvalidIndividualSearchQuery.getErrorCode(), ner.errorCode);
+      assertEquals(InvalidIndividualSearchQuery.getErrorMessage(), ner.errorMsg);
     }
 
     /* ---------------------------------------------------------------------- */
@@ -572,14 +572,14 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals("Q", profile0.getMiddlename());
     assertEquals("Doe", profile0.getLastname());
     assertEquals("III", profile0.getNamesuffix());
-    assertEquals(PLOS_SROUCE, profile0.getSource());
+    assertEquals(PLOS_SOURCE, profile0.getSource());
 
     Individualprofile profile1 = profiles.get(1);
     assertEquals("Jane", profile1.getFirstname());
     assertEquals("Shmoe", profile1.getLastname());
     assertEquals("Janie", profile1.getNickname());
     assertEquals("10bogus郑超Gebækaaaمن", profile1.getDisplayname());
-    assertEquals(PLOS_SROUCE, profile1.getSource());
+    assertEquals(PLOS_SOURCE, profile1.getSource());
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */
@@ -791,7 +791,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     relationship.setType("Individual Affiliated with Organization");
     relationship.setNedidrelated(nedOrganizationId);
     relationship.setStartdate( dateAdapter.unmarshal("2015-06-30"));
-    relationship.setSource(PLOS_SROUCE);
+    relationship.setSource(PLOS_SOURCE);
 
     Unmarshaller unmarshaller = jsonUnmarshaller(Relationship.class);
 
@@ -965,21 +965,21 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     Email email0 = emails.get(0);
     assertEquals("Work", email0.getType());
     assertEquals("jane.q.doe.work@foo.com", email0.getEmailaddress());
-    assertEquals(PLOS_SROUCE, email0.getSource());
+    assertEquals(PLOS_SOURCE, email0.getSource());
     assertEquals(false, email0.getVerified());
     assertEquals(true, email0.getIsactive());
 
     Email email1 = emails.get(1);
     assertEquals("Work", email1.getType());
     assertEquals("jane.q.doe.defunct@foo.com", email1.getEmailaddress());
-    assertEquals(PLOS_SROUCE, email1.getSource());
+    assertEquals(PLOS_SOURCE, email1.getSource());
     assertEquals(true, email1.getVerified());
     assertEquals(false, email1.getIsactive());
 
     Email email2 = emails.get(2);
     assertEquals("Personal", email2.getType());
     assertEquals("jane.q.doe.personal@foo.com", email2.getEmailaddress());
-    assertEquals(PLOS_SROUCE, email2.getSource());
+    assertEquals(PLOS_SOURCE, email2.getSource());
     assertEquals(false, email2.getVerified());
     assertEquals(true, email2.getIsactive());
 

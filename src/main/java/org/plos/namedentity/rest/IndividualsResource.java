@@ -33,7 +33,7 @@ import java.util.Random;
 import java.util.Set;
 
 import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
-import static org.plos.namedentity.api.NedException.ErrorType.InvalidInstitutionSearchQuery;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidIndividualSearchQuery;
 import static org.plos.namedentity.api.NedException.ErrorType.TooManyResultsFound;
 
 @Path("/individuals")
@@ -81,7 +81,7 @@ public class IndividualsResource extends NedResource {
                                   @QueryParam("value")     String value) {
     try {
       if (isEmptyOrBlank(entity) || isEmptyOrBlank(attribute) || isEmptyOrBlank(value)) {
-        throw new NedException(InvalidInstitutionSearchQuery);
+        throw new NedException(InvalidIndividualSearchQuery);
       }
 
       List<Entity> results = crudService.findByAttribute( createSearchCriteria(entity,attribute,value,IndividualComposite.class) );
