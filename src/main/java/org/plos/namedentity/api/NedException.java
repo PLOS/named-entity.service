@@ -65,10 +65,13 @@ public class NedException extends RuntimeException {
 
     // Client-side Errors
 
-    InvalidSearchQuery(1800, "Search query requires an entity, an attribute, and a value"),
+    InvalidIndividualSearchQuery(1800, "Search query requires an entity, an attribute, and a value"),
     InvalidSearchCriteria(1810, "Invalid search criteria"),
     TooManyResultsFound(1820, "Too Many Results Found"),
     InvalidInstitutionQuery(1830, "Institution query requires a substring parameter"),
+    InvalidOrganizationSearchQuery(1850, "Search query requires an attribute, and a value"),
+
+    InstitutionNotFound(1860, "Institution not found with that ID"),
 
     InvalidErrorType(-1, "");
 
@@ -154,11 +157,15 @@ public class NedException extends RuntimeException {
   public String getMessage() {
     StringBuilder b = new StringBuilder();
 
-    if (errorType != null) { b.append(errorType.toString()); }
+    if (errorType != null) {
+      b.append(errorType.toString());
+    }
 
     if (b.length() > 0) b.append(" ");
 
-    if (detailedMessage != null) { b.append(detailedMessage); }
+    if (detailedMessage != null) {
+      b.append(detailedMessage);
+    }
 
     if (b.length() > 0) b.append(" ");
 

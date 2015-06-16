@@ -1,13 +1,13 @@
 {
   "type"         : "University",
-  "familiarname" : "UC Berkeley",
-  "legalname"    : "University of California, Berkeley",
+  "familiarname" : "Stanford University",
+  "legalname"    : "Stanford University",
   "source"       : "Ambra",
   "isactive"     : "true",
   "uniqueidentifiers": [
     {
       "type": "Ringgold",
-      "uniqueidentifier": "123",
+      "uniqueidentifier": "6429",
       "source": "Ambra"
     }
   ],

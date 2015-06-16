@@ -6,14 +6,12 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Auth;
-import org.plos.namedentity.api.entity.Composite;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Relationship;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
-import org.plos.namedentity.service.AuthServiceImpl;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -31,12 +29,11 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
 import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
-import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchQuery;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidIndividualSearchQuery;
 import static org.plos.namedentity.api.NedException.ErrorType.TooManyResultsFound;
 
 @Path("/individuals")
@@ -84,7 +81,7 @@ public class IndividualsResource extends NedResource {
                                   @QueryParam("value")     String value) {
     try {
       if (isEmptyOrBlank(entity) || isEmptyOrBlank(attribute) || isEmptyOrBlank(value)) {
-        throw new NedException(InvalidSearchQuery);
+        throw new NedException(InvalidIndividualSearchQuery);
       }
 
       List<Entity> results = crudService.findByAttribute( createSearchCriteria(entity,attribute,value,IndividualComposite.class) );
