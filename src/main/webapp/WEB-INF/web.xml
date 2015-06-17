@@ -68,6 +68,7 @@
   <filter-mapping>
     <filter-name>authenticationFilter</filter-name>
     <url-pattern>/individuals/*</url-pattern>
+    <url-pattern>/institutionsearch/*</url-pattern>
     <url-pattern>/organizations/*</url-pattern>
     <url-pattern>/typeclasses/*</url-pattern>
   </filter-mapping>
