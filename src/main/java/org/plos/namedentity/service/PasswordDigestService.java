@@ -29,6 +29,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 /**
  * Password digest service. Salts and hashes passwords such that they can be verified, but it is cryptographically
@@ -39,6 +40,8 @@ import java.util.Random;
 public class PasswordDigestService {
 
   protected static Logger logger = Logger.getLogger(PasswordDigestService.class);
+
+  private static final Pattern passwordDigestRegexp = Pattern.compile("^[0-9a-f]+$");
 
   private static final HashFunction HASH_FUNCTION = Hashing.sha256();
   private static final int HASH_LENGTH = HASH_FUNCTION.bits() / Byte.SIZE;
@@ -125,5 +128,11 @@ public class PasswordDigestService {
      */
     String expectedDigest = saltString + hashHex;
     return expectedDigest.equals(digest);
+  }
+
+  public static boolean isValidDigestFormat(String password) {
+    return (passwordDigestRegexp.matcher(password).matches() &&
+        (password.length() == (LEGACY_SALT_LENGTH + HASH_LENGTH * 2) ||
+         password.length() == (SECURE_SALT_LENGTH * 2 + HASH_LENGTH * 2)));
   }
 }
