@@ -35,6 +35,7 @@ INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,create
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Co-Author', NULL, 'COAU', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Academic Editor (PLOS ONE)', NULL, 'AE_PLOSONE', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'NP System Administrator', NULL, 'SANP', CURRENT_TIMESTAMP);
+INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'Editor (PLOS BIO)', NULL, 'E_PLOSBIO', CURRENT_TIMESTAMP);
 
 /* Named Party Prefixes */
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Named Party Prefixes','Ms, Dr, etc');

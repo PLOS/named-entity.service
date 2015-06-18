@@ -35,6 +35,7 @@ INSERT INTO namedEntities.globalTypes (typeId,shortDescription,longDescription,t
 INSERT INTO namedEntities.globalTypes (typeId,shortDescription,longDescription,typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions), 'Co-Author', NULL, 'COAU');
 INSERT INTO namedEntities.globalTypes (typeId,shortDescription,longDescription,typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions), 'Academic Editor (PLOS ONE)', NULL, 'AE_PLOSONE');
 INSERT INTO namedEntities.globalTypes (typeId,shortDescription,longDescription,typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions), 'NP System Administrator', NULL, 'SANP');
+INSERT INTO namedEntities.globalTypes (typeId,shortDescription,longDescription,typeCode) VALUES ((select max(id) from namedEntities.typeDescriptions), 'Editor (PLOS BIO)', NULL, 'E_PLOSBIO');
 
 /* Named Party Prefixes */
 INSERT INTO namedEntities.typeDescriptions(description, howUsed) VALUES ('Named Party Prefixes','Ms, Dr, etc');
