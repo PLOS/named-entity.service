@@ -33,20 +33,17 @@ import static org.plos.namedentity.api.NedException.ErrorType.PasswordError;
 import static org.plos.namedentity.api.NedException.ErrorType.PasswordFormatError;
 import static org.plos.namedentity.api.NedException.ErrorType.TamperedPasswordError;
 
+import static org.plos.namedentity.service.PasswordDigestService.isValidDigestFormat;
+
 @XmlRootElement
 public class Auth extends Entity {
 
   public static final int PASSWORD_MIN_LENGTH = 8;
 
-  private static final int PASSWORD_DIGEST_LENGTH = 128;
-  private static final int LEGACY_PASSWORD_DIGEST_LENGTH = 70;
-
   private static final int CASID_MIN_LENGTH = 28;
   private static final int CASID_MAX_LENGTH = 36;
 
   private static final Pattern casRegex = Pattern.compile("^[A-Za-z0-9-]+$");
-  private static final Pattern passwordDigestRegexp = Pattern.compile("^[0-9a-f]+$");
-
   private static final Pattern passwordRegexp = Pattern.compile("(\\d+\\D+)|(\\D+\\d+)");
 
   private String   email;
@@ -218,11 +215,5 @@ public class Auth extends Entity {
         throw new NedException(TamperedPasswordError, "secure password doesn't match input password");
       }
     }
-  }
-
-  boolean isValidDigestFormat(String password) {
-    return (passwordDigestRegexp.matcher(password).matches() &&
-        (password.length() == PASSWORD_DIGEST_LENGTH || 
-         password.length() == LEGACY_PASSWORD_DIGEST_LENGTH));
   }
 }

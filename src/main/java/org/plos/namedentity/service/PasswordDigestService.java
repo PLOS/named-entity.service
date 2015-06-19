@@ -29,6 +29,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 /**
  * Password digest service. Salts and hashes passwords such that they can be verified, but it is cryptographically
@@ -40,10 +41,18 @@ public class PasswordDigestService {
 
   protected static Logger logger = Logger.getLogger(PasswordDigestService.class);
 
+  private static final Pattern passwordDigestRegexp = Pattern.compile("^[0-9a-f]+$");
+
   private static final HashFunction HASH_FUNCTION = Hashing.sha256();
   private static final int HASH_LENGTH = HASH_FUNCTION.bits() / Byte.SIZE;
   private static final int SECURE_SALT_LENGTH = HASH_LENGTH;
-  private static final int LEGACY_SALT_LENGTH = 6;
+  private static final int LEGACY_SALT_LENGTH = 3;
+
+  private static final int LEGACY_SALT_HEX_ENCODING_LENGTH   = LEGACY_SALT_LENGTH * 2;
+  private static final int LEGACY_DIGEST_HEX_ENCODING_LENGTH = LEGACY_SALT_HEX_ENCODING_LENGTH + HASH_LENGTH * 2;
+
+  private static final int SECURE_SALT_HEX_ENCODING_LENGTH   = SECURE_SALT_LENGTH * 2;
+  private static final int SECURE_DIGEST_HEX_ENCODING_LENGTH = SECURE_SALT_HEX_ENCODING_LENGTH + HASH_LENGTH * 2;
 
   static {
     assert SECURE_SALT_LENGTH != LEGACY_SALT_LENGTH;
@@ -87,7 +96,7 @@ public class PasswordDigestService {
   }
 
   public boolean verifyPassword(String plaintextPassword, String digest) {
-    if (digest.length() == LEGACY_SALT_LENGTH + HASH_LENGTH * 2) {
+    if (digest.length() == LEGACY_DIGEST_HEX_ENCODING_LENGTH) {
       return verifyLegacy(digest, plaintextPassword);
     }
 
@@ -102,7 +111,7 @@ public class PasswordDigestService {
   }
 
   private boolean verifyLegacy(String digest, String plaintextPassword) {
-    String saltString = digest.substring(0, LEGACY_SALT_LENGTH);
+    String saltString = digest.substring(0, LEGACY_SALT_HEX_ENCODING_LENGTH);
     byte[] saltBytes = saltString.getBytes(BYTE_ENCODING);
     /*
      * Yes, saltBytes really is this and not STRING_ENCODING.decode(saltString). This was a bug in the legacy
@@ -125,5 +134,11 @@ public class PasswordDigestService {
      */
     String expectedDigest = saltString + hashHex;
     return expectedDigest.equals(digest);
+  }
+
+  public static boolean isValidDigestFormat(String password) {
+    return (passwordDigestRegexp.matcher(password).matches() &&
+        (password.length() == LEGACY_DIGEST_HEX_ENCODING_LENGTH ||
+         password.length() == SECURE_DIGEST_HEX_ENCODING_LENGTH));
   }
 }

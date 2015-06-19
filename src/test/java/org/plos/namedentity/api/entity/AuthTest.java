@@ -29,6 +29,7 @@ import static org.junit.Assert.fail;
 import static org.plos.namedentity.api.NedException.ErrorType.CasIdError;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidCasId;
 import static org.plos.namedentity.api.NedException.ErrorType.PasswordFormatError;
+import static org.plos.namedentity.service.PasswordDigestService.isValidDigestFormat;
 
 public class AuthTest {
 
@@ -94,7 +95,7 @@ public class AuthTest {
     };
 
     for (String password : badPasswords) {
-      assertFalse( auth.isValidDigestFormat(password) );
+      assertFalse(isValidDigestFormat(password));
     }
   }
 
@@ -106,7 +107,7 @@ public class AuthTest {
     };
 
     for (String password : okPasswords) {
-      assertTrue( auth.isValidDigestFormat(password) );
+      assertTrue(isValidDigestFormat(password));
     }
   }
 
