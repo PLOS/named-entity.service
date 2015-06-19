@@ -46,7 +46,13 @@ public class PasswordDigestService {
   private static final HashFunction HASH_FUNCTION = Hashing.sha256();
   private static final int HASH_LENGTH = HASH_FUNCTION.bits() / Byte.SIZE;
   private static final int SECURE_SALT_LENGTH = HASH_LENGTH;
-  private static final int LEGACY_SALT_LENGTH = 6;
+  private static final int LEGACY_SALT_LENGTH = 3;
+
+  private static final int LEGACY_SALT_HEX_ENCODING_LENGTH   = LEGACY_SALT_LENGTH * 2;
+  private static final int LEGACY_DIGEST_HEX_ENCODING_LENGTH = LEGACY_SALT_HEX_ENCODING_LENGTH + HASH_LENGTH * 2;
+
+  private static final int SECURE_SALT_HEX_ENCODING_LENGTH   = SECURE_SALT_LENGTH * 2;
+  private static final int SECURE_DIGEST_HEX_ENCODING_LENGTH = SECURE_SALT_HEX_ENCODING_LENGTH + HASH_LENGTH * 2;
 
   static {
     assert SECURE_SALT_LENGTH != LEGACY_SALT_LENGTH;
@@ -90,7 +96,7 @@ public class PasswordDigestService {
   }
 
   public boolean verifyPassword(String plaintextPassword, String digest) {
-    if (digest.length() == LEGACY_SALT_LENGTH + HASH_LENGTH * 2) {
+    if (digest.length() == LEGACY_DIGEST_HEX_ENCODING_LENGTH) {
       return verifyLegacy(digest, plaintextPassword);
     }
 
@@ -105,7 +111,7 @@ public class PasswordDigestService {
   }
 
   private boolean verifyLegacy(String digest, String plaintextPassword) {
-    String saltString = digest.substring(0, LEGACY_SALT_LENGTH);
+    String saltString = digest.substring(0, LEGACY_SALT_HEX_ENCODING_LENGTH);
     byte[] saltBytes = saltString.getBytes(BYTE_ENCODING);
     /*
      * Yes, saltBytes really is this and not STRING_ENCODING.decode(saltString). This was a bug in the legacy
@@ -132,7 +138,7 @@ public class PasswordDigestService {
 
   public static boolean isValidDigestFormat(String password) {
     return (passwordDigestRegexp.matcher(password).matches() &&
-        (password.length() == (LEGACY_SALT_LENGTH + HASH_LENGTH * 2) ||
-         password.length() == (SECURE_SALT_LENGTH * 2 + HASH_LENGTH * 2)));
+        (password.length() == LEGACY_DIGEST_HEX_ENCODING_LENGTH ||
+         password.length() == SECURE_DIGEST_HEX_ENCODING_LENGTH));
   }
 }
