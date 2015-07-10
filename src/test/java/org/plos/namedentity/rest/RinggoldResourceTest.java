@@ -80,7 +80,7 @@ public class RinggoldResourceTest extends BaseResourceTest {
   @Test
   public void testInstitutionFindMany() throws Exception {
 
-    final String  INSTITUTION_SUBSTRING = "stanford";
+    final String  INSTITUTION_SUBSTRING = "Stanford U";
     final Integer NEW_INSTITUTION_RESULT_LIMIT = 5;
 
     Response response = target(INSTITUTIONSEARCH_URI).queryParam("substring",INSTITUTION_SUBSTRING)
@@ -92,10 +92,10 @@ public class RinggoldResourceTest extends BaseResourceTest {
 
     Unmarshaller unmarshaller = jsonUnmarshaller(Institution.class);
     List<Institution> institutions = unmarshalEntities(jsonPayload, Institution.class, unmarshaller);
-    assertEquals(30, institutions.size());
+    assertEquals(25, institutions.size());
 
     for (Institution institution : institutions) {
-      assertTrue(institution.getName().toLowerCase().contains(INSTITUTION_SUBSTRING));
+      assertTrue(institution.getName().contains(INSTITUTION_SUBSTRING));
     }
 
     // results should be truncated if exceed limit. test this with a smaller limit.
