@@ -23,22 +23,23 @@ import org.plos.namedentity.api.ringgold.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import java.lang.reflect.Method;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
+
 public class RinggoldDBServiceTest {
 
-  @Autowired RinggoldDBService ringgoldDBSvc;
+  @Autowired RinggoldDBService ringgoldDBService;
   @Autowired DSLContext        context;
 
   @Test
   public void testFindById() {
-    Institution institution = ringgoldDBSvc.findById(1, Institution.class);
+    Institution institution = ringgoldDBService.findById(1, Institution.class);
     assertEquals(Integer.valueOf(1), institution.getRecId());
     assertEquals("Stanford University", institution.getName());
     assertEquals("Stanford", institution.getCity());
@@ -46,31 +47,43 @@ public class RinggoldDBServiceTest {
     assertEquals("US", institution.getCountry());
     assertEquals("academic", institution.getType());
 
-    assertNull( ringgoldDBSvc.findById(9999, Institution.class) );
+    assertNull( ringgoldDBService.findById(9999, Institution.class) );
   }
 
   @Test
   public void testFindByAttribute() {
     Institution ifilter = new Institution();
-    ifilter.setName("stanford");
-    List<Institution> institutions = ringgoldDBSvc.findByAttribute(ifilter);
-    assertEquals(30, institutions.size());
+    ifilter.setName("Stanford U");
+    List<Institution> institutions = ringgoldDBService.findByAttribute(ifilter);
+    assertEquals(25, institutions.size());
 
     ifilter.setState("CA");
-    institutions = ringgoldDBSvc.findByAttribute(ifilter);
-    assertEquals(27, institutions.size());
+    institutions = ringgoldDBService.findByAttribute(ifilter);
+    assertEquals(23, institutions.size());
 
     ifilter.setType("academic/earth");
-    institutions = ringgoldDBSvc.findByAttribute(ifilter);
+    institutions = ringgoldDBService.findByAttribute(ifilter);
     assertEquals(3, institutions.size());
 
     ifilter.setState("VOODOO");
-    institutions = ringgoldDBSvc.findByAttribute(ifilter);
+    institutions = ringgoldDBService.findByAttribute(ifilter);
     assertEquals(0, institutions.size());
 
     Institution ifilter2 = new Institution();
     ifilter2.setName("STANFORD Medicine");
-    institutions = ringgoldDBSvc.findByAttribute(ifilter2);
+    institutions = ringgoldDBService.findByAttribute(ifilter2);
     assertEquals(1, institutions.size());
+  }
+
+  @Test
+  public void testInstitutionNameWhereCondition() throws Exception {
+    Method method = RinggoldDBServiceImpl.class.getDeclaredMethod("institutionNameWhereCondition", String.class, String.class);
+    method.setAccessible(true);
+
+    String result = (String) method.invoke(ringgoldDBService, "name", "foo" ); //when one string
+    assertTrue(result.contains("REGEX"));
+
+    result = (String) method.invoke(ringgoldDBService, "name", "foo bar" ); //when 2+ strings
+    assertTrue(result.contains("LIKE"));
   }
 }

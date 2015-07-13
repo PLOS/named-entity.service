@@ -88,9 +88,8 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
   private <T> String whereCondition(String field, Object value, Class<T> clazz) {
     String cname = clazz.getCanonicalName();
     if (cname.equals(Institution.class.getCanonicalName())) {
-
       if (field.equals("name")) {
-        return String.format("LOWER(%s) LIKE LOWER('%%%s%%')",field,value);
+        return institutionNameWhereCondition(field, (String) value);
       }
     } else {
       throw new UnsupportedOperationException("Unsupported entity " + cname);
@@ -107,6 +106,13 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
     return condition.toString();
   }
 
+  private String institutionNameWhereCondition(String field, String value) {
+    if (value.split(" ").length > 1) {
+      return String.format("%s LIKE '%%%s%%'",field,value); 
+    } else {
+      return String.format("%s REGEXP '[[:<:]]%s'", field, value);
+    }
+  }
   /* ---------------------------------------------------------------------- */
   /*  INTERNAL MAP : ENTITY POJO -> { JooqTable, JooqPkFieldForTable }      */
   /* ---------------------------------------------------------------------- */
