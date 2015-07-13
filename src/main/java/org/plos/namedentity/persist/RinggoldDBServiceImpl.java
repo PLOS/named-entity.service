@@ -53,11 +53,19 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
 
   @Override @SuppressWarnings("unchecked")
   public <T> List<T> findByAttribute(T t) {
+
+    Object x = context.select()
+      .from(table(t.getClass()))
+      .where( buildWhereClause(t));
+
     return context.select()
       .from(table(t.getClass()))
       .where( buildWhereClause(t) )
       .fetchInto((Class<T>)t.getClass());
   }
+
+  //public <T> List<T> findByInstitutionName(T t) {
+  //}
 
   private <T> String buildWhereClause(T t) {
     StringBuilder where = new StringBuilder();

@@ -43,6 +43,10 @@ public class RinggoldServiceImpl implements RinggoldService {
     return ringgoldDBService.findByAttribute(t);
   }
 
+  //public <T> List<T> findByInstitutionName(T t) {
+    //return ringgoldDBService.findByInstitutionName(t);
+  //}
+
   public RinggoldDBService getRinggoldDBService() {
     return ringgoldDBService;
   }
