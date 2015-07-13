@@ -108,7 +108,7 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
 
   private String institutionNameWhereCondition(String field, String value) {
     if (value.split(" ").length > 1) {
-      return String.format("LOWER(%s) LIKE LOWER('%%%s%%')",field,value); //remove lower?
+      return String.format("%s LIKE '%%%s%%'",field,value); 
     } else {
       return String.format("%s REGEXP '[[:<:]]%s'", field, value);
     }
