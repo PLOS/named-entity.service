@@ -25,6 +25,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.lang.reflect.Method;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -76,14 +77,37 @@ public class RinggoldDBServiceTest {
   }
 
   @Test
-  public void testInstitutionNameWhereCondition() throws Exception {
-    Method method = RinggoldDBServiceImpl.class.getDeclaredMethod("institutionNameWhereCondition", String.class, String.class);
+  public void testInstitutionNameSearchCondition() throws Exception {
+    Method method = RinggoldDBServiceImpl.class.getDeclaredMethod("institutionNameSearchCondition", String.class);
     method.setAccessible(true);
 
-    String result = (String) method.invoke(ringgoldDBService, "name", "foo" ); //when one string
+    String result = (String) method.invoke(ringgoldDBService, "foo" ); //when one string
     assertTrue(result.contains("REGEX"));
 
-    result = (String) method.invoke(ringgoldDBService, "name", "foo bar" ); //when 2+ strings
+    result = (String) method.invoke(ringgoldDBService, "foo bar" ); //when 2+ strings
     assertTrue(result.contains("LIKE"));
+  }
+
+  @Test
+  public void testBubbleCountryToTop() throws Exception {
+    Method method = RinggoldDBServiceImpl.class.getDeclaredMethod("bubbleCountryToTop", List.class);
+    method.setAccessible(true);
+
+    Institution us_inst = new Institution();
+    us_inst.setCountry("US");
+    Institution non_us_inst = new Institution();
+    non_us_inst.setCountry("NZ");
+
+    ArrayList<Institution> list = new ArrayList<>();
+    list.add(non_us_inst);
+    list.add(us_inst);
+
+    assertEquals(list.get(0).getCountry(), "NZ");
+    assertEquals(list.get(1).getCountry(), "US");
+
+    List<Institution> new_list =  (List) method.invoke(ringgoldDBService, list );
+
+    assertEquals(new_list.get(0).getCountry(), "US");
+    assertEquals(new_list.get(1).getCountry(), "NZ");
   }
 }

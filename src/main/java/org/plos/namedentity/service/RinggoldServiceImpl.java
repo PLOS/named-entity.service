@@ -21,6 +21,7 @@ import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.persist.RinggoldDBService;
 import org.springframework.transaction.annotation.Transactional;
+import org.plos.namedentity.api.ringgold.Institution;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -43,9 +44,10 @@ public class RinggoldServiceImpl implements RinggoldService {
     return ringgoldDBService.findByAttribute(t);
   }
 
-  //public <T> List<T> findByInstitutionName(T t) {
-    //return ringgoldDBService.findByInstitutionName(t);
-  //}
+  @Override
+  public List<Institution> findByInstitutionName(String searchString) {
+    return ringgoldDBService.findByInstitutionName(searchString);
+  }
 
   public RinggoldDBService getRinggoldDBService() {
     return ringgoldDBService;

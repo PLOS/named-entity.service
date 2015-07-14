@@ -17,10 +17,13 @@
 package org.plos.namedentity.persist;
 
 import java.util.List;
+import org.plos.namedentity.api.ringgold.Institution;
 
 public interface RinggoldDBService {
 
   <T> T findById(Integer id, Class<T> clazz);
 
   <T> List<T> findByAttribute(T t);
+
+  List<Institution> findByInstitutionName(String searchString);
 }

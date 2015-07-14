@@ -81,7 +81,6 @@ public class RinggoldResourceTest extends BaseResourceTest {
   public void testInstitutionFindMany() throws Exception {
 
     final String  INSTITUTION_SUBSTRING = "Stanford U";
-    final Integer NEW_INSTITUTION_RESULT_LIMIT = 5;
 
     Response response = target(INSTITUTIONSEARCH_URI).queryParam("substring",INSTITUTION_SUBSTRING)
                                                      .request(MediaType.APPLICATION_JSON_TYPE).get();
@@ -97,21 +96,6 @@ public class RinggoldResourceTest extends BaseResourceTest {
     for (Institution institution : institutions) {
       assertTrue(institution.getName().contains(INSTITUTION_SUBSTRING));
     }
-
-    // results should be truncated if exceed limit. test this with a smaller limit.
-
-    Field institutionsResultLimit = RinggoldResource.class.getDeclaredField("INSTITUTIONS_RESULT_LIMIT");
-    institutionsResultLimit.set(null, NEW_INSTITUTION_RESULT_LIMIT);
-
-    response = target(INSTITUTIONSEARCH_URI).queryParam("substring",INSTITUTION_SUBSTRING)
-                                            .request(MediaType.APPLICATION_JSON_TYPE).get();
-
-    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-
-    jsonPayload = response.readEntity(String.class);
-
-    institutions = unmarshalEntities(jsonPayload, Institution.class, unmarshaller);
-    assertEquals(NEW_INSTITUTION_RESULT_LIMIT, Integer.valueOf(institutions.size()));
   }
 
   @Test

@@ -17,6 +17,7 @@
 package org.plos.namedentity.service;
 
 import java.util.List;
+import org.plos.namedentity.api.ringgold.Institution;
 
 /* -------------------------------------------------------------------------- */
 /*   Ringgold Service API                                                     */
@@ -24,7 +25,9 @@ import java.util.List;
 
 public interface RinggoldService {
 
-  public <T> T findById(Integer id, Class<T> clazz);
+  <T> T findById(Integer id, Class<T> clazz);
 
-  public <T> List<T> findByAttribute(T t);
+  <T> List<T> findByAttribute(T t);
+
+  List<Institution> findByInstitutionName(String searchString);
 }
