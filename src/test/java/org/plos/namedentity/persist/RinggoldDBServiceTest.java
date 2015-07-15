@@ -110,4 +110,13 @@ public class RinggoldDBServiceTest {
     assertEquals(new_list.get(0).getCountry(), "US");
     assertEquals(new_list.get(1).getCountry(), "NZ");
   }
+
+  @Test
+  public void testFindByInstitutionName() {
+    List<Institution> institutions = ringgoldDBService.findByInstitutionName("Test Group1");
+    assertEquals(6, institutions.size());
+    for (int i = 0; i < institutions.size(); i++) {
+      assertTrue( institutions.get(i).getName().contains("I00"+(i+1)) );
+    }
+  }
 }

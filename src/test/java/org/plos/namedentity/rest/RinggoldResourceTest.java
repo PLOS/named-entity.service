@@ -120,4 +120,25 @@ public class RinggoldResourceTest extends BaseResourceTest {
     assertEquals(Integer.valueOf(158423), institution.getPCode());
     assertTrue(institution.getName().toLowerCase().contains("stanford medicine"));
   }
+
+  @Test
+  public void testInstitutionFindOrdering() throws Exception {
+
+    final String  INSTITUTION_SUBSTRING = "Test Group1";
+
+    Response response = target(INSTITUTIONSEARCH_URI).queryParam("substring",INSTITUTION_SUBSTRING)
+                                                     .request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    String jsonPayload = response.readEntity(String.class);
+
+    Unmarshaller unmarshaller = jsonUnmarshaller(Institution.class);
+    List<Institution> institutions = unmarshalEntities(jsonPayload, Institution.class, unmarshaller);
+    assertEquals(6, institutions.size());
+
+    for (int i = 0; i < institutions.size(); i++) {
+      assertTrue( institutions.get(i).getName().contains("I00"+(i+1)) );
+    }
+  }
 }

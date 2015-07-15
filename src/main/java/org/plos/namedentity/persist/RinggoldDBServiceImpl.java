@@ -67,7 +67,7 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
       .on(PARENTS.P_CODE.equal(SIZES.P_CODE))
       .and(SIZES.KIND.equal("size"))
       .where(institutionNameSearchCondition(searchString))
-      .orderBy(SIZES.VALUE.desc())
+      .orderBy(SIZES.VALUE.desc().nullsLast())
       .limit(100)
       .fetchInto(Institution.class);
 
