@@ -99,3 +99,24 @@ INSERT INTO ringgold.consortia (Consortia_ID,P_Code,Name,Timestamp) VALUES (1224
 INSERT INTO ringgold.consortia (Consortia_ID,P_Code,Name,Timestamp) VALUES (42263,6429,'Stanford University','2015-03-20 11:40:54');
 
 INSERT INTO ringgold.url (P_Code,URL,Timestamp) VALUES (158423,'stanfordmedicine.org','2015-01-28 07:48:52');
+
+/* test data to help verify correct sort order */
+INSERT INTO ringgold.parents (Rec_ID,GP_Code,P_Code,Name,Ext_Name,City,Ext_City,Zip,Country,State,Type,Timestamp)
+    VALUES (1000001,0,1000001,'Test Group1 I001','','San Francisco','','94101','US','CA','academic/medsch','2014-08-04 10:44:31');
+INSERT INTO ringgold.parents (Rec_ID,GP_Code,P_Code,Name,Ext_Name,City,Ext_City,Zip,Country,State,Type,Timestamp)
+    VALUES (1000002,0,1000002,'Test Group1 I002','','San Francisco','','94101','US','CA','academic/medsch','2014-08-04 10:44:31');
+INSERT INTO ringgold.parents (Rec_ID,GP_Code,P_Code,Name,Ext_Name,City,Ext_City,Zip,Country,State,Type,Timestamp)
+    VALUES (1000003,0,1000003,'Test Group1 I003','','San Francisco','','94101','US','CA','academic/medsch','2014-08-04 10:44:31');
+INSERT INTO ringgold.parents (Rec_ID,GP_Code,P_Code,Name,Ext_Name,City,Ext_City,Zip,Country,State,Type,Timestamp)
+    VALUES (1000004,0,1000004,'Test Group1 I004','','Paris','','75480','FR','','academic/health','2014-08-04 10:44:31');
+INSERT INTO ringgold.parents (Rec_ID,GP_Code,P_Code,Name,Ext_Name,City,Ext_City,Zip,Country,State,Type,Timestamp)
+    VALUES (1000005,0,1000005,'Test Group1 I005','','Paris','','75480','FR','','academic/health','2014-08-04 10:44:31');
+INSERT INTO ringgold.parents (Rec_ID,GP_Code,P_Code,Name,Ext_Name,City,Ext_City,Zip,Country,State,Type,Timestamp)
+    VALUES (1000006,0,1000006,'Test Group1 I006','','Paris','','75480','FR','','academic/health','2014-08-04 10:44:31');
+
+INSERT INTO ringgold.sizes (P_Code,Kind,Value,Timestamp) VALUES (1000001,'size','100','2015-01-28 06:37:09');
+INSERT INTO ringgold.sizes (P_Code,Kind,Value,Timestamp) VALUES (1000002,'size','1','2015-01-28 06:37:09');
+--INSERT INTO ringgold.sizes (P_Code,Kind,Value,Timestamp) VALUES --(1000003,'size',NULL,'2015-01-28 06:37:09');
+INSERT INTO ringgold.sizes (P_Code,Kind,Value,Timestamp) VALUES (1000004,'size','100','2015-01-28 06:37:09');
+INSERT INTO ringgold.sizes (P_Code,Kind,Value,Timestamp) VALUES (1000005,'size','1','2015-01-28 06:37:09');
+--INSERT INTO ringgold.sizes (P_Code,Kind,Value,Timestamp) VALUES --(1000006,'size',NULL,'2015-01-28 06:37:09');

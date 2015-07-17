@@ -61,7 +61,7 @@ public class RinggoldServiceTest {
 
     List<Institution> institutions = ringgoldService.findByAttribute(ifilter);
     assertEquals(1, institutions.size());
-    
+
     Institution institution = institutions.get(0);
     assertEquals(Integer.valueOf(12), institution.getRecId());
     assertEquals(Integer.valueOf(174507), institution.getPCode()); 
@@ -73,5 +73,22 @@ public class RinggoldServiceTest {
 
     ifilter.setName("bogus name not in db");
     assertEquals(0, ringgoldService.findByAttribute(ifilter).size());
+  }
+
+  @Test
+  public void testFindByInstitutionName() {
+    List<Institution> institutions = ringgoldService.findByInstitutionName("Test Group1");
+    assertEquals(6, institutions.size());
+
+    Institution institution = institutions.get(0);
+    assertEquals(Integer.valueOf(1000001), institution.getRecId());
+    assertEquals(Integer.valueOf(1000001), institution.getPCode());
+    assertEquals("Test Group1 I001", institution.getName());
+    assertEquals("San Francisco", institution.getCity());
+    assertEquals("CA", institution.getState());
+    assertEquals("US", institution.getCountry());
+    assertEquals("academic/medsch", institution.getType());
+
+    assertEquals(0, ringgoldService.findByInstitutionName("bogus name not in db").size());
   }
 }

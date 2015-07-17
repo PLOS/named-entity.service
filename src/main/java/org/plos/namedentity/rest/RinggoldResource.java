@@ -40,26 +40,19 @@ import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
 @Api("/institutionsearch")
 public class RinggoldResource extends BaseResource {
 
-  static Integer INSTITUTIONS_RESULT_LIMIT = 100;
-
   @Inject protected RinggoldService ringgoldService;
 
   @GET
   @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-  @ApiOperation(value = "Find institution(s) by name (wildcard search).")
-  public Response findInstitutionsByName(@QueryParam("substring") String name) {
+  @ApiOperation(value = "Find institution(s) by name fragment (wildcard search).")
+  public Response findInstitutionsByName(@QueryParam("substring") String search_string) {
     try {
-      if (isEmptyOrBlank(name)) {
+      if (isEmptyOrBlank(search_string)) {
         throw new NedException(InvalidInstitutionQuery, 
           "Institution search requires a partial name to match against (defined in substring parameter)");
       }
 
-      Institution ifilter = new Institution() ; ifilter.setName(name);
-
-      List<Institution> results = ringgoldService.findByAttribute(ifilter);
-
-      if (results.size() > INSTITUTIONS_RESULT_LIMIT)
-        results = results.subList(0, INSTITUTIONS_RESULT_LIMIT);
+      List<Institution> results = ringgoldService.findByInstitutionName(search_string);
 
       return Response.status(Response.Status.OK).entity(
         new GenericEntity<List<Institution>>(results){}).build();

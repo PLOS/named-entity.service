@@ -59,6 +59,44 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
       .fetchInto((Class<T>)t.getClass());
   }
 
+  @Override
+  public List<Institution> findByInstitutionName(String searchString) {
+    List<Institution> results = context.select(PARENTS.fields())
+      .from(PARENTS)
+      .leftOuterJoin(SIZES)
+      .on(PARENTS.P_CODE.equal(SIZES.P_CODE))
+      .and(SIZES.KIND.equal("size"))
+      .where(institutionNameSearchCondition(searchString))
+      .orderBy(SIZES.VALUE.desc().nullsLast())
+      .limit(100)
+      .fetchInto(Institution.class);
+
+    results = bubbleCountryToTop(results);
+
+    return results;
+  }
+
+  private List<Institution> bubbleCountryToTop(List<Institution> list) {
+    return bubbleCountryToTop(list, "US");
+  }
+
+  private List<Institution> bubbleCountryToTop(List<Institution> list, String country) {
+    if (list.isEmpty()) { return list; }
+
+    List<Institution> preferred    = new ArrayList<>();
+    List<Institution> nonpreferred = new ArrayList<>();
+
+    for(Institution inst : list) {
+      if(inst.getCountry().equals(country)){
+        preferred.add(inst);
+      } else {
+        nonpreferred.add(inst);
+      }
+    }
+    preferred.addAll(nonpreferred);
+    return preferred;
+  }
+
   private <T> String buildWhereClause(T t) {
     StringBuilder where = new StringBuilder();
     try {
@@ -89,7 +127,7 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
     String cname = clazz.getCanonicalName();
     if (cname.equals(Institution.class.getCanonicalName())) {
       if (field.equals("name")) {
-        return institutionNameWhereCondition(field, (String) value);
+        return institutionNameSearchCondition((String) value);
       }
     } else {
       throw new UnsupportedOperationException("Unsupported entity " + cname);
@@ -106,11 +144,11 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
     return condition.toString();
   }
 
-  private String institutionNameWhereCondition(String field, String value) {
-    if (value.split(" ").length > 1) {
-      return String.format("%s LIKE '%%%s%%'",field,value); 
+  private String institutionNameSearchCondition(String searchString) {
+    if (searchString.split(" ").length > 1) {
+      return String.format("name LIKE '%%%s%%'",searchString); 
     } else {
-      return String.format("%s REGEXP '[[:<:]]%s'", field, value);
+      return String.format("name REGEXP '[[:<:]]%s'", searchString);
     }
   }
   /* ---------------------------------------------------------------------- */
