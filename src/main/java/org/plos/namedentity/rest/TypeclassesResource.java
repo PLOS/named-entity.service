@@ -1,8 +1,8 @@
 package org.plos.namedentity.rest;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Globaltype;
 import org.plos.namedentity.api.entity.Typedescription;

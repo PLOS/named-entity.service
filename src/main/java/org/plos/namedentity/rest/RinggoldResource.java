@@ -16,8 +16,8 @@
  */
 package org.plos.namedentity.rest;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.ringgold.Institution;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.service.RinggoldService;

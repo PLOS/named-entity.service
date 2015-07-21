@@ -16,8 +16,8 @@
  */
 package org.plos.namedentity.rest;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.ConfigInfo;
 import org.plos.namedentity.api.NedErrorResponse;
 import org.plos.namedentity.api.NedException;
@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Path("/service")
-@Api(tags = {"service"})
+@Api("/service")
 public class InfoResource {
 
   @Inject
