@@ -332,6 +332,31 @@
           </execution>
         </executions>
       </plugin>
+
+      <!-- Flyway, for schema migrations   -->
+      <!--<plugin>-->
+        <!--<groupId>org.flywaydb</groupId>-->
+        <!--<artifactId>flyway-maven-plugin</artifactId>-->
+        <!--<version>3.0</version>-->
+        <!--<executions>-->
+          <!--<execution>-->
+            <!--<phase>generate-sources</phase>-->
+            <!--<goals>-->
+              <!--<goal>migrate</goal>-->
+            <!--</goals>-->
+          <!--</execution>-->
+        <!--</executions>-->
+        <!--<configuration>-->
+          <!--<url>${docker_db_url}</url>-->
+          <!--<user>${docker_db_username}</user>-->
+          <!--<password>${docker_db_password}</password>-->
+          <!--<locations>-->
+            <!--<location>filesystem:${db_migrations_path}</location>-->
+          <!--</locations>-->
+          <!--<initOnMigrate>true</initOnMigrate>-->
+        <!--</configuration>-->
+      <!--</plugin>-->
+
     </plugins>
 
     <!-- needed to deploy artifacts to maven repo over sftp -->
@@ -500,6 +525,11 @@
           <artifactId>h2</artifactId>
           <version>${h2db.version}</version>
         </dependency>
+        <dependency>
+          <groupId>mysql</groupId>
+          <artifactId>mysql-connector-java</artifactId>
+          <version>${mysql.connector.version}</version>
+        </dependency>
       </dependencies>
       <build>
         <!-- The resources element will replace available properties in all matching resources -->
@@ -533,7 +563,7 @@
                 <goals><goal>add-source</goal></goals>
                 <configuration>
                   <sources>
-                    <source>src/generated/h2</source>
+                    <source>src/generated/mysql</source>
                   </sources>
                 </configuration>
               </execution>
@@ -571,9 +601,17 @@
               <generator>
                 <name>org.jooq.util.DefaultGenerator</name>
                 <database>
-                  <name>org.jooq.util.h2.H2Database</name>
+                    <name>org.jooq.util.h2.MySQLDatabase</name>
                   <includes>.*</includes>
                   <excludes/>
+                    <schemata>
+                    <schema>
+                        <inputSchema>namedEntities</inputSchema>
+                    </schema>
+                    <schema>
+                        <inputSchema>ringgold</inputSchema>
+                    </schema>
+                    </schemata>
                   <!--<inputSchema>namedEntities</inputSchema>-->
                 </database>
                 <generate>
@@ -586,7 +624,7 @@
                 </generate>
                 <target>
                   <packageName>org.plos.namedentity.persist.db</packageName>
-                  <directory>src/generated/h2</directory>
+                  <directory>src/generated/mysql</directory>
                 </target>
               </generator>
             </configuration>
@@ -606,47 +644,111 @@
                 <artifactId>h2</artifactId>
                 <version>${h2db.version}</version>
               </dependency>
-            </dependencies>
-          </plugin>
-          <!-- h2 test schema is loaded here -->
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>sql-maven-plugin</artifactId>
-            <version>1.5</version>
-            <configuration>
-              <skip>${maven.test.skip}</skip>
-              <forkMode>always</forkMode>
-            </configuration>
-            <executions>
-              <execution>
-                <id>create-database-h2</id>
-                <phase>generate-sources</phase>
-                <goals>
-                  <goal>execute</goal>
-                </goals>
-                <configuration>
-                  <driver>${db.driver}</driver>
-                  <url>${db.url}</url>
-                  <user>${db.username}</user>
-                  <password>${db.password}</password>
-                  <autocommit>true</autocommit>
-                  <srcFiles>
-                    <srcFile>src/main/resources/ned-schema.h2.sql</srcFile>
-                    <srcFile>src/main/resources/ned-data.h2.sql</srcFile>
-                    <srcFile>src/main/resources/ringgold-schema.h2.sql</srcFile>
-                    <srcFile>src/main/resources/ringgold-data.h2.sql</srcFile>
-                  </srcFiles>
-                </configuration>
-              </execution>
-            </executions>
-            <dependencies>
               <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>${h2db.version}</version>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.connector.version}</version>
               </dependency>
             </dependencies>
           </plugin>
+          <!-- h2 test schema is loaded here -->
+          <!--<plugin>-->
+            <!--<groupId>org.codehaus.mojo</groupId>-->
+            <!--<artifactId>sql-maven-plugin</artifactId>-->
+            <!--<version>1.5</version>-->
+            <!--<configuration>-->
+              <!--<skip>${maven.test.skip}</skip>-->
+              <!--<forkMode>always</forkMode>-->
+            <!--</configuration>-->
+            <!--<executions>-->
+              <!--<execution>-->
+                <!--<id>create-database-h2</id>-->
+                <!--<phase>generate-sources</phase>-->
+                <!--<goals>-->
+                  <!--<goal>execute</goal>-->
+                <!--</goals>-->
+                <!--<configuration>-->
+                  <!--<driver>${db.driver}</driver>-->
+                  <!--<url>${db.url}</url>-->
+                  <!--<user>${db.username}</user>-->
+                  <!--<password>${db.password}</password>-->
+                  <!--<autocommit>true</autocommit>-->
+                  <!--<srcFiles>-->
+                    <!--<srcFile>src/main/resources/ned-schema.h2.sql</srcFile>-->
+                    <!--<srcFile>src/main/resources/ned-data.h2.sql</srcFile>-->
+                    <!--<srcFile>src/main/resources/ringgold-schema.h2.sql</srcFile>-->
+                    <!--<srcFile>src/main/resources/ringgold-data.h2.sql</srcFile>-->
+                  <!--</srcFiles>-->
+                <!--</configuration>-->
+              <!--</execution>-->
+            <!--</executions>-->
+            <!--<dependencies>-->
+              <!--<dependency>-->
+                <!--<groupId>com.h2database</groupId>-->
+                <!--<artifactId>h2</artifactId>-->
+                <!--<version>${h2db.version}</version>-->
+              <!--</dependency>-->
+             <!--<dependency>-->
+          <!--<groupId>mysql</groupId>-->
+          <!--<artifactId>mysql-connector-java</artifactId>-->
+          <!--<version>${mysql.connector.version}</version>-->
+        <!--</dependency>-->
+            <!--</dependencies>-->
+          <!--</plugin>-->
+
+      <!-- Docker Maven Plugin-->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.4.0</version>
+
+        <executions>
+
+          <!-- Start up a percona docker container if one isn't running already before
+               the build, since flyway and jooq need it during the build.              -->
+          <!--<execution>-->
+            <!--<id>pre-build</id>-->
+            <!--<phase>initialize</phase>-->
+            <!--<goals>-->
+              <!--<goal>exec</goal>-->
+            <!--</goals>-->
+            <!--<configuration>-->
+              <!--<executable>${project.basedir}/docker/percona/db_start.sh</executable>-->
+              <!--<workingDirectory>${project.basedir}/docker/percona</workingDirectory>-->
+            <!--</configuration>-->
+          <!--</execution>-->
+          <execution>
+            <id>pre-unit-test</id>
+            <phase>process-test-classes</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>${project.basedir}/src/test/resources/docker/pre_unit_test.sh</executable>
+              <arguments>
+                <argument>${project.basedir}/${docker_file_path}</argument>
+                <argument>${docker_cert_path}</argument>
+                <argument>${project.basedir}/${db_migrations_path}</argument>
+                <argument>${project.basedir}/${db_test_data_path}</argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>post-unit-test</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>${project.basedir}/src/test/resources/docker/post_unit_test.sh</executable>
+              <arguments>
+                <argument>${docker_cert_path}</argument>
+              </arguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
         </plugins>
       </build>
     </profile>
