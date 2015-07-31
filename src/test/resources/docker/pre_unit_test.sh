@@ -33,6 +33,8 @@ function build () {
     sleep 1
   done
 
+  echo "SET GLOBAL sql_mode='';" | ${MYSQL_ROOT}
+
   echo -e "\nCreating DB User (ned)"
   echo "CREATE USER 'ned' IDENTIFIED BY 'ned'" | ${MYSQL_ROOT}
   echo "GRANT ALL PRIVILEGES ON *.* TO 'ned'@'%' WITH GRANT OPTION; FLUSH PRIVILEGES" | ${MYSQL_ROOT}
@@ -40,30 +42,32 @@ function build () {
 
   set -e
   
-  #echo "DROP DATABASE IF EXISTS namedEntities;" | $MYSQL_ROOT
-  #echo "CREATE DATABASE namedEntities;" | $MYSQL_ROOT
+  echo "DROP SCHEMA IF EXISTS namedEntities;" | $MYSQL_ROOT
+  echo "CREATE SCHEMA namedEntities DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;" | $MYSQL_ROOT
 
   # Load all schema migrations.
   # TODO: figure out if there is a way for flyway and maven to do this automatically.
   # The addition of docker (this script) complicates things.
   for F in `\ls ${args[2]}/*.sql`
   do
+      echo "$(basename $F)"
     cat "$F" | $MYSQL_ROOT namedEntities
   done
 
   for F in `\ls ${args[3]}/*.sql`
   do
+    echo "$(basename $F)"
     cat "$F" | $MYSQL_ROOT namedEntities
   done
 
-  #echo "DROP DATABASE IF EXISTS ringgold;" | $MYSQL_ROOT
-  #echo "CREATE DATABASE ringgold;" | $MYSQL_ROOT
+  echo "DROP SCHEMA IF EXISTS ringgold;" | $MYSQL_ROOT
+  echo "CREATE SCHEMA ringgold;" | $MYSQL_ROOT
 
   for F in `\ls ${args[3]}/ringgold/*.sql`
   do
+    echo "$(basename $F)"
     cat "$F" | $MYSQL_ROOT ringgold
   done
-
 }
 
 args=("$@")

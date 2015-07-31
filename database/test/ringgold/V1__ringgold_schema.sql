@@ -1,10 +1,3 @@
-
-DROP SCHEMA IF EXISTS ringgold;
-
-CREATE SCHEMA ringgold;
-
-USE ringgold;
-
 CREATE TABLE ringgold.alt_name (
     Rec_ID BIGINT(20) NOT NULL AUTO_INCREMENT,
     P_Code BIGINT(20) NOT NULL DEFAULT '0',

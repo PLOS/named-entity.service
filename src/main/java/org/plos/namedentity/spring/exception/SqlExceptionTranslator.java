@@ -34,9 +34,7 @@ public class SqlExceptionTranslator extends DefaultExecuteListener {
   public void exception(ExecuteContext ctx) {
     SQLDialect dialect = ctx.configuration().dialect();
     SQLExceptionTranslator translator = (dialect != null)
-      // TODO: fix this (MYSQL -> MySQL)
-      //? new SQLErrorCodeSQLExceptionTranslator(dialect.name())
-      ? new SQLErrorCodeSQLExceptionTranslator("H2")
+      ? new SQLErrorCodeSQLExceptionTranslator(dialect.name())
       : new SQLStateSQLExceptionTranslator();
 
     ctx.exception(translator.translate("jOOQ", ctx.sql(), ctx.sqlException()));
