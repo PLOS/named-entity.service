@@ -74,7 +74,7 @@ public class AuthenticationFilterTest {
   @Test
   public void testFilterValidCredentials() throws IOException, ServletException {
     when(httpServletRequest.getHeader(AuthenticationFilter.AUTHENTICATION_HEADER))
-      .thenReturn("Basic "+encode("tahi:tahi"));
+      .thenReturn("Basic "+encode("test:test"));
 
     authFilter.doFilter(httpServletRequest, httpServletResponse, filterChain);
     verify(filterChain).doFilter(any(HttpServletRequest.class),any(HttpServletResponse.class));

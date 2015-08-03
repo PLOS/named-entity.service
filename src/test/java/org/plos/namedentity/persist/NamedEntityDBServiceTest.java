@@ -946,7 +946,7 @@ public class NamedEntityDBServiceTest {
     List<Consumer> allConsumersInDb = nedDBSvc.findAll(Consumer.class, 0, Integer.MAX_VALUE);
     assertTrue( allConsumersInDb.size() > 0 );
 
-    String[] registeredApps = { "tahi", "akita", "etl" };
+    String[] registeredApps = { "test" };
 
     for (String app : registeredApps) {
       Consumer filter = new Consumer();

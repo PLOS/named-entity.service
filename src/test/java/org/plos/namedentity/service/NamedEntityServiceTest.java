@@ -1080,8 +1080,8 @@ public class NamedEntityServiceTest {
     composite.setLegalname("legal name"+UUID.randomUUID().toString());
     composite.setFamiliarname("familiar name");
     composite.setSource("Ambra");
-    composite.setCreatedby("tahi");
-    composite.setLastmodifiedby("tahi");
+    composite.setCreatedby("test");
+    composite.setLastmodifiedby("test");
 
     return composite;
   }
@@ -1102,8 +1102,8 @@ public class NamedEntityServiceTest {
   }
   private <S extends Entity>
   S _(S entity, boolean create) {
-    entity.setCreatedbyname( create?"akita":null );
-    entity.setLastmodifiedbyname("akita");
+    entity.setCreatedbyname( create?"test":null );
+    entity.setLastmodifiedbyname("test");
     return entity;
   }
 }
