@@ -98,7 +98,7 @@ insertapp)
         mvn test-compile
     fi
 
-    HASHED=$(mvn -Dned.skip=true -q exec:java -Dexec.mainClass=org.plos.namedentity.spring.security.BCrypt -Dexec.args="$3")
+    HASHED=$(mvn -q exec:java -Dexec.mainClass=org.plos.namedentity.spring.security.BCrypt -Dexec.args="$3")
 
     echo "REPLACE INTO namedEntities.consumers (name, password) VALUES ('$2','$HASHED');"
     #echo "REPLACE INTO namedEntities.consumers (name, password) VALUES ('$2','$HASHED');" | mysql -u ned

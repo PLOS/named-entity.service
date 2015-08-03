@@ -30,9 +30,9 @@ function build () {
     sleep 1
   done
 
-  echo -e "Docker IP: $DB_HOST"
+  echo "Docker IP: $DB_HOST"
 
-  echo -e "Create DB User: ned"
+  echo "Create DB User: ned"
   echo "CREATE USER 'ned' IDENTIFIED BY 'ned'" | $MYSQL_ROOT 2>/dev/null
   echo "GRANT ALL PRIVILEGES ON *.* TO 'ned'@'%' WITH GRANT OPTION; FLUSH PRIVILEGES" | $MYSQL_ROOT
 
@@ -46,7 +46,7 @@ function build () {
   echo "DROP SCHEMA IF EXISTS ringgold;" | $MYSQL_ROOT
   echo "CREATE SCHEMA ringgold;" | $MYSQL_ROOT
 
-  for F in `\ls -v test/ringgold/V*.sql`
+  for F in `ls -v test/ringgold/V*.sql`
   do
     cat "$F" | $MYSQL_ROOT ringgold
   done
