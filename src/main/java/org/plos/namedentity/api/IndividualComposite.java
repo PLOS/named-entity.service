@@ -191,4 +191,18 @@ public class IndividualComposite extends Composite implements Validatable {
   public void setRelationships(List<Relationship> relationships) {
     this.relationships = relationships;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+
+    Map<Class, List<? extends Entity>> compositeMap = getAsMap();
+    for (List<? extends Entity> entities : compositeMap.values()) {
+      if (entities != null) {
+        for (Entity entity : entities)
+          sb.append(entity).append("\n");
+      }
+    }
+    return sb.toString();
+  }
 }

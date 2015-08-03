@@ -6,30 +6,14 @@ NED is a web service for hosting information about people and organizations. It 
 Requirements
 ------------
 
-NED depends on Java 1.8 (compile/run)
-
-Database Setup
---------------
-
-set up the database by running the following in MySql
-
-    source src/main/resources/ned-schema.mysql.sql;
-    source src/main/resources/ned-data.mysql.sql;
-    
-    create user 'ned'@'localhost' identified by '';
-    grant all privileges on namedEntities.* to ned@'localhost';
-    grant all privileges on ringgold.* to NED@'localhost';
-
-    create user 'ned'@'%' identified by '';
-    grant all privileges on namedEntities.* to ned@'%';
-    grant all privileges on ringgold.* to ned@'%';
-
-    flush privileges;
+NED depends on Java 1.8 (compile/run) and Docker.
 
 Adding userapps
 ---------------
 
-Applications that use NED must identify themselves. This is done with HTTP Basic auth, and there are fields for the appname and password on the swagger interface. To insert a userapp into the database, run this:
+Applications that use NED must identify themselves. This is done with HTTP Basic
+auth, and there are fields for the appname and password on the swagger
+interface. To insert a userapp into the database, run this:
 
     ./ned.sh insertapp appname password
     
@@ -66,11 +50,11 @@ tests use an embedded jersey container (grizzly)
 
 to run a specific test class
 
-    mvn -P h2 clean test -Dtest=NamedEntityServiceTest
+    mvn clean test -Dtest=NamedEntityServiceTest
     
 to run a specific test method
 
-    mvn -P h2 clean test -Dtest='NamedEntityServiceTest#testCreateIndividualCompositeWithRole'
+    mvn clean test -Dtest='NamedEntityServiceTest#testCreateIndividualCompositeWithRole'
     
 Debugging
 ---------
@@ -86,11 +70,22 @@ in separate window, attach with debug client
     
 to debug a unit test class
     
-    mvnDebug -P h2 clean test -DforkMode=never -Dtest=NamedEntityServiceTest
+    mvnDebug clean test -DforkMode=never -Dtest=NamedEntityServiceTest
     
 to attach to a debug unit test with IntelliJ, create a remote test config with the following command line
     
     -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000
+
+Database Migrations
+-------------------
+
+NED uses Flyway to manage database migrations. Migrations are applied to a
+Docker database instance for most Maven lifecycle phases. 
+
+Assuming you have a Docker instance running (docker ps), here's how you validate
+and query migrations.
+
+    mvn properties:read-project-properties flyway:info flyway:validate
 
 Generating Eclipse Project Files
 --------------------------------

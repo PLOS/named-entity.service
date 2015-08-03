@@ -2,12 +2,6 @@
 
 shopt -s nullglob
 
-function do_mvn {
-    echo "mvn -P ${MVN_PROFILE} ${MVN_TARGETS}"
-    # tip: add -X to debug 
-    mvn -P ${MVN_PROFILE} ${MVN_TARGETS}
-}
-
 function check_ringgold_env {
     if [[ -z ${RINGGOLD_DB_DIR} ]]; then
         echo -e "\nUndefined RINGGOLD_DB_DIR (ex: export RINGGOLD_DB_DIR=~/work)\n"
@@ -64,50 +58,30 @@ function deploy_jar {
     echo "Deployed ${ned_jar}"
 }
 
-MVN_DEFAULT_TARGET=${1:-clean}
-
-MVN_PROFILE=mysql
-MVN_TARGETS=$@
-
 case "$1" in
-clean) ;; 
-
-codegen-h2)
-    MVN_PROFILE=h2
-    MVN_TARGETS="generate-sources jooq-codegen:generate test-compile"
-    do_mvn
-    ;;
-
-codegen-mysql)
-    MVN_TARGETS="generate-sources jooq-codegen:generate"
-    do_mvn
+codegen)
+    mvn clean generate-sources jooq-codegen:generate
     ;;
 
 test)
-    MVN_PROFILE=h2
-    MVN_TARGETS="clean test"
-    do_mvn
+    mvn clean test
     ;;
 
 package)
-    MVN_TARGETS="clean package"
-    do_mvn
+    mvn clean package
     ;;
 
 install)
-    MVN_TARGETS="clean install"
-    do_mvn
+    mvn clean install
     ;;
 
 deploy)
-    MVN_TARGETS="clean install"
-    do_mvn
+    mvn clean install
     deploy_jar "named-entity-pojos"
     deploy_jar "named-entity-password"
     ;;
 
 insertapp)
-
     echo INSERT APP
 
     if [[ -z $2 ]]; then
@@ -121,26 +95,17 @@ insertapp)
     fi
 
     if [[ ! -f "target/test-classes/org/plos/namedentity/spring/security/BCrypt.class" ]]; then
-        mvn -P h2 test-compile
+        mvn test-compile
     fi
 
-    HASHED=$(mvn -q -P h2 exec:java -Dexec.mainClass=org.plos.namedentity.spring.security.BCrypt -Dexec.args="$3")
+    HASHED=$(mvn -Dned.skip=true -q exec:java -Dexec.mainClass=org.plos.namedentity.spring.security.BCrypt -Dexec.args="$3")
 
-    echo Inserting app: $2 with hashed password: $HASHED
-
-    echo "REPLACE INTO namedEntities.consumers (name, password) VALUES ('$2','$HASHED');" | mysql -u ned
-
+    echo "REPLACE INTO namedEntities.consumers (name, password) VALUES ('$2','$HASHED');"
+    #echo "REPLACE INTO namedEntities.consumers (name, password) VALUES ('$2','$HASHED');" | mysql -u ned
     ;;
-
 
 tomcat)
-    MVN_TARGETS="clean tomcat:run"
-    do_mvn
-    ;;
-
-dbreset)
-    mysql -u ned < src/main/resources/ned-schema.mysql.sql
-    mysql -u ned < src/main/resources/ned-data.mysql.sql
+    mvn clean tomcat:run
     ;;
 
 db-ringgold)
@@ -148,56 +113,8 @@ db-ringgold)
     import_ringgold
     ;;
 
-container-start)
-    cd docker/builder
-    ./ned-build.sh
-    cd ..
-    docker-compose build && docker-compose up -d
-
-    echo MySQL DB = `docker inspect --format '{{ .NetworkSettings.IPAddress }}' docker_neddb_1`:3306
-
-    echo "Bringing up NED service..."
-
-    SERVICE_IP=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' docker_nedapi_1`
-
-    CURL_CMD="curl http://${SERVICE_IP}:8080/service/config"
-
-    $CURL_CMD
-    CURL_RETURN_CODE=$?
-        if [ $CURL_RETURN_CODE -eq 6 ] ; then
-            echo -e "\nERROR: unable to resolve NED Service host. Exiting."
-            echo -e "Possible Reason: NED Service war on host hasn't been built.\n"
-            exit 1
-        fi
-
-    while [ $CURL_RETURN_CODE -ne 0 ] ; do
-      echo "Service not ready. Waiting..."
-      sleep 3
-      $CURL_CMD
-      CURL_RETURN_CODE=$?
-    done;
-
-    echo NED Service = http://${SERVICE_IP}:8080
-
-    echo Launching web browser  # Linux desktop only
-    xdg-open "http://${SERVICE_IP}:8080"
-    ;;
-    
-container-stop)
-    cd docker
-    docker-compose stop && docker-compose rm --force
-    ;;
-
-container-test)
-    cd docker/apitester
-    time ./ned-test.sh
-
-    cd ../etltester
-    time ./ned-test.sh
-    ;;
-
 *)
-    echo -e "\nUsage: `basename $0` (codegen-h2|codegen-mysql|dbreset|db-ringgold|insertapp|install|deploy|package|test|tomcat|container-start|container-stop|container-test)"
+    echo -e "\nUsage: `basename $0` (codegen|db-ringgold|insertapp|test|package|install|deploy|tomcat)"
     echo -e "\n  tomcat url -> http://localhost:8080\n"
     exit 0
     ;;

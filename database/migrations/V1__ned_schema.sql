@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS namedEntities.typeDescriptions;
+
 CREATE TABLE namedEntities.typeDescriptions (
     id INT NOT NULL AUTO_INCREMENT,
     description TEXT NOT NULL,
@@ -8,7 +8,6 @@ CREATE TABLE namedEntities.typeDescriptions (
     PRIMARY KEY (id)
 )   ENGINE=INNODB;
 
-DROP TABLE IF EXISTS namedEntities.globalTypes;
 CREATE TABLE namedEntities.globalTypes (
     id INT NOT NULL AUTO_INCREMENT,
     typeId INT NOT NULL,
@@ -23,7 +22,6 @@ CREATE TABLE namedEntities.globalTypes (
     FOREIGN KEY (typeId) REFERENCES typeDescriptions(id)
 )   ENGINE=INNODB;
 
-DROP TABLE IF EXISTS namedEntities.namedEntityIdentifiers;
 CREATE TABLE IF NOT EXISTS namedEntities.namedEntityIdentifiers (
     id INT NOT NULL AUTO_INCREMENT,
     typeId INT NOT NULL,
@@ -35,7 +33,6 @@ CREATE TABLE IF NOT EXISTS namedEntities.namedEntityIdentifiers (
     FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
-DROP TABLE IF EXISTS namedEntities.consumers;
 CREATE TABLE IF NOT EXISTS namedEntities.consumers (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
@@ -46,7 +43,6 @@ CREATE TABLE IF NOT EXISTS namedEntities.consumers (
     UNIQUE (name)
 )   ENGINE=INNODB;
 
-DROP TABLE IF EXISTS namedEntities.individualProfiles;
 CREATE TABLE IF NOT EXISTS namedEntities.individualProfiles (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
@@ -75,7 +71,6 @@ CREATE TABLE IF NOT EXISTS namedEntities.individualProfiles (
     INDEX (displayName)
 )   ENGINE=INNODB;
 
-DROP TABLE IF EXISTS namedEntities.organizations;
 CREATE TABLE IF NOT EXISTS namedEntities.organizations (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
@@ -99,7 +94,6 @@ CREATE TABLE IF NOT EXISTS namedEntities.organizations (
     UNIQUE (legalName, sourceTypeId)
 )   ENGINE=INNODB;
 
-DROP TABLE IF EXISTS namedEntities.addresses;
 CREATE TABLE IF NOT EXISTS namedEntities.addresses (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
@@ -128,7 +122,6 @@ CREATE TABLE IF NOT EXISTS namedEntities.addresses (
     FOREIGN KEY (lastModifiedBy) REFERENCES consumers(id)
 )   ENGINE=INNODB;
 
-DROP TABLE IF EXISTS namedEntities.emails;
 CREATE TABLE IF NOT EXISTS namedEntities.emails (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
@@ -150,7 +143,6 @@ CREATE TABLE IF NOT EXISTS namedEntities.emails (
     UNIQUE (emailAddress, sourceTypeId)
 )   ENGINE=INNODB;
 
-DROP TABLE IF EXISTS namedEntities.phoneNumbers;
 CREATE TABLE IF NOT EXISTS namedEntities.phoneNumbers (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
@@ -173,7 +165,6 @@ CREATE TABLE IF NOT EXISTS namedEntities.phoneNumbers (
     FOREIGN KEY (lastModifiedBy) REFERENCES consumers(id)
 )   ENGINE=INNODB;
 
-DROP TABLE IF EXISTS namedEntities.roles;
 CREATE TABLE IF NOT EXISTS namedEntities.roles (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
@@ -195,7 +186,6 @@ CREATE TABLE IF NOT EXISTS namedEntities.roles (
     FOREIGN KEY (lastModifiedBy) REFERENCES consumers(id)
 )   ENGINE=INNODB;
 
-DROP TABLE IF EXISTS namedEntities.relationships;
 CREATE TABLE IF NOT EXISTS namedEntities.relationships (
     id INT NOT NULL AUTO_INCREMENT,
     typeId INT NOT NULL,
@@ -217,7 +207,6 @@ CREATE TABLE IF NOT EXISTS namedEntities.relationships (
     FOREIGN KEY (lastModifiedBy) REFERENCES consumers(id)
 )   ENGINE=INNODB;
 
-DROP TABLE IF EXISTS namedEntities.sourceFields;
 CREATE TABLE IF NOT EXISTS namedEntities.sourceFields (
     id INT NOT NULL AUTO_INCREMENT,
     sourceTable TEXT NOT NULL,
@@ -227,7 +216,6 @@ CREATE TABLE IF NOT EXISTS namedEntities.sourceFields (
     PRIMARY KEY (id)
 )   ENGINE=INNODB;
 
-DROP TABLE IF EXISTS namedEntities.auditTrail;
 CREATE TABLE IF NOT EXISTS namedEntities.auditTrail (
     id INT NOT NULL AUTO_INCREMENT,
     sourceFieldId INT NOT NULL,
@@ -242,7 +230,6 @@ CREATE TABLE IF NOT EXISTS namedEntities.auditTrail (
     FOREIGN KEY (sourceFieldId) REFERENCES sourceFields(id)
 )   ENGINE=INNODB;
 
-DROP TABLE IF EXISTS namedEntities.subjectAreas;
 CREATE TABLE IF NOT EXISTS namedEntities.subjectAreas (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
@@ -254,7 +241,6 @@ CREATE TABLE IF NOT EXISTS namedEntities.subjectAreas (
     FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
-DROP TABLE IF EXISTS namedEntities.journals;
 CREATE TABLE IF NOT EXISTS namedEntities.journals (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
@@ -266,7 +252,6 @@ CREATE TABLE IF NOT EXISTS namedEntities.journals (
     FOREIGN KEY (typeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
 
-DROP TABLE IF EXISTS namedEntities.degrees;
 CREATE TABLE IF NOT EXISTS namedEntities.degrees (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
@@ -284,7 +269,6 @@ CREATE TABLE IF NOT EXISTS namedEntities.degrees (
     FOREIGN KEY (lastModifiedBy) REFERENCES consumers(id)
 )   ENGINE=INNODB;
 
-DROP TABLE IF EXISTS namedEntities.urls;
 CREATE TABLE IF NOT EXISTS namedEntities.urls (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
@@ -301,7 +285,6 @@ CREATE TABLE IF NOT EXISTS namedEntities.urls (
     FOREIGN KEY (lastModifiedBy) REFERENCES consumers(id)
 )   ENGINE=INNODB;
 
-DROP TABLE IF EXISTS namedEntities.uniqueIdentifiers;
 CREATE TABLE IF NOT EXISTS namedEntities.uniqueIdentifiers (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
@@ -322,7 +305,6 @@ CREATE TABLE IF NOT EXISTS namedEntities.uniqueIdentifiers (
 )   ENGINE=INNODB;
 
 
-DROP TABLE IF EXISTS namedEntities.authCas;
 CREATE TABLE IF NOT EXISTS namedEntities.authCas (
     id INT NOT NULL AUTO_INCREMENT,
     nedId INT NOT NULL,
