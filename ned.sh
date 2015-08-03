@@ -58,6 +58,20 @@ function deploy_jar {
     echo "Deployed ${ned_jar}"
 }
 
+function clean_db {
+    db_host=${1:-localhost}
+    db_port=${2:-3306}
+    db_url="jdbc:mysql://${db_host}:${db_port}/namedEntities?useUnicode=true&amp;characterEncoding=utf8"
+    mvn -Ddb.url="$db_url" properties:read-project-properties flyway:clean
+}
+
+function migrate_db {
+    db_host=${1:-localhost}
+    db_port=${2:-3306}
+    db_url="jdbc:mysql://${db_host}:${db_port}/namedEntities?useUnicode=true&amp;characterEncoding=utf8"
+    mvn -Ddb.url="$db_url" properties:read-project-properties flyway:migrate
+}
+
 case "$1" in
 codegen)
     mvn clean generate-sources jooq-codegen:generate
@@ -79,6 +93,10 @@ deploy)
     mvn clean install
     deploy_jar "named-entity-pojos"
     deploy_jar "named-entity-password"
+    ;;
+
+tomcat)
+    mvn clean tomcat:run
     ;;
 
 insertapp)
@@ -104,8 +122,12 @@ insertapp)
     #echo "REPLACE INTO namedEntities.consumers (name, password) VALUES ('$2','$HASHED');" | mysql -u ned
     ;;
 
-tomcat)
-    mvn clean tomcat:run
+db-clean)
+    clean_db $2 $3
+    ;;
+
+db-migrate)
+    migrate_db $2 $3
     ;;
 
 db-ringgold)
@@ -114,7 +136,7 @@ db-ringgold)
     ;;
 
 *)
-    echo -e "\nUsage: `basename $0` (codegen|db-ringgold|insertapp|test|package|install|deploy|tomcat)"
+    echo -e "\nUsage: `basename $0` (codegen|db-clean|db-migrate|db-ringgold|insertapp|test|package|install|deploy|tomcat)"
     echo -e "\n  tomcat url -> http://localhost:8080\n"
     exit 0
     ;;
