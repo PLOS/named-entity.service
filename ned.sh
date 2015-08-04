@@ -2,6 +2,11 @@
 
 shopt -s nullglob
 
+function cleanup {
+    # stop docker container if running.
+    ./database/docker/db_stop.sh
+}
+
 function check_ringgold_env {
     if [[ -z ${RINGGOLD_DB_DIR} ]]; then
         echo -e "\nUndefined RINGGOLD_DB_DIR (ex: export RINGGOLD_DB_DIR=~/work)\n"
@@ -62,7 +67,21 @@ function clean_db {
     db_host=${1:-localhost}
     db_port=${2:-3306}
     db_url="jdbc:mysql://${db_host}:${db_port}/namedEntities?useUnicode=true&amp;characterEncoding=utf8"
-    mvn -Ddb.url="$db_url" properties:read-project-properties flyway:clean
+
+    echo -e "\nAbout to destroy namedEntities schema on ${db_host}:${db_port}"
+    read -p "Are you sure? " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        mvn -Ddb.url="$db_url" properties:read-project-properties flyway:clean
+    fi
+}
+
+function db_info {
+    db_host=${1:-localhost}
+    db_port=${2:-3306}
+    db_url="jdbc:mysql://${db_host}:${db_port}/namedEntities?useUnicode=true&amp;characterEncoding=utf8"
+    mvn -Ddb.url="$db_url" properties:read-project-properties flyway:info
 }
 
 function migrate_db {
@@ -70,8 +89,11 @@ function migrate_db {
     db_port=${2:-3306}
     mvn_profile=${3:-deploy}
     db_url="jdbc:mysql://${db_host}:${db_port}/namedEntities?useUnicode=true&amp;characterEncoding=utf8"
-    #mvn -P $mvn_profile -Ddb.url="$db_url" -Dflyway.target=1 compile flyway:migrate
     mvn -P $mvn_profile -Ddb.url="$db_url" compile flyway:migrate
+
+    # here's how to migrate up to a specific target version. migrations with a
+    # higher version number will not be applied (ex: apply v1 and v2).
+    #mvn -P $mvn_profile -Ddb.url="$db_url" -Dflyway.target=2 compile flyway:migrate
 }
 
 case "$1" in
@@ -128,6 +150,10 @@ db-clean)
     clean_db $2 $3
     ;;
 
+db-info)
+    db_info $2 $3
+    ;;
+
 db-migrate)
     migrate_db $2 $3 $4
     ;;
@@ -138,11 +164,14 @@ db-ringgold)
     ;;
 
 *)
-    echo -e "\nUsage: `basename $0` (codegen|db-clean|db-migrate|db-ringgold|insertapp|test|package|install|deploy|tomcat)"
-    echo -e "\n  tomcat url -> http://localhost:8080\n"
+    echo -e "\nUsage: `basename $0` (codegen|db-clean|db-info|db-migrate|db-ringgold|insertapp|test|package|install|deploy|tomcat)"
+    echo -e "\n  tomcat url = http://localhost:8080\n"
+    echo -e "  db-migrate                     # migrates non-test schema to localhost:3306"
+    echo -e "  db-migrate devbox01 3304       # migrates non-test schema to devbox01:3304"
+    echo -e "  db-migrate localhost 3306 test # migrates test schema to localhost:3306"
+    echo -e "  db-migrate devbox01 3304 test  # migrates test schema to devbox01:3304"
     exit 0
     ;;
 esac
 
-# cleanup. stop docker container if running.
-./database/docker/db_stop.sh
+cleanup

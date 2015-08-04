@@ -542,7 +542,6 @@
                 <location>filesystem:database/migrations</location>
                 <location>filesystem:database/test</location>
               </locations>
-              <baselineOnMigrate>true</baselineOnMigrate>
               <schemas>
                 <schema>namedEntities</schema>
               </schemas>
@@ -575,7 +574,6 @@
               <locations>
                   <location>filesystem:database/migrations</location>
               </locations>
-              <baselineOnMigrate>true</baselineOnMigrate>
               <schemas>
                 <schema>namedEntities</schema>
               </schemas>
