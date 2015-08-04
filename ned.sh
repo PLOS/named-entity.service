@@ -164,12 +164,24 @@ db-ringgold)
     ;;
 
 *)
-    echo -e "\nUsage: `basename $0` (codegen|db-clean|db-info|db-migrate|db-ringgold|insertapp|test|package|install|deploy|tomcat)"
-    echo -e "\n  tomcat url = http://localhost:8080\n"
-    echo -e "  db-migrate                     # migrates non-test schema to localhost:3306"
-    echo -e "  db-migrate devbox01 3304       # migrates non-test schema to devbox01:3304"
-    echo -e "  db-migrate localhost 3306 test # migrates test schema to localhost:3306"
-    echo -e "  db-migrate devbox01 3304 test  # migrates test schema to devbox01:3304"
+    echo -e "\nUsage: `basename $0` (codegen|db-clean|db-info|db-migrate|db-ringgold|insertapp|test|package|install|deploy|tomcat)\n"
+    echo "  codegen                        # runs jooq code generator against docker"
+    echo "                                 #   instance with latest migrations"
+    echo "  db-clean <host> <port>         # cleans ned schema        (localhost:3306)"
+    echo "  db-info  <host> <port>         # shows applied migrations (localhost:3306)"
+    echo "  db-migrate <host> <port>       # migrates non-test schema (localhost:3306)"
+    echo "  db-migrate devbox01 3304       # migrates non-test schema to devbox01:3304"
+    echo "  db-migrate localhost 3306 test # migrates test schema to localhost:3306"
+    echo "  db-migrate devbox01 3304 test  # migrates test schema to devbox01:3304"
+    echo "  db-ringgold                    # extracts and import ringgold archive"
+    echo "  insertapp <user> <password>    # generates SQL INSERT into Consumers table for user"
+    echo "  test                           # runs unit tests"
+    echo "  package                        # generates war and pojo's"
+    echo "  install                        # copies war/pojo's -> internal maven repo"
+    echo "  deploy                         # copies pojo's     -> external ambra maven repo"
+    echo "                                 #   (http://maven.ambraproject.org/maven2/release/org/plos/)"
+    echo "  tomcat                         # starts embedded tomcat (http://localhost:8080, docker db(3304))"
+    echo
     exit 0
     ;;
 esac
