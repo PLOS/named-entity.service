@@ -12,7 +12,7 @@ fi
 docker ps | grep -q 'neddb'
 if [ $? -eq 0 ]
 then
-  echo -e "\nStopping and removing (neddb) Docker container ..."
-  docker stop neddb
-  docker rm neddb
+  echo "\nStopping and removing (neddb) Docker container ..."
+  docker stop neddb >/dev/null
+  docker rm neddb >/dev/null
 fi

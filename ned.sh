@@ -143,3 +143,6 @@ db-ringgold)
     exit 0
     ;;
 esac
+
+# cleanup. stop docker container if running.
+./database/docker/db_stop.sh
