@@ -68,8 +68,10 @@ function clean_db {
 function migrate_db {
     db_host=${1:-localhost}
     db_port=${2:-3306}
+    mvn_profile=${3:-deploy}
     db_url="jdbc:mysql://${db_host}:${db_port}/namedEntities?useUnicode=true&amp;characterEncoding=utf8"
-    mvn -Ddb.url="$db_url" properties:read-project-properties flyway:migrate
+    #mvn -P $mvn_profile -Ddb.url="$db_url" -Dflyway.target=1 compile flyway:migrate
+    mvn -P $mvn_profile -Ddb.url="$db_url" compile flyway:migrate
 }
 
 case "$1" in
@@ -127,7 +129,7 @@ db-clean)
     ;;
 
 db-migrate)
-    migrate_db $2 $3
+    migrate_db $2 $3 $4
     ;;
 
 db-ringgold)

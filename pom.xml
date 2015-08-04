@@ -502,32 +502,6 @@
           </execution>
         </executions>
       </plugin>
-
-      <!-- Flyway, for schema migrations   -->
-      <plugin>
-        <groupId>org.flywaydb</groupId>
-        <artifactId>flyway-maven-plugin</artifactId>
-        <version>3.2.1</version>
-        <executions>
-          <execution>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>migrate</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <url>${db.url}</url>
-          <user>${db.username}</user>
-          <password>${db.password}</password>
-          <locations>
-            <location>filesystem:database/migrations</location>
-          </locations>
-          <schemas>
-            <schema>namedEntities</schema>
-          </schemas>
-        </configuration>
-      </plugin>
     </plugins>
 
     <!-- needed to deploy artifacts to maven repo over sftp -->
@@ -539,5 +513,77 @@
       </extension>
     </extensions>
   </build>
+
+  <profiles>
+    <profile>
+      <id>test</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-maven-plugin</artifactId>
+            <version>3.2.1</version>
+            <executions>
+              <execution>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>migrate</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <url>${db.url}</url>
+              <user>${db.username}</user>
+              <password>${db.password}</password>
+              <locations>
+                <location>filesystem:database/migrations</location>
+                <location>filesystem:database/test</location>
+              </locations>
+              <baselineOnMigrate>true</baselineOnMigrate>
+              <schemas>
+                <schema>namedEntities</schema>
+              </schemas>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>deploy</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-maven-plugin</artifactId>
+            <version>3.2.1</version>
+            <executions>
+              <execution>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>migrate</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <url>${db.url}</url>
+              <user>${db.username}</user>
+              <password>${db.password}</password>
+              <locations>
+                  <location>filesystem:database/migrations</location>
+              </locations>
+              <baselineOnMigrate>true</baselineOnMigrate>
+              <schemas>
+                <schema>namedEntities</schema>
+              </schemas>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 </project>
