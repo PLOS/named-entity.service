@@ -187,7 +187,7 @@ db-ringgold)
     echo "  deploy                      # copies pojo's     -> external ambra maven repo"
     echo "                              #   (http://maven.ambraproject.org/maven2/release/org/plos/)"
     echo ""
-    echo "  tomcat                      # starts embedded tomcat (http://localhost:8080, docker db(3304))"
+    echo "  tomcat                      # starts embedded tomcat (http://localhost:8080, docker db(3306))"
     echo
     exit 0
     ;;
