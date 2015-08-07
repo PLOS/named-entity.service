@@ -33,7 +33,7 @@ function build () {
   echo "Docker IP: $DB_HOST"
 
   echo "Create DB User: ned"
-  echo "CREATE USER 'ned' IDENTIFIED BY 'ned'" | $MYSQL_ROOT 2>/dev/null
+  echo "CREATE USER 'ned' IDENTIFIED BY ''" | $MYSQL_ROOT 2>/dev/null
   echo "GRANT ALL PRIVILEGES ON *.* TO 'ned'@'%' WITH GRANT OPTION; FLUSH PRIVILEGES" | $MYSQL_ROOT
 
   set -e

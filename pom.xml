@@ -437,8 +437,7 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>1.4.0</version>
         <executions>
-          <!-- Start up a percona docker container if one isn't running already before
-               the build, since flyway and jooq need it during the build.              -->
+          <!-- Start up a percona docker container which is used by flyway and jooq -->
           <execution>
             <id>start-neddb</id>
             <phase>initialize</phase>
@@ -453,18 +452,20 @@
               </arguments>
             </configuration>
           </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.plos.maven</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <executions>
           <execution>
-            <id>stop-neddb</id>
-            <phase>prepare-package</phase>
+            <id>docker-shutdown-hook</id>
+            <phase>initialize</phase>
             <goals>
-              <goal>exec</goal>
+              <goal>shutdown-hook</goal>
             </goals>
-            <configuration>
-              <executable>${project.basedir}/database/docker/db_stop.sh</executable>
-              <arguments>
-                <argument>${docker_cert_path}</argument>
-              </arguments>
-            </configuration>
           </execution>
         </executions>
       </plugin>
