@@ -6,7 +6,9 @@ NED is a web service for hosting information about people and organizations. It 
 Requirements
 ------------
 
-NED depends on Java 1.8 (compile/run) and Docker.
+NED depends on Java 1.8 (compile/run), Docker, and a custom Docker Maven Plugin
+(which we wrote). You have to manually build and deploy the Docker Maven
+Plugin at least once. See the readme in config/docker-maven-plugin for details.
 
 Adding userapps
 ---------------
@@ -79,13 +81,7 @@ to attach to a debug unit test with IntelliJ, create a remote test config with t
 Database Migrations
 -------------------
 
-NED uses Flyway to manage database migrations. Migrations are applied to a
-Docker database instance for most Maven lifecycle phases. 
-
-Assuming you have a Docker instance running (docker ps), here's how you validate
-and query migrations.
-
-    mvn properties:read-project-properties flyway:info flyway:validate
+NED uses Flyway to manage database migrations. See ned script for usage.
 
 Generating Eclipse Project Files
 --------------------------------

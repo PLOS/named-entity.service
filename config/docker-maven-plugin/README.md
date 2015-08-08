@@ -16,4 +16,4 @@ need to update the CLASSPATH - see script for details.
 TODO: unfortunately, invoking class with mvn exec doesn't invoke shutdown hook
 -- research this?!
 
-    mvn exec:java -Dexec.mainClass="org.plos.maven.DockerMojo"
+mvn exec:java -Dexec.mainClass="org.plos.maven.DockerMojo"
