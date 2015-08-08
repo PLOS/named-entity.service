@@ -4,7 +4,7 @@ Docker Maven Plugin
 This Maven plugin attaches a shutdown hook to the jvm which stops and removes
 the Docker instance used in NED's build process (neddb).
 
-Build and deploy to Maven repo.
+Build and deploy this plugin to Maven repo.
 
     mvn clean install
 
@@ -14,6 +14,6 @@ need to update the CLASSPATH - see script for details.
     ./docker-mojo-tester.sh
 
 TODO: unfortunately, invoking class with mvn exec doesn't invoke shutdown hook
--- research this?!
+      -- why not?! research.
 
-mvn exec:java -Dexec.mainClass="org.plos.maven.DockerMojo"
+    mvn -q exec:java -Dexec.mainClass="org.plos.maven.DockerMojo"

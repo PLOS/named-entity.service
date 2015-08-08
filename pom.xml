@@ -23,6 +23,7 @@
     <org.springframework.version>4.1.6.RELEASE</org.springframework.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <tomcat.jdbc.version>7.0.54</tomcat.jdbc.version>
+    <maven.exec.skip>false</maven.exec.skip>
   </properties>
 
   <dependencies>
@@ -450,6 +451,7 @@
               <arguments>
                 <argument>${docker_cert_path}</argument>
               </arguments>
+              <skip>${maven.exec.skip}</skip>
             </configuration>
           </execution>
         </executions>
@@ -546,6 +548,7 @@
               <schemas>
                 <schema>namedEntities</schema>
               </schemas>
+              <skip>${maven.exec.skip}</skip>
             </configuration>
           </plugin>
         </plugins>

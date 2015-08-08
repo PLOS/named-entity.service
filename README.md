@@ -3,12 +3,15 @@ Named Entity Database
 
 NED is a web service for hosting information about people and organizations. It provides a REST API backed my a MySQL database.
 
-Requirements
+Dependencies
 ------------
+    * Java 8
+    * Docker (1.7+)
+    * Docker Maven Plugin
 
-NED depends on Java 1.8 (compile/run), Docker, and a custom Docker Maven Plugin
-(which we wrote). You have to manually build and deploy the Docker Maven
-Plugin at least once. See the readme in config/docker-maven-plugin for details.
+You need to build and deploy the Docker Maven Plugin to your Maven repo before
+building NED. See readme in config/docker-maven-plugin for details on how to do
+this.
 
 Adding userapps
 ---------------
