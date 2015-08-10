@@ -94,7 +94,7 @@ function migrate_db {
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
         mvn -P deploy -Ddb.url="$db_url" -Ddb.username="$db_username" -Ddb.password="$db_password" \
-            properties:read-project-properties flyway:migrate
+            -Dmaven.exec.skip=true compile flyway:migrate
     fi
     # here's how to migrate up to a specific target version. migrations with a
     # higher version number will not be applied (ex: apply v1 and v2).
@@ -135,7 +135,7 @@ function insert_app {
 
 function run_tomcat {
     process_db_args "$@"
-    mvn -Dtomcat.db.url="$db_url" -Dtomcat.db.username="$db_username" -Dtomcat.db.password="$db_password" \
+    mvn -Dmaven.exec.skip=true -Dtomcat.db.url="$db_url" -Dtomcat.db.username="$db_username" -Dtomcat.db.password="$db_password" \
         clean tomcat:run
 }
 
@@ -145,11 +145,11 @@ codegen)
     ;;
 
 db-clean)
-    shift && clean_db "$@" 
+    shift && clean_db "$@"
     ;;
 
 db-info)
-    shift && db_info "$@" 
+    shift && db_info "$@"
     ;;
 
 db-migrate)
@@ -206,11 +206,12 @@ tomcat)
     echo "  db-ringgold                        # extracts and import ringgold archive"
     echo ""
     echo "  insertapp <app_username> <app_password> [<host> <port> <db_username> <db_password>]"
-    echo "                                     # inserts app user into db (localhost:3306:ned:<empty>)"
+    echo "  insertapp etl etl                  # inserts etl app user into db (localhost:3306:ned:<empty>)"
+    echo "  insertapp etl etl devbox02         # inserts etl app user into db (devbox02:3306:ned:<empty>)"
     echo ""
     echo "  tomcat [<db_host> <db_port> <db_username> <db_password>]"
-    echo "  tomcat                 # starts embedded tomcat - http://localhost:8080, mysql(localhost:3306:ned:<empty>)"
-    echo "  tomcat localhost 3304  # starts embedded tomcat - http://localhost:8080, docker(localhost:3304:ned:<empty>)"
+    echo "  tomcat                       # starts embedded tomcat - http://localhost:8080, mysql(localhost:3306:ned:<empty>)"
+    echo "  tomcat devbox01 3306 ned ned # starts embedded tomcat - http://localhost:8080, mysql(devbox01:3306:ned:ned)"
     echo ""
     echo "  test     # runs unit tests"
     echo "  package  # generates war and pojo's"

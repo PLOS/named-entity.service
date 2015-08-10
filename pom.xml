@@ -468,6 +468,9 @@
             <goals>
               <goal>shutdown-hook</goal>
             </goals>
+            <configuration>
+              <skip>${maven.exec.skip}</skip>
+            </configuration>
           </execution>
         </executions>
       </plugin>

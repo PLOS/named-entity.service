@@ -3,12 +3,21 @@ package org.plos.maven;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 
 @Mojo(name = "shutdown-hook" )
 public class DockerMojo extends AbstractMojo
 {
+  @Parameter( property = "shutdown-hook.skip", defaultValue = "false", alias = "shutdown-hook.skip" )
+  private boolean skip;
+
   public void execute() throws MojoExecutionException
   {
+    if (skip) {
+      getLog().info( "shutdown-hook.skip = true: not installing shutdown hook" );
+      return;
+    }
+
     getLog().info("Registering Docker Shutdown Hook");
     Runtime.getRuntime().addShutdownHook(new Thread() {
       public void run() {
