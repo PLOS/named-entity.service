@@ -81,6 +81,8 @@ public class NamedEntityServiceTest {
 
     composite2.getIndividualprofiles().get(0).setDisplayname(
         composite1.getIndividualprofiles().get(0).getDisplayname());
+    composite2.getUniqueidentifiers().get(0).setUniqueidentifier(
+        composite1.getUniqueidentifiers().get(0).getUniqueidentifier());
 
     assertEquals(composite1, composite2);
 
