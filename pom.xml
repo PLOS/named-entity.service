@@ -15,8 +15,7 @@
   <properties>
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
     <buildDate>${maven.build.timestamp}</buildDate>
-    <h2db.version>1.4.185</h2db.version>
-    <mysql.connector.version>5.1.30</mysql.connector.version> 
+    <mysql.connector.version>5.1.36</mysql.connector.version> 
     <org.apache.commons.version>3.3.2</org.apache.commons.version>
     <org.glassfish.jersey-version>2.11</org.glassfish.jersey-version>
     <org.hamcrest.version>1.3</org.hamcrest.version>
@@ -24,6 +23,7 @@
     <org.springframework.version>4.1.6.RELEASE</org.springframework.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <tomcat.jdbc.version>7.0.54</tomcat.jdbc.version>
+    <maven.exec.skip>false</maven.exec.skip>
   </properties>
 
   <dependencies>
@@ -158,12 +158,6 @@
     </dependency>
 
     <dependency>
-      <groupId>joda-time</groupId>
-      <artifactId>joda-time</artifactId>
-      <version>2.7</version>
-    </dependency>
-
-    <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest-core</artifactId>
       <version>${org.hamcrest.version}</version>
@@ -214,19 +208,158 @@
       <version>${org.apache.commons.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>${mysql.connector.version}</version>
+    </dependency>
   </dependencies>
 
   <build>
     <finalName>${project.artifactId}-${project.version}</finalName>
 
+    <!-- The resources element will replace available properties in all matching resources -->
     <resources>
       <resource>
         <directory>src/main/resources/</directory>
         <filtering>true</filtering>
       </resource>
+      <resource>
+        <filtering>true</filtering>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*.xml</include>
+        </includes>
+      </resource>
+      <resource>
+        <filtering>true</filtering>
+        <directory>config/tomcat</directory>
+        <includes>
+          <include>**/*.xml</include>
+        </includes>
+      </resource>
     </resources>
+    <testResources>
+      <testResource>
+        <filtering>true</filtering>
+        <directory>src/test/resources</directory>
+        <includes>
+          <include>**/*.xml</include>
+        </includes>
+      </testResource>
+    </testResources>
 
     <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.9</version>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals><goal>add-source</goal></goals>
+            <configuration>
+              <sources>
+                <source>src/generated</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>properties-maven-plugin</artifactId>
+        <version>1.0-alpha-2</version>
+        <configuration>
+          <files>
+            <file>src/main/resources/config.properties</file>
+          </files>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>initialize</phase>
+            <goals>
+              <goal>read-project-properties</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.jooq</groupId>
+        <artifactId>jooq-codegen-maven</artifactId>
+        <version>${org.jooq.version}</version>
+        <configuration>
+          <jdbc>
+            <driver>${db.driver}</driver>
+            <url>${db.url}</url>
+            <user>${db.username}</user>
+            <password>${db.password}</password>
+          </jdbc>
+          <generator>
+          <name>org.jooq.util.DefaultGenerator</name>
+          <database>
+            <name>org.jooq.util.mysql.MySQLDatabase</name>
+            <includes>.*</includes>
+            <excludes/>
+            <schemata>
+              <schema>
+                <inputSchema>namedEntities</inputSchema>
+              </schema>
+              <schema>
+                <inputSchema>ringgold</inputSchema>
+              </schema>
+            </schemata>
+          </database>
+          <generate>
+            <deprecated>false</deprecated>
+            <instanceFields>true</instanceFields>
+            <!--<pojos>true</pojos>-->
+            <!--<daos>true</daos>-->
+            <!--<jpaAnnotations>true</jpaAnnotations>-->
+            <!--<validationAnnotations>true</validationAnnotations>-->
+          </generate>
+          <target>
+            <packageName>org.plos.namedentity.persist.db</packageName>
+            <directory>src/generated</directory>
+          </target>
+          </generator>
+        </configuration>
+        <executions>
+          <execution>
+            <id>jooq-codegen</id>
+            <!-- binds to generate-sources phase by default. unbind. -->
+            <phase></phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.connector.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>tomcat-maven-plugin</artifactId>
+        <version>1.1</version>
+        <configuration>
+          <contextFile>${basedir}/target/classes/context.xml</contextFile>
+          <path>/</path>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>juli</artifactId>
+            <version>6.0.29</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+
       <plugin>
         <artifactId>maven-eclipse-plugin</artifactId>
         <version>2.9</version>
@@ -299,6 +432,49 @@
         <version>2.16</version>
       </plugin>
 
+      <!-- Docker Maven Plugin-->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.4.0</version>
+        <executions>
+          <!-- Start up a percona docker container which is used by flyway and jooq -->
+          <execution>
+            <id>start-neddb</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>${project.basedir}/database/docker/db_start.sh</executable>
+              <workingDirectory>${project.basedir}/database/</workingDirectory>
+              <arguments>
+                <argument>${docker_cert_path}</argument>
+              </arguments>
+              <skip>${maven.exec.skip}</skip>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.plos.maven</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <executions>
+          <execution>
+            <id>docker-shutdown-hook</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>shutdown-hook</goal>
+            </goals>
+            <configuration>
+              <skip>${maven.exec.skip}</skip>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-install-plugin</artifactId>
@@ -345,355 +521,73 @@
   </build>
 
   <profiles>
-    <!-- MYSQL Profile -->
     <profile>
-      <id>mysql</id>
-      <properties>
-        <maven.test.skip>true</maven.test.skip>
-      </properties>
-      <dependencies>
-        <dependency>
-          <groupId>mysql</groupId>
-          <artifactId>mysql-connector-java</artifactId>
-          <version>${mysql.connector.version}</version>
-        </dependency>
-      </dependencies>
+      <id>test</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <build>
-        <!-- The resources element will replace available properties in all matching resources -->
-        <resources>
-          <resource>
-            <filtering>true</filtering>
-            <directory>src/main/resources</directory>
-            <includes>
-            <include>**/*.xml</include>
-            </includes>
-          </resource>
-          <resource>
-            <filtering>true</filtering>
-            <directory>config/tomcat</directory>
-            <includes>
-            <include>**/*.xml</include>
-            </includes>
-          </resource>
-        </resources>
-
         <plugins>
           <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>build-helper-maven-plugin</artifactId>
-            <version>1.9</version>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-maven-plugin</artifactId>
+            <version>3.2.1</version>
             <executions>
               <execution>
                 <phase>generate-sources</phase>
-                <goals><goal>add-source</goal></goals>
-                <configuration>
-                  <sources>
-                    <source>src/generated/mysql</source>
-                  </sources>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>properties-maven-plugin</artifactId>
-            <version>1.0-alpha-2</version>
-            <executions>
-              <execution>
-                <phase>initialize</phase>
                 <goals>
-                  <goal>read-project-properties</goal>
+                  <goal>migrate</goal>
                 </goals>
-                <configuration>
-                  <files>
-                    <file>src/main/resources/config.mysql.properties</file>
-                  </files>
-                </configuration>
               </execution>
             </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.jooq</groupId>
-            <artifactId>jooq-codegen-maven</artifactId>
-            <version>${org.jooq.version}</version>
             <configuration>
-              <jdbc>
-                <driver>${db.driver}</driver>
-                <url>${db.url}</url>
-                <user>${db.username}</user>
-                <password>${db.password}</password>
-              </jdbc>
-              <generator>
-              <name>org.jooq.util.DefaultGenerator</name>
-              <database>
-                <name>org.jooq.util.mysql.MySQLDatabase</name>
-                <includes>.*</includes>
-                <excludes/>
-                <schemata>
-                  <schema>
-                    <inputSchema>namedEntities</inputSchema>
-                  </schema>
-                  <schema>
-                    <inputSchema>ringgold</inputSchema>
-                  </schema>
-                </schemata>
-              </database>
-              <generate>
-                <deprecated>false</deprecated>
-                <instanceFields>true</instanceFields>
-                <!--<pojos>true</pojos>-->
-                <!--<daos>true</daos>-->
-                <!--<jpaAnnotations>true</jpaAnnotations>-->
-                <!--<validationAnnotations>true</validationAnnotations>-->
-              </generate>
-              <target>
-                <packageName>org.plos.namedentity.persist.db</packageName>
-                <directory>src/generated/mysql</directory>
-              </target>
-              </generator>
+              <url>${db.url}</url>
+              <user>${db.username}</user>
+              <password>${db.password}</password>
+              <locations>
+                <location>filesystem:database/migrations</location>
+                <location>filesystem:database/test</location>
+              </locations>
+              <schemas>
+                <schema>namedEntities</schema>
+              </schemas>
+              <skip>${maven.exec.skip}</skip>
             </configuration>
-            <executions>
-              <execution>
-                <id>jooq-codegen</id>
-                <!-- binds to generate-sources phase by default. unbind. -->
-                <phase></phase>
-                <goals>
-                  <goal>generate</goal>
-                </goals>
-              </execution>
-            </executions>
-            <dependencies>
-              <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql.connector.version}</version>
-              </dependency>
-            </dependencies>
-          </plugin>
-
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>tomcat-maven-plugin</artifactId>
-            <version>1.1</version>
-            <configuration>
-              <contextFile>${basedir}/target/classes/context.xml</contextFile>
-              <path>/</path>
-            </configuration>
-            <dependencies>
-              <dependency>
-                <groupId>org.apache.tomcat</groupId>
-                <artifactId>juli</artifactId>
-                <version>6.0.29</version>
-              </dependency>
-            </dependencies>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-
-    <!-- H2 PROFILE -->
-    <profile>
-      <id>h2</id>
-      <dependencies>
-        <dependency>
-          <groupId>com.h2database</groupId>
-          <artifactId>h2</artifactId>
-          <version>${h2db.version}</version>
-        </dependency>
-      </dependencies>
-      <build>
-        <!-- The resources element will replace available properties in all matching resources -->
-        <resources>
-          <resource>
-            <filtering>true</filtering>
-            <directory>src/main/resources</directory>
-            <includes>
-              <include>**/*.xml</include>
-            </includes>
-          </resource>
-        </resources>
-        <testResources>
-          <testResource>
-            <filtering>true</filtering>
-            <directory>src/test/resources</directory>
-            <includes>
-              <include>**/*.xml</include>
-            </includes>
-          </testResource>
-        </testResources>
-
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>build-helper-maven-plugin</artifactId>
-            <version>1.9</version>
-            <executions>
-              <execution>
-                <phase>generate-sources</phase>
-                <goals><goal>add-source</goal></goals>
-                <configuration>
-                  <sources>
-                    <source>src/generated/h2</source>
-                  </sources>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>properties-maven-plugin</artifactId>
-            <version>1.0-alpha-2</version>
-            <executions>
-              <execution>
-                <phase>initialize</phase>
-                <goals>
-                  <goal>read-project-properties</goal>
-                </goals>
-                <configuration>
-                  <files>
-                    <file>src/main/resources/config.h2.properties</file>
-                  </files>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.jooq</groupId>
-            <artifactId>jooq-codegen-maven</artifactId>
-            <version>${org.jooq.version}</version>
-            <configuration>
-              <jdbc>
-                <driver>${db.driver}</driver>
-                <url>${db.url}</url>
-                <user>${db.username}</user>
-                <password>${db.password}</password>
-              </jdbc>
-              <generator>
-                <name>org.jooq.util.DefaultGenerator</name>
-                <database>
-                  <name>org.jooq.util.h2.H2Database</name>
-                  <includes>.*</includes>
-                  <excludes/>
-                  <!--<inputSchema>namedEntities</inputSchema>-->
-                </database>
-                <generate>
-                  <deprecated>false</deprecated>
-                  <instanceFields>true</instanceFields>
-                  <!--<pojos>true</pojos>-->
-                  <!--<daos>true</daos>-->
-                  <!--<jpaAnnotations>true</jpaAnnotations>-->
-                  <!--<validationAnnotations>true</validationAnnotations>-->
-                </generate>
-                <target>
-                  <packageName>org.plos.namedentity.persist.db</packageName>
-                  <directory>src/generated/h2</directory>
-                </target>
-              </generator>
-            </configuration>
-            <executions>
-              <execution>
-                <id>jooq-codegen</id>
-                <!--<phase>generate-sources</phase>-->
-                <phase></phase>
-                <goals>
-                  <goal>generate</goal>
-                </goals>
-              </execution>
-            </executions>
-            <dependencies>
-              <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>${h2db.version}</version>
-              </dependency>
-            </dependencies>
-          </plugin>
-          <!-- h2 test schema is loaded here -->
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>sql-maven-plugin</artifactId>
-            <version>1.5</version>
-            <configuration>
-              <skip>${maven.test.skip}</skip>
-              <forkMode>always</forkMode>
-            </configuration>
-            <executions>
-              <execution>
-                <id>create-database-h2</id>
-                <phase>generate-sources</phase>
-                <goals>
-                  <goal>execute</goal>
-                </goals>
-                <configuration>
-                  <driver>${db.driver}</driver>
-                  <url>${db.url}</url>
-                  <user>${db.username}</user>
-                  <password>${db.password}</password>
-                  <autocommit>true</autocommit>
-                  <srcFiles>
-                    <srcFile>src/main/resources/ned-schema.h2.sql</srcFile>
-                    <srcFile>src/main/resources/ned-data.h2.sql</srcFile>
-                    <srcFile>src/main/resources/ringgold-schema.h2.sql</srcFile>
-                    <srcFile>src/main/resources/ringgold-data.h2.sql</srcFile>
-                  </srcFiles>
-                </configuration>
-              </execution>
-            </executions>
-            <dependencies>
-              <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>${h2db.version}</version>
-              </dependency>
-            </dependencies>
           </plugin>
         </plugins>
       </build>
     </profile>
 
     <profile>
-      <id>fail</id>
-        <activation>
-          <activeByDefault>true</activeByDefault>
-        </activation>
-        <build>
-          <plugins>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-enforcer-plugin</artifactId>
-              <executions>
-                <execution>
-                  <id>enforce-profile-was-specified</id>
-                  <goals>
-                    <goal>enforce</goal>
-                  </goals>
-                  <configuration>
-                    <rules>
-                      <requireActiveProfile>
-<message>
-NED Maven Project Usage
-=======================
-  mvn clean
-
-  mvn -P h2 test
-  mvn -P h2 generate-sources jooq-codegen:generate test
-
-  mvn -P mysql generate-sources jooq-codegen:generate 
-  mvn -P mysql package
-  mvn -P mysql tomcat:run
-</message>
-                        <profiles>mysql,h2</profiles>
-                        <all>false</all>
-                      </requireActiveProfile>
-                      <!--<AlwaysFail/>-->
-                    </rules>
-                    <fail>true</fail>
-                  </configuration>
-                </execution>
-              </executions>
-            </plugin>
-          </plugins>
-        </build>
+      <id>deploy</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-maven-plugin</artifactId>
+            <version>3.2.1</version>
+            <executions>
+              <execution>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>migrate</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <url>${db.url}</url>
+              <user>${db.username}</user>
+              <password>${db.password}</password>
+              <locations>
+                  <location>filesystem:database/migrations</location>
+              </locations>
+              <schemas>
+                <schema>namedEntities</schema>
+              </schemas>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
 

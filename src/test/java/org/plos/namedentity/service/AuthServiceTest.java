@@ -48,7 +48,7 @@ public class AuthServiceTest {
 
   @Test
   public void testValidCredentials() {
-    String[] inputForms = { "tahi:tahi", "akita:akita", "etl:etl" };
+    String[] inputForms = { "test:test" };
     for (String plaintext : inputForms) {
       assertTrue(authService.authenticate("Basic "+encode(plaintext)));
     }

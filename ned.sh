@@ -2,12 +2,6 @@
 
 shopt -s nullglob
 
-function do_mvn {
-    echo "mvn -P ${MVN_PROFILE} ${MVN_TARGETS}"
-    # tip: add -X to debug 
-    mvn -P ${MVN_PROFILE} ${MVN_TARGETS}
-}
-
 function check_ringgold_env {
     if [[ -z ${RINGGOLD_DB_DIR} ]]; then
         echo -e "\nUndefined RINGGOLD_DB_DIR (ex: export RINGGOLD_DB_DIR=~/work)\n"
@@ -64,83 +58,102 @@ function deploy_jar {
     echo "Deployed ${ned_jar}"
 }
 
-MVN_DEFAULT_TARGET=${1:-clean}
+function process_db_args {
+    db_host=${1:-localhost}
+    db_port=${2:-3306}
+    db_username=${3:-ned}
+    db_password=${4}
+    db_url="jdbc:mysql://${db_host}:${db_port}/namedEntities?useUnicode=true&amp;characterEncoding=utf8"
+}
 
-MVN_PROFILE=mysql
-MVN_TARGETS=$@
+function clean_db {
+    process_db_args "$@"
 
-case "$1" in
-clean) ;; 
+    echo -e "\nAbout to destroy namedEntities schema on ${db_host}:${db_port} user:${db_username} password:'${db_password}'"
+    read -p "Are you sure? " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        mvn -Ddb.url="$db_url" -Ddb.username="$db_username" -Ddb.password="$db_password" \
+            properties:read-project-properties flyway:clean
+    fi
+}
 
-codegen-h2)
-    MVN_PROFILE=h2
-    MVN_TARGETS="generate-sources jooq-codegen:generate test-compile"
-    do_mvn
-    ;;
+function db_info {
+    process_db_args "$@"
+    mvn -P deploy -Ddb.url="$db_url" -Ddb.username="$db_username" -Ddb.password="$db_password" \
+        properties:read-project-properties flyway:info
+}
 
-codegen-mysql)
-    MVN_TARGETS="generate-sources jooq-codegen:generate"
-    do_mvn
-    ;;
+function migrate_db {
+    process_db_args "$@"
 
-test)
-    MVN_PROFILE=h2
-    MVN_TARGETS="clean test"
-    do_mvn
-    ;;
+    echo -e "\nAbout to apply migrations to namedEntities schema on ${db_host}:${db_port} user:${db_username} password:'${db_password}'"
+    read -p "Are you sure? " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        mvn -P deploy -Ddb.url="$db_url" -Ddb.username="$db_username" -Ddb.password="$db_password" \
+            -Dmaven.exec.skip=true compile flyway:migrate
+    fi
+    # here's how to migrate up to a specific target version. migrations with a
+    # higher version number will not be applied (ex: apply v1 and v2).
+    #mvn -P deploy -Ddb.url="$db_url" -Dflyway.target=2 compile flyway:migrate
+}
 
-package)
-    MVN_TARGETS="clean package"
-    do_mvn
-    ;;
-
-install)
-    MVN_TARGETS="clean install"
-    do_mvn
-    ;;
-
-deploy)
-    MVN_TARGETS="clean install"
-    do_mvn
-    deploy_jar "named-entity-pojos"
-    deploy_jar "named-entity-password"
-    ;;
-
-insertapp)
-
-    echo INSERT APP
-
-    if [[ -z $2 ]]; then
+function insert_app {
+    if [[ -z $1 ]]; then
         echo -e "Error: App name not specified"
         exit 1
     fi
 
-    if [[ -z $3 ]]; then
+    if [[ -z $2 ]]; then
         echo -e "Error: App password not specified"
         exit 1
     fi
 
-    if [[ ! -f "target/test-classes/org/plos/namedentity/spring/security/BCrypt.class" ]]; then
-        mvn -P h2 test-compile
+    app_username=$1
+    app_password=$2
+    db_host=${3:-localhost}
+    db_port=${4:-3306}
+    db_username=${5:-ned}
+    db_password=${6}
+
+    if [[ ! -f "target/classes/org/plos/namedentity/spring/security/BCrypt.class" ]]; then
+        echo "compiling classes"
+        mvn -q -Dmaven.exec.skip=true test-compile
     fi
 
-    HASHED=$(mvn -q -P h2 exec:java -Dexec.mainClass=org.plos.namedentity.spring.security.BCrypt -Dexec.args="$3")
+    HASHED=$(mvn -q exec:java -Dexec.mainClass=org.plos.namedentity.spring.security.BCrypt -Dexec.args="$app_password")
 
-    echo Inserting app: $2 with hashed password: $HASHED
+    echo "REPLACE INTO namedEntities.consumers (name, password) VALUES ('$app_username','$HASHED'); \\"
+    echo " | mysql -h $db_host -P $db_port --user=$db_username --password=$db_password"
 
-    echo "REPLACE INTO namedEntities.consumers (name, password) VALUES ('$2','$HASHED');" | mysql -u ned
+    echo "REPLACE INTO namedEntities.consumers (name, password) VALUES ('$app_username','$HASHED');" \
+        | mysql -h $db_host -P $db_port --user=$db_username --password=$db_password
+}
 
+function run_tomcat {
+    process_db_args "$@"
+    mvn -Dmaven.exec.skip=true -Dtomcat.db.url="$db_url" -Dtomcat.db.username="$db_username" -Dtomcat.db.password="$db_password" \
+        clean tomcat:run
+}
+
+case "$1" in
+codegen)
+    mvn -P deploy clean generate-sources jooq-codegen:generate
     ;;
 
-
-tomcat)
-    MVN_TARGETS="clean tomcat:run"
-    do_mvn
+db-clean)
+    shift && clean_db "$@"
     ;;
 
-dbreset)
-    mysql -u ned < src/main/resources/ned-schema.mysql.sql
-    mysql -u ned < src/main/resources/ned-data.mysql.sql
+db-info)
+    shift && db_info "$@"
+    ;;
+
+db-migrate)
+    shift && migrate_db "$@"
     ;;
 
 db-ringgold)
@@ -148,57 +161,65 @@ db-ringgold)
     import_ringgold
     ;;
 
-container-start)
-    cd docker/builder
-    ./ned-build.sh
-    cd ..
-    docker-compose build && docker-compose up -d
-
-    echo MySQL DB = `docker inspect --format '{{ .NetworkSettings.IPAddress }}' docker_neddb_1`:3306
-
-    echo "Bringing up NED service..."
-
-    SERVICE_IP=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' docker_nedapi_1`
-
-    CURL_CMD="curl http://${SERVICE_IP}:8080/service/config"
-
-    $CURL_CMD
-    CURL_RETURN_CODE=$?
-        if [ $CURL_RETURN_CODE -eq 6 ] ; then
-            echo -e "\nERROR: unable to resolve NED Service host. Exiting."
-            echo -e "Possible Reason: NED Service war on host hasn't been built.\n"
-            exit 1
-        fi
-
-    while [ $CURL_RETURN_CODE -ne 0 ] ; do
-      echo "Service not ready. Waiting..."
-      sleep 3
-      $CURL_CMD
-      CURL_RETURN_CODE=$?
-    done;
-
-    echo NED Service = http://${SERVICE_IP}:8080
-
-    echo Launching web browser  # Linux desktop only
-    xdg-open "http://${SERVICE_IP}:8080"
-    ;;
-    
-container-stop)
-    cd docker
-    docker-compose stop && docker-compose rm --force
+insertapp)
+    shift && insert_app "$@"
     ;;
 
-container-test)
-    cd docker/apitester
-    time ./ned-test.sh
+test)
+    mvn clean test
+    ;;
 
-    cd ../etltester
-    time ./ned-test.sh
+package)
+    mvn clean package
+    ;;
+
+install)
+    mvn clean install
+    ;;
+
+deploy)
+    mvn clean install
+    deploy_jar "named-entity-pojos"
+    deploy_jar "named-entity-password"
+    ;;
+
+tomcat)
+    shift && run_tomcat "$@"
     ;;
 
 *)
-    echo -e "\nUsage: `basename $0` (codegen-h2|codegen-mysql|dbreset|db-ringgold|insertapp|install|deploy|package|test|tomcat|container-start|container-stop|container-test)"
-    echo -e "\n  tomcat url -> http://localhost:8080\n"
+    echo -e "\nUsage: `basename $0` (codegen|db-clean|db-info|db-migrate|db-ringgold|insertapp|test|package|install|deploy|tomcat)\n"
+    echo "  codegen  # runs jooq code generator against docker instance with latest migrations"
+    echo ""
+    echo "  db-clean [<host> <port> <username> <password>]"
+    echo "  db-clean                           # cleans ned schema (localhost:3306:ned:<empty>)"
+    echo ""
+    echo "  db-info  [<host> <port> <username> <password>]"
+    echo "  db-info                            # shows applied migrations (localhost:3306:ned:<empty>)"
+    echo "  db-info devbox02                   # shows applied migrations (devbox02:3306:ned:<empty>)"
+    echo ""
+    echo "  db-migrate [<host> <port> <username> <password>]"
+    echo "  db-migrate                         # applies migrations (localhost:3306:ned:<empty>)"
+    echo "  db-migrate devbox01 3304           # applies migrations (devbox01:3304:ned:<empty>)"
+    echo "  db-migrate localhost 3306 ned ned  # applies migrations (localhost:3306:ned:ned)"
+    echo ""
+    echo "  db-ringgold                        # extracts and import ringgold archive"
+    echo ""
+    echo "  insertapp <app_username> <app_password> [<host> <port> <db_username> <db_password>]"
+    echo "  insertapp etl etl                  # inserts etl app user into db (localhost:3306:ned:<empty>)"
+    echo "  insertapp etl etl devbox02         # inserts etl app user into db (devbox02:3306:ned:<empty>)"
+    echo ""
+    echo "  tomcat [<db_host> <db_port> <db_username> <db_password>]"
+    echo "  tomcat                       # starts embedded tomcat - http://localhost:8080, mysql(localhost:3306:ned:<empty>)"
+    echo "  tomcat devbox01 3306 ned ned # starts embedded tomcat - http://localhost:8080, mysql(devbox01:3306:ned:ned)"
+    echo ""
+    echo "  test     # runs unit tests"
+    echo "  package  # generates war and pojo's"
+    echo "  install  # copies war/pojo's to internal maven repo"
+    echo ""
+    echo "  deploy   # deploys pojo's to external ambra maven repo"
+    echo "           # (http://maven.ambraproject.org/maven2/release/org/plos/)"
+    echo ""
     exit 0
     ;;
 esac

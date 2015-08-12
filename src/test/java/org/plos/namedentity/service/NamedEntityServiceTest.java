@@ -312,21 +312,21 @@ public class NamedEntityServiceTest {
 
     Phonenumber officePhone = new Phonenumber();
     officePhone.setType("Office");
-    officePhone.setCountrycodetype("01");
+    officePhone.setCountrycodetype("1");
     officePhone.setPhonenumber("123-456-7890");
     officePhone.setSource("Editorial Manager");
     phonenumbers.add(_(officePhone));
 
     Phonenumber mobilePhone = new Phonenumber();
     mobilePhone.setType("Mobile");
-    mobilePhone.setCountrycodetype("01");
+    mobilePhone.setCountrycodetype("1");
     mobilePhone.setPhonenumber("123-444-0011");
     mobilePhone.setSource("Editorial Manager");
     phonenumbers.add(_(mobilePhone));
 
     Phonenumber homePhone = new Phonenumber();
     homePhone.setType("Home");
-    homePhone.setCountrycodetype("01");
+    homePhone.setCountrycodetype("1");
     homePhone.setPhonenumber("123-555-6666");
     homePhone.setSource("Editorial Manager");
     phonenumbers.add(_(homePhone));
@@ -1082,8 +1082,8 @@ public class NamedEntityServiceTest {
     composite.setLegalname("legal name"+UUID.randomUUID().toString());
     composite.setFamiliarname("familiar name");
     composite.setSource("Ambra");
-    composite.setCreatedby("tahi");
-    composite.setLastmodifiedby("tahi");
+    composite.setCreatedby("test");
+    composite.setLastmodifiedby("test");
 
     return composite;
   }
@@ -1104,8 +1104,8 @@ public class NamedEntityServiceTest {
   }
   private <S extends Entity>
   S _(S entity, boolean create) {
-    entity.setCreatedbyname( create?"akita":null );
-    entity.setLastmodifiedbyname("akita");
+    entity.setCreatedbyname( create?"test":null );
+    entity.setLastmodifiedbyname("test");
     return entity;
   }
 }

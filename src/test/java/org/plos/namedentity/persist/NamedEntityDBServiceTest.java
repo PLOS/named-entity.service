@@ -31,7 +31,7 @@ import org.plos.namedentity.persist.db.namedentities.tables.Globaltypes;
 import org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.test.context.ContextConfiguration;
@@ -39,6 +39,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
@@ -133,7 +134,7 @@ public class NamedEntityDBServiceTest {
     try {
       Integer pkid = nedDBSvc.create( workEmail );
       fail("entity created " + pkid);
-    } catch (DataIntegrityViolationException expected) {
+    } catch (NonTransientDataAccessException expected) {
       // this should happen because emailAddress is required
     }
   }
@@ -292,7 +293,7 @@ public class NamedEntityDBServiceTest {
       nedDBSvc.create( workEmail );
       fail("duplicate email saved: " + workEmail);
     }
-    catch (DataIntegrityViolationException expected) {
+    catch (NonTransientDataAccessException expected) {
       // expected
     }
 
@@ -304,11 +305,14 @@ public class NamedEntityDBServiceTest {
       assertFalse( nedDBSvc.update(savedWorkEmail) );
       fail("entity updated: " + savedWorkEmail);
     }
-    catch (DataIntegrityViolationException expected) {
+    catch (NonTransientDataAccessException expected) {
       // this is expected because source type id is required (ie, not null)
       // restore source type before continuing.
       savedWorkEmail.setSourcetypeid(savedSourceTypeId);
     }
+
+    // sleep for a second
+    try { Thread.sleep(1000); } catch(InterruptedException ex) { }
 
     // UPDATE #2 : Work Email and Status
 
@@ -520,7 +524,7 @@ public class NamedEntityDBServiceTest {
     Integer officePhoneTypeId = nedDBSvc.findTypeValue(phoneTypeClassId, "Office") ; assertNotNull(officePhoneTypeId);
     Integer mobilePhoneTypeId = nedDBSvc.findTypeValue(phoneTypeClassId, "Mobile") ; assertNotNull(mobilePhoneTypeId);
 
-    Integer usaCountryCodeTypeId = nedDBSvc.findTypeValue(countryCodeTypeClassId, "01");
+    Integer usaCountryCodeTypeId = nedDBSvc.findTypeValue(countryCodeTypeClassId, "1");
     assertNotNull(usaCountryCodeTypeId); 
 
     Phonenumber mobilePhone = _(new Phonenumber());
@@ -890,10 +894,9 @@ public class NamedEntityDBServiceTest {
 
       nedDBSvc.create( url );
     }
-    catch (DataIntegrityViolationException expected) {
-      // h2 error code: NULL_NOT_ALLOWED (23502)
-      org.h2.jdbc.JdbcSQLException h2SqlException = (org.h2.jdbc.JdbcSQLException) expected.getRootCause();
-      assertEquals("23502", h2SqlException.getSQLState());
+    catch (NonTransientDataAccessException expected) {
+      // MySQL ErrorCode: 1364, SQLState:HY000 (ER_NO_DEFAULT_FOR_FIELD)
+      assertEquals(1364, ((SQLException)expected.getCause()).getErrorCode());
     }
 
     // CREATE : Valid URL
@@ -943,7 +946,7 @@ public class NamedEntityDBServiceTest {
     List<Consumer> allConsumersInDb = nedDBSvc.findAll(Consumer.class, 0, Integer.MAX_VALUE);
     assertTrue( allConsumersInDb.size() > 0 );
 
-    String[] registeredApps = { "tahi", "akita", "etl" };
+    String[] registeredApps = { "test" };
 
     for (String app : registeredApps) {
       Consumer filter = new Consumer();

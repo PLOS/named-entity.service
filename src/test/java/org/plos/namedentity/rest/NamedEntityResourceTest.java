@@ -1656,7 +1656,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   }
 
   private Invocation.Builder buildRequestDefaultAuth(String uri) {
-    return buildRequest(uri, "akita", "akita");
+    return buildRequest(uri, "test", "test");
   }
   private Invocation.Builder buildRequest(String uri, String username, String password) {
     Invocation.Builder builder = target(uri).request(MediaType.APPLICATION_JSON_TYPE);

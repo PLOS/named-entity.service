@@ -23,7 +23,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.spring.exception.NedExceptionTranslator;
 import org.springframework.core.Ordered;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.NonTransientDataAccessException;
 
 public class NamedEntityValidator implements Ordered {
 
@@ -65,7 +65,7 @@ public class NamedEntityValidator implements Ordered {
 
     try {
       returnValue = call.proceed();
-    } catch (DataIntegrityViolationException e) {
+    } catch (NonTransientDataAccessException e) {
       throw NedExceptionTranslator.translate(e);
     }
 

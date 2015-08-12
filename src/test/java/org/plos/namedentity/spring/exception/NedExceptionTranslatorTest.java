@@ -33,13 +33,7 @@ public class NedExceptionTranslatorTest {
   public void testTranslateForDupeEmails() {
     String[] dupeMessages = new String[]{
       "Duplicate entry 'xxx@utsa.edu-7' for key 'emailAddress'",
-
       "jOOQ; SQL [insert into ...]; Duplicate entry 'xxx@utsa.edu-7' for key 'emailAddress';",
-
-      "Unique index or primary key violation: \"CONSTRAINT_INDEX_7A1A ON NAMEDENTITIES.EMAILS(EMAILADDRESS, SOURCETYPEID) VALUES ...\"",
-
-      "jOOQ; SQL [insert into ...]; Unique index or primary key violation: \"CONSTRAINT_INDEX_7A1A " +
-      "ON NAMEDENTITIES.EMAILS(EMAILADDRESS, SOURCETYPEID) VALUES ('yyy@foo.com', 6, 3)\";",
     };
 
     for (String msg : dupeMessages) {
@@ -58,8 +52,6 @@ public class NedExceptionTranslatorTest {
 
     String[] dupeMessages = new String[]{
         "jOOQ; SQL [insert into ...]; Duplicate entry 'xxx' for key 'displayName';",
-        "jOOQ; SQL [insert into ...]; Unique index or primary key violation: \"CONSTRAINT_INDEX_... " +
-            "ON NAMEDENTITIES.INDIVIDUALPROFILES(DISPLAYNAME, SOURCETYPEID) VALUES ('xxx', 6)\";",
     };
 
     for (String msg : dupeMessages) {
@@ -79,8 +71,6 @@ public class NedExceptionTranslatorTest {
 
     String[] dupeMessages = new String[]{
         "jOOQ; SQL [insert into ...]; Duplicate entry 'xxx' for key 'legalName';",
-        "jOOQ; SQL [insert into ...]; Unique index or primary key violation: \"CONSTRAINT_INDEX_... " +
-            "ON NAMEDENTITIES.ORGANIZATIONS(LEGALNAME, SOURCETYPEID) VALUES ('xxx', 6)\";",
     };
 
     for (String msg : dupeMessages) {
@@ -99,8 +89,6 @@ public class NedExceptionTranslatorTest {
 
     String[] dupeMessages = new String[]{
         "jOOQ; SQL [insert into ...]; Duplicate entry 'xxx' for key 'uniqueIdentifier';",
-        "jOOQ; SQL [insert into ...]; Unique index or primary key violation: \"CONSTRAINT_INDEX_... " +
-            "ON NAMEDENTITIES.UNIQUEIDENTIFIERS(UNIQUEIDENTIFIER, SOURCETYPEID, TYPEID) VALUES ('xxx', 6, 8)\";",
     };
 
     for (String msg : dupeMessages) {
