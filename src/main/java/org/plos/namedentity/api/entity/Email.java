@@ -18,15 +18,15 @@ package org.plos.namedentity.api.entity;
 
 import static org.plos.namedentity.api.NedException.ErrorType.*;
 
-import org.apache.commons.validator.routines.EmailValidator;
 import org.plos.namedentity.api.NedException;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.regex.Pattern;
 
 @XmlRootElement
 public class Email extends Entity {
 
-  private static EmailValidator emailValidator = EmailValidator.getInstance();
+  private static final Pattern emailRegexp = Pattern.compile("^.{1,64}@.{1,63}(\\..{1,63})+$");
 
   private String  type;
   private Integer typeid;
@@ -38,7 +38,7 @@ public class Email extends Entity {
   @Override
   public void validate() {
 
-    if (emailaddress == null || !emailValidator.isValid(emailaddress))
+    if (emailaddress == null || !validateEmail(emailaddress))
       throw new NedException(InvalidEmail, "Email not valid");
   }
 
@@ -82,4 +82,7 @@ public class Email extends Entity {
       this.type = type;
   }
 
+  public static boolean validateEmail(String email) {
+    return ( emailRegexp.matcher(email).matches() );
+  }
 }
