@@ -48,7 +48,8 @@ function deploy_jar {
 
     # get groupId and version from pom. 
     # repositoryId = server id in your mvn settings.xml
-    mvn -P ${MVN_PROFILE} deploy:deploy-file -DpomFile=./pom.xml \
+    mvn deploy:deploy-file \
+        -DpomFile=./pom.xml \
         -DartifactId=$1 \
         -Dpackaging=jar \
         -Dfile=${ned_jar} \
