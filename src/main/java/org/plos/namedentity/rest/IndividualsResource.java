@@ -12,6 +12,7 @@ import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Relationship;
 import org.plos.namedentity.api.entity.Role;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.service.PasswordDigestService;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -27,13 +28,16 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
 import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidIndividualSearchQuery;
+import static org.plos.namedentity.api.NedException.ErrorType.PasswordNotSpecified;
 import static org.plos.namedentity.api.NedException.ErrorType.TooManyResultsFound;
 
 @Path("/individuals")
@@ -363,5 +367,36 @@ public class IndividualsResource extends NedResource {
                                    @HeaderParam("Authorization") String authstring,
                                    Auth authEntity) {
     return updateEntity(nedId, authId, authEntity, authstring);
+  }
+
+  @POST
+  @Path("/{nedId}/auth/checkpassword")
+  @ApiOperation(value = "Check existing password", response = String.class)
+  public Response checkPassword(@PathParam("nedId") int nedId,
+                                Auth authEntity) {
+    try {
+      if (isEmptyOrBlank(authEntity.getPlainTextPassword()))
+        throw new NedException(PasswordNotSpecified);
+
+      List<Auth> results = namedEntityService.findResolvedEntities(nedId, Auth.class);
+
+      if (results.size() == 0)
+        throw new NedException(EntityNotFound, "AuthCas record not found with ned id: " + nedId);
+
+      Auth auth = (Auth) results.get(0);
+      boolean verifyResult = new PasswordDigestService()
+        .verifyPassword(authEntity.getPlainTextPassword(), auth.getPassword());
+
+      Map<String,String> map = new HashMap();
+      map.put("valid", new Boolean(verifyResult).toString());
+
+      //return Response.status(Response.Status.OK).entity(
+        //new GenericEntity<Map<String,String>>(map){}).build();
+
+    } catch (NedException e) {
+      return nedError(e, "Check password failed");
+    } catch (Exception e) {
+      return serverError(e, "Check password failed");
+    }
   }
 }

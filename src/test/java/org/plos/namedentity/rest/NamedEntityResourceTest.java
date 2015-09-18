@@ -61,6 +61,7 @@ import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchCrite
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidTypeValue;
 import static org.plos.namedentity.api.NedException.ErrorType.PasswordError;
 import static org.plos.namedentity.api.NedException.ErrorType.PasswordFormatError;
+import static org.plos.namedentity.api.NedException.ErrorType.PasswordNotSpecified;
 
 public class NamedEntityResourceTest extends BaseResourceTest {
 
@@ -1636,6 +1637,64 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals(128, auth.getPassword().length());
 
     // DELETE:TODO
+  }
+
+  @Test
+  public void testAuthCheckPassword() throws IOException, JAXBException {
+
+    String authsURI = String.format("%s/%d/auth", INDIVIDUAL_URI, nedIndividualId);
+
+    // don't specify a password in payload. expect a 400.
+    Auth auth = new Auth();
+
+    Response response = buildRequestDefaultAuth( authsURI+"/checkpassword" )
+                         .post(Entity.json(writeValueAsString(auth)));
+
+    assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+
+    String responseJson = response.readEntity(String.class);
+
+    NedErrorResponse ner = unmarshalEntity(responseJson, NedErrorResponse.class,
+                                           jsonUnmarshaller(NedErrorResponse.class));
+
+    assertEquals(PasswordNotSpecified.getErrorCode(), ner.errorCode);
+
+    // try again with a ned id which isn't associated with an auth record.
+    auth = new Auth();
+    auth.setPlainTextPassword("secret_password1");
+
+    response = buildRequestDefaultAuth(String.format("%s/%d/auth/checkpassword", INDIVIDUAL_URI, -1))
+                .post(Entity.json(writeValueAsString(auth)));
+
+    assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+
+    responseJson = response.readEntity(String.class);
+
+    ner = unmarshalEntity(responseJson, NedErrorResponse.class, jsonUnmarshaller(NedErrorResponse.class));
+
+    assertEquals(EntityNotFound.getErrorCode(), ner.errorCode);
+
+    // try again with wrong password
+    auth = new Auth();
+    auth.setPlainTextPassword("bogus");
+
+    response = buildRequestDefaultAuth( authsURI+"/checkpassword" )
+                .post(Entity.json(writeValueAsString(auth)));
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    assertTrue(response.readEntity(String.class).contains("false"));
+
+    // try again with correct password!
+    auth = new Auth();
+    auth.setPlainTextPassword("secret_password1");
+
+    response = buildRequestDefaultAuth( authsURI+"/checkpassword" )
+                .post(Entity.json(writeValueAsString(auth)));
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    assertTrue(response.readEntity(String.class).contains("true"));
   }
 
   private void assertAuth(Auth auth) {
