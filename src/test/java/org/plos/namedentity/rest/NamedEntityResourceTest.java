@@ -22,6 +22,7 @@ import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedErrorResponse;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.OrganizationComposite;
+import org.plos.namedentity.api.adapter.Container;
 import org.plos.namedentity.api.adapter.DateAdapter;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.api.enums.UidTypeEnum;
@@ -1683,7 +1684,12 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
-    assertTrue(response.readEntity(String.class).contains("false"));
+    responseJson = response.readEntity(String.class);
+
+    Unmarshaller unmarshaller = jsonUnmarshaller(Container.class);
+    Container c1 = unmarshalEntity(responseJson, Container.class, unmarshaller);
+
+    assertEquals("false", c1.getMap().get("valid"));
 
     // try again with correct password!
     auth = new Auth();
@@ -1694,7 +1700,13 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
-    assertTrue(response.readEntity(String.class).contains("true"));
+    // assert on json (weaker)
+    responseJson = response.readEntity(String.class);
+    assertTrue(responseJson.contains("true"));
+
+    // unmarshal to pojo and assert (stronger)
+    Container c2 = unmarshalEntity(responseJson, Container.class, unmarshaller);
+    assertEquals("true", c2.getMap().get("valid"));
   }
 
   private void assertAuth(Auth auth) {

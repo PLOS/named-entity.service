@@ -5,6 +5,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
+import org.plos.namedentity.api.adapter.Container;
 import org.plos.namedentity.api.entity.Auth;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Entity;
@@ -371,7 +372,7 @@ public class IndividualsResource extends NedResource {
 
   @POST
   @Path("/{nedId}/auth/checkpassword")
-  @ApiOperation(value = "Check existing password", response = String.class)
+  @ApiOperation(value = "Validate password")
   public Response checkPassword(@PathParam("nedId") int nedId,
                                 Auth authEntity) {
     try {
@@ -390,8 +391,10 @@ public class IndividualsResource extends NedResource {
       Map<String,String> map = new HashMap();
       map.put("valid", new Boolean(verifyResult).toString());
 
-      //return Response.status(Response.Status.OK).entity(
-        //new GenericEntity<Map<String,String>>(map){}).build();
+      Container c = new Container();
+      c.setMap(map);
+
+      return Response.status(Response.Status.OK).entity(c).build();
 
     } catch (NedException e) {
       return nedError(e, "Check password failed");
