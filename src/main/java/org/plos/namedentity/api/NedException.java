@@ -70,8 +70,8 @@ public class NedException extends RuntimeException {
     TooManyResultsFound(1820, "Too Many Results Found"),
     InvalidInstitutionQuery(1830, "Institution query requires a substring parameter"),
     InvalidOrganizationSearchQuery(1850, "Search query requires an attribute, and a value"),
-
     InstitutionNotFound(1860, "Institution not found with that ID"),
+    PasswordNotSpecified(1870, "Password not specified"),
 
     InvalidErrorType(-1, "");
 
