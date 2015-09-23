@@ -24,6 +24,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <tomcat.jdbc.version>7.0.54</tomcat.jdbc.version>
     <maven.exec.skip>false</maven.exec.skip>
+    <docker.db.host>localhost</docker.db.host>
   </properties>
 
   <dependencies>
@@ -266,24 +267,7 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>properties-maven-plugin</artifactId>
-        <version>1.0-alpha-2</version>
-        <configuration>
-          <files>
-            <file>src/main/resources/config.properties</file>
-          </files>
-        </configuration>
-        <executions>
-          <execution>
-            <phase>initialize</phase>
-            <goals>
-              <goal>read-project-properties</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+
       <plugin>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-codegen-maven</artifactId>
@@ -432,7 +416,6 @@
         <version>2.16</version>
       </plugin>
 
-      <!-- Docker Maven Plugin-->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
@@ -467,10 +450,31 @@
             <phase>initialize</phase>
             <goals>
               <goal>shutdown-hook</goal>
+              <goal>docker-properties</goal>
             </goals>
             <configuration>
               <skip>${maven.exec.skip}</skip>
             </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>properties-maven-plugin</artifactId>
+        <version>1.0-alpha-2</version>
+        <configuration>
+          <files>
+            <file>src/main/resources/config.properties</file>
+          </files>
+        </configuration>
+        <executions>
+          <execution>
+            <id>read-properties</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>read-project-properties</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>
