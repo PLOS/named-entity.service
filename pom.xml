@@ -24,7 +24,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <tomcat.jdbc.version>7.0.54</tomcat.jdbc.version>
     <maven.exec.skip>false</maven.exec.skip>
-    <docker.db.host>localhost</docker.db.host>
   </properties>
 
   <dependencies>
@@ -450,6 +449,7 @@
             <phase>initialize</phase>
             <goals>
               <goal>shutdown-hook</goal>
+              <!-- resolve docker db host @ runtime -->
               <goal>docker-properties</goal>
             </goals>
             <configuration>

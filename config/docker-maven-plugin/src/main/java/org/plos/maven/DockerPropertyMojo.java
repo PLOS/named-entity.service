@@ -27,24 +27,25 @@ public class DockerPropertyMojo extends AbstractMojo
       return;
     }
 
-    getLog().info( "Adding Docker System Properties" );
+    getLog().info("Resolving Docker Host");
     try {
-      if (Files.exists(Paths.get("/usr/bin/docker"), LinkOption.NOFOLLOW_LINKS)) {
-        String dockerIpCmd="docker inspect --format '{{ .NetworkSettings.IPAddress }}' neddb";
-        getLog().info(dockerIpCmd);
-        Process p = Runtime.getRuntime().exec(dockerIpCmd);
-        int pExitValue = p.waitFor();
-        if (pExitValue == 0) {
-          BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-          String dockerIp = in.readLine();
-          if ( !isEmptyOrBlank(dockerIp) ) {
-            getLog().info(DOCKER_DB_HOST+"="+dockerIp);
-            System.setProperty(DOCKER_DB_HOST, dockerIp);
-          }
-        }
+      Process process = null;
+      if (Files.exists(Paths.get("/usr/local/bin/docker-machine"), LinkOption.NOFOLLOW_LINKS)) {
+        process = new ProcessBuilder("docker-machine", "ip", "neddb").start();
+      }
+      else if (Files.exists(Paths.get("/usr/bin/docker"), LinkOption.NOFOLLOW_LINKS)) {
+        process = new ProcessBuilder("docker", "inspect", "--format", "'{{ .NetworkSettings.IPAddress }}'", "neddb").start();
+      }
+      BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+      String dockerIp = in.readLine();
+      int pExitValue = process.waitFor();
+      if (pExitValue == 0 && !isEmptyOrBlank(dockerIp)) {
+        dockerIp = dockerIp.replace("'","");
+        getLog().info(DOCKER_DB_HOST+"="+dockerIp);
+        System.setProperty(DOCKER_DB_HOST, dockerIp);
       }
     } catch (Exception e) {
-      getLog().error("Problem adding Docker system property.", e);
+      getLog().error("Problem resolving docker host.", e);
     }
   }
 
