@@ -11,12 +11,13 @@ function build () {
       docker pull percona:5.6
   fi
 
-  docker run -d --name neddb -p 3304:$DB_PORT -e MYSQL_ROOT_PASSWORD=root percona:5.6 2> /dev/null
-
-  if [ -x /usr/local/bin/boot2docker ]
+  if [ -x /usr/local/bin/docker-machine ]
   then
-    DB_HOST=`boot2docker ip`
+    # port mapping -> docker-machine:docker-container
+    docker run -d --name neddb -p $DB_PORT:$DB_PORT -e MYSQL_ROOT_PASSWORD=root percona:5.6 2> /dev/null
+    DB_HOST=`docker-machine ip neddb`
   else
+    docker run -d --name neddb -e MYSQL_ROOT_PASSWORD=root percona:5.6 2> /dev/null
     DB_HOST=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' neddb`
   fi
 
