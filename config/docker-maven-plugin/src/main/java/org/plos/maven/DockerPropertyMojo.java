@@ -15,7 +15,9 @@ import org.apache.maven.plugins.annotations.Parameter;
 @Mojo(name = "docker-properties" )
 public class DockerPropertyMojo extends AbstractMojo
 {
-  private static final String DOCKER_DB_HOST = "docker.db.host";
+  private static final String DOCKER_IP_HOST = "docker.ip.host";
+  private static final String DOCKER_INSTANCE_NAME = "neddb";
+
 
   @Parameter( property = "docker-properties.skip", defaultValue = "false", alias = "docker-properties.skip" )
   private boolean skip;
@@ -31,18 +33,19 @@ public class DockerPropertyMojo extends AbstractMojo
     try {
       Process process = null;
       if (Files.exists(Paths.get("/usr/local/bin/docker-machine"), LinkOption.NOFOLLOW_LINKS)) {
-        process = new ProcessBuilder("docker-machine", "ip", "neddb").start();
+        process = new ProcessBuilder("docker-machine", "ip", DOCKER_INSTANCE_NAME).start();
       }
       else if (Files.exists(Paths.get("/usr/bin/docker"), LinkOption.NOFOLLOW_LINKS)) {
-        process = new ProcessBuilder("docker", "inspect", "--format", "'{{ .NetworkSettings.IPAddress }}'", "neddb").start();
+        process = new ProcessBuilder("docker", "inspect", "--format",
+                                     "'{{ .NetworkSettings.IPAddress }}'", DOCKER_INSTANCE_NAME).start();
       }
       BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
       String dockerIp = in.readLine();
       int pExitValue = process.waitFor();
       if (pExitValue == 0 && !isEmptyOrBlank(dockerIp)) {
         dockerIp = dockerIp.replace("'","");
-        getLog().info(DOCKER_DB_HOST+"="+dockerIp);
-        System.setProperty(DOCKER_DB_HOST, dockerIp);
+        getLog().info(DOCKER_IP_HOST+"="+dockerIp);
+        System.setProperty(DOCKER_IP_HOST, dockerIp);
       }
     } catch (Exception e) {
       getLog().error("Problem resolving docker host.", e);

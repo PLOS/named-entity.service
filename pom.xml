@@ -449,7 +449,7 @@
             <phase>initialize</phase>
             <goals>
               <goal>shutdown-hook</goal>
-              <!-- resolve docker db host @ runtime -->
+              <!-- resolve ip of docker host @ runtime -->
               <goal>docker-properties</goal>
             </goals>
             <configuration>
