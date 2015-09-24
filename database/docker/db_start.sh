@@ -1,6 +1,26 @@
 #!/usr/bin/env bash
 
 DB_PORT=3306
+DOCKER_PORT_MAP_ARG="-p $DB_PORT:$DB_PORT"
+
+
+function get_docker_host {
+  HOST="localhost"
+
+  if boot2docker ip >/dev/null 2>&1 ; then
+    HOST=$(boot2docker ip)
+  elif docker-machine ip >/dev/null 2>&1 ; then
+    HOST=$(docker-machine ip)
+  fi
+
+  echo $HOST
+}
+
+function run_docker {
+    port_map=${1}
+    # port mapping -> docker-machine:docker-container
+    docker run -d --name neddb $port_map -e MYSQL_ROOT_PASSWORD=root percona:5.6 2> /dev/null
+}
 
 function build () {
 
@@ -11,14 +31,15 @@ function build () {
       docker pull percona:5.6
   fi
 
-  if [ -x /usr/local/bin/docker-machine ]
-  then
-    # port mapping -> docker-machine:docker-container
-    docker run -d --name neddb -p $DB_PORT:$DB_PORT -e MYSQL_ROOT_PASSWORD=root percona:5.6 2> /dev/null
-    DB_HOST=`docker-machine ip neddb`
+  if boot2docker ip >/dev/null 2>&1 ; then
+    run_docker $DOCKER_PORT_MAP_ARG
+    DB_HOST=$(boot2docker ip)
+  elif docker-machine ip >/dev/null 2>&1 ; then
+    run_docker $DOCKER_PORT_MAP_ARG
+    DB_HOST=$(docker-machine ip)
   else
-    docker run -d --name neddb -e MYSQL_ROOT_PASSWORD=root percona:5.6 2> /dev/null
-    DB_HOST=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' neddb`
+    run_docker
+    DB_HOST=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' neddb)
   fi
 
   MYSQL_ROOT="mysql -h $DB_HOST -P $DB_PORT --user=root --password=root --default-character-set=utf8"
