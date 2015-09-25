@@ -5,3 +5,4 @@
 CLASSPATH=./target/classes:${CLASSPATH}
 
 java -cp "$CLASSPATH" org.plos.maven.DockerMojo
+java -cp "$CLASSPATH" org.plos.maven.DockerPropertyMojo
