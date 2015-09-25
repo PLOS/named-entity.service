@@ -30,7 +30,7 @@ import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Relationship;
-import org.plos.namedentity.api.entity.Role;
+import org.plos.namedentity.api.entity.Group;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.api.entity.Url;
 
@@ -348,10 +348,10 @@ public abstract class NedResource extends BaseResource {
                 namedEntityService.findResolvedEntities(nedId, Relationship.class)
             ){}).build();
       }
-      else if (cname.equals(Role.class.getCanonicalName())) {
+      else if (cname.equals(Group.class.getCanonicalName())) {
         return Response.status(Response.Status.OK).entity(
-            new GenericEntity<List<Role>>(
-                namedEntityService.findResolvedEntities(nedId, Role.class)
+            new GenericEntity<List<Group>>(
+                namedEntityService.findResolvedEntities(nedId, Group.class)
             ){}).build();
       }
       else if (cname.equals(Degree.class.getCanonicalName())) {

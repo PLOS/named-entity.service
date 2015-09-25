@@ -73,9 +73,9 @@ public class NamedEntityServiceTest {
 
   @Test
   public void testIndividualCompositeEquality() {
-    IndividualComposite composite1 = newCompositeIndividualWithRole();
+    IndividualComposite composite1 = newCompositeIndividualWithGroup();
 
-    IndividualComposite composite2 = newCompositeIndividualWithRole();
+    IndividualComposite composite2 = newCompositeIndividualWithGroup();
 
     // patch randomized attributes in objects so that they'll pass equality check
 
@@ -267,9 +267,9 @@ public class NamedEntityServiceTest {
   }
 
   @Test
-  public void testCreateIndividualCompositeWithRole() {
+  public void testCreateIndividualCompositeWithGroup() {
 
-    IndividualComposite composite = newCompositeIndividualWithRole();
+    IndividualComposite composite = newCompositeIndividualWithGroup();
 
     /* ------------------------------------------------------------------ */
     /*  EMAILS                                                            */
@@ -442,8 +442,8 @@ public class NamedEntityServiceTest {
     List<Phonenumber> phonenumberEntities = namedEntityService.findResolvedEntities(nedId, Phonenumber.class);
     assertEquals(3, phonenumberEntities.size());
 
-    List<Role> roleEntities = namedEntityService.findResolvedEntities(nedId, Role.class);
-    assertEquals(1, roleEntities.size());
+    List<Group> groupEntities = namedEntityService.findResolvedEntities(nedId, Group.class);
+    assertEquals(1, groupEntities.size());
 
     List<Uniqueidentifier> uidEntities = namedEntityService.findResolvedEntities(nedId, Uniqueidentifier.class);
     assertEquals(1, uidEntities.size());
@@ -470,7 +470,7 @@ public class NamedEntityServiceTest {
   @Test
   public void testCreateIndividualCompositeWithInvalidEmail() {
 
-    IndividualComposite composite = newCompositeIndividualWithRole();
+    IndividualComposite composite = newCompositeIndividualWithGroup();
 
     List<Email> emails = new ArrayList<>();
 
@@ -500,7 +500,7 @@ public class NamedEntityServiceTest {
   @Test
   public void testCreateIndividualCompositeValidator() {
 
-    IndividualComposite composite = newCompositeIndividualWithRole();
+    IndividualComposite composite = newCompositeIndividualWithGroup();
 
     try {
       namedEntityService.createComposite(composite, IndividualComposite.class);
@@ -527,7 +527,7 @@ public class NamedEntityServiceTest {
       Assert.isTrue(expected.getMessage().contains("Profile entities can not be empty"));
     }
 
-    composite = newCompositeIndividualWithRole();
+    composite = newCompositeIndividualWithGroup();
     composite.setEmails( emails );
 
     try {
@@ -537,7 +537,7 @@ public class NamedEntityServiceTest {
       Assert.isTrue(expected.getMessage().contains("User credentials can not be empty"));
     }
 
-    composite = newCompositeIndividualWithRole();
+    composite = newCompositeIndividualWithGroup();
     composite.setEmails( emails );
 
     List<Auth> auths = new ArrayList<>();
@@ -746,21 +746,21 @@ public class NamedEntityServiceTest {
   }
 
   @Test
-  public void testRoleEntityCrud() {
+  public void testGroupEntityCrud() {
 
-    // CREATE role entity. we don't expect the address type to persist.
+    // CREATE group entity. we don't expect the type names to persist.
 
-    Role roleEntity = new Role();
-    roleEntity.setNedid(1);
-    roleEntity.setApplicationtype("Editorial Manager");
-    roleEntity.setType("Academic Editor (PLOS ONE)");
-    roleEntity.setStartdate( dateNow() );
-    roleEntity.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
-    roleEntity.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
-    roleEntity.setSource("Editorial Manager");
+    Group groupEntity = new Group();
+    groupEntity.setNedid(1);
+    groupEntity.setApplicationtype("Knowledge Base");
+    groupEntity.setType("Knowledge Base - Pathogens");
+    groupEntity.setStartdate( dateNow() );
+    groupEntity.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    groupEntity.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    groupEntity.setSource("Ambra");
 
     try {
-      crudService.create(_(roleEntity));
+      crudService.create(_(groupEntity));
       fail();
     }
     catch (NedException expected) {
@@ -771,26 +771,26 @@ public class NamedEntityServiceTest {
     // try again but this time use type resolver. remember that type names are
     // resolved by joins when querying database -- need foreign key to get name.
     
-    Integer createRoleId = crudService.create( namedEntityService.resolveValuesToIds(_(roleEntity)) );
-    assertNotNull( createRoleId );
+    Integer createGroupId = crudService.create( namedEntityService.resolveValuesToIds(_(groupEntity)) );
+    assertNotNull( createGroupId );
 
-    Role savedEntity = namedEntityService.findResolvedEntityByKey(createRoleId, Role.class);
+    Group savedEntity = namedEntityService.findResolvedEntityByKey(createGroupId, Group.class);
     assertNotNull( savedEntity.getType() );
 
-    // UPDATE role entity. Scrub appropriate attributes from current instance
+    // UPDATE group entity. Scrub appropriate attributes from current instance
     // and reuse. 
 
-    roleEntity.setId(createRoleId); 
-    roleEntity.setApplicationtypeid(null);
-    roleEntity.setTypeid(null); 
-    assertTrue( crudService.update(namedEntityService.resolveValuesToIds(_(roleEntity,false))) );
+    groupEntity.setId(createGroupId); 
+    groupEntity.setApplicationtypeid(null);
+    groupEntity.setTypeid(null); 
+    assertTrue( crudService.update(namedEntityService.resolveValuesToIds(_(groupEntity,false))) );
 
-    Role savedEntity2 = namedEntityService.findResolvedEntityByKey(createRoleId, Role.class);
+    Group savedEntity2 = namedEntityService.findResolvedEntityByKey(createGroupId, Group.class);
     assertNotNull( savedEntity2.getType() );
 
     // DELETE.
 
-    assertTrue( crudService.delete(roleEntity) );
+    assertTrue( crudService.delete(groupEntity) );
   }
 
   @Test
@@ -855,7 +855,7 @@ public class NamedEntityServiceTest {
     assertFalse(crudService.delete(addressEntity));
   }
 
-  private IndividualComposite newCompositeIndividualWithRole() {
+  private IndividualComposite newCompositeIndividualWithGroup() {
 
     IndividualComposite composite = new IndividualComposite();
     Individualprofile individualProfile = new Individualprofile();
@@ -871,18 +871,18 @@ public class NamedEntityServiceTest {
 
     composite.setIndividualprofiles(individualProfiles);
 
-    List<Role> roles = new ArrayList<>();
-    Role author = new Role();
+    List<Group> groups = new ArrayList<>();
+    Group group = new Group();
 
-    author.setType("Author");
-    author.setStartdate(new java.sql.Date(1401408000));  // "2014-05-30"
+    group.setType("Knowledge Base - Medicine");
+    group.setStartdate(new java.sql.Date(1401408000));  // "2014-05-30"
 
-    author.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
-    author.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
-    author.setSource("Editorial Manager");
-    roles.add(_(author));
+    group.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    group.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    group.setSource("Ambra");
+    groups.add(_(group));
 
-    composite.setRoles(roles);
+    composite.setGroups(groups);
 
     Uniqueidentifier uid = new Uniqueidentifier();
     uid.setSource("Ambra");
