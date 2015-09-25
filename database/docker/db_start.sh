@@ -1,25 +1,11 @@
 #!/usr/bin/env bash
 
 DB_PORT=3306
-DOCKER_PORT_MAP_ARG="-p $DB_PORT:$DB_PORT"
-
-
-function get_docker_host {
-  HOST="localhost"
-
-  if boot2docker ip >/dev/null 2>&1 ; then
-    HOST=$(boot2docker ip)
-  elif docker-machine ip >/dev/null 2>&1 ; then
-    HOST=$(docker-machine ip)
-  fi
-
-  echo $HOST
-}
+# <docker-machine-port>:<docker-container-port>
+DOCKER_PORT_MAP="-p ${DB_PORT}:${DB_PORT}"
 
 function run_docker {
-    port_map=${1}
-    # port mapping -> docker-machine:docker-container
-    docker run -d --name neddb $port_map -e MYSQL_ROOT_PASSWORD=root percona:5.6 2> /dev/null
+  docker run -d --name neddb ${1} -e MYSQL_ROOT_PASSWORD=root percona:5.6 2> /dev/null
 }
 
 function build () {
@@ -32,10 +18,10 @@ function build () {
   fi
 
   if boot2docker ip >/dev/null 2>&1 ; then
-    run_docker $DOCKER_PORT_MAP_ARG
+    run_docker "$DOCKER_PORT_MAP"
     DB_HOST=$(boot2docker ip)
   elif docker-machine ip >/dev/null 2>&1 ; then
-    run_docker $DOCKER_PORT_MAP_ARG
+    run_docker "$DOCKER_PORT_MAP"
     DB_HOST=$(docker-machine ip)
   else
     run_docker
