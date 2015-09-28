@@ -2,6 +2,10 @@
 
 DB_PORT=3306
 
+function run_docker {
+  docker run -d --name neddb ${1} -e MYSQL_ROOT_PASSWORD=root percona:5.6 2> /dev/null
+}
+
 function build () {
 
   docker images | grep -qw 'percona'
@@ -11,13 +15,16 @@ function build () {
       docker pull percona:5.6
   fi
 
-  docker run -d --name neddb -p 3304:$DB_PORT -e MYSQL_ROOT_PASSWORD=root percona:5.6 2> /dev/null
-
-  if [ -x /usr/local/bin/boot2docker ]
-  then
-    DB_HOST=`boot2docker ip`
+  if boot2docker ip >/dev/null 2>&1 ; then
+    # <docker-vm-port>:<docker-container-port>
+    run_docker "-p ${DB_PORT}:${DB_PORT}"
+    DB_HOST=$(boot2docker ip)
+  elif docker-machine ip >/dev/null 2>&1 ; then
+    run_docker "-p ${DB_PORT}:${DB_PORT}"
+    DB_HOST=$(docker-machine ip)
   else
-    DB_HOST=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' neddb`
+    run_docker
+    DB_HOST=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' neddb)
   fi
 
   MYSQL_ROOT="mysql -h $DB_HOST -P $DB_PORT --user=root --password=root --default-character-set=utf8"
