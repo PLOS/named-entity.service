@@ -25,12 +25,12 @@ public enum TypeClassEnum {
   COUNTRY_CODE_FOR_PHONE("Country Codes for Phone Numbers"),
   DEGREES("Degrees"),
   EMAIL_TYPES("Email Address Types"),
+  GROUPS("Groups"),
   JOURNAL_TYPES("Journal Types"),
-  KNOWLEDGE_BASE_GROUPS("Knowledge Base Groups"),
   LANGUAGES("Languages"),
-  NAMED_ENTITY_PREFIX("Named Party Prefixes"),
+  NAMED_ENTITY_PREFIXES("Named Party Prefixes"),
+  NAMED_ENTITY_SUFFIXES("Named Party Suffixes"),
   NAMED_ENTITY_TYPES("Named Party Types"),
-  NED_ROLES("NED Roles"),
   ORGANIZATION_TYPES("Organization Types"),
   PHYSICAL_ADDRESS_TYPES("Physical Address Types"),
   RELATIONSHIP_TYPES("Relationship Types"),
@@ -40,6 +40,7 @@ public enum TypeClassEnum {
   TELEPHONE_TYPES("Telephone Number Types"),
   UID_INDIVIDUAL_TYPES("UID Individual Types"),
   UID_ORGANIZATION_TYPES("UID Organization Types"),
+  USER_APPLICATIONS("User Applications"),
   INVALID_TYPE_CLASS("");
 
   String name;

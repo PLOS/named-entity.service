@@ -747,23 +747,19 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     List<Group> groups = unmarshalEntities(responseJson, Group.class, unmarshaller);
     assertEquals(3, groups.size());
 
-    Group group0 = groups.get(0);
-    assertTrue(group0.getId() > 0);
-    assertEquals(nedIndividualId, group0.getNedid());
-    assertEquals("Knowledge Base - PLOSONE", group0.getType());
+    String assignedGroups[] = {
+      "Knowledge Base - PLOSONE",
+      "Knowledge Base - Computational Biology",
+      "Knowledge Base - Genetics"
+    };
 
-    Group group1 = groups.get(1);
-    assertTrue(group1.getId() > 0);
-    assertEquals(nedIndividualId, group1.getNedid());
-    assertEquals("Knowledge Base", group1.getApplicationtype());
-    assertEquals("Knowledge Base - Computational Biology", group1.getType());
-
-    Group group2 = groups.get(2);
-    assertTrue(group2.getId() > 0);
-    assertEquals(nedIndividualId, group2.getNedid());
-    assertEquals("Knowledge Base", group2.getApplicationtype());
-    assertEquals("Knowledge Base - Genetics", group2.getType());
-    assertEquals(START_DATE, group2.getStartdate());
+    for (int i = 0; i < groups.size(); i++) {
+      Group grp = groups.get(i);
+      assertTrue(grp.getId() > 0);
+      assertEquals(nedIndividualId, grp.getNedid());
+      assertEquals("Knowledge Base", grp.getApplicationtype());
+      assertEquals(assignedGroups[i], grp.getType());
+    }
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */

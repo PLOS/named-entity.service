@@ -25,7 +25,6 @@ import org.junit.runner.RunWith;
 import org.plos.namedentity.api.Consumer;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.*;
-import org.plos.namedentity.api.enums.TypeClassEnum;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.persist.db.namedentities.tables.Globaltypes;
 import org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions;
@@ -56,6 +55,7 @@ import static org.plos.namedentity.api.NedException.ErrorType.InvalidUrl;
 import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
 import static org.plos.namedentity.persist.db.namedentities.Tables.GLOBALTYPES;
 import static org.plos.namedentity.persist.db.namedentities.Tables.TYPEDESCRIPTIONS;
+import static org.plos.namedentity.api.enums.TypeClassEnum.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
@@ -667,12 +667,11 @@ public class NamedEntityDBServiceTest {
 
     // CREATE
 
-    Integer srcAppTypeClassId = nedDBSvc.findTypeClass("User Applications");
-    Integer groupTypeClassId  = nedDBSvc.findTypeClass("Groups");
-
+    Integer srcAppTypeClassId = nedDBSvc.findTypeClass(USER_APPLICATIONS.getName());
     Integer srcAppTypeId = nedDBSvc.findTypeValue(srcAppTypeClassId, "Knowledge Base");
     assertNotNull(srcAppTypeId);
 
+    Integer groupTypeClassId  = nedDBSvc.findTypeClass(GROUPS.getName());
     Integer groupTypeId = nedDBSvc.findTypeValue(groupTypeClassId, "Knowledge Base - PLOSONE");
     assertNotNull(groupTypeId);
 
@@ -686,7 +685,7 @@ public class NamedEntityDBServiceTest {
 
     kbPlosOneGrp.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
     kbPlosOneGrp.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
-    kbPlosOneGrp.setSourcetypeid( getSourceTypeId(UidTypeEnum.EDITORIAL_MANAGER.getName()) );
+    kbPlosOneGrp.setSourcetypeid( getSourceTypeId("Ambra") );
 
     assertNull(kbPlosOneGrp.getId());
     assertNotNull(kbPlosOneGrp.getNedid());
@@ -710,18 +709,18 @@ public class NamedEntityDBServiceTest {
     assertEquals(savedGroup.getStartdate(), savedGroup2.getStartdate());
     assertEquals(savedGroup.getEnddate(), savedGroup2.getEnddate());
 
-    // FIND ALL Groups
+    // FIND (all group assignments)
 
-    List<Group> allGroupsInDb = nedDBSvc.findAll(Group.class, 0, Integer.MAX_VALUE);
-    assertTrue( allGroupsInDb.size() > 0 );
+    List<Group> groupAssignments = nedDBSvc.findAll(Group.class, 0, Integer.MAX_VALUE);
+    assertTrue( groupAssignments.size() > 0 );
 
-    // FIND BY JOIN-QUERY 
+    // FIND BY JOIN-QUERY (all groups assigned to a person)
 
     List<Group> groups = nedDBSvc.findResolvedEntities(savedGroup.getNedid(), Group.class);
     Group group = groups.get(0);
     assertEquals("Knowledge Base - PLOSONE", group.getType());
     assertEquals(kbPlosOneGrp.getNedid(), group.getNedid());
-              
+
     // DELETE
 
     Group groupToDelete = new Group();
@@ -817,7 +816,7 @@ public class NamedEntityDBServiceTest {
 
     // Create two individuals with the same Orcid#
 
-    Integer uidIdType = nedDBSvc.findTypeClass(TypeClassEnum.UID_INDIVIDUAL_TYPES.getName());
+    Integer uidIdType = nedDBSvc.findTypeClass(UID_INDIVIDUAL_TYPES.getName());
 
     Integer orcidTypeId  = nedDBSvc.findTypeValue(uidIdType, UidTypeEnum.ORCID.getName());
     assertNotNull(orcidTypeId);
