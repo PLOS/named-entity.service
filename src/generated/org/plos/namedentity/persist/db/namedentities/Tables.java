@@ -52,6 +52,11 @@ public class Tables {
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Globaltypes GLOBALTYPES = org.plos.namedentity.persist.db.namedentities.tables.Globaltypes.GLOBALTYPES;
 
 	/**
+	 * The table namedEntities.groups
+	 */
+	public static final org.plos.namedentity.persist.db.namedentities.tables.Groups GROUPS = org.plos.namedentity.persist.db.namedentities.tables.Groups.GROUPS;
+
+	/**
 	 * The table namedEntities.individualProfiles
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Individualprofiles INDIVIDUALPROFILES = org.plos.namedentity.persist.db.namedentities.tables.Individualprofiles.INDIVIDUALPROFILES;
@@ -80,11 +85,6 @@ public class Tables {
 	 * The table namedEntities.relationships
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Relationships RELATIONSHIPS = org.plos.namedentity.persist.db.namedentities.tables.Relationships.RELATIONSHIPS;
-
-	/**
-	 * The table namedEntities.roles
-	 */
-	public static final org.plos.namedentity.persist.db.namedentities.tables.Roles ROLES = org.plos.namedentity.persist.db.namedentities.tables.Roles.ROLES;
 
 	/**
 	 * The table namedEntities.schema_version

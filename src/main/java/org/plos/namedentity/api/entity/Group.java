@@ -24,7 +24,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @XmlRootElement
-public class Role extends Entity {
+public class Group extends Entity {
 
   private Integer typeid;
   private String  type;

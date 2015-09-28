@@ -251,8 +251,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     return this.context.insertInto(NAMEDENTITYIDENTIFIERS) 
                .set(NAMEDENTITYIDENTIFIERS.TYPEID, findTypeIdByName(TypeClassEnum.NAMED_ENTITY_TYPES, typeCode))
-               .set(ROLES.CREATEDBY, 1)
-               .set(ROLES.LASTMODIFIEDBY, 1)
+               .set(NAMEDENTITYIDENTIFIERS.CREATEDBY, 1)
+               .set(NAMEDENTITYIDENTIFIERS.LASTMODIFIEDBY, 1)
                .returning(NAMEDENTITYIDENTIFIERS.ID)
                .fetchOne()
                .getId();
@@ -349,8 +349,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       return (T)findEmailByPrimaryKey(pk);
     if (cname.equals(Address.class.getCanonicalName()))
       return (T)findAddressByPrimaryKey(pk);
-    if (cname.equals(Role.class.getCanonicalName()))
-      return (T)findRoleByPrimaryKey(pk);
+    if (cname.equals(Group.class.getCanonicalName()))
+      return (T)findGroupByPrimaryKey(pk);
     if (cname.equals(Uniqueidentifier.class.getCanonicalName()))
       return (T)findUniqueIdsByPrimaryKey(pk);
     if (cname.equals(Auth.class.getCanonicalName()))
@@ -388,8 +388,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       return (List<T>)findEmailsByNedId(nedId);
     if (cname.equals(Phonenumber.class.getCanonicalName()))
       return (List<T>)findPhoneNumbersByNedId(nedId);
-    if (cname.equals(Role.class.getCanonicalName()))
-      return (List<T>)findRolesByNedId(nedId);
+    if (cname.equals(Group.class.getCanonicalName()))
+      return (List<T>)findGroupsByNedId(nedId);
     if (cname.equals(Uniqueidentifier.class.getCanonicalName()))
       return (List<T>)findUniqueIdsByNedId(nedId);
     if (cname.equals(Degree.class.getCanonicalName()))
@@ -516,7 +516,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .leftOuterJoin(gt4).on(a.SOURCETYPEID.equal(gt4.ID));
   }
 
-  private SelectOnConditionStep select(Roles r) {
+  private SelectOnConditionStep select(Groups g) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
@@ -524,15 +524,15 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     return this.context
         .select(
-            r.ID, r.STARTDATE, r.ENDDATE, r.NEDID,
+            g.ID, g.STARTDATE, g.ENDDATE, g.NEDID,
             gt1.SHORTDESCRIPTION.as("applicationtype"),
             gt2.SHORTDESCRIPTION.as("type"),
             gt3.SHORTDESCRIPTION.as("source"),
-            r.CREATED, r.LASTMODIFIED)
-        .from(r)
-        .leftOuterJoin(gt1).on(r.APPLICATIONTYPEID.equal(gt1.ID))
-        .leftOuterJoin(gt2).on(r.TYPEID.equal(gt2.ID))
-        .leftOuterJoin(gt3).on(r.SOURCETYPEID.equal(gt3.ID));
+            g.CREATED, g.LASTMODIFIED)
+        .from(g)
+        .leftOuterJoin(gt1).on(g.APPLICATIONTYPEID.equal(gt1.ID))
+        .leftOuterJoin(gt2).on(g.TYPEID.equal(gt2.ID))
+        .leftOuterJoin(gt3).on(g.SOURCETYPEID.equal(gt3.ID));
   }
 
   private SelectOnConditionStep select(Organizations o) {
@@ -633,9 +633,9 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     return select(e).where(e.NEDID.equal(nedId)).fetch().into(Email.class);
   }
 
-  private List<Role> findRolesByNedId(Integer nedId) {
-    Roles r = ROLES.as("r");
-    return select(r).where(r.NEDID.equal(nedId)).fetch().into(Role.class);
+  private List<Group> findGroupsByNedId(Integer nedId) {
+    Groups g = GROUPS.as("g");
+    return select(g).where(g.NEDID.equal(nedId)).fetch().into(Group.class);
   }
 
   private List<Uniqueidentifier> findUniqueIdsByNedId(Integer nedId) {
@@ -819,16 +819,16 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     return record.into(Address.class);
   }
 
-  private Role findRoleByPrimaryKey(Integer roleId) {
+  private Group findGroupByPrimaryKey(Integer groupId) {
 
-    Roles r = ROLES.as("r");
+    Groups g = GROUPS.as("g");
 
-    Record record = select(r).where(r.ID.equal(roleId)).fetchOne();
+    Record record = select(g).where(g.ID.equal(groupId)).fetchOne();
 
     if (record == null)
-      throw new NedException(EntityNotFound, String.format("Role not found with id %d", roleId));
+      throw new NedException(EntityNotFound, String.format("Group not found with id %d", groupId));
 
-    return record.into(Role.class);
+    return record.into(Group.class);
   }
 
   /* ---------------------------------------------------------------------- */
@@ -876,7 +876,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     entityTableMap.put(Namedentityidentifier.class, new TablePkPair(NAMEDENTITYIDENTIFIERS, NAMEDENTITYIDENTIFIERS.ID));
     entityTableMap.put(Organization.class, new TablePkPair(ORGANIZATIONS, ORGANIZATIONS.ID));
     entityTableMap.put(Phonenumber.class, new TablePkPair(PHONENUMBERS, PHONENUMBERS.ID));
-    entityTableMap.put(Role.class, new TablePkPair(ROLES, ROLES.ID));
+    entityTableMap.put(Group.class, new TablePkPair(GROUPS, GROUPS.ID));
     entityTableMap.put(Typedescription.class, new TablePkPair(TYPEDESCRIPTIONS, TYPEDESCRIPTIONS.ID));
     entityTableMap.put(Uniqueidentifier.class, new TablePkPair(UNIQUEIDENTIFIERS, UNIQUEIDENTIFIERS.ID));
     entityTableMap.put(Url.class, new TablePkPair(URLS, URLS.ID));

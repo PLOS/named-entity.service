@@ -26,7 +26,7 @@ import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Globaltype;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Organization;
-import org.plos.namedentity.api.entity.Role;
+import org.plos.namedentity.api.entity.Group;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.persist.NamedEntityDBService;
@@ -381,54 +381,54 @@ public class CrudServiceTest {
   }
 
   @Test
-  public void testRolesCRUD() {
+  public void testGroupsCRUD() {
 
     /* ------------------------------------------------------------------ */
     /*  CREATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    Role newRole = _(new Role());
-    newRole.setNedid(1);
-    newRole.setApplicationtype("Editorial Manager");
-    newRole.setType("Academic Editor (PLOS ONE)");
-    newRole.setStartdate( dateNow() );
-    newRole.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
-    newRole.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
-    newRole.setSource("Editorial Manager");
+    Group newGroup = _(new Group());
+    newGroup.setNedid(1);
+    newGroup.setApplicationtype("Knowledge Base");
+    newGroup.setType("Knowledge Base - Biology");
+    newGroup.setStartdate( dateNow() );
+    newGroup.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    newGroup.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    newGroup.setSource("Ambra");
 
     // save record
 
-    Integer pkId = crudService.create( namedEntityService.resolveValuesToIds(newRole) );
+    Integer pkId = crudService.create( namedEntityService.resolveValuesToIds(newGroup) );
     assertNotNull( pkId );
 
-    Role savedRole = crudService.findById(pkId, Role.class);
-    assertNotNull( savedRole );
-    assertEquals(pkId, savedRole.getId());
-    assertNotNull( savedRole.getApplicationtypeid() );
-    assertNotNull( savedRole.getTypeid() );
+    Group savedGroup = crudService.findById(pkId, Group.class);
+    assertNotNull( savedGroup );
+    assertEquals(pkId, savedGroup.getId());
+    assertNotNull( savedGroup.getApplicationtypeid() );
+    assertNotNull( savedGroup.getTypeid() );
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    savedRole.setEnddate( dateNow() );
-    assertTrue( crudService.update(savedRole) );
-    Role savedRole2 = crudService.findById(pkId, Role.class);
-    assertEquals(savedRole, savedRole2);
+    savedGroup.setEnddate( dateNow() );
+    assertTrue( crudService.update(savedGroup) );
+    Group savedGroup2 = crudService.findById(pkId, Group.class);
+    assertEquals(savedGroup, savedGroup2);
 
     /* ------------------------------------------------------------------ */
     /*  FINDERS                                                           */
     /* ------------------------------------------------------------------ */
 
-    List<Role> allRoles = crudService.findAll(Role.class, 0, Integer.MAX_VALUE);
-    assertNotNull(allRoles);
-    assertTrue(allRoles.contains(savedRole2));
+    List<Group> allGroups = crudService.findAll(Group.class, 0, Integer.MAX_VALUE);
+    assertNotNull(allGroups);
+    assertTrue(allGroups.contains(savedGroup2));
 
     /* ------------------------------------------------------------------ */
     /*  DELETE                                                            */
     /* ------------------------------------------------------------------ */
 
-    assertTrue( crudService.delete(savedRole) );
+    assertTrue( crudService.delete(savedGroup) );
   }
 
   @Test
