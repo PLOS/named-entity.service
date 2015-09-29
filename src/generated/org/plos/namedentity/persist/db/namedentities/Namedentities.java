@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.namedentities;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Namedentities extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -2002229072;
+	private static final long serialVersionUID = -559246;
 
 	/**
 	 * The reference instance of <code>namedEntities</code>
@@ -46,13 +46,13 @@ public class Namedentities extends org.jooq.impl.SchemaImpl {
 			org.plos.namedentity.persist.db.namedentities.tables.Degrees.DEGREES,
 			org.plos.namedentity.persist.db.namedentities.tables.Emails.EMAILS,
 			org.plos.namedentity.persist.db.namedentities.tables.Globaltypes.GLOBALTYPES,
+			org.plos.namedentity.persist.db.namedentities.tables.Groups.GROUPS,
 			org.plos.namedentity.persist.db.namedentities.tables.Individualprofiles.INDIVIDUALPROFILES,
 			org.plos.namedentity.persist.db.namedentities.tables.Journals.JOURNALS,
 			org.plos.namedentity.persist.db.namedentities.tables.Namedentityidentifiers.NAMEDENTITYIDENTIFIERS,
 			org.plos.namedentity.persist.db.namedentities.tables.Organizations.ORGANIZATIONS,
 			org.plos.namedentity.persist.db.namedentities.tables.Phonenumbers.PHONENUMBERS,
 			org.plos.namedentity.persist.db.namedentities.tables.Relationships.RELATIONSHIPS,
-			org.plos.namedentity.persist.db.namedentities.tables.Roles.ROLES,
 			org.plos.namedentity.persist.db.namedentities.tables.SchemaVersion.SCHEMA_VERSION,
 			org.plos.namedentity.persist.db.namedentities.tables.Sourcefields.SOURCEFIELDS,
 			org.plos.namedentity.persist.db.namedentities.tables.Subjectareas.SUBJECTAREAS,

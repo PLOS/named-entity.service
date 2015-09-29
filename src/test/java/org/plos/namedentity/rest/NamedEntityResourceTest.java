@@ -693,83 +693,79 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   }
 
   @Test
-  public void testRoleCrud() throws IOException, JAXBException {
+  public void testGroupCrud() throws IOException, JAXBException {
 
-    String rolesURI = String.format("%s/%d/roles", INDIVIDUAL_URI, nedIndividualId);
+    String groupsURI = String.format("%s/%d/groups", INDIVIDUAL_URI, nedIndividualId);
     Date START_DATE = getDate(6, 30, 2014);
 
     /* ------------------------------------------------------------------ */
     /*  CREATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    String requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "role.json")));
+    String requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "group.json")));
 
-    Response response = buildRequestDefaultAuth(rolesURI).post(Entity.json(requestJson));
+    Response response = buildRequestDefaultAuth(groupsURI).post(Entity.json(requestJson));
 
     assertEquals(200, response.getStatus());
 
     String responseJson = response.readEntity(String.class);
 
-    Unmarshaller unmarshaller = jsonUnmarshaller(Role.class);
-    Role role = unmarshalEntity(responseJson, Role.class, unmarshaller);
+    Unmarshaller unmarshaller = jsonUnmarshaller(Group.class);
+    Group group = unmarshalEntity(responseJson, Group.class, unmarshaller);
 
-    assertTrue( role.getId() > 0 );
-    assertEquals(nedIndividualId, role.getNedid());
-    assertEquals("Editorial Manager", role.getApplicationtype());
-    assertEquals("Academic Editor (PLOS ONE)", role.getType());
+    assertTrue( group.getId() > 0 );
+    assertEquals(nedIndividualId, group.getNedid());
+    assertEquals("Knowledge Base", group.getApplicationtype());
+    assertEquals("Knowledge Base - Genetics", group.getType());
 
-    assertEquals(START_DATE, role.getStartdate());
+    assertEquals(START_DATE, group.getStartdate());
 
-    String roleURI = rolesURI + "/" + role.getId();
+    String groupURI = groupsURI + "/" + group.getId();
 
     /* ------------------------------------------------------------------ */
-    /*  FIND (BY ROLE ID (PK))                                            */
+    /*  FIND (BY GROUP ID (PK))                                            */
     /* ------------------------------------------------------------------ */
 
-    response = target(roleURI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    response = target(groupURI).request(MediaType.APPLICATION_JSON_TYPE).get();
     assertEquals(200, response.getStatus());
 
     responseJson = response.readEntity(String.class);
 
-    Role foundRole = unmarshalEntity(responseJson, Role.class, unmarshaller);
-    assertEquals(role, foundRole);
+    Group foundGroup = unmarshalEntity(responseJson, Group.class, unmarshaller);
+    assertEquals(group, foundGroup);
 
     /* ------------------------------------------------------------------ */
     /*  FIND (BY NED ID)                                                  */
     /* ------------------------------------------------------------------ */
 
-    response = target(rolesURI).request(MediaType.APPLICATION_JSON_TYPE).get();
+    response = target(groupsURI).request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(200, response.getStatus());
 
     responseJson = response.readEntity(String.class);
 
-    List<Role> roles = unmarshalEntities(responseJson, Role.class, unmarshaller);
-    assertEquals(3, roles.size());
+    List<Group> groups = unmarshalEntities(responseJson, Group.class, unmarshaller);
+    assertEquals(3, groups.size());
 
-    Role role0 = roles.get(0);
-    assertTrue(role0.getId() > 0);
-    assertEquals(nedIndividualId, role0.getNedid());
-    assertEquals("Author", role0.getType());
+    String assignedGroups[] = {
+      "Knowledge Base - PLOSONE",
+      "Knowledge Base - Computational Biology",
+      "Knowledge Base - Genetics"
+    };
 
-    Role role1 = roles.get(1);
-    assertTrue(role1.getId() > 0);
-    assertEquals(nedIndividualId, role1.getNedid());
-    assertEquals("Editorial Manager", role1.getApplicationtype());
-    assertEquals("Co-Author", role1.getType());
-
-    Role role2 = roles.get(2);
-    assertTrue(role2.getId() > 0);
-    assertEquals(nedIndividualId, role2.getNedid());
-    assertEquals("Editorial Manager", role2.getApplicationtype());
-    assertEquals("Academic Editor (PLOS ONE)", role2.getType());
-    assertEquals(START_DATE, role2.getStartdate());
+    for (int i = 0; i < groups.size(); i++) {
+      Group grp = groups.get(i);
+      assertTrue(grp.getId() > 0);
+      assertEquals(nedIndividualId, grp.getNedid());
+      assertEquals("Knowledge Base", grp.getApplicationtype());
+      assertEquals(assignedGroups[i], grp.getType());
+    }
 
     /* ------------------------------------------------------------------ */
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    response = buildRequestDefaultAuth(roleURI).put(Entity.json(writeValueAsString(role)));
+    response = buildRequestDefaultAuth(groupURI).put(Entity.json(writeValueAsString(group)));
 
     assertEquals(200, response.getStatus());
 
@@ -777,7 +773,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     /*  DELETE                                                            */
     /* ------------------------------------------------------------------ */
 
-    response = target(roleURI)
+    response = target(groupURI)
       .request(MediaType.APPLICATION_JSON_TYPE)
         .delete();
 
@@ -1379,7 +1375,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     String globalTypeJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "globaltype.json")));
 
-    Integer typeClassId = findTypeClassIdByName("Roles");
+    Integer typeClassId = findTypeClassIdByName("Groups");
 
     String typeValueUri = String.format("%s/%s/typevalues", TYPE_CLASS_URI, typeClassId);
 
