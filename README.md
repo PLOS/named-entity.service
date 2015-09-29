@@ -59,7 +59,7 @@ to run a specific test class
     
 to run a specific test method
 
-    mvn clean test -Dtest='NamedEntityServiceTest#testCreateIndividualCompositeWithRole'
+    mvn clean test -Dtest='NamedEntityServiceTest#testCreateIndividualCompositeWithGroup'
     
 Debugging
 ---------

@@ -25,7 +25,6 @@ import org.junit.runner.RunWith;
 import org.plos.namedentity.api.Consumer;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.*;
-import org.plos.namedentity.api.enums.TypeClassEnum;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.persist.db.namedentities.tables.Globaltypes;
 import org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions;
@@ -56,6 +55,7 @@ import static org.plos.namedentity.api.NedException.ErrorType.InvalidUrl;
 import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
 import static org.plos.namedentity.persist.db.namedentities.Tables.GLOBALTYPES;
 import static org.plos.namedentity.persist.db.namedentities.Tables.TYPEDESCRIPTIONS;
+import static org.plos.namedentity.api.enums.TypeClassEnum.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
@@ -663,67 +663,69 @@ public class NamedEntityDBServiceTest {
   }
 
   @Test
-  public void testRoleCRUD() {
+  public void testGroupCRUD() {
 
     // CREATE
 
-    Integer srcAppTypeClassId = nedDBSvc.findTypeClass("User Applications");
-    Integer roleTypeClassId   = nedDBSvc.findTypeClass("Roles");
+    Integer srcAppTypeClassId = nedDBSvc.findTypeClass(USER_APPLICATIONS.getName());
+    Integer srcAppTypeId = nedDBSvc.findTypeValue(srcAppTypeClassId, "Knowledge Base");
+    assertNotNull(srcAppTypeId);
 
-    Integer srcAppTypeId = nedDBSvc.findTypeValue(srcAppTypeClassId, UidTypeEnum.EDITORIAL_MANAGER.getName()); assertNotNull(srcAppTypeId);
-    Integer roleTypeId   = nedDBSvc.findTypeValue(roleTypeClassId, "Author")             ; assertNotNull(roleTypeId)  ;
+    Integer groupTypeClassId  = nedDBSvc.findTypeClass(GROUPS.getName());
+    Integer groupTypeId = nedDBSvc.findTypeValue(groupTypeClassId, "Knowledge Base - PLOSONE");
+    assertNotNull(groupTypeId);
 
-    Role authorRole = _(new Role());
-    authorRole.setNedid(1);
-    authorRole.setApplicationtypeid(srcAppTypeId);
-    authorRole.setTypeid(roleTypeId);
+    Group kbPlosOneGrp = _(new Group());
+    kbPlosOneGrp.setNedid(1);
+    kbPlosOneGrp.setApplicationtypeid(srcAppTypeId);
+    kbPlosOneGrp.setTypeid(groupTypeId);
 
     java.sql.Date startDate = dateNow();
-    authorRole.setStartdate(startDate);
+    kbPlosOneGrp.setStartdate(startDate);
 
-    authorRole.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
-    authorRole.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
-    authorRole.setSourcetypeid( getSourceTypeId(UidTypeEnum.EDITORIAL_MANAGER.getName()) );
+    kbPlosOneGrp.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    kbPlosOneGrp.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    kbPlosOneGrp.setSourcetypeid( getSourceTypeId("Ambra") );
 
-    assertNull(authorRole.getId());
-    assertNotNull(authorRole.getNedid());
+    assertNull(kbPlosOneGrp.getId());
+    assertNotNull(kbPlosOneGrp.getNedid());
 
-    Integer authorId = nedDBSvc.create( authorRole );
-    assertNotNull(authorId);
+    Integer groupId = nedDBSvc.create( kbPlosOneGrp );
+    assertNotNull(groupId);
 
     // UPDATE
 
-    Role savedRole = nedDBSvc.findById(authorId, Role.class);
+    Group savedGroup = nedDBSvc.findById(groupId, Group.class);
 
     java.sql.Date endDate = dateNow();
-    savedRole.setEnddate(endDate);
+    savedGroup.setEnddate(endDate);
 
-    assertTrue( nedDBSvc.update(savedRole) );
+    assertTrue( nedDBSvc.update(savedGroup) );
 
-    // Get another instance of same role record 
+    // Get another instance of same group record
 
-    Role savedRole2 = nedDBSvc.findById(authorId, Role.class);
-    assertEquals(savedRole, savedRole2);
-    assertEquals(savedRole.getStartdate(), savedRole2.getStartdate());
-    assertEquals(savedRole.getEnddate(), savedRole2.getEnddate());
+    Group savedGroup2 = nedDBSvc.findById(groupId, Group.class);
+    assertEquals(savedGroup, savedGroup2);
+    assertEquals(savedGroup.getStartdate(), savedGroup2.getStartdate());
+    assertEquals(savedGroup.getEnddate(), savedGroup2.getEnddate());
 
-    // FIND ALL Roles 
+    // FIND (all group assignments)
 
-    List<Role> allRolesInDb = nedDBSvc.findAll(Role.class, 0, Integer.MAX_VALUE);
-    assertTrue( allRolesInDb.size() > 0 );
+    List<Group> groupAssignments = nedDBSvc.findAll(Group.class, 0, Integer.MAX_VALUE);
+    assertTrue( groupAssignments.size() > 0 );
 
-    // FIND BY JOIN-QUERY 
+    // FIND BY JOIN-QUERY (all groups assigned to a person)
 
-    List<Role> roles = nedDBSvc.findResolvedEntities(savedRole.getNedid(), Role.class);
-    Role role = roles.get(0);
-    assertEquals("Author", role.getType());
-    assertEquals(authorRole.getNedid(), role.getNedid());
-              
+    List<Group> groups = nedDBSvc.findResolvedEntities(savedGroup.getNedid(), Group.class);
+    Group group = groups.get(0);
+    assertEquals("Knowledge Base - PLOSONE", group.getType());
+    assertEquals(kbPlosOneGrp.getNedid(), group.getNedid());
+
     // DELETE
 
-    Role roleToDelete = new Role();
-    roleToDelete.setId(authorId);
-    assertTrue( nedDBSvc.delete(roleToDelete) );
+    Group groupToDelete = new Group();
+    groupToDelete.setId(groupId);
+    assertTrue( nedDBSvc.delete(groupToDelete) );
   }
 
   @Test
@@ -814,7 +816,7 @@ public class NamedEntityDBServiceTest {
 
     // Create two individuals with the same Orcid#
 
-    Integer uidIdType = nedDBSvc.findTypeClass(TypeClassEnum.UID_INDIVIDUAL_TYPES.getName());
+    Integer uidIdType = nedDBSvc.findTypeClass(UID_INDIVIDUAL_TYPES.getName());
 
     Integer orcidTypeId  = nedDBSvc.findTypeValue(uidIdType, UidTypeEnum.ORCID.getName());
     assertNotNull(orcidTypeId);
@@ -852,7 +854,7 @@ public class NamedEntityDBServiceTest {
     savedUid.setUniqueidentifier(savedUid.getUniqueidentifier() + "Z");
     assertTrue( nedDBSvc.update(savedUid) );
 
-    // Get another instance of same role record
+    // Get another instance of same uid record
 
     Uniqueidentifier savedUid2 = nedDBSvc.findById(uidId1, Uniqueidentifier.class);
     assertEquals(savedUid, savedUid2);

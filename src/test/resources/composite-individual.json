@@ -19,19 +19,19 @@
       "isactive"        : "true"
     }
   ],
-  "roles" : [
+  "groups" : [
     {
-      "type"                : "Author",
+      "type"                : "Knowledge Base - PLOSONE",
       "startdate"           : "2015-01-01",
       "enddate"             : "2015-01-22",
-      "applicationtype"     : "Editorial Manager",
-      "source"              : "Editorial Manager"
+      "applicationtype"     : "Knowledge Base",
+      "source"              : "Ambra"
     },
     {
-      "type"            : "Co-Author",
+      "type"            : "Knowledge Base - Computational Biology",
       "startdate"       : "2015-02-01",
-      "applicationtype" : "Editorial Manager",
-      "source"          : "Editorial Manager"
+      "applicationtype" : "Knowledge Base",
+      "source"          : "Ambra"
     }
   ],
   "relationships" : [

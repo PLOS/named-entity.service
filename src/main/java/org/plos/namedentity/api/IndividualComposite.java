@@ -37,7 +37,7 @@ public class IndividualComposite extends Composite implements Validatable {
   private List<Auth>              auth;
 
   private List<Individualprofile> individualprofiles;
-  private List<Role>              roles;
+  private List<Group>             groups;
   private List<Address>           addresses;
   private List<Email>             emails;
   private List<Phonenumber>       phonenumbers;
@@ -62,7 +62,7 @@ public class IndividualComposite extends Composite implements Validatable {
     Map<Class, List<? extends Entity>> map = new LinkedHashMap<>();
 
     map.put(Individualprofile.class, individualprofiles);
-    map.put(Role.class, roles);
+    map.put(Group.class, groups);
     map.put(Address.class, addresses);
     map.put(Email.class, emails);
     map.put(Phonenumber.class, phonenumbers);
@@ -78,7 +78,7 @@ public class IndividualComposite extends Composite implements Validatable {
   @SuppressWarnings("unchecked")
   public void setFromMap(Map<Class, List<? extends Entity>> map) {
     individualprofiles = (List<Individualprofile>) map.get(Individualprofile.class);
-    roles              = (List<Role>) map.get(Role.class);
+    groups             = (List<Group>) map.get(Group.class);
     addresses          = (List<Address>) map.get(Address.class);
     emails             = (List<Email>) map.get(Email.class);
     phonenumbers       = (List<Phonenumber>) map.get(Phonenumber.class);
@@ -144,12 +144,12 @@ public class IndividualComposite extends Composite implements Validatable {
     this.degrees = degrees;
   }
 
-  public List<Role> getRoles() {
-    return roles;
+  public List<Group> getGroups() {
+    return groups;
   }
 
-  public void setRoles(List<Role> roles) {
-    this.roles = roles;
+  public void setGroups(List<Group> groups) {
+    this.groups = groups;
   }
 
   public List<Address> getAddresses() {
