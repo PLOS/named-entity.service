@@ -46,7 +46,7 @@ public class DockerPropertyMojo extends AbstractMojo
     try {
       Process process = null;
       if (dockerMachine) {
-        process = new ProcessBuilder("docker-machine", "ip").start();
+        process = new ProcessBuilder("docker-machine", "ip", "default").start();
       } else {
         process = new ProcessBuilder("docker", "inspect", "--format",
                                     "'{{ .NetworkSettings.IPAddress }}'", DOCKER_INSTANCE_NAME).start();
