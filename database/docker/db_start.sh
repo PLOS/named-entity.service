@@ -19,9 +19,9 @@ function build () {
     # <docker-vm-port>:<docker-container-port>
     run_docker "-p ${DB_PORT}:${DB_PORT}"
     DB_HOST=$(boot2docker ip)
-  elif docker-machine ip >/dev/null 2>&1 ; then
+  elif docker-machine ip default >/dev/null 2>&1 ; then
     run_docker "-p ${DB_PORT}:${DB_PORT}"
-    DB_HOST=$(docker-machine ip)
+    DB_HOST=$(docker-machine ip default)
   else
     run_docker
     DB_HOST=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' neddb)
