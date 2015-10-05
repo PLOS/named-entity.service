@@ -16,9 +16,11 @@
  */
 package org.plos.namedentity.service;
 
+import org.ambraproject.models.UserProfile;
+import org.ambraproject.service.user.DuplicateUserException;
+import org.ambraproject.service.user.UserRegistrationService;
 import org.apache.log4j.Logger;
 import org.plos.namedentity.api.Consumer;
-import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.api.enums.UidTypeEnum;
@@ -33,6 +35,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
+import static org.plos.namedentity.api.NedException.ErrorType.DatabaseError;
 import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
 import static org.plos.namedentity.api.entity.Individualprofile.DISPLAYNAME_MAX_LENGTH;
 
@@ -41,6 +44,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   private static Logger logger = Logger.getLogger(NamedEntityServiceImpl.class);
 
   @Inject private NamedEntityDBService nedDBSvc;
+
+  @Inject private UserRegistrationService userRegistrationService;
 
 
   public <T extends Entity> T resolveValuesToIds(T t) {
@@ -330,6 +335,18 @@ public class NamedEntityServiceImpl implements NamedEntityService {
           nedDBSvc.create(resolveValuesToIds(entity));
         }
       }
+    }
+
+
+    // insert it into Ambra
+
+    UserProfile ambraProfile = new UserProfile();
+    ambraProfile.setEmail("test@test.com");
+
+    try {
+      userRegistrationService.registerUser(ambraProfile, "password");
+    } catch (DuplicateUserException e) {
+      throw new NedException(DatabaseError, "Duplicte user in Ambra Database");
     }
 
     return findComposite(nedId, clazz);

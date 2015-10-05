@@ -23,10 +23,59 @@
     <org.springframework.version>4.1.6.RELEASE</org.springframework.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <tomcat.jdbc.version>7.0.54</tomcat.jdbc.version>
+    <ambra.version>2.10.12</ambra.version>
     <maven.exec.skip>false</maven.exec.skip>
   </properties>
 
   <dependencies>
+
+    <!--ambra DB access-->
+
+    <dependency>
+      <groupId>org.ambraproject</groupId>
+      <artifactId>ambra-base</artifactId>
+      <version>${ambra.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.testng</groupId>
+          <artifactId>testng</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.ambraproject</groupId>
+      <artifactId>ambra-models</artifactId>
+      <version>${ambra.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.ambraproject</groupId>
+      <artifactId>conf-helper</artifactId>
+      <version>${ambra.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.6.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.6.1</version>
+    </dependency>
+
+
     <!-- database access -->
     <dependency>
       <groupId>org.jooq</groupId>
