@@ -53,6 +53,12 @@
 
     <dependency>
       <groupId>org.ambraproject</groupId>
+      <artifactId>ambra-admin</artifactId>
+      <version>2.9.28</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.ambraproject</groupId>
       <artifactId>ambra-models</artifactId>
       <version>${ambra.version}</version>
     </dependency>
@@ -643,5 +649,19 @@
       </build>
     </profile>
   </profiles>
+
+  <repositories>
+    <repository>
+      <id>ambra</id>
+      <name>Maven 2 Release Repository for Ambra</name>
+      <url>http://maven.ambraproject.org/maven2/release/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
 
 </project>

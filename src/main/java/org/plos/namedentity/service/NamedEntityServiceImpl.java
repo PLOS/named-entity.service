@@ -16,11 +16,14 @@
  */
 package org.plos.namedentity.service;
 
+import org.ambraproject.admin.service.AdminRolesService;
+import org.ambraproject.admin.views.UserRoleView;
 import org.ambraproject.models.UserProfile;
 import org.ambraproject.service.user.DuplicateUserException;
 import org.ambraproject.service.user.UserRegistrationService;
 import org.apache.log4j.Logger;
 import org.plos.namedentity.api.Consumer;
+import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.api.enums.UidTypeEnum;
@@ -30,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -46,6 +50,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   @Inject private NamedEntityDBService nedDBSvc;
 
   @Inject private UserRegistrationService userRegistrationService;
+
+  @Inject private AdminRolesService rolesService;
 
 
   public <T extends Entity> T resolveValuesToIds(T t) {
@@ -321,6 +327,54 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     }
   }
 
+//  private UserRole toAmbraRole(IndividualComposite) {
+//
+//  }
+
+  private UserProfile toAmbraProfile(IndividualComposite composite) {
+
+    Individualprofile profile = composite.getIndividualprofiles().get(0);
+
+    UserProfile result = new UserProfile(
+        composite.getEmails().get(0).getEmailaddress(),
+        profile.getDisplayname(),
+        composite.getAuth().get(0).getPlainTextPassword()
+    );
+
+
+    result.setGivenNames(profile.getFirstname());
+    result.setSurname(profile.getLastname());
+
+    String realName = profile.getFirstname();
+
+    if (realName == null)
+      realName = profile.getLastname();
+    else if (profile.getLastname() != null)
+        realName += "" + profile.getLastname();
+
+    result.setRealName(realName);
+    result.setBiography(profile.getBiography());
+    result.setTitle(profile.getNameprefix());
+
+
+    if (composite.getAddresses() != null && composite.getAddresses().size() > 0) {
+      result.setCity(composite.getAddresses().get(0).getCity());
+      result.setCountry(composite.getAddresses().get(0).getCountrycodetype());
+      // TODO: postaladdress
+    }
+
+    if (composite.getUrls() != null && composite.getUrls().size() > 0) {
+      result.setHomePage(composite.getUrls().get(0).getUrl());
+    }
+
+
+
+    // TODO: organization
+
+
+    return result;
+  }
+
   @Override @Transactional
   public  <T extends Composite> T createComposite(T composite, Class<T> clazz) {
 
@@ -338,18 +392,69 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     }
 
 
-    // insert it into Ambra
+    T foundComposite = findComposite(nedId, clazz);
 
-    UserProfile ambraProfile = new UserProfile();
-    ambraProfile.setEmail("test@test.com");
+    // insert user into Ambra DB
 
-    try {
-      userRegistrationService.registerUser(ambraProfile, "password");
-    } catch (DuplicateUserException e) {
-      throw new NedException(DatabaseError, "Duplicte user in Ambra Database");
+    if (clazz == IndividualComposite.class) {
+
+
+      Map<String, String> ambraRoles = new HashMap<String, String>(){{
+        put("NED Admin", "Admin");
+        put("NED Manage Users", "Manage Users");
+
+        put("Knowledge Base - PLOSONE", "AE-PLOSONE");
+//        put("Knowledge Base - Computational Biology", "AE-PLOSONE");
+      }};
+
+      IndividualComposite c = (IndividualComposite) composite;
+
+      UserProfile ambraProfile = toAmbraProfile(c);
+
+      Long ambraId;
+      ambraProfile.setAuthId(c.getAuth().get(0).getAuthid());
+
+      try {
+        ambraId = userRegistrationService.registerUser(ambraProfile, ambraProfile.getPassword());
+      } catch (DuplicateUserException e) {
+        throw new NedException(DatabaseError, "Duplicte user in Ambra Database");
+      }
+
+      ambraProfile = null;
+
+
+      // this is a hack which allows grantAllRoles to work
+      rolesService.revokeAllRoles(ambraId);
+//
+////      Set<UserRoleView> testRoles = rolesService.getUserRoles(ambraId);
+//
+//
+
+      try {
+        List<UserRoleView> possibleRoles = rolesService.getAllRoles(ambraId);
+      } catch (RuntimeException e) {
+        int i=1;
+      }
+
+//      for (Group group : c.getGroups()) {
+//        String ambraRole = ambraRoles.get(group.getType());
+//
+//        try {
+//          Long roleId = possibleRoles.stream()
+//              .filter(r -> r.getRoleName().equals(ambraRole))
+//              .findFirst().get().getID();
+//
+////          rolesService.grantRole(ambraId, roleId);
+//        } catch (NoSuchElementException e) {
+//          // do nothing since the group does not exist in Ambra
+//          // TODO: or should we throw and exception?
+//        }
+//      }
+//
+//        rolesService.grantRole(ambraProfile.getID(), (long)1);
     }
 
-    return findComposite(nedId, clazz);
+    return foundComposite;
   }
 
   @Override

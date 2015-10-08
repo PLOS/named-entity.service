@@ -4,9 +4,10 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
-                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
     <!-- Enable configuration of transactional behavior based on annotations -->
     <tx:annotation-driven transaction-manager="transactionManager" order="1"/>
@@ -76,6 +77,28 @@
     </bean>
 
 
+    <!-- temp ambra dependencies -->
+
+    <!--<bean id="propertyConfigurer" class="org.ambraproject.configuration.SpringPlaceholderConfigurer"/>-->
+
+    <bean id="rolesEhCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+        <property name="cacheName" value="RolesCache"/>
+    </bean>
+
+    <bean id="rolesCache" class="org.ambraproject.service.cache.EhcacheProvider">
+        <constructor-arg index="0" ref="rolesEhCache"/>
+    </bean>
+
+    <bean id="permissionsService" class="org.ambraproject.service.permission.PermissionsServiceImpl">
+        <property name="sessionFactory" ref="hibernateSessionFactoryForAdmin"/>
+        <property name="rolesCache" ref="rolesCache"/>
+    </bean>
+
+    <bean id="rolesService" class="org.ambraproject.admin.service.impl.AdminRolesServiceImpl">
+        <property name="sessionFactory" ref="hibernateSessionFactory"/>
+        <property name="permissionsService" ref="permissionsService"/>
+    </bean>
+
     <bean id="configurationStore" class="org.ambraproject.configuration.ConfigurationStore" factory-method="getInstance"/>
 
     <bean id="ambraConfiguration" factory-bean="configurationStore" factory-method="getConfiguration"/>
@@ -98,6 +121,28 @@
         </property>
     </bean>
 
+
+
+    <bean id="hibernateSessionFactoryForAdmin" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="ambraDataSource"/>
+        <property name="mappingLocations">
+            <list>
+                <value>classpath:org/ambraproject/models/*.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <!-- We might use MySQLInnoDBDialect instead -->
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.format_sql">false</prop>
+            </props>
+        </property>
+    </bean>
+
+
+
+
     <bean id="ambraPasswordDigestService" class="org.ambraproject.service.password.PasswordDigestService"/>
 
     <bean id="ambraMailer" class="org.plos.namedentity.service.NullAmbraMailer"/>
@@ -107,6 +152,8 @@
         <property name="ambraMailer" ref="ambraMailer"/>
         <property name="passwordDigestService" ref="ambraPasswordDigestService"/>
     </bean>
+
+    <!-- end temp ambra dependencies -->
 
     <aop:config>
         <aop:aspect id="validatingAspect" ref="validator">
