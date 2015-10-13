@@ -270,7 +270,13 @@ public class IndividualsResource extends NedResource {
                               @HeaderParam("Authorization") String authstring) {
     Response response = createEntity(nedId, groupEntity, authstring);
 
-    ambraService.addRole(groupEntity, nedId);
+    try {
+      ambraService.addRole(groupEntity, nedId);
+    } catch (NedException e) {
+      return nedError(e, "Unable to create " + groupEntity.getClass().getSimpleName());
+    } catch (Exception e) {
+      return serverError(e, "Unable to create " + groupEntity.getClass().getSimpleName());
+    }
 
     // TODO: handle rollback
 

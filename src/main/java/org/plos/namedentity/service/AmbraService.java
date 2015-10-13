@@ -73,7 +73,6 @@ public class AmbraService {
 
     Long ambraId = Long.parseLong(namedEntityDBService.findByAttribute(uniqueidentifier).get(0).getUniqueidentifier());
 
-//      rolesService.revokeAllRoles(ambraId);
     List<UserRoleView> possibleRoles = rolesService.getAllRoles(ambraId);
 
     String ambraRole = ambraRoles.get(group.getType());
@@ -85,11 +84,9 @@ public class AmbraService {
 
       rolesService.grantRole(ambraId, roleId);
     } catch (NoSuchElementException e) {
-      // do nothing since the group does not exist in Ambra
-      // TODO: or should we throw and exception?
+
+      throw new NedException(DatabaseError, "Specified role does not exist in Ambra");
     }
-////
-////        rolesService.grantRole(ambraProfile.getID(), (long)1);
   }
 
 

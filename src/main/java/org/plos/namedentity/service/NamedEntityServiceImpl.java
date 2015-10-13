@@ -345,13 +345,15 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       Long ambraId = ambraService.createUser((IndividualComposite)composite);
 
       // insert Ambra UID back into NED
-      Uniqueidentifier uniqueidentifier = new Uniqueidentifier();
+      Email email = ((IndividualComposite) composite).getEmails().get(0);
 
+      Uniqueidentifier uniqueidentifier = new Uniqueidentifier();
       uniqueidentifier.setNedid(nedId);
       uniqueidentifier.setSource("Ambra");
       uniqueidentifier.setType(UidTypeEnum.AMBRA.getName());
       uniqueidentifier.setUniqueidentifier(ambraId.toString());
-
+      uniqueidentifier.setCreatedbyname(email.getCreatedbyname());
+      uniqueidentifier.setLastmodifiedbyname(email.getLastmodifiedbyname());
       uniqueidentifier = resolveValuesToIds(uniqueidentifier);
 
       nedDBSvc.create(uniqueidentifier);
