@@ -16,23 +16,9 @@
  */
 package org.plos.namedentity.rest;
 
-import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
-import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchCriteria;
-
 import com.wordnik.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.NedException;
-import org.plos.namedentity.api.entity.Address;
-import org.plos.namedentity.api.entity.Auth;
-import org.plos.namedentity.api.entity.Composite;
-import org.plos.namedentity.api.entity.Degree;
-import org.plos.namedentity.api.entity.Email;
-import org.plos.namedentity.api.entity.Entity;
-import org.plos.namedentity.api.entity.Individualprofile;
-import org.plos.namedentity.api.entity.Phonenumber;
-import org.plos.namedentity.api.entity.Relationship;
-import org.plos.namedentity.api.entity.Group;
-import org.plos.namedentity.api.entity.Uniqueidentifier;
-import org.plos.namedentity.api.entity.Url;
+import org.plos.namedentity.api.entity.*;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -43,11 +29,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Map;
+
+import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchCriteria;
 
 public abstract class NedResource extends BaseResource {
 

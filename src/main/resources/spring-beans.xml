@@ -140,9 +140,6 @@
         </property>
     </bean>
 
-
-
-
     <bean id="ambraPasswordDigestService" class="org.ambraproject.service.password.PasswordDigestService"/>
 
     <bean id="ambraMailer" class="org.plos.namedentity.service.NullAmbraMailer"/>
@@ -152,6 +149,8 @@
         <property name="ambraMailer" ref="ambraMailer"/>
         <property name="passwordDigestService" ref="ambraPasswordDigestService"/>
     </bean>
+
+    <bean id="ambraService" class="org.plos.namedentity.service.AmbraService" />
 
     <!-- end temp ambra dependencies -->
 

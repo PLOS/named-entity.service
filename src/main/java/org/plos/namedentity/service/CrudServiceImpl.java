@@ -16,8 +16,7 @@
  */
 package org.plos.namedentity.service;
 
-import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
-
+import org.ambraproject.admin.service.AdminRolesService;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.persist.NamedEntityDBService;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,21 +24,37 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import java.util.List;
 
+import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+
 public class CrudServiceImpl implements CrudService {
 
-  @Inject private NamedEntityDBService namedEntityDBService; 
+  @Inject
+  private NamedEntityDBService namedEntityDBService;
 
-  @Override @Transactional
+  @Inject
+  private AdminRolesService rolesService;
+
+  @Override
+  @Transactional
   public <T> Integer create(T t) {
+
+//    if (t.getClass() == Group.class) {
+//
+//      rolesService.revokeAllRoles(ambraId);
+//      List<UserRoleView> possibleRoles = rolesService.getAllRoles(ambraId);
+//    }
+
     return namedEntityDBService.create(t);
   }
 
-  @Override @Transactional
+  @Override
+  @Transactional
   public <T> boolean update(T t) {
     return namedEntityDBService.update(t);
   }
 
-  @Override @Transactional
+  @Override
+  @Transactional
   public <T> boolean delete(T t) {
     return namedEntityDBService.delete(t);
   }
@@ -62,11 +77,11 @@ public class CrudServiceImpl implements CrudService {
   public <T> List<T> findByAttribute(T t) {
     return namedEntityDBService.findByAttribute(t);
   }
-  
+
   public NamedEntityDBService getNamedEntityDBService() {
     return namedEntityDBService;
   }
-  
+
   public void setNamedEntityDBService(NamedEntityDBService namedEntityDBService) {
     this.namedEntityDBService = namedEntityDBService;
   }
