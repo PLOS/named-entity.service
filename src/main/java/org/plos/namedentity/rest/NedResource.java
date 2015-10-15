@@ -88,7 +88,7 @@ public abstract class NedResource extends BaseResource {
 
   @GET
   @Path("/{nedId}/emails")
-  @ApiOperation(value = "List emails", response = Email.class)
+  @ApiOperation(value = "List emails", response = Email.class, responseContainer = "List")
   public Response getEmails(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Email.class);
   }
@@ -138,7 +138,7 @@ public abstract class NedResource extends BaseResource {
 
   @GET
   @Path("/{nedId}/addresses")
-  @ApiOperation(value = "List addresses", response = Address.class)
+  @ApiOperation(value = "List addresses", response = Address.class, responseContainer = "List")
   public Response getAddresses(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Address.class);
   }
@@ -149,7 +149,7 @@ public abstract class NedResource extends BaseResource {
 
   @GET
   @Path("/{nedId}/phonenumbers")
-  @ApiOperation(value = "List phone numbers", response = Phonenumber.class)
+  @ApiOperation(value = "List phone numbers", response = Phonenumber.class, responseContainer = "List")
   public Response getPhonenumbers(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Phonenumber.class);
   }
@@ -187,7 +187,7 @@ public abstract class NedResource extends BaseResource {
 
   @GET
   @Path("/{nedId}/uids")
-  @ApiOperation(value = "List UIDs")
+  @ApiOperation(value = "List UIDs", response = Uniqueidentifier.class,  responseContainer = "List")
   public Response getUids(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Uniqueidentifier.class);
   }

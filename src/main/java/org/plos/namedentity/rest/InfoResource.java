@@ -49,7 +49,7 @@ public class InfoResource {
 
   @GET
   @Path("/errorcodes")
-  @ApiOperation(value = "List possible error codes")
+  @ApiOperation(value = "List possible error codes", response = NedErrorResponse.class, responseContainer = "List")
   public Response errorcodes() {
 
     List<NedErrorResponse> list = new ArrayList<>();
