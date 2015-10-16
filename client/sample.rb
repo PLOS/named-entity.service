@@ -1,10 +1,10 @@
 require 'swagger_client'
 
 SwaggerClient.configure { |c| [
-   c.debugging = true, c.host='http://localhost:8080',
+   c.debugging = true, c.host='http://akita:akita@localhost:8080',
    c.username = 'akita', c.password = 'akita'] }
 
-# TODO: get basic auth to work  https://github.com/swagger-api/swagger-codegen/issues/1407
+# TODO: get basic auth to work in the header https://github.com/swagger-api/swagger-codegen/issues/1407
 header = {'Authorization'=> SwaggerClient.configure.basic_auth_token}
 
 print header
@@ -22,3 +22,5 @@ serviceapi.config
 # serviceapi.errorcodes
 
 typeclassesapi.list
+
+individualsapi.read_individual(53).emails
