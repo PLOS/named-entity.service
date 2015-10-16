@@ -1,7 +1,7 @@
 module SwaggerClient
   # 
   class Auth < BaseObject
-    attr_accessor :email, :emailid, :authid, :password, :passwordreset, :verificationtoken, :verified, :isactive, :source, :nedid, :sourcetypeid, :id
+    attr_accessor :email, :emailid, :authid, :password, :passwordreset, :verificationtoken, :verified, :isactive, :id, :source, :nedid, :sourcetypeid
     # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
@@ -31,16 +31,16 @@ module SwaggerClient
         :'isactive' => :'isactive',
         
         # 
+        :'id' => :'id',
+        
+        # 
         :'source' => :'source',
         
         # 
         :'nedid' => :'nedid',
         
         # 
-        :'sourcetypeid' => :'sourcetypeid',
-        
-        # 
-        :'id' => :'id'
+        :'sourcetypeid' => :'sourcetypeid'
         
       }
     end
@@ -56,10 +56,10 @@ module SwaggerClient
         :'verificationtoken' => :'String',
         :'verified' => :'String',
         :'isactive' => :'String',
+        :'id' => :'Integer',
         :'source' => :'String',
         :'nedid' => :'Integer',
-        :'sourcetypeid' => :'Integer',
-        :'id' => :'Integer'
+        :'sourcetypeid' => :'Integer'
         
       }
     end
@@ -103,6 +103,10 @@ module SwaggerClient
         self.isactive = attributes[:'isactive']
       end
       
+      if attributes[:'id']
+        self.id = attributes[:'id']
+      end
+      
       if attributes[:'source']
         self.source = attributes[:'source']
       end
@@ -113,10 +117,6 @@ module SwaggerClient
       
       if attributes[:'sourcetypeid']
         self.sourcetypeid = attributes[:'sourcetypeid']
-      end
-      
-      if attributes[:'id']
-        self.id = attributes[:'id']
       end
       
     end

@@ -1,7 +1,7 @@
 module SwaggerClient
   # 
   class Relationship < BaseObject
-    attr_accessor :nedidrelated, :typeid, :type, :title, :startdate, :enddate, :source, :nedid, :sourcetypeid, :id
+    attr_accessor :nedidrelated, :typeid, :type, :title, :startdate, :enddate, :id, :source, :nedid, :sourcetypeid
     # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
@@ -25,16 +25,16 @@ module SwaggerClient
         :'enddate' => :'enddate',
         
         # 
+        :'id' => :'id',
+        
+        # 
         :'source' => :'source',
         
         # 
         :'nedid' => :'nedid',
         
         # 
-        :'sourcetypeid' => :'sourcetypeid',
-        
-        # 
-        :'id' => :'id'
+        :'sourcetypeid' => :'sourcetypeid'
         
       }
     end
@@ -48,10 +48,10 @@ module SwaggerClient
         :'title' => :'String',
         :'startdate' => :'DateTime',
         :'enddate' => :'DateTime',
+        :'id' => :'Integer',
         :'source' => :'String',
         :'nedid' => :'Integer',
-        :'sourcetypeid' => :'Integer',
-        :'id' => :'Integer'
+        :'sourcetypeid' => :'Integer'
         
       }
     end
@@ -87,6 +87,10 @@ module SwaggerClient
         self.enddate = attributes[:'enddate']
       end
       
+      if attributes[:'id']
+        self.id = attributes[:'id']
+      end
+      
       if attributes[:'source']
         self.source = attributes[:'source']
       end
@@ -97,10 +101,6 @@ module SwaggerClient
       
       if attributes[:'sourcetypeid']
         self.sourcetypeid = attributes[:'sourcetypeid']
-      end
-      
-      if attributes[:'id']
-        self.id = attributes[:'id']
       end
       
     end

@@ -1,7 +1,7 @@
 module SwaggerClient
   # 
   class Phonenumber < BaseObject
-    attr_accessor :typeid, :type, :countrycodetypeid, :countrycodetype, :phonenumber, :extension, :isactive, :source, :nedid, :sourcetypeid, :id
+    attr_accessor :typeid, :type, :countrycodetypeid, :countrycodetype, :phonenumber, :extension, :isactive, :id, :source, :nedid, :sourcetypeid
     # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
@@ -28,16 +28,16 @@ module SwaggerClient
         :'isactive' => :'isactive',
         
         # 
+        :'id' => :'id',
+        
+        # 
         :'source' => :'source',
         
         # 
         :'nedid' => :'nedid',
         
         # 
-        :'sourcetypeid' => :'sourcetypeid',
-        
-        # 
-        :'id' => :'id'
+        :'sourcetypeid' => :'sourcetypeid'
         
       }
     end
@@ -52,10 +52,10 @@ module SwaggerClient
         :'phonenumber' => :'String',
         :'extension' => :'String',
         :'isactive' => :'BOOLEAN',
+        :'id' => :'Integer',
         :'source' => :'String',
         :'nedid' => :'Integer',
-        :'sourcetypeid' => :'Integer',
-        :'id' => :'Integer'
+        :'sourcetypeid' => :'Integer'
         
       }
     end
@@ -95,6 +95,10 @@ module SwaggerClient
         self.isactive = attributes[:'isactive']
       end
       
+      if attributes[:'id']
+        self.id = attributes[:'id']
+      end
+      
       if attributes[:'source']
         self.source = attributes[:'source']
       end
@@ -105,10 +109,6 @@ module SwaggerClient
       
       if attributes[:'sourcetypeid']
         self.sourcetypeid = attributes[:'sourcetypeid']
-      end
-      
-      if attributes[:'id']
-        self.id = attributes[:'id']
       end
       
     end

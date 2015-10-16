@@ -2,7 +2,6 @@ import swagger_client
 
 swagger_client.configuration.username = 'akita'
 swagger_client.configuration.password = 'akita'
-# basiccreds = swagger_client.configuration.get_basic_auth_token()
 
 apiclient = swagger_client.ApiClient('http://localhost:8080', header_name="Authorization", header_value=swagger_client.configuration.get_basic_auth_token())
 

@@ -361,8 +361,8 @@ public class IndividualsResource extends NedResource {
 
   @GET
   @Path("/{nedId}/relationships")
-  @ApiOperation(value = "List relationships", responseContainer = "List")
-  public Response getRelationship(@PathParam("nedId") int nedId) {
+  @ApiOperation(value = "List relationships", response = Relationship.class, responseContainer = "List")
+  public Response getRelationships(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Relationship.class);
   }
 

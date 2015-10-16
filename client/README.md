@@ -38,6 +38,19 @@ Its not required, but good to has a copy around for when the service is down.
 
 ### Ruby sample
 
+    cd ruby
     gem build swagger_client.gemspec
     gem install swagger_client-1.0.0.gem
+    cd ..
     ruby sample.rb
+
+## Java
+
+    java -jar ~/applications/swagger-codegen/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
+      -i http://localhost:8080/api-docs \
+      -l java \
+      -o ./java
+
+### Java sample
+
+  TODO

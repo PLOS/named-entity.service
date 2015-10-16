@@ -1,7 +1,7 @@
 module SwaggerClient
   # 
   class IndividualComposite < BaseObject
-    attr_accessor :individualprofiles, :groups, :addresses, :emails, :phonenumbers, :uniqueidentifiers, :degrees, :urls, :relationships, :credentials, :type_name, :as_map
+    attr_accessor :individualprofiles, :groups, :addresses, :emails, :phonenumbers, :uniqueidentifiers, :degrees, :urls, :relationships, :type_name, :credentials, :as_map
     # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
@@ -34,10 +34,10 @@ module SwaggerClient
         :'relationships' => :'relationships',
         
         # 
-        :'credentials' => :'credentials',
+        :'type_name' => :'typeName',
         
         # 
-        :'type_name' => :'typeName',
+        :'credentials' => :'credentials',
         
         # 
         :'as_map' => :'asMap'
@@ -57,8 +57,8 @@ module SwaggerClient
         :'degrees' => :'Array<Degree>',
         :'urls' => :'Array<Url>',
         :'relationships' => :'Array<Relationship>',
-        :'credentials' => :'Array<Auth>',
         :'type_name' => :'String',
+        :'credentials' => :'Array<Auth>',
         :'as_map' => :'Map[Class,List[? extends org.plos.namedentity.api.entity.Entity]]'
         
       }
@@ -125,14 +125,14 @@ module SwaggerClient
         end
       end
       
+      if attributes[:'typeName']
+        self.type_name = attributes[:'typeName']
+      end
+      
       if attributes[:'credentials']
         if (value = attributes[:'credentials']).is_a?(Array)
           self.credentials = value
         end
-      end
-      
-      if attributes[:'typeName']
-        self.type_name = attributes[:'typeName']
       end
       
       if attributes[:'asMap']

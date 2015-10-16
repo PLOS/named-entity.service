@@ -2,11 +2,23 @@ require 'swagger_client'
 
 SwaggerClient.configure { |c| [
    c.debugging = true, c.host='http://localhost:8080',
-   c.username = 'akita', c.password = 'akita', c.base_path = '/'] }
+   c.username = 'akita', c.password = 'akita'] }
+
+# TODO: get basic auth to work  https://github.com/swagger-api/swagger-codegen/issues/1407
+header = {'Authorization'=> SwaggerClient.configure.basic_auth_token}
+
+print header
 
 apiclient = SwaggerClient::ApiClient.new
 
-serviceapi = SwaggerClient::ServiceApi.new(apiclient)
+apiclient.update_params_for_auth!(header, {}, ['header'])
 
-# TODO: figure out an exctra slash is being added GET //service/config
+serviceapi = SwaggerClient::ServiceApi.new(apiclient)
+individualsapi = SwaggerClient::IndividualsApi.new(apiclient)
+typeclassesapi = SwaggerClient::TypeclassesApi.new(apiclient)
+
 serviceapi.config
+
+# serviceapi.errorcodes
+
+typeclassesapi.list

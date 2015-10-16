@@ -1,7 +1,7 @@
 module SwaggerClient
   # 
   class OrganizationComposite < BaseObject
-    attr_accessor :addresses, :emails, :phonenumbers, :uniqueidentifiers, :source, :nedid, :sourcetypeid, :isactive, :typeid, :familiarname, :legalname, :maincontactid, :type_name, :type, :as_map
+    attr_accessor :addresses, :emails, :phonenumbers, :uniqueidentifiers, :type_name, :type, :source, :nedid, :maincontactid, :sourcetypeid, :isactive, :typeid, :familiarname, :legalname, :as_map
     # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
@@ -19,10 +19,19 @@ module SwaggerClient
         :'uniqueidentifiers' => :'uniqueidentifiers',
         
         # 
+        :'type_name' => :'typeName',
+        
+        # 
+        :'type' => :'type',
+        
+        # 
         :'source' => :'source',
         
         # 
         :'nedid' => :'nedid',
+        
+        # 
+        :'maincontactid' => :'maincontactid',
         
         # 
         :'sourcetypeid' => :'sourcetypeid',
@@ -40,15 +49,6 @@ module SwaggerClient
         :'legalname' => :'legalname',
         
         # 
-        :'maincontactid' => :'maincontactid',
-        
-        # 
-        :'type_name' => :'typeName',
-        
-        # 
-        :'type' => :'type',
-        
-        # 
         :'as_map' => :'asMap'
         
       }
@@ -61,16 +61,16 @@ module SwaggerClient
         :'emails' => :'Array<Email>',
         :'phonenumbers' => :'Array<Phonenumber>',
         :'uniqueidentifiers' => :'Array<Uniqueidentifier>',
+        :'type_name' => :'String',
+        :'type' => :'String',
         :'source' => :'String',
         :'nedid' => :'Integer',
+        :'maincontactid' => :'Integer',
         :'sourcetypeid' => :'Integer',
         :'isactive' => :'BOOLEAN',
         :'typeid' => :'Integer',
         :'familiarname' => :'String',
         :'legalname' => :'String',
-        :'maincontactid' => :'Integer',
-        :'type_name' => :'String',
-        :'type' => :'String',
         :'as_map' => :'Map[Class,List[? extends org.plos.namedentity.api.entity.Entity]]'
         
       }
@@ -107,12 +107,24 @@ module SwaggerClient
         end
       end
       
+      if attributes[:'typeName']
+        self.type_name = attributes[:'typeName']
+      end
+      
+      if attributes[:'type']
+        self.type = attributes[:'type']
+      end
+      
       if attributes[:'source']
         self.source = attributes[:'source']
       end
       
       if attributes[:'nedid']
         self.nedid = attributes[:'nedid']
+      end
+      
+      if attributes[:'maincontactid']
+        self.maincontactid = attributes[:'maincontactid']
       end
       
       if attributes[:'sourcetypeid']
@@ -133,18 +145,6 @@ module SwaggerClient
       
       if attributes[:'legalname']
         self.legalname = attributes[:'legalname']
-      end
-      
-      if attributes[:'maincontactid']
-        self.maincontactid = attributes[:'maincontactid']
-      end
-      
-      if attributes[:'typeName']
-        self.type_name = attributes[:'typeName']
-      end
-      
-      if attributes[:'type']
-        self.type = attributes[:'type']
       end
       
       if attributes[:'asMap']
