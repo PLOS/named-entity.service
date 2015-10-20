@@ -7,11 +7,10 @@ import io.swagger.client.Pair;
 import io.swagger.client.TypeRef;
 
 import io.swagger.client.model.ConfigInfo;
-import io.swagger.client.model.NedErrorResponse;
 
 import java.util.*;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-16T10:46:01.311-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-19T20:30:34.752-07:00")
 public class ServiceApi {
   private ApiClient apiClient;
 
@@ -82,9 +81,9 @@ public class ServiceApi {
   /**
    * List possible error codes
    * 
-   * @return List<NedErrorResponse>
+   * @return void
    */
-  public List<NedErrorResponse> errorcodes () throws ApiException {
+  public void errorcodes () throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -118,8 +117,7 @@ public class ServiceApi {
 
     
     
-    TypeRef returnType = new TypeRef<List<NedErrorResponse>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
     
     
 
