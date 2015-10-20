@@ -8,13 +8,24 @@ import io.swagger.client.api.*;
 public class App {
     public static void main( String[] args ) throws ApiException {
 
-        ApiClient apiClient = new ApiClient();
-        apiClient.setBasePath("http://dev:dev@localhost:8080");
+        ApiClient apiclient = new ApiClient();
+        apiclient.setDebugging(true);
+        apiclient.setBasePath("http://localhost:8080");
+        // apiclient.setUsername("dev");
+        // apiclient.setPassword("dev");
 
-        ServiceApi serviceApi = new ServiceApi(apiClient);
+        // TODO: generate this header from user/password
+        apiclient.addDefaultHeader("Authorization", "Basic ZGV2OmRldg==");
 
-        System.out.println("apiclient basepath: " + apiClient.getBasePath());
+        System.out.println("apiclient basepath: " + apiclient.getBasePath());
+
+        ServiceApi serviceApi = new ServiceApi(apiclient);
+        TypeclassesApi typeclassesapi = new TypeclassesApi(apiclient);
 
         System.out.println(serviceApi.config());
+
+        // TODO: regenerate client so it knows this is a list
+        System.out.println("typeclasss: " + typeclassesapi.list(null, null).size());
+
     }
 }
