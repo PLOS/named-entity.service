@@ -7,8 +7,6 @@ import io.swagger.client.auth.*;
 import java.io.UnsupportedEncodingException;
 import javax.xml.bind.DatatypeConverter;
 
-// run with : mvn install -DskipTests && mvn exec:java
-
 public class App {
     public static void main( String[] args ) throws ApiException {
 
@@ -19,8 +17,8 @@ public class App {
         // apiclient.setUsername("dev");
         // apiclient.setPassword("dev");
 
-        String username = "dev";
-        String password = "dev";
+        String username = "akita";
+        String password = "akita";
         String str = (username == null ? "" : username) + ":" + (password == null ? "" : password);
         try {
           apiclient.addDefaultHeader("Authorization", "Basic " + DatatypeConverter.printBase64Binary(str.getBytes("UTF-8")));
@@ -33,10 +31,9 @@ public class App {
         ServiceApi serviceApi = new ServiceApi(apiclient);
         TypeclassesApi typeclassesapi = new TypeclassesApi(apiclient);
 
-        System.out.println(serviceApi.config());
+        System.out.println("typeclass description: " + typeclassesapi.list(null, null).get(0).getDescription());
 
-        // TODO: regenerate client so it knows this is a list
-        System.out.println("typeclasss: " + typeclassesapi.list(null, null));
+        System.out.println(serviceApi.config());    // TODO: figure out date error
 
     }
 }

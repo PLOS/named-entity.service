@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-19T20:30:34.752-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-20T11:32:47.715-07:00")
 public class Auth   {
   
   private String email = null;
@@ -20,10 +20,10 @@ public class Auth   {
   private String verificationtoken = null;
   private String verified = null;
   private String isactive = null;
+  private Integer id = null;
   private String source = null;
   private Integer nedid = null;
   private Integer sourcetypeid = null;
-  private Integer id = null;
 
   
   /**
@@ -125,6 +125,18 @@ public class Auth   {
   /**
    **/
   @ApiModelProperty(value = "")
+  @JsonProperty("id")
+  public Integer getId() {
+    return id;
+  }
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
   @JsonProperty("source")
   public String getSource() {
     return source;
@@ -158,18 +170,6 @@ public class Auth   {
   }
 
   
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("id")
-  public Integer getId() {
-    return id;
-  }
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  
 
   @Override
   public String toString()  {
@@ -184,10 +184,10 @@ public class Auth   {
     sb.append("    verificationtoken: ").append(StringUtil.toIndentedString(verificationtoken)).append("\n");
     sb.append("    verified: ").append(StringUtil.toIndentedString(verified)).append("\n");
     sb.append("    isactive: ").append(StringUtil.toIndentedString(isactive)).append("\n");
+    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
     sb.append("    source: ").append(StringUtil.toIndentedString(source)).append("\n");
     sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
     sb.append("    sourcetypeid: ").append(StringUtil.toIndentedString(sourcetypeid)).append("\n");
-    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
     sb.append("}");
     return sb.toString();
   }

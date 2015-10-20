@@ -19,11 +19,8 @@ import io.swagger.annotations.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-/**
- * 
- **/
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-19T20:30:34.752-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-20T11:32:47.715-07:00")
 public class IndividualComposite   {
   
   private List<Individualprofile> individualprofiles = new ArrayList<Individualprofile>();
@@ -35,8 +32,8 @@ public class IndividualComposite   {
   private List<Degree> degrees = new ArrayList<Degree>();
   private List<Url> urls = new ArrayList<Url>();
   private List<Relationship> relationships = new ArrayList<Relationship>();
-  private List<Auth> credentials = new ArrayList<Auth>();
   private String typeName = null;
+  private List<Auth> credentials = new ArrayList<Auth>();
 
   
   /**
@@ -150,24 +147,24 @@ public class IndividualComposite   {
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("credentials")
-  public List<Auth> getCredentials() {
-    return credentials;
-  }
-  public void setCredentials(List<Auth> credentials) {
-    this.credentials = credentials;
-  }
-
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   @JsonProperty("typeName")
   public String getTypeName() {
     return typeName;
   }
   public void setTypeName(String typeName) {
     this.typeName = typeName;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("credentials")
+  public List<Auth> getCredentials() {
+    return credentials;
+  }
+  public void setCredentials(List<Auth> credentials) {
+    this.credentials = credentials;
   }
 
   
@@ -186,8 +183,8 @@ public class IndividualComposite   {
     sb.append("    degrees: ").append(StringUtil.toIndentedString(degrees)).append("\n");
     sb.append("    urls: ").append(StringUtil.toIndentedString(urls)).append("\n");
     sb.append("    relationships: ").append(StringUtil.toIndentedString(relationships)).append("\n");
-    sb.append("    credentials: ").append(StringUtil.toIndentedString(credentials)).append("\n");
     sb.append("    typeName: ").append(StringUtil.toIndentedString(typeName)).append("\n");
+    sb.append("    credentials: ").append(StringUtil.toIndentedString(credentials)).append("\n");
     sb.append("}");
     return sb.toString();
   }

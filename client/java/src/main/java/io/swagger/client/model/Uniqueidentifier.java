@@ -9,17 +9,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-19T20:30:34.752-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-20T11:32:47.715-07:00")
 public class Uniqueidentifier   {
   
   private Integer typeid = null;
   private String type = null;
   private String uniqueidentifier = null;
-  private String metadata = null;
+  private Integer id = null;
   private String source = null;
   private Integer nedid = null;
   private Integer sourcetypeid = null;
-  private Integer id = null;
 
   
   /**
@@ -61,12 +60,12 @@ public class Uniqueidentifier   {
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("metadata")
-  public String getMetadata() {
-    return metadata;
+  @JsonProperty("id")
+  public Integer getId() {
+    return id;
   }
-  public void setMetadata(String metadata) {
-    this.metadata = metadata;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   
@@ -106,18 +105,6 @@ public class Uniqueidentifier   {
   }
 
   
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("id")
-  public Integer getId() {
-    return id;
-  }
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  
 
   @Override
   public String toString()  {
@@ -127,11 +114,10 @@ public class Uniqueidentifier   {
     sb.append("    typeid: ").append(StringUtil.toIndentedString(typeid)).append("\n");
     sb.append("    type: ").append(StringUtil.toIndentedString(type)).append("\n");
     sb.append("    uniqueidentifier: ").append(StringUtil.toIndentedString(uniqueidentifier)).append("\n");
-    sb.append("    metadata: ").append(StringUtil.toIndentedString(metadata)).append("\n");
+    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
     sb.append("    source: ").append(StringUtil.toIndentedString(source)).append("\n");
     sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
     sb.append("    sourcetypeid: ").append(StringUtil.toIndentedString(sourcetypeid)).append("\n");
-    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
     sb.append("}");
     return sb.toString();
   }

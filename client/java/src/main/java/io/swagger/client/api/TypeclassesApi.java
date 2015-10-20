@@ -11,7 +11,7 @@ import io.swagger.client.model.Globaltype;
 
 import java.util.*;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-19T20:30:34.752-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-20T11:32:47.715-07:00")
 public class TypeclassesApi {
   private ApiClient apiClient;
 
@@ -37,9 +37,9 @@ public class TypeclassesApi {
    * 
    * @param offset 
    * @param limit 
-   * @return Typedescription
+   * @return List<Typedescription>
    */
-  public Typedescription list (Integer offset, Integer limit) throws ApiException {
+  public List<Typedescription> list (Integer offset, Integer limit) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -77,7 +77,7 @@ public class TypeclassesApi {
 
     
     
-    TypeRef returnType = new TypeRef<Typedescription>() {};
+    TypeRef returnType = new TypeRef<List<Typedescription>>() {};
     return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
     

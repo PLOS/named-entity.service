@@ -53,5 +53,6 @@ Its not required, but good to has a copy around for when the service is down.
 
 ### Java sample
 
+    cd java && mvn clean install && cd ..
     cd sample-java
     mvn install -DskipTests && mvn exec:java
