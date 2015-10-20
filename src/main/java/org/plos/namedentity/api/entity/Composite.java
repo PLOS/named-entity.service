@@ -9,7 +9,7 @@ import java.util.Objects;
 @XmlTransient
 public abstract class Composite {
 
-  abstract public Map<Class, List<? extends Entity>> getAsMap();
+  abstract public Map<Class, List<? extends Entity>> readAsMap();
 
   abstract public void setFromMap(Map<Class, List<? extends Entity>> map);
 
@@ -29,7 +29,7 @@ public abstract class Composite {
   @Override
   public int hashCode() {
 
-    Map<Class, List<? extends Entity>> compositeMap = getAsMap();
+    Map<Class, List<? extends Entity>> compositeMap = readAsMap();
 
     Object[] array = new Object[compositeMap.size()];
 

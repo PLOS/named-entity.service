@@ -3,7 +3,6 @@ package io.swagger.client.model;
 import io.swagger.client.StringUtil;
 import io.swagger.client.model.Email;
 import io.swagger.client.model.Address;
-import io.swagger.client.model.MapClassList$ExtendsOrgPlosNamedentityApiEntityEntity;
 import java.util.*;
 import io.swagger.client.model.Uniqueidentifier;
 import io.swagger.client.model.Phonenumber;
@@ -15,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-16T10:46:01.311-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-19T20:30:34.752-07:00")
 public class OrganizationComposite   {
   
   private List<Address> addresses = new ArrayList<Address>();
@@ -24,15 +23,14 @@ public class OrganizationComposite   {
   private List<Uniqueidentifier> uniqueidentifiers = new ArrayList<Uniqueidentifier>();
   private String source = null;
   private Integer nedid = null;
-  private Integer sourcetypeid = null;
-  private Boolean isactive = null;
-  private Integer typeid = null;
   private String familiarname = null;
   private String legalname = null;
   private Integer maincontactid = null;
+  private Integer sourcetypeid = null;
+  private Boolean isactive = null;
+  private Integer typeid = null;
   private String typeName = null;
   private String type = null;
-  private MapClassList$ExtendsOrgPlosNamedentityApiEntityEntity asMap = null;
 
   
   /**
@@ -110,42 +108,6 @@ public class OrganizationComposite   {
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("sourcetypeid")
-  public Integer getSourcetypeid() {
-    return sourcetypeid;
-  }
-  public void setSourcetypeid(Integer sourcetypeid) {
-    this.sourcetypeid = sourcetypeid;
-  }
-
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("isactive")
-  public Boolean getIsactive() {
-    return isactive;
-  }
-  public void setIsactive(Boolean isactive) {
-    this.isactive = isactive;
-  }
-
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("typeid")
-  public Integer getTypeid() {
-    return typeid;
-  }
-  public void setTypeid(Integer typeid) {
-    this.typeid = typeid;
-  }
-
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   @JsonProperty("familiarname")
   public String getFamiliarname() {
     return familiarname;
@@ -182,6 +144,42 @@ public class OrganizationComposite   {
   /**
    **/
   @ApiModelProperty(value = "")
+  @JsonProperty("sourcetypeid")
+  public Integer getSourcetypeid() {
+    return sourcetypeid;
+  }
+  public void setSourcetypeid(Integer sourcetypeid) {
+    this.sourcetypeid = sourcetypeid;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("isactive")
+  public Boolean getIsactive() {
+    return isactive;
+  }
+  public void setIsactive(Boolean isactive) {
+    this.isactive = isactive;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("typeid")
+  public Integer getTypeid() {
+    return typeid;
+  }
+  public void setTypeid(Integer typeid) {
+    this.typeid = typeid;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
   @JsonProperty("typeName")
   public String getTypeName() {
     return typeName;
@@ -203,18 +201,6 @@ public class OrganizationComposite   {
   }
 
   
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("asMap")
-  public MapClassList$ExtendsOrgPlosNamedentityApiEntityEntity getAsMap() {
-    return asMap;
-  }
-  public void setAsMap(MapClassList$ExtendsOrgPlosNamedentityApiEntityEntity asMap) {
-    this.asMap = asMap;
-  }
-
-  
 
   @Override
   public String toString()  {
@@ -227,15 +213,14 @@ public class OrganizationComposite   {
     sb.append("    uniqueidentifiers: ").append(StringUtil.toIndentedString(uniqueidentifiers)).append("\n");
     sb.append("    source: ").append(StringUtil.toIndentedString(source)).append("\n");
     sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
-    sb.append("    sourcetypeid: ").append(StringUtil.toIndentedString(sourcetypeid)).append("\n");
-    sb.append("    isactive: ").append(StringUtil.toIndentedString(isactive)).append("\n");
-    sb.append("    typeid: ").append(StringUtil.toIndentedString(typeid)).append("\n");
     sb.append("    familiarname: ").append(StringUtil.toIndentedString(familiarname)).append("\n");
     sb.append("    legalname: ").append(StringUtil.toIndentedString(legalname)).append("\n");
     sb.append("    maincontactid: ").append(StringUtil.toIndentedString(maincontactid)).append("\n");
+    sb.append("    sourcetypeid: ").append(StringUtil.toIndentedString(sourcetypeid)).append("\n");
+    sb.append("    isactive: ").append(StringUtil.toIndentedString(isactive)).append("\n");
+    sb.append("    typeid: ").append(StringUtil.toIndentedString(typeid)).append("\n");
     sb.append("    typeName: ").append(StringUtil.toIndentedString(typeName)).append("\n");
     sb.append("    type: ").append(StringUtil.toIndentedString(type)).append("\n");
-    sb.append("    asMap: ").append(StringUtil.toIndentedString(asMap)).append("\n");
     sb.append("}");
     return sb.toString();
   }

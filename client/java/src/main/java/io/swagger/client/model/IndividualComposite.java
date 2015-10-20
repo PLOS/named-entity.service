@@ -4,7 +4,6 @@ import io.swagger.client.StringUtil;
 import io.swagger.client.model.Group;
 import io.swagger.client.model.Email;
 import io.swagger.client.model.Address;
-import io.swagger.client.model.MapClassList$ExtendsOrgPlosNamedentityApiEntityEntity;
 import io.swagger.client.model.Degree;
 import io.swagger.client.model.Relationship;
 import io.swagger.client.model.Auth;
@@ -20,8 +19,11 @@ import io.swagger.annotations.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
+/**
+ * 
+ **/
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-16T10:46:01.311-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-19T20:30:34.752-07:00")
 public class IndividualComposite   {
   
   private List<Individualprofile> individualprofiles = new ArrayList<Individualprofile>();
@@ -35,7 +37,6 @@ public class IndividualComposite   {
   private List<Relationship> relationships = new ArrayList<Relationship>();
   private List<Auth> credentials = new ArrayList<Auth>();
   private String typeName = null;
-  private MapClassList$ExtendsOrgPlosNamedentityApiEntityEntity asMap = null;
 
   
   /**
@@ -170,18 +171,6 @@ public class IndividualComposite   {
   }
 
   
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("asMap")
-  public MapClassList$ExtendsOrgPlosNamedentityApiEntityEntity getAsMap() {
-    return asMap;
-  }
-  public void setAsMap(MapClassList$ExtendsOrgPlosNamedentityApiEntityEntity asMap) {
-    this.asMap = asMap;
-  }
-
-  
 
   @Override
   public String toString()  {
@@ -199,7 +188,6 @@ public class IndividualComposite   {
     sb.append("    relationships: ").append(StringUtil.toIndentedString(relationships)).append("\n");
     sb.append("    credentials: ").append(StringUtil.toIndentedString(credentials)).append("\n");
     sb.append("    typeName: ").append(StringUtil.toIndentedString(typeName)).append("\n");
-    sb.append("    asMap: ").append(StringUtil.toIndentedString(asMap)).append("\n");
     sb.append("}");
     return sb.toString();
   }

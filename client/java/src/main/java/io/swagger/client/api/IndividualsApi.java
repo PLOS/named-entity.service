@@ -9,7 +9,6 @@ import io.swagger.client.TypeRef;
 import io.swagger.client.model.IndividualComposite;
 import io.swagger.client.model.Address;
 import io.swagger.client.model.Auth;
-import io.swagger.client.model.Degree;
 import io.swagger.client.model.Email;
 import io.swagger.client.model.Group;
 import io.swagger.client.model.Individualprofile;
@@ -19,7 +18,7 @@ import io.swagger.client.model.Uniqueidentifier;
 
 import java.util.*;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-16T10:46:01.311-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-19T20:30:34.752-07:00")
 public class IndividualsApi {
   private ApiClient apiClient;
 
@@ -46,9 +45,9 @@ public class IndividualsApi {
    * @param entity 
    * @param attribute 
    * @param value 
-   * @return List<IndividualComposite>
+   * @return void
    */
-  public List<IndividualComposite> findIndividuals (String entity, String attribute, String value) throws ApiException {
+  public void findIndividuals (String entity, String attribute, String value) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -88,8 +87,7 @@ public class IndividualsApi {
 
     
     
-    TypeRef returnType = new TypeRef<List<IndividualComposite>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
     
     
 
@@ -259,9 +257,9 @@ public class IndividualsApi {
    * List addresses
    * 
    * @param nedId 
-   * @return List<Address>
+   * @return Address
    */
-  public List<Address> getAddresses (Integer nedId) throws ApiException {
+  public Address getAddresses (Integer nedId) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -301,7 +299,7 @@ public class IndividualsApi {
 
     
     
-    TypeRef returnType = new TypeRef<List<Address>>() {};
+    TypeRef returnType = new TypeRef<Address>() {};
     return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
     
@@ -732,9 +730,9 @@ public class IndividualsApi {
    * List degrees
    * 
    * @param nedId 
-   * @return List<Degree>
+   * @return void
    */
-  public List<Degree> getDegrees (Integer nedId) throws ApiException {
+  public void getDegrees (Integer nedId) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -774,8 +772,7 @@ public class IndividualsApi {
 
     
     
-    TypeRef returnType = new TypeRef<List<Degree>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
     
     
 
@@ -786,9 +783,9 @@ public class IndividualsApi {
    * List emails
    * 
    * @param nedId 
-   * @return List<Email>
+   * @return Email
    */
-  public List<Email> getEmails (Integer nedId) throws ApiException {
+  public Email getEmails (Integer nedId) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -828,7 +825,7 @@ public class IndividualsApi {
 
     
     
-    TypeRef returnType = new TypeRef<List<Email>>() {};
+    TypeRef returnType = new TypeRef<Email>() {};
     return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
     
@@ -1087,9 +1084,9 @@ public class IndividualsApi {
    * List groups
    * 
    * @param nedId 
-   * @return List<Group>
+   * @return void
    */
-  public List<Group> getGroups (Integer nedId) throws ApiException {
+  public void getGroups (Integer nedId) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -1129,8 +1126,7 @@ public class IndividualsApi {
 
     
     
-    TypeRef returnType = new TypeRef<List<Group>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
     
     
 
@@ -1388,9 +1384,9 @@ public class IndividualsApi {
    * List profiles
    * 
    * @param nedId 
-   * @return List<Individualprofile>
+   * @return Individualprofile
    */
-  public List<Individualprofile> getProfiles (Integer nedId) throws ApiException {
+  public Individualprofile getProfiles (Integer nedId) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -1430,7 +1426,7 @@ public class IndividualsApi {
 
     
     
-    TypeRef returnType = new TypeRef<List<Individualprofile>>() {};
+    TypeRef returnType = new TypeRef<Individualprofile>() {};
     return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
     
@@ -1689,9 +1685,9 @@ public class IndividualsApi {
    * List phone numbers
    * 
    * @param nedId 
-   * @return List<Phonenumber>
+   * @return Phonenumber
    */
-  public List<Phonenumber> getPhonenumbers (Integer nedId) throws ApiException {
+  public Phonenumber getPhonenumbers (Integer nedId) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -1731,7 +1727,7 @@ public class IndividualsApi {
 
     
     
-    TypeRef returnType = new TypeRef<List<Phonenumber>>() {};
+    TypeRef returnType = new TypeRef<Phonenumber>() {};
     return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
     
@@ -1743,15 +1739,15 @@ public class IndividualsApi {
    * List relationships
    * 
    * @param nedId 
-   * @return List<Relationship>
+   * @return void
    */
-  public List<Relationship> getRelationships (Integer nedId) throws ApiException {
+  public void getRelationship (Integer nedId) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
-        throw new ApiException(400, "Missing the required parameter 'nedId' when calling getRelationships");
+        throw new ApiException(400, "Missing the required parameter 'nedId' when calling getRelationship");
      }
      
     // create path and map variables
@@ -1785,8 +1781,7 @@ public class IndividualsApi {
 
     
     
-    TypeRef returnType = new TypeRef<List<Relationship>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
     
     
 
@@ -1858,18 +1853,18 @@ public class IndividualsApi {
    * @param relationshipId 
    * @return Relationship
    */
-  public Relationship getRelationship (Integer nedId, Integer relationshipId) throws ApiException {
+  public Relationship getRelationship_1 (Integer nedId, Integer relationshipId) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
-        throw new ApiException(400, "Missing the required parameter 'nedId' when calling getRelationship");
+        throw new ApiException(400, "Missing the required parameter 'nedId' when calling getRelationship_1");
      }
      
      // verify the required parameter 'relationshipId' is set
      if (relationshipId == null) {
-        throw new ApiException(400, "Missing the required parameter 'relationshipId' when calling getRelationship");
+        throw new ApiException(400, "Missing the required parameter 'relationshipId' when calling getRelationship_1");
      }
      
     // create path and map variables
@@ -2044,9 +2039,9 @@ public class IndividualsApi {
    * List UIDs
    * 
    * @param nedId 
-   * @return List<Uniqueidentifier>
+   * @return void
    */
-  public List<Uniqueidentifier> getUids (Integer nedId) throws ApiException {
+  public void getUids (Integer nedId) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -2086,8 +2081,7 @@ public class IndividualsApi {
 
     
     
-    TypeRef returnType = new TypeRef<List<Uniqueidentifier>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
     
     
 
