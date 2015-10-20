@@ -89,6 +89,12 @@
         <constructor-arg index="0" ref="rolesEhCache"/>
     </bean>
 
+    <bean id="userService" class="org.ambraproject.service.user.UserServiceImpl">
+        <property name="permissionsService" ref="permissionsService"/>
+        <property name="sessionFactory" ref="hibernateSessionFactoryForAdmin"/>
+        <property name="configuration" ref="ambraConfiguration"/>
+    </bean>
+
     <bean id="permissionsService" class="org.ambraproject.service.permission.PermissionsServiceImpl">
         <property name="sessionFactory" ref="hibernateSessionFactoryForAdmin"/>
         <property name="rolesCache" ref="rolesCache"/>

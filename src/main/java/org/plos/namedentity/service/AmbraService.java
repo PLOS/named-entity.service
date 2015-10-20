@@ -2,23 +2,18 @@ package org.plos.namedentity.service;
 
 
 import org.ambraproject.admin.service.AdminRolesService;
-import org.ambraproject.admin.views.UserRoleView;
 import org.ambraproject.models.UserProfile;
 import org.ambraproject.service.user.DuplicateUserException;
 import org.ambraproject.service.user.UserRegistrationService;
+import org.ambraproject.service.user.UserService;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
-import org.plos.namedentity.api.entity.Group;
 import org.plos.namedentity.api.entity.Individualprofile;
-import org.plos.namedentity.api.entity.Uniqueidentifier;
-import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.persist.NamedEntityDBService;
 
 import javax.inject.Inject;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 import static org.plos.namedentity.api.NedException.ErrorType.DatabaseError;
 
@@ -32,6 +27,9 @@ public class AmbraService {
 
   @Inject
   private NamedEntityDBService namedEntityDBService;
+
+  @Inject
+  private UserService userService;
 
 
   private static Map<String, String> ambraRoles = new HashMap<String, String>() {{
@@ -60,34 +58,45 @@ public class AmbraService {
     }
   }
 
-  public void addRole(Group group, int nedId) {
+  public void updateProfile(Individualprofile profile, Long ambraId) {
 
-    // use the nedid to find the ambraid
-    Uniqueidentifier uniqueidentifier = new Uniqueidentifier();
+    UserProfile ambraProfile = userService.getUser(ambraId);
 
-    Integer individualUidTypeId = namedEntityDBService.findTypeClass("UID Individual Types");
-    Integer ambraTypeId = namedEntityDBService.findTypeValue(individualUidTypeId, UidTypeEnum.AMBRA.getName());
 
-    uniqueidentifier.setTypeid(ambraTypeId);
-    uniqueidentifier.setNedid(nedId);
 
-    Long ambraId = Long.parseLong(namedEntityDBService.findByAttribute(uniqueidentifier).get(0).getUniqueidentifier());
 
-    List<UserRoleView> possibleRoles = rolesService.getAllRoles(ambraId);
 
-    String ambraRole = ambraRoles.get(group.getType());
-
-    try {
-      Long roleId = possibleRoles.stream()
-          .filter(r -> r.getRoleName().equals(ambraRole))
-          .findFirst().get().getID();
-
-      rolesService.grantRole(ambraId, roleId);
-    } catch (NoSuchElementException e) {
-
-      throw new NedException(DatabaseError, "Specified role does not exist in Ambra");
-    }
   }
+
+//  // this method is probably not needed
+//  public void addRole(Group group, int nedId) {
+//
+//    // use the nedid to find the ambraid
+//    Uniqueidentifier uniqueidentifier = new Uniqueidentifier();
+//
+//    Integer individualUidTypeId = namedEntityDBService.findTypeClass("UID Individual Types");
+//    Integer ambraTypeId = namedEntityDBService.findTypeValue(individualUidTypeId, UidTypeEnum.AMBRA.getName());
+//
+//    uniqueidentifier.setTypeid(ambraTypeId);
+//    uniqueidentifier.setNedid(nedId);
+//
+//    Long ambraId = Long.parseLong(namedEntityDBService.findByAttribute(uniqueidentifier).get(0).getUniqueidentifier());
+//
+//    List<UserRoleView> possibleRoles = rolesService.getAllRoles(ambraId);
+//
+//    String ambraRole = ambraRoles.get(group.getType());
+//
+//    try {
+//      Long roleId = possibleRoles.stream()
+//          .filter(r -> r.getRoleName().equals(ambraRole))
+//          .findFirst().get().getID();
+//
+//      rolesService.grantRole(ambraId, roleId);
+//    } catch (NoSuchElementException e) {
+//
+//      throw new NedException(DatabaseError, "Specified role does not exist in Ambra");
+//    }
+//  }
 
 
   private UserProfile toAmbraProfile(IndividualComposite composite) {

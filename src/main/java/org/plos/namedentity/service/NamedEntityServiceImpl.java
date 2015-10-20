@@ -327,6 +327,32 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     Integer nedId = nedDBSvc.newNamedEntityId(composite.getTypeName());
 
+    // insert user into Ambra DB
+
+    if (clazz == IndividualComposite.class) {
+
+      Long ambraId = ambraService.createUser((IndividualComposite)composite);
+
+      // insert Ambra into NED UIDs
+      Email email = ((IndividualComposite) composite).getEmails().get(0);
+
+      Uniqueidentifier uniqueidentifier = new Uniqueidentifier();
+//      uniqueidentifier.setNedid(nedId);
+      uniqueidentifier.setSource("Ambra");
+      uniqueidentifier.setType(UidTypeEnum.AMBRA.getName());
+      uniqueidentifier.setUniqueidentifier(ambraId.toString());
+      uniqueidentifier.setCreatedbyname(email.getCreatedbyname());
+      uniqueidentifier.setLastmodifiedbyname(email.getLastmodifiedbyname());
+      uniqueidentifier = resolveValuesToIds(uniqueidentifier);
+
+      ((IndividualComposite) composite).getUniqueidentifiers().add(uniqueidentifier);
+
+//      nedDBSvc.create(uniqueidentifier);
+    }
+
+
+    // insert into NED
+
     Map<Class, List<? extends Entity>> compositeMap = composite.getAsMap();
 
     for (List<? extends Entity> entities : compositeMap.values()) {
@@ -338,26 +364,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       }
     }
 
-    // insert user into Ambra DB
-
-    if (clazz == IndividualComposite.class) {
-
-      Long ambraId = ambraService.createUser((IndividualComposite)composite);
-
-      // insert Ambra UID back into NED
-      Email email = ((IndividualComposite) composite).getEmails().get(0);
-
-      Uniqueidentifier uniqueidentifier = new Uniqueidentifier();
-      uniqueidentifier.setNedid(nedId);
-      uniqueidentifier.setSource("Ambra");
-      uniqueidentifier.setType(UidTypeEnum.AMBRA.getName());
-      uniqueidentifier.setUniqueidentifier(ambraId.toString());
-      uniqueidentifier.setCreatedbyname(email.getCreatedbyname());
-      uniqueidentifier.setLastmodifiedbyname(email.getLastmodifiedbyname());
-      uniqueidentifier = resolveValuesToIds(uniqueidentifier);
-
-      nedDBSvc.create(uniqueidentifier);
-    }
+    // TODO: if NED insert fails, manually rollback ambra
 
     return findComposite(nedId, clazz);
 

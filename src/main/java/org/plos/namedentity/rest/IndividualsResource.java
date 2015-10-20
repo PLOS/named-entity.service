@@ -268,19 +268,7 @@ public class IndividualsResource extends NedResource {
   public Response createGroup(@PathParam("nedId") int nedId,
                               Group groupEntity,
                               @HeaderParam("Authorization") String authstring) {
-    Response response = createEntity(nedId, groupEntity, authstring);
-
-    try {
-      ambraService.addRole(groupEntity, nedId);
-    } catch (NedException e) {
-      return nedError(e, "Unable to create " + groupEntity.getClass().getSimpleName());
-    } catch (Exception e) {
-      return serverError(e, "Unable to create " + groupEntity.getClass().getSimpleName());
-    }
-
-    // TODO: handle rollback
-
-    return response;
+    return createEntity(nedId, groupEntity, authstring);
   }
 
   @PUT
