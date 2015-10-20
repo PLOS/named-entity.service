@@ -307,7 +307,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     try {
       T composite = (T)ctor.newInstance();
 
-      Map<Class, List<? extends Entity>> compositeMap = composite.getAsMap();
+      Map<Class, List<? extends Entity>> compositeMap = composite.readAsMap();
 
       for (Class entityType : compositeMap.keySet())
         compositeMap.put(entityType, findResolvedEntities(nedId, entityType));
@@ -327,7 +327,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     Integer nedId = nedDBSvc.newNamedEntityId(composite.getTypeName());
 
-    Map<Class, List<? extends Entity>> compositeMap = composite.getAsMap();
+    Map<Class, List<? extends Entity>> compositeMap = composite.readAsMap();
 
     for (List<? extends Entity> entities : compositeMap.values()) {
       if (entities != null) {

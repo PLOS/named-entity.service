@@ -53,7 +53,7 @@ public class IndividualComposite extends Composite implements Validatable {
   }
 
   @XmlTransient
-  public Map<Class, List<? extends Entity>> getAsMap() {
+  public Map<Class, List<? extends Entity>> readAsMap() {
 
     // use a linked map to preserve insertion order. this will ensure
     // that email inserts before auth record during composite creation
@@ -92,7 +92,7 @@ public class IndividualComposite extends Composite implements Validatable {
   @Override
   public void validate() {
 
-    Map<Class, List<? extends Entity>> compositeMap = getAsMap();
+    Map<Class, List<? extends Entity>> compositeMap = readAsMap();
 
     for (List<? extends Entity> entities : compositeMap.values()) {
 
@@ -196,7 +196,7 @@ public class IndividualComposite extends Composite implements Validatable {
   public String toString() {
     StringBuilder sb = new StringBuilder();
 
-    Map<Class, List<? extends Entity>> compositeMap = getAsMap();
+    Map<Class, List<? extends Entity>> compositeMap = readAsMap();
     for (List<? extends Entity> entities : compositeMap.values()) {
       if (entities != null) {
         for (Entity entity : entities)
