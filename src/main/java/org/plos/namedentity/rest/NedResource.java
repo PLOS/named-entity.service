@@ -132,11 +132,11 @@ public abstract class NedResource extends BaseResource {
                                 Address addressEntity,
                                 @HeaderParam("Authorization") String authstring) {
 
-    ambraService.update(addressEntity, nedId);
-
     Response response = updateEntity(nedId, addressId, addressEntity, authstring);
 
-    // TODO: roll back ambra if updateEntity fails
+    ambraService.update(addressEntity, nedId);
+
+    // TODO: roll back NED if ambra fails
 
     return response;
   }
@@ -286,19 +286,41 @@ public abstract class NedResource extends BaseResource {
     }
   }
 
+  protected  <S extends Entity> S getEntityRaw(int nedId, int pkId, Class<S> child) {
+
+//    try {
+
+      return namedEntityService.findResolvedEntities(nedId, child)
+          .stream().filter(e -> e.getId().equals(pkId)).findFirst()
+          .orElseThrow(() -> new NedException(EntityNotFound, String.format("%s (id=%d)", child.getSimpleName(), pkId)));
+//
+//    } catch (NedException e) {
+//      return nedError(e, "Find by id failed");
+//
+//    } catch (Exception e) {
+//      return serverError(e, String.format("Find %s by id failed (nedId=%d, pkId=%d)",
+//          child.getSimpleName(), nedId, pkId));
+//    }
+  }
+
   protected <S extends Entity>
   Response getEntity(int nedId, int pkId, Class<S> child) {
 
     try {
       namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
 
-      List<S> entities = namedEntityService.findResolvedEntities(nedId, child);
+      return Response.status(Response.Status.OK)
+          .entity(
+            getEntityRaw(nedId, pkId, child)
+                 ).build();
 
-      for (Entity entity : entities)
-        if (entity.getId().equals(pkId))
-          return Response.status(Response.Status.OK).entity(entity).build();
-
-      throw new NedException(EntityNotFound, String.format("%s (id=%d)", child.getSimpleName(), pkId));
+//      List<S> entities = namedEntityService.findResolvedEntities(nedId, child);
+//
+//      for (Entity entity : entities)
+//        if (entity.getId().equals(pkId))
+//          return Response.status(Response.Status.OK).entity(entity).build();
+//
+//      throw new NedException(EntityNotFound, String.format("%s (id=%d)", child.getSimpleName(), pkId));
 
     } catch (NedException e) {
       return nedError(e, "Find by id failed");

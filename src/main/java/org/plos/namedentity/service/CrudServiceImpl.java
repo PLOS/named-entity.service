@@ -51,6 +51,17 @@ public class CrudServiceImpl implements CrudService {
   @Transactional
   public <T> boolean update(T t) {
     return namedEntityDBService.update(t);
+
+
+
+
+    // update ambra
+
+
+
+
+
+
   }
 
   @Override
