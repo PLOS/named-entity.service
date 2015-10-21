@@ -195,7 +195,7 @@ public class IndividualsResource extends NedResource {
                                 @HeaderParam("Authorization") String authstring,
                                 Individualprofile entity) {
 
-    ambraService.updateProfile(entity, nedId);
+    ambraService.update(entity, nedId);
 
     Response response = updateEntity(nedId, profileId, entity, authstring);
 

@@ -37,9 +37,9 @@
             factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
             validationQuery="SELECT 1"
             testOnBorrow="true"
-            driverClassName="com.mysql.jdbc.Driver"
-            username="root"
-            password=""
-            url="jdbc:mysql://localhost/ambra" />
+            driverClassName="${tomcat.ambradb.driver}"
+            username="${tomcat.ambradb.username}"
+            password="${tomcat.ambradb.password}"
+            url="${tomcat.ambradb.url}" />
 
 </Context>

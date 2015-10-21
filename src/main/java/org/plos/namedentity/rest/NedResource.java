@@ -66,7 +66,7 @@ public abstract class NedResource extends BaseResource {
                               Email emailEntity,
                               @HeaderParam("Authorization") String authstring) {
 
-    ambraService.updateEmail(emailEntity, nedId);
+    ambraService.update(emailEntity, nedId);
 
     Response response = updateEntity(nedId, emailId, emailEntity, authstring);
 
@@ -115,7 +115,13 @@ public abstract class NedResource extends BaseResource {
                                 Address addressEntity,
                                 @HeaderParam("Authorization") String authstring) {
 
-    return createEntity(nedId, addressEntity, authstring);
+    ambraService.update(addressEntity, nedId);
+
+    Response response = createEntity(nedId, addressEntity, authstring);
+
+    // TODO: roll back ambra if updateEntity fails
+
+    return response;
   }
 
   @PUT
@@ -126,7 +132,7 @@ public abstract class NedResource extends BaseResource {
                                 Address addressEntity,
                                 @HeaderParam("Authorization") String authstring) {
 
-    ambraService.updateAddress(addressEntity, nedId);
+    ambraService.update(addressEntity, nedId);
 
     Response response = updateEntity(nedId, addressId, addressEntity, authstring);
 

@@ -49,7 +49,7 @@ to use the API and see the REST documentation visit the root of the service
 Running Tests
 -------------
 
-tests use an embedded jersey container (grizzly)
+tests using an embedded jersey container (grizzly)
 
     ./ned.sh test
 

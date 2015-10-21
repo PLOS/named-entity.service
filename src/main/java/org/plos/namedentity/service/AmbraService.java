@@ -62,19 +62,19 @@ public class AmbraService {
     }
   }
 
-  public void updateAddress(Address address, int nedId) {
+  public void update(Address address, int nedId) {
     UserProfile ambraProfile = getAmbraProfile(nedId);
     copyToAmbraPojo(address, ambraProfile);
     updateInAmbra(ambraProfile);
   }
 
-  public void updateEmail(Email email, int nedId) {
+  public void update(Email email, int nedId) {
     UserProfile ambraProfile = getAmbraProfile(nedId);
     copyToAmbraPojo(email, ambraProfile);
     updateInAmbra(ambraProfile);
   }
 
-  public void updateProfile(Individualprofile profile, int nedId) {
+  public void update(Individualprofile profile, int nedId) {
     UserProfile ambraProfile = getAmbraProfile(nedId);
     copyToAmbraPojo(profile, ambraProfile);
     updateInAmbra(ambraProfile);
