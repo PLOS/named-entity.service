@@ -1603,8 +1603,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertNotNull( auth.getAuthid() );
     assertNotNull( auth.getPassword() );
     assertNull( auth.getVerificationtoken() );
-    assertTrue( auth.getVerified().equals((byte)0) );
-    assertTrue( auth.getPasswordreset().equals((byte)0) );
+    assertTrue( auth.getVerified().equals(false) );
+    assertTrue( auth.getPasswordreset().equals(false) );
     assertEquals("jane.q.doe.work@foo.com", auth.getEmail());
     assertEquals(128, auth.getPassword().length());
 
@@ -1612,8 +1612,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    auth.setVerified((byte)1);
-    auth.setPasswordreset((byte)1);
+    auth.setVerified(true);
+    auth.setPasswordreset(true);
     auth.setVerificationtoken("0123456789abcdef");
 
     response = buildRequestDefaultAuth( authsURI+"/"+auth.getId() )
