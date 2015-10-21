@@ -24,14 +24,14 @@
   </listener>
 
   <servlet>
-    <servlet-name>Bootstrap</servlet-name>
+    <servlet-name>SwaggerBootstrap</servlet-name>
     <servlet-class>org.plos.namedentity.rest.JerseySwaggerConfig</servlet-class>
     <load-on-startup>2</load-on-startup>
   </servlet>
 
   <servlet>
-    <servlet-name>DefaultJaxrsConfig</servlet-name>
-    <servlet-class>com.wordnik.swagger.jersey.config.JerseyJaxrsConfig</servlet-class>
+    <servlet-name>Jersey2Config</servlet-name>
+    <servlet-class>io.swagger.jersey.config.JerseyJaxrsConfig</servlet-class>
     <!--<init-param>-->
     <!--<param-name>api.version</param-name>-->
     <!--<param-value>1.0.0</param-value>-->
@@ -52,7 +52,7 @@
     </init-param>
     <init-param>
       <param-name>jersey.config.server.provider.packages</param-name>
-      <param-value>com.wordnik.swagger.jaxrs.json;com.wordnik.swagger.jaxrs.listing</param-value>
+      <param-value>io.swagger.jaxrs.listing,io.swagger.sample.resource</param-value>
     </init-param>
     <init-param>
       <param-name>jersey.config.servlet.filter.staticContentRegex</param-name>
