@@ -26,14 +26,14 @@ public class AmbraService {
   @Inject
   private UserRegistrationService userRegistrationService;
 
-//  @Inject
-//  private AdminRolesService rolesService;
-
   @Inject
   private NamedEntityDBService namedEntityDBService;
 
   @Inject
   private UserService userService;
+
+//  @Inject
+//  private AdminRolesService rolesService;
 
 
 //  private static Map<String, String> ambraRoles = new HashMap<String, String>() {{
@@ -80,6 +80,10 @@ public class AmbraService {
     updateInAmbra(ambraProfile);
   }
 
+  public void updatePassword(String plaintext, int nedId) {
+    userRegistrationService.resetPassword(getEmailAddress(nedId), plaintext);
+  }
+
   private UserProfile getAmbraProfile(int nedId) {
     UserProfile ambraProfile = userService.getUser(getAmbraId(nedId));
     ambraProfile.setAuthId(getAuthId(nedId));
@@ -92,6 +96,17 @@ public class AmbraService {
       userService.updateProfile(profile);
     } catch (NoSuchUserException e) {
       throw new NedException(DatabaseError, "Ambra user does not exist");
+    }
+  }
+
+  private String getEmailAddress(int nedId) {
+    try {
+      return namedEntityDBService.findResolvedEntities(nedId, Email.class)
+          .stream()
+          .findFirst()
+          .get().getEmailaddress();
+    } catch (NoSuchElementException e) {
+      throw new NedException(DatabaseError, "Email address not found in NED");
     }
   }
 
@@ -174,26 +189,14 @@ public class AmbraService {
   private void copyToAmbraPojo(Address address, UserProfile ambraUser) {
     ambraUser.setCity(address.getCity());
     ambraUser.setCountry(address.getCountrycodetype());
-    // TODO: postaladdress
+    ambraUser.setPostalAddress(address.getAddressline1() + "\n" +
+                               address.getAddressline2() + "\n" +
+                               address.getAddressline3());
   }
 
   private void copyToAmbraPojo(Email email, UserProfile ambraUser) {
     ambraUser.setEmail(email.getEmailaddress());
   }
-
-//  private void copyToAmbraPojo(Auth auth, UserProfile ambraUser) {
-//
-
-
-
-
-  // TODO: how do we save the password?
-
-
-
-
-
-//  }
 
   private UserProfile toAmbraProfile(IndividualComposite composite) {
 

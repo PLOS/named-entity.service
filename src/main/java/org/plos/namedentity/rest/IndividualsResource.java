@@ -372,7 +372,14 @@ public class IndividualsResource extends NedResource {
                                    @PathParam("authId") int authId,
                                    @HeaderParam("Authorization") String authstring,
                                    Auth authEntity) {
-    return updateEntity(nedId, authId, authEntity, authstring);
+
+    ambraService.updatePassword(authEntity.getPlainTextPassword(), nedId);
+
+    Response response = updateEntity(nedId, authId, authEntity, authstring);
+
+    // TODO: roll back ambra if updateEntity fails
+
+    return response;
   }
 
   @POST

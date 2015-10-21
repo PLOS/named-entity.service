@@ -27,6 +27,8 @@ Its not required, but good to has a copy around for when the service is down.
 
 ### Run the sample
 
+    pip install certifi six urllib3
+
     PYTHONPATH=python python sample.py
 
 ## Ruby
