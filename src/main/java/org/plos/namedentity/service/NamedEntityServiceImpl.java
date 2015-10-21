@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -43,11 +44,6 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   @Inject private NamedEntityDBService nedDBSvc;
 
   @Inject private AmbraService ambraService;
-
-//  @Inject private UserRegistrationService userRegistrationService;
-
-//  @Inject private AdminRolesService rolesService;
-
 
   public <T extends Entity> T resolveValuesToIds(T t) {
 
@@ -337,7 +333,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       Email email = ((IndividualComposite) composite).getEmails().get(0);
 
       Uniqueidentifier uniqueidentifier = new Uniqueidentifier();
-//      uniqueidentifier.setNedid(nedId);
+      uniqueidentifier.setNedid(nedId);
       uniqueidentifier.setSource("Ambra");
       uniqueidentifier.setType(UidTypeEnum.AMBRA.getName());
       uniqueidentifier.setUniqueidentifier(ambraId.toString());
@@ -345,9 +341,10 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       uniqueidentifier.setLastmodifiedbyname(email.getLastmodifiedbyname());
       uniqueidentifier = resolveValuesToIds(uniqueidentifier);
 
-      ((IndividualComposite) composite).getUniqueidentifiers().add(uniqueidentifier);
+      if (((IndividualComposite) composite).getUniqueidentifiers() == null)
+        ((IndividualComposite) composite).setUniqueidentifiers(new ArrayList<>());
 
-//      nedDBSvc.create(uniqueidentifier);
+      ((IndividualComposite) composite).getUniqueidentifiers().add(uniqueidentifier);
     }
 
 

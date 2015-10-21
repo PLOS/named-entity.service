@@ -2,21 +2,18 @@ package org.plos.namedentity.rest;
 
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
-
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.adapter.Container;
 import org.plos.namedentity.api.entity.Auth;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Entity;
+import org.plos.namedentity.api.entity.Group;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Relationship;
-import org.plos.namedentity.api.entity.Group;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
-import org.plos.namedentity.service.AmbraService;
 import org.plos.namedentity.service.PasswordDigestService;
 
-import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -29,7 +26,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -46,9 +42,6 @@ import static org.plos.namedentity.api.NedException.ErrorType.TooManyResultsFoun
 @Path("/individuals")
 @Api(value="/individuals")
 public class IndividualsResource extends NedResource {
-
-  @Inject
-  private AmbraService ambraService;
 
   @Override
   protected String getNamedPartyType() {
@@ -201,7 +194,14 @@ public class IndividualsResource extends NedResource {
                                 @PathParam("profileId") int profileId,
                                 @HeaderParam("Authorization") String authstring,
                                 Individualprofile entity) {
-    return updateEntity(nedId, profileId, entity, authstring);
+
+    ambraService.updateProfile(entity, nedId);
+
+    Response response = updateEntity(nedId, profileId, entity, authstring);
+
+    // TODO: roll back ambra if updateEntity fails
+
+    return response;
   }
 
   @DELETE

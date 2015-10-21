@@ -1,19 +1,23 @@
 package org.plos.namedentity.service;
 
 
-import org.ambraproject.admin.service.AdminRolesService;
 import org.ambraproject.models.UserProfile;
 import org.ambraproject.service.user.DuplicateUserException;
+import org.ambraproject.service.user.NoSuchUserException;
 import org.ambraproject.service.user.UserRegistrationService;
 import org.ambraproject.service.user.UserService;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
+import org.plos.namedentity.api.entity.Address;
+import org.plos.namedentity.api.entity.Auth;
+import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Individualprofile;
+import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.persist.NamedEntityDBService;
 
 import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.NoSuchElementException;
 
 import static org.plos.namedentity.api.NedException.ErrorType.DatabaseError;
 
@@ -22,8 +26,8 @@ public class AmbraService {
   @Inject
   private UserRegistrationService userRegistrationService;
 
-  @Inject
-  private AdminRolesService rolesService;
+//  @Inject
+//  private AdminRolesService rolesService;
 
   @Inject
   private NamedEntityDBService namedEntityDBService;
@@ -32,18 +36,18 @@ public class AmbraService {
   private UserService userService;
 
 
-  private static Map<String, String> ambraRoles = new HashMap<String, String>() {{
-    put("NED Admin", "Admin");
-    put("NED Manage Users", "Manage Users");
-
-    put("Knowledge Base - PLOSONE", "AE-PLOSONE");
-    put("Knowledge Base - Pathogens", "Editor-Pathog");
-    put("Knowledge Base - Neglected Tropical Diseases", "Editor-NTDs");
-    put("Knowledge Base - Medicine", "Editor-MED");
-    put("Knowledge Base - Genetics", "Editor-Gen");
-    put("Knowledge Base - Computational Biology", "Editor-CB");
-    put("Knowledge Base - Biology", "Editor-BIO");
-  }};
+//  private static Map<String, String> ambraRoles = new HashMap<String, String>() {{
+//    put("NED Admin", "Admin");
+//    put("NED Manage Users", "Manage Users");
+//
+//    put("Knowledge Base - PLOSONE", "AE-PLOSONE");
+//    put("Knowledge Base - Pathogens", "Editor-Pathog");
+//    put("Knowledge Base - Neglected Tropical Diseases", "Editor-NTDs");
+//    put("Knowledge Base - Medicine", "Editor-MED");
+//    put("Knowledge Base - Genetics", "Editor-Gen");
+//    put("Knowledge Base - Computational Biology", "Editor-CB");
+//    put("Knowledge Base - Biology", "Editor-BIO");
+//  }};
 
   public Long createUser(IndividualComposite composite) {
 
@@ -58,14 +62,63 @@ public class AmbraService {
     }
   }
 
-  public void updateProfile(Individualprofile profile, Long ambraId) {
+  public void updateAddress(Address address, int nedId) {
+    UserProfile ambraProfile = getAmbraProfile(nedId);
+    copyToAmbraPojo(address, ambraProfile);
+    updateInAmbra(ambraProfile);
+  }
 
-    UserProfile ambraProfile = userService.getUser(ambraId);
+  public void updateEmail(Email email, int nedId) {
+    UserProfile ambraProfile = getAmbraProfile(nedId);
+    copyToAmbraPojo(email, ambraProfile);
+    updateInAmbra(ambraProfile);
+  }
 
+  public void updateProfile(Individualprofile profile, int nedId) {
+    UserProfile ambraProfile = getAmbraProfile(nedId);
+    copyToAmbraPojo(profile, ambraProfile);
+    updateInAmbra(ambraProfile);
+  }
 
+  private UserProfile getAmbraProfile(int nedId) {
+    UserProfile ambraProfile = userService.getUser(getAmbraId(nedId));
+    ambraProfile.setAuthId(getAuthId(nedId));
+    return ambraProfile;
+  }
 
+  private void updateInAmbra(UserProfile profile) {
 
+    try {
+      userService.updateProfile(profile);
+    } catch (NoSuchUserException e) {
+      throw new NedException(DatabaseError, "Ambra user does not exist");
+    }
+  }
 
+  private Long getAmbraId(int nedId) {
+
+    try {
+      return Long.parseLong(namedEntityDBService.findResolvedEntities(nedId, Uniqueidentifier.class)
+          .stream()
+          .filter(u -> u.getType().equals(UidTypeEnum.AMBRA.getName()))
+          .findFirst()
+          .get().getUniqueidentifier());
+    } catch (NoSuchElementException e) {
+      throw new NedException(DatabaseError, "Ambra ID not found in NED");
+    }
+  }
+
+  private String getAuthId(int nedId) {
+    try {
+      return namedEntityDBService.findResolvedEntities(nedId, Auth.class)
+          .stream()
+          .findFirst()
+          .get()
+          .getAuthid();
+
+    } catch (NoSuchElementException e) {
+      throw new NedException(DatabaseError, "Unable to find authId");
+    }
   }
 
 //  // this method is probably not needed
@@ -98,44 +151,64 @@ public class AmbraService {
 //    }
 //  }
 
+  private void copyToAmbraPojo(Individualprofile nedUser, UserProfile ambraUser) {
+
+    ambraUser.setDisplayName(nedUser.getDisplayname());
+
+    ambraUser.setGivenNames(nedUser.getFirstname());
+    ambraUser.setSurname(nedUser.getLastname());
+
+    String realName = nedUser.getFirstname();
+
+    if (realName == null)
+      realName = nedUser.getLastname();
+    else if (nedUser.getLastname() != null)
+      realName += "" + nedUser.getLastname();
+
+    ambraUser.setRealName(realName);
+    ambraUser.setBiography(nedUser.getBiography());
+    ambraUser.setTitle(nedUser.getNameprefix());
+
+  }
+
+  private void copyToAmbraPojo(Address address, UserProfile ambraUser) {
+    ambraUser.setCity(address.getCity());
+    ambraUser.setCountry(address.getCountrycodetype());
+    // TODO: postaladdress
+  }
+
+  private void copyToAmbraPojo(Email email, UserProfile ambraUser) {
+    ambraUser.setEmail(email.getEmailaddress());
+  }
+
+//  private void copyToAmbraPojo(Auth auth, UserProfile ambraUser) {
+//
+
+
+
+
+  // TODO: how do we save the password?
+
+
+
+
+
+//  }
 
   private UserProfile toAmbraProfile(IndividualComposite composite) {
 
-    Individualprofile profile = composite.getIndividualprofiles().get(0);
+    UserProfile result = new UserProfile();
 
-    UserProfile result = new UserProfile(
-        composite.getEmails().get(0).getEmailaddress(),
-        profile.getDisplayname(),
-        composite.getAuth().get(0).getPlainTextPassword()
-    );
+    copyToAmbraPojo(composite.getIndividualprofiles().get(0), result);
 
+    copyToAmbraPojo(composite.getEmails().get(0), result);
+    result.setPassword(composite.getAuth().get(0).getPlainTextPassword());
 
-    result.setGivenNames(profile.getFirstname());
-    result.setSurname(profile.getLastname());
+    if (composite.getAddresses() != null && composite.getAddresses().size() > 0)
+      copyToAmbraPojo(composite.getAddresses().get(0), result);
 
-    String realName = profile.getFirstname();
-
-    if (realName == null)
-      realName = profile.getLastname();
-    else if (profile.getLastname() != null)
-      realName += "" + profile.getLastname();
-
-    result.setRealName(realName);
-    result.setBiography(profile.getBiography());
-    result.setTitle(profile.getNameprefix());
-
-
-    if (composite.getAddresses() != null && composite.getAddresses().size() > 0) {
-      result.setCity(composite.getAddresses().get(0).getCity());
-      result.setCountry(composite.getAddresses().get(0).getCountrycodetype());
-      // TODO: postaladdress
-    }
-
-    if (composite.getUrls() != null && composite.getUrls().size() > 0) {
+    if (composite.getUrls() != null && composite.getUrls().size() > 0)
       result.setHomePage(composite.getUrls().get(0).getUrl());
-    }
-
-
 
     // TODO: organization
 
