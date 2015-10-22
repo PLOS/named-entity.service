@@ -178,7 +178,7 @@ public class AmbraService {
     if (realName == null)
       realName = nedUser.getLastname();
     else if (nedUser.getLastname() != null)
-      realName += "" + nedUser.getLastname();
+      realName += " " + nedUser.getLastname();
 
     ambraUser.setRealName(realName);
     ambraUser.setBiography(nedUser.getBiography());

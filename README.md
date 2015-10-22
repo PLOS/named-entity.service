@@ -16,9 +16,9 @@ this.
 Ambra Integration
 -----------------
 
-NED is configured to TEMPORARIALLY also talk to the Ambra database for some of its requests. It should be noted that and Ambra database is assumed to be configured and running alongside NED.
+NED is configured to TEMPORARILY also talk to the Ambra database for some of its requests. It should be noted that the Ambra database is assumed to be configured and running alongside NED.
 
-You most configure your context file accordingly. See the sample in config/tomcat/
+You must configure your context file accordingly. See the sample in config/tomcat/
 
 NED talks to the Ambra database via, a repackaged ambra-admin jar file that needs to be generated via the 'setup-ambra-libs.sh'. You need to run it once and it takes one argument which is the path to your local ambra-admin source directory.
 

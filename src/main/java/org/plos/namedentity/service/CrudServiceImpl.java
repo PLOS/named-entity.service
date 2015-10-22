@@ -16,7 +16,6 @@
  */
 package org.plos.namedentity.service;
 
-import org.ambraproject.admin.service.AdminRolesService;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.persist.NamedEntityDBService;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,19 +30,10 @@ public class CrudServiceImpl implements CrudService {
   @Inject
   private NamedEntityDBService namedEntityDBService;
 
-  @Inject
-  private AdminRolesService rolesService;
 
   @Override
   @Transactional
   public <T> Integer create(T t) {
-
-//    if (t.getClass() == Group.class) {
-//
-//      rolesService.revokeAllRoles(ambraId);
-//      List<UserRoleView> possibleRoles = rolesService.getAllRoles(ambraId);
-//    }
-
     return namedEntityDBService.create(t);
   }
 
