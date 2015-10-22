@@ -19,6 +19,8 @@ public class JerseySwaggerConfig extends HttpServlet {
         null // license URL
     );
 
+//    AuthorizationType auth = new
+
     ConfigFactory.config().setApiInfo(info);
     //ConfigFactory.config().setApiVersion("v1");
 
