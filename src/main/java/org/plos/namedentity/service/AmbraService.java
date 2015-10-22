@@ -11,6 +11,7 @@ import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Auth;
 import org.plos.namedentity.api.entity.Email;
+import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.api.enums.UidTypeEnum;
@@ -62,25 +63,43 @@ public class AmbraService {
     }
   }
 
-  public void update(Address address, int nedId) {
+
+  public <S extends Entity> void update(S entity) {
+
+    String cname = entity.getClass().getCanonicalName();
+
+    if (cname.equals(Individualprofile.class.getCanonicalName()))
+      update((Individualprofile) entity, entity.getNedid());
+    else if (cname.equals(Address.class.getCanonicalName()))
+      update((Address) entity, entity.getNedid());
+    else if (cname.equals(Email.class.getCanonicalName()))
+      update((Email) entity, entity.getNedid());
+    // else, its not something in Ambra, so nothing to update
+
+  }
+
+  private void update(Address address, int nedId) {
     UserProfile ambraProfile = getAmbraProfile(nedId);
     copyToAmbraPojo(address, ambraProfile);
     updateInAmbra(ambraProfile);
   }
 
-  public void update(Email email, int nedId) {
+  private void update(Email email, int nedId) {
     UserProfile ambraProfile = getAmbraProfile(nedId);
     copyToAmbraPojo(email, ambraProfile);
     updateInAmbra(ambraProfile);
   }
 
-  public void update(Individualprofile profile, int nedId) {
+  private void update(Individualprofile profile, int nedId) {
     UserProfile ambraProfile = getAmbraProfile(nedId);
     copyToAmbraPojo(profile, ambraProfile);
     updateInAmbra(ambraProfile);
   }
 
   public void updatePassword(String plaintext, int nedId) {
+
+    // TODO: move this into the generic function somehow
+
     userRegistrationService.resetPassword(getEmailAddress(nedId), plaintext);
   }
 

@@ -361,7 +361,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       }
     }
 
-    // TODO: if NED insert fails, manually rollback ambra
+    // TODO: if NED insert fails, manually rollback ambra, but how to delete from ambra?
 
     return findComposite(nedId, clazz);
 

@@ -195,19 +195,7 @@ public class IndividualsResource extends NedResource {
                                 @HeaderParam("Authorization") String authstring,
                                 Individualprofile entity) {
 
-    Individualprofile orig = getEntityRaw(nedId, profileId, entity.getClass());
-
-    Response response = updateEntity(nedId, profileId, entity, authstring);
-
-    try {
-      ambraService.update(entity, nedId);
-    } catch (Exception e) {
-      updateEntity(nedId, profileId, orig, authstring);
-      return nedError(new NedException("Error saving record to Ambra"),
-          "Unable to update profile");
-    }
-
-    return response;
+    return updateEntity(nedId, profileId, entity, authstring);
   }
 
   @DELETE

@@ -16,8 +16,8 @@
  */
 package org.plos.namedentity.service;
 
-import org.ambraproject.admin.service.AdminRolesService;
 import org.plos.namedentity.api.NedException;
+import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.persist.NamedEntityDBService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,36 +32,36 @@ public class CrudServiceImpl implements CrudService {
   private NamedEntityDBService namedEntityDBService;
 
   @Inject
-  private AdminRolesService rolesService;
+  private AmbraService ambraService;
 
   @Override
   @Transactional
   public <T> Integer create(T t) {
-
-//    if (t.getClass() == Group.class) {
-//
-//      rolesService.revokeAllRoles(ambraId);
-//      List<UserRoleView> possibleRoles = rolesService.getAllRoles(ambraId);
-//    }
-
     return namedEntityDBService.create(t);
   }
 
   @Override
   @Transactional
   public <T> boolean update(T t) {
-    return namedEntityDBService.update(t);
+    boolean nedresponse = namedEntityDBService.update(t);
+
+    if (t instanceof Entity)
+      ambraService.update((Entity)t);
+
+    // TODO: something similar in the create method above (ie - create address)
 
 
+//    String cname = t.getClass().getCanonicalName();
+//
+//    if (cname.equals(Individualprofile.class.getCanonicalName()))
+//      ambraService.update((Individualprofile)t, ((Individualprofile) t).getNedid());
+//    else if (cname.equals(Address.class.getCanonicalName()))
+//      ambraService.update((Address)t, ((Address) t).getNedid());
+//    else if (cname.equals(Email.class.getCanonicalName()))
+//      ambraService.update((Email)t, ((Email) t).getNedid());
+//    // else, its not something in Ambra
 
-
-    // update ambra
-
-
-
-
-
-
+    return nedresponse;
   }
 
   @Override
