@@ -58,7 +58,7 @@ import static org.plos.namedentity.persist.db.namedentities.Tables.TYPEDESCRIPTI
 import static org.plos.namedentity.api.enums.TypeClassEnum.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
+@ContextConfiguration(locations = {"/spring-beans.xml","/ambra-spring-beans.xml","/spring-beans.test.xml","/ambra-spring-beans.test.xml"})
 public class NamedEntityDBServiceTest {
 
   @Autowired NamedEntityDBService         nedDBSvc;
