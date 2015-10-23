@@ -20,7 +20,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/typeclasses")
-@Api(value = "/typeclasses", authorizations = {@Authorization(value = "basic")})
+@Api(value = "/typeclasses", authorizations = {@Authorization(value = "basicAuth")})
 public class TypeclassesResource extends BaseResource {
 
   private static String namedPartyType = "Typeclass";
@@ -32,7 +32,7 @@ public class TypeclassesResource extends BaseResource {
 
   @GET
   @Path("/{id}")
-  @ApiOperation(value = "Read", response = Typedescription.class, authorizations = {@Authorization(value = "basic")})
+  @ApiOperation(value = "Read", response = Typedescription.class)
   public Response read(@PathParam("id") int id) {
     try {
       return Response.status(Response.Status.OK).entity(
