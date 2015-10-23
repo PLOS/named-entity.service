@@ -168,7 +168,7 @@
         <property name="passwordDigestService" ref="ambraPasswordDigestService"/>
     </bean>
 
-    <bean id="ambraService" class="org.plos.namedentity.service.AmbraService" />
+    <bean id="ambraService" class="org.plos.namedentity.service.AmbraServiceImpl" />
 
     <!-- end temp ambra dependencies -->
 
