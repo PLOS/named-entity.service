@@ -2,6 +2,7 @@ package org.plos.namedentity.rest;
 
 import com.wordnik.swagger.config.ConfigFactory;
 import com.wordnik.swagger.model.ApiInfo;
+import com.wordnik.swagger.model.BasicAuth;
 
 import javax.servlet.http.HttpServlet;
 
@@ -20,6 +21,7 @@ public class JerseySwaggerConfig extends HttpServlet {
     );
 
     ConfigFactory.config().setApiInfo(info);
+    ConfigFactory.config().addAuthorization(new BasicAuth());
     //ConfigFactory.config().setApiVersion("v1");
 
   }

@@ -79,7 +79,19 @@
 
     <!-- temp ambra dependencies -->
 
-    <!--<bean id="propertyConfigurer" class="org.ambraproject.configuration.SpringPlaceholderConfigurer"/>-->
+
+    <!--<bean id="systemPrereqs"-->
+          <!--class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">-->
+        <!--<property name="targetObject" value="#{@systemProperties}" />-->
+        <!--<property name="targetMethod" value="putAll" />-->
+        <!--<property name="arguments">-->
+            <!--&lt;!&ndash; The new Properties &ndash;&gt;-->
+            <!--<util:properties>-->
+                <!--<prop key="SYSTEM_OBJECT_ID_PREFIX">info:doi/10.1371/</prop>-->
+                <!--<prop key="ambra.configuration">classpath:ambra-config.xml</prop>-->
+            <!--</util:properties>-->
+        <!--</property>-->
+    <!--</bean>-->
 
     <bean id="rolesEhCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
         <property name="cacheName" value="RolesCache"/>
@@ -156,7 +168,7 @@
         <property name="passwordDigestService" ref="ambraPasswordDigestService"/>
     </bean>
 
-    <bean id="ambraService" class="org.plos.namedentity.service.AmbraService" />
+    <bean id="ambraService" class="org.plos.namedentity.service.AmbraServiceImpl" />
 
     <!-- end temp ambra dependencies -->
 

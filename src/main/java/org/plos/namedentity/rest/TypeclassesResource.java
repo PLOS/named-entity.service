@@ -3,6 +3,7 @@ package org.plos.namedentity.rest;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
+import com.wordnik.swagger.annotations.Authorization;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Globaltype;
 import org.plos.namedentity.api.entity.Typedescription;
@@ -19,7 +20,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/typeclasses")
-@Api("/typeclasses")
+@Api(value = "/typeclasses", authorizations = {@Authorization(value = "basicAuth")})
 public class TypeclassesResource extends BaseResource {
 
   private static String namedPartyType = "Typeclass";
