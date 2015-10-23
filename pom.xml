@@ -332,7 +332,7 @@
         <version>1.1</version>
         <configuration>
           <contextFile>${basedir}/target/classes/context.xml</contextFile>
-          <path>/</path>
+          <path>/vx</path>
         </configuration>
         <dependencies>
           <dependency>

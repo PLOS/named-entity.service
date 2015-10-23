@@ -26,13 +26,16 @@ import org.plos.namedentity.service.InfoService;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
 @Path("/service")
 @Api("/service")
+@Produces({MediaType.APPLICATION_JSON})
 public class InfoResource {
 
   @Inject

@@ -3,6 +3,7 @@ package org.plos.namedentity.rest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import io.swagger.annotations.Authorization;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.adapter.Container;
@@ -42,7 +43,8 @@ import static org.plos.namedentity.api.NedException.ErrorType.PasswordNotSpecifi
 import static org.plos.namedentity.api.NedException.ErrorType.TooManyResultsFound;
 
 @Path("/individuals")
-@Api(value="/individuals")
+@Api(value="/individuals", authorizations = {@Authorization(value = "basic")})
+//@Produces(MediaType.APPLICATION_JSON)
 public class IndividualsResource extends NedResource {
 
   @Override
@@ -79,7 +81,6 @@ public class IndividualsResource extends NedResource {
   }
 
   @GET
-  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   @ApiOperation(value = "Find individual matching specified attribute.")
   public Response findIndividuals(@QueryParam("entity")    String entity,
                                   @QueryParam("attribute") String attribute,
@@ -121,7 +122,6 @@ public class IndividualsResource extends NedResource {
 
   @GET
   @Path("/{nedId}")
-  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   @ApiOperation(value = "Read individual by Ned ID", response = IndividualComposite.class)
   public Response readIndividual(@PathParam("nedId") int nedId) {
     try {

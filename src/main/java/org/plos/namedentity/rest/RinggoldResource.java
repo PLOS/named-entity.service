@@ -38,12 +38,12 @@ import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
 
 @Path("/institutionsearch")
 @Api("/institutionsearch")
+@Produces(MediaType.APPLICATION_JSON)
 public class RinggoldResource extends BaseResource {
 
   @Inject protected RinggoldService ringgoldService;
 
   @GET
-  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   @ApiOperation(value = "Find institution(s) by name fragment (wildcard search).")
   public Response findInstitutionsByName(@QueryParam("substring") String search_string) {
     try {

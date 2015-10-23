@@ -36,6 +36,8 @@
         url = window.location.pathname.split('/').slice(0,-2).concat("swagger.json").join("/");
       }
 
+      console.log("url : " + url);
+
       // Pre load translate...
       if(window.SwaggerTranslator) {
         window.SwaggerTranslator.translate();
