@@ -854,7 +854,7 @@
         "tags" : [ "individuals" ],
         "summary" : "List relationships",
         "description" : "",
-        "operationId" : "getRelationship",
+        "operationId" : "getRelationships",
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -868,7 +868,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/definitions/void"
+                "$ref" : "#/definitions/Relationship"
               }
             }
           }
@@ -2239,12 +2239,12 @@
           "type" : "integer",
           "format" : "int32"
         },
-        "isactive" : {
-          "type" : "boolean"
-        },
         "typeid" : {
           "type" : "integer",
           "format" : "int32"
+        },
+        "isactive" : {
+          "type" : "boolean"
         },
         "familiarname" : {
           "type" : "string"
@@ -2261,9 +2261,6 @@
         },
         "type" : {
           "type" : "string"
-        },
-        "asMap" : {
-          "$ref" : "#/definitions/Map[Class,List[? extends org.plos.namedentity.api.entity.Entity]]"
         }
       }
     },
@@ -2288,6 +2285,9 @@
           "type" : "string"
         },
         "uniqueidentifier" : {
+          "type" : "string"
+        },
+        "metadata" : {
           "type" : "string"
         },
         "source" : {
@@ -2465,19 +2465,16 @@
           "type" : "string"
         },
         "passwordreset" : {
-          "type" : "string",
-          "format" : "byte"
+          "type" : "boolean"
         },
         "verificationtoken" : {
           "type" : "string"
         },
         "verified" : {
-          "type" : "string",
-          "format" : "byte"
+          "type" : "boolean"
         },
         "isactive" : {
-          "type" : "string",
-          "format" : "byte"
+          "type" : "boolean"
         },
         "source" : {
           "type" : "string"
@@ -2601,9 +2598,6 @@
         },
         "typeName" : {
           "type" : "string"
-        },
-        "asMap" : {
-          "$ref" : "#/definitions/Map[Class,List[? extends org.plos.namedentity.api.entity.Entity]]"
         }
       }
     },

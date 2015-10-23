@@ -9,21 +9,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-20T11:32:47.715-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-22T17:32:27.863-07:00")
 public class Auth   {
   
   private String email = null;
   private Integer emailid = null;
   private String authid = null;
   private String password = null;
-  private String passwordreset = null;
+  private Boolean passwordreset = null;
   private String verificationtoken = null;
-  private String verified = null;
-  private String isactive = null;
-  private Integer id = null;
+  private Boolean verified = null;
+  private Boolean isactive = null;
   private String source = null;
   private Integer nedid = null;
   private Integer sourcetypeid = null;
+  private Integer id = null;
 
   
   /**
@@ -78,10 +78,10 @@ public class Auth   {
    **/
   @ApiModelProperty(value = "")
   @JsonProperty("passwordreset")
-  public String getPasswordreset() {
+  public Boolean getPasswordreset() {
     return passwordreset;
   }
-  public void setPasswordreset(String passwordreset) {
+  public void setPasswordreset(Boolean passwordreset) {
     this.passwordreset = passwordreset;
   }
 
@@ -102,10 +102,10 @@ public class Auth   {
    **/
   @ApiModelProperty(value = "")
   @JsonProperty("verified")
-  public String getVerified() {
+  public Boolean getVerified() {
     return verified;
   }
-  public void setVerified(String verified) {
+  public void setVerified(Boolean verified) {
     this.verified = verified;
   }
 
@@ -114,23 +114,11 @@ public class Auth   {
    **/
   @ApiModelProperty(value = "")
   @JsonProperty("isactive")
-  public String getIsactive() {
+  public Boolean getIsactive() {
     return isactive;
   }
-  public void setIsactive(String isactive) {
+  public void setIsactive(Boolean isactive) {
     this.isactive = isactive;
-  }
-
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("id")
-  public Integer getId() {
-    return id;
-  }
-  public void setId(Integer id) {
-    this.id = id;
   }
 
   
@@ -170,6 +158,18 @@ public class Auth   {
   }
 
   
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("id")
+  public Integer getId() {
+    return id;
+  }
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  
 
   @Override
   public String toString()  {
@@ -184,10 +184,10 @@ public class Auth   {
     sb.append("    verificationtoken: ").append(StringUtil.toIndentedString(verificationtoken)).append("\n");
     sb.append("    verified: ").append(StringUtil.toIndentedString(verified)).append("\n");
     sb.append("    isactive: ").append(StringUtil.toIndentedString(isactive)).append("\n");
-    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
     sb.append("    source: ").append(StringUtil.toIndentedString(source)).append("\n");
     sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
     sb.append("    sourcetypeid: ").append(StringUtil.toIndentedString(sourcetypeid)).append("\n");
+    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
     sb.append("}");
     return sb.toString();
   }

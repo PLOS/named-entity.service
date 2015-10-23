@@ -1,7 +1,7 @@
 module SwaggerClient
   # 
   class Degree < BaseObject
-    attr_accessor :typeid, :type, :id, :source, :nedid, :sourcetypeid
+    attr_accessor :typeid, :type, :source, :nedid, :sourcetypeid, :id
     # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
@@ -13,16 +13,16 @@ module SwaggerClient
         :'type' => :'type',
         
         # 
-        :'id' => :'id',
-        
-        # 
         :'source' => :'source',
         
         # 
         :'nedid' => :'nedid',
         
         # 
-        :'sourcetypeid' => :'sourcetypeid'
+        :'sourcetypeid' => :'sourcetypeid',
+        
+        # 
+        :'id' => :'id'
         
       }
     end
@@ -32,10 +32,10 @@ module SwaggerClient
       {
         :'typeid' => :'Integer',
         :'type' => :'String',
-        :'id' => :'Integer',
         :'source' => :'String',
         :'nedid' => :'Integer',
-        :'sourcetypeid' => :'Integer'
+        :'sourcetypeid' => :'Integer',
+        :'id' => :'Integer'
         
       }
     end
@@ -55,10 +55,6 @@ module SwaggerClient
         self.type = attributes[:'type']
       end
       
-      if attributes[:'id']
-        self.id = attributes[:'id']
-      end
-      
       if attributes[:'source']
         self.source = attributes[:'source']
       end
@@ -69,6 +65,10 @@ module SwaggerClient
       
       if attributes[:'sourcetypeid']
         self.sourcetypeid = attributes[:'sourcetypeid']
+      end
+      
+      if attributes[:'id']
+        self.id = attributes[:'id']
       end
       
     end

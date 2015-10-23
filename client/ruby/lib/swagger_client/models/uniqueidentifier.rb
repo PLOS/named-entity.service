@@ -1,7 +1,7 @@
 module SwaggerClient
   # 
   class Uniqueidentifier < BaseObject
-    attr_accessor :typeid, :type, :uniqueidentifier, :id, :source, :nedid, :sourcetypeid
+    attr_accessor :typeid, :type, :uniqueidentifier, :metadata, :source, :nedid, :sourcetypeid, :id
     # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
@@ -16,7 +16,7 @@ module SwaggerClient
         :'uniqueidentifier' => :'uniqueidentifier',
         
         # 
-        :'id' => :'id',
+        :'metadata' => :'metadata',
         
         # 
         :'source' => :'source',
@@ -25,7 +25,10 @@ module SwaggerClient
         :'nedid' => :'nedid',
         
         # 
-        :'sourcetypeid' => :'sourcetypeid'
+        :'sourcetypeid' => :'sourcetypeid',
+        
+        # 
+        :'id' => :'id'
         
       }
     end
@@ -36,10 +39,11 @@ module SwaggerClient
         :'typeid' => :'Integer',
         :'type' => :'String',
         :'uniqueidentifier' => :'String',
-        :'id' => :'Integer',
+        :'metadata' => :'String',
         :'source' => :'String',
         :'nedid' => :'Integer',
-        :'sourcetypeid' => :'Integer'
+        :'sourcetypeid' => :'Integer',
+        :'id' => :'Integer'
         
       }
     end
@@ -63,8 +67,8 @@ module SwaggerClient
         self.uniqueidentifier = attributes[:'uniqueidentifier']
       end
       
-      if attributes[:'id']
-        self.id = attributes[:'id']
+      if attributes[:'metadata']
+        self.metadata = attributes[:'metadata']
       end
       
       if attributes[:'source']
@@ -77,6 +81,10 @@ module SwaggerClient
       
       if attributes[:'sourcetypeid']
         self.sourcetypeid = attributes[:'sourcetypeid']
+      end
+      
+      if attributes[:'id']
+        self.id = attributes[:'id']
       end
       
     end

@@ -47,8 +47,7 @@ class IndividualComposite(object):
             'urls': 'list[Url]',
             'relationships': 'list[Relationship]',
             'credentials': 'list[Auth]',
-            'type_name': 'str',
-            'as_map': 'MapClassList$ExtendsOrgPlosNamedentityApiEntityEntity'
+            'type_name': 'str'
         }
 
         self.attribute_map = {
@@ -62,8 +61,7 @@ class IndividualComposite(object):
             'urls': 'urls',
             'relationships': 'relationships',
             'credentials': 'credentials',
-            'type_name': 'typeName',
-            'as_map': 'asMap'
+            'type_name': 'typeName'
         }
 
         self._individualprofiles = None
@@ -77,7 +75,6 @@ class IndividualComposite(object):
         self._relationships = None
         self._credentials = None
         self._type_name = None
-        self._as_map = None
 
     @property
     def individualprofiles(self):
@@ -320,28 +317,6 @@ class IndividualComposite(object):
         :type: str
         """
         self._type_name = type_name
-
-    @property
-    def as_map(self):
-        """
-        Gets the as_map of this IndividualComposite.
-
-
-        :return: The as_map of this IndividualComposite.
-        :rtype: MapClassList$ExtendsOrgPlosNamedentityApiEntityEntity
-        """
-        return self._as_map
-
-    @as_map.setter
-    def as_map(self, as_map):
-        """
-        Sets the as_map of this IndividualComposite.
-
-
-        :param as_map: The as_map of this IndividualComposite.
-        :type: MapClassList$ExtendsOrgPlosNamedentityApiEntityEntity
-        """
-        self._as_map = as_map
 
     def to_dict(self):
         """

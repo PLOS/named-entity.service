@@ -11,7 +11,7 @@ import io.swagger.client.model.Globaltype;
 
 import java.util.*;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-20T11:32:47.715-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-22T17:32:27.863-07:00")
 public class TypeclassesApi {
   private ApiClient apiClient;
 

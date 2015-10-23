@@ -1,7 +1,7 @@
 module SwaggerClient
   # 
   class Individualprofile < BaseObject
-    attr_accessor :firstname, :middlename, :lastname, :nickname, :nameprefix, :nameprefixtypeid, :namesuffix, :namesuffixtypeid, :displayname, :biography, :isactive, :id, :source, :nedid, :sourcetypeid
+    attr_accessor :firstname, :middlename, :lastname, :nickname, :nameprefix, :nameprefixtypeid, :namesuffix, :namesuffixtypeid, :displayname, :biography, :isactive, :source, :nedid, :sourcetypeid, :id
     # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
@@ -40,16 +40,16 @@ module SwaggerClient
         :'isactive' => :'isactive',
         
         # 
-        :'id' => :'id',
-        
-        # 
         :'source' => :'source',
         
         # 
         :'nedid' => :'nedid',
         
         # 
-        :'sourcetypeid' => :'sourcetypeid'
+        :'sourcetypeid' => :'sourcetypeid',
+        
+        # 
+        :'id' => :'id'
         
       }
     end
@@ -68,10 +68,10 @@ module SwaggerClient
         :'displayname' => :'String',
         :'biography' => :'String',
         :'isactive' => :'BOOLEAN',
-        :'id' => :'Integer',
         :'source' => :'String',
         :'nedid' => :'Integer',
-        :'sourcetypeid' => :'Integer'
+        :'sourcetypeid' => :'Integer',
+        :'id' => :'Integer'
         
       }
     end
@@ -127,10 +127,6 @@ module SwaggerClient
         self.isactive = attributes[:'isactive']
       end
       
-      if attributes[:'id']
-        self.id = attributes[:'id']
-      end
-      
       if attributes[:'source']
         self.source = attributes[:'source']
       end
@@ -141,6 +137,10 @@ module SwaggerClient
       
       if attributes[:'sourcetypeid']
         self.sourcetypeid = attributes[:'sourcetypeid']
+      end
+      
+      if attributes[:'id']
+        self.id = attributes[:'id']
       end
       
     end

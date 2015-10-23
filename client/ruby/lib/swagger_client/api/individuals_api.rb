@@ -1574,14 +1574,14 @@ module SwaggerClient
     # 
     # @param ned_id 
     # @param [Hash] opts the optional parameters
-    # @return [Array<void>]
-    def get_relationship(ned_id, opts = {})
+    # @return [Array<Relationship>]
+    def get_relationships(ned_id, opts = {})
       if Configuration.debugging
-        Configuration.logger.debug "Calling API: IndividualsApi#get_relationship ..."
+        Configuration.logger.debug "Calling API: IndividualsApi#get_relationships ..."
       end
       
       # verify the required parameter 'ned_id' is set
-      fail "Missing the required parameter 'ned_id' when calling get_relationship" if ned_id.nil?
+      fail "Missing the required parameter 'ned_id' when calling get_relationships" if ned_id.nil?
       
       # resource path
       path = "/individuals/{nedId}/relationships".sub('{format}','json').sub('{' + 'nedId' + '}', ned_id.to_s)
@@ -1614,9 +1614,9 @@ module SwaggerClient
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
-        :return_type => 'Array<void>')
+        :return_type => 'Array<Relationship>')
       if Configuration.debugging
-        Configuration.logger.debug "API called: IndividualsApi#get_relationship. Result: #{result.inspect}"
+        Configuration.logger.debug "API called: IndividualsApi#get_relationships. Result: #{result.inspect}"
       end
       return result
     end
@@ -1681,16 +1681,16 @@ module SwaggerClient
     # @param relationship_id 
     # @param [Hash] opts the optional parameters
     # @return [Relationship]
-    def get_relationship_1(ned_id, relationship_id, opts = {})
+    def get_relationship(ned_id, relationship_id, opts = {})
       if Configuration.debugging
-        Configuration.logger.debug "Calling API: IndividualsApi#get_relationship_1 ..."
+        Configuration.logger.debug "Calling API: IndividualsApi#get_relationship ..."
       end
       
       # verify the required parameter 'ned_id' is set
-      fail "Missing the required parameter 'ned_id' when calling get_relationship_1" if ned_id.nil?
+      fail "Missing the required parameter 'ned_id' when calling get_relationship" if ned_id.nil?
       
       # verify the required parameter 'relationship_id' is set
-      fail "Missing the required parameter 'relationship_id' when calling get_relationship_1" if relationship_id.nil?
+      fail "Missing the required parameter 'relationship_id' when calling get_relationship" if relationship_id.nil?
       
       # resource path
       path = "/individuals/{nedId}/relationships/{relationshipId}".sub('{format}','json').sub('{' + 'nedId' + '}', ned_id.to_s).sub('{' + 'relationshipId' + '}', relationship_id.to_s)
@@ -1725,7 +1725,7 @@ module SwaggerClient
         :auth_names => auth_names,
         :return_type => 'Relationship')
       if Configuration.debugging
-        Configuration.logger.debug "API called: IndividualsApi#get_relationship_1. Result: #{result.inspect}"
+        Configuration.logger.debug "API called: IndividualsApi#get_relationship. Result: #{result.inspect}"
       end
       return result
     end

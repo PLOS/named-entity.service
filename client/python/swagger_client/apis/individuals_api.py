@@ -2457,7 +2457,7 @@ class IndividualsApi(object):
                                             callback=params.get('callback'))
         return response
 
-    def get_relationship(self, ned_id, **kwargs):
+    def get_relationships(self, ned_id, **kwargs):
         """
         List relationships
         
@@ -2468,18 +2468,18 @@ class IndividualsApi(object):
         >>> def callback_function(response):
         >>>     pprint(response)
         >>>
-        >>> thread = api.get_relationship(ned_id, callback=callback_function)
+        >>> thread = api.get_relationships(ned_id, callback=callback_function)
 
         :param callback function: The callback function
             for asynchronous request. (optional)
         :param int ned_id:  (required)
-        :return: list[Void]
+        :return: list[Relationship]
                  If the method is called asynchronously,
                  returns the request thread.
         """
         # verify the required parameter 'ned_id' is set
         if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `get_relationship`")
+            raise ValueError("Missing the required parameter `ned_id` when calling `get_relationships`")
 
         all_params = ['ned_id']
         all_params.append('callback')
@@ -2489,7 +2489,7 @@ class IndividualsApi(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method get_relationship" % key
+                    " to method get_relationships" % key
                 )
             params[key] = val
         del params['kwargs']
@@ -2530,7 +2530,7 @@ class IndividualsApi(object):
                                             body=body_params,
                                             post_params=form_params,
                                             files=files,
-                                            response_type='list[Void]',
+                                            response_type='list[Relationship]',
                                             auth_settings=auth_settings,
                                             callback=params.get('callback'))
         return response
@@ -2619,7 +2619,7 @@ class IndividualsApi(object):
                                             callback=params.get('callback'))
         return response
 
-    def get_relationship_1(self, ned_id, relationship_id, **kwargs):
+    def get_relationship(self, ned_id, relationship_id, **kwargs):
         """
         Read relationship
         
@@ -2630,7 +2630,7 @@ class IndividualsApi(object):
         >>> def callback_function(response):
         >>>     pprint(response)
         >>>
-        >>> thread = api.get_relationship_1(ned_id, relationship_id, callback=callback_function)
+        >>> thread = api.get_relationship(ned_id, relationship_id, callback=callback_function)
 
         :param callback function: The callback function
             for asynchronous request. (optional)
@@ -2642,10 +2642,10 @@ class IndividualsApi(object):
         """
         # verify the required parameter 'ned_id' is set
         if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `get_relationship_1`")
+            raise ValueError("Missing the required parameter `ned_id` when calling `get_relationship`")
         # verify the required parameter 'relationship_id' is set
         if relationship_id is None:
-            raise ValueError("Missing the required parameter `relationship_id` when calling `get_relationship_1`")
+            raise ValueError("Missing the required parameter `relationship_id` when calling `get_relationship`")
 
         all_params = ['ned_id', 'relationship_id']
         all_params.append('callback')
@@ -2655,7 +2655,7 @@ class IndividualsApi(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method get_relationship_1" % key
+                    " to method get_relationship" % key
                 )
             params[key] = val
         del params['kwargs']

@@ -14,23 +14,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-20T11:32:47.715-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-22T17:32:27.863-07:00")
 public class OrganizationComposite   {
   
   private List<Address> addresses = new ArrayList<Address>();
   private List<Email> emails = new ArrayList<Email>();
   private List<Phonenumber> phonenumbers = new ArrayList<Phonenumber>();
   private List<Uniqueidentifier> uniqueidentifiers = new ArrayList<Uniqueidentifier>();
-  private String typeName = null;
-  private String type = null;
   private String source = null;
   private Integer nedid = null;
-  private Boolean isactive = null;
   private Integer sourcetypeid = null;
   private Integer typeid = null;
+  private Boolean isactive = null;
   private String familiarname = null;
   private String legalname = null;
   private Integer maincontactid = null;
+  private String typeName = null;
+  private String type = null;
 
   
   /**
@@ -84,30 +84,6 @@ public class OrganizationComposite   {
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("typeName")
-  public String getTypeName() {
-    return typeName;
-  }
-  public void setTypeName(String typeName) {
-    this.typeName = typeName;
-  }
-
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("type")
-  public String getType() {
-    return type;
-  }
-  public void setType(String type) {
-    this.type = type;
-  }
-
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   @JsonProperty("source")
   public String getSource() {
     return source;
@@ -132,18 +108,6 @@ public class OrganizationComposite   {
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("isactive")
-  public Boolean getIsactive() {
-    return isactive;
-  }
-  public void setIsactive(Boolean isactive) {
-    this.isactive = isactive;
-  }
-
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   @JsonProperty("sourcetypeid")
   public Integer getSourcetypeid() {
     return sourcetypeid;
@@ -162,6 +126,18 @@ public class OrganizationComposite   {
   }
   public void setTypeid(Integer typeid) {
     this.typeid = typeid;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("isactive")
+  public Boolean getIsactive() {
+    return isactive;
+  }
+  public void setIsactive(Boolean isactive) {
+    this.isactive = isactive;
   }
 
   
@@ -201,6 +177,30 @@ public class OrganizationComposite   {
   }
 
   
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("typeName")
+  public String getTypeName() {
+    return typeName;
+  }
+  public void setTypeName(String typeName) {
+    this.typeName = typeName;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("type")
+  public String getType() {
+    return type;
+  }
+  public void setType(String type) {
+    this.type = type;
+  }
+
+  
 
   @Override
   public String toString()  {
@@ -211,16 +211,16 @@ public class OrganizationComposite   {
     sb.append("    emails: ").append(StringUtil.toIndentedString(emails)).append("\n");
     sb.append("    phonenumbers: ").append(StringUtil.toIndentedString(phonenumbers)).append("\n");
     sb.append("    uniqueidentifiers: ").append(StringUtil.toIndentedString(uniqueidentifiers)).append("\n");
-    sb.append("    typeName: ").append(StringUtil.toIndentedString(typeName)).append("\n");
-    sb.append("    type: ").append(StringUtil.toIndentedString(type)).append("\n");
     sb.append("    source: ").append(StringUtil.toIndentedString(source)).append("\n");
     sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
-    sb.append("    isactive: ").append(StringUtil.toIndentedString(isactive)).append("\n");
     sb.append("    sourcetypeid: ").append(StringUtil.toIndentedString(sourcetypeid)).append("\n");
     sb.append("    typeid: ").append(StringUtil.toIndentedString(typeid)).append("\n");
+    sb.append("    isactive: ").append(StringUtil.toIndentedString(isactive)).append("\n");
     sb.append("    familiarname: ").append(StringUtil.toIndentedString(familiarname)).append("\n");
     sb.append("    legalname: ").append(StringUtil.toIndentedString(legalname)).append("\n");
     sb.append("    maincontactid: ").append(StringUtil.toIndentedString(maincontactid)).append("\n");
+    sb.append("    typeName: ").append(StringUtil.toIndentedString(typeName)).append("\n");
+    sb.append("    type: ").append(StringUtil.toIndentedString(type)).append("\n");
     sb.append("}");
     return sb.toString();
   }

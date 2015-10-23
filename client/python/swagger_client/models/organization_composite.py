@@ -44,14 +44,13 @@ class OrganizationComposite(object):
             'source': 'str',
             'nedid': 'int',
             'sourcetypeid': 'int',
-            'isactive': 'bool',
             'typeid': 'int',
+            'isactive': 'bool',
             'familiarname': 'str',
             'legalname': 'str',
             'maincontactid': 'int',
             'type_name': 'str',
-            'type': 'str',
-            'as_map': 'MapClassList$ExtendsOrgPlosNamedentityApiEntityEntity'
+            'type': 'str'
         }
 
         self.attribute_map = {
@@ -62,14 +61,13 @@ class OrganizationComposite(object):
             'source': 'source',
             'nedid': 'nedid',
             'sourcetypeid': 'sourcetypeid',
-            'isactive': 'isactive',
             'typeid': 'typeid',
+            'isactive': 'isactive',
             'familiarname': 'familiarname',
             'legalname': 'legalname',
             'maincontactid': 'maincontactid',
             'type_name': 'typeName',
-            'type': 'type',
-            'as_map': 'asMap'
+            'type': 'type'
         }
 
         self._addresses = None
@@ -79,14 +77,13 @@ class OrganizationComposite(object):
         self._source = None
         self._nedid = None
         self._sourcetypeid = None
-        self._isactive = None
         self._typeid = None
+        self._isactive = None
         self._familiarname = None
         self._legalname = None
         self._maincontactid = None
         self._type_name = None
         self._type = None
-        self._as_map = None
 
     @property
     def addresses(self):
@@ -243,28 +240,6 @@ class OrganizationComposite(object):
         self._sourcetypeid = sourcetypeid
 
     @property
-    def isactive(self):
-        """
-        Gets the isactive of this OrganizationComposite.
-
-
-        :return: The isactive of this OrganizationComposite.
-        :rtype: bool
-        """
-        return self._isactive
-
-    @isactive.setter
-    def isactive(self, isactive):
-        """
-        Sets the isactive of this OrganizationComposite.
-
-
-        :param isactive: The isactive of this OrganizationComposite.
-        :type: bool
-        """
-        self._isactive = isactive
-
-    @property
     def typeid(self):
         """
         Gets the typeid of this OrganizationComposite.
@@ -285,6 +260,28 @@ class OrganizationComposite(object):
         :type: int
         """
         self._typeid = typeid
+
+    @property
+    def isactive(self):
+        """
+        Gets the isactive of this OrganizationComposite.
+
+
+        :return: The isactive of this OrganizationComposite.
+        :rtype: bool
+        """
+        return self._isactive
+
+    @isactive.setter
+    def isactive(self, isactive):
+        """
+        Sets the isactive of this OrganizationComposite.
+
+
+        :param isactive: The isactive of this OrganizationComposite.
+        :type: bool
+        """
+        self._isactive = isactive
 
     @property
     def familiarname(self):
@@ -395,28 +392,6 @@ class OrganizationComposite(object):
         :type: str
         """
         self._type = type
-
-    @property
-    def as_map(self):
-        """
-        Gets the as_map of this OrganizationComposite.
-
-
-        :return: The as_map of this OrganizationComposite.
-        :rtype: MapClassList$ExtendsOrgPlosNamedentityApiEntityEntity
-        """
-        return self._as_map
-
-    @as_map.setter
-    def as_map(self, as_map):
-        """
-        Sets the as_map of this OrganizationComposite.
-
-
-        :param as_map: The as_map of this OrganizationComposite.
-        :type: MapClassList$ExtendsOrgPlosNamedentityApiEntityEntity
-        """
-        self._as_map = as_map
 
     def to_dict(self):
         """

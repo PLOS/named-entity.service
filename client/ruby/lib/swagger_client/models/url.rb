@@ -1,7 +1,7 @@
 module SwaggerClient
   # 
   class Url < BaseObject
-    attr_accessor :url, :id, :source, :nedid, :sourcetypeid
+    attr_accessor :url, :source, :nedid, :sourcetypeid, :id
     # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
@@ -10,16 +10,16 @@ module SwaggerClient
         :'url' => :'url',
         
         # 
-        :'id' => :'id',
-        
-        # 
         :'source' => :'source',
         
         # 
         :'nedid' => :'nedid',
         
         # 
-        :'sourcetypeid' => :'sourcetypeid'
+        :'sourcetypeid' => :'sourcetypeid',
+        
+        # 
+        :'id' => :'id'
         
       }
     end
@@ -28,10 +28,10 @@ module SwaggerClient
     def self.swagger_types
       {
         :'url' => :'String',
-        :'id' => :'Integer',
         :'source' => :'String',
         :'nedid' => :'Integer',
-        :'sourcetypeid' => :'Integer'
+        :'sourcetypeid' => :'Integer',
+        :'id' => :'Integer'
         
       }
     end
@@ -47,10 +47,6 @@ module SwaggerClient
         self.url = attributes[:'url']
       end
       
-      if attributes[:'id']
-        self.id = attributes[:'id']
-      end
-      
       if attributes[:'source']
         self.source = attributes[:'source']
       end
@@ -61,6 +57,10 @@ module SwaggerClient
       
       if attributes[:'sourcetypeid']
         self.sourcetypeid = attributes[:'sourcetypeid']
+      end
+      
+      if attributes[:'id']
+        self.id = attributes[:'id']
       end
       
     end

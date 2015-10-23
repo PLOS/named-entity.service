@@ -40,6 +40,7 @@ class Uniqueidentifier(object):
             'typeid': 'int',
             'type': 'str',
             'uniqueidentifier': 'str',
+            'metadata': 'str',
             'source': 'str',
             'nedid': 'int',
             'sourcetypeid': 'int',
@@ -50,6 +51,7 @@ class Uniqueidentifier(object):
             'typeid': 'typeid',
             'type': 'type',
             'uniqueidentifier': 'uniqueidentifier',
+            'metadata': 'metadata',
             'source': 'source',
             'nedid': 'nedid',
             'sourcetypeid': 'sourcetypeid',
@@ -59,6 +61,7 @@ class Uniqueidentifier(object):
         self._typeid = None
         self._type = None
         self._uniqueidentifier = None
+        self._metadata = None
         self._source = None
         self._nedid = None
         self._sourcetypeid = None
@@ -129,6 +132,28 @@ class Uniqueidentifier(object):
         :type: str
         """
         self._uniqueidentifier = uniqueidentifier
+
+    @property
+    def metadata(self):
+        """
+        Gets the metadata of this Uniqueidentifier.
+
+
+        :return: The metadata of this Uniqueidentifier.
+        :rtype: str
+        """
+        return self._metadata
+
+    @metadata.setter
+    def metadata(self, metadata):
+        """
+        Sets the metadata of this Uniqueidentifier.
+
+
+        :param metadata: The metadata of this Uniqueidentifier.
+        :type: str
+        """
+        self._metadata = metadata
 
     @property
     def source(self):

@@ -55,14 +55,13 @@ module SwaggerClient
 
     def build_request(http_method, path, opts = {})
       url = build_request_url(path)
-
       http_method = http_method.to_sym.downcase
 
       header_params = @default_headers.merge(opts[:header_params] || {})
       query_params = opts[:query_params] || {}
       form_params = opts[:form_params] || {}
 
-
+      
 
       req_opts = {
         :method => http_method,

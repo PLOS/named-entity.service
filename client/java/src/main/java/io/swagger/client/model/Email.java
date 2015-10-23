@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-20T11:32:47.715-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-22T17:32:27.863-07:00")
 public class Email   {
   
   private String type = null;
@@ -17,10 +17,10 @@ public class Email   {
   private String emailaddress = null;
   private Boolean verified = null;
   private Boolean isactive = null;
-  private Integer id = null;
   private String source = null;
   private Integer nedid = null;
   private Integer sourcetypeid = null;
+  private Integer id = null;
 
   
   /**
@@ -86,18 +86,6 @@ public class Email   {
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("id")
-  public Integer getId() {
-    return id;
-  }
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   @JsonProperty("source")
   public String getSource() {
     return source;
@@ -131,6 +119,18 @@ public class Email   {
   }
 
   
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("id")
+  public Integer getId() {
+    return id;
+  }
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  
 
   @Override
   public String toString()  {
@@ -142,10 +142,10 @@ public class Email   {
     sb.append("    emailaddress: ").append(StringUtil.toIndentedString(emailaddress)).append("\n");
     sb.append("    verified: ").append(StringUtil.toIndentedString(verified)).append("\n");
     sb.append("    isactive: ").append(StringUtil.toIndentedString(isactive)).append("\n");
-    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
     sb.append("    source: ").append(StringUtil.toIndentedString(source)).append("\n");
     sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
     sb.append("    sourcetypeid: ").append(StringUtil.toIndentedString(sourcetypeid)).append("\n");
+    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
     sb.append("}");
     return sb.toString();
   }

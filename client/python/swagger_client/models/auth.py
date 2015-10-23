@@ -41,10 +41,10 @@ class Auth(object):
             'emailid': 'int',
             'authid': 'str',
             'password': 'str',
-            'passwordreset': 'str',
+            'passwordreset': 'bool',
             'verificationtoken': 'str',
-            'verified': 'str',
-            'isactive': 'str',
+            'verified': 'bool',
+            'isactive': 'bool',
             'source': 'str',
             'nedid': 'int',
             'sourcetypeid': 'int',
@@ -174,7 +174,7 @@ class Auth(object):
 
 
         :return: The passwordreset of this Auth.
-        :rtype: str
+        :rtype: bool
         """
         return self._passwordreset
 
@@ -185,7 +185,7 @@ class Auth(object):
 
 
         :param passwordreset: The passwordreset of this Auth.
-        :type: str
+        :type: bool
         """
         self._passwordreset = passwordreset
 
@@ -218,7 +218,7 @@ class Auth(object):
 
 
         :return: The verified of this Auth.
-        :rtype: str
+        :rtype: bool
         """
         return self._verified
 
@@ -229,7 +229,7 @@ class Auth(object):
 
 
         :param verified: The verified of this Auth.
-        :type: str
+        :type: bool
         """
         self._verified = verified
 
@@ -240,7 +240,7 @@ class Auth(object):
 
 
         :return: The isactive of this Auth.
-        :rtype: str
+        :rtype: bool
         """
         return self._isactive
 
@@ -251,7 +251,7 @@ class Auth(object):
 
 
         :param isactive: The isactive of this Auth.
-        :type: str
+        :type: bool
         """
         self._isactive = isactive
 
