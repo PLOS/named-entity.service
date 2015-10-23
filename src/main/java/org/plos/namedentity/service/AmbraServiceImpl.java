@@ -183,11 +183,6 @@ public class AmbraServiceImpl implements AmbraService {
 
   private void copyToAmbraPojo(Individualprofile nedUser, UserProfile ambraUser) {
 
-    ambraUser.setDisplayName(nedUser.getDisplayname());
-
-    ambraUser.setGivenNames(nedUser.getFirstname());
-    ambraUser.setSurname(nedUser.getLastname());
-
     String realName = nedUser.getFirstname();
 
     if (realName == null)
@@ -195,10 +190,12 @@ public class AmbraServiceImpl implements AmbraService {
     else if (nedUser.getLastname() != null)
       realName += " " + nedUser.getLastname();
 
+    ambraUser.setDisplayName(nedUser.getDisplayname());
+    ambraUser.setGivenNames(nedUser.getFirstname());
+    ambraUser.setSurname(nedUser.getLastname());
     ambraUser.setRealName(realName);
     ambraUser.setBiography(nedUser.getBiography());
     ambraUser.setTitle(nedUser.getNameprefix());
-
   }
 
   private void copyToAmbraPojo(Address address, UserProfile ambraUser) {
@@ -218,9 +215,7 @@ public class AmbraServiceImpl implements AmbraService {
     UserProfile result = new UserProfile();
 
     copyToAmbraPojo(composite.getIndividualprofiles().get(0), result);
-
     copyToAmbraPojo(composite.getEmails().get(0), result);
-    result.setPassword(composite.getAuth().get(0).getPlainTextPassword());
 
     if (composite.getAddresses() != null && composite.getAddresses().size() > 0)
       copyToAmbraPojo(composite.getAddresses().get(0), result);
@@ -228,8 +223,9 @@ public class AmbraServiceImpl implements AmbraService {
     if (composite.getUrls() != null && composite.getUrls().size() > 0)
       result.setHomePage(composite.getUrls().get(0).getUrl());
 
-    // TODO: organization
+    result.setPassword(composite.getAuth().get(0).getPlainTextPassword());
 
+    // TODO: organization
 
     return result;
   }

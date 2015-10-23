@@ -50,17 +50,6 @@ public class CrudServiceImpl implements CrudService {
 
     // TODO: something similar in the create method above (ie - create address)
 
-
-//    String cname = t.getClass().getCanonicalName();
-//
-//    if (cname.equals(Individualprofile.class.getCanonicalName()))
-//      ambraService.update((Individualprofile)t, ((Individualprofile) t).getNedid());
-//    else if (cname.equals(Address.class.getCanonicalName()))
-//      ambraService.update((Address)t, ((Address) t).getNedid());
-//    else if (cname.equals(Email.class.getCanonicalName()))
-//      ambraService.update((Email)t, ((Email) t).getNedid());
-//    // else, its not something in Ambra
-
     return nedresponse;
   }
 

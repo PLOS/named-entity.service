@@ -29,7 +29,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -39,6 +41,7 @@ import java.util.Map;
 import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchCriteria;
 
+@Produces(MediaType.APPLICATION_JSON)
 public abstract class NedResource extends BaseResource {
 
   @Inject
