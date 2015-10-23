@@ -29,7 +29,8 @@
             driverClassName="${tomcat.db.driver}" 
             username="${tomcat.db.username}" 
             password="${tomcat.db.password}" 
-            url="${tomcat.db.url}" />
+            url="${tomcat.db.url}"
+            closeMethod="close" />
 
   <Resource name="jdbc/AmbraDS"
             auth="Container"
@@ -40,6 +41,7 @@
             driverClassName="${tomcat.ambradb.driver}"
             username="${tomcat.ambradb.username}"
             password="${tomcat.ambradb.password}"
-            url="${tomcat.ambradb.url}" />
+            url="${tomcat.ambradb.url}"
+            closeMethod="close" />
 
 </Context>

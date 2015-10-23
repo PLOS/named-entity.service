@@ -35,7 +35,9 @@
 
     <bean id="configurationStore" class="org.ambraproject.configuration.ConfigurationStore" factory-method="getInstance"/>
 
-    <bean id="ambraConfiguration" factory-bean="configurationStore" factory-method="getConfiguration"/>
+    <bean id="ambraConfigFactory" class="org.plos.ambra.config.AmbraConfigurationFactory"/>
+
+    <bean id="ambraConfiguration" factory-bean="ambraConfigFactory" factory-method="getConfiguration"/>
 
     <bean id="ambraDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="java:comp/env/jdbc/AmbraDS"/>

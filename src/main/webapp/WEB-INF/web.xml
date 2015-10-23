@@ -20,13 +20,8 @@
   </context-param>
 
   <listener>
-    <listener-class>org.ambraproject.configuration.WebAppListener</listener-class>
-  </listener>
-
-  <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
-
 
   <servlet>
     <servlet-name>Bootstrap</servlet-name>

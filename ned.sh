@@ -167,7 +167,7 @@ insertapp)
     ;;
 
 test)
-    mvn clean test
+    mvn clean test -DSYSTEM_OBJECT_ID_PREFIX=info:doi/10.1371/
     ;;
 
 package)
