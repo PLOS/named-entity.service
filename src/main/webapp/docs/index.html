@@ -52,7 +52,7 @@
               clientId: "your-client-id",
               clientSecret: "your-client-secret",
               realm: "your-realms",
-              appName: "your-app-name", 
+              appName: "your-app-name",
               scopeSeparator: ","
             });
           }
@@ -88,7 +88,11 @@
 
       var updateAuth = function() {
         var auth = "Basic " + btoa($('#input_user')[0].value + ":" + $('#input_pass')[0].value);
-        window.swaggerUi.api.clientAuthorizations.add("key", new ApiKeyAuthorization("Authorization", auth, "header"));
+
+        log(auth);
+        var basicAuth = new SwaggerClient.ApiKeyAuthorization("Authorization", auth, "header");
+        window.swaggerUi.api.clientAuthorizations.add("key", basicAuth);
+        log(basicAuth);
       };
 
       $('#input_user').change(updateAuth);
