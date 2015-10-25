@@ -395,6 +395,14 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     this.nedDBSvc = nedDBSvc;
   }
 
+  public AmbraService getAmbraService() {
+    return ambraService;
+  }
+
+  public void setAmbraService(AmbraService ambraService) {
+    this.ambraService = ambraService;
+  }
+
   private Integer findAppuserId(String username) {
     //TODO: cache app users in memory.
     Consumer filter = new Consumer();

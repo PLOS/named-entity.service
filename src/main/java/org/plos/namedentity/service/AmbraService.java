@@ -219,4 +219,27 @@ public class AmbraService {
     return result;
   }
 
+  public UserRegistrationService getUserRegistrationService() {
+    return userRegistrationService;
+  }
+
+  public void setUserRegistrationService(UserRegistrationService userRegistrationService) {
+    this.userRegistrationService = userRegistrationService;
+  }
+
+  public NamedEntityDBService getNamedEntityDBService() {
+    return namedEntityDBService;
+  }
+
+  public void setNamedEntityDBService(NamedEntityDBService namedEntityDBService) {
+    this.namedEntityDBService = namedEntityDBService;
+  }
+
+  public UserService getUserService() {
+    return userService;
+  }
+
+  public void setUserService(UserService userService) {
+    this.userService = userService;
+  }
 }

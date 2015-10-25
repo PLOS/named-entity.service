@@ -28,10 +28,10 @@
         <property name="rolesCache" ref="rolesCache"/>
     </bean>
 
-    <bean id="rolesService" class="org.ambraproject.admin.service.impl.AdminRolesServiceImpl">
-        <property name="sessionFactory" ref="hibernateSessionFactory"/>
-        <property name="permissionsService" ref="permissionsService"/>
-    </bean>
+    <!--<bean id="rolesService" class="org.ambraproject.admin.service.impl.AdminRolesServiceImpl">-->
+        <!--<property name="sessionFactory" ref="hibernateSessionFactory"/>-->
+        <!--<property name="permissionsService" ref="permissionsService"/>-->
+    <!--</bean>-->
 
     <bean id="configurationStore" class="org.ambraproject.configuration.ConfigurationStore" factory-method="getInstance"/>
 

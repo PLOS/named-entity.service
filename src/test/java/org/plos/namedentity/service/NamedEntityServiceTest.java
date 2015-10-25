@@ -446,7 +446,9 @@ public class NamedEntityServiceTest {
     assertEquals(1, groupEntities.size());
 
     List<Uniqueidentifier> uidEntities = namedEntityService.findResolvedEntities(nedId, Uniqueidentifier.class);
-    assertEquals(1, uidEntities.size());
+    //AMBRA-ADAPTER:
+    //assertEquals(1, uidEntities.size());
+    assertEquals(2, uidEntities.size());
 
     Individualprofile individualProfile = namedEntityService.findResolvedEntityByUid("ORCID", "0000-0001-9430-001X", Individualprofile.class);
 

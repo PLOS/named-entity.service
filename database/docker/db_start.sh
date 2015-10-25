@@ -40,6 +40,8 @@ function build () {
 
   echo "Docker IP: $DB_HOST"
 
+  echo "SET GLOBAL max_connections = 500" | $MYSQL_ROOT 2>/dev/null
+
   echo "Create DB User: ned"
   echo "CREATE USER 'ned' IDENTIFIED BY ''" | $MYSQL_ROOT 2>/dev/null
   echo "GRANT ALL PRIVILEGES ON *.* TO 'ned'@'%' WITH GRANT OPTION; FLUSH PRIVILEGES" | $MYSQL_ROOT

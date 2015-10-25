@@ -38,6 +38,7 @@
 
     <bean id="namedEntityService" class="org.plos.namedentity.service.NamedEntityServiceImpl">
         <property name="namedEntityDBService" ref="namedEntityDBService" />
+        <property name="ambraService" ref="ambraService" />
     </bean>
 
     <bean id="ringgoldService" class="org.plos.namedentity.service.RinggoldServiceImpl">
