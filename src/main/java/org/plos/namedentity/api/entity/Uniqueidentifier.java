@@ -32,7 +32,9 @@ public class Uniqueidentifier extends Entity {
   private Integer typeid;
   private String  type;
   private String  uniqueidentifier;
+  private String  metadata;
 
+//TODO - verify metadata is valid json?!
   private static Integer salesForceLengthA = 15;
   private static Integer salesForceLengthB = 18;
   private static Pattern salesForceRegexp  = Pattern.compile("^[a-zA-Z0-9]*$");
@@ -87,4 +89,11 @@ public class Uniqueidentifier extends Entity {
     this.uniqueidentifier = uniqueidentifier;
   }
 
+  public String getMetadata() {
+    return metadata;
+  }
+
+  public void setMetadata(String metadata) {
+    this.metadata = metadata;
+  }
 }

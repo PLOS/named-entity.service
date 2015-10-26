@@ -11,7 +11,7 @@ import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Relationship;
-import org.plos.namedentity.api.entity.Role;
+import org.plos.namedentity.api.entity.Group;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.service.PasswordDigestService;
 
@@ -254,51 +254,51 @@ public class IndividualsResource extends NedResource {
   }
 
   /* ----------------------------------------------------------------------- */
-  /*  ROLE CRUD                                                              */
+  /*  GROUPS CRUD                                                            */
   /* ----------------------------------------------------------------------- */
 
   @POST
-  @Path("/{nedId}/roles")
-  @ApiOperation(value = "Create role", response = Role.class)
-  public Response createRole(@PathParam("nedId") int nedId,
-                             Role roleEntity,
-                             @HeaderParam("Authorization") String authstring) {
-    return createEntity(nedId, roleEntity, authstring);
+  @Path("/{nedId}/groups")
+  @ApiOperation(value = "Create group", response = Group.class)
+  public Response createGroup(@PathParam("nedId") int nedId,
+                              Group groupEntity,
+                              @HeaderParam("Authorization") String authstring) {
+    return createEntity(nedId, groupEntity, authstring);
   }
 
   @PUT
-  @Path("/{nedId}/roles/{roleId}")
-  @ApiOperation(value = "Update role", response = Role.class)
-  public Response updateRole(@PathParam("nedId") int nedId,
-                             @PathParam("roleId") int roleId,
-                             @HeaderParam("Authorization") String authstring,
-                             Role roleEntity) {
-    return updateEntity(nedId, roleId, roleEntity, authstring);
+  @Path("/{nedId}/groups/{groupId}")
+  @ApiOperation(value = "Update group", response = Group.class)
+  public Response updateGroup(@PathParam("nedId") int nedId,
+                              @PathParam("groupId") int groupId,
+                              @HeaderParam("Authorization") String authstring,
+                              Group groupEntity) {
+    return updateEntity(nedId, groupId, groupEntity, authstring);
   }
 
   @DELETE
-  @Path("/{nedId}/roles/{roleId}")
-  @ApiOperation(value = "Delete role")
-  public Response deleteRole(@PathParam("nedId")  int nedId,
-                             @PathParam("roleId") int roleId,
-                             @HeaderParam("Authorization") String authstring) {
+  @Path("/{nedId}/groups/{groupId}")
+  @ApiOperation(value = "Delete group")
+  public Response deleteGroup(@PathParam("nedId")  int nedId,
+                              @PathParam("groupId") int groupId,
+                              @HeaderParam("Authorization") String authstring) {
     //TODO: process authstring
-    return deleteEntity(nedId, roleId, Role.class);
+    return deleteEntity(nedId, groupId, Group.class);
   }
 
   @GET
-  @Path("/{nedId}/roles/{roleId}")
-  @ApiOperation(value = "Read role", response = Role.class)
-  public Response getRole(@PathParam("nedId")  int nedId,
-                          @PathParam("roleId") int roleId) {
-    return getEntity(nedId, roleId, Role.class);
+  @Path("/{nedId}/groups/{groupId}")
+  @ApiOperation(value = "Read group", response = Group.class)
+  public Response getGroup(@PathParam("nedId")  int nedId,
+                           @PathParam("groupId") int groupId) {
+    return getEntity(nedId, groupId, Group.class);
   }
 
   @GET
-  @Path("/{nedId}/roles")
-  @ApiOperation(value = "List roles")
-  public Response getRoles(@PathParam("nedId") int nedId) {
-    return getEntities(nedId, Role.class);
+  @Path("/{nedId}/groups")
+  @ApiOperation(value = "List groups")
+  public Response getGroups(@PathParam("nedId") int nedId) {
+    return getEntities(nedId, Group.class);
   }
 
   /* ----------------------------------------------------------------------- */

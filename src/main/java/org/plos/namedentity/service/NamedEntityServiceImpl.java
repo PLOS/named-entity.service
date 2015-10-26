@@ -61,8 +61,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       resolveReference((Uniqueidentifier) t);
     else if (t instanceof Degree)
       resolveDegree((Degree) t);
-    else if (t instanceof Role)
-      resolveRole((Role) t);
+    else if (t instanceof Group)
+      resolveGroup((Group) t);
     else if (t instanceof Url)
       resolveUrl((Url) t);
     else if (t instanceof Auth)
@@ -268,13 +268,13 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     return entity;
   }
 
-  private Role resolveRole(Role entity) {
+  private Group resolveGroup(Group entity) {
 
     if (entity.getApplicationtype() != null)
       entity.setApplicationtypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("User Applications"), entity.getApplicationtype()));
 
     if (entity.getType() != null)
-      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Roles"), entity.getType()));
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Groups"), entity.getType()));
 
     if (entity.getSource() != null)
       entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
