@@ -2,7 +2,6 @@ package org.plos.namedentity.rest;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
 import io.swagger.annotations.Authorization;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
@@ -10,9 +9,9 @@ import org.plos.namedentity.api.adapter.Container;
 import org.plos.namedentity.api.entity.Auth;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Entity;
+import org.plos.namedentity.api.entity.Group;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Relationship;
-import org.plos.namedentity.api.entity.Group;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.service.PasswordDigestService;
 
@@ -23,12 +22,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -42,9 +38,8 @@ import static org.plos.namedentity.api.NedException.ErrorType.InvalidIndividualS
 import static org.plos.namedentity.api.NedException.ErrorType.PasswordNotSpecified;
 import static org.plos.namedentity.api.NedException.ErrorType.TooManyResultsFound;
 
-@Path("/individuals")
-@Api(value="/individuals", authorizations = {@Authorization(value = "basic")})
-//@Produces(MediaType.APPLICATION_JSON)
+@Path("individuals")
+@Api(value="individuals", authorizations = {@Authorization(value = "basic")})
 public class IndividualsResource extends NedResource {
 
   @Override
