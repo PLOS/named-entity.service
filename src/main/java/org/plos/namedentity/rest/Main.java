@@ -17,6 +17,7 @@
 package org.plos.namedentity.rest;
 
 import org.eclipse.persistence.jaxb.rs.MOXyJsonProvider;
+import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.server.ResourceConfig;
 
 public class Main extends ResourceConfig {
@@ -33,6 +34,8 @@ public class Main extends ResourceConfig {
     moxyJsonProvider.setValueWrapper("$");
 
     register(moxyJsonProvider);
+
+    register(LoggingFilter.class);
 
     // set json provider properties here (moxy)
     //property(MarshallerProperties.JSON_INCLUDE_ROOT, false);

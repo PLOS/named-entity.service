@@ -46,6 +46,7 @@
         url: url,
         dom_id: "swagger-ui-container",
         supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
+        //authorizations: { basic: new SwaggerClient.ApiKeyAuthorization('basic', auth, "header") },
         onComplete: function(swaggerApi, swaggerUi){
           if(typeof initOAuth == "function") {
             initOAuth({
@@ -72,7 +73,7 @@
         },
         docExpansion: "list",
         apisSorter: "alpha",
-        showRequestHeaders: false
+        showRequestHeaders: true
       });
 
       function addApiKeyAuthorization(){
@@ -90,7 +91,8 @@
         var auth = "Basic " + btoa($('#input_user')[0].value + ":" + $('#input_pass')[0].value);
 
         log(auth);
-        var basicAuth = new SwaggerClient.ApiKeyAuthorization("Authorization", auth, "header");
+        var basicAuth = new SwaggerClient.PasswordAuthorization($('#input_user')[0].value, $('#input_pass')[0].value);
+        //var basicAuth = new SwaggerClient.ApiKeyAuthorization("Authorization", auth, "header");
         window.swaggerUi.api.clientAuthorizations.add("key", basicAuth);
         log(basicAuth);
       };
