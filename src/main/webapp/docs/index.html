@@ -36,8 +36,6 @@
         url = window.location.pathname.split('/').slice(0,-2).concat("swagger.json").join("/");
       }
 
-      console.log("url : " + url);
-
       // Pre load translate...
       if(window.SwaggerTranslator) {
         window.SwaggerTranslator.translate();
@@ -46,7 +44,6 @@
         url: url,
         dom_id: "swagger-ui-container",
         supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
-        //authorizations: { basic: new SwaggerClient.ApiKeyAuthorization('basic', auth, "header") },
         onComplete: function(swaggerApi, swaggerUi){
           if(typeof initOAuth == "function") {
             initOAuth({
@@ -88,13 +85,8 @@
       //$('#input_apiKey').change(addApiKeyAuthorization);
 
       var updateAuth = function() {
-        var auth = "Basic " + btoa($('#input_user')[0].value + ":" + $('#input_pass')[0].value);
-
-        log(auth);
-        var basicAuth = new SwaggerClient.PasswordAuthorization($('#input_user')[0].value, $('#input_pass')[0].value);
-        //var basicAuth = new SwaggerClient.ApiKeyAuthorization("Authorization", auth, "header");
-        window.swaggerUi.api.clientAuthorizations.add("key", basicAuth);
-        log(basicAuth);
+        window.swaggerUi.api.clientAuthorizations.add("basic",
+            new SwaggerClient.PasswordAuthorization($('#input_user')[0].value, $('#input_pass')[0].value));
       };
 
       $('#input_user').change(updateAuth);
