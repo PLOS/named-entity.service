@@ -29,7 +29,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -39,6 +41,7 @@ import java.util.Map;
 import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchCriteria;
 
+@Produces(MediaType.APPLICATION_JSON)
 public abstract class NedResource extends BaseResource {
 
   @Inject
@@ -65,14 +68,7 @@ public abstract class NedResource extends BaseResource {
                               @PathParam("emailId") int emailId,
                               Email emailEntity,
                               @HeaderParam("Authorization") String authstring) {
-
-    ambraService.update(emailEntity, nedId);
-
-    Response response = updateEntity(nedId, emailId, emailEntity, authstring);
-
-    // TODO: roll back ambra if updateEntity fails
-
-    return response;
+    return updateEntity(nedId, emailId, emailEntity, authstring);
   }
 
   @DELETE
@@ -114,14 +110,7 @@ public abstract class NedResource extends BaseResource {
   public Response createAddress(@PathParam("nedId") int nedId,
                                 Address addressEntity,
                                 @HeaderParam("Authorization") String authstring) {
-
-    ambraService.update(addressEntity, nedId);
-
-    Response response = createEntity(nedId, addressEntity, authstring);
-
-    // TODO: roll back ambra if updateEntity fails
-
-    return response;
+    return createEntity(nedId, addressEntity, authstring);
   }
 
   @PUT
@@ -131,14 +120,7 @@ public abstract class NedResource extends BaseResource {
                                 @PathParam("addressId") int addressId,
                                 Address addressEntity,
                                 @HeaderParam("Authorization") String authstring) {
-
-    ambraService.update(addressEntity, nedId);
-
-    Response response = updateEntity(nedId, addressId, addressEntity, authstring);
-
-    // TODO: roll back ambra if updateEntity fails
-
-    return response;
+    return updateEntity(nedId, addressId, addressEntity, authstring);
   }
 
   @DELETE
@@ -286,11 +268,33 @@ public abstract class NedResource extends BaseResource {
     }
   }
 
+//  protected  <S extends Entity> S getEntityRaw(int nedId, int pkId, Class<S> child) {
+//
+////    try {
+//
+//      return namedEntityService.findResolvedEntities(nedId, child)
+//          .stream().filter(e -> e.getId().equals(pkId)).findFirst()
+//          .orElseThrow(() -> new NedException(EntityNotFound, String.format("%s (id=%d)", child.getSimpleName(), pkId)));
+////
+////    } catch (NedException e) {
+////      return nedError(e, "Find by id failed");
+////
+////    } catch (Exception e) {
+////      return serverError(e, String.format("Find %s by id failed (nedId=%d, pkId=%d)",
+////          child.getSimpleName(), nedId, pkId));
+////    }
+//  }
+
   protected <S extends Entity>
   Response getEntity(int nedId, int pkId, Class<S> child) {
 
     try {
       namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
+
+//      return Response.status(Response.Status.OK)
+//          .entity(
+//            getEntityRaw(nedId, pkId, child)
+//                 ).build();
 
       List<S> entities = namedEntityService.findResolvedEntities(nedId, child);
 

@@ -17,6 +17,7 @@
 package org.plos.namedentity.service;
 
 import org.plos.namedentity.api.NedException;
+import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.persist.NamedEntityDBService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +31,8 @@ public class CrudServiceImpl implements CrudService {
   @Inject
   private NamedEntityDBService namedEntityDBService;
 
+  @Inject
+  private AmbraService ambraService;
 
   @Override
   @Transactional
@@ -40,7 +43,14 @@ public class CrudServiceImpl implements CrudService {
   @Override
   @Transactional
   public <T> boolean update(T t) {
-    return namedEntityDBService.update(t);
+    boolean nedresponse = namedEntityDBService.update(t);
+
+    if (t instanceof Entity)
+      ambraService.update((Entity)t);
+
+    // TODO: something similar in the create method above (ie - create address)
+
+    return nedresponse;
   }
 
   @Override

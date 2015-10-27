@@ -41,9 +41,11 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   private static Logger logger = Logger.getLogger(NamedEntityServiceImpl.class);
 
-  @Inject private NamedEntityDBService nedDBSvc;
+  @Inject
+  private NamedEntityDBService nedDBSvc;
 
-  @Inject private AmbraService ambraService;
+  @Inject
+  private AmbraService ambraService;
 
   public <T extends Entity> T resolveValuesToIds(T t) {
 
@@ -79,10 +81,10 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   private <T extends Entity> void resolveCreatedAndLastmodifiedBy(T entity) {
     if (entity.getCreatedbyname() != null) {
-      entity.setCreatedby( findAppuserId(entity.getCreatedbyname()) );
+      entity.setCreatedby(findAppuserId(entity.getCreatedbyname()));
     }
     if (entity.getLastmodifiedbyname() != null) {
-      entity.setLastmodifiedby( findAppuserId(entity.getLastmodifiedbyname()) );
+      entity.setLastmodifiedby(findAppuserId(entity.getLastmodifiedbyname()));
     }
   }
 
@@ -361,7 +363,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       }
     }
 
-    // TODO: if NED insert fails, manually rollback ambra
+    // TODO: if NED insert fails, manually rollback ambra, but how to delete from ambra?
 
     return findComposite(nedId, clazz);
 
