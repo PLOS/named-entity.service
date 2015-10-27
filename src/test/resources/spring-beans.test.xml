@@ -26,6 +26,7 @@
 
     <bean id="crudService" class="org.plos.namedentity.service.CrudServiceImpl">
        <property name="namedEntityDBService" ref="namedEntityDBService" />
+       <property name="ambraService" ref="ambraService" />
     </bean>
 
     <bean id="ringgoldDBService" class="org.plos.namedentity.persist.RinggoldDBServiceImpl">

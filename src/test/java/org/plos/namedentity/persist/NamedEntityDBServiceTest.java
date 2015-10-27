@@ -425,7 +425,7 @@ public class NamedEntityDBServiceTest {
     individualProfile.setFirstname("firstname");
     individualProfile.setMiddlename("middlename");
     individualProfile.setLastname("lastname");
-    individualProfile.setDisplayname("displayname_i");
+    individualProfile.setDisplayname("displayname_i_nes");
     individualProfile.setBiography("bio");
     individualProfile.setNameprefixtypeid(prefixTypeId);
     individualProfile.setNamesuffixtypeid(suffixTypeId);

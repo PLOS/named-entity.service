@@ -85,4 +85,12 @@ public class CrudServiceImpl implements CrudService {
   public void setNamedEntityDBService(NamedEntityDBService namedEntityDBService) {
     this.namedEntityDBService = namedEntityDBService;
   }
+
+  public AmbraService getAmbraService() {
+      return ambraService;
+  }
+
+  public void setAmbraService(AmbraService ambraService) {
+      this.ambraService = ambraService;
+  }
 }

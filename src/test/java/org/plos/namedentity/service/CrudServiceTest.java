@@ -68,7 +68,7 @@ public class CrudServiceTest {
     individualProfile.setNedid(nedId);
     individualProfile.setFirstname("firstname");
     individualProfile.setLastname("lastname");
-    individualProfile.setDisplayname("displayname_i");
+    individualProfile.setDisplayname("displayname_i_cs");
     individualProfile.setSource("Editorial Manager");
 
     Integer pkId = crudService.create(namedEntityService.resolveValuesToIds(individualProfile));

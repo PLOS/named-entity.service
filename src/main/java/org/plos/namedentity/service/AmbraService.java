@@ -1,7 +1,11 @@
 package org.plos.namedentity.service;
 
+import org.ambraproject.service.user.UserRegistrationService;
+import org.ambraproject.service.user.UserService;
+
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.entity.Entity;
+import org.plos.namedentity.persist.NamedEntityDBService;
 
 public interface AmbraService {
 
@@ -11,28 +15,4 @@ public interface AmbraService {
 
   // TODO: move this function into update
   void updatePassword(String plaintext, int nedId);
-
-  public UserRegistrationService getUserRegistrationService() {
-    return userRegistrationService;
-  }
-
-  public void setUserRegistrationService(UserRegistrationService userRegistrationService) {
-    this.userRegistrationService = userRegistrationService;
-  }
-
-  public NamedEntityDBService getNamedEntityDBService() {
-    return namedEntityDBService;
-  }
-
-  public void setNamedEntityDBService(NamedEntityDBService namedEntityDBService) {
-    this.namedEntityDBService = namedEntityDBService;
-  }
-
-  public UserService getUserService() {
-    return userService;
-  }
-
-  public void setUserService(UserService userService) {
-    this.userService = userService;
-  }
 }

@@ -17,7 +17,7 @@
        <property name="password" value="${ambradb.password}" />
     </bean>
 
-    <bean id="ambraService" class="org.plos.namedentity.service.AmbraService">
+    <bean id="ambraService" class="org.plos.namedentity.service.AmbraServiceImpl">
         <property name="userRegistrationService" ref="userRegistrationService" />
         <property name="namedEntityDBService" ref="namedEntityDBService" />
         <property name="userService" ref="userService" />
