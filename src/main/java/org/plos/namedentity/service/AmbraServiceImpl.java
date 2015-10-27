@@ -1,6 +1,5 @@
 package org.plos.namedentity.service;
 
-
 import org.ambraproject.models.UserProfile;
 import org.ambraproject.service.user.DuplicateUserException;
 import org.ambraproject.service.user.NoSuchUserException;
@@ -50,6 +49,7 @@ public class AmbraServiceImpl implements AmbraService {
 //    put("Knowledge Base - Biology", "Editor-BIO");
 //  }};
 
+  @Override
   public Long createUser(IndividualComposite composite) {
 
     UserProfile ambraProfile = toAmbraProfile(composite);
@@ -63,6 +63,7 @@ public class AmbraServiceImpl implements AmbraService {
     }
   }
 
+  @Override
   public <S extends Entity> void update(S entity) {
 
     String cname = entity.getClass().getCanonicalName();
@@ -95,6 +96,7 @@ public class AmbraServiceImpl implements AmbraService {
     updateInAmbra(ambraProfile);
   }
 
+  @Override
   public void updatePassword(String plaintext, int nedId) {
     userRegistrationService.resetPassword(getEmailAddress(nedId), plaintext);
   }
