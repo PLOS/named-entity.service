@@ -61,11 +61,9 @@ public class CrudServiceTest {
   @Test
   public void testIndividualCRUD() {
 
-    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
-
     // CREATE
     Individualprofile individualProfile = _(new Individualprofile());
-    individualProfile.setNedid(nedId);
+    individualProfile.setNedid(1);
     individualProfile.setFirstname("firstname");
     individualProfile.setLastname("lastname");
     individualProfile.setDisplayname("displayname_i_cs");
