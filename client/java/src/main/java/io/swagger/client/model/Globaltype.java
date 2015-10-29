@@ -1,7 +1,7 @@
 package io.swagger.client.model;
 
 import io.swagger.client.StringUtil;
-import java.sql.Timestamp;
+import java.util.Date;
 
 
 
@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-22T17:32:27.863-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-29T08:59:42.643-07:00")
 public class Globaltype   {
   
   private Integer id = null;
@@ -18,8 +18,8 @@ public class Globaltype   {
   private String shortdescription = null;
   private String longdescription = null;
   private String typecode = null;
-  private Timestamp created = null;
-  private Timestamp lastmodified = null;
+  private Date created = null;
+  private Date lastmodified = null;
   private Integer createdby = null;
   private Integer lastmodifiedby = null;
 
@@ -88,10 +88,10 @@ public class Globaltype   {
    **/
   @ApiModelProperty(value = "")
   @JsonProperty("created")
-  public Timestamp getCreated() {
+  public Date getCreated() {
     return created;
   }
-  public void setCreated(Timestamp created) {
+  public void setCreated(Date created) {
     this.created = created;
   }
 
@@ -100,10 +100,10 @@ public class Globaltype   {
    **/
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodified")
-  public Timestamp getLastmodified() {
+  public Date getLastmodified() {
     return lastmodified;
   }
-  public void setLastmodified(Timestamp lastmodified) {
+  public void setLastmodified(Date lastmodified) {
     this.lastmodified = lastmodified;
   }
 

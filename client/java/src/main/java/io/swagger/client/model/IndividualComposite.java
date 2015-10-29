@@ -5,10 +5,11 @@ import io.swagger.client.model.Group;
 import io.swagger.client.model.Email;
 import io.swagger.client.model.Address;
 import io.swagger.client.model.Degree;
-import io.swagger.client.model.Relationship;
 import io.swagger.client.model.Auth;
+import io.swagger.client.model.Relationship;
 import java.util.*;
 import io.swagger.client.model.Uniqueidentifier;
+import java.util.Map;
 import io.swagger.client.model.Individualprofile;
 import io.swagger.client.model.Phonenumber;
 import io.swagger.client.model.Url;
@@ -20,9 +21,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-22T17:32:27.863-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-29T08:59:42.643-07:00")
 public class IndividualComposite   {
   
+  private List<Auth> auth = new ArrayList<Auth>();
   private List<Individualprofile> individualprofiles = new ArrayList<Individualprofile>();
   private List<Group> groups = new ArrayList<Group>();
   private List<Address> addresses = new ArrayList<Address>();
@@ -32,8 +34,20 @@ public class IndividualComposite   {
   private List<Degree> degrees = new ArrayList<Degree>();
   private List<Url> urls = new ArrayList<Url>();
   private List<Relationship> relationships = new ArrayList<Relationship>();
-  private List<Auth> credentials = new ArrayList<Auth>();
+  private Map<String, List<Entity>> asMap = new HashMap<String, List<Entity>>();
   private String typeName = null;
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("auth")
+  public List<Auth> getAuth() {
+    return auth;
+  }
+  public void setAuth(List<Auth> auth) {
+    this.auth = auth;
+  }
 
   
   /**
@@ -147,12 +161,12 @@ public class IndividualComposite   {
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("credentials")
-  public List<Auth> getCredentials() {
-    return credentials;
+  @JsonProperty("asMap")
+  public Map<String, List<Entity>> getAsMap() {
+    return asMap;
   }
-  public void setCredentials(List<Auth> credentials) {
-    this.credentials = credentials;
+  public void setAsMap(Map<String, List<Entity>> asMap) {
+    this.asMap = asMap;
   }
 
   
@@ -174,6 +188,7 @@ public class IndividualComposite   {
     StringBuilder sb = new StringBuilder();
     sb.append("class IndividualComposite {\n");
     
+    sb.append("    auth: ").append(StringUtil.toIndentedString(auth)).append("\n");
     sb.append("    individualprofiles: ").append(StringUtil.toIndentedString(individualprofiles)).append("\n");
     sb.append("    groups: ").append(StringUtil.toIndentedString(groups)).append("\n");
     sb.append("    addresses: ").append(StringUtil.toIndentedString(addresses)).append("\n");
@@ -183,7 +198,7 @@ public class IndividualComposite   {
     sb.append("    degrees: ").append(StringUtil.toIndentedString(degrees)).append("\n");
     sb.append("    urls: ").append(StringUtil.toIndentedString(urls)).append("\n");
     sb.append("    relationships: ").append(StringUtil.toIndentedString(relationships)).append("\n");
-    sb.append("    credentials: ").append(StringUtil.toIndentedString(credentials)).append("\n");
+    sb.append("    asMap: ").append(StringUtil.toIndentedString(asMap)).append("\n");
     sb.append("    typeName: ").append(StringUtil.toIndentedString(typeName)).append("\n");
     sb.append("}");
     return sb.toString();

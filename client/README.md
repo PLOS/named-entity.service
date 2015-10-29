@@ -2,43 +2,28 @@
 
 These libraries are auto generated from NED's Swagger spec via swagger codegen.
 
-This is a work in progress. Use at your own risk.
-
 ## Setup the code generator
 
 See https://github.com/swagger-api/swagger-codegen
 
-## Record the swagger spec
+## Generate/Update the client libraries
 
-Its not required, but good to has a copy around for when the service is down.
+    ./generate_clients.sh
 
-    java -jar ~/applications/swagger-codegen/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
-      -i http://localhost:8080/api-docs \
-      -l swagger \
-      -o ./swagger
+## Distribute
 
+TODO
+ambra maven repo?
 
-## Generate Python client
+## Run the samples
 
-    java -jar ~/applications/swagger-codegen/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
-      -i http://localhost:8080/api-docs \
-      -l python \
-      -o ./python
-
-### Run the sample
+### Python
 
     pip install certifi six urllib3
 
     PYTHONPATH=python python sample.py
 
-## Ruby
-
-    java -jar ~/applications/swagger-codegen/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
-      -i http://localhost:8080/api-docs \
-      -l ruby \
-      -o ./ruby
-
-### Ruby sample
+### Ruby
 
     cd ruby
     gem build swagger_client.gemspec
@@ -46,14 +31,7 @@ Its not required, but good to has a copy around for when the service is down.
     cd ..
     ruby sample.rb
 
-## Java
-
-    java -jar ~/applications/swagger-codegen/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
-      -i http://localhost:8080/api-docs \
-      -l java \
-      -o ./java
-
-### Java sample
+### Java
 
     cd java && mvn clean install && cd ..
     cd sample-java

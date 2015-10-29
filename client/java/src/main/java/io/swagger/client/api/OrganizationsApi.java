@@ -14,7 +14,7 @@ import io.swagger.client.model.Uniqueidentifier;
 
 import java.util.*;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-22T17:32:27.863-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-29T08:59:42.643-07:00")
 public class OrganizationsApi {
   private ApiClient apiClient;
 
@@ -115,7 +115,7 @@ public class OrganizationsApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -196,9 +196,9 @@ public class OrganizationsApi {
    * List addresses
    * 
    * @param nedId 
-   * @return List<Address>
+   * @return Address
    */
-  public List<Address> getAddresses (Integer nedId) throws ApiException {
+  public Address getAddresses (Integer nedId) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -223,7 +223,7 @@ public class OrganizationsApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -238,7 +238,7 @@ public class OrganizationsApi {
 
     
     
-    TypeRef returnType = new TypeRef<List<Address>>() {};
+    TypeRef returnType = new TypeRef<Address>() {};
     return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
     
@@ -281,7 +281,7 @@ public class OrganizationsApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -342,7 +342,7 @@ public class OrganizationsApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -407,7 +407,7 @@ public class OrganizationsApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -471,7 +471,7 @@ public class OrganizationsApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -497,9 +497,9 @@ public class OrganizationsApi {
    * List emails
    * 
    * @param nedId 
-   * @return List<Email>
+   * @return Email
    */
-  public List<Email> getEmails (Integer nedId) throws ApiException {
+  public Email getEmails (Integer nedId) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -524,7 +524,7 @@ public class OrganizationsApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -539,7 +539,7 @@ public class OrganizationsApi {
 
     
     
-    TypeRef returnType = new TypeRef<List<Email>>() {};
+    TypeRef returnType = new TypeRef<Email>() {};
     return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
     
@@ -582,7 +582,7 @@ public class OrganizationsApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -643,7 +643,7 @@ public class OrganizationsApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -708,7 +708,7 @@ public class OrganizationsApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -772,7 +772,7 @@ public class OrganizationsApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -798,9 +798,9 @@ public class OrganizationsApi {
    * List phone numbers
    * 
    * @param nedId 
-   * @return List<Phonenumber>
+   * @return Phonenumber
    */
-  public List<Phonenumber> getPhonenumbers (Integer nedId) throws ApiException {
+  public Phonenumber getPhonenumbers (Integer nedId) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -825,7 +825,7 @@ public class OrganizationsApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -840,7 +840,7 @@ public class OrganizationsApi {
 
     
     
-    TypeRef returnType = new TypeRef<List<Phonenumber>>() {};
+    TypeRef returnType = new TypeRef<Phonenumber>() {};
     return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
     
@@ -852,9 +852,9 @@ public class OrganizationsApi {
    * List UIDs
    * 
    * @param nedId 
-   * @return List<Uniqueidentifier>
+   * @return void
    */
-  public List<Uniqueidentifier> getUids (Integer nedId) throws ApiException {
+  public void getUids (Integer nedId) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -879,7 +879,7 @@ public class OrganizationsApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -894,8 +894,7 @@ public class OrganizationsApi {
 
     
     
-    TypeRef returnType = new TypeRef<List<Uniqueidentifier>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
     
     
 
@@ -937,7 +936,7 @@ public class OrganizationsApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -998,7 +997,7 @@ public class OrganizationsApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -1063,7 +1062,7 @@ public class OrganizationsApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -1124,7 +1123,7 @@ public class OrganizationsApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 

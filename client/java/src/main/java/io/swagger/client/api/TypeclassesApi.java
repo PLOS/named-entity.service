@@ -11,7 +11,7 @@ import io.swagger.client.model.Globaltype;
 
 import java.util.*;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-22T17:32:27.863-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-29T08:59:42.643-07:00")
 public class TypeclassesApi {
   private ApiClient apiClient;
 
@@ -62,7 +62,7 @@ public class TypeclassesApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -71,7 +71,7 @@ public class TypeclassesApi {
     };
     final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
-    String[] authNames = new String[] {  };
+    String[] authNames = new String[] { "basic" };
 
     
 
@@ -110,7 +110,7 @@ public class TypeclassesApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -119,7 +119,7 @@ public class TypeclassesApi {
     };
     final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
-    String[] authNames = new String[] {  };
+    String[] authNames = new String[] { "basic" };
 
     
 
@@ -164,7 +164,7 @@ public class TypeclassesApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -173,7 +173,7 @@ public class TypeclassesApi {
     };
     final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
-    String[] authNames = new String[] {  };
+    String[] authNames = new String[] { "basic" };
 
     
 
@@ -212,7 +212,7 @@ public class TypeclassesApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -221,7 +221,7 @@ public class TypeclassesApi {
     };
     final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
-    String[] authNames = new String[] {  };
+    String[] authNames = new String[] { "basic" };
 
     
 
@@ -266,7 +266,7 @@ public class TypeclassesApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -275,7 +275,7 @@ public class TypeclassesApi {
     };
     final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
-    String[] authNames = new String[] {  };
+    String[] authNames = new String[] { "basic" };
 
     
 
@@ -319,7 +319,7 @@ public class TypeclassesApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -328,7 +328,7 @@ public class TypeclassesApi {
     };
     final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
-    String[] authNames = new String[] {  };
+    String[] authNames = new String[] { "basic" };
 
     
 
@@ -373,7 +373,7 @@ public class TypeclassesApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -382,7 +382,7 @@ public class TypeclassesApi {
     };
     final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
-    String[] authNames = new String[] {  };
+    String[] authNames = new String[] { "basic" };
 
     
 
@@ -434,7 +434,7 @@ public class TypeclassesApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -443,7 +443,7 @@ public class TypeclassesApi {
     };
     final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
-    String[] authNames = new String[] {  };
+    String[] authNames = new String[] { "basic" };
 
     
 
@@ -496,7 +496,7 @@ public class TypeclassesApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -505,7 +505,7 @@ public class TypeclassesApi {
     };
     final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
-    String[] authNames = new String[] {  };
+    String[] authNames = new String[] { "basic" };
 
     
 
@@ -557,7 +557,7 @@ public class TypeclassesApi {
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -566,7 +566,7 @@ public class TypeclassesApi {
     };
     final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
-    String[] authNames = new String[] {  };
+    String[] authNames = new String[] { "basic" };
 
     
 

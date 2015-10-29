@@ -1,6 +1,7 @@
 package io.swagger.client.model;
 
 import io.swagger.client.StringUtil;
+import java.util.Date;
 
 
 
@@ -9,9 +10,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-22T17:32:27.863-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-29T08:59:42.643-07:00")
 public class Address   {
   
+  private Integer id = null;
+  private Integer nedid = null;
+  private String source = null;
+  private Integer sourcetypeid = null;
+  private Date created = null;
+  private Date lastmodified = null;
+  private Integer createdby = null;
+  private String createdbyname = null;
+  private Integer lastmodifiedby = null;
+  private String lastmodifiedbyname = null;
   private Integer typeid = null;
   private String type = null;
   private String addressline1 = null;
@@ -27,10 +38,126 @@ public class Address   {
   private Integer latitude = null;
   private Integer longitude = null;
   private Boolean isactive = null;
-  private String source = null;
-  private Integer nedid = null;
-  private Integer sourcetypeid = null;
-  private Integer id = null;
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("id")
+  public Integer getId() {
+    return id;
+  }
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("nedid")
+  public Integer getNedid() {
+    return nedid;
+  }
+  public void setNedid(Integer nedid) {
+    this.nedid = nedid;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("source")
+  public String getSource() {
+    return source;
+  }
+  public void setSource(String source) {
+    this.source = source;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("sourcetypeid")
+  public Integer getSourcetypeid() {
+    return sourcetypeid;
+  }
+  public void setSourcetypeid(Integer sourcetypeid) {
+    this.sourcetypeid = sourcetypeid;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("created")
+  public Date getCreated() {
+    return created;
+  }
+  public void setCreated(Date created) {
+    this.created = created;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("lastmodified")
+  public Date getLastmodified() {
+    return lastmodified;
+  }
+  public void setLastmodified(Date lastmodified) {
+    this.lastmodified = lastmodified;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("createdby")
+  public Integer getCreatedby() {
+    return createdby;
+  }
+  public void setCreatedby(Integer createdby) {
+    this.createdby = createdby;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("createdbyname")
+  public String getCreatedbyname() {
+    return createdbyname;
+  }
+  public void setCreatedbyname(String createdbyname) {
+    this.createdbyname = createdbyname;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("lastmodifiedby")
+  public Integer getLastmodifiedby() {
+    return lastmodifiedby;
+  }
+  public void setLastmodifiedby(Integer lastmodifiedby) {
+    this.lastmodifiedby = lastmodifiedby;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("lastmodifiedbyname")
+  public String getLastmodifiedbyname() {
+    return lastmodifiedbyname;
+  }
+  public void setLastmodifiedbyname(String lastmodifiedbyname) {
+    this.lastmodifiedbyname = lastmodifiedbyname;
+  }
 
   
   /**
@@ -213,60 +340,22 @@ public class Address   {
   }
 
   
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("source")
-  public String getSource() {
-    return source;
-  }
-  public void setSource(String source) {
-    this.source = source;
-  }
-
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("nedid")
-  public Integer getNedid() {
-    return nedid;
-  }
-  public void setNedid(Integer nedid) {
-    this.nedid = nedid;
-  }
-
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("sourcetypeid")
-  public Integer getSourcetypeid() {
-    return sourcetypeid;
-  }
-  public void setSourcetypeid(Integer sourcetypeid) {
-    this.sourcetypeid = sourcetypeid;
-  }
-
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("id")
-  public Integer getId() {
-    return id;
-  }
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  
 
   @Override
   public String toString()  {
     StringBuilder sb = new StringBuilder();
     sb.append("class Address {\n");
     
+    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
+    sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
+    sb.append("    source: ").append(StringUtil.toIndentedString(source)).append("\n");
+    sb.append("    sourcetypeid: ").append(StringUtil.toIndentedString(sourcetypeid)).append("\n");
+    sb.append("    created: ").append(StringUtil.toIndentedString(created)).append("\n");
+    sb.append("    lastmodified: ").append(StringUtil.toIndentedString(lastmodified)).append("\n");
+    sb.append("    createdby: ").append(StringUtil.toIndentedString(createdby)).append("\n");
+    sb.append("    createdbyname: ").append(StringUtil.toIndentedString(createdbyname)).append("\n");
+    sb.append("    lastmodifiedby: ").append(StringUtil.toIndentedString(lastmodifiedby)).append("\n");
+    sb.append("    lastmodifiedbyname: ").append(StringUtil.toIndentedString(lastmodifiedbyname)).append("\n");
     sb.append("    typeid: ").append(StringUtil.toIndentedString(typeid)).append("\n");
     sb.append("    type: ").append(StringUtil.toIndentedString(type)).append("\n");
     sb.append("    addressline1: ").append(StringUtil.toIndentedString(addressline1)).append("\n");
@@ -282,10 +371,6 @@ public class Address   {
     sb.append("    latitude: ").append(StringUtil.toIndentedString(latitude)).append("\n");
     sb.append("    longitude: ").append(StringUtil.toIndentedString(longitude)).append("\n");
     sb.append("    isactive: ").append(StringUtil.toIndentedString(isactive)).append("\n");
-    sb.append("    source: ").append(StringUtil.toIndentedString(source)).append("\n");
-    sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
-    sb.append("    sourcetypeid: ").append(StringUtil.toIndentedString(sourcetypeid)).append("\n");
-    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
     sb.append("}");
     return sb.toString();
   }

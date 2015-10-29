@@ -1,14 +1,15 @@
 from __future__ import absolute_import
 
 # import models into sdk package
+from .models.entity import Entity
 from .models.group import Group
 from .models.email import Email
 from .models.address import Address
 from .models.degree import Degree
 from .models.organization_composite import OrganizationComposite
 from .models.config_info import ConfigInfo
-from .models.uniqueidentifier import Uniqueidentifier
 from .models.globaltype import Globaltype
+from .models.uniqueidentifier import Uniqueidentifier
 from .models.url import Url
 from .models.ned_error_response import NedErrorResponse
 from .models.typedescription import Typedescription

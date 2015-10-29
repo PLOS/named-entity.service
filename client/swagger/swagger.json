@@ -1,9 +1,21 @@
 {
   "swagger" : "2.0",
   "info" : {
-    "version" : ""
+    "version" : "Swagger Server",
+    "title" : ""
   },
-  "basePath" : "/",
+  "basePath" : "/v0",
+  "tags" : [ {
+    "name" : "institutionsearch"
+  }, {
+    "name" : "typeclasses"
+  }, {
+    "name" : "organizations"
+  }, {
+    "name" : "individuals"
+  }, {
+    "name" : "service"
+  } ],
   "schemes" : [ "http" ],
   "paths" : {
     "/individuals" : {
@@ -12,7 +24,7 @@
         "summary" : "Find individual matching specified attribute.",
         "description" : "",
         "operationId" : "findIndividuals",
-        "produces" : [ "application/json", "application/xml" ],
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "entity",
           "in" : "query",
@@ -31,21 +43,19 @@
         } ],
         "responses" : {
           "default" : {
-            "description" : "success",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/IndividualComposite"
-              }
-            }
+            "description" : "successful operation"
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "post" : {
         "tags" : [ "individuals" ],
         "summary" : "Create individual",
         "description" : "",
         "operationId" : "createIndividual",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "in" : "body",
           "name" : "body",
@@ -60,14 +70,18 @@
           "type" : "string"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/IndividualComposite"
             }
           }
-        }
-      }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
+      },
+      "parameters" : [ ]
     },
     "/individuals/CAS/{casId}" : {
       "get" : {
@@ -75,6 +89,7 @@
         "summary" : "Read individual by CAS ID",
         "description" : "",
         "operationId" : "readIndividualByCasId",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "casId",
           "in" : "path",
@@ -82,14 +97,18 @@
           "type" : "string"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/IndividualComposite"
             }
           }
-        }
-      }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}" : {
       "get" : {
@@ -97,7 +116,7 @@
         "summary" : "Read individual by Ned ID",
         "description" : "",
         "operationId" : "readIndividual",
-        "produces" : [ "application/json", "application/xml" ],
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -106,14 +125,18 @@
           "format" : "int32"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/IndividualComposite"
             }
           }
-        }
-      }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/addresses" : {
       "get" : {
@@ -121,6 +144,7 @@
         "summary" : "List addresses",
         "description" : "",
         "operationId" : "getAddresses",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -129,22 +153,23 @@
           "format" : "int32"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Address"
-              }
+              "$ref" : "#/definitions/Address"
             }
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "post" : {
         "tags" : [ "individuals" ],
         "summary" : "Create address",
         "description" : "",
         "operationId" : "createAddress",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -165,14 +190,18 @@
           "type" : "string"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Address"
             }
           }
-        }
-      }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/addresses/{addressId}" : {
       "get" : {
@@ -180,6 +209,7 @@
         "summary" : "Read address",
         "description" : "",
         "operationId" : "getAddress",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -194,19 +224,23 @@
           "format" : "int32"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Address"
             }
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "put" : {
         "tags" : [ "individuals" ],
         "summary" : "Update address",
         "description" : "",
         "operationId" : "updateAddress",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -233,19 +267,23 @@
           "type" : "string"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Address"
             }
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "delete" : {
         "tags" : [ "individuals" ],
         "summary" : "Delete address",
         "description" : "",
         "operationId" : "deleteAddress",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -263,8 +301,17 @@
           "in" : "header",
           "required" : false,
           "type" : "string"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        },
+        "security" : [ {
+          "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/auth" : {
       "get" : {
@@ -272,14 +319,24 @@
         "summary" : "List auth record(s)",
         "description" : "",
         "operationId" : "getAuthRecord",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
           "required" : true,
           "type" : "integer",
           "format" : "int32"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        },
+        "security" : [ {
+          "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/auth/checkpassword" : {
       "post" : {
@@ -287,6 +344,7 @@
         "summary" : "Validate password",
         "description" : "",
         "operationId" : "checkPassword",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -300,8 +358,17 @@
           "schema" : {
             "$ref" : "#/definitions/Auth"
           }
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        },
+        "security" : [ {
+          "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/auth/{authId}" : {
       "put" : {
@@ -309,6 +376,7 @@
         "summary" : "Update auth record",
         "description" : "",
         "operationId" : "updateAuthRecord",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -335,14 +403,18 @@
           }
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Auth"
             }
           }
-        }
-      }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/degrees" : {
       "get" : {
@@ -350,6 +422,7 @@
         "summary" : "List degrees",
         "description" : "",
         "operationId" : "getDegrees",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -359,16 +432,14 @@
         } ],
         "responses" : {
           "default" : {
-            "description" : "success",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Degree"
-              }
-            }
+            "description" : "successful operation"
           }
-        }
-      }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/emails" : {
       "get" : {
@@ -376,6 +447,7 @@
         "summary" : "List emails",
         "description" : "",
         "operationId" : "getEmails",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -384,22 +456,23 @@
           "format" : "int32"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Email"
-              }
+              "$ref" : "#/definitions/Email"
             }
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "post" : {
         "tags" : [ "individuals" ],
         "summary" : "Create email",
         "description" : "",
         "operationId" : "createEmail",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -420,14 +493,18 @@
           "type" : "string"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Email"
             }
           }
-        }
-      }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/emails/{emailId}" : {
       "get" : {
@@ -435,6 +512,7 @@
         "summary" : "Read email",
         "description" : "",
         "operationId" : "getEmail",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -449,19 +527,23 @@
           "format" : "int32"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Email"
             }
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "put" : {
         "tags" : [ "individuals" ],
         "summary" : "Update email",
         "description" : "",
         "operationId" : "updateEmail",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -488,19 +570,23 @@
           "type" : "string"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Email"
             }
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "delete" : {
         "tags" : [ "individuals" ],
         "summary" : "Delete email",
         "description" : "",
         "operationId" : "deleteEmail",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -518,8 +604,17 @@
           "in" : "header",
           "required" : false,
           "type" : "string"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        },
+        "security" : [ {
+          "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/groups" : {
       "get" : {
@@ -527,6 +622,7 @@
         "summary" : "List groups",
         "description" : "",
         "operationId" : "getGroups",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -536,21 +632,19 @@
         } ],
         "responses" : {
           "default" : {
-            "description" : "success",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Group"
-              }
-            }
+            "description" : "successful operation"
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "post" : {
         "tags" : [ "individuals" ],
         "summary" : "Create group",
         "description" : "",
         "operationId" : "createGroup",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -571,14 +665,18 @@
           "type" : "string"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Group"
             }
           }
-        }
-      }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/groups/{groupId}" : {
       "get" : {
@@ -586,6 +684,7 @@
         "summary" : "Read group",
         "description" : "",
         "operationId" : "getGroup",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -600,19 +699,23 @@
           "format" : "int32"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Group"
             }
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "put" : {
         "tags" : [ "individuals" ],
         "summary" : "Update group",
         "description" : "",
         "operationId" : "updateGroup",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -639,19 +742,23 @@
           }
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Group"
             }
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "delete" : {
         "tags" : [ "individuals" ],
         "summary" : "Delete group",
         "description" : "",
         "operationId" : "deleteGroup",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -669,8 +776,17 @@
           "in" : "header",
           "required" : false,
           "type" : "string"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        },
+        "security" : [ {
+          "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/individualprofiles" : {
       "get" : {
@@ -678,6 +794,7 @@
         "summary" : "List profiles",
         "description" : "",
         "operationId" : "getProfiles",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -686,22 +803,23 @@
           "format" : "int32"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Individualprofile"
-              }
+              "$ref" : "#/definitions/Individualprofile"
             }
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "post" : {
         "tags" : [ "individuals" ],
         "summary" : "Add profile",
         "description" : "",
         "operationId" : "addProfile",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -722,14 +840,18 @@
           "type" : "string"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Individualprofile"
             }
           }
-        }
-      }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/individualprofiles/{profileId}" : {
       "get" : {
@@ -737,6 +859,7 @@
         "summary" : "Read profile",
         "description" : "",
         "operationId" : "getProfile",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -751,19 +874,23 @@
           "format" : "int32"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Individualprofile"
             }
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "put" : {
         "tags" : [ "individuals" ],
         "summary" : "Update a profile",
         "description" : "",
         "operationId" : "updateProfile",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -790,19 +917,23 @@
           }
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Individualprofile"
             }
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "delete" : {
         "tags" : [ "individuals" ],
         "summary" : "Delete a profile",
         "description" : "",
         "operationId" : "deleteProfile",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -820,8 +951,17 @@
           "in" : "header",
           "required" : false,
           "type" : "string"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        },
+        "security" : [ {
+          "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/phonenumbers" : {
       "get" : {
@@ -829,6 +969,7 @@
         "summary" : "List phone numbers",
         "description" : "",
         "operationId" : "getPhonenumbers",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -837,24 +978,26 @@
           "format" : "int32"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Phonenumber"
-              }
+              "$ref" : "#/definitions/Phonenumber"
             }
           }
-        }
-      }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/relationships" : {
       "get" : {
         "tags" : [ "individuals" ],
         "summary" : "List relationships",
         "description" : "",
-        "operationId" : "getRelationships",
+        "operationId" : "getRelationship",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -864,21 +1007,19 @@
         } ],
         "responses" : {
           "default" : {
-            "description" : "success",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Relationship"
-              }
-            }
+            "description" : "successful operation"
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "post" : {
         "tags" : [ "individuals" ],
         "summary" : "Create relationship",
         "description" : "",
         "operationId" : "createRelationship",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -899,14 +1040,18 @@
           "type" : "string"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Relationship"
             }
           }
-        }
-      }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/relationships/{relationshipId}" : {
       "get" : {
@@ -914,6 +1059,7 @@
         "summary" : "Read relationship",
         "description" : "",
         "operationId" : "getRelationship",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -928,19 +1074,23 @@
           "format" : "int32"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Relationship"
             }
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "put" : {
         "tags" : [ "individuals" ],
         "summary" : "Update relationship",
         "description" : "",
         "operationId" : "updateRelationship",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -967,19 +1117,23 @@
           }
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Relationship"
             }
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "delete" : {
         "tags" : [ "individuals" ],
         "summary" : "Delete relationship",
         "description" : "",
         "operationId" : "deleteRelationship",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -997,8 +1151,17 @@
           "in" : "header",
           "required" : false,
           "type" : "string"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        },
+        "security" : [ {
+          "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/uids" : {
       "get" : {
@@ -1006,6 +1169,7 @@
         "summary" : "List UIDs",
         "description" : "",
         "operationId" : "getUids",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -1015,21 +1179,19 @@
         } ],
         "responses" : {
           "default" : {
-            "description" : "success",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Uniqueidentifier"
-              }
-            }
+            "description" : "successful operation"
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "post" : {
         "tags" : [ "individuals" ],
         "summary" : "Create UID",
         "description" : "",
         "operationId" : "createUid",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -1050,14 +1212,18 @@
           "type" : "string"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Uniqueidentifier"
             }
           }
-        }
-      }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/uids/{id}" : {
       "get" : {
@@ -1065,6 +1231,7 @@
         "summary" : "Read uid",
         "description" : "",
         "operationId" : "getUid",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -1079,19 +1246,23 @@
           "format" : "int32"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Uniqueidentifier"
             }
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "put" : {
         "tags" : [ "individuals" ],
         "summary" : "Update UID",
         "description" : "",
         "operationId" : "updateUid",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -1118,19 +1289,23 @@
           }
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Uniqueidentifier"
             }
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "delete" : {
         "tags" : [ "individuals" ],
         "summary" : "Delete UID",
         "description" : "",
         "operationId" : "deleteUid",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -1148,8 +1323,17 @@
           "in" : "header",
           "required" : false,
           "type" : "string"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        },
+        "security" : [ {
+          "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{uidType}/{uidValue}" : {
       "get" : {
@@ -1157,6 +1341,7 @@
         "summary" : "Read individual by UID",
         "description" : "",
         "operationId" : "readIndividualByUid",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "uidType",
           "in" : "path",
@@ -1169,14 +1354,18 @@
           "type" : "string"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/IndividualComposite"
             }
           }
-        }
-      }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
+      },
+      "parameters" : [ ]
     },
     "/institutionsearch" : {
       "get" : {
@@ -1184,14 +1373,20 @@
         "summary" : "Find institution(s) by name fragment (wildcard search).",
         "description" : "",
         "operationId" : "findInstitutionsByName",
-        "produces" : [ "application/json", "application/xml" ],
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "substring",
           "in" : "query",
           "required" : false,
           "type" : "string"
-        } ]
-      }
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      },
+      "parameters" : [ ]
     },
     "/organizations" : {
       "get" : {
@@ -1210,13 +1405,19 @@
           "in" : "query",
           "required" : false,
           "type" : "string"
-        } ]
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
       },
       "post" : {
         "tags" : [ "organizations" ],
         "summary" : "Create organization",
         "description" : "",
         "operationId" : "createOrganization",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "in" : "body",
           "name" : "body",
@@ -1231,14 +1432,15 @@
           "type" : "string"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/OrganizationComposite"
             }
           }
         }
-      }
+      },
+      "parameters" : [ ]
     },
     "/organizations/{nedId}" : {
       "get" : {
@@ -1255,14 +1457,15 @@
           "format" : "int32"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/OrganizationComposite"
             }
           }
         }
-      }
+      },
+      "parameters" : [ ]
     },
     "/organizations/{nedId}/addresses" : {
       "get" : {
@@ -1270,6 +1473,7 @@
         "summary" : "List addresses",
         "description" : "",
         "operationId" : "getAddresses",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -1278,13 +1482,10 @@
           "format" : "int32"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Address"
-              }
+              "$ref" : "#/definitions/Address"
             }
           }
         }
@@ -1294,6 +1495,7 @@
         "summary" : "Create address",
         "description" : "",
         "operationId" : "createAddress",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -1314,14 +1516,15 @@
           "type" : "string"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Address"
             }
           }
         }
-      }
+      },
+      "parameters" : [ ]
     },
     "/organizations/{nedId}/addresses/{addressId}" : {
       "get" : {
@@ -1329,6 +1532,7 @@
         "summary" : "Read address",
         "description" : "",
         "operationId" : "getAddress",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -1343,8 +1547,8 @@
           "format" : "int32"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Address"
             }
@@ -1356,6 +1560,7 @@
         "summary" : "Update address",
         "description" : "",
         "operationId" : "updateAddress",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -1382,8 +1587,8 @@
           "type" : "string"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Address"
             }
@@ -1395,6 +1600,7 @@
         "summary" : "Delete address",
         "description" : "",
         "operationId" : "deleteAddress",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -1412,8 +1618,14 @@
           "in" : "header",
           "required" : false,
           "type" : "string"
-        } ]
-      }
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      },
+      "parameters" : [ ]
     },
     "/organizations/{nedId}/emails" : {
       "get" : {
@@ -1421,6 +1633,7 @@
         "summary" : "List emails",
         "description" : "",
         "operationId" : "getEmails",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -1429,13 +1642,10 @@
           "format" : "int32"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Email"
-              }
+              "$ref" : "#/definitions/Email"
             }
           }
         }
@@ -1445,6 +1655,7 @@
         "summary" : "Create email",
         "description" : "",
         "operationId" : "createEmail",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -1465,14 +1676,15 @@
           "type" : "string"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Email"
             }
           }
         }
-      }
+      },
+      "parameters" : [ ]
     },
     "/organizations/{nedId}/emails/{emailId}" : {
       "get" : {
@@ -1480,6 +1692,7 @@
         "summary" : "Read email",
         "description" : "",
         "operationId" : "getEmail",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -1494,8 +1707,8 @@
           "format" : "int32"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Email"
             }
@@ -1507,6 +1720,7 @@
         "summary" : "Update email",
         "description" : "",
         "operationId" : "updateEmail",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -1533,8 +1747,8 @@
           "type" : "string"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Email"
             }
@@ -1546,6 +1760,7 @@
         "summary" : "Delete email",
         "description" : "",
         "operationId" : "deleteEmail",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -1563,8 +1778,14 @@
           "in" : "header",
           "required" : false,
           "type" : "string"
-        } ]
-      }
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      },
+      "parameters" : [ ]
     },
     "/organizations/{nedId}/phonenumbers" : {
       "get" : {
@@ -1572,6 +1793,7 @@
         "summary" : "List phone numbers",
         "description" : "",
         "operationId" : "getPhonenumbers",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -1580,17 +1802,15 @@
           "format" : "int32"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Phonenumber"
-              }
+              "$ref" : "#/definitions/Phonenumber"
             }
           }
         }
-      }
+      },
+      "parameters" : [ ]
     },
     "/organizations/{nedId}/uids" : {
       "get" : {
@@ -1598,6 +1818,7 @@
         "summary" : "List UIDs",
         "description" : "",
         "operationId" : "getUids",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -1607,13 +1828,7 @@
         } ],
         "responses" : {
           "default" : {
-            "description" : "success",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Uniqueidentifier"
-              }
-            }
+            "description" : "successful operation"
           }
         }
       },
@@ -1622,6 +1837,7 @@
         "summary" : "Create UID",
         "description" : "",
         "operationId" : "createUid",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -1642,14 +1858,15 @@
           "type" : "string"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Uniqueidentifier"
             }
           }
         }
-      }
+      },
+      "parameters" : [ ]
     },
     "/organizations/{nedId}/uids/{id}" : {
       "get" : {
@@ -1657,6 +1874,7 @@
         "summary" : "Read uid",
         "description" : "",
         "operationId" : "getUid",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -1671,8 +1889,8 @@
           "format" : "int32"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Uniqueidentifier"
             }
@@ -1684,6 +1902,7 @@
         "summary" : "Update UID",
         "description" : "",
         "operationId" : "updateUid",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -1710,14 +1929,15 @@
           }
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Uniqueidentifier"
             }
           }
         }
-      }
+      },
+      "parameters" : [ ]
     },
     "/organizations/{uidType}/{uidValue}" : {
       "get" : {
@@ -1725,6 +1945,7 @@
         "summary" : "Read organization by UID",
         "description" : "",
         "operationId" : "readOrganizationByUid",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "uidType",
           "in" : "path",
@@ -1737,14 +1958,15 @@
           "type" : "string"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/OrganizationComposite"
             }
           }
         }
-      }
+      },
+      "parameters" : [ ]
     },
     "/service/config" : {
       "get" : {
@@ -1752,16 +1974,18 @@
         "summary" : "Config info",
         "description" : "",
         "operationId" : "config",
+        "produces" : [ "application/json" ],
         "parameters" : [ ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/ConfigInfo"
             }
           }
         }
-      }
+      },
+      "parameters" : [ ]
     },
     "/service/errorcodes" : {
       "get" : {
@@ -1769,10 +1993,11 @@
         "summary" : "List possible error codes",
         "description" : "",
         "operationId" : "errorcodes",
+        "produces" : [ "application/json" ],
         "parameters" : [ ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "type" : "array",
               "items" : {
@@ -1781,7 +2006,8 @@
             }
           }
         }
-      }
+      },
+      "parameters" : [ ]
     },
     "/typeclasses" : {
       "get" : {
@@ -1789,6 +2015,7 @@
         "summary" : "List",
         "description" : "",
         "operationId" : "list",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "offset",
           "in" : "query",
@@ -1803,8 +2030,8 @@
           "format" : "int32"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "type" : "array",
               "items" : {
@@ -1812,13 +2039,17 @@
               }
             }
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "post" : {
         "tags" : [ "typeclasses" ],
         "summary" : "Create",
         "description" : "",
         "operationId" : "create",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "in" : "body",
           "name" : "body",
@@ -1828,14 +2059,18 @@
           }
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Typedescription"
             }
           }
-        }
-      }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
+      },
+      "parameters" : [ ]
     },
     "/typeclasses/{id}" : {
       "get" : {
@@ -1843,6 +2078,7 @@
         "summary" : "Read",
         "description" : "",
         "operationId" : "read",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -1851,19 +2087,23 @@
           "format" : "int32"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Typedescription"
             }
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "put" : {
         "tags" : [ "typeclasses" ],
         "summary" : "Update",
         "description" : "",
         "operationId" : "update",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "in" : "body",
           "name" : "body",
@@ -1873,27 +2113,40 @@
           }
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Typedescription"
             }
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "delete" : {
         "tags" : [ "typeclasses" ],
         "summary" : "Delete",
         "description" : "",
         "operationId" : "delete",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
           "required" : true,
           "type" : "integer",
           "format" : "int32"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        },
+        "security" : [ {
+          "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/typeclasses/{typeclassid}/typevalues" : {
       "get" : {
@@ -1901,12 +2154,21 @@
         "summary" : "List global types",
         "description" : "",
         "operationId" : "getGlobalTypeForTypeClass",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "typeclassid",
           "in" : "path",
           "required" : true,
           "type" : "integer",
           "format" : "int32"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        },
+        "security" : [ {
+          "basic" : [ ]
         } ]
       },
       "post" : {
@@ -1914,6 +2176,7 @@
         "summary" : "Create global type",
         "description" : "",
         "operationId" : "createGlobalType",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "typeclassid",
           "in" : "path",
@@ -1929,14 +2192,18 @@
           }
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Globaltype"
             }
           }
-        }
-      }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
+      },
+      "parameters" : [ ]
     },
     "/typeclasses/{typeclassid}/typevalues/{typevalueid}" : {
       "get" : {
@@ -1944,6 +2211,7 @@
         "summary" : "Read global type",
         "description" : "",
         "operationId" : "getGlobalType",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "typeclassid",
           "in" : "path",
@@ -1958,19 +2226,23 @@
           "format" : "int32"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Globaltype"
             }
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "put" : {
         "tags" : [ "typeclasses" ],
         "summary" : "Update global type",
         "description" : "",
         "operationId" : "updateGlobalType",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "typeclassid",
           "in" : "path",
@@ -1992,19 +2264,23 @@
           }
         } ],
         "responses" : {
-          "default" : {
-            "description" : "success",
+          "200" : {
+            "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/Globaltype"
             }
           }
-        }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
       },
       "delete" : {
         "tags" : [ "typeclasses" ],
         "summary" : "Delete global type",
         "description" : "",
         "operationId" : "deleteGlobalType",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "typeclassid",
           "in" : "path",
@@ -2017,13 +2293,105 @@
           "required" : true,
           "type" : "integer",
           "format" : "int32"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        },
+        "security" : [ {
+          "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
+    }
+  },
+  "securityDefinitions" : {
+    "basic" : {
+      "type" : "basic"
     }
   },
   "definitions" : {
+    "Entity" : {
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "nedid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "source" : {
+          "type" : "string"
+        },
+        "sourcetypeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lastmodified" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "createdby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "createdbyname" : {
+          "type" : "string"
+        },
+        "lastmodifiedby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "lastmodifiedbyname" : {
+          "type" : "string"
+        }
+      }
+    },
     "Group" : {
       "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "nedid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "source" : {
+          "type" : "string"
+        },
+        "sourcetypeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lastmodified" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "createdby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "createdbyname" : {
+          "type" : "string"
+        },
+        "lastmodifiedby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "lastmodifiedbyname" : {
+          "type" : "string"
+        },
         "typeid" : {
           "type" : "integer",
           "format" : "int32"
@@ -2039,33 +2407,10 @@
           "type" : "string",
           "format" : "date-time"
         },
-        "createdby" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "lastmodifiedby" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
         "applicationtype" : {
           "type" : "string"
         },
         "applicationtypeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "source" : {
-          "type" : "string"
-        },
-        "nedid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "sourcetypeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "id" : {
           "type" : "integer",
           "format" : "int32"
         }
@@ -2073,6 +2418,43 @@
     },
     "Email" : {
       "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "nedid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "source" : {
+          "type" : "string"
+        },
+        "sourcetypeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lastmodified" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "createdby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "createdbyname" : {
+          "type" : "string"
+        },
+        "lastmodifiedby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "lastmodifiedbyname" : {
+          "type" : "string"
+        },
         "type" : {
           "type" : "string"
         },
@@ -2084,30 +2466,54 @@
           "type" : "string"
         },
         "verified" : {
-          "type" : "boolean"
+          "type" : "boolean",
+          "default" : false
         },
         "isactive" : {
-          "type" : "boolean"
-        },
-        "source" : {
-          "type" : "string"
-        },
-        "nedid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "sourcetypeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "id" : {
-          "type" : "integer",
-          "format" : "int32"
+          "type" : "boolean",
+          "default" : false
         }
       }
     },
     "Address" : {
       "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "nedid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "source" : {
+          "type" : "string"
+        },
+        "sourcetypeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lastmodified" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "createdby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "createdbyname" : {
+          "type" : "string"
+        },
+        "lastmodifiedby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "lastmodifiedbyname" : {
+          "type" : "string"
+        },
         "typeid" : {
           "type" : "integer",
           "format" : "int32"
@@ -2157,48 +2563,56 @@
           "format" : "int32"
         },
         "isactive" : {
-          "type" : "boolean"
-        },
-        "source" : {
-          "type" : "string"
-        },
-        "nedid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "sourcetypeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "id" : {
-          "type" : "integer",
-          "format" : "int32"
+          "type" : "boolean",
+          "default" : false
         }
       }
     },
     "Degree" : {
       "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "nedid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "source" : {
+          "type" : "string"
+        },
+        "sourcetypeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lastmodified" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "createdby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "createdbyname" : {
+          "type" : "string"
+        },
+        "lastmodifiedby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "lastmodifiedbyname" : {
+          "type" : "string"
+        },
         "typeid" : {
           "type" : "integer",
           "format" : "int32"
         },
         "type" : {
           "type" : "string"
-        },
-        "source" : {
-          "type" : "string"
-        },
-        "nedid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "sourcetypeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "id" : {
-          "type" : "integer",
-          "format" : "int32"
         }
       }
     },
@@ -2228,14 +2642,33 @@
             "$ref" : "#/definitions/Uniqueidentifier"
           }
         },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "typeName" : {
+          "type" : "string"
+        },
+        "type" : {
+          "type" : "string"
+        },
         "source" : {
           "type" : "string"
         },
-        "nedid" : {
+        "sourcetypeid" : {
           "type" : "integer",
           "format" : "int32"
         },
-        "sourcetypeid" : {
+        "asMap" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/Entity"
+            }
+          }
+        },
+        "nedid" : {
           "type" : "integer",
           "format" : "int32"
         },
@@ -2243,23 +2676,22 @@
           "type" : "integer",
           "format" : "int32"
         },
-        "isactive" : {
-          "type" : "boolean"
+        "lastmodified" : {
+          "type" : "string",
+          "format" : "date-time"
         },
         "familiarname" : {
           "type" : "string"
         },
-        "legalname" : {
-          "type" : "string"
+        "isactive" : {
+          "type" : "boolean",
+          "default" : false
         },
         "maincontactid" : {
           "type" : "integer",
           "format" : "int32"
         },
-        "typeName" : {
-          "type" : "string"
-        },
-        "type" : {
+        "legalname" : {
           "type" : "string"
         }
       }
@@ -2272,38 +2704,6 @@
         "startime" : {
           "type" : "string",
           "format" : "date-time"
-        }
-      }
-    },
-    "Uniqueidentifier" : {
-      "properties" : {
-        "typeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "type" : {
-          "type" : "string"
-        },
-        "uniqueidentifier" : {
-          "type" : "string"
-        },
-        "metadata" : {
-          "type" : "string"
-        },
-        "source" : {
-          "type" : "string"
-        },
-        "nedid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "sourcetypeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "id" : {
-          "type" : "integer",
-          "format" : "int32"
         }
       }
     },
@@ -2327,10 +2727,12 @@
           "type" : "string"
         },
         "created" : {
-          "$ref" : "#/definitions/Timestamp"
+          "type" : "string",
+          "format" : "date-time"
         },
         "lastmodified" : {
-          "$ref" : "#/definitions/Timestamp"
+          "type" : "string",
+          "format" : "date-time"
         },
         "createdby" : {
           "type" : "integer",
@@ -2342,76 +2744,111 @@
         }
       }
     },
-    "Timestamp" : {
+    "Uniqueidentifier" : {
       "properties" : {
-        "nanos" : {
+        "id" : {
           "type" : "integer",
           "format" : "int32"
-        },
-        "time" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "year" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "month" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "date" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "hours" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "minutes" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "seconds" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "day" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "timezoneOffset" : {
-          "type" : "integer",
-          "format" : "int32"
-        }
-      }
-    },
-    "Url" : {
-      "properties" : {
-        "url" : {
-          "type" : "string"
-        },
-        "source" : {
-          "type" : "string"
         },
         "nedid" : {
           "type" : "integer",
           "format" : "int32"
         },
+        "source" : {
+          "type" : "string"
+        },
         "sourcetypeid" : {
           "type" : "integer",
           "format" : "int32"
         },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lastmodified" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "createdby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "createdbyname" : {
+          "type" : "string"
+        },
+        "lastmodifiedby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "lastmodifiedbyname" : {
+          "type" : "string"
+        },
+        "typeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "uniqueidentifier" : {
+          "type" : "string"
+        },
+        "metadata" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Url" : {
+      "properties" : {
         "id" : {
           "type" : "integer",
           "format" : "int32"
+        },
+        "nedid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "source" : {
+          "type" : "string"
+        },
+        "sourcetypeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lastmodified" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "createdby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "createdbyname" : {
+          "type" : "string"
+        },
+        "lastmodifiedby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "lastmodifiedbyname" : {
+          "type" : "string"
+        },
+        "url" : {
+          "type" : "string"
         }
       }
     },
     "NedErrorResponse" : {
       "properties" : {
-        "problem" : {
-          "type" : "string"
+        "failureMsg" : {
+          "type" : "string",
+          "xml" : {
+            "name" : "problem"
+          }
         },
         "errorCode" : {
           "type" : "integer",
@@ -2446,11 +2883,56 @@
         },
         "howused" : {
           "type" : "string"
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lastmodified" : {
+          "type" : "string",
+          "format" : "date-time"
         }
       }
     },
     "Auth" : {
       "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "nedid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "source" : {
+          "type" : "string"
+        },
+        "sourcetypeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lastmodified" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "createdby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "createdbyname" : {
+          "type" : "string"
+        },
+        "lastmodifiedby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "lastmodifiedbyname" : {
+          "type" : "string"
+        },
         "email" : {
           "type" : "string"
         },
@@ -2461,40 +2943,74 @@
         "authid" : {
           "type" : "string"
         },
+        "plainTextPassword" : {
+          "type" : "string",
+          "xml" : {
+            "name" : "password"
+          }
+        },
         "password" : {
-          "type" : "string"
+          "type" : "string",
+          "xml" : {
+            "name" : "password_digest"
+          }
         },
         "passwordreset" : {
-          "type" : "boolean"
+          "type" : "string",
+          "format" : "byte"
         },
         "verificationtoken" : {
           "type" : "string"
         },
         "verified" : {
-          "type" : "boolean"
+          "type" : "string",
+          "format" : "byte"
         },
         "isactive" : {
-          "type" : "boolean"
-        },
-        "source" : {
-          "type" : "string"
-        },
-        "nedid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "sourcetypeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "id" : {
-          "type" : "integer",
-          "format" : "int32"
+          "type" : "string",
+          "format" : "byte"
         }
       }
     },
     "Relationship" : {
       "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "nedid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "source" : {
+          "type" : "string"
+        },
+        "sourcetypeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lastmodified" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "createdby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "createdbyname" : {
+          "type" : "string"
+        },
+        "lastmodifiedby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "lastmodifiedbyname" : {
+          "type" : "string"
+        },
         "nedidrelated" : {
           "type" : "integer",
           "format" : "int32"
@@ -2516,26 +3032,20 @@
         "enddate" : {
           "type" : "string",
           "format" : "date-time"
-        },
-        "source" : {
-          "type" : "string"
-        },
-        "nedid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "sourcetypeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "id" : {
-          "type" : "integer",
-          "format" : "int32"
         }
       }
     },
     "IndividualComposite" : {
       "properties" : {
+        "auth" : {
+          "type" : "array",
+          "xml" : {
+            "name" : "credentials"
+          },
+          "items" : {
+            "$ref" : "#/definitions/Auth"
+          }
+        },
         "individualprofiles" : {
           "type" : "array",
           "items" : {
@@ -2590,19 +3100,59 @@
             "$ref" : "#/definitions/Relationship"
           }
         },
-        "credentials" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/Auth"
-          }
-        },
         "typeName" : {
           "type" : "string"
+        },
+        "asMap" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/Entity"
+            }
+          }
         }
       }
     },
     "Phonenumber" : {
       "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "nedid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "source" : {
+          "type" : "string"
+        },
+        "sourcetypeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lastmodified" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "createdby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "createdbyname" : {
+          "type" : "string"
+        },
+        "lastmodifiedby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "lastmodifiedbyname" : {
+          "type" : "string"
+        },
         "typeid" : {
           "type" : "integer",
           "format" : "int32"
@@ -2624,27 +3174,50 @@
           "type" : "string"
         },
         "isactive" : {
-          "type" : "boolean"
-        },
-        "source" : {
-          "type" : "string"
-        },
-        "nedid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "sourcetypeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "id" : {
-          "type" : "integer",
-          "format" : "int32"
+          "type" : "boolean",
+          "default" : false
         }
       }
     },
     "Individualprofile" : {
       "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "nedid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "source" : {
+          "type" : "string"
+        },
+        "sourcetypeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lastmodified" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "createdby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "createdbyname" : {
+          "type" : "string"
+        },
+        "lastmodifiedby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "lastmodifiedbyname" : {
+          "type" : "string"
+        },
         "firstname" : {
           "type" : "string"
         },
@@ -2678,22 +3251,8 @@
           "type" : "string"
         },
         "isactive" : {
-          "type" : "boolean"
-        },
-        "source" : {
-          "type" : "string"
-        },
-        "nedid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "sourcetypeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "id" : {
-          "type" : "integer",
-          "format" : "int32"
+          "type" : "boolean",
+          "default" : false
         }
       }
     }
