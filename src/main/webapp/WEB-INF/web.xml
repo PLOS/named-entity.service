@@ -32,13 +32,13 @@
   <servlet>
     <servlet-name>Jersey2Config</servlet-name>
     <servlet-class>io.swagger.jersey.config.JerseyJaxrsConfig</servlet-class>
-    <init-param>
-      <param-name>api.version</param-name>
-      <param-value>${project.version}</param-value>
-    </init-param>
+    <!--<init-param>-->
+      <!--<param-name>api.version</param-name>-->
+      <!--<param-value>${project.version}</param-value>-->
+    <!--</init-param>-->
     <init-param>
       <param-name>swagger.api.basepath</param-name>
-      <param-value>${swagger.basepath}</param-value>
+      <param-value>/v0</param-value>
     </init-param>
     <load-on-startup>2</load-on-startup>
   </servlet>

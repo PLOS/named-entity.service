@@ -233,13 +233,6 @@
       </resource>
       <resource>
         <filtering>true</filtering>
-        <directory>src/main/webapp</directory>
-        <includes>
-          <include>WEB-INF/web.xml</include>
-        </includes>
-      </resource>
-      <resource>
-        <filtering>true</filtering>
         <directory>config/tomcat</directory>
         <includes>
           <include>**/*.xml</include>
@@ -273,25 +266,6 @@
           </execution>
         </executions>
       </plugin>
-
-      <!--<plugin>-->
-        <!--<groupId>org.apache.maven.plugins</groupId>-->
-        <!--<artifactId>maven-war-plugin</artifactId>-->
-        <!--<configuration>-->
-          <!--<webResources>-->
-            <!--<resource>-->
-              <!--<filtering>true</filtering>-->
-              <!--<directory>src/main/webapp</directory>-->
-              <!--<includes>-->
-                <!--<include>**/web.xml</include>-->
-              <!--</includes>-->
-            <!--</resource>-->
-          <!--</webResources>-->
-          <!--<warSourceDirectory>src/main/webapp</warSourceDirectory>-->
-          <!--<webXml>src/main/webapp/WEB-INF/web.xml</webXml>-->
-        <!--</configuration>-->
-      <!--</plugin>-->
-
 
       <plugin>
         <groupId>org.jooq</groupId>
@@ -358,8 +332,7 @@
         <version>1.1</version>
         <configuration>
           <contextFile>${basedir}/target/classes/context.xml</contextFile>
-          <path>/vx</path>
-          <tomcatWebXml>${basedir}/target/classes/WEB-INF/web.xml</tomcatWebXml>
+          <path>/v0</path>
         </configuration>
         <dependencies>
           <dependency>
