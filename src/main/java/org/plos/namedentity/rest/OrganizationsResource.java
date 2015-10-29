@@ -25,6 +25,7 @@ import org.plos.namedentity.api.entity.Organization;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.api.ringgold.Institution;
+import org.plos.namedentity.api.enums.NamedPartyEnum;
 import org.plos.namedentity.service.RinggoldService;
 
 import javax.inject.Inject;
@@ -56,7 +57,7 @@ public class OrganizationsResource extends NedResource {
 
   @Override
   protected String getNamedPartyType() {
-    return OrganizationComposite.typeName;
+    return NamedPartyEnum.ORGANIZATION.getName();
   }
 
   @POST

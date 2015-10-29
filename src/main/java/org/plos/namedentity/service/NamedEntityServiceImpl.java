@@ -323,19 +323,19 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   @Override @Transactional
   public  <T extends Composite> T createComposite(T composite, Class<T> clazz) {
 
-    Integer nedId = nedDBSvc.newNamedEntityId(composite.getTypeName());
+    Long ambraId = null;
 
     // insert user into Ambra DB
 
     if (clazz == IndividualComposite.class) {
 
-      Long ambraId = ambraService.createUser((IndividualComposite)composite);
+      ambraId = ambraService.createUser((IndividualComposite)composite);
 
       // insert Ambra into NED UIDs
       Email email = ((IndividualComposite) composite).getEmails().get(0);
 
       Uniqueidentifier uniqueidentifier = new Uniqueidentifier();
-      uniqueidentifier.setNedid(nedId);
+      uniqueidentifier.setNedid(ambraId.intValue());   /* nedId == ambraId */
       uniqueidentifier.setSource("Ambra");
       uniqueidentifier.setType(UidTypeEnum.AMBRA.getName());
       uniqueidentifier.setUniqueidentifier(ambraId.toString());
@@ -349,6 +349,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       ((IndividualComposite) composite).getUniqueidentifiers().add(uniqueidentifier);
     }
 
+    //AMBRA-ADAPTER:
+    Integer nedId = nedDBSvc.newNamedEntityId(composite.getTypeName(), (ambraId != null) ? ambraId.intValue() : null);
 
     // insert into NED
 

@@ -43,6 +43,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.plos.namedentity.api.enums.NamedPartyEnum.*;
 import static org.plos.namedentity.api.NedException.ErrorType.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -95,7 +96,7 @@ public class CrudServiceTest {
 
     // CREATE
 
-    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+    Integer nedId = nedDBSvc.newNamedEntityId(INDIVIDUAL);
 
     Organization organization = _(new Organization());
     organization.setNedid(nedId);
@@ -131,7 +132,7 @@ public class CrudServiceTest {
   @Test
   public void testIndividualInvalidEmail() {
 
-    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+    Integer nedId = nedDBSvc.newNamedEntityId(INDIVIDUAL);
 
     Individualprofile individualProfile = _(new Individualprofile());
     individualProfile.setNedid(nedId);
@@ -173,7 +174,7 @@ public class CrudServiceTest {
   @Test
   public void testNonNullConstraint() {
 
-    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+    Integer nedId = nedDBSvc.newNamedEntityId(INDIVIDUAL);
 
     Individualprofile individualProfile = _(new Individualprofile());
     individualProfile.setNedid(nedId);
@@ -588,7 +589,7 @@ public class CrudServiceTest {
 
     // fill in auth record attributes and try again (happy path)
 
-    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+    Integer nedId = nedDBSvc.newNamedEntityId(INDIVIDUAL);
 
     Email email = _(new Email());
     email.setNedid(nedId);

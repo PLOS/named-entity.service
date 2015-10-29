@@ -12,6 +12,7 @@ import org.plos.namedentity.api.entity.Group;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Relationship;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.api.enums.NamedPartyEnum;
 import org.plos.namedentity.service.PasswordDigestService;
 
 import javax.ws.rs.DELETE;
@@ -43,7 +44,7 @@ public class IndividualsResource extends NedResource {
 
   @Override
   protected String getNamedPartyType() {
-    return IndividualComposite.typeName;
+    return NamedPartyEnum.INDIVIDUAL.getName();
   }
 
   @POST

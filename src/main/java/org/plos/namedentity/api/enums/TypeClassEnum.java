@@ -49,7 +49,6 @@ public enum TypeClassEnum {
     this.name = name;
   }
 
-  // assume uom names are unique; may not be true for symbols.
   public static TypeClassEnum getTypeClassEnum(String name) {
     for (TypeClassEnum typeclass : EnumSet.allOf(TypeClassEnum.class))
       if (typeclass.name.equals(name))

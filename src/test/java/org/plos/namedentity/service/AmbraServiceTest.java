@@ -13,6 +13,7 @@ import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Auth;
 import org.plos.namedentity.api.entity.Email;
+import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.persist.NamedEntityDBService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +24,23 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.when;
@@ -40,7 +48,7 @@ import static org.mockito.Matchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring-beans.xml","/ambra-spring-beans.xml","/spring-beans.test.xml","/ambra-spring-beans.test.xml"})
-public class AmberServiceTest {
+public class AmbraServiceTest {
 
   @Autowired
   NamedEntityService namedEntityService;  // inject so can resolve type names to ids
@@ -81,7 +89,7 @@ public class AmberServiceTest {
     return unmarshaller.unmarshal(new StreamSource(new StringReader(json)), clazz).getValue();
   }
 
-  private IndividualComposite loadComposite(String filename) throws Exception {
+  private IndividualComposite loadComposite(String filename) throws Throwable {
 
     Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
     return unmarshalEntity(
@@ -90,22 +98,37 @@ public class AmberServiceTest {
         IndividualComposite.class, unmarshaller);
   }
 
-  private IndividualComposite getNew() throws Exception {
+  private IndividualComposite getNew() throws Throwable {
 
     IndividualComposite composite = loadComposite("composite-individual.json");
 
+    MethodHandles.Lookup lookup = MethodHandles.lookup();
+
+    Map<Class, List<? extends Entity>> compositeMap = composite.readAsMap();
+
+    Iterator<Map.Entry<Class, List<? extends Entity>>> entries = compositeMap.entrySet().iterator();
+    while (entries.hasNext()) {
+      Map.Entry<Class, List<? extends Entity>> entry = entries.next();
+      List<? extends Entity> entities = entry.getValue();
+      if (entities != null) {
+        MethodHandle createdByMH = lookup.findVirtual(entry.getKey(), "setCreatedbyname", MethodType.methodType(void.class, String.class));
+        MethodHandle lastmodifiedByMH = lookup.findVirtual(entry.getKey(), "setLastmodifiedbyname", MethodType.methodType(void.class, String.class));
+        for (Entity entity : entities) {
+          createdByMH.invoke(entity, "test");
+          lastmodifiedByMH.invoke(entity, "test");
+        }
+      }
+    }
+
     String rand = UUID.randomUUID().toString();
 
-    Auth auth = new Auth();
-    auth.setAuthid(rand);
+    Auth auth = composite.getAuth().get(0);
     auth.setEmail(rand + "@test.test");
-    composite.getAuth().add(auth);
 
     composite.getEmails().get(0).setEmailaddress(rand + "@test.test");
     composite.getIndividualprofiles().get(0).setDisplayname(rand);
 
     return composite;
-
   }
 
   private void assertEqual(IndividualComposite ned, UserProfile ambra) {
@@ -153,7 +176,7 @@ public class AmberServiceTest {
   }
 
   @Test
-  public void testCreateInAmbra() throws Exception {
+  public void testCreateInAmbra() throws Throwable {
 
     IndividualComposite composite = getNew();
 
@@ -168,7 +191,7 @@ public class AmberServiceTest {
   }
 
   @Test
-  public void testCreateInAmbraAndNed() throws Exception {
+  public void testCreateInAmbraAndNed() throws Throwable {
 
     IndividualComposite composite = getNew();
 
@@ -185,28 +208,29 @@ public class AmberServiceTest {
   }
 
   @Test
-  public void testUpdateInAmbra() throws Exception {
+  public void testUpdateInAmbra() throws Throwable {
 
     IndividualComposite composite = getNew();
 
-    Long ambraId = ambraService.createUser(composite);
+    IndividualComposite dbComposite = namedEntityService.createComposite(
+        composite, IndividualComposite.class);
 
-    Email email = composite.getEmails().get(0);
+    Email email = dbComposite.getEmails().get(0);
     email.setEmailaddress("email2@foo.com");
     ambraService.update(email);
 
-    Address address = composite.getAddresses().get(0);
+    Address address = dbComposite.getAddresses().get(0);
     address.setCity("new city");
     ambraService.update(address);
 
-    UserProfile userProfile = userService.getUser(ambraId);
+    UserProfile userProfile = userService.getUser(new Long(email.getNedid()));
 
     assertEqual(email, userProfile);
     assertEqual(address, userProfile);
   }
 
   @Test
-  public void testUpdateInAmbraAndNed() throws Exception {
+  public void testUpdateInAmbraAndNed() throws Throwable {
     IndividualComposite composite = getNew();
 
     Email email = namedEntityService.createComposite(
@@ -236,7 +260,7 @@ public class AmberServiceTest {
 
 
   @Test
-  public void testUpdateRollbackNed() throws Exception {
+  public void testUpdateRollbackNed() throws Throwable {
 
     IndividualComposite composite = getNew();
 
@@ -274,7 +298,7 @@ public class AmberServiceTest {
   }
 
   @Test
-  public void testUpdateRollbackAmbra() throws Exception {
+  public void testUpdateRollbackAmbra() throws Throwable {
 
     IndividualComposite composite = getNew();
 
@@ -297,7 +321,7 @@ public class AmberServiceTest {
   }
 
   @Test
-  public void testCreateRollbackNed() throws Exception {
+  public void testCreateRollbackNed() throws Throwable {
 
     IndividualComposite composite = getNew();
 
@@ -320,7 +344,7 @@ public class AmberServiceTest {
   }
 
   @Test
-  public void testCreateRollbackAmbra() throws Exception {
+  public void testCreateRollbackAmbra() throws Throwable {
 
 //    UserRegistrationService origReg = userRegistrationService;
 
