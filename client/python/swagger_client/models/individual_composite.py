@@ -37,6 +37,7 @@ class IndividualComposite(object):
                                   and the value is json key in definition.
         """
         self.swagger_types = {
+            'auth': 'list[Auth]',
             'individualprofiles': 'list[Individualprofile]',
             'groups': 'list[Group]',
             'addresses': 'list[Address]',
@@ -46,11 +47,12 @@ class IndividualComposite(object):
             'degrees': 'list[Degree]',
             'urls': 'list[Url]',
             'relationships': 'list[Relationship]',
-            'credentials': 'list[Auth]',
+            'as_map': 'dict(str, list[Entity])',
             'type_name': 'str'
         }
 
         self.attribute_map = {
+            'auth': 'auth',
             'individualprofiles': 'individualprofiles',
             'groups': 'groups',
             'addresses': 'addresses',
@@ -60,10 +62,11 @@ class IndividualComposite(object):
             'degrees': 'degrees',
             'urls': 'urls',
             'relationships': 'relationships',
-            'credentials': 'credentials',
+            'as_map': 'asMap',
             'type_name': 'typeName'
         }
 
+        self._auth = None
         self._individualprofiles = None
         self._groups = None
         self._addresses = None
@@ -73,8 +76,30 @@ class IndividualComposite(object):
         self._degrees = None
         self._urls = None
         self._relationships = None
-        self._credentials = None
+        self._as_map = None
         self._type_name = None
+
+    @property
+    def auth(self):
+        """
+        Gets the auth of this IndividualComposite.
+
+
+        :return: The auth of this IndividualComposite.
+        :rtype: list[Auth]
+        """
+        return self._auth
+
+    @auth.setter
+    def auth(self, auth):
+        """
+        Sets the auth of this IndividualComposite.
+
+
+        :param auth: The auth of this IndividualComposite.
+        :type: list[Auth]
+        """
+        self._auth = auth
 
     @property
     def individualprofiles(self):
@@ -275,26 +300,26 @@ class IndividualComposite(object):
         self._relationships = relationships
 
     @property
-    def credentials(self):
+    def as_map(self):
         """
-        Gets the credentials of this IndividualComposite.
+        Gets the as_map of this IndividualComposite.
 
 
-        :return: The credentials of this IndividualComposite.
-        :rtype: list[Auth]
+        :return: The as_map of this IndividualComposite.
+        :rtype: dict(str, list[Entity])
         """
-        return self._credentials
+        return self._as_map
 
-    @credentials.setter
-    def credentials(self, credentials):
+    @as_map.setter
+    def as_map(self, as_map):
         """
-        Sets the credentials of this IndividualComposite.
+        Sets the as_map of this IndividualComposite.
 
 
-        :param credentials: The credentials of this IndividualComposite.
-        :type: list[Auth]
+        :param as_map: The as_map of this IndividualComposite.
+        :type: dict(str, list[Entity])
         """
-        self._credentials = credentials
+        self._as_map = as_map
 
     @property
     def type_name(self):

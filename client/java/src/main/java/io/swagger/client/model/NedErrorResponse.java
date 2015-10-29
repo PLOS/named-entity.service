@@ -11,10 +11,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-22T17:32:27.863-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-29T08:59:42.643-07:00")
 public class NedErrorResponse   {
   
-  private String problem = null;
+  private String failureMsg = null;
   private Integer errorCode = null;
   private String errorMsg = null;
   private String detailedMsg = null;
@@ -25,12 +25,12 @@ public class NedErrorResponse   {
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("problem")
-  public String getProblem() {
-    return problem;
+  @JsonProperty("failureMsg")
+  public String getFailureMsg() {
+    return failureMsg;
   }
-  public void setProblem(String problem) {
-    this.problem = problem;
+  public void setFailureMsg(String failureMsg) {
+    this.failureMsg = failureMsg;
   }
 
   
@@ -100,7 +100,7 @@ public class NedErrorResponse   {
     StringBuilder sb = new StringBuilder();
     sb.append("class NedErrorResponse {\n");
     
-    sb.append("    problem: ").append(StringUtil.toIndentedString(problem)).append("\n");
+    sb.append("    failureMsg: ").append(StringUtil.toIndentedString(failureMsg)).append("\n");
     sb.append("    errorCode: ").append(StringUtil.toIndentedString(errorCode)).append("\n");
     sb.append("    errorMsg: ").append(StringUtil.toIndentedString(errorMsg)).append("\n");
     sb.append("    detailedMsg: ").append(StringUtil.toIndentedString(detailedMsg)).append("\n");

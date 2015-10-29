@@ -37,47 +37,279 @@ class Group(object):
                                   and the value is json key in definition.
         """
         self.swagger_types = {
+            'id': 'int',
+            'nedid': 'int',
+            'source': 'str',
+            'sourcetypeid': 'int',
+            'created': 'datetime',
+            'lastmodified': 'datetime',
+            'createdby': 'int',
+            'createdbyname': 'str',
+            'lastmodifiedby': 'int',
+            'lastmodifiedbyname': 'str',
             'typeid': 'int',
             'type': 'str',
             'startdate': 'datetime',
             'enddate': 'datetime',
-            'createdby': 'int',
-            'lastmodifiedby': 'int',
             'applicationtype': 'str',
-            'applicationtypeid': 'int',
-            'source': 'str',
-            'nedid': 'int',
-            'sourcetypeid': 'int',
-            'id': 'int'
+            'applicationtypeid': 'int'
         }
 
         self.attribute_map = {
+            'id': 'id',
+            'nedid': 'nedid',
+            'source': 'source',
+            'sourcetypeid': 'sourcetypeid',
+            'created': 'created',
+            'lastmodified': 'lastmodified',
+            'createdby': 'createdby',
+            'createdbyname': 'createdbyname',
+            'lastmodifiedby': 'lastmodifiedby',
+            'lastmodifiedbyname': 'lastmodifiedbyname',
             'typeid': 'typeid',
             'type': 'type',
             'startdate': 'startdate',
             'enddate': 'enddate',
-            'createdby': 'createdby',
-            'lastmodifiedby': 'lastmodifiedby',
             'applicationtype': 'applicationtype',
-            'applicationtypeid': 'applicationtypeid',
-            'source': 'source',
-            'nedid': 'nedid',
-            'sourcetypeid': 'sourcetypeid',
-            'id': 'id'
+            'applicationtypeid': 'applicationtypeid'
         }
 
+        self._id = None
+        self._nedid = None
+        self._source = None
+        self._sourcetypeid = None
+        self._created = None
+        self._lastmodified = None
+        self._createdby = None
+        self._createdbyname = None
+        self._lastmodifiedby = None
+        self._lastmodifiedbyname = None
         self._typeid = None
         self._type = None
         self._startdate = None
         self._enddate = None
-        self._createdby = None
-        self._lastmodifiedby = None
         self._applicationtype = None
         self._applicationtypeid = None
-        self._source = None
-        self._nedid = None
-        self._sourcetypeid = None
-        self._id = None
+
+    @property
+    def id(self):
+        """
+        Gets the id of this Group.
+
+
+        :return: The id of this Group.
+        :rtype: int
+        """
+        return self._id
+
+    @id.setter
+    def id(self, id):
+        """
+        Sets the id of this Group.
+
+
+        :param id: The id of this Group.
+        :type: int
+        """
+        self._id = id
+
+    @property
+    def nedid(self):
+        """
+        Gets the nedid of this Group.
+
+
+        :return: The nedid of this Group.
+        :rtype: int
+        """
+        return self._nedid
+
+    @nedid.setter
+    def nedid(self, nedid):
+        """
+        Sets the nedid of this Group.
+
+
+        :param nedid: The nedid of this Group.
+        :type: int
+        """
+        self._nedid = nedid
+
+    @property
+    def source(self):
+        """
+        Gets the source of this Group.
+
+
+        :return: The source of this Group.
+        :rtype: str
+        """
+        return self._source
+
+    @source.setter
+    def source(self, source):
+        """
+        Sets the source of this Group.
+
+
+        :param source: The source of this Group.
+        :type: str
+        """
+        self._source = source
+
+    @property
+    def sourcetypeid(self):
+        """
+        Gets the sourcetypeid of this Group.
+
+
+        :return: The sourcetypeid of this Group.
+        :rtype: int
+        """
+        return self._sourcetypeid
+
+    @sourcetypeid.setter
+    def sourcetypeid(self, sourcetypeid):
+        """
+        Sets the sourcetypeid of this Group.
+
+
+        :param sourcetypeid: The sourcetypeid of this Group.
+        :type: int
+        """
+        self._sourcetypeid = sourcetypeid
+
+    @property
+    def created(self):
+        """
+        Gets the created of this Group.
+
+
+        :return: The created of this Group.
+        :rtype: datetime
+        """
+        return self._created
+
+    @created.setter
+    def created(self, created):
+        """
+        Sets the created of this Group.
+
+
+        :param created: The created of this Group.
+        :type: datetime
+        """
+        self._created = created
+
+    @property
+    def lastmodified(self):
+        """
+        Gets the lastmodified of this Group.
+
+
+        :return: The lastmodified of this Group.
+        :rtype: datetime
+        """
+        return self._lastmodified
+
+    @lastmodified.setter
+    def lastmodified(self, lastmodified):
+        """
+        Sets the lastmodified of this Group.
+
+
+        :param lastmodified: The lastmodified of this Group.
+        :type: datetime
+        """
+        self._lastmodified = lastmodified
+
+    @property
+    def createdby(self):
+        """
+        Gets the createdby of this Group.
+
+
+        :return: The createdby of this Group.
+        :rtype: int
+        """
+        return self._createdby
+
+    @createdby.setter
+    def createdby(self, createdby):
+        """
+        Sets the createdby of this Group.
+
+
+        :param createdby: The createdby of this Group.
+        :type: int
+        """
+        self._createdby = createdby
+
+    @property
+    def createdbyname(self):
+        """
+        Gets the createdbyname of this Group.
+
+
+        :return: The createdbyname of this Group.
+        :rtype: str
+        """
+        return self._createdbyname
+
+    @createdbyname.setter
+    def createdbyname(self, createdbyname):
+        """
+        Sets the createdbyname of this Group.
+
+
+        :param createdbyname: The createdbyname of this Group.
+        :type: str
+        """
+        self._createdbyname = createdbyname
+
+    @property
+    def lastmodifiedby(self):
+        """
+        Gets the lastmodifiedby of this Group.
+
+
+        :return: The lastmodifiedby of this Group.
+        :rtype: int
+        """
+        return self._lastmodifiedby
+
+    @lastmodifiedby.setter
+    def lastmodifiedby(self, lastmodifiedby):
+        """
+        Sets the lastmodifiedby of this Group.
+
+
+        :param lastmodifiedby: The lastmodifiedby of this Group.
+        :type: int
+        """
+        self._lastmodifiedby = lastmodifiedby
+
+    @property
+    def lastmodifiedbyname(self):
+        """
+        Gets the lastmodifiedbyname of this Group.
+
+
+        :return: The lastmodifiedbyname of this Group.
+        :rtype: str
+        """
+        return self._lastmodifiedbyname
+
+    @lastmodifiedbyname.setter
+    def lastmodifiedbyname(self, lastmodifiedbyname):
+        """
+        Sets the lastmodifiedbyname of this Group.
+
+
+        :param lastmodifiedbyname: The lastmodifiedbyname of this Group.
+        :type: str
+        """
+        self._lastmodifiedbyname = lastmodifiedbyname
 
     @property
     def typeid(self):
@@ -168,50 +400,6 @@ class Group(object):
         self._enddate = enddate
 
     @property
-    def createdby(self):
-        """
-        Gets the createdby of this Group.
-
-
-        :return: The createdby of this Group.
-        :rtype: int
-        """
-        return self._createdby
-
-    @createdby.setter
-    def createdby(self, createdby):
-        """
-        Sets the createdby of this Group.
-
-
-        :param createdby: The createdby of this Group.
-        :type: int
-        """
-        self._createdby = createdby
-
-    @property
-    def lastmodifiedby(self):
-        """
-        Gets the lastmodifiedby of this Group.
-
-
-        :return: The lastmodifiedby of this Group.
-        :rtype: int
-        """
-        return self._lastmodifiedby
-
-    @lastmodifiedby.setter
-    def lastmodifiedby(self, lastmodifiedby):
-        """
-        Sets the lastmodifiedby of this Group.
-
-
-        :param lastmodifiedby: The lastmodifiedby of this Group.
-        :type: int
-        """
-        self._lastmodifiedby = lastmodifiedby
-
-    @property
     def applicationtype(self):
         """
         Gets the applicationtype of this Group.
@@ -254,94 +442,6 @@ class Group(object):
         :type: int
         """
         self._applicationtypeid = applicationtypeid
-
-    @property
-    def source(self):
-        """
-        Gets the source of this Group.
-
-
-        :return: The source of this Group.
-        :rtype: str
-        """
-        return self._source
-
-    @source.setter
-    def source(self, source):
-        """
-        Sets the source of this Group.
-
-
-        :param source: The source of this Group.
-        :type: str
-        """
-        self._source = source
-
-    @property
-    def nedid(self):
-        """
-        Gets the nedid of this Group.
-
-
-        :return: The nedid of this Group.
-        :rtype: int
-        """
-        return self._nedid
-
-    @nedid.setter
-    def nedid(self, nedid):
-        """
-        Sets the nedid of this Group.
-
-
-        :param nedid: The nedid of this Group.
-        :type: int
-        """
-        self._nedid = nedid
-
-    @property
-    def sourcetypeid(self):
-        """
-        Gets the sourcetypeid of this Group.
-
-
-        :return: The sourcetypeid of this Group.
-        :rtype: int
-        """
-        return self._sourcetypeid
-
-    @sourcetypeid.setter
-    def sourcetypeid(self, sourcetypeid):
-        """
-        Sets the sourcetypeid of this Group.
-
-
-        :param sourcetypeid: The sourcetypeid of this Group.
-        :type: int
-        """
-        self._sourcetypeid = sourcetypeid
-
-    @property
-    def id(self):
-        """
-        Gets the id of this Group.
-
-
-        :return: The id of this Group.
-        :rtype: int
-        """
-        return self._id
-
-    @id.setter
-    def id(self, id):
-        """
-        Sets the id of this Group.
-
-
-        :param id: The id of this Group.
-        :type: int
-        """
-        self._id = id
 
     def to_dict(self):
         """

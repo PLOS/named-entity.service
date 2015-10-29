@@ -37,70 +37,66 @@ class Url(object):
                                   and the value is json key in definition.
         """
         self.swagger_types = {
-            'url': 'str',
-            'source': 'str',
+            'id': 'int',
             'nedid': 'int',
+            'source': 'str',
             'sourcetypeid': 'int',
-            'id': 'int'
+            'created': 'datetime',
+            'lastmodified': 'datetime',
+            'createdby': 'int',
+            'createdbyname': 'str',
+            'lastmodifiedby': 'int',
+            'lastmodifiedbyname': 'str',
+            'url': 'str'
         }
 
         self.attribute_map = {
-            'url': 'url',
-            'source': 'source',
+            'id': 'id',
             'nedid': 'nedid',
+            'source': 'source',
             'sourcetypeid': 'sourcetypeid',
-            'id': 'id'
+            'created': 'created',
+            'lastmodified': 'lastmodified',
+            'createdby': 'createdby',
+            'createdbyname': 'createdbyname',
+            'lastmodifiedby': 'lastmodifiedby',
+            'lastmodifiedbyname': 'lastmodifiedbyname',
+            'url': 'url'
         }
 
-        self._url = None
-        self._source = None
-        self._nedid = None
-        self._sourcetypeid = None
         self._id = None
+        self._nedid = None
+        self._source = None
+        self._sourcetypeid = None
+        self._created = None
+        self._lastmodified = None
+        self._createdby = None
+        self._createdbyname = None
+        self._lastmodifiedby = None
+        self._lastmodifiedbyname = None
+        self._url = None
 
     @property
-    def url(self):
+    def id(self):
         """
-        Gets the url of this Url.
+        Gets the id of this Url.
 
 
-        :return: The url of this Url.
-        :rtype: str
+        :return: The id of this Url.
+        :rtype: int
         """
-        return self._url
+        return self._id
 
-    @url.setter
-    def url(self, url):
+    @id.setter
+    def id(self, id):
         """
-        Sets the url of this Url.
+        Sets the id of this Url.
 
 
-        :param url: The url of this Url.
-        :type: str
+        :param id: The id of this Url.
+        :type: int
         """
-        self._url = url
-
-    @property
-    def source(self):
-        """
-        Gets the source of this Url.
-
-
-        :return: The source of this Url.
-        :rtype: str
-        """
-        return self._source
-
-    @source.setter
-    def source(self, source):
-        """
-        Sets the source of this Url.
-
-
-        :param source: The source of this Url.
-        :type: str
-        """
-        self._source = source
+        self._id = id
 
     @property
     def nedid(self):
@@ -125,6 +121,28 @@ class Url(object):
         self._nedid = nedid
 
     @property
+    def source(self):
+        """
+        Gets the source of this Url.
+
+
+        :return: The source of this Url.
+        :rtype: str
+        """
+        return self._source
+
+    @source.setter
+    def source(self, source):
+        """
+        Sets the source of this Url.
+
+
+        :param source: The source of this Url.
+        :type: str
+        """
+        self._source = source
+
+    @property
     def sourcetypeid(self):
         """
         Gets the sourcetypeid of this Url.
@@ -147,26 +165,158 @@ class Url(object):
         self._sourcetypeid = sourcetypeid
 
     @property
-    def id(self):
+    def created(self):
         """
-        Gets the id of this Url.
+        Gets the created of this Url.
 
 
-        :return: The id of this Url.
+        :return: The created of this Url.
+        :rtype: datetime
+        """
+        return self._created
+
+    @created.setter
+    def created(self, created):
+        """
+        Sets the created of this Url.
+
+
+        :param created: The created of this Url.
+        :type: datetime
+        """
+        self._created = created
+
+    @property
+    def lastmodified(self):
+        """
+        Gets the lastmodified of this Url.
+
+
+        :return: The lastmodified of this Url.
+        :rtype: datetime
+        """
+        return self._lastmodified
+
+    @lastmodified.setter
+    def lastmodified(self, lastmodified):
+        """
+        Sets the lastmodified of this Url.
+
+
+        :param lastmodified: The lastmodified of this Url.
+        :type: datetime
+        """
+        self._lastmodified = lastmodified
+
+    @property
+    def createdby(self):
+        """
+        Gets the createdby of this Url.
+
+
+        :return: The createdby of this Url.
         :rtype: int
         """
-        return self._id
+        return self._createdby
 
-    @id.setter
-    def id(self, id):
+    @createdby.setter
+    def createdby(self, createdby):
         """
-        Sets the id of this Url.
+        Sets the createdby of this Url.
 
 
-        :param id: The id of this Url.
+        :param createdby: The createdby of this Url.
         :type: int
         """
-        self._id = id
+        self._createdby = createdby
+
+    @property
+    def createdbyname(self):
+        """
+        Gets the createdbyname of this Url.
+
+
+        :return: The createdbyname of this Url.
+        :rtype: str
+        """
+        return self._createdbyname
+
+    @createdbyname.setter
+    def createdbyname(self, createdbyname):
+        """
+        Sets the createdbyname of this Url.
+
+
+        :param createdbyname: The createdbyname of this Url.
+        :type: str
+        """
+        self._createdbyname = createdbyname
+
+    @property
+    def lastmodifiedby(self):
+        """
+        Gets the lastmodifiedby of this Url.
+
+
+        :return: The lastmodifiedby of this Url.
+        :rtype: int
+        """
+        return self._lastmodifiedby
+
+    @lastmodifiedby.setter
+    def lastmodifiedby(self, lastmodifiedby):
+        """
+        Sets the lastmodifiedby of this Url.
+
+
+        :param lastmodifiedby: The lastmodifiedby of this Url.
+        :type: int
+        """
+        self._lastmodifiedby = lastmodifiedby
+
+    @property
+    def lastmodifiedbyname(self):
+        """
+        Gets the lastmodifiedbyname of this Url.
+
+
+        :return: The lastmodifiedbyname of this Url.
+        :rtype: str
+        """
+        return self._lastmodifiedbyname
+
+    @lastmodifiedbyname.setter
+    def lastmodifiedbyname(self, lastmodifiedbyname):
+        """
+        Sets the lastmodifiedbyname of this Url.
+
+
+        :param lastmodifiedbyname: The lastmodifiedbyname of this Url.
+        :type: str
+        """
+        self._lastmodifiedbyname = lastmodifiedbyname
+
+    @property
+    def url(self):
+        """
+        Gets the url of this Url.
+
+
+        :return: The url of this Url.
+        :rtype: str
+        """
+        return self._url
+
+    @url.setter
+    def url(self, url):
+        """
+        Sets the url of this Url.
+
+
+        :param url: The url of this Url.
+        :type: str
+        """
+        self._url = url
 
     def to_dict(self):
         """

@@ -39,18 +39,24 @@ class Typedescription(object):
         self.swagger_types = {
             'id': 'int',
             'description': 'str',
-            'howused': 'str'
+            'howused': 'str',
+            'created': 'datetime',
+            'lastmodified': 'datetime'
         }
 
         self.attribute_map = {
             'id': 'id',
             'description': 'description',
-            'howused': 'howused'
+            'howused': 'howused',
+            'created': 'created',
+            'lastmodified': 'lastmodified'
         }
 
         self._id = None
         self._description = None
         self._howused = None
+        self._created = None
+        self._lastmodified = None
 
     @property
     def id(self):
@@ -117,6 +123,50 @@ class Typedescription(object):
         :type: str
         """
         self._howused = howused
+
+    @property
+    def created(self):
+        """
+        Gets the created of this Typedescription.
+
+
+        :return: The created of this Typedescription.
+        :rtype: datetime
+        """
+        return self._created
+
+    @created.setter
+    def created(self, created):
+        """
+        Sets the created of this Typedescription.
+
+
+        :param created: The created of this Typedescription.
+        :type: datetime
+        """
+        self._created = created
+
+    @property
+    def lastmodified(self):
+        """
+        Gets the lastmodified of this Typedescription.
+
+
+        :return: The lastmodified of this Typedescription.
+        :rtype: datetime
+        """
+        return self._lastmodified
+
+    @lastmodified.setter
+    def lastmodified(self, lastmodified):
+        """
+        Sets the lastmodified of this Typedescription.
+
+
+        :param lastmodified: The lastmodified of this Typedescription.
+        :type: datetime
+        """
+        self._lastmodified = lastmodified
 
     def to_dict(self):
         """

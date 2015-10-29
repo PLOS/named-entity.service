@@ -41,16 +41,19 @@ class OrganizationComposite(object):
             'emails': 'list[Email]',
             'phonenumbers': 'list[Phonenumber]',
             'uniqueidentifiers': 'list[Uniqueidentifier]',
+            'created': 'datetime',
+            'type': 'str',
             'source': 'str',
-            'nedid': 'int',
             'sourcetypeid': 'int',
+            'as_map': 'dict(str, list[Entity])',
+            'nedid': 'int',
             'typeid': 'int',
             'isactive': 'bool',
-            'familiarname': 'str',
             'legalname': 'str',
+            'lastmodified': 'datetime',
+            'familiarname': 'str',
             'maincontactid': 'int',
-            'type_name': 'str',
-            'type': 'str'
+            'type_name': 'str'
         }
 
         self.attribute_map = {
@@ -58,32 +61,38 @@ class OrganizationComposite(object):
             'emails': 'emails',
             'phonenumbers': 'phonenumbers',
             'uniqueidentifiers': 'uniqueidentifiers',
+            'created': 'created',
+            'type': 'type',
             'source': 'source',
-            'nedid': 'nedid',
             'sourcetypeid': 'sourcetypeid',
+            'as_map': 'asMap',
+            'nedid': 'nedid',
             'typeid': 'typeid',
             'isactive': 'isactive',
-            'familiarname': 'familiarname',
             'legalname': 'legalname',
+            'lastmodified': 'lastmodified',
+            'familiarname': 'familiarname',
             'maincontactid': 'maincontactid',
-            'type_name': 'typeName',
-            'type': 'type'
+            'type_name': 'typeName'
         }
 
         self._addresses = None
         self._emails = None
         self._phonenumbers = None
         self._uniqueidentifiers = None
+        self._created = None
+        self._type = None
         self._source = None
-        self._nedid = None
         self._sourcetypeid = None
+        self._as_map = None
+        self._nedid = None
         self._typeid = None
         self._isactive = None
-        self._familiarname = None
         self._legalname = None
+        self._lastmodified = None
+        self._familiarname = None
         self._maincontactid = None
         self._type_name = None
-        self._type = None
 
     @property
     def addresses(self):
@@ -174,6 +183,50 @@ class OrganizationComposite(object):
         self._uniqueidentifiers = uniqueidentifiers
 
     @property
+    def created(self):
+        """
+        Gets the created of this OrganizationComposite.
+
+
+        :return: The created of this OrganizationComposite.
+        :rtype: datetime
+        """
+        return self._created
+
+    @created.setter
+    def created(self, created):
+        """
+        Sets the created of this OrganizationComposite.
+
+
+        :param created: The created of this OrganizationComposite.
+        :type: datetime
+        """
+        self._created = created
+
+    @property
+    def type(self):
+        """
+        Gets the type of this OrganizationComposite.
+
+
+        :return: The type of this OrganizationComposite.
+        :rtype: str
+        """
+        return self._type
+
+    @type.setter
+    def type(self, type):
+        """
+        Sets the type of this OrganizationComposite.
+
+
+        :param type: The type of this OrganizationComposite.
+        :type: str
+        """
+        self._type = type
+
+    @property
     def source(self):
         """
         Gets the source of this OrganizationComposite.
@@ -196,28 +249,6 @@ class OrganizationComposite(object):
         self._source = source
 
     @property
-    def nedid(self):
-        """
-        Gets the nedid of this OrganizationComposite.
-
-
-        :return: The nedid of this OrganizationComposite.
-        :rtype: int
-        """
-        return self._nedid
-
-    @nedid.setter
-    def nedid(self, nedid):
-        """
-        Sets the nedid of this OrganizationComposite.
-
-
-        :param nedid: The nedid of this OrganizationComposite.
-        :type: int
-        """
-        self._nedid = nedid
-
-    @property
     def sourcetypeid(self):
         """
         Gets the sourcetypeid of this OrganizationComposite.
@@ -238,6 +269,50 @@ class OrganizationComposite(object):
         :type: int
         """
         self._sourcetypeid = sourcetypeid
+
+    @property
+    def as_map(self):
+        """
+        Gets the as_map of this OrganizationComposite.
+
+
+        :return: The as_map of this OrganizationComposite.
+        :rtype: dict(str, list[Entity])
+        """
+        return self._as_map
+
+    @as_map.setter
+    def as_map(self, as_map):
+        """
+        Sets the as_map of this OrganizationComposite.
+
+
+        :param as_map: The as_map of this OrganizationComposite.
+        :type: dict(str, list[Entity])
+        """
+        self._as_map = as_map
+
+    @property
+    def nedid(self):
+        """
+        Gets the nedid of this OrganizationComposite.
+
+
+        :return: The nedid of this OrganizationComposite.
+        :rtype: int
+        """
+        return self._nedid
+
+    @nedid.setter
+    def nedid(self, nedid):
+        """
+        Sets the nedid of this OrganizationComposite.
+
+
+        :param nedid: The nedid of this OrganizationComposite.
+        :type: int
+        """
+        self._nedid = nedid
 
     @property
     def typeid(self):
@@ -284,28 +359,6 @@ class OrganizationComposite(object):
         self._isactive = isactive
 
     @property
-    def familiarname(self):
-        """
-        Gets the familiarname of this OrganizationComposite.
-
-
-        :return: The familiarname of this OrganizationComposite.
-        :rtype: str
-        """
-        return self._familiarname
-
-    @familiarname.setter
-    def familiarname(self, familiarname):
-        """
-        Sets the familiarname of this OrganizationComposite.
-
-
-        :param familiarname: The familiarname of this OrganizationComposite.
-        :type: str
-        """
-        self._familiarname = familiarname
-
-    @property
     def legalname(self):
         """
         Gets the legalname of this OrganizationComposite.
@@ -326,6 +379,50 @@ class OrganizationComposite(object):
         :type: str
         """
         self._legalname = legalname
+
+    @property
+    def lastmodified(self):
+        """
+        Gets the lastmodified of this OrganizationComposite.
+
+
+        :return: The lastmodified of this OrganizationComposite.
+        :rtype: datetime
+        """
+        return self._lastmodified
+
+    @lastmodified.setter
+    def lastmodified(self, lastmodified):
+        """
+        Sets the lastmodified of this OrganizationComposite.
+
+
+        :param lastmodified: The lastmodified of this OrganizationComposite.
+        :type: datetime
+        """
+        self._lastmodified = lastmodified
+
+    @property
+    def familiarname(self):
+        """
+        Gets the familiarname of this OrganizationComposite.
+
+
+        :return: The familiarname of this OrganizationComposite.
+        :rtype: str
+        """
+        return self._familiarname
+
+    @familiarname.setter
+    def familiarname(self, familiarname):
+        """
+        Sets the familiarname of this OrganizationComposite.
+
+
+        :param familiarname: The familiarname of this OrganizationComposite.
+        :type: str
+        """
+        self._familiarname = familiarname
 
     @property
     def maincontactid(self):
@@ -370,28 +467,6 @@ class OrganizationComposite(object):
         :type: str
         """
         self._type_name = type_name
-
-    @property
-    def type(self):
-        """
-        Gets the type of this OrganizationComposite.
-
-
-        :return: The type of this OrganizationComposite.
-        :rtype: str
-        """
-        return self._type
-
-    @type.setter
-    def type(self, type):
-        """
-        Sets the type of this OrganizationComposite.
-
-
-        :param type: The type of this OrganizationComposite.
-        :type: str
-        """
-        self._type = type
 
     def to_dict(self):
         """

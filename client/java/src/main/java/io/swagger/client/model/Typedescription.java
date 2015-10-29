@@ -1,6 +1,7 @@
 package io.swagger.client.model;
 
 import io.swagger.client.StringUtil;
+import java.util.Date;
 
 
 
@@ -9,12 +10,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-22T17:32:27.863-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-29T08:59:42.643-07:00")
 public class Typedescription   {
   
   private Integer id = null;
   private String description = null;
   private String howused = null;
+  private Date created = null;
+  private Date lastmodified = null;
 
   
   /**
@@ -53,6 +56,30 @@ public class Typedescription   {
   }
 
   
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("created")
+  public Date getCreated() {
+    return created;
+  }
+  public void setCreated(Date created) {
+    this.created = created;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("lastmodified")
+  public Date getLastmodified() {
+    return lastmodified;
+  }
+  public void setLastmodified(Date lastmodified) {
+    this.lastmodified = lastmodified;
+  }
+
+  
 
   @Override
   public String toString()  {
@@ -62,6 +89,8 @@ public class Typedescription   {
     sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
     sb.append("    description: ").append(StringUtil.toIndentedString(description)).append("\n");
     sb.append("    howused: ").append(StringUtil.toIndentedString(howused)).append("\n");
+    sb.append("    created: ").append(StringUtil.toIndentedString(created)).append("\n");
+    sb.append("    lastmodified: ").append(StringUtil.toIndentedString(lastmodified)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -37,33 +37,55 @@ class Phonenumber(object):
                                   and the value is json key in definition.
         """
         self.swagger_types = {
+            'id': 'int',
+            'nedid': 'int',
+            'source': 'str',
+            'sourcetypeid': 'int',
+            'created': 'datetime',
+            'lastmodified': 'datetime',
+            'createdby': 'int',
+            'createdbyname': 'str',
+            'lastmodifiedby': 'int',
+            'lastmodifiedbyname': 'str',
             'typeid': 'int',
             'type': 'str',
             'countrycodetypeid': 'int',
             'countrycodetype': 'str',
             'phonenumber': 'str',
             'extension': 'str',
-            'isactive': 'bool',
-            'source': 'str',
-            'nedid': 'int',
-            'sourcetypeid': 'int',
-            'id': 'int'
+            'isactive': 'bool'
         }
 
         self.attribute_map = {
+            'id': 'id',
+            'nedid': 'nedid',
+            'source': 'source',
+            'sourcetypeid': 'sourcetypeid',
+            'created': 'created',
+            'lastmodified': 'lastmodified',
+            'createdby': 'createdby',
+            'createdbyname': 'createdbyname',
+            'lastmodifiedby': 'lastmodifiedby',
+            'lastmodifiedbyname': 'lastmodifiedbyname',
             'typeid': 'typeid',
             'type': 'type',
             'countrycodetypeid': 'countrycodetypeid',
             'countrycodetype': 'countrycodetype',
             'phonenumber': 'phonenumber',
             'extension': 'extension',
-            'isactive': 'isactive',
-            'source': 'source',
-            'nedid': 'nedid',
-            'sourcetypeid': 'sourcetypeid',
-            'id': 'id'
+            'isactive': 'isactive'
         }
 
+        self._id = None
+        self._nedid = None
+        self._source = None
+        self._sourcetypeid = None
+        self._created = None
+        self._lastmodified = None
+        self._createdby = None
+        self._createdbyname = None
+        self._lastmodifiedby = None
+        self._lastmodifiedbyname = None
         self._typeid = None
         self._type = None
         self._countrycodetypeid = None
@@ -71,10 +93,226 @@ class Phonenumber(object):
         self._phonenumber = None
         self._extension = None
         self._isactive = None
-        self._source = None
-        self._nedid = None
-        self._sourcetypeid = None
-        self._id = None
+
+    @property
+    def id(self):
+        """
+        Gets the id of this Phonenumber.
+
+
+        :return: The id of this Phonenumber.
+        :rtype: int
+        """
+        return self._id
+
+    @id.setter
+    def id(self, id):
+        """
+        Sets the id of this Phonenumber.
+
+
+        :param id: The id of this Phonenumber.
+        :type: int
+        """
+        self._id = id
+
+    @property
+    def nedid(self):
+        """
+        Gets the nedid of this Phonenumber.
+
+
+        :return: The nedid of this Phonenumber.
+        :rtype: int
+        """
+        return self._nedid
+
+    @nedid.setter
+    def nedid(self, nedid):
+        """
+        Sets the nedid of this Phonenumber.
+
+
+        :param nedid: The nedid of this Phonenumber.
+        :type: int
+        """
+        self._nedid = nedid
+
+    @property
+    def source(self):
+        """
+        Gets the source of this Phonenumber.
+
+
+        :return: The source of this Phonenumber.
+        :rtype: str
+        """
+        return self._source
+
+    @source.setter
+    def source(self, source):
+        """
+        Sets the source of this Phonenumber.
+
+
+        :param source: The source of this Phonenumber.
+        :type: str
+        """
+        self._source = source
+
+    @property
+    def sourcetypeid(self):
+        """
+        Gets the sourcetypeid of this Phonenumber.
+
+
+        :return: The sourcetypeid of this Phonenumber.
+        :rtype: int
+        """
+        return self._sourcetypeid
+
+    @sourcetypeid.setter
+    def sourcetypeid(self, sourcetypeid):
+        """
+        Sets the sourcetypeid of this Phonenumber.
+
+
+        :param sourcetypeid: The sourcetypeid of this Phonenumber.
+        :type: int
+        """
+        self._sourcetypeid = sourcetypeid
+
+    @property
+    def created(self):
+        """
+        Gets the created of this Phonenumber.
+
+
+        :return: The created of this Phonenumber.
+        :rtype: datetime
+        """
+        return self._created
+
+    @created.setter
+    def created(self, created):
+        """
+        Sets the created of this Phonenumber.
+
+
+        :param created: The created of this Phonenumber.
+        :type: datetime
+        """
+        self._created = created
+
+    @property
+    def lastmodified(self):
+        """
+        Gets the lastmodified of this Phonenumber.
+
+
+        :return: The lastmodified of this Phonenumber.
+        :rtype: datetime
+        """
+        return self._lastmodified
+
+    @lastmodified.setter
+    def lastmodified(self, lastmodified):
+        """
+        Sets the lastmodified of this Phonenumber.
+
+
+        :param lastmodified: The lastmodified of this Phonenumber.
+        :type: datetime
+        """
+        self._lastmodified = lastmodified
+
+    @property
+    def createdby(self):
+        """
+        Gets the createdby of this Phonenumber.
+
+
+        :return: The createdby of this Phonenumber.
+        :rtype: int
+        """
+        return self._createdby
+
+    @createdby.setter
+    def createdby(self, createdby):
+        """
+        Sets the createdby of this Phonenumber.
+
+
+        :param createdby: The createdby of this Phonenumber.
+        :type: int
+        """
+        self._createdby = createdby
+
+    @property
+    def createdbyname(self):
+        """
+        Gets the createdbyname of this Phonenumber.
+
+
+        :return: The createdbyname of this Phonenumber.
+        :rtype: str
+        """
+        return self._createdbyname
+
+    @createdbyname.setter
+    def createdbyname(self, createdbyname):
+        """
+        Sets the createdbyname of this Phonenumber.
+
+
+        :param createdbyname: The createdbyname of this Phonenumber.
+        :type: str
+        """
+        self._createdbyname = createdbyname
+
+    @property
+    def lastmodifiedby(self):
+        """
+        Gets the lastmodifiedby of this Phonenumber.
+
+
+        :return: The lastmodifiedby of this Phonenumber.
+        :rtype: int
+        """
+        return self._lastmodifiedby
+
+    @lastmodifiedby.setter
+    def lastmodifiedby(self, lastmodifiedby):
+        """
+        Sets the lastmodifiedby of this Phonenumber.
+
+
+        :param lastmodifiedby: The lastmodifiedby of this Phonenumber.
+        :type: int
+        """
+        self._lastmodifiedby = lastmodifiedby
+
+    @property
+    def lastmodifiedbyname(self):
+        """
+        Gets the lastmodifiedbyname of this Phonenumber.
+
+
+        :return: The lastmodifiedbyname of this Phonenumber.
+        :rtype: str
+        """
+        return self._lastmodifiedbyname
+
+    @lastmodifiedbyname.setter
+    def lastmodifiedbyname(self, lastmodifiedbyname):
+        """
+        Sets the lastmodifiedbyname of this Phonenumber.
+
+
+        :param lastmodifiedbyname: The lastmodifiedbyname of this Phonenumber.
+        :type: str
+        """
+        self._lastmodifiedbyname = lastmodifiedbyname
 
     @property
     def typeid(self):
@@ -229,94 +467,6 @@ class Phonenumber(object):
         :type: bool
         """
         self._isactive = isactive
-
-    @property
-    def source(self):
-        """
-        Gets the source of this Phonenumber.
-
-
-        :return: The source of this Phonenumber.
-        :rtype: str
-        """
-        return self._source
-
-    @source.setter
-    def source(self, source):
-        """
-        Sets the source of this Phonenumber.
-
-
-        :param source: The source of this Phonenumber.
-        :type: str
-        """
-        self._source = source
-
-    @property
-    def nedid(self):
-        """
-        Gets the nedid of this Phonenumber.
-
-
-        :return: The nedid of this Phonenumber.
-        :rtype: int
-        """
-        return self._nedid
-
-    @nedid.setter
-    def nedid(self, nedid):
-        """
-        Sets the nedid of this Phonenumber.
-
-
-        :param nedid: The nedid of this Phonenumber.
-        :type: int
-        """
-        self._nedid = nedid
-
-    @property
-    def sourcetypeid(self):
-        """
-        Gets the sourcetypeid of this Phonenumber.
-
-
-        :return: The sourcetypeid of this Phonenumber.
-        :rtype: int
-        """
-        return self._sourcetypeid
-
-    @sourcetypeid.setter
-    def sourcetypeid(self, sourcetypeid):
-        """
-        Sets the sourcetypeid of this Phonenumber.
-
-
-        :param sourcetypeid: The sourcetypeid of this Phonenumber.
-        :type: int
-        """
-        self._sourcetypeid = sourcetypeid
-
-    @property
-    def id(self):
-        """
-        Gets the id of this Phonenumber.
-
-
-        :return: The id of this Phonenumber.
-        :rtype: int
-        """
-        return self._id
-
-    @id.setter
-    def id(self, id):
-        """
-        Sets the id of this Phonenumber.
-
-
-        :param id: The id of this Phonenumber.
-        :type: int
-        """
-        self._id = id
 
     def to_dict(self):
         """

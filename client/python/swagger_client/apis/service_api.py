@@ -94,7 +94,7 @@ class ServiceApi(object):
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
-            select_header_accept([])
+            select_header_accept(['application/json'])
         if not header_params['Accept']:
             del header_params['Accept']
 
@@ -166,7 +166,7 @@ class ServiceApi(object):
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
-            select_header_accept([])
+            select_header_accept(['application/json'])
         if not header_params['Accept']:
             del header_params['Accept']
 

@@ -37,7 +37,7 @@ class NedErrorResponse(object):
                                   and the value is json key in definition.
         """
         self.swagger_types = {
-            'problem': 'str',
+            'failure_msg': 'str',
             'error_code': 'int',
             'error_msg': 'str',
             'detailed_msg': 'str',
@@ -46,7 +46,7 @@ class NedErrorResponse(object):
         }
 
         self.attribute_map = {
-            'problem': 'problem',
+            'failure_msg': 'failureMsg',
             'error_code': 'errorCode',
             'error_msg': 'errorMsg',
             'detailed_msg': 'detailedMsg',
@@ -54,7 +54,7 @@ class NedErrorResponse(object):
             'timestamp': 'timestamp'
         }
 
-        self._problem = None
+        self._failure_msg = None
         self._error_code = None
         self._error_msg = None
         self._detailed_msg = None
@@ -62,26 +62,26 @@ class NedErrorResponse(object):
         self._timestamp = None
 
     @property
-    def problem(self):
+    def failure_msg(self):
         """
-        Gets the problem of this NedErrorResponse.
+        Gets the failure_msg of this NedErrorResponse.
 
 
-        :return: The problem of this NedErrorResponse.
+        :return: The failure_msg of this NedErrorResponse.
         :rtype: str
         """
-        return self._problem
+        return self._failure_msg
 
-    @problem.setter
-    def problem(self, problem):
+    @failure_msg.setter
+    def failure_msg(self, failure_msg):
         """
-        Sets the problem of this NedErrorResponse.
+        Sets the failure_msg of this NedErrorResponse.
 
 
-        :param problem: The problem of this NedErrorResponse.
+        :param failure_msg: The failure_msg of this NedErrorResponse.
         :type: str
         """
-        self._problem = problem
+        self._failure_msg = failure_msg
 
     @property
     def error_code(self):

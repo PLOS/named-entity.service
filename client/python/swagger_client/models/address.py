@@ -37,6 +37,16 @@ class Address(object):
                                   and the value is json key in definition.
         """
         self.swagger_types = {
+            'id': 'int',
+            'nedid': 'int',
+            'source': 'str',
+            'sourcetypeid': 'int',
+            'created': 'datetime',
+            'lastmodified': 'datetime',
+            'createdby': 'int',
+            'createdbyname': 'str',
+            'lastmodifiedby': 'int',
+            'lastmodifiedbyname': 'str',
             'typeid': 'int',
             'type': 'str',
             'addressline1': 'str',
@@ -51,14 +61,20 @@ class Address(object):
             'maincontactnamedentityid': 'int',
             'latitude': 'int',
             'longitude': 'int',
-            'isactive': 'bool',
-            'source': 'str',
-            'nedid': 'int',
-            'sourcetypeid': 'int',
-            'id': 'int'
+            'isactive': 'bool'
         }
 
         self.attribute_map = {
+            'id': 'id',
+            'nedid': 'nedid',
+            'source': 'source',
+            'sourcetypeid': 'sourcetypeid',
+            'created': 'created',
+            'lastmodified': 'lastmodified',
+            'createdby': 'createdby',
+            'createdbyname': 'createdbyname',
+            'lastmodifiedby': 'lastmodifiedby',
+            'lastmodifiedbyname': 'lastmodifiedbyname',
             'typeid': 'typeid',
             'type': 'type',
             'addressline1': 'addressline1',
@@ -73,13 +89,19 @@ class Address(object):
             'maincontactnamedentityid': 'maincontactnamedentityid',
             'latitude': 'latitude',
             'longitude': 'longitude',
-            'isactive': 'isactive',
-            'source': 'source',
-            'nedid': 'nedid',
-            'sourcetypeid': 'sourcetypeid',
-            'id': 'id'
+            'isactive': 'isactive'
         }
 
+        self._id = None
+        self._nedid = None
+        self._source = None
+        self._sourcetypeid = None
+        self._created = None
+        self._lastmodified = None
+        self._createdby = None
+        self._createdbyname = None
+        self._lastmodifiedby = None
+        self._lastmodifiedbyname = None
         self._typeid = None
         self._type = None
         self._addressline1 = None
@@ -95,10 +117,226 @@ class Address(object):
         self._latitude = None
         self._longitude = None
         self._isactive = None
-        self._source = None
-        self._nedid = None
-        self._sourcetypeid = None
-        self._id = None
+
+    @property
+    def id(self):
+        """
+        Gets the id of this Address.
+
+
+        :return: The id of this Address.
+        :rtype: int
+        """
+        return self._id
+
+    @id.setter
+    def id(self, id):
+        """
+        Sets the id of this Address.
+
+
+        :param id: The id of this Address.
+        :type: int
+        """
+        self._id = id
+
+    @property
+    def nedid(self):
+        """
+        Gets the nedid of this Address.
+
+
+        :return: The nedid of this Address.
+        :rtype: int
+        """
+        return self._nedid
+
+    @nedid.setter
+    def nedid(self, nedid):
+        """
+        Sets the nedid of this Address.
+
+
+        :param nedid: The nedid of this Address.
+        :type: int
+        """
+        self._nedid = nedid
+
+    @property
+    def source(self):
+        """
+        Gets the source of this Address.
+
+
+        :return: The source of this Address.
+        :rtype: str
+        """
+        return self._source
+
+    @source.setter
+    def source(self, source):
+        """
+        Sets the source of this Address.
+
+
+        :param source: The source of this Address.
+        :type: str
+        """
+        self._source = source
+
+    @property
+    def sourcetypeid(self):
+        """
+        Gets the sourcetypeid of this Address.
+
+
+        :return: The sourcetypeid of this Address.
+        :rtype: int
+        """
+        return self._sourcetypeid
+
+    @sourcetypeid.setter
+    def sourcetypeid(self, sourcetypeid):
+        """
+        Sets the sourcetypeid of this Address.
+
+
+        :param sourcetypeid: The sourcetypeid of this Address.
+        :type: int
+        """
+        self._sourcetypeid = sourcetypeid
+
+    @property
+    def created(self):
+        """
+        Gets the created of this Address.
+
+
+        :return: The created of this Address.
+        :rtype: datetime
+        """
+        return self._created
+
+    @created.setter
+    def created(self, created):
+        """
+        Sets the created of this Address.
+
+
+        :param created: The created of this Address.
+        :type: datetime
+        """
+        self._created = created
+
+    @property
+    def lastmodified(self):
+        """
+        Gets the lastmodified of this Address.
+
+
+        :return: The lastmodified of this Address.
+        :rtype: datetime
+        """
+        return self._lastmodified
+
+    @lastmodified.setter
+    def lastmodified(self, lastmodified):
+        """
+        Sets the lastmodified of this Address.
+
+
+        :param lastmodified: The lastmodified of this Address.
+        :type: datetime
+        """
+        self._lastmodified = lastmodified
+
+    @property
+    def createdby(self):
+        """
+        Gets the createdby of this Address.
+
+
+        :return: The createdby of this Address.
+        :rtype: int
+        """
+        return self._createdby
+
+    @createdby.setter
+    def createdby(self, createdby):
+        """
+        Sets the createdby of this Address.
+
+
+        :param createdby: The createdby of this Address.
+        :type: int
+        """
+        self._createdby = createdby
+
+    @property
+    def createdbyname(self):
+        """
+        Gets the createdbyname of this Address.
+
+
+        :return: The createdbyname of this Address.
+        :rtype: str
+        """
+        return self._createdbyname
+
+    @createdbyname.setter
+    def createdbyname(self, createdbyname):
+        """
+        Sets the createdbyname of this Address.
+
+
+        :param createdbyname: The createdbyname of this Address.
+        :type: str
+        """
+        self._createdbyname = createdbyname
+
+    @property
+    def lastmodifiedby(self):
+        """
+        Gets the lastmodifiedby of this Address.
+
+
+        :return: The lastmodifiedby of this Address.
+        :rtype: int
+        """
+        return self._lastmodifiedby
+
+    @lastmodifiedby.setter
+    def lastmodifiedby(self, lastmodifiedby):
+        """
+        Sets the lastmodifiedby of this Address.
+
+
+        :param lastmodifiedby: The lastmodifiedby of this Address.
+        :type: int
+        """
+        self._lastmodifiedby = lastmodifiedby
+
+    @property
+    def lastmodifiedbyname(self):
+        """
+        Gets the lastmodifiedbyname of this Address.
+
+
+        :return: The lastmodifiedbyname of this Address.
+        :rtype: str
+        """
+        return self._lastmodifiedbyname
+
+    @lastmodifiedbyname.setter
+    def lastmodifiedbyname(self, lastmodifiedbyname):
+        """
+        Sets the lastmodifiedbyname of this Address.
+
+
+        :param lastmodifiedbyname: The lastmodifiedbyname of this Address.
+        :type: str
+        """
+        self._lastmodifiedbyname = lastmodifiedbyname
 
     @property
     def typeid(self):
@@ -429,94 +667,6 @@ class Address(object):
         :type: bool
         """
         self._isactive = isactive
-
-    @property
-    def source(self):
-        """
-        Gets the source of this Address.
-
-
-        :return: The source of this Address.
-        :rtype: str
-        """
-        return self._source
-
-    @source.setter
-    def source(self, source):
-        """
-        Sets the source of this Address.
-
-
-        :param source: The source of this Address.
-        :type: str
-        """
-        self._source = source
-
-    @property
-    def nedid(self):
-        """
-        Gets the nedid of this Address.
-
-
-        :return: The nedid of this Address.
-        :rtype: int
-        """
-        return self._nedid
-
-    @nedid.setter
-    def nedid(self, nedid):
-        """
-        Sets the nedid of this Address.
-
-
-        :param nedid: The nedid of this Address.
-        :type: int
-        """
-        self._nedid = nedid
-
-    @property
-    def sourcetypeid(self):
-        """
-        Gets the sourcetypeid of this Address.
-
-
-        :return: The sourcetypeid of this Address.
-        :rtype: int
-        """
-        return self._sourcetypeid
-
-    @sourcetypeid.setter
-    def sourcetypeid(self, sourcetypeid):
-        """
-        Sets the sourcetypeid of this Address.
-
-
-        :param sourcetypeid: The sourcetypeid of this Address.
-        :type: int
-        """
-        self._sourcetypeid = sourcetypeid
-
-    @property
-    def id(self):
-        """
-        Gets the id of this Address.
-
-
-        :return: The id of this Address.
-        :rtype: int
-        """
-        return self._id
-
-    @id.setter
-    def id(self, id):
-        """
-        Sets the id of this Address.
-
-
-        :param id: The id of this Address.
-        :type: int
-        """
-        self._id = id
 
     def to_dict(self):
         """

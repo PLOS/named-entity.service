@@ -37,38 +37,276 @@ class Email(object):
                                   and the value is json key in definition.
         """
         self.swagger_types = {
+            'id': 'int',
+            'nedid': 'int',
+            'source': 'str',
+            'sourcetypeid': 'int',
+            'created': 'datetime',
+            'lastmodified': 'datetime',
+            'createdby': 'int',
+            'createdbyname': 'str',
+            'lastmodifiedby': 'int',
+            'lastmodifiedbyname': 'str',
             'type': 'str',
             'typeid': 'int',
             'emailaddress': 'str',
             'verified': 'bool',
-            'isactive': 'bool',
-            'source': 'str',
-            'nedid': 'int',
-            'sourcetypeid': 'int',
-            'id': 'int'
+            'isactive': 'bool'
         }
 
         self.attribute_map = {
+            'id': 'id',
+            'nedid': 'nedid',
+            'source': 'source',
+            'sourcetypeid': 'sourcetypeid',
+            'created': 'created',
+            'lastmodified': 'lastmodified',
+            'createdby': 'createdby',
+            'createdbyname': 'createdbyname',
+            'lastmodifiedby': 'lastmodifiedby',
+            'lastmodifiedbyname': 'lastmodifiedbyname',
             'type': 'type',
             'typeid': 'typeid',
             'emailaddress': 'emailaddress',
             'verified': 'verified',
-            'isactive': 'isactive',
-            'source': 'source',
-            'nedid': 'nedid',
-            'sourcetypeid': 'sourcetypeid',
-            'id': 'id'
+            'isactive': 'isactive'
         }
 
+        self._id = None
+        self._nedid = None
+        self._source = None
+        self._sourcetypeid = None
+        self._created = None
+        self._lastmodified = None
+        self._createdby = None
+        self._createdbyname = None
+        self._lastmodifiedby = None
+        self._lastmodifiedbyname = None
         self._type = None
         self._typeid = None
         self._emailaddress = None
         self._verified = None
         self._isactive = None
-        self._source = None
-        self._nedid = None
-        self._sourcetypeid = None
-        self._id = None
+
+    @property
+    def id(self):
+        """
+        Gets the id of this Email.
+
+
+        :return: The id of this Email.
+        :rtype: int
+        """
+        return self._id
+
+    @id.setter
+    def id(self, id):
+        """
+        Sets the id of this Email.
+
+
+        :param id: The id of this Email.
+        :type: int
+        """
+        self._id = id
+
+    @property
+    def nedid(self):
+        """
+        Gets the nedid of this Email.
+
+
+        :return: The nedid of this Email.
+        :rtype: int
+        """
+        return self._nedid
+
+    @nedid.setter
+    def nedid(self, nedid):
+        """
+        Sets the nedid of this Email.
+
+
+        :param nedid: The nedid of this Email.
+        :type: int
+        """
+        self._nedid = nedid
+
+    @property
+    def source(self):
+        """
+        Gets the source of this Email.
+
+
+        :return: The source of this Email.
+        :rtype: str
+        """
+        return self._source
+
+    @source.setter
+    def source(self, source):
+        """
+        Sets the source of this Email.
+
+
+        :param source: The source of this Email.
+        :type: str
+        """
+        self._source = source
+
+    @property
+    def sourcetypeid(self):
+        """
+        Gets the sourcetypeid of this Email.
+
+
+        :return: The sourcetypeid of this Email.
+        :rtype: int
+        """
+        return self._sourcetypeid
+
+    @sourcetypeid.setter
+    def sourcetypeid(self, sourcetypeid):
+        """
+        Sets the sourcetypeid of this Email.
+
+
+        :param sourcetypeid: The sourcetypeid of this Email.
+        :type: int
+        """
+        self._sourcetypeid = sourcetypeid
+
+    @property
+    def created(self):
+        """
+        Gets the created of this Email.
+
+
+        :return: The created of this Email.
+        :rtype: datetime
+        """
+        return self._created
+
+    @created.setter
+    def created(self, created):
+        """
+        Sets the created of this Email.
+
+
+        :param created: The created of this Email.
+        :type: datetime
+        """
+        self._created = created
+
+    @property
+    def lastmodified(self):
+        """
+        Gets the lastmodified of this Email.
+
+
+        :return: The lastmodified of this Email.
+        :rtype: datetime
+        """
+        return self._lastmodified
+
+    @lastmodified.setter
+    def lastmodified(self, lastmodified):
+        """
+        Sets the lastmodified of this Email.
+
+
+        :param lastmodified: The lastmodified of this Email.
+        :type: datetime
+        """
+        self._lastmodified = lastmodified
+
+    @property
+    def createdby(self):
+        """
+        Gets the createdby of this Email.
+
+
+        :return: The createdby of this Email.
+        :rtype: int
+        """
+        return self._createdby
+
+    @createdby.setter
+    def createdby(self, createdby):
+        """
+        Sets the createdby of this Email.
+
+
+        :param createdby: The createdby of this Email.
+        :type: int
+        """
+        self._createdby = createdby
+
+    @property
+    def createdbyname(self):
+        """
+        Gets the createdbyname of this Email.
+
+
+        :return: The createdbyname of this Email.
+        :rtype: str
+        """
+        return self._createdbyname
+
+    @createdbyname.setter
+    def createdbyname(self, createdbyname):
+        """
+        Sets the createdbyname of this Email.
+
+
+        :param createdbyname: The createdbyname of this Email.
+        :type: str
+        """
+        self._createdbyname = createdbyname
+
+    @property
+    def lastmodifiedby(self):
+        """
+        Gets the lastmodifiedby of this Email.
+
+
+        :return: The lastmodifiedby of this Email.
+        :rtype: int
+        """
+        return self._lastmodifiedby
+
+    @lastmodifiedby.setter
+    def lastmodifiedby(self, lastmodifiedby):
+        """
+        Sets the lastmodifiedby of this Email.
+
+
+        :param lastmodifiedby: The lastmodifiedby of this Email.
+        :type: int
+        """
+        self._lastmodifiedby = lastmodifiedby
+
+    @property
+    def lastmodifiedbyname(self):
+        """
+        Gets the lastmodifiedbyname of this Email.
+
+
+        :return: The lastmodifiedbyname of this Email.
+        :rtype: str
+        """
+        return self._lastmodifiedbyname
+
+    @lastmodifiedbyname.setter
+    def lastmodifiedbyname(self, lastmodifiedbyname):
+        """
+        Sets the lastmodifiedbyname of this Email.
+
+
+        :param lastmodifiedbyname: The lastmodifiedbyname of this Email.
+        :type: str
+        """
+        self._lastmodifiedbyname = lastmodifiedbyname
 
     @property
     def type(self):
@@ -179,94 +417,6 @@ class Email(object):
         :type: bool
         """
         self._isactive = isactive
-
-    @property
-    def source(self):
-        """
-        Gets the source of this Email.
-
-
-        :return: The source of this Email.
-        :rtype: str
-        """
-        return self._source
-
-    @source.setter
-    def source(self, source):
-        """
-        Sets the source of this Email.
-
-
-        :param source: The source of this Email.
-        :type: str
-        """
-        self._source = source
-
-    @property
-    def nedid(self):
-        """
-        Gets the nedid of this Email.
-
-
-        :return: The nedid of this Email.
-        :rtype: int
-        """
-        return self._nedid
-
-    @nedid.setter
-    def nedid(self, nedid):
-        """
-        Sets the nedid of this Email.
-
-
-        :param nedid: The nedid of this Email.
-        :type: int
-        """
-        self._nedid = nedid
-
-    @property
-    def sourcetypeid(self):
-        """
-        Gets the sourcetypeid of this Email.
-
-
-        :return: The sourcetypeid of this Email.
-        :rtype: int
-        """
-        return self._sourcetypeid
-
-    @sourcetypeid.setter
-    def sourcetypeid(self, sourcetypeid):
-        """
-        Sets the sourcetypeid of this Email.
-
-
-        :param sourcetypeid: The sourcetypeid of this Email.
-        :type: int
-        """
-        self._sourcetypeid = sourcetypeid
-
-    @property
-    def id(self):
-        """
-        Gets the id of this Email.
-
-
-        :return: The id of this Email.
-        :rtype: int
-        """
-        return self._id
-
-    @id.setter
-    def id(self, id):
-        """
-        Sets the id of this Email.
-
-
-        :param id: The id of this Email.
-        :type: int
-        """
-        self._id = id
 
     def to_dict(self):
         """

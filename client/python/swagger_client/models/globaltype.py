@@ -42,8 +42,8 @@ class Globaltype(object):
             'shortdescription': 'str',
             'longdescription': 'str',
             'typecode': 'str',
-            'created': 'Timestamp',
-            'lastmodified': 'Timestamp',
+            'created': 'datetime',
+            'lastmodified': 'datetime',
             'createdby': 'int',
             'lastmodifiedby': 'int'
         }
@@ -187,7 +187,7 @@ class Globaltype(object):
 
 
         :return: The created of this Globaltype.
-        :rtype: Timestamp
+        :rtype: datetime
         """
         return self._created
 
@@ -198,7 +198,7 @@ class Globaltype(object):
 
 
         :param created: The created of this Globaltype.
-        :type: Timestamp
+        :type: datetime
         """
         self._created = created
 
@@ -209,7 +209,7 @@ class Globaltype(object):
 
 
         :return: The lastmodified of this Globaltype.
-        :rtype: Timestamp
+        :rtype: datetime
         """
         return self._lastmodified
 
@@ -220,7 +220,7 @@ class Globaltype(object):
 
 
         :param lastmodified: The lastmodified of this Globaltype.
-        :type: Timestamp
+        :type: datetime
         """
         self._lastmodified = lastmodified
 

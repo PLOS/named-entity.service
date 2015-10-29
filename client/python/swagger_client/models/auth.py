@@ -37,47 +37,288 @@ class Auth(object):
                                   and the value is json key in definition.
         """
         self.swagger_types = {
+            'id': 'int',
+            'nedid': 'int',
+            'source': 'str',
+            'sourcetypeid': 'int',
+            'created': 'datetime',
+            'lastmodified': 'datetime',
+            'createdby': 'int',
+            'createdbyname': 'str',
+            'lastmodifiedby': 'int',
+            'lastmodifiedbyname': 'str',
             'email': 'str',
             'emailid': 'int',
             'authid': 'str',
+            'plain_text_password': 'str',
             'password': 'str',
-            'passwordreset': 'bool',
+            'passwordreset': 'str',
             'verificationtoken': 'str',
-            'verified': 'bool',
-            'isactive': 'bool',
-            'source': 'str',
-            'nedid': 'int',
-            'sourcetypeid': 'int',
-            'id': 'int'
+            'verified': 'str',
+            'isactive': 'str'
         }
 
         self.attribute_map = {
+            'id': 'id',
+            'nedid': 'nedid',
+            'source': 'source',
+            'sourcetypeid': 'sourcetypeid',
+            'created': 'created',
+            'lastmodified': 'lastmodified',
+            'createdby': 'createdby',
+            'createdbyname': 'createdbyname',
+            'lastmodifiedby': 'lastmodifiedby',
+            'lastmodifiedbyname': 'lastmodifiedbyname',
             'email': 'email',
             'emailid': 'emailid',
             'authid': 'authid',
+            'plain_text_password': 'plainTextPassword',
             'password': 'password',
             'passwordreset': 'passwordreset',
             'verificationtoken': 'verificationtoken',
             'verified': 'verified',
-            'isactive': 'isactive',
-            'source': 'source',
-            'nedid': 'nedid',
-            'sourcetypeid': 'sourcetypeid',
-            'id': 'id'
+            'isactive': 'isactive'
         }
 
+        self._id = None
+        self._nedid = None
+        self._source = None
+        self._sourcetypeid = None
+        self._created = None
+        self._lastmodified = None
+        self._createdby = None
+        self._createdbyname = None
+        self._lastmodifiedby = None
+        self._lastmodifiedbyname = None
         self._email = None
         self._emailid = None
         self._authid = None
+        self._plain_text_password = None
         self._password = None
         self._passwordreset = None
         self._verificationtoken = None
         self._verified = None
         self._isactive = None
-        self._source = None
-        self._nedid = None
-        self._sourcetypeid = None
-        self._id = None
+
+    @property
+    def id(self):
+        """
+        Gets the id of this Auth.
+
+
+        :return: The id of this Auth.
+        :rtype: int
+        """
+        return self._id
+
+    @id.setter
+    def id(self, id):
+        """
+        Sets the id of this Auth.
+
+
+        :param id: The id of this Auth.
+        :type: int
+        """
+        self._id = id
+
+    @property
+    def nedid(self):
+        """
+        Gets the nedid of this Auth.
+
+
+        :return: The nedid of this Auth.
+        :rtype: int
+        """
+        return self._nedid
+
+    @nedid.setter
+    def nedid(self, nedid):
+        """
+        Sets the nedid of this Auth.
+
+
+        :param nedid: The nedid of this Auth.
+        :type: int
+        """
+        self._nedid = nedid
+
+    @property
+    def source(self):
+        """
+        Gets the source of this Auth.
+
+
+        :return: The source of this Auth.
+        :rtype: str
+        """
+        return self._source
+
+    @source.setter
+    def source(self, source):
+        """
+        Sets the source of this Auth.
+
+
+        :param source: The source of this Auth.
+        :type: str
+        """
+        self._source = source
+
+    @property
+    def sourcetypeid(self):
+        """
+        Gets the sourcetypeid of this Auth.
+
+
+        :return: The sourcetypeid of this Auth.
+        :rtype: int
+        """
+        return self._sourcetypeid
+
+    @sourcetypeid.setter
+    def sourcetypeid(self, sourcetypeid):
+        """
+        Sets the sourcetypeid of this Auth.
+
+
+        :param sourcetypeid: The sourcetypeid of this Auth.
+        :type: int
+        """
+        self._sourcetypeid = sourcetypeid
+
+    @property
+    def created(self):
+        """
+        Gets the created of this Auth.
+
+
+        :return: The created of this Auth.
+        :rtype: datetime
+        """
+        return self._created
+
+    @created.setter
+    def created(self, created):
+        """
+        Sets the created of this Auth.
+
+
+        :param created: The created of this Auth.
+        :type: datetime
+        """
+        self._created = created
+
+    @property
+    def lastmodified(self):
+        """
+        Gets the lastmodified of this Auth.
+
+
+        :return: The lastmodified of this Auth.
+        :rtype: datetime
+        """
+        return self._lastmodified
+
+    @lastmodified.setter
+    def lastmodified(self, lastmodified):
+        """
+        Sets the lastmodified of this Auth.
+
+
+        :param lastmodified: The lastmodified of this Auth.
+        :type: datetime
+        """
+        self._lastmodified = lastmodified
+
+    @property
+    def createdby(self):
+        """
+        Gets the createdby of this Auth.
+
+
+        :return: The createdby of this Auth.
+        :rtype: int
+        """
+        return self._createdby
+
+    @createdby.setter
+    def createdby(self, createdby):
+        """
+        Sets the createdby of this Auth.
+
+
+        :param createdby: The createdby of this Auth.
+        :type: int
+        """
+        self._createdby = createdby
+
+    @property
+    def createdbyname(self):
+        """
+        Gets the createdbyname of this Auth.
+
+
+        :return: The createdbyname of this Auth.
+        :rtype: str
+        """
+        return self._createdbyname
+
+    @createdbyname.setter
+    def createdbyname(self, createdbyname):
+        """
+        Sets the createdbyname of this Auth.
+
+
+        :param createdbyname: The createdbyname of this Auth.
+        :type: str
+        """
+        self._createdbyname = createdbyname
+
+    @property
+    def lastmodifiedby(self):
+        """
+        Gets the lastmodifiedby of this Auth.
+
+
+        :return: The lastmodifiedby of this Auth.
+        :rtype: int
+        """
+        return self._lastmodifiedby
+
+    @lastmodifiedby.setter
+    def lastmodifiedby(self, lastmodifiedby):
+        """
+        Sets the lastmodifiedby of this Auth.
+
+
+        :param lastmodifiedby: The lastmodifiedby of this Auth.
+        :type: int
+        """
+        self._lastmodifiedby = lastmodifiedby
+
+    @property
+    def lastmodifiedbyname(self):
+        """
+        Gets the lastmodifiedbyname of this Auth.
+
+
+        :return: The lastmodifiedbyname of this Auth.
+        :rtype: str
+        """
+        return self._lastmodifiedbyname
+
+    @lastmodifiedbyname.setter
+    def lastmodifiedbyname(self, lastmodifiedbyname):
+        """
+        Sets the lastmodifiedbyname of this Auth.
+
+
+        :param lastmodifiedbyname: The lastmodifiedbyname of this Auth.
+        :type: str
+        """
+        self._lastmodifiedbyname = lastmodifiedbyname
 
     @property
     def email(self):
@@ -146,6 +387,28 @@ class Auth(object):
         self._authid = authid
 
     @property
+    def plain_text_password(self):
+        """
+        Gets the plain_text_password of this Auth.
+
+
+        :return: The plain_text_password of this Auth.
+        :rtype: str
+        """
+        return self._plain_text_password
+
+    @plain_text_password.setter
+    def plain_text_password(self, plain_text_password):
+        """
+        Sets the plain_text_password of this Auth.
+
+
+        :param plain_text_password: The plain_text_password of this Auth.
+        :type: str
+        """
+        self._plain_text_password = plain_text_password
+
+    @property
     def password(self):
         """
         Gets the password of this Auth.
@@ -174,7 +437,7 @@ class Auth(object):
 
 
         :return: The passwordreset of this Auth.
-        :rtype: bool
+        :rtype: str
         """
         return self._passwordreset
 
@@ -185,7 +448,7 @@ class Auth(object):
 
 
         :param passwordreset: The passwordreset of this Auth.
-        :type: bool
+        :type: str
         """
         self._passwordreset = passwordreset
 
@@ -218,7 +481,7 @@ class Auth(object):
 
 
         :return: The verified of this Auth.
-        :rtype: bool
+        :rtype: str
         """
         return self._verified
 
@@ -229,7 +492,7 @@ class Auth(object):
 
 
         :param verified: The verified of this Auth.
-        :type: bool
+        :type: str
         """
         self._verified = verified
 
@@ -240,7 +503,7 @@ class Auth(object):
 
 
         :return: The isactive of this Auth.
-        :rtype: bool
+        :rtype: str
         """
         return self._isactive
 
@@ -251,97 +514,9 @@ class Auth(object):
 
 
         :param isactive: The isactive of this Auth.
-        :type: bool
-        """
-        self._isactive = isactive
-
-    @property
-    def source(self):
-        """
-        Gets the source of this Auth.
-
-
-        :return: The source of this Auth.
-        :rtype: str
-        """
-        return self._source
-
-    @source.setter
-    def source(self, source):
-        """
-        Sets the source of this Auth.
-
-
-        :param source: The source of this Auth.
         :type: str
         """
-        self._source = source
-
-    @property
-    def nedid(self):
-        """
-        Gets the nedid of this Auth.
-
-
-        :return: The nedid of this Auth.
-        :rtype: int
-        """
-        return self._nedid
-
-    @nedid.setter
-    def nedid(self, nedid):
-        """
-        Sets the nedid of this Auth.
-
-
-        :param nedid: The nedid of this Auth.
-        :type: int
-        """
-        self._nedid = nedid
-
-    @property
-    def sourcetypeid(self):
-        """
-        Gets the sourcetypeid of this Auth.
-
-
-        :return: The sourcetypeid of this Auth.
-        :rtype: int
-        """
-        return self._sourcetypeid
-
-    @sourcetypeid.setter
-    def sourcetypeid(self, sourcetypeid):
-        """
-        Sets the sourcetypeid of this Auth.
-
-
-        :param sourcetypeid: The sourcetypeid of this Auth.
-        :type: int
-        """
-        self._sourcetypeid = sourcetypeid
-
-    @property
-    def id(self):
-        """
-        Gets the id of this Auth.
-
-
-        :return: The id of this Auth.
-        :rtype: int
-        """
-        return self._id
-
-    @id.setter
-    def id(self, id):
-        """
-        Sets the id of this Auth.
-
-
-        :param id: The id of this Auth.
-        :type: int
-        """
-        self._id = id
+        self._isactive = isactive
 
     def to_dict(self):
         """

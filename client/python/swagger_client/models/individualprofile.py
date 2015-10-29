@@ -37,6 +37,16 @@ class Individualprofile(object):
                                   and the value is json key in definition.
         """
         self.swagger_types = {
+            'id': 'int',
+            'nedid': 'int',
+            'source': 'str',
+            'sourcetypeid': 'int',
+            'created': 'datetime',
+            'lastmodified': 'datetime',
+            'createdby': 'int',
+            'createdbyname': 'str',
+            'lastmodifiedby': 'int',
+            'lastmodifiedbyname': 'str',
             'firstname': 'str',
             'middlename': 'str',
             'lastname': 'str',
@@ -47,14 +57,20 @@ class Individualprofile(object):
             'namesuffixtypeid': 'int',
             'displayname': 'str',
             'biography': 'str',
-            'isactive': 'bool',
-            'source': 'str',
-            'nedid': 'int',
-            'sourcetypeid': 'int',
-            'id': 'int'
+            'isactive': 'bool'
         }
 
         self.attribute_map = {
+            'id': 'id',
+            'nedid': 'nedid',
+            'source': 'source',
+            'sourcetypeid': 'sourcetypeid',
+            'created': 'created',
+            'lastmodified': 'lastmodified',
+            'createdby': 'createdby',
+            'createdbyname': 'createdbyname',
+            'lastmodifiedby': 'lastmodifiedby',
+            'lastmodifiedbyname': 'lastmodifiedbyname',
             'firstname': 'firstname',
             'middlename': 'middlename',
             'lastname': 'lastname',
@@ -65,13 +81,19 @@ class Individualprofile(object):
             'namesuffixtypeid': 'namesuffixtypeid',
             'displayname': 'displayname',
             'biography': 'biography',
-            'isactive': 'isactive',
-            'source': 'source',
-            'nedid': 'nedid',
-            'sourcetypeid': 'sourcetypeid',
-            'id': 'id'
+            'isactive': 'isactive'
         }
 
+        self._id = None
+        self._nedid = None
+        self._source = None
+        self._sourcetypeid = None
+        self._created = None
+        self._lastmodified = None
+        self._createdby = None
+        self._createdbyname = None
+        self._lastmodifiedby = None
+        self._lastmodifiedbyname = None
         self._firstname = None
         self._middlename = None
         self._lastname = None
@@ -83,10 +105,226 @@ class Individualprofile(object):
         self._displayname = None
         self._biography = None
         self._isactive = None
-        self._source = None
-        self._nedid = None
-        self._sourcetypeid = None
-        self._id = None
+
+    @property
+    def id(self):
+        """
+        Gets the id of this Individualprofile.
+
+
+        :return: The id of this Individualprofile.
+        :rtype: int
+        """
+        return self._id
+
+    @id.setter
+    def id(self, id):
+        """
+        Sets the id of this Individualprofile.
+
+
+        :param id: The id of this Individualprofile.
+        :type: int
+        """
+        self._id = id
+
+    @property
+    def nedid(self):
+        """
+        Gets the nedid of this Individualprofile.
+
+
+        :return: The nedid of this Individualprofile.
+        :rtype: int
+        """
+        return self._nedid
+
+    @nedid.setter
+    def nedid(self, nedid):
+        """
+        Sets the nedid of this Individualprofile.
+
+
+        :param nedid: The nedid of this Individualprofile.
+        :type: int
+        """
+        self._nedid = nedid
+
+    @property
+    def source(self):
+        """
+        Gets the source of this Individualprofile.
+
+
+        :return: The source of this Individualprofile.
+        :rtype: str
+        """
+        return self._source
+
+    @source.setter
+    def source(self, source):
+        """
+        Sets the source of this Individualprofile.
+
+
+        :param source: The source of this Individualprofile.
+        :type: str
+        """
+        self._source = source
+
+    @property
+    def sourcetypeid(self):
+        """
+        Gets the sourcetypeid of this Individualprofile.
+
+
+        :return: The sourcetypeid of this Individualprofile.
+        :rtype: int
+        """
+        return self._sourcetypeid
+
+    @sourcetypeid.setter
+    def sourcetypeid(self, sourcetypeid):
+        """
+        Sets the sourcetypeid of this Individualprofile.
+
+
+        :param sourcetypeid: The sourcetypeid of this Individualprofile.
+        :type: int
+        """
+        self._sourcetypeid = sourcetypeid
+
+    @property
+    def created(self):
+        """
+        Gets the created of this Individualprofile.
+
+
+        :return: The created of this Individualprofile.
+        :rtype: datetime
+        """
+        return self._created
+
+    @created.setter
+    def created(self, created):
+        """
+        Sets the created of this Individualprofile.
+
+
+        :param created: The created of this Individualprofile.
+        :type: datetime
+        """
+        self._created = created
+
+    @property
+    def lastmodified(self):
+        """
+        Gets the lastmodified of this Individualprofile.
+
+
+        :return: The lastmodified of this Individualprofile.
+        :rtype: datetime
+        """
+        return self._lastmodified
+
+    @lastmodified.setter
+    def lastmodified(self, lastmodified):
+        """
+        Sets the lastmodified of this Individualprofile.
+
+
+        :param lastmodified: The lastmodified of this Individualprofile.
+        :type: datetime
+        """
+        self._lastmodified = lastmodified
+
+    @property
+    def createdby(self):
+        """
+        Gets the createdby of this Individualprofile.
+
+
+        :return: The createdby of this Individualprofile.
+        :rtype: int
+        """
+        return self._createdby
+
+    @createdby.setter
+    def createdby(self, createdby):
+        """
+        Sets the createdby of this Individualprofile.
+
+
+        :param createdby: The createdby of this Individualprofile.
+        :type: int
+        """
+        self._createdby = createdby
+
+    @property
+    def createdbyname(self):
+        """
+        Gets the createdbyname of this Individualprofile.
+
+
+        :return: The createdbyname of this Individualprofile.
+        :rtype: str
+        """
+        return self._createdbyname
+
+    @createdbyname.setter
+    def createdbyname(self, createdbyname):
+        """
+        Sets the createdbyname of this Individualprofile.
+
+
+        :param createdbyname: The createdbyname of this Individualprofile.
+        :type: str
+        """
+        self._createdbyname = createdbyname
+
+    @property
+    def lastmodifiedby(self):
+        """
+        Gets the lastmodifiedby of this Individualprofile.
+
+
+        :return: The lastmodifiedby of this Individualprofile.
+        :rtype: int
+        """
+        return self._lastmodifiedby
+
+    @lastmodifiedby.setter
+    def lastmodifiedby(self, lastmodifiedby):
+        """
+        Sets the lastmodifiedby of this Individualprofile.
+
+
+        :param lastmodifiedby: The lastmodifiedby of this Individualprofile.
+        :type: int
+        """
+        self._lastmodifiedby = lastmodifiedby
+
+    @property
+    def lastmodifiedbyname(self):
+        """
+        Gets the lastmodifiedbyname of this Individualprofile.
+
+
+        :return: The lastmodifiedbyname of this Individualprofile.
+        :rtype: str
+        """
+        return self._lastmodifiedbyname
+
+    @lastmodifiedbyname.setter
+    def lastmodifiedbyname(self, lastmodifiedbyname):
+        """
+        Sets the lastmodifiedbyname of this Individualprofile.
+
+
+        :param lastmodifiedbyname: The lastmodifiedbyname of this Individualprofile.
+        :type: str
+        """
+        self._lastmodifiedbyname = lastmodifiedbyname
 
     @property
     def firstname(self):
@@ -329,94 +567,6 @@ class Individualprofile(object):
         :type: bool
         """
         self._isactive = isactive
-
-    @property
-    def source(self):
-        """
-        Gets the source of this Individualprofile.
-
-
-        :return: The source of this Individualprofile.
-        :rtype: str
-        """
-        return self._source
-
-    @source.setter
-    def source(self, source):
-        """
-        Sets the source of this Individualprofile.
-
-
-        :param source: The source of this Individualprofile.
-        :type: str
-        """
-        self._source = source
-
-    @property
-    def nedid(self):
-        """
-        Gets the nedid of this Individualprofile.
-
-
-        :return: The nedid of this Individualprofile.
-        :rtype: int
-        """
-        return self._nedid
-
-    @nedid.setter
-    def nedid(self, nedid):
-        """
-        Sets the nedid of this Individualprofile.
-
-
-        :param nedid: The nedid of this Individualprofile.
-        :type: int
-        """
-        self._nedid = nedid
-
-    @property
-    def sourcetypeid(self):
-        """
-        Gets the sourcetypeid of this Individualprofile.
-
-
-        :return: The sourcetypeid of this Individualprofile.
-        :rtype: int
-        """
-        return self._sourcetypeid
-
-    @sourcetypeid.setter
-    def sourcetypeid(self, sourcetypeid):
-        """
-        Sets the sourcetypeid of this Individualprofile.
-
-
-        :param sourcetypeid: The sourcetypeid of this Individualprofile.
-        :type: int
-        """
-        self._sourcetypeid = sourcetypeid
-
-    @property
-    def id(self):
-        """
-        Gets the id of this Individualprofile.
-
-
-        :return: The id of this Individualprofile.
-        :rtype: int
-        """
-        return self._id
-
-    @id.setter
-    def id(self, id):
-        """
-        Sets the id of this Individualprofile.
-
-
-        :param id: The id of this Individualprofile.
-        :type: int
-        """
-        self._id = id
 
     def to_dict(self):
         """

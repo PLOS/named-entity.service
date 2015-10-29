@@ -100,7 +100,7 @@ class TypeclassesApi(object):
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
-            select_header_accept([])
+            select_header_accept(['application/json'])
         if not header_params['Accept']:
             del header_params['Accept']
 
@@ -109,7 +109,7 @@ class TypeclassesApi(object):
             select_header_content_type([])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['basic']
 
         response = self.api_client.call_api(resource_path, method,
                                             path_params,
@@ -175,7 +175,7 @@ class TypeclassesApi(object):
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
-            select_header_accept([])
+            select_header_accept(['application/json'])
         if not header_params['Accept']:
             del header_params['Accept']
 
@@ -184,7 +184,7 @@ class TypeclassesApi(object):
             select_header_content_type([])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['basic']
 
         response = self.api_client.call_api(resource_path, method,
                                             path_params,
@@ -253,7 +253,7 @@ class TypeclassesApi(object):
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
-            select_header_accept([])
+            select_header_accept(['application/json'])
         if not header_params['Accept']:
             del header_params['Accept']
 
@@ -262,7 +262,7 @@ class TypeclassesApi(object):
             select_header_content_type([])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['basic']
 
         response = self.api_client.call_api(resource_path, method,
                                             path_params,
@@ -328,7 +328,7 @@ class TypeclassesApi(object):
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
-            select_header_accept([])
+            select_header_accept(['application/json'])
         if not header_params['Accept']:
             del header_params['Accept']
 
@@ -337,7 +337,7 @@ class TypeclassesApi(object):
             select_header_content_type([])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['basic']
 
         response = self.api_client.call_api(resource_path, method,
                                             path_params,
@@ -406,7 +406,7 @@ class TypeclassesApi(object):
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
-            select_header_accept([])
+            select_header_accept(['application/json'])
         if not header_params['Accept']:
             del header_params['Accept']
 
@@ -415,7 +415,7 @@ class TypeclassesApi(object):
             select_header_content_type([])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['basic']
 
         response = self.api_client.call_api(resource_path, method,
                                             path_params,
@@ -484,7 +484,7 @@ class TypeclassesApi(object):
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
-            select_header_accept([])
+            select_header_accept(['application/json'])
         if not header_params['Accept']:
             del header_params['Accept']
 
@@ -493,7 +493,7 @@ class TypeclassesApi(object):
             select_header_content_type([])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['basic']
 
         response = self.api_client.call_api(resource_path, method,
                                             path_params,
@@ -565,7 +565,7 @@ class TypeclassesApi(object):
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
-            select_header_accept([])
+            select_header_accept(['application/json'])
         if not header_params['Accept']:
             del header_params['Accept']
 
@@ -574,7 +574,7 @@ class TypeclassesApi(object):
             select_header_content_type([])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['basic']
 
         response = self.api_client.call_api(resource_path, method,
                                             path_params,
@@ -649,7 +649,7 @@ class TypeclassesApi(object):
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
-            select_header_accept([])
+            select_header_accept(['application/json'])
         if not header_params['Accept']:
             del header_params['Accept']
 
@@ -658,7 +658,7 @@ class TypeclassesApi(object):
             select_header_content_type([])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['basic']
 
         response = self.api_client.call_api(resource_path, method,
                                             path_params,
@@ -736,7 +736,7 @@ class TypeclassesApi(object):
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
-            select_header_accept([])
+            select_header_accept(['application/json'])
         if not header_params['Accept']:
             del header_params['Accept']
 
@@ -745,7 +745,7 @@ class TypeclassesApi(object):
             select_header_content_type([])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['basic']
 
         response = self.api_client.call_api(resource_path, method,
                                             path_params,
@@ -820,7 +820,7 @@ class TypeclassesApi(object):
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
-            select_header_accept([])
+            select_header_accept(['application/json'])
         if not header_params['Accept']:
             del header_params['Accept']
 
@@ -829,7 +829,7 @@ class TypeclassesApi(object):
             select_header_content_type([])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['basic']
 
         response = self.api_client.call_api(resource_path, method,
                                             path_params,

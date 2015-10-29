@@ -4,7 +4,7 @@ swagger_client.configuration.username = 'akita'
 swagger_client.configuration.password = 'akita'
 swagger_client.configuration.debug = True
 
-apiclient = swagger_client.ApiClient('http://localhost:8080')
+apiclient = swagger_client.ApiClient('http://localhost:8080/vx')
 
 serviceapi = swagger_client.ServiceApi(apiclient)
 typeclassesapi = swagger_client.TypeclassesApi(apiclient)
