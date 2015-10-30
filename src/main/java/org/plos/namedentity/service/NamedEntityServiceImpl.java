@@ -338,7 +338,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       Email email = ((IndividualComposite) composite).getEmails().get(0);
 
       Uniqueidentifier uniqueidentifier = new Uniqueidentifier();
-      uniqueidentifier.setNedid(ambraId.intValue());   /* nedId == ambraId */
+      uniqueidentifier.setNedid(nedId);   /* nedId == ambraId */
       uniqueidentifier.setSource("Ambra");
       uniqueidentifier.setType(UidTypeEnum.AMBRA.getName());
       uniqueidentifier.setUniqueidentifier(ambraId.toString());

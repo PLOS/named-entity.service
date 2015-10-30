@@ -102,6 +102,11 @@ public class AmbraServiceTest {
 
     IndividualComposite composite = loadComposite("composite-individual.json");
 
+    // cleanse composite
+
+    composite.getUniqueidentifiers().clear();
+    composite.getEmails().remove(1);
+
     MethodHandles.Lookup lookup = MethodHandles.lookup();
 
     Map<Class, List<? extends Entity>> compositeMap = composite.readAsMap();
