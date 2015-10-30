@@ -12,16 +12,30 @@ See https://github.com/swagger-api/swagger-codegen
 
 ## Distribute
 
-TODO
-ambra maven repo?
+### Java
 
-## Run the samples
+Make sure your settings have the ambraproject.org credentials in them. After the clients have been generated, you should be able to run:
+
+    java_deploy/deploy.sh
+
+Then you should be able to find them in
+http://maven.ambraproject.org/maven2/release/org/plos/ned-client
+
+### Ruby
+
+TODO
 
 ### Python
 
-    pip install certifi six urllib3
+TODO
 
-    PYTHONPATH=python python sample.py
+## Run the samples
+
+### Java
+
+    cd java && mvn clean install && cd ..
+    cd sample-java
+    mvn install -DskipTests && mvn exec:java
 
 ### Ruby
 
@@ -31,8 +45,8 @@ ambra maven repo?
     cd ..
     ruby sample.rb
 
-### Java
+### Python
 
-    cd java && mvn clean install && cd ..
-    cd sample-java
-    mvn install -DskipTests && mvn exec:java
+    pip install certifi six urllib3
+
+    PYTHONPATH=python python sample.py

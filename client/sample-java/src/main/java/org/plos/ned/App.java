@@ -1,8 +1,8 @@
 package org.plos.ned;
 
-import io.swagger.client.*;
-import io.swagger.client.api.*;
-import io.swagger.client.auth.*;
+import org.plos.ned_client.*;
+import org.plos.ned_client.api.*;
+import org.plos.ned_client.auth.*;
 
 import java.io.UnsupportedEncodingException;
 import javax.xml.bind.DatatypeConverter;
@@ -12,7 +12,7 @@ public class App {
 
         ApiClient apiclient = new ApiClient();
         apiclient.setDebugging(true);
-        apiclient.setBasePath("http://localhost:8080");
+        apiclient.setBasePath("http://localhost:8080/v0");
 
         // apiclient.setUsername("dev");
         // apiclient.setPassword("dev");

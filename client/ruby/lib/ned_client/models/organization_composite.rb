@@ -1,7 +1,7 @@
 module NedClient
   # 
   class OrganizationComposite < BaseObject
-    attr_accessor :addresses, :emails, :phonenumbers, :uniqueidentifiers, :created, :type_name, :type, :source, :sourcetypeid, :as_map, :nedid, :typeid, :lastmodified, :familiarname, :isactive, :maincontactid, :legalname
+    attr_accessor :addresses, :emails, :phonenumbers, :uniqueidentifiers, :created, :type, :source, :sourcetypeid, :as_map, :nedid, :typeid, :lastmodified, :isactive, :familiarname, :legalname, :maincontactid, :type_name
     # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
@@ -20,9 +20,6 @@ module NedClient
         
         # 
         :'created' => :'created',
-        
-        # 
-        :'type_name' => :'typeName',
         
         # 
         :'type' => :'type',
@@ -46,16 +43,19 @@ module NedClient
         :'lastmodified' => :'lastmodified',
         
         # 
+        :'isactive' => :'isactive',
+        
+        # 
         :'familiarname' => :'familiarname',
         
         # 
-        :'isactive' => :'isactive',
+        :'legalname' => :'legalname',
         
         # 
         :'maincontactid' => :'maincontactid',
         
         # 
-        :'legalname' => :'legalname'
+        :'type_name' => :'typeName'
         
       }
     end
@@ -68,7 +68,6 @@ module NedClient
         :'phonenumbers' => :'Array<Phonenumber>',
         :'uniqueidentifiers' => :'Array<Uniqueidentifier>',
         :'created' => :'DateTime',
-        :'type_name' => :'String',
         :'type' => :'String',
         :'source' => :'String',
         :'sourcetypeid' => :'Integer',
@@ -76,10 +75,11 @@ module NedClient
         :'nedid' => :'Integer',
         :'typeid' => :'Integer',
         :'lastmodified' => :'DateTime',
-        :'familiarname' => :'String',
         :'isactive' => :'BOOLEAN',
+        :'familiarname' => :'String',
+        :'legalname' => :'String',
         :'maincontactid' => :'Integer',
-        :'legalname' => :'String'
+        :'type_name' => :'String'
         
       }
     end
@@ -119,10 +119,6 @@ module NedClient
         self.created = attributes[:'created']
       end
       
-      if attributes[:'typeName']
-        self.type_name = attributes[:'typeName']
-      end
-      
       if attributes[:'type']
         self.type = attributes[:'type']
       end
@@ -153,20 +149,24 @@ module NedClient
         self.lastmodified = attributes[:'lastmodified']
       end
       
+      if attributes[:'isactive']
+        self.isactive = attributes[:'isactive']
+      end
+      
       if attributes[:'familiarname']
         self.familiarname = attributes[:'familiarname']
       end
       
-      if attributes[:'isactive']
-        self.isactive = attributes[:'isactive']
+      if attributes[:'legalname']
+        self.legalname = attributes[:'legalname']
       end
       
       if attributes[:'maincontactid']
         self.maincontactid = attributes[:'maincontactid']
       end
       
-      if attributes[:'legalname']
-        self.legalname = attributes[:'legalname']
+      if attributes[:'typeName']
+        self.type_name = attributes[:'typeName']
       end
       
     end

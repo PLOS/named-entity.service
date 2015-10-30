@@ -1,5 +1,5 @@
-group = 'io.swagger'
-version = '1.0.0'
+group = 'org.plos'
+version = '0.11.0-SNAPSHOT'
 
 buildscript {
     repositories {
@@ -76,7 +76,7 @@ if(hasProperty('target') && target == 'android') {
 	
 	install {
 	    repositories.mavenInstaller {
-	        pom.artifactId = 'swagger-java-client'
+	        pom.artifactId = 'ned-client'
 	    }
 	}
 	

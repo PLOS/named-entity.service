@@ -3,8 +3,8 @@
 import sys
 from setuptools import setup, find_packages
 
-NAME = "swagger_client"
-VERSION = "1.0.0"
+NAME = "ned_client"
+VERSION = "0.11.0-SNAPSHOT"
 
 
 

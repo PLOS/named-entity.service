@@ -1,7 +1,7 @@
 module NedClient
   # 
   class IndividualComposite < BaseObject
-    attr_accessor :auth, :individualprofiles, :groups, :addresses, :emails, :phonenumbers, :uniqueidentifiers, :degrees, :urls, :relationships, :type_name, :as_map
+    attr_accessor :auth, :individualprofiles, :groups, :addresses, :emails, :phonenumbers, :uniqueidentifiers, :degrees, :urls, :relationships, :as_map, :type_name
     # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
@@ -37,10 +37,10 @@ module NedClient
         :'relationships' => :'relationships',
         
         # 
-        :'type_name' => :'typeName',
+        :'as_map' => :'asMap',
         
         # 
-        :'as_map' => :'asMap'
+        :'type_name' => :'typeName'
         
       }
     end
@@ -58,8 +58,8 @@ module NedClient
         :'degrees' => :'Array<Degree>',
         :'urls' => :'Array<Url>',
         :'relationships' => :'Array<Relationship>',
-        :'type_name' => :'String',
-        :'as_map' => :'Hash<String, Array<Entity>>'
+        :'as_map' => :'Hash<String, Array<Entity>>',
+        :'type_name' => :'String'
         
       }
     end
@@ -131,14 +131,14 @@ module NedClient
         end
       end
       
-      if attributes[:'typeName']
-        self.type_name = attributes[:'typeName']
-      end
-      
       if attributes[:'asMap']
         if (value = attributes[:'asMap']).is_a?(Array)
           self.as_map = value
         end
+      end
+      
+      if attributes[:'typeName']
+        self.type_name = attributes[:'typeName']
       end
       
     end

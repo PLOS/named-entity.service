@@ -6,15 +6,15 @@
   },
   "basePath" : "/v0",
   "tags" : [ {
+    "name" : "organizations"
+  }, {
     "name" : "institutionsearch"
   }, {
     "name" : "typeclasses"
   }, {
-    "name" : "organizations"
+    "name" : "service"
   }, {
     "name" : "individuals"
-  }, {
-    "name" : "service"
   } ],
   "schemes" : [ "http" ],
   "paths" : {
@@ -2646,9 +2646,6 @@
           "type" : "string",
           "format" : "date-time"
         },
-        "typeName" : {
-          "type" : "string"
-        },
         "type" : {
           "type" : "string"
         },
@@ -2680,18 +2677,21 @@
           "type" : "string",
           "format" : "date-time"
         },
-        "familiarname" : {
-          "type" : "string"
-        },
         "isactive" : {
           "type" : "boolean",
           "default" : false
+        },
+        "familiarname" : {
+          "type" : "string"
+        },
+        "legalname" : {
+          "type" : "string"
         },
         "maincontactid" : {
           "type" : "integer",
           "format" : "int32"
         },
-        "legalname" : {
+        "typeName" : {
           "type" : "string"
         }
       }
@@ -2704,43 +2704,6 @@
         "startime" : {
           "type" : "string",
           "format" : "date-time"
-        }
-      }
-    },
-    "Globaltype" : {
-      "properties" : {
-        "id" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "typeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "shortdescription" : {
-          "type" : "string"
-        },
-        "longdescription" : {
-          "type" : "string"
-        },
-        "typecode" : {
-          "type" : "string"
-        },
-        "created" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "lastmodified" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "createdby" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "lastmodifiedby" : {
-          "type" : "integer",
-          "format" : "int32"
         }
       }
     },
@@ -2795,6 +2758,43 @@
         },
         "metadata" : {
           "type" : "string"
+        }
+      }
+    },
+    "Globaltype" : {
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "typeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "shortdescription" : {
+          "type" : "string"
+        },
+        "longdescription" : {
+          "type" : "string"
+        },
+        "typecode" : {
+          "type" : "string"
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lastmodified" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "createdby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "lastmodifiedby" : {
+          "type" : "integer",
+          "format" : "int32"
         }
       }
     },
@@ -2894,6 +2894,69 @@
         }
       }
     },
+    "Relationship" : {
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "nedid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "source" : {
+          "type" : "string"
+        },
+        "sourcetypeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lastmodified" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "createdby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "createdbyname" : {
+          "type" : "string"
+        },
+        "lastmodifiedby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "lastmodifiedbyname" : {
+          "type" : "string"
+        },
+        "nedidrelated" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "typeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "startdate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "enddate" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
+    },
     "Auth" : {
       "properties" : {
         "id" : {
@@ -2972,69 +3035,6 @@
         }
       }
     },
-    "Relationship" : {
-      "properties" : {
-        "id" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "nedid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "source" : {
-          "type" : "string"
-        },
-        "sourcetypeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "created" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "lastmodified" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "createdby" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "createdbyname" : {
-          "type" : "string"
-        },
-        "lastmodifiedby" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "lastmodifiedbyname" : {
-          "type" : "string"
-        },
-        "nedidrelated" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "typeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "type" : {
-          "type" : "string"
-        },
-        "title" : {
-          "type" : "string"
-        },
-        "startdate" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "enddate" : {
-          "type" : "string",
-          "format" : "date-time"
-        }
-      }
-    },
     "IndividualComposite" : {
       "properties" : {
         "auth" : {
@@ -3100,9 +3100,6 @@
             "$ref" : "#/definitions/Relationship"
           }
         },
-        "typeName" : {
-          "type" : "string"
-        },
         "asMap" : {
           "type" : "object",
           "additionalProperties" : {
@@ -3111,6 +3108,9 @@
               "$ref" : "#/definitions/Entity"
             }
           }
+        },
+        "typeName" : {
+          "type" : "string"
         }
       }
     },
