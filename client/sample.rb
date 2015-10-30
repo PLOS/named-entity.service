@@ -4,10 +4,9 @@ NedClient.configure { |c| [
    c.debugging = false, c.host='http://localhost:8080/v0',
    c.username = 'akita', c.password = 'akita'] }
 
-header = {'Authorization'=> NedClient.configure.basic_auth_token}
-
 apiclient = NedClient::ApiClient.new
 
+# header = {'Authorization'=> NedClient.configure.basic_auth_token}
 # apiclient.default_headers = header
 
 serviceapi = NedClient::ServiceApi.new(apiclient)

@@ -8,6 +8,15 @@ SWAGGER=$SERVICE/swagger.json
 
 CONFIG=$SERVICE/service/config
 
+
+if [[ -n "$1" ]]; then
+  CODEGEN=$1
+fi
+
+if [[ -n "$2" ]]; then
+  SERVICE=$2
+fi
+
 VERSION=$(echo "import json, requests; print(requests.get('${CONFIG}').json()['version'].split(' ')[0])" | python)
 
 GENERATE="java -jar $CODEGEN/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate"
