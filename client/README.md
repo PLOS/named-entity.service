@@ -23,7 +23,13 @@ http://maven.ambraproject.org/maven2/release/org/plos/ned-client
 
 ### Ruby
 
-TODO
+See http://bundler.io/git.html
+
+Perhaps add something like this to your Gemfile:
+
+git 'https://github.com/plos/named-enenties.service.git' do
+  gem 'client/ruby'
+end
 
 ### Python
 
@@ -40,8 +46,7 @@ TODO
 ### Ruby
 
     cd ruby
-    gem build swagger_client.gemspec
-    gem install swagger_client-1.0.0.gem
+    gem install ned_client-*.gem
     cd ..
     ruby sample.rb
 

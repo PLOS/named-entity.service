@@ -3,7 +3,7 @@ import swagger_client
 swagger_client.configuration.username = 'akita'
 swagger_client.configuration.password = 'akita'
 
-apiclient = swagger_client.ApiClient('http://localhost:8080/vx', header_name="Authorization", header_value=swagger_client.configuration.get_basic_auth_token())
+apiclient = swagger_client.ApiClient('http://localhost:8080/v0', header_name="Authorization", header_value=swagger_client.configuration.get_basic_auth_token())
 
 serviceapi = swagger_client.ServiceApi(apiclient)
 typeclassesapi = swagger_client.TypeclassesApi(apiclient)

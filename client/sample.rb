@@ -1,23 +1,21 @@
-require 'swagger_client'
+require 'ned_client'
 
-SwaggerClient.configure { |c| [
-   c.debugging = false, c.host='http://localhost:8081',
-   c.username = 'dev', c.password = 'dev'] }
+NedClient.configure { |c| [
+   c.debugging = false, c.host='http://localhost:8080/v0',
+   c.username = 'akita', c.password = 'akita'] }
 
-header = {'Authorization'=> SwaggerClient.configure.basic_auth_token}
+header = {'Authorization'=> NedClient.configure.basic_auth_token}
 
-apiclient = SwaggerClient::ApiClient.new
+apiclient = NedClient::ApiClient.new
 
-apiclient.default_headers = header
+# apiclient.default_headers = header
 
-serviceapi = SwaggerClient::ServiceApi.new(apiclient)
-individualsapi = SwaggerClient::IndividualsApi.new(apiclient)
-typeclassesapi = SwaggerClient::TypeclassesApi.new(apiclient)
+serviceapi = NedClient::ServiceApi.new(apiclient)
+individualsapi = NedClient::IndividualsApi.new(apiclient)
+typeclassesapi = NedClient::TypeclassesApi.new(apiclient)
 
-print serviceapi.config
+puts serviceapi.config
 
 # serviceapi.errorcodes
 
-print typeclassesapi.list
-
-# print individualsapi.read_individual(53).emails[0].emailaddress
+puts typeclassesapi.read 12

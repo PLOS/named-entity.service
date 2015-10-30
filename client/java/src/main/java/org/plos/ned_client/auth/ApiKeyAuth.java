@@ -5,7 +5,7 @@ import org.plos.ned_client.Pair;
 import java.util.Map;
 import java.util.List;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-30T11:51:44.371-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-30T15:25:08.819-07:00")
 public class ApiKeyAuth implements Authentication {
   private final String location;
   private final String paramName;

@@ -162,10 +162,10 @@ module NedClient
       {
         'basic' =>
           {
-            type: 'api_key',
-            in: 'query',
-            key: '',
-            value: api_key_with_prefix('')
+            type: 'basic',
+            in: 'header',
+            key: 'Authorization',
+            value: basic_auth_token
           },
       }
     end
