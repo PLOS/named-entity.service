@@ -36,7 +36,7 @@ CREATE TABLE ambra.userProfile (
     UNIQUE KEY authId (authId),
     UNIQUE KEY email (email),
     UNIQUE KEY displayName (displayName)
-    ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+    ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8;
 
 CREATE TABLE ambra.userProfileMetaData (
     userProfileMetaDataID bigint(20) NOT NULL AUTO_INCREMENT,

@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 import org.plos.namedentity.api.Consumer;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
+import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.persist.NamedEntityDBService;
@@ -323,13 +324,15 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   @Override @Transactional
   public  <T extends Composite> T createComposite(T composite, Class<T> clazz) {
 
-    Long ambraId = null;
-
-    // insert user into Ambra DB
+    Integer nedId = null;
 
     if (clazz == IndividualComposite.class) {
 
-      ambraId = ambraService.createUser((IndividualComposite)composite);
+      // insert user into Ambra DB first, then NED
+      Long ambraId = ambraService.createUser((IndividualComposite)composite);
+
+      //AMBRA-ADAPTER:
+      nedId = nedDBSvc.newNamedEntityId(composite.getTypeName(), ambraId.intValue());
 
       // insert Ambra into NED UIDs
       Email email = ((IndividualComposite) composite).getEmails().get(0);
@@ -348,9 +351,12 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
       ((IndividualComposite) composite).getUniqueidentifiers().add(uniqueidentifier);
     }
-
-    //AMBRA-ADAPTER:
-    Integer nedId = nedDBSvc.newNamedEntityId(composite.getTypeName(), (ambraId != null) ? ambraId.intValue() : null);
+    else if (clazz == OrganizationComposite.class) {
+      nedId = nedDBSvc.newNamedEntityId(composite.getTypeName());
+    }
+    else {
+      throw new UnsupportedOperationException("Unsupported composite: " + clazz);
+    }
 
     // insert into NED
 
