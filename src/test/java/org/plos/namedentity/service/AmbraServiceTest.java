@@ -111,8 +111,10 @@ public class AmbraServiceTest {
       Map.Entry<Class, List<? extends Entity>> entry = entries.next();
       List<? extends Entity> entities = entry.getValue();
       if (entities != null) {
-        MethodHandle createdByMH = lookup.findVirtual(entry.getKey(), "setCreatedbyname", MethodType.methodType(void.class, String.class));
-        MethodHandle lastmodifiedByMH = lookup.findVirtual(entry.getKey(), "setLastmodifiedbyname", MethodType.methodType(void.class, String.class));
+        MethodHandle createdByMH = lookup.findVirtual(entry.getKey(), 
+            "setCreatedbyname", MethodType.methodType(void.class, String.class));
+        MethodHandle lastmodifiedByMH = lookup.findVirtual(entry.getKey(),
+            "setLastmodifiedbyname", MethodType.methodType(void.class, String.class));
         for (Entity entity : entities) {
           createdByMH.invoke(entity, "test");
           lastmodifiedByMH.invoke(entity, "test");
@@ -238,11 +240,6 @@ public class AmbraServiceTest {
 
     email.setEmailaddress("valid@email.com");
 
-//    setCreatedAndLastModifiedBy(authHeader,entity,false);
-//    entity.setId(pkId);
-//    entity.setNedid(nedId);
-//    namedEntityService.resolveValuesToIds(entity);
-
     crudService.update(email);
 
     UserProfile userProfile = userService.getUser(new Long(email.getNedid()));
@@ -346,12 +343,15 @@ public class AmbraServiceTest {
   @Test
   public void testCreateRollbackAmbra() throws Throwable {
 
-//    UserRegistrationService origReg = userRegistrationService;
+    // inject mock Ambra service into NED service.
 
-    UserRegistrationService mockReg = Mockito.mock(UserRegistrationService.class);
-    when(mockReg.registerUser(any(UserProfile.class), any(String.class))).thenThrow(DuplicateUserException.class);
+    AmbraService mockAmbraSvc = Mockito.mock(AmbraService.class);
+    when(mockAmbraSvc.createUser(any(IndividualComposite.class)))
+        .thenThrow(DuplicateUserException.class);
 
-    userRegistrationService = mockReg;
+    NamedEntityServiceImpl namedEntityService = new NamedEntityServiceImpl();
+    namedEntityService.setNamedEntityDBService(nedDBSvc);
+    namedEntityService.setAmbraService(mockAmbraSvc);
 
     IndividualComposite composite = getNew();
 
@@ -360,16 +360,15 @@ public class AmbraServiceTest {
     try {
       namedEntityService.createComposite(composite, IndividualComposite.class);
       fail();
-    } catch (NedException expected) {
+    } catch (Exception expected) {
     }
 
     // make sure it did not get inserted in NED
-    assertNull(crudService.findByAttribute(composite.getEmails().get(0)));
+    Email filter = new Email();
+    filter.setEmailaddress(composite.getEmails().get(0).getEmailaddress());
+    assertEquals(0, crudService.findByAttribute(filter).size());
 
     // make sure it did not get inserted in Ambra
     assertNull(userService.getUserByAuthId(authId));
-
-//    userRegistrationService = origReg;
   }
-
 }
