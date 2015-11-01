@@ -76,7 +76,7 @@ public class IndividualsResource extends NedResource {
   }
 
   @GET
-  @ApiOperation(value = "Find individual matching specified attribute.")
+  @ApiOperation(value = "Find individual matching specified attribute.", responseContainer = "List")
   public Response findIndividuals(@QueryParam("entity")    String entity,
                                   @QueryParam("attribute") String attribute,
                                   @QueryParam("value")     String value) {
@@ -218,7 +218,7 @@ public class IndividualsResource extends NedResource {
 
   @GET
   @Path("/{nedId}/individualprofiles")
-  @ApiOperation(value = "List profiles", response = Individualprofile.class)
+  @ApiOperation(value = "List profiles", response = Individualprofile.class, responseContainer = "List")
   public Response getProfiles(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Individualprofile.class);
   }
@@ -243,7 +243,7 @@ public class IndividualsResource extends NedResource {
 
   @GET
   @Path("/{nedId}/degrees")
-  @ApiOperation(value = "List degrees")
+  @ApiOperation(value = "List degrees", responseContainer = "List")
   public Response getDegrees(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Degree.class);
   }
@@ -291,7 +291,7 @@ public class IndividualsResource extends NedResource {
 
   @GET
   @Path("/{nedId}/groups")
-  @ApiOperation(value = "List groups")
+  @ApiOperation(value = "List groups", response = Group.class, responseContainer = "List")
   public Response getGroups(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Group.class);
   }
@@ -339,8 +339,8 @@ public class IndividualsResource extends NedResource {
 
   @GET
   @Path("/{nedId}/relationships")
-  @ApiOperation(value = "List relationships")
-  public Response getRelationship(@PathParam("nedId") int nedId) {
+  @ApiOperation(value = "List relationships", response = Relationship.class, responseContainer = "List")
+  public Response getRelationships(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Relationship.class);
   }
 

@@ -127,7 +127,8 @@ public class OrganizationsResource extends NedResource {
 
   @GET
   @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-  @ApiOperation(value = "Find organizations matching specified attribute.")
+  @ApiOperation(value = "Find organizations matching specified attribute.",
+          response = OrganizationComposite.class, responseContainer = "List")
   public Response findOrganizations(@QueryParam("attribute") String attribute,
                                     @QueryParam("value") String value) {
 
