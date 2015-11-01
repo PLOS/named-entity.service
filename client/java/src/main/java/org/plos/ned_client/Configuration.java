@@ -1,6 +1,6 @@
 package org.plos.ned_client;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-01T07:39:28.231-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-01T10:44:08.963-08:00")
 public class Configuration {
   private static ApiClient defaultApiClient = new ApiClient();
 

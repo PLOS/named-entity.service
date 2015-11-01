@@ -9,7 +9,6 @@ import org.plos.ned_client.model.Auth;
 import org.plos.ned_client.model.Relationship;
 import java.util.*;
 import org.plos.ned_client.model.Uniqueidentifier;
-import java.util.Map;
 import org.plos.ned_client.model.Individualprofile;
 import org.plos.ned_client.model.Phonenumber;
 import org.plos.ned_client.model.Url;
@@ -21,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-01T07:39:28.231-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-01T10:44:08.963-08:00")
 public class IndividualComposite   {
   
   private List<Auth> auth = new ArrayList<Auth>();
@@ -35,7 +34,6 @@ public class IndividualComposite   {
   private List<Url> urls = new ArrayList<Url>();
   private List<Relationship> relationships = new ArrayList<Relationship>();
   private String typeName = null;
-  private Map<String, List<Entity>> asMap = new HashMap<String, List<Entity>>();
 
   
   /**
@@ -170,18 +168,6 @@ public class IndividualComposite   {
   }
 
   
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("asMap")
-  public Map<String, List<Entity>> getAsMap() {
-    return asMap;
-  }
-  public void setAsMap(Map<String, List<Entity>> asMap) {
-    this.asMap = asMap;
-  }
-
-  
 
   @Override
   public String toString()  {
@@ -199,7 +185,6 @@ public class IndividualComposite   {
     sb.append("    urls: ").append(StringUtil.toIndentedString(urls)).append("\n");
     sb.append("    relationships: ").append(StringUtil.toIndentedString(relationships)).append("\n");
     sb.append("    typeName: ").append(StringUtil.toIndentedString(typeName)).append("\n");
-    sb.append("    asMap: ").append(StringUtil.toIndentedString(asMap)).append("\n");
     sb.append("}");
     return sb.toString();
   }

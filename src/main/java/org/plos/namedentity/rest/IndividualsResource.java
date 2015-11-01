@@ -243,7 +243,7 @@ public class IndividualsResource extends NedResource {
 
   @GET
   @Path("/{nedId}/degrees")
-  @ApiOperation(value = "List degrees", responseContainer = "List")
+  @ApiOperation(value = "List degrees", response = Degree.class, responseContainer = "List")
   public Response getDegrees(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Degree.class);
   }

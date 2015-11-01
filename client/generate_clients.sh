@@ -79,3 +79,7 @@ echo 'mvn deploy:deploy-file \
 
 $GENERATE -i $SWAGGER -l java -o ./java -c ned_java.json \
   && cd java && mvn clean install && cd ..
+
+
+# Run a quick test
+# PYTHONPATH=python python sample.py

@@ -1,7 +1,7 @@
 module NedClient
   # 
   class OrganizationComposite < BaseObject
-    attr_accessor :addresses, :emails, :phonenumbers, :uniqueidentifiers, :created, :type_name, :type, :source, :sourcetypeid, :isactive, :typeid, :nedid, :as_map, :lastmodified, :familiarname, :legalname, :maincontactid
+    attr_accessor :addresses, :emails, :phonenumbers, :uniqueidentifiers, :created, :type, :source, :sourcetypeid, :nedid, :typeid, :lastmodified, :isactive, :familiarname, :legalname, :maincontactid, :type_name
     # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
@@ -22,9 +22,6 @@ module NedClient
         :'created' => :'created',
         
         # 
-        :'type_name' => :'typeName',
-        
-        # 
         :'type' => :'type',
         
         # 
@@ -34,19 +31,16 @@ module NedClient
         :'sourcetypeid' => :'sourcetypeid',
         
         # 
-        :'isactive' => :'isactive',
+        :'nedid' => :'nedid',
         
         # 
         :'typeid' => :'typeid',
         
         # 
-        :'nedid' => :'nedid',
-        
-        # 
-        :'as_map' => :'asMap',
-        
-        # 
         :'lastmodified' => :'lastmodified',
+        
+        # 
+        :'isactive' => :'isactive',
         
         # 
         :'familiarname' => :'familiarname',
@@ -55,7 +49,10 @@ module NedClient
         :'legalname' => :'legalname',
         
         # 
-        :'maincontactid' => :'maincontactid'
+        :'maincontactid' => :'maincontactid',
+        
+        # 
+        :'type_name' => :'typeName'
         
       }
     end
@@ -68,18 +65,17 @@ module NedClient
         :'phonenumbers' => :'Array<Phonenumber>',
         :'uniqueidentifiers' => :'Array<Uniqueidentifier>',
         :'created' => :'DateTime',
-        :'type_name' => :'String',
         :'type' => :'String',
         :'source' => :'String',
         :'sourcetypeid' => :'Integer',
-        :'isactive' => :'BOOLEAN',
-        :'typeid' => :'Integer',
         :'nedid' => :'Integer',
-        :'as_map' => :'Hash<String, Array<Entity>>',
+        :'typeid' => :'Integer',
         :'lastmodified' => :'DateTime',
+        :'isactive' => :'BOOLEAN',
         :'familiarname' => :'String',
         :'legalname' => :'String',
-        :'maincontactid' => :'Integer'
+        :'maincontactid' => :'Integer',
+        :'type_name' => :'String'
         
       }
     end
@@ -119,10 +115,6 @@ module NedClient
         self.created = attributes[:'created']
       end
       
-      if attributes[:'typeName']
-        self.type_name = attributes[:'typeName']
-      end
-      
       if attributes[:'type']
         self.type = attributes[:'type']
       end
@@ -135,26 +127,20 @@ module NedClient
         self.sourcetypeid = attributes[:'sourcetypeid']
       end
       
-      if attributes[:'isactive']
-        self.isactive = attributes[:'isactive']
+      if attributes[:'nedid']
+        self.nedid = attributes[:'nedid']
       end
       
       if attributes[:'typeid']
         self.typeid = attributes[:'typeid']
       end
       
-      if attributes[:'nedid']
-        self.nedid = attributes[:'nedid']
-      end
-      
-      if attributes[:'asMap']
-        if (value = attributes[:'asMap']).is_a?(Array)
-          self.as_map = value
-        end
-      end
-      
       if attributes[:'lastmodified']
         self.lastmodified = attributes[:'lastmodified']
+      end
+      
+      if attributes[:'isactive']
+        self.isactive = attributes[:'isactive']
       end
       
       if attributes[:'familiarname']
@@ -167,6 +153,10 @@ module NedClient
       
       if attributes[:'maincontactid']
         self.maincontactid = attributes[:'maincontactid']
+      end
+      
+      if attributes[:'typeName']
+        self.type_name = attributes[:'typeName']
       end
       
     end

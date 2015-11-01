@@ -460,7 +460,7 @@ public abstract class NedResource extends BaseResource {
   void setCreatedAndLastModifiedBy(String authHeader, T composite) {
     Map<String,String> consumer = authService.parseCredentials(authHeader);
 
-    Map<Class, List<? extends Entity>> compositeMap = composite.getAsMap();
+    Map<Class, List<? extends Entity>> compositeMap = composite.readAsMap();
 
     for (List<? extends Entity> entities : compositeMap.values()) {
       if (entities != null) {
