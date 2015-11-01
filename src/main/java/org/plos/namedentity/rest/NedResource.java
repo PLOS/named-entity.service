@@ -19,7 +19,7 @@ package org.plos.namedentity.rest;
 import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchCriteria;
 
-import com.wordnik.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Auth;
@@ -34,14 +34,9 @@ import org.plos.namedentity.api.entity.Group;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.api.entity.Url;
 
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import java.lang.reflect.Field;
@@ -49,6 +44,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Map;
 
+@Produces(MediaType.APPLICATION_JSON)
 public abstract class NedResource extends BaseResource {
 
   /* ----------------------------------------------------------------------- */
@@ -100,7 +96,7 @@ public abstract class NedResource extends BaseResource {
 
   @GET
   @Path("/{nedId}/emails")
-  @ApiOperation(value = "List emails", response = Email.class)
+  @ApiOperation(value = "List emails", response = Email.class, responseContainer = "List")
   public Response getEmails(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Email.class);
   }
@@ -132,7 +128,7 @@ public abstract class NedResource extends BaseResource {
 
   @DELETE
   @Path("/{nedId}/addresses/{addressId}")
-  @ApiOperation(value = "Delete address")
+  @ApiOperation(value = "Delete address", response = Address.class, responseContainer = "List")
   public Response deleteAddress(@PathParam("nedId")     int nedId,
                                 @PathParam("addressId") int addressId,
                                 @HeaderParam("Authorization") String authstring) {
@@ -161,7 +157,7 @@ public abstract class NedResource extends BaseResource {
 
   @GET
   @Path("/{nedId}/phonenumbers")
-  @ApiOperation(value = "List phone numbers", response = Phonenumber.class)
+  @ApiOperation(value = "List phone numbers", response = Phonenumber.class, responseContainer = "List")
   public Response getPhonenumbers(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Phonenumber.class);
   }
@@ -199,7 +195,7 @@ public abstract class NedResource extends BaseResource {
 
   @GET
   @Path("/{nedId}/uids")
-  @ApiOperation(value = "List UIDs")
+  @ApiOperation(value = "List UIDs", response = Uniqueidentifier.class, responseContainer = "List")
   public Response getUids(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Uniqueidentifier.class);
   }
