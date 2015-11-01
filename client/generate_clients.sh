@@ -17,9 +17,14 @@ if [[ -n "$2" ]]; then
   SERVICE=$2
 fi
 
-VERSION=$(echo "import json, requests; print(requests.get('${CONFIG}').json()['version'].split(' ')[0])" | python)
+# exit if there is an error
+set -e
+
+VERSION=$(echo "import json, requests; print(requests.get('${CONFIG}').json()['version'].split(' ')[0])" | python2)
 
 GENERATE="java -jar $CODEGEN/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate"
+
+echo "VERSION: $VERSION"
 
 
 # JSON SWAGGER SPEC
@@ -48,7 +53,7 @@ echo '{
 }' > ned_ruby.json
 
 $GENERATE -i $SWAGGER -l ruby -o ./ruby -c ned_ruby.json \
-  && cd ruby && gem build ned_client.gemspec && cd ..
+  && cd ruby && rm *.gem && gem build ned_client.gemspec && cd ..
 
 # JAVA
 

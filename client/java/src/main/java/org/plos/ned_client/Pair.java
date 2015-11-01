@@ -1,6 +1,6 @@
 package org.plos.ned_client;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-30T16:15:42.479-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-01T07:39:28.231-08:00")
 public class Pair {
     private String name = "";
     private String value = "";

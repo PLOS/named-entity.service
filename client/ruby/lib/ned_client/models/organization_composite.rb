@@ -1,7 +1,7 @@
 module NedClient
   # 
   class OrganizationComposite < BaseObject
-    attr_accessor :addresses, :emails, :phonenumbers, :uniqueidentifiers, :created, :type, :source, :sourcetypeid, :as_map, :nedid, :typeid, :lastmodified, :isactive, :familiarname, :legalname, :maincontactid, :type_name
+    attr_accessor :addresses, :emails, :phonenumbers, :uniqueidentifiers, :created, :type_name, :type, :source, :sourcetypeid, :isactive, :typeid, :nedid, :as_map, :lastmodified, :familiarname, :legalname, :maincontactid
     # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
@@ -22,6 +22,9 @@ module NedClient
         :'created' => :'created',
         
         # 
+        :'type_name' => :'typeName',
+        
+        # 
         :'type' => :'type',
         
         # 
@@ -31,19 +34,19 @@ module NedClient
         :'sourcetypeid' => :'sourcetypeid',
         
         # 
-        :'as_map' => :'asMap',
-        
-        # 
-        :'nedid' => :'nedid',
+        :'isactive' => :'isactive',
         
         # 
         :'typeid' => :'typeid',
         
         # 
-        :'lastmodified' => :'lastmodified',
+        :'nedid' => :'nedid',
         
         # 
-        :'isactive' => :'isactive',
+        :'as_map' => :'asMap',
+        
+        # 
+        :'lastmodified' => :'lastmodified',
         
         # 
         :'familiarname' => :'familiarname',
@@ -52,10 +55,7 @@ module NedClient
         :'legalname' => :'legalname',
         
         # 
-        :'maincontactid' => :'maincontactid',
-        
-        # 
-        :'type_name' => :'typeName'
+        :'maincontactid' => :'maincontactid'
         
       }
     end
@@ -68,18 +68,18 @@ module NedClient
         :'phonenumbers' => :'Array<Phonenumber>',
         :'uniqueidentifiers' => :'Array<Uniqueidentifier>',
         :'created' => :'DateTime',
+        :'type_name' => :'String',
         :'type' => :'String',
         :'source' => :'String',
         :'sourcetypeid' => :'Integer',
-        :'as_map' => :'Hash<String, Array<Entity>>',
-        :'nedid' => :'Integer',
-        :'typeid' => :'Integer',
-        :'lastmodified' => :'DateTime',
         :'isactive' => :'BOOLEAN',
+        :'typeid' => :'Integer',
+        :'nedid' => :'Integer',
+        :'as_map' => :'Hash<String, Array<Entity>>',
+        :'lastmodified' => :'DateTime',
         :'familiarname' => :'String',
         :'legalname' => :'String',
-        :'maincontactid' => :'Integer',
-        :'type_name' => :'String'
+        :'maincontactid' => :'Integer'
         
       }
     end
@@ -119,6 +119,10 @@ module NedClient
         self.created = attributes[:'created']
       end
       
+      if attributes[:'typeName']
+        self.type_name = attributes[:'typeName']
+      end
+      
       if attributes[:'type']
         self.type = attributes[:'type']
       end
@@ -131,26 +135,26 @@ module NedClient
         self.sourcetypeid = attributes[:'sourcetypeid']
       end
       
-      if attributes[:'asMap']
-        if (value = attributes[:'asMap']).is_a?(Array)
-          self.as_map = value
-        end
-      end
-      
-      if attributes[:'nedid']
-        self.nedid = attributes[:'nedid']
+      if attributes[:'isactive']
+        self.isactive = attributes[:'isactive']
       end
       
       if attributes[:'typeid']
         self.typeid = attributes[:'typeid']
       end
       
-      if attributes[:'lastmodified']
-        self.lastmodified = attributes[:'lastmodified']
+      if attributes[:'nedid']
+        self.nedid = attributes[:'nedid']
       end
       
-      if attributes[:'isactive']
-        self.isactive = attributes[:'isactive']
+      if attributes[:'asMap']
+        if (value = attributes[:'asMap']).is_a?(Array)
+          self.as_map = value
+        end
+      end
+      
+      if attributes[:'lastmodified']
+        self.lastmodified = attributes[:'lastmodified']
       end
       
       if attributes[:'familiarname']
@@ -163,10 +167,6 @@ module NedClient
       
       if attributes[:'maincontactid']
         self.maincontactid = attributes[:'maincontactid']
-      end
-      
-      if attributes[:'typeName']
-        self.type_name = attributes[:'typeName']
       end
       
     end

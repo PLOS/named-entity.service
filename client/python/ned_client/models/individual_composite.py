@@ -47,8 +47,8 @@ class IndividualComposite(object):
             'degrees': 'list[Degree]',
             'urls': 'list[Url]',
             'relationships': 'list[Relationship]',
-            'as_map': 'dict(str, list[Entity])',
-            'type_name': 'str'
+            'type_name': 'str',
+            'as_map': 'dict(str, list[Entity])'
         }
 
         self.attribute_map = {
@@ -62,8 +62,8 @@ class IndividualComposite(object):
             'degrees': 'degrees',
             'urls': 'urls',
             'relationships': 'relationships',
-            'as_map': 'asMap',
-            'type_name': 'typeName'
+            'type_name': 'typeName',
+            'as_map': 'asMap'
         }
 
         self._auth = None
@@ -76,8 +76,8 @@ class IndividualComposite(object):
         self._degrees = None
         self._urls = None
         self._relationships = None
-        self._as_map = None
         self._type_name = None
+        self._as_map = None
 
     @property
     def auth(self):
@@ -300,28 +300,6 @@ class IndividualComposite(object):
         self._relationships = relationships
 
     @property
-    def as_map(self):
-        """
-        Gets the as_map of this IndividualComposite.
-
-
-        :return: The as_map of this IndividualComposite.
-        :rtype: dict(str, list[Entity])
-        """
-        return self._as_map
-
-    @as_map.setter
-    def as_map(self, as_map):
-        """
-        Sets the as_map of this IndividualComposite.
-
-
-        :param as_map: The as_map of this IndividualComposite.
-        :type: dict(str, list[Entity])
-        """
-        self._as_map = as_map
-
-    @property
     def type_name(self):
         """
         Gets the type_name of this IndividualComposite.
@@ -342,6 +320,28 @@ class IndividualComposite(object):
         :type: str
         """
         self._type_name = type_name
+
+    @property
+    def as_map(self):
+        """
+        Gets the as_map of this IndividualComposite.
+
+
+        :return: The as_map of this IndividualComposite.
+        :rtype: dict(str, list[Entity])
+        """
+        return self._as_map
+
+    @as_map.setter
+    def as_map(self, as_map):
+        """
+        Sets the as_map of this IndividualComposite.
+
+
+        :param as_map: The as_map of this IndividualComposite.
+        :type: dict(str, list[Entity])
+        """
+        self._as_map = as_map
 
     def to_dict(self):
         """

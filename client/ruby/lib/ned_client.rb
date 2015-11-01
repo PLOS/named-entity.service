@@ -6,8 +6,8 @@ require 'ned_client/configuration'
 
 # Models
 require 'ned_client/models/base_object'
-require 'ned_client/models/entity'
 require 'ned_client/models/group'
+require 'ned_client/models/entity'
 require 'ned_client/models/email'
 require 'ned_client/models/address'
 require 'ned_client/models/degree'
@@ -21,8 +21,8 @@ require 'ned_client/models/typedescription'
 require 'ned_client/models/relationship'
 require 'ned_client/models/auth'
 require 'ned_client/models/individual_composite'
-require 'ned_client/models/phonenumber'
 require 'ned_client/models/individualprofile'
+require 'ned_client/models/phonenumber'
 
 # APIs
 require 'ned_client/api/institutionsearch_api'

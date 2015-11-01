@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-30T16:15:42.479-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-01T07:39:28.231-08:00")
 public class OrganizationComposite   {
   
   private List<Address> addresses = new ArrayList<Address>();
@@ -24,18 +24,18 @@ public class OrganizationComposite   {
   private List<Phonenumber> phonenumbers = new ArrayList<Phonenumber>();
   private List<Uniqueidentifier> uniqueidentifiers = new ArrayList<Uniqueidentifier>();
   private Date created = null;
+  private String typeName = null;
   private String type = null;
   private String source = null;
   private Integer sourcetypeid = null;
-  private Map<String, List<Entity>> asMap = new HashMap<String, List<Entity>>();
-  private Integer nedid = null;
-  private Integer typeid = null;
-  private Date lastmodified = null;
   private Boolean isactive = false;
+  private Integer typeid = null;
+  private Integer nedid = null;
+  private Map<String, List<Entity>> asMap = new HashMap<String, List<Entity>>();
+  private Date lastmodified = null;
   private String familiarname = null;
   private String legalname = null;
   private Integer maincontactid = null;
-  private String typeName = null;
 
   
   /**
@@ -101,6 +101,18 @@ public class OrganizationComposite   {
   /**
    **/
   @ApiModelProperty(value = "")
+  @JsonProperty("typeName")
+  public String getTypeName() {
+    return typeName;
+  }
+  public void setTypeName(String typeName) {
+    this.typeName = typeName;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
   @JsonProperty("type")
   public String getType() {
     return type;
@@ -137,24 +149,12 @@ public class OrganizationComposite   {
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("asMap")
-  public Map<String, List<Entity>> getAsMap() {
-    return asMap;
+  @JsonProperty("isactive")
+  public Boolean getIsactive() {
+    return isactive;
   }
-  public void setAsMap(Map<String, List<Entity>> asMap) {
-    this.asMap = asMap;
-  }
-
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("nedid")
-  public Integer getNedid() {
-    return nedid;
-  }
-  public void setNedid(Integer nedid) {
-    this.nedid = nedid;
+  public void setIsactive(Boolean isactive) {
+    this.isactive = isactive;
   }
 
   
@@ -173,24 +173,36 @@ public class OrganizationComposite   {
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("lastmodified")
-  public Date getLastmodified() {
-    return lastmodified;
+  @JsonProperty("nedid")
+  public Integer getNedid() {
+    return nedid;
   }
-  public void setLastmodified(Date lastmodified) {
-    this.lastmodified = lastmodified;
+  public void setNedid(Integer nedid) {
+    this.nedid = nedid;
   }
 
   
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("isactive")
-  public Boolean getIsactive() {
-    return isactive;
+  @JsonProperty("asMap")
+  public Map<String, List<Entity>> getAsMap() {
+    return asMap;
   }
-  public void setIsactive(Boolean isactive) {
-    this.isactive = isactive;
+  public void setAsMap(Map<String, List<Entity>> asMap) {
+    this.asMap = asMap;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("lastmodified")
+  public Date getLastmodified() {
+    return lastmodified;
+  }
+  public void setLastmodified(Date lastmodified) {
+    this.lastmodified = lastmodified;
   }
 
   
@@ -230,18 +242,6 @@ public class OrganizationComposite   {
   }
 
   
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("typeName")
-  public String getTypeName() {
-    return typeName;
-  }
-  public void setTypeName(String typeName) {
-    this.typeName = typeName;
-  }
-
-  
 
   @Override
   public String toString()  {
@@ -253,18 +253,18 @@ public class OrganizationComposite   {
     sb.append("    phonenumbers: ").append(StringUtil.toIndentedString(phonenumbers)).append("\n");
     sb.append("    uniqueidentifiers: ").append(StringUtil.toIndentedString(uniqueidentifiers)).append("\n");
     sb.append("    created: ").append(StringUtil.toIndentedString(created)).append("\n");
+    sb.append("    typeName: ").append(StringUtil.toIndentedString(typeName)).append("\n");
     sb.append("    type: ").append(StringUtil.toIndentedString(type)).append("\n");
     sb.append("    source: ").append(StringUtil.toIndentedString(source)).append("\n");
     sb.append("    sourcetypeid: ").append(StringUtil.toIndentedString(sourcetypeid)).append("\n");
-    sb.append("    asMap: ").append(StringUtil.toIndentedString(asMap)).append("\n");
-    sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
-    sb.append("    typeid: ").append(StringUtil.toIndentedString(typeid)).append("\n");
-    sb.append("    lastmodified: ").append(StringUtil.toIndentedString(lastmodified)).append("\n");
     sb.append("    isactive: ").append(StringUtil.toIndentedString(isactive)).append("\n");
+    sb.append("    typeid: ").append(StringUtil.toIndentedString(typeid)).append("\n");
+    sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
+    sb.append("    asMap: ").append(StringUtil.toIndentedString(asMap)).append("\n");
+    sb.append("    lastmodified: ").append(StringUtil.toIndentedString(lastmodified)).append("\n");
     sb.append("    familiarname: ").append(StringUtil.toIndentedString(familiarname)).append("\n");
     sb.append("    legalname: ").append(StringUtil.toIndentedString(legalname)).append("\n");
     sb.append("    maincontactid: ").append(StringUtil.toIndentedString(maincontactid)).append("\n");
-    sb.append("    typeName: ").append(StringUtil.toIndentedString(typeName)).append("\n");
     sb.append("}");
     return sb.toString();
   }

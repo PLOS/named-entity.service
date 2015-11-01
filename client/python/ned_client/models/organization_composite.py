@@ -42,18 +42,18 @@ class OrganizationComposite(object):
             'phonenumbers': 'list[Phonenumber]',
             'uniqueidentifiers': 'list[Uniqueidentifier]',
             'created': 'datetime',
+            'type_name': 'str',
             'type': 'str',
             'source': 'str',
             'sourcetypeid': 'int',
-            'as_map': 'dict(str, list[Entity])',
-            'nedid': 'int',
-            'typeid': 'int',
-            'lastmodified': 'datetime',
             'isactive': 'bool',
+            'typeid': 'int',
+            'nedid': 'int',
+            'as_map': 'dict(str, list[Entity])',
+            'lastmodified': 'datetime',
             'familiarname': 'str',
             'legalname': 'str',
-            'maincontactid': 'int',
-            'type_name': 'str'
+            'maincontactid': 'int'
         }
 
         self.attribute_map = {
@@ -62,18 +62,18 @@ class OrganizationComposite(object):
             'phonenumbers': 'phonenumbers',
             'uniqueidentifiers': 'uniqueidentifiers',
             'created': 'created',
+            'type_name': 'typeName',
             'type': 'type',
             'source': 'source',
             'sourcetypeid': 'sourcetypeid',
-            'as_map': 'asMap',
-            'nedid': 'nedid',
-            'typeid': 'typeid',
-            'lastmodified': 'lastmodified',
             'isactive': 'isactive',
+            'typeid': 'typeid',
+            'nedid': 'nedid',
+            'as_map': 'asMap',
+            'lastmodified': 'lastmodified',
             'familiarname': 'familiarname',
             'legalname': 'legalname',
-            'maincontactid': 'maincontactid',
-            'type_name': 'typeName'
+            'maincontactid': 'maincontactid'
         }
 
         self._addresses = None
@@ -81,18 +81,18 @@ class OrganizationComposite(object):
         self._phonenumbers = None
         self._uniqueidentifiers = None
         self._created = None
+        self._type_name = None
         self._type = None
         self._source = None
         self._sourcetypeid = None
-        self._as_map = None
-        self._nedid = None
-        self._typeid = None
-        self._lastmodified = None
         self._isactive = None
+        self._typeid = None
+        self._nedid = None
+        self._as_map = None
+        self._lastmodified = None
         self._familiarname = None
         self._legalname = None
         self._maincontactid = None
-        self._type_name = None
 
     @property
     def addresses(self):
@@ -205,6 +205,28 @@ class OrganizationComposite(object):
         self._created = created
 
     @property
+    def type_name(self):
+        """
+        Gets the type_name of this OrganizationComposite.
+
+
+        :return: The type_name of this OrganizationComposite.
+        :rtype: str
+        """
+        return self._type_name
+
+    @type_name.setter
+    def type_name(self, type_name):
+        """
+        Sets the type_name of this OrganizationComposite.
+
+
+        :param type_name: The type_name of this OrganizationComposite.
+        :type: str
+        """
+        self._type_name = type_name
+
+    @property
     def type(self):
         """
         Gets the type of this OrganizationComposite.
@@ -271,48 +293,26 @@ class OrganizationComposite(object):
         self._sourcetypeid = sourcetypeid
 
     @property
-    def as_map(self):
+    def isactive(self):
         """
-        Gets the as_map of this OrganizationComposite.
+        Gets the isactive of this OrganizationComposite.
 
 
-        :return: The as_map of this OrganizationComposite.
-        :rtype: dict(str, list[Entity])
+        :return: The isactive of this OrganizationComposite.
+        :rtype: bool
         """
-        return self._as_map
+        return self._isactive
 
-    @as_map.setter
-    def as_map(self, as_map):
+    @isactive.setter
+    def isactive(self, isactive):
         """
-        Sets the as_map of this OrganizationComposite.
+        Sets the isactive of this OrganizationComposite.
 
 
-        :param as_map: The as_map of this OrganizationComposite.
-        :type: dict(str, list[Entity])
+        :param isactive: The isactive of this OrganizationComposite.
+        :type: bool
         """
-        self._as_map = as_map
-
-    @property
-    def nedid(self):
-        """
-        Gets the nedid of this OrganizationComposite.
-
-
-        :return: The nedid of this OrganizationComposite.
-        :rtype: int
-        """
-        return self._nedid
-
-    @nedid.setter
-    def nedid(self, nedid):
-        """
-        Sets the nedid of this OrganizationComposite.
-
-
-        :param nedid: The nedid of this OrganizationComposite.
-        :type: int
-        """
-        self._nedid = nedid
+        self._isactive = isactive
 
     @property
     def typeid(self):
@@ -337,6 +337,50 @@ class OrganizationComposite(object):
         self._typeid = typeid
 
     @property
+    def nedid(self):
+        """
+        Gets the nedid of this OrganizationComposite.
+
+
+        :return: The nedid of this OrganizationComposite.
+        :rtype: int
+        """
+        return self._nedid
+
+    @nedid.setter
+    def nedid(self, nedid):
+        """
+        Sets the nedid of this OrganizationComposite.
+
+
+        :param nedid: The nedid of this OrganizationComposite.
+        :type: int
+        """
+        self._nedid = nedid
+
+    @property
+    def as_map(self):
+        """
+        Gets the as_map of this OrganizationComposite.
+
+
+        :return: The as_map of this OrganizationComposite.
+        :rtype: dict(str, list[Entity])
+        """
+        return self._as_map
+
+    @as_map.setter
+    def as_map(self, as_map):
+        """
+        Sets the as_map of this OrganizationComposite.
+
+
+        :param as_map: The as_map of this OrganizationComposite.
+        :type: dict(str, list[Entity])
+        """
+        self._as_map = as_map
+
+    @property
     def lastmodified(self):
         """
         Gets the lastmodified of this OrganizationComposite.
@@ -357,28 +401,6 @@ class OrganizationComposite(object):
         :type: datetime
         """
         self._lastmodified = lastmodified
-
-    @property
-    def isactive(self):
-        """
-        Gets the isactive of this OrganizationComposite.
-
-
-        :return: The isactive of this OrganizationComposite.
-        :rtype: bool
-        """
-        return self._isactive
-
-    @isactive.setter
-    def isactive(self, isactive):
-        """
-        Sets the isactive of this OrganizationComposite.
-
-
-        :param isactive: The isactive of this OrganizationComposite.
-        :type: bool
-        """
-        self._isactive = isactive
 
     @property
     def familiarname(self):
@@ -445,28 +467,6 @@ class OrganizationComposite(object):
         :type: int
         """
         self._maincontactid = maincontactid
-
-    @property
-    def type_name(self):
-        """
-        Gets the type_name of this OrganizationComposite.
-
-
-        :return: The type_name of this OrganizationComposite.
-        :rtype: str
-        """
-        return self._type_name
-
-    @type_name.setter
-    def type_name(self, type_name):
-        """
-        Sets the type_name of this OrganizationComposite.
-
-
-        :param type_name: The type_name of this OrganizationComposite.
-        :type: str
-        """
-        self._type_name = type_name
 
     def to_dict(self):
         """

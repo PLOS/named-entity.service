@@ -14,7 +14,7 @@ import org.plos.ned_client.model.Uniqueidentifier;
 
 import java.util.*;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-30T16:15:42.479-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-01T07:39:28.231-08:00")
 public class OrganizationsApi {
   private ApiClient apiClient;
 
@@ -40,9 +40,9 @@ public class OrganizationsApi {
    * 
    * @param attribute 
    * @param value 
-   * @return void
+   * @return List<OrganizationComposite>
    */
-  public void findOrganizations (String attribute, String value) throws ApiException {
+  public List<OrganizationComposite> findOrganizations (String attribute, String value) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -80,7 +80,8 @@ public class OrganizationsApi {
 
     
     
-    apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
+    TypeRef returnType = new TypeRef<List<OrganizationComposite>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
     
 
@@ -436,9 +437,9 @@ public class OrganizationsApi {
    * @param nedId 
    * @param addressId 
    * @param authorization 
-   * @return void
+   * @return List<Address>
    */
-  public void deleteAddress (Integer nedId, Integer addressId, String authorization) throws ApiException {
+  public List<Address> deleteAddress (Integer nedId, Integer addressId, String authorization) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -486,7 +487,8 @@ public class OrganizationsApi {
 
     
     
-    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
+    TypeRef returnType = new TypeRef<List<Address>>() {};
+    return apiClient.invokeAPI(path, "DELETE", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
     
 
@@ -497,9 +499,9 @@ public class OrganizationsApi {
    * List emails
    * 
    * @param nedId 
-   * @return Email
+   * @return List<Email>
    */
-  public Email getEmails (Integer nedId) throws ApiException {
+  public List<Email> getEmails (Integer nedId) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -539,7 +541,7 @@ public class OrganizationsApi {
 
     
     
-    TypeRef returnType = new TypeRef<Email>() {};
+    TypeRef returnType = new TypeRef<List<Email>>() {};
     return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
     
@@ -798,9 +800,9 @@ public class OrganizationsApi {
    * List phone numbers
    * 
    * @param nedId 
-   * @return Phonenumber
+   * @return List<Phonenumber>
    */
-  public Phonenumber getPhonenumbers (Integer nedId) throws ApiException {
+  public List<Phonenumber> getPhonenumbers (Integer nedId) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -840,7 +842,7 @@ public class OrganizationsApi {
 
     
     
-    TypeRef returnType = new TypeRef<Phonenumber>() {};
+    TypeRef returnType = new TypeRef<List<Phonenumber>>() {};
     return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
     
@@ -852,9 +854,9 @@ public class OrganizationsApi {
    * List UIDs
    * 
    * @param nedId 
-   * @return void
+   * @return List<Uniqueidentifier>
    */
-  public void getUids (Integer nedId) throws ApiException {
+  public List<Uniqueidentifier> getUids (Integer nedId) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -894,7 +896,8 @@ public class OrganizationsApi {
 
     
     
-    apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
+    TypeRef returnType = new TypeRef<List<Uniqueidentifier>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
     
 

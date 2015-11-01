@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-30T16:15:42.479-07:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-01T07:39:28.231-08:00")
 public class IndividualComposite   {
   
   private List<Auth> auth = new ArrayList<Auth>();
@@ -34,8 +34,8 @@ public class IndividualComposite   {
   private List<Degree> degrees = new ArrayList<Degree>();
   private List<Url> urls = new ArrayList<Url>();
   private List<Relationship> relationships = new ArrayList<Relationship>();
-  private Map<String, List<Entity>> asMap = new HashMap<String, List<Entity>>();
   private String typeName = null;
+  private Map<String, List<Entity>> asMap = new HashMap<String, List<Entity>>();
 
   
   /**
@@ -161,24 +161,24 @@ public class IndividualComposite   {
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("asMap")
-  public Map<String, List<Entity>> getAsMap() {
-    return asMap;
-  }
-  public void setAsMap(Map<String, List<Entity>> asMap) {
-    this.asMap = asMap;
-  }
-
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   @JsonProperty("typeName")
   public String getTypeName() {
     return typeName;
   }
   public void setTypeName(String typeName) {
     this.typeName = typeName;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("asMap")
+  public Map<String, List<Entity>> getAsMap() {
+    return asMap;
+  }
+  public void setAsMap(Map<String, List<Entity>> asMap) {
+    this.asMap = asMap;
   }
 
   
@@ -198,8 +198,8 @@ public class IndividualComposite   {
     sb.append("    degrees: ").append(StringUtil.toIndentedString(degrees)).append("\n");
     sb.append("    urls: ").append(StringUtil.toIndentedString(urls)).append("\n");
     sb.append("    relationships: ").append(StringUtil.toIndentedString(relationships)).append("\n");
-    sb.append("    asMap: ").append(StringUtil.toIndentedString(asMap)).append("\n");
     sb.append("    typeName: ").append(StringUtil.toIndentedString(typeName)).append("\n");
+    sb.append("    asMap: ").append(StringUtil.toIndentedString(asMap)).append("\n");
     sb.append("}");
     return sb.toString();
   }

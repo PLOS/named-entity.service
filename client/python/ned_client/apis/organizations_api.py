@@ -62,7 +62,7 @@ class OrganizationsApi(object):
             for asynchronous request. (optional)
         :param str attribute: 
         :param str value: 
-        :return: None
+        :return: list[OrganizationComposite]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -118,7 +118,7 @@ class OrganizationsApi(object):
                                             body=body_params,
                                             post_params=form_params,
                                             files=files,
-                                            response_type=None,
+                                            response_type='list[OrganizationComposite]',
                                             auth_settings=auth_settings,
                                             callback=params.get('callback'))
         return response
@@ -633,7 +633,7 @@ class OrganizationsApi(object):
         :param int ned_id:  (required)
         :param int address_id:  (required)
         :param str authorization: 
-        :return: None
+        :return: list[Address]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -697,7 +697,7 @@ class OrganizationsApi(object):
                                             body=body_params,
                                             post_params=form_params,
                                             files=files,
-                                            response_type=None,
+                                            response_type='list[Address]',
                                             auth_settings=auth_settings,
                                             callback=params.get('callback'))
         return response
@@ -718,7 +718,7 @@ class OrganizationsApi(object):
         :param callback function: The callback function
             for asynchronous request. (optional)
         :param int ned_id:  (required)
-        :return: Email
+        :return: list[Email]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -775,7 +775,7 @@ class OrganizationsApi(object):
                                             body=body_params,
                                             post_params=form_params,
                                             files=files,
-                                            response_type='Email',
+                                            response_type='list[Email]',
                                             auth_settings=auth_settings,
                                             callback=params.get('callback'))
         return response
@@ -1141,7 +1141,7 @@ class OrganizationsApi(object):
         :param callback function: The callback function
             for asynchronous request. (optional)
         :param int ned_id:  (required)
-        :return: Phonenumber
+        :return: list[Phonenumber]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1198,7 +1198,7 @@ class OrganizationsApi(object):
                                             body=body_params,
                                             post_params=form_params,
                                             files=files,
-                                            response_type='Phonenumber',
+                                            response_type='list[Phonenumber]',
                                             auth_settings=auth_settings,
                                             callback=params.get('callback'))
         return response
@@ -1219,7 +1219,7 @@ class OrganizationsApi(object):
         :param callback function: The callback function
             for asynchronous request. (optional)
         :param int ned_id:  (required)
-        :return: None
+        :return: list[Uniqueidentifier]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1276,7 +1276,7 @@ class OrganizationsApi(object):
                                             body=body_params,
                                             post_params=form_params,
                                             files=files,
-                                            response_type=None,
+                                            response_type='list[Uniqueidentifier]',
                                             auth_settings=auth_settings,
                                             callback=params.get('callback'))
         return response

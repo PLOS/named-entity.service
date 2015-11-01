@@ -260,11 +260,11 @@ font-style: italic;
   
   <li><a href="#getPhonenumbers"><code><span class="http-method">get</span> /individuals/{nedId}/phonenumbers</code></a></li>
   
-  <li><a href="#getRelationship"><code><span class="http-method">get</span> /individuals/{nedId}/relationships</code></a></li>
+  <li><a href="#getRelationships"><code><span class="http-method">get</span> /individuals/{nedId}/relationships</code></a></li>
   
   <li><a href="#createRelationship"><code><span class="http-method">post</span> /individuals/{nedId}/relationships</code></a></li>
   
-  <li><a href="#getRelationship_1"><code><span class="http-method">get</span> /individuals/{nedId}/relationships/{relationshipId}</code></a></li>
+  <li><a href="#getRelationship"><code><span class="http-method">get</span> /individuals/{nedId}/relationships/{relationshipId}</code></a></li>
   
   <li><a href="#updateRelationship"><code><span class="http-method">put</span> /individuals/{nedId}/relationships/{relationshipId}</code></a></li>
   
@@ -290,35 +290,35 @@ font-style: italic;
   
   <li><a href="#readOrganization"><code><span class="http-method">get</span> /organizations/{nedId}</code></a></li>
   
-  <li><a href="#getAddresses_2"><code><span class="http-method">get</span> /organizations/{nedId}/addresses</code></a></li>
+  <li><a href="#getAddresses_1"><code><span class="http-method">get</span> /organizations/{nedId}/addresses</code></a></li>
   
-  <li><a href="#createAddress_3"><code><span class="http-method">post</span> /organizations/{nedId}/addresses</code></a></li>
+  <li><a href="#createAddress_2"><code><span class="http-method">post</span> /organizations/{nedId}/addresses</code></a></li>
   
-  <li><a href="#getAddress_4"><code><span class="http-method">get</span> /organizations/{nedId}/addresses/{addressId}</code></a></li>
+  <li><a href="#getAddress_3"><code><span class="http-method">get</span> /organizations/{nedId}/addresses/{addressId}</code></a></li>
   
-  <li><a href="#updateAddress_5"><code><span class="http-method">put</span> /organizations/{nedId}/addresses/{addressId}</code></a></li>
+  <li><a href="#updateAddress_4"><code><span class="http-method">put</span> /organizations/{nedId}/addresses/{addressId}</code></a></li>
   
-  <li><a href="#deleteAddress_6"><code><span class="http-method">delete</span> /organizations/{nedId}/addresses/{addressId}</code></a></li>
+  <li><a href="#deleteAddress_5"><code><span class="http-method">delete</span> /organizations/{nedId}/addresses/{addressId}</code></a></li>
   
-  <li><a href="#getEmails_7"><code><span class="http-method">get</span> /organizations/{nedId}/emails</code></a></li>
+  <li><a href="#getEmails_6"><code><span class="http-method">get</span> /organizations/{nedId}/emails</code></a></li>
   
-  <li><a href="#createEmail_8"><code><span class="http-method">post</span> /organizations/{nedId}/emails</code></a></li>
+  <li><a href="#createEmail_7"><code><span class="http-method">post</span> /organizations/{nedId}/emails</code></a></li>
   
-  <li><a href="#getEmail_9"><code><span class="http-method">get</span> /organizations/{nedId}/emails/{emailId}</code></a></li>
+  <li><a href="#getEmail_8"><code><span class="http-method">get</span> /organizations/{nedId}/emails/{emailId}</code></a></li>
   
-  <li><a href="#updateEmail_10"><code><span class="http-method">put</span> /organizations/{nedId}/emails/{emailId}</code></a></li>
+  <li><a href="#updateEmail_9"><code><span class="http-method">put</span> /organizations/{nedId}/emails/{emailId}</code></a></li>
   
-  <li><a href="#deleteEmail_11"><code><span class="http-method">delete</span> /organizations/{nedId}/emails/{emailId}</code></a></li>
+  <li><a href="#deleteEmail_10"><code><span class="http-method">delete</span> /organizations/{nedId}/emails/{emailId}</code></a></li>
   
-  <li><a href="#getPhonenumbers_12"><code><span class="http-method">get</span> /organizations/{nedId}/phonenumbers</code></a></li>
+  <li><a href="#getPhonenumbers_11"><code><span class="http-method">get</span> /organizations/{nedId}/phonenumbers</code></a></li>
   
-  <li><a href="#getUids_13"><code><span class="http-method">get</span> /organizations/{nedId}/uids</code></a></li>
+  <li><a href="#getUids_12"><code><span class="http-method">get</span> /organizations/{nedId}/uids</code></a></li>
   
-  <li><a href="#createUid_14"><code><span class="http-method">post</span> /organizations/{nedId}/uids</code></a></li>
+  <li><a href="#createUid_13"><code><span class="http-method">post</span> /organizations/{nedId}/uids</code></a></li>
   
-  <li><a href="#getUid_15"><code><span class="http-method">get</span> /organizations/{nedId}/uids/{id}</code></a></li>
+  <li><a href="#getUid_14"><code><span class="http-method">get</span> /organizations/{nedId}/uids/{id}</code></a></li>
   
-  <li><a href="#updateUid_16"><code><span class="http-method">put</span> /organizations/{nedId}/uids/{id}</code></a></li>
+  <li><a href="#updateUid_15"><code><span class="http-method">put</span> /organizations/{nedId}/uids/{id}</code></a></li>
   
   <li><a href="#readOrganizationByUid"><code><span class="http-method">get</span> /organizations/{uidType}/{uidValue}</code></a></li>
   
@@ -873,6 +873,12 @@ font-style: italic;
     
 
     
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Address">Address</a>]
+      
+    </div>
+    
 
     <!--Todo: process Response Object and its headers, schema, examples -->
 
@@ -891,7 +897,7 @@ font-style: italic;
 
     <h3 class="field-label">Responses</h3>
     
-    <h4 class="field-label">0</h4>
+    <h4 class="field-label">200</h4>
     successful operation
     
     
@@ -1162,7 +1168,7 @@ font-style: italic;
     
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
-      <a href="#Email">Email</a>
+      array[<a href="#Email">Email</a>]
       
     </div>
     
@@ -1469,6 +1475,12 @@ font-style: italic;
     
 
     
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Group">Group</a>]
+      
+    </div>
+    
 
     <!--Todo: process Response Object and its headers, schema, examples -->
 
@@ -1487,7 +1499,7 @@ font-style: italic;
 
     <h3 class="field-label">Responses</h3>
     
-    <h4 class="field-label">0</h4>
+    <h4 class="field-label">200</h4>
     successful operation
     
     
@@ -1774,7 +1786,7 @@ font-style: italic;
     
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
-      <a href="#Individualprofile">Individualprofile</a>
+      array[<a href="#Individualprofile">Individualprofile</a>]
       
     </div>
     
@@ -2083,7 +2095,7 @@ font-style: italic;
     
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
-      <a href="#Phonenumber">Phonenumber</a>
+      array[<a href="#Phonenumber">Phonenumber</a>]
       
     </div>
     
@@ -2112,11 +2124,11 @@ font-style: italic;
   </div> <!-- method -->
   <hr/>
   
-  <div class="method"><a name="getRelationship"/>
+  <div class="method"><a name="getRelationships"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /individuals/{nedId}/relationships</code></pre></div>
-    <div class="method-summary">List relationships (<span class="nickname">getRelationship</span>)</div>
+    <div class="method-summary">List relationships (<span class="nickname">getRelationships</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -2140,6 +2152,12 @@ font-style: italic;
     
 
     
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Relationship">Relationship</a>]
+      
+    </div>
+    
 
     <!--Todo: process Response Object and its headers, schema, examples -->
 
@@ -2158,7 +2176,7 @@ font-style: italic;
 
     <h3 class="field-label">Responses</h3>
     
-    <h4 class="field-label">0</h4>
+    <h4 class="field-label">200</h4>
     successful operation
     
     
@@ -2231,11 +2249,11 @@ font-style: italic;
   </div> <!-- method -->
   <hr/>
   
-  <div class="method"><a name="getRelationship_1"/>
+  <div class="method"><a name="getRelationship"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /individuals/{nedId}/relationships/{relationshipId}</code></pre></div>
-    <div class="method-summary">Read relationship (<span class="nickname">getRelationship_1</span>)</div>
+    <div class="method-summary">Read relationship (<span class="nickname">getRelationship</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -2443,6 +2461,12 @@ font-style: italic;
     
 
     
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Uniqueidentifier">Uniqueidentifier</a>]
+      
+    </div>
+    
 
     <!--Todo: process Response Object and its headers, schema, examples -->
 
@@ -2461,7 +2485,7 @@ font-style: italic;
 
     <h3 class="field-label">Responses</h3>
     
-    <h4 class="field-label">0</h4>
+    <h4 class="field-label">200</h4>
     successful operation
     
     
@@ -2862,6 +2886,12 @@ font-style: italic;
     
 
     
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#OrganizationComposite">OrganizationComposite</a>]
+      
+    </div>
+    
 
     <!--Todo: process Response Object and its headers, schema, examples -->
 
@@ -2882,7 +2912,7 @@ font-style: italic;
 
     <h3 class="field-label">Responses</h3>
     
-    <h4 class="field-label">0</h4>
+    <h4 class="field-label">200</h4>
     successful operation
     
     
@@ -3009,11 +3039,11 @@ font-style: italic;
   </div> <!-- method -->
   <hr/>
   
-  <div class="method"><a name="getAddresses_2"/>
+  <div class="method"><a name="getAddresses_1"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /organizations/{nedId}/addresses</code></pre></div>
-    <div class="method-summary">List addresses (<span class="nickname">getAddresses_2</span>)</div>
+    <div class="method-summary">List addresses (<span class="nickname">getAddresses_1</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -3068,11 +3098,11 @@ font-style: italic;
   </div> <!-- method -->
   <hr/>
   
-  <div class="method"><a name="createAddress_3"/>
+  <div class="method"><a name="createAddress_2"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="post"><code class="huge"><span class="http-method">post</span> /organizations/{nedId}/addresses</code></pre></div>
-    <div class="method-summary">Create address (<span class="nickname">createAddress_3</span>)</div>
+    <div class="method-summary">Create address (<span class="nickname">createAddress_2</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -3134,11 +3164,11 @@ font-style: italic;
   </div> <!-- method -->
   <hr/>
   
-  <div class="method"><a name="getAddress_4"/>
+  <div class="method"><a name="getAddress_3"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /organizations/{nedId}/addresses/{addressId}</code></pre></div>
-    <div class="method-summary">Read address (<span class="nickname">getAddress_4</span>)</div>
+    <div class="method-summary">Read address (<span class="nickname">getAddress_3</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -3195,11 +3225,11 @@ font-style: italic;
   </div> <!-- method -->
   <hr/>
   
-  <div class="method"><a name="updateAddress_5"/>
+  <div class="method"><a name="updateAddress_4"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="put"><code class="huge"><span class="http-method">put</span> /organizations/{nedId}/addresses/{addressId}</code></pre></div>
-    <div class="method-summary">Update address (<span class="nickname">updateAddress_5</span>)</div>
+    <div class="method-summary">Update address (<span class="nickname">updateAddress_4</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -3263,11 +3293,11 @@ font-style: italic;
   </div> <!-- method -->
   <hr/>
   
-  <div class="method"><a name="deleteAddress_6"/>
+  <div class="method"><a name="deleteAddress_5"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="delete"><code class="huge"><span class="http-method">delete</span> /organizations/{nedId}/addresses/{addressId}</code></pre></div>
-    <div class="method-summary">Delete address (<span class="nickname">deleteAddress_6</span>)</div>
+    <div class="method-summary">Delete address (<span class="nickname">deleteAddress_5</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -3293,6 +3323,12 @@ font-style: italic;
     
 
     
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Address">Address</a>]
+      
+    </div>
+    
 
     <!--Todo: process Response Object and its headers, schema, examples -->
 
@@ -3311,18 +3347,18 @@ font-style: italic;
 
     <h3 class="field-label">Responses</h3>
     
-    <h4 class="field-label">0</h4>
+    <h4 class="field-label">200</h4>
     successful operation
     
     
   </div> <!-- method -->
   <hr/>
   
-  <div class="method"><a name="getEmails_7"/>
+  <div class="method"><a name="getEmails_6"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /organizations/{nedId}/emails</code></pre></div>
-    <div class="method-summary">List emails (<span class="nickname">getEmails_7</span>)</div>
+    <div class="method-summary">List emails (<span class="nickname">getEmails_6</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -3348,7 +3384,7 @@ font-style: italic;
     
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
-      <a href="#Email">Email</a>
+      array[<a href="#Email">Email</a>]
       
     </div>
     
@@ -3377,11 +3413,11 @@ font-style: italic;
   </div> <!-- method -->
   <hr/>
   
-  <div class="method"><a name="createEmail_8"/>
+  <div class="method"><a name="createEmail_7"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="post"><code class="huge"><span class="http-method">post</span> /organizations/{nedId}/emails</code></pre></div>
-    <div class="method-summary">Create email (<span class="nickname">createEmail_8</span>)</div>
+    <div class="method-summary">Create email (<span class="nickname">createEmail_7</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -3443,11 +3479,11 @@ font-style: italic;
   </div> <!-- method -->
   <hr/>
   
-  <div class="method"><a name="getEmail_9"/>
+  <div class="method"><a name="getEmail_8"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /organizations/{nedId}/emails/{emailId}</code></pre></div>
-    <div class="method-summary">Read email (<span class="nickname">getEmail_9</span>)</div>
+    <div class="method-summary">Read email (<span class="nickname">getEmail_8</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -3504,11 +3540,11 @@ font-style: italic;
   </div> <!-- method -->
   <hr/>
   
-  <div class="method"><a name="updateEmail_10"/>
+  <div class="method"><a name="updateEmail_9"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="put"><code class="huge"><span class="http-method">put</span> /organizations/{nedId}/emails/{emailId}</code></pre></div>
-    <div class="method-summary">Update email (<span class="nickname">updateEmail_10</span>)</div>
+    <div class="method-summary">Update email (<span class="nickname">updateEmail_9</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -3572,11 +3608,11 @@ font-style: italic;
   </div> <!-- method -->
   <hr/>
   
-  <div class="method"><a name="deleteEmail_11"/>
+  <div class="method"><a name="deleteEmail_10"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="delete"><code class="huge"><span class="http-method">delete</span> /organizations/{nedId}/emails/{emailId}</code></pre></div>
-    <div class="method-summary">Delete email (<span class="nickname">deleteEmail_11</span>)</div>
+    <div class="method-summary">Delete email (<span class="nickname">deleteEmail_10</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -3627,11 +3663,11 @@ font-style: italic;
   </div> <!-- method -->
   <hr/>
   
-  <div class="method"><a name="getPhonenumbers_12"/>
+  <div class="method"><a name="getPhonenumbers_11"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /organizations/{nedId}/phonenumbers</code></pre></div>
-    <div class="method-summary">List phone numbers (<span class="nickname">getPhonenumbers_12</span>)</div>
+    <div class="method-summary">List phone numbers (<span class="nickname">getPhonenumbers_11</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -3657,7 +3693,7 @@ font-style: italic;
     
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
-      <a href="#Phonenumber">Phonenumber</a>
+      array[<a href="#Phonenumber">Phonenumber</a>]
       
     </div>
     
@@ -3686,11 +3722,11 @@ font-style: italic;
   </div> <!-- method -->
   <hr/>
   
-  <div class="method"><a name="getUids_13"/>
+  <div class="method"><a name="getUids_12"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /organizations/{nedId}/uids</code></pre></div>
-    <div class="method-summary">List UIDs (<span class="nickname">getUids_13</span>)</div>
+    <div class="method-summary">List UIDs (<span class="nickname">getUids_12</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -3714,6 +3750,12 @@ font-style: italic;
     
 
     
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Uniqueidentifier">Uniqueidentifier</a>]
+      
+    </div>
+    
 
     <!--Todo: process Response Object and its headers, schema, examples -->
 
@@ -3732,18 +3774,18 @@ font-style: italic;
 
     <h3 class="field-label">Responses</h3>
     
-    <h4 class="field-label">0</h4>
+    <h4 class="field-label">200</h4>
     successful operation
     
     
   </div> <!-- method -->
   <hr/>
   
-  <div class="method"><a name="createUid_14"/>
+  <div class="method"><a name="createUid_13"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="post"><code class="huge"><span class="http-method">post</span> /organizations/{nedId}/uids</code></pre></div>
-    <div class="method-summary">Create UID (<span class="nickname">createUid_14</span>)</div>
+    <div class="method-summary">Create UID (<span class="nickname">createUid_13</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -3805,11 +3847,11 @@ font-style: italic;
   </div> <!-- method -->
   <hr/>
   
-  <div class="method"><a name="getUid_15"/>
+  <div class="method"><a name="getUid_14"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /organizations/{nedId}/uids/{id}</code></pre></div>
-    <div class="method-summary">Read uid (<span class="nickname">getUid_15</span>)</div>
+    <div class="method-summary">Read uid (<span class="nickname">getUid_14</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -3866,11 +3908,11 @@ font-style: italic;
   </div> <!-- method -->
   <hr/>
   
-  <div class="method"><a name="updateUid_16"/>
+  <div class="method"><a name="updateUid_15"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="put"><code class="huge"><span class="http-method">put</span> /organizations/{nedId}/uids/{id}</code></pre></div>
-    <div class="method-summary">Update UID (<span class="nickname">updateUid_16</span>)</div>
+    <div class="method-summary">Update UID (<span class="nickname">updateUid_15</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -4705,11 +4747,11 @@ font-style: italic;
   <ol>
   
   
-    <li><a href="#Entity"><code>Entity</code></a></li>
-  
-  
-  
     <li><a href="#Group"><code>Group</code></a></li>
+  
+  
+  
+    <li><a href="#Entity"><code>Entity</code></a></li>
   
   
   
@@ -4765,44 +4807,15 @@ font-style: italic;
   
   
   
-    <li><a href="#Phonenumber"><code>Phonenumber</code></a></li>
-  
-  
-  
     <li><a href="#Individualprofile"><code>Individualprofile</code></a></li>
+  
+  
+  
+    <li><a href="#Phonenumber"><code>Phonenumber</code></a></li>
   
   
   </ol>
 
-  
-  
-  <div class="model">
-    <h3 class="field-label"><a name="Entity">Entity</a> <a class="up" href="#__Models">Up</a></h3>
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">nedid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">source </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">sourcetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">created </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">createdby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">createdbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">lastmodifiedby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">lastmodifiedbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      
-    </div>  <!-- field-items -->
-  </div>
-  
   
   
   <div class="model">
@@ -4839,6 +4852,35 @@ font-style: italic;
       <div class="param">applicationtype </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       <div class="param">applicationtypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Entity">Entity</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">nedid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">source </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">sourcetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">created </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      <div class="param">createdby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">createdbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">lastmodifiedby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">lastmodifiedbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       
     </div>  <!-- field-items -->
@@ -4990,29 +5032,29 @@ font-style: italic;
       
       <div class="param">created </div><div class="param-desc"><span class="param-type">Date</span> </div>
       
+      <div class="param">typeName </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
       <div class="param">type </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       <div class="param">source </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       <div class="param">sourcetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
       
-      <div class="param">asMap </div><div class="param-desc"><span class="param-type">map[String, array[Entity]]</span> </div>
-      
-      <div class="param">nedid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      <div class="param">isactive </div><div class="param-desc"><span class="param-type">Boolean</span> </div>
       
       <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
       
-      <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      <div class="param">nedid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
       
-      <div class="param">isactive </div><div class="param-desc"><span class="param-type">Boolean</span> </div>
+      <div class="param">asMap </div><div class="param-desc"><span class="param-type">map[String, array[Entity]]</span> </div>
+      
+      <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
       
       <div class="param">familiarname </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       <div class="param">legalname </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       <div class="param">maincontactid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">typeName </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       
     </div>  <!-- field-items -->
@@ -5279,52 +5321,9 @@ font-style: italic;
       
       <div class="param">relationships </div><div class="param-desc"><span class="param-type">array[Relationship]</span> </div>
       
-      <div class="param">asMap </div><div class="param-desc"><span class="param-type">map[String, array[Entity]]</span> </div>
-      
       <div class="param">typeName </div><div class="param-desc"><span class="param-type">String</span> </div>
       
-      
-    </div>  <!-- field-items -->
-  </div>
-  
-  
-  
-  <div class="model">
-    <h3 class="field-label"><a name="Phonenumber">Phonenumber</a> <a class="up" href="#__Models">Up</a></h3>
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">nedid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">source </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">sourcetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">created </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">createdby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">createdbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">lastmodifiedby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">lastmodifiedbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">type </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">countrycodetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">countrycodetype </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">phonenumber </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">extension </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">isactive </div><div class="param-desc"><span class="param-type">Boolean</span> </div>
+      <div class="param">asMap </div><div class="param-desc"><span class="param-type">map[String, array[Entity]]</span> </div>
       
       
     </div>  <!-- field-items -->
@@ -5374,6 +5373,49 @@ font-style: italic;
       <div class="param">displayname </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       <div class="param">biography </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">isactive </div><div class="param-desc"><span class="param-type">Boolean</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Phonenumber">Phonenumber</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">nedid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">source </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">sourcetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">created </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      <div class="param">createdby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">createdbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">lastmodifiedby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">lastmodifiedbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">type </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">countrycodetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">countrycodetype </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">phonenumber </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">extension </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       <div class="param">isactive </div><div class="param-desc"><span class="param-type">Boolean</span> </div>
       

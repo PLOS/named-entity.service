@@ -13,7 +13,7 @@ module NedClient
     # @param [Hash] opts the optional parameters
     # @option opts [String] :attribute 
     # @option opts [String] :value 
-    # @return [nil]
+    # @return [Array<OrganizationComposite>]
     def find_organizations(opts = {})
       if Configuration.debugging
         Configuration.logger.debug "Calling API: OrganizationsApi#find_organizations ..."
@@ -46,16 +46,17 @@ module NedClient
       
 
       auth_names = []
-      @api_client.call_api(:GET, path,
+      result = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names)
+        :auth_names => auth_names,
+        :return_type => 'Array<OrganizationComposite>')
       if Configuration.debugging
-        Configuration.logger.debug "API called: OrganizationsApi#find_organizations"
+        Configuration.logger.debug "API called: OrganizationsApi#find_organizations. Result: #{result.inspect}"
       end
-      return nil
+      return result
     end
 
     # Create organization
@@ -383,7 +384,7 @@ module NedClient
     # @param address_id 
     # @param [Hash] opts the optional parameters
     # @option opts [String] :authorization 
-    # @return [nil]
+    # @return [Array<Address>]
     def delete_address(ned_id, address_id, opts = {})
       if Configuration.debugging
         Configuration.logger.debug "Calling API: OrganizationsApi#delete_address ..."
@@ -421,23 +422,24 @@ module NedClient
       
 
       auth_names = []
-      @api_client.call_api(:DELETE, path,
+      result = @api_client.call_api(:DELETE, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names)
+        :auth_names => auth_names,
+        :return_type => 'Array<Address>')
       if Configuration.debugging
-        Configuration.logger.debug "API called: OrganizationsApi#delete_address"
+        Configuration.logger.debug "API called: OrganizationsApi#delete_address. Result: #{result.inspect}"
       end
-      return nil
+      return result
     end
 
     # List emails
     # 
     # @param ned_id 
     # @param [Hash] opts the optional parameters
-    # @return [Email]
+    # @return [Array<Email>]
     def get_emails(ned_id, opts = {})
       if Configuration.debugging
         Configuration.logger.debug "Calling API: OrganizationsApi#get_emails ..."
@@ -477,7 +479,7 @@ module NedClient
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
-        :return_type => 'Email')
+        :return_type => 'Array<Email>')
       if Configuration.debugging
         Configuration.logger.debug "API called: OrganizationsApi#get_emails. Result: #{result.inspect}"
       end
@@ -711,7 +713,7 @@ module NedClient
     # 
     # @param ned_id 
     # @param [Hash] opts the optional parameters
-    # @return [Phonenumber]
+    # @return [Array<Phonenumber>]
     def get_phonenumbers(ned_id, opts = {})
       if Configuration.debugging
         Configuration.logger.debug "Calling API: OrganizationsApi#get_phonenumbers ..."
@@ -751,7 +753,7 @@ module NedClient
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
-        :return_type => 'Phonenumber')
+        :return_type => 'Array<Phonenumber>')
       if Configuration.debugging
         Configuration.logger.debug "API called: OrganizationsApi#get_phonenumbers. Result: #{result.inspect}"
       end
@@ -762,7 +764,7 @@ module NedClient
     # 
     # @param ned_id 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [Array<Uniqueidentifier>]
     def get_uids(ned_id, opts = {})
       if Configuration.debugging
         Configuration.logger.debug "Calling API: OrganizationsApi#get_uids ..."
@@ -796,16 +798,17 @@ module NedClient
       
 
       auth_names = []
-      @api_client.call_api(:GET, path,
+      result = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names)
+        :auth_names => auth_names,
+        :return_type => 'Array<Uniqueidentifier>')
       if Configuration.debugging
-        Configuration.logger.debug "API called: OrganizationsApi#get_uids"
+        Configuration.logger.debug "API called: OrganizationsApi#get_uids. Result: #{result.inspect}"
       end
-      return nil
+      return result
     end
 
     # Create UID

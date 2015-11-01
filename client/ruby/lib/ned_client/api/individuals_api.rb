@@ -436,7 +436,7 @@ module NedClient
     # @param address_id 
     # @param [Hash] opts the optional parameters
     # @option opts [String] :authorization 
-    # @return [nil]
+    # @return [Array<Address>]
     def delete_address(ned_id, address_id, opts = {})
       if Configuration.debugging
         Configuration.logger.debug "Calling API: IndividualsApi#delete_address ..."
@@ -474,16 +474,17 @@ module NedClient
       
 
       auth_names = ['basic']
-      @api_client.call_api(:DELETE, path,
+      result = @api_client.call_api(:DELETE, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names)
+        :auth_names => auth_names,
+        :return_type => 'Array<Address>')
       if Configuration.debugging
-        Configuration.logger.debug "API called: IndividualsApi#delete_address"
+        Configuration.logger.debug "API called: IndividualsApi#delete_address. Result: #{result.inspect}"
       end
-      return nil
+      return result
     end
 
     # List auth record(s)
@@ -699,7 +700,7 @@ module NedClient
     # 
     # @param ned_id 
     # @param [Hash] opts the optional parameters
-    # @return [Email]
+    # @return [Array<Email>]
     def get_emails(ned_id, opts = {})
       if Configuration.debugging
         Configuration.logger.debug "Calling API: IndividualsApi#get_emails ..."
@@ -739,7 +740,7 @@ module NedClient
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
-        :return_type => 'Email')
+        :return_type => 'Array<Email>')
       if Configuration.debugging
         Configuration.logger.debug "API called: IndividualsApi#get_emails. Result: #{result.inspect}"
       end
@@ -973,7 +974,7 @@ module NedClient
     # 
     # @param ned_id 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [Array<Group>]
     def get_groups(ned_id, opts = {})
       if Configuration.debugging
         Configuration.logger.debug "Calling API: IndividualsApi#get_groups ..."
@@ -1007,16 +1008,17 @@ module NedClient
       
 
       auth_names = ['basic']
-      @api_client.call_api(:GET, path,
+      result = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names)
+        :auth_names => auth_names,
+        :return_type => 'Array<Group>')
       if Configuration.debugging
-        Configuration.logger.debug "API called: IndividualsApi#get_groups"
+        Configuration.logger.debug "API called: IndividualsApi#get_groups. Result: #{result.inspect}"
       end
-      return nil
+      return result
     end
 
     # Create group
@@ -1246,7 +1248,7 @@ module NedClient
     # 
     # @param ned_id 
     # @param [Hash] opts the optional parameters
-    # @return [Individualprofile]
+    # @return [Array<Individualprofile>]
     def get_profiles(ned_id, opts = {})
       if Configuration.debugging
         Configuration.logger.debug "Calling API: IndividualsApi#get_profiles ..."
@@ -1286,7 +1288,7 @@ module NedClient
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
-        :return_type => 'Individualprofile')
+        :return_type => 'Array<Individualprofile>')
       if Configuration.debugging
         Configuration.logger.debug "API called: IndividualsApi#get_profiles. Result: #{result.inspect}"
       end
@@ -1520,7 +1522,7 @@ module NedClient
     # 
     # @param ned_id 
     # @param [Hash] opts the optional parameters
-    # @return [Phonenumber]
+    # @return [Array<Phonenumber>]
     def get_phonenumbers(ned_id, opts = {})
       if Configuration.debugging
         Configuration.logger.debug "Calling API: IndividualsApi#get_phonenumbers ..."
@@ -1560,7 +1562,7 @@ module NedClient
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
-        :return_type => 'Phonenumber')
+        :return_type => 'Array<Phonenumber>')
       if Configuration.debugging
         Configuration.logger.debug "API called: IndividualsApi#get_phonenumbers. Result: #{result.inspect}"
       end
@@ -1571,14 +1573,14 @@ module NedClient
     # 
     # @param ned_id 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
-    def get_relationship(ned_id, opts = {})
+    # @return [Array<Relationship>]
+    def get_relationships(ned_id, opts = {})
       if Configuration.debugging
-        Configuration.logger.debug "Calling API: IndividualsApi#get_relationship ..."
+        Configuration.logger.debug "Calling API: IndividualsApi#get_relationships ..."
       end
       
       # verify the required parameter 'ned_id' is set
-      fail "Missing the required parameter 'ned_id' when calling get_relationship" if ned_id.nil?
+      fail "Missing the required parameter 'ned_id' when calling get_relationships" if ned_id.nil?
       
       # resource path
       path = "/individuals/{nedId}/relationships".sub('{format}','json').sub('{' + 'nedId' + '}', ned_id.to_s)
@@ -1605,16 +1607,17 @@ module NedClient
       
 
       auth_names = ['basic']
-      @api_client.call_api(:GET, path,
+      result = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names)
+        :auth_names => auth_names,
+        :return_type => 'Array<Relationship>')
       if Configuration.debugging
-        Configuration.logger.debug "API called: IndividualsApi#get_relationship"
+        Configuration.logger.debug "API called: IndividualsApi#get_relationships. Result: #{result.inspect}"
       end
-      return nil
+      return result
     end
 
     # Create relationship
@@ -1677,16 +1680,16 @@ module NedClient
     # @param relationship_id 
     # @param [Hash] opts the optional parameters
     # @return [Relationship]
-    def get_relationship_1(ned_id, relationship_id, opts = {})
+    def get_relationship(ned_id, relationship_id, opts = {})
       if Configuration.debugging
-        Configuration.logger.debug "Calling API: IndividualsApi#get_relationship_1 ..."
+        Configuration.logger.debug "Calling API: IndividualsApi#get_relationship ..."
       end
       
       # verify the required parameter 'ned_id' is set
-      fail "Missing the required parameter 'ned_id' when calling get_relationship_1" if ned_id.nil?
+      fail "Missing the required parameter 'ned_id' when calling get_relationship" if ned_id.nil?
       
       # verify the required parameter 'relationship_id' is set
-      fail "Missing the required parameter 'relationship_id' when calling get_relationship_1" if relationship_id.nil?
+      fail "Missing the required parameter 'relationship_id' when calling get_relationship" if relationship_id.nil?
       
       # resource path
       path = "/individuals/{nedId}/relationships/{relationshipId}".sub('{format}','json').sub('{' + 'nedId' + '}', ned_id.to_s).sub('{' + 'relationshipId' + '}', relationship_id.to_s)
@@ -1721,7 +1724,7 @@ module NedClient
         :auth_names => auth_names,
         :return_type => 'Relationship')
       if Configuration.debugging
-        Configuration.logger.debug "API called: IndividualsApi#get_relationship_1. Result: #{result.inspect}"
+        Configuration.logger.debug "API called: IndividualsApi#get_relationship. Result: #{result.inspect}"
       end
       return result
     end
@@ -1844,7 +1847,7 @@ module NedClient
     # 
     # @param ned_id 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [Array<Uniqueidentifier>]
     def get_uids(ned_id, opts = {})
       if Configuration.debugging
         Configuration.logger.debug "Calling API: IndividualsApi#get_uids ..."
@@ -1878,16 +1881,17 @@ module NedClient
       
 
       auth_names = ['basic']
-      @api_client.call_api(:GET, path,
+      result = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names)
+        :auth_names => auth_names,
+        :return_type => 'Array<Uniqueidentifier>')
       if Configuration.debugging
-        Configuration.logger.debug "API called: IndividualsApi#get_uids"
+        Configuration.logger.debug "API called: IndividualsApi#get_uids. Result: #{result.inspect}"
       end
-      return nil
+      return result
     end
 
     # Create UID

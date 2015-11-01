@@ -1,8 +1,8 @@
 from __future__ import absolute_import
 
 # import models into model package
-from .entity import Entity
 from .group import Group
+from .entity import Entity
 from .email import Email
 from .address import Address
 from .degree import Degree
@@ -16,5 +16,5 @@ from .typedescription import Typedescription
 from .relationship import Relationship
 from .auth import Auth
 from .individual_composite import IndividualComposite
-from .phonenumber import Phonenumber
 from .individualprofile import Individualprofile
+from .phonenumber import Phonenumber

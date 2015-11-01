@@ -1,8 +1,8 @@
 from __future__ import absolute_import
 
 # import models into sdk package
-from .models.entity import Entity
 from .models.group import Group
+from .models.entity import Entity
 from .models.email import Email
 from .models.address import Address
 from .models.degree import Degree
@@ -16,8 +16,8 @@ from .models.typedescription import Typedescription
 from .models.relationship import Relationship
 from .models.auth import Auth
 from .models.individual_composite import IndividualComposite
-from .models.phonenumber import Phonenumber
 from .models.individualprofile import Individualprofile
+from .models.phonenumber import Phonenumber
 
 # import apis into sdk package
 from .apis.institutionsearch_api import InstitutionsearchApi
