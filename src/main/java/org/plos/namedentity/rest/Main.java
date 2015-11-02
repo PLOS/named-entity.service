@@ -34,6 +34,8 @@ public class Main extends ResourceConfig {
 
     register(moxyJsonProvider);
 
+//    register(LoggingFilter.class);
+
     // set json provider properties here (moxy)
     //property(MarshallerProperties.JSON_INCLUDE_ROOT, false);
   }

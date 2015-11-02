@@ -33,7 +33,7 @@ public class OrganizationComposite extends Composite implements Validatable {
   }
 
   @XmlTransient
-  public Map<Class, List<? extends Entity>> getAsMap() {
+  public Map<Class, List<? extends Entity>> readAsMap() {
     Map<Class, List<? extends Entity>> map = new HashMap<>();
 
     List<Organization> orgs = new ArrayList<>();
@@ -62,7 +62,7 @@ public class OrganizationComposite extends Composite implements Validatable {
   @Override
   public void validate() {
 
-    Map<Class, List<? extends Entity>> compositeMap = getAsMap();
+    Map<Class, List<? extends Entity>> compositeMap = readAsMap();
 
     for (List<? extends Entity> entities : compositeMap.values()) {
 

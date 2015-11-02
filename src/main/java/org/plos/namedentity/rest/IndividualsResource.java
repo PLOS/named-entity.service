@@ -1,17 +1,17 @@
 package org.plos.namedentity.rest;
 
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
-
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.adapter.Container;
 import org.plos.namedentity.api.entity.Auth;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Entity;
+import org.plos.namedentity.api.entity.Group;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Relationship;
-import org.plos.namedentity.api.entity.Group;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.service.PasswordDigestService;
 
@@ -22,12 +22,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -41,8 +38,8 @@ import static org.plos.namedentity.api.NedException.ErrorType.InvalidIndividualS
 import static org.plos.namedentity.api.NedException.ErrorType.PasswordNotSpecified;
 import static org.plos.namedentity.api.NedException.ErrorType.TooManyResultsFound;
 
-@Path("/individuals")
-@Api(value="/individuals")
+@Path("individuals")
+@Api(value="individuals", authorizations = {@Authorization(value = "basic")})
 public class IndividualsResource extends NedResource {
 
   @Override
@@ -79,8 +76,7 @@ public class IndividualsResource extends NedResource {
   }
 
   @GET
-  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-  @ApiOperation(value = "Find individual matching specified attribute.")
+  @ApiOperation(value = "Find individual matching specified attribute.", responseContainer = "List")
   public Response findIndividuals(@QueryParam("entity")    String entity,
                                   @QueryParam("attribute") String attribute,
                                   @QueryParam("value")     String value) {
@@ -121,7 +117,6 @@ public class IndividualsResource extends NedResource {
 
   @GET
   @Path("/{nedId}")
-  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   @ApiOperation(value = "Read individual by Ned ID", response = IndividualComposite.class)
   public Response readIndividual(@PathParam("nedId") int nedId) {
     try {
@@ -223,7 +218,7 @@ public class IndividualsResource extends NedResource {
 
   @GET
   @Path("/{nedId}/individualprofiles")
-  @ApiOperation(value = "List profiles", response = Individualprofile.class)
+  @ApiOperation(value = "List profiles", response = Individualprofile.class, responseContainer = "List")
   public Response getProfiles(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Individualprofile.class);
   }
@@ -248,7 +243,7 @@ public class IndividualsResource extends NedResource {
 
   @GET
   @Path("/{nedId}/degrees")
-  @ApiOperation(value = "List degrees")
+  @ApiOperation(value = "List degrees", response = Degree.class, responseContainer = "List")
   public Response getDegrees(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Degree.class);
   }
@@ -296,7 +291,7 @@ public class IndividualsResource extends NedResource {
 
   @GET
   @Path("/{nedId}/groups")
-  @ApiOperation(value = "List groups")
+  @ApiOperation(value = "List groups", response = Group.class, responseContainer = "List")
   public Response getGroups(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Group.class);
   }
@@ -344,8 +339,8 @@ public class IndividualsResource extends NedResource {
 
   @GET
   @Path("/{nedId}/relationships")
-  @ApiOperation(value = "List relationships")
-  public Response getRelationship(@PathParam("nedId") int nedId) {
+  @ApiOperation(value = "List relationships", response = Relationship.class, responseContainer = "List")
+  public Response getRelationships(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Relationship.class);
   }
 

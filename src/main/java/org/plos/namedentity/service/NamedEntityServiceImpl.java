@@ -18,7 +18,6 @@ package org.plos.namedentity.service;
 
 import org.apache.log4j.Logger;
 import org.plos.namedentity.api.Consumer;
-import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.api.enums.UidTypeEnum;
@@ -301,7 +300,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     try {
       T composite = (T)ctor.newInstance();
 
-      Map<Class, List<? extends Entity>> compositeMap = composite.getAsMap();
+      Map<Class, List<? extends Entity>> compositeMap = composite.readAsMap();
 
       for (Class entityType : compositeMap.keySet())
         compositeMap.put(entityType, findResolvedEntities(nedId, entityType));
@@ -321,7 +320,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     Integer nedId = nedDBSvc.newNamedEntityId(composite.getTypeName());
 
-    Map<Class, List<? extends Entity>> compositeMap = composite.getAsMap();
+    Map<Class, List<? extends Entity>> compositeMap = composite.readAsMap();
 
     for (List<? extends Entity> entities : compositeMap.values()) {
       if (entities != null) {
