@@ -49,7 +49,7 @@ $GENERATE -i $SWAGGER -l python -o ./python -c ned_python.json
 echo '{
   "gemName": "ned_client",
   "moduleName": "NedClient",
-  "gemVersion": "'${VERSION}'"
+  "gemVersion": "'$(echo ${VERSION}|sed 's/\-/\./')'"
 }' > ned_ruby.json
 
 $GENERATE -i $SWAGGER -l ruby -o ./ruby -c ned_ruby.json \

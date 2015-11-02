@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-01T10:44:08.963-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-02T10:19:21.505-08:00")
 public class OrganizationComposite   {
   
   private List<Address> addresses = new ArrayList<Address>();
@@ -26,13 +26,13 @@ public class OrganizationComposite   {
   private String type = null;
   private String source = null;
   private Integer sourcetypeid = null;
-  private Integer nedid = null;
-  private Integer typeid = null;
-  private Date lastmodified = null;
   private Boolean isactive = false;
+  private Date lastmodified = null;
+  private Integer typeid = null;
   private String familiarname = null;
   private String legalname = null;
   private Integer maincontactid = null;
+  private Integer nedid = null;
   private String typeName = null;
 
   
@@ -135,24 +135,12 @@ public class OrganizationComposite   {
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("nedid")
-  public Integer getNedid() {
-    return nedid;
+  @JsonProperty("isactive")
+  public Boolean getIsactive() {
+    return isactive;
   }
-  public void setNedid(Integer nedid) {
-    this.nedid = nedid;
-  }
-
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("typeid")
-  public Integer getTypeid() {
-    return typeid;
-  }
-  public void setTypeid(Integer typeid) {
-    this.typeid = typeid;
+  public void setIsactive(Boolean isactive) {
+    this.isactive = isactive;
   }
 
   
@@ -171,12 +159,12 @@ public class OrganizationComposite   {
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("isactive")
-  public Boolean getIsactive() {
-    return isactive;
+  @JsonProperty("typeid")
+  public Integer getTypeid() {
+    return typeid;
   }
-  public void setIsactive(Boolean isactive) {
-    this.isactive = isactive;
+  public void setTypeid(Integer typeid) {
+    this.typeid = typeid;
   }
 
   
@@ -219,6 +207,18 @@ public class OrganizationComposite   {
   /**
    **/
   @ApiModelProperty(value = "")
+  @JsonProperty("nedid")
+  public Integer getNedid() {
+    return nedid;
+  }
+  public void setNedid(Integer nedid) {
+    this.nedid = nedid;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
   @JsonProperty("typeName")
   public String getTypeName() {
     return typeName;
@@ -242,13 +242,13 @@ public class OrganizationComposite   {
     sb.append("    type: ").append(StringUtil.toIndentedString(type)).append("\n");
     sb.append("    source: ").append(StringUtil.toIndentedString(source)).append("\n");
     sb.append("    sourcetypeid: ").append(StringUtil.toIndentedString(sourcetypeid)).append("\n");
-    sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
-    sb.append("    typeid: ").append(StringUtil.toIndentedString(typeid)).append("\n");
-    sb.append("    lastmodified: ").append(StringUtil.toIndentedString(lastmodified)).append("\n");
     sb.append("    isactive: ").append(StringUtil.toIndentedString(isactive)).append("\n");
+    sb.append("    lastmodified: ").append(StringUtil.toIndentedString(lastmodified)).append("\n");
+    sb.append("    typeid: ").append(StringUtil.toIndentedString(typeid)).append("\n");
     sb.append("    familiarname: ").append(StringUtil.toIndentedString(familiarname)).append("\n");
     sb.append("    legalname: ").append(StringUtil.toIndentedString(legalname)).append("\n");
     sb.append("    maincontactid: ").append(StringUtil.toIndentedString(maincontactid)).append("\n");
+    sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
     sb.append("    typeName: ").append(StringUtil.toIndentedString(typeName)).append("\n");
     sb.append("}");
     return sb.toString();

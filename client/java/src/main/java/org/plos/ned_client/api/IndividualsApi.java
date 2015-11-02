@@ -9,6 +9,7 @@ import org.plos.ned_client.TypeRef;
 import org.plos.ned_client.model.IndividualComposite;
 import org.plos.ned_client.model.Address;
 import org.plos.ned_client.model.Auth;
+import org.plos.ned_client.model.Degree;
 import org.plos.ned_client.model.Email;
 import org.plos.ned_client.model.Group;
 import org.plos.ned_client.model.Individualprofile;
@@ -18,7 +19,7 @@ import org.plos.ned_client.model.Uniqueidentifier;
 
 import java.util.*;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-01T10:44:08.963-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-02T10:19:21.505-08:00")
 public class IndividualsApi {
   private ApiClient apiClient;
 
@@ -731,9 +732,9 @@ public class IndividualsApi {
    * List degrees
    * 
    * @param nedId 
-   * @return void
+   * @return List<Degree>
    */
-  public void getDegrees (Integer nedId) throws ApiException {
+  public List<Degree> getDegrees (Integer nedId) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -773,7 +774,8 @@ public class IndividualsApi {
 
     
     
-    apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
+    TypeRef returnType = new TypeRef<List<Degree>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
     
 
