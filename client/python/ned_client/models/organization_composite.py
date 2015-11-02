@@ -45,13 +45,13 @@ class OrganizationComposite(object):
             'type': 'str',
             'source': 'str',
             'sourcetypeid': 'int',
-            'nedid': 'int',
-            'typeid': 'int',
-            'lastmodified': 'datetime',
             'isactive': 'bool',
+            'lastmodified': 'datetime',
+            'typeid': 'int',
             'familiarname': 'str',
             'legalname': 'str',
             'maincontactid': 'int',
+            'nedid': 'int',
             'type_name': 'str'
         }
 
@@ -64,13 +64,13 @@ class OrganizationComposite(object):
             'type': 'type',
             'source': 'source',
             'sourcetypeid': 'sourcetypeid',
-            'nedid': 'nedid',
-            'typeid': 'typeid',
-            'lastmodified': 'lastmodified',
             'isactive': 'isactive',
+            'lastmodified': 'lastmodified',
+            'typeid': 'typeid',
             'familiarname': 'familiarname',
             'legalname': 'legalname',
             'maincontactid': 'maincontactid',
+            'nedid': 'nedid',
             'type_name': 'typeName'
         }
 
@@ -82,13 +82,13 @@ class OrganizationComposite(object):
         self._type = None
         self._source = None
         self._sourcetypeid = None
-        self._nedid = None
-        self._typeid = None
-        self._lastmodified = None
         self._isactive = None
+        self._lastmodified = None
+        self._typeid = None
         self._familiarname = None
         self._legalname = None
         self._maincontactid = None
+        self._nedid = None
         self._type_name = None
 
     @property
@@ -268,48 +268,26 @@ class OrganizationComposite(object):
         self._sourcetypeid = sourcetypeid
 
     @property
-    def nedid(self):
+    def isactive(self):
         """
-        Gets the nedid of this OrganizationComposite.
+        Gets the isactive of this OrganizationComposite.
 
 
-        :return: The nedid of this OrganizationComposite.
-        :rtype: int
+        :return: The isactive of this OrganizationComposite.
+        :rtype: bool
         """
-        return self._nedid
+        return self._isactive
 
-    @nedid.setter
-    def nedid(self, nedid):
+    @isactive.setter
+    def isactive(self, isactive):
         """
-        Sets the nedid of this OrganizationComposite.
+        Sets the isactive of this OrganizationComposite.
 
 
-        :param nedid: The nedid of this OrganizationComposite.
-        :type: int
+        :param isactive: The isactive of this OrganizationComposite.
+        :type: bool
         """
-        self._nedid = nedid
-
-    @property
-    def typeid(self):
-        """
-        Gets the typeid of this OrganizationComposite.
-
-
-        :return: The typeid of this OrganizationComposite.
-        :rtype: int
-        """
-        return self._typeid
-
-    @typeid.setter
-    def typeid(self, typeid):
-        """
-        Sets the typeid of this OrganizationComposite.
-
-
-        :param typeid: The typeid of this OrganizationComposite.
-        :type: int
-        """
-        self._typeid = typeid
+        self._isactive = isactive
 
     @property
     def lastmodified(self):
@@ -334,26 +312,26 @@ class OrganizationComposite(object):
         self._lastmodified = lastmodified
 
     @property
-    def isactive(self):
+    def typeid(self):
         """
-        Gets the isactive of this OrganizationComposite.
+        Gets the typeid of this OrganizationComposite.
 
 
-        :return: The isactive of this OrganizationComposite.
-        :rtype: bool
+        :return: The typeid of this OrganizationComposite.
+        :rtype: int
         """
-        return self._isactive
+        return self._typeid
 
-    @isactive.setter
-    def isactive(self, isactive):
+    @typeid.setter
+    def typeid(self, typeid):
         """
-        Sets the isactive of this OrganizationComposite.
+        Sets the typeid of this OrganizationComposite.
 
 
-        :param isactive: The isactive of this OrganizationComposite.
-        :type: bool
+        :param typeid: The typeid of this OrganizationComposite.
+        :type: int
         """
-        self._isactive = isactive
+        self._typeid = typeid
 
     @property
     def familiarname(self):
@@ -420,6 +398,28 @@ class OrganizationComposite(object):
         :type: int
         """
         self._maincontactid = maincontactid
+
+    @property
+    def nedid(self):
+        """
+        Gets the nedid of this OrganizationComposite.
+
+
+        :return: The nedid of this OrganizationComposite.
+        :rtype: int
+        """
+        return self._nedid
+
+    @nedid.setter
+    def nedid(self, nedid):
+        """
+        Sets the nedid of this OrganizationComposite.
+
+
+        :param nedid: The nedid of this OrganizationComposite.
+        :type: int
+        """
+        self._nedid = nedid
 
     @property
     def type_name(self):

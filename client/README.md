@@ -8,6 +8,10 @@ See https://github.com/swagger-api/swagger-codegen
 
 ## Generate/Update the client libraries
 
+Make sure the NED API is running
+
+Run the generator (open the script to see possible arguments):
+
     ./generate_clients.sh
 
 ## Distribute
@@ -27,7 +31,7 @@ See http://bundler.io/git.html
 
 Perhaps add something like this to your Gemfile:
 
-git 'https://github.com/plos/named-enenties.service.git' do
+git 'https://github.com/plos/named-entities.service.git' do
   gem 'client/ruby'
 end
 

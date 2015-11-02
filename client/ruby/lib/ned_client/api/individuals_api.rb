@@ -650,7 +650,7 @@ module NedClient
     # 
     # @param ned_id 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [Array<Degree>]
     def get_degrees(ned_id, opts = {})
       if Configuration.debugging
         Configuration.logger.debug "Calling API: IndividualsApi#get_degrees ..."
@@ -684,16 +684,17 @@ module NedClient
       
 
       auth_names = ['basic']
-      @api_client.call_api(:GET, path,
+      result = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names)
+        :auth_names => auth_names,
+        :return_type => 'Array<Degree>')
       if Configuration.debugging
-        Configuration.logger.debug "API called: IndividualsApi#get_degrees"
+        Configuration.logger.debug "API called: IndividualsApi#get_degrees. Result: #{result.inspect}"
       end
-      return nil
+      return result
     end
 
     # List emails

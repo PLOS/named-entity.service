@@ -1113,6 +1113,12 @@ font-style: italic;
     
 
     
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Degree">Degree</a>]
+      
+    </div>
+    
 
     <!--Todo: process Response Object and its headers, schema, examples -->
 
@@ -1131,7 +1137,7 @@ font-style: italic;
 
     <h3 class="field-label">Responses</h3>
     
-    <h4 class="field-label">0</h4>
+    <h4 class="field-label">200</h4>
     successful operation
     
     
@@ -4771,11 +4777,11 @@ font-style: italic;
   
   
   
-    <li><a href="#Globaltype"><code>Globaltype</code></a></li>
-  
-  
-  
     <li><a href="#Uniqueidentifier"><code>Uniqueidentifier</code></a></li>
+  
+  
+  
+    <li><a href="#Globaltype"><code>Globaltype</code></a></li>
   
   
   
@@ -4791,11 +4797,11 @@ font-style: italic;
   
   
   
-    <li><a href="#Auth"><code>Auth</code></a></li>
-  
-  
-  
     <li><a href="#Relationship"><code>Relationship</code></a></li>
+  
+  
+  
+    <li><a href="#Auth"><code>Auth</code></a></li>
   
   
   
@@ -4803,11 +4809,11 @@ font-style: italic;
   
   
   
-    <li><a href="#Individualprofile"><code>Individualprofile</code></a></li>
-  
-  
-  
     <li><a href="#Phonenumber"><code>Phonenumber</code></a></li>
+  
+  
+  
+    <li><a href="#Individualprofile"><code>Individualprofile</code></a></li>
   
   
   </ol>
@@ -5005,19 +5011,19 @@ font-style: italic;
       
       <div class="param">sourcetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
       
-      <div class="param">nedid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      <div class="param">isactive </div><div class="param-desc"><span class="param-type">Boolean</span> </div>
       
       <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
       
-      <div class="param">isactive </div><div class="param-desc"><span class="param-type">Boolean</span> </div>
+      <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
       
       <div class="param">familiarname </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       <div class="param">legalname </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       <div class="param">maincontactid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">nedid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
       
       <div class="param">typeName </div><div class="param-desc"><span class="param-type">String</span> </div>
       
@@ -5033,33 +5039,6 @@ font-style: italic;
       <div class="param">version </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       <div class="param">startime </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      
-    </div>  <!-- field-items -->
-  </div>
-  
-  
-  
-  <div class="model">
-    <h3 class="field-label"><a name="Globaltype">Globaltype</a> <a class="up" href="#__Models">Up</a></h3>
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">shortdescription </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">longdescription </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">typecode </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">created </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">createdby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">lastmodifiedby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
       
       
     </div>  <!-- field-items -->
@@ -5097,6 +5076,33 @@ font-style: italic;
       <div class="param">uniqueidentifier </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       <div class="param">metadata </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Globaltype">Globaltype</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">shortdescription </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">longdescription </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">typecode </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">created </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      <div class="param">createdby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">lastmodifiedby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
       
       
     </div>  <!-- field-items -->
@@ -5176,6 +5182,47 @@ font-style: italic;
   
   
   <div class="model">
+    <h3 class="field-label"><a name="Relationship">Relationship</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">nedid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">source </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">sourcetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">created </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      <div class="param">createdby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">createdbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">lastmodifiedby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">lastmodifiedbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">nedidrelated </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">type </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">title </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">startdate </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      <div class="param">enddate </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
     <h3 class="field-label"><a name="Auth">Auth</a> <a class="up" href="#__Models">Up</a></h3>
     <div class="field-items">
       <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
@@ -5223,47 +5270,6 @@ font-style: italic;
   
   
   <div class="model">
-    <h3 class="field-label"><a name="Relationship">Relationship</a> <a class="up" href="#__Models">Up</a></h3>
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">nedid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">source </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">sourcetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">created </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">createdby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">createdbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">lastmodifiedby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">lastmodifiedbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">nedidrelated </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">type </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">title </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">startdate </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">enddate </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      
-    </div>  <!-- field-items -->
-  </div>
-  
-  
-  
-  <div class="model">
     <h3 class="field-label"><a name="IndividualComposite">IndividualComposite</a> <a class="up" href="#__Models">Up</a></h3>
     <div class="field-items">
       <div class="param">auth </div><div class="param-desc"><span class="param-type">array[Auth]</span> </div>
@@ -5287,6 +5293,49 @@ font-style: italic;
       <div class="param">relationships </div><div class="param-desc"><span class="param-type">array[Relationship]</span> </div>
       
       <div class="param">typeName </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Phonenumber">Phonenumber</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">nedid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">source </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">sourcetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">created </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      <div class="param">createdby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">createdbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">lastmodifiedby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">lastmodifiedbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">type </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">countrycodetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">countrycodetype </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">phonenumber </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">extension </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">isactive </div><div class="param-desc"><span class="param-type">Boolean</span> </div>
       
       
     </div>  <!-- field-items -->
@@ -5336,49 +5385,6 @@ font-style: italic;
       <div class="param">displayname </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       <div class="param">biography </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">isactive </div><div class="param-desc"><span class="param-type">Boolean</span> </div>
-      
-      
-    </div>  <!-- field-items -->
-  </div>
-  
-  
-  
-  <div class="model">
-    <h3 class="field-label"><a name="Phonenumber">Phonenumber</a> <a class="up" href="#__Models">Up</a></h3>
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">nedid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">source </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">sourcetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">created </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">createdby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">createdbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">lastmodifiedby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">lastmodifiedbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">type </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">countrycodetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">countrycodetype </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">phonenumber </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">extension </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       <div class="param">isactive </div><div class="param-desc"><span class="param-type">Boolean</span> </div>
       

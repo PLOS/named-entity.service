@@ -1048,7 +1048,7 @@ class IndividualsApi(object):
         :param callback function: The callback function
             for asynchronous request. (optional)
         :param int ned_id:  (required)
-        :return: None
+        :return: list[Degree]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1105,7 +1105,7 @@ class IndividualsApi(object):
                                             body=body_params,
                                             post_params=form_params,
                                             files=files,
-                                            response_type=None,
+                                            response_type='list[Degree]',
                                             auth_settings=auth_settings,
                                             callback=params.get('callback'))
         return response
