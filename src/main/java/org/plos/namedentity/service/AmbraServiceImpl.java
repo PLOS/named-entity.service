@@ -59,7 +59,7 @@ public class AmbraServiceImpl implements AmbraService {
     try {
       return userRegistrationService.registerUser(ambraProfile, ambraProfile.getPassword());
     } catch (DuplicateUserException e) {
-      throw new NedException(DatabaseError, "Duplicte user in Ambra Database");
+      throw new NedException(DatabaseError, "Duplicate user in Ambra Database", e);
     }
   }
 

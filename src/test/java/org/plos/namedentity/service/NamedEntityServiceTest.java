@@ -81,8 +81,9 @@ public class NamedEntityServiceTest {
 
     composite2.getIndividualprofiles().get(0).setDisplayname(
         composite1.getIndividualprofiles().get(0).getDisplayname());
-    composite2.getUniqueidentifiers().get(0).setUniqueidentifier(
-        composite1.getUniqueidentifiers().get(0).getUniqueidentifier());
+    //AMBRA-ADAPTER:
+    //composite2.getUniqueidentifiers().get(0).setUniqueidentifier(
+        //composite1.getUniqueidentifiers().get(0).getUniqueidentifier());
 
     assertEquals(composite1, composite2);
 
@@ -515,7 +516,7 @@ public class NamedEntityServiceTest {
 
     Email workEmail = new Email();
     workEmail.setType("Work");
-    workEmail.setEmailaddress("valid@email.com");
+    workEmail.setEmailaddress("valid-"+UUID.randomUUID().toString()+"@email.com");
     workEmail.setSource("Ambra");
     emails.add(_(workEmail));
 
@@ -886,6 +887,8 @@ public class NamedEntityServiceTest {
 
     composite.setGroups(groups);
 
+    //AMBRA-ADAPTER:
+/*
     Uniqueidentifier uid = new Uniqueidentifier();
     uid.setSource("Ambra");
     uid.setType("Ambra");
@@ -895,7 +898,7 @@ public class NamedEntityServiceTest {
     uniqueidentifiers.add(_(uid));
 
     composite.setUniqueidentifiers(uniqueidentifiers);
-
+*/
     return composite;
   }
 

@@ -245,7 +245,7 @@ public class AmbraServiceTest {
 
     email.setEmailaddress("valid@email.com");
 
-    crudService.update(email);
+    crudService.update( namedEntityService.resolveValuesToIds(email) );
 
     UserProfile userProfile = userService.getUser(new Long(email.getNedid()));
 
@@ -254,7 +254,7 @@ public class AmbraServiceTest {
 
     assertEqual(compositeOut, userProfile);
 
-    assertEquals(composite.getEmails().get(0).getEmailaddress(),
+    assertEquals(compositeOut.getEmails().get(0).getEmailaddress(),
         userProfile.getEmail());
 
     assertEquals(userProfile.getEmail(), email.getEmailaddress());
@@ -274,11 +274,6 @@ public class AmbraServiceTest {
     String origEmail = email.getEmailaddress();
 
     email.setEmailaddress("invalid@email");
-
-//    setCreatedAndLastModifiedBy(authHeader,entity,false);
-//    entity.setId(pkId);
-//    entity.setNedid(nedId);
-//    namedEntityService.resolveValuesToIds(entity);
 
     try {
       crudService.update(email);
@@ -316,7 +311,9 @@ public class AmbraServiceTest {
     }
 
     // make sure it did not get inserted in NED
-    assertNull(crudService.findByAttribute(composite.getEmails().get(0)));
+    Email filter = new Email();
+    filter.setEmailaddress(composite.getEmails().get(0).getEmailaddress());
+    assertEquals(0, crudService.findByAttribute(filter).size());
 
     // make sure it did not get inserted in Ambra
     assertNull(userService.getUserByAuthId(authId));
@@ -338,11 +335,12 @@ public class AmbraServiceTest {
     }
 
     // make sure it did not get inserted in NED
-    assertNull(crudService.findByAttribute(composite.getEmails().get(0)));
+    Email filter = new Email();
+    filter.setEmailaddress(composite.getEmails().get(0).getEmailaddress());
+    assertEquals(0, crudService.findByAttribute(filter).size());
 
     // make sure it did not get inserted in Ambra
     assertNull(userService.getUserByAuthId(authId));
-
   }
 
   @Test
