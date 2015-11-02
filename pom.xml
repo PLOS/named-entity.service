@@ -52,8 +52,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.ambraproject</groupId>
-      <artifactId>ambra-admin</artifactId>
+      <groupId>org.plos</groupId>
+      <artifactId>ned-ambra-admin-lib</artifactId>
       <version>2.9.28</version>
     </dependency>
 

@@ -4,6 +4,8 @@ shopt -s nullglob
 
 AMBRA_DOI_PREFIX_PARAM="-DSYSTEM_OBJECT_ID_PREFIX=info:doi/10.1371/"
 
+AMBRA_ADMIN_DIR="../ambra-admin"
+
 function check_ringgold_env {
     if [[ -z ${RINGGOLD_DB_DIR} ]]; then
         echo -e "\nUndefined RINGGOLD_DB_DIR (ex: export RINGGOLD_DB_DIR=~/work)\n"
@@ -60,6 +62,32 @@ function deploy_jar {
 
     echo "Deployed ${ned_jar}"
 }
+
+function deploy_ambra_admin_jar {
+    jar=($AMBRA_ADMIN_DIR/target/ned-ambra-admin-lib-*.jar)
+
+    # get groupId and version from pom.
+    # repositoryId = server id in your mvn settings.xml
+    mvn deploy:deploy-file \
+        -DpomFile=./ambra-admin-pom.xml \
+        -Dpackaging=jar \
+        -Dfile=${jar} \
+        -DrepositoryId=ambra \
+        -Durl=sftp://maven.ambraproject.org/home/maven2/repository/release
+
+    echo "Deployed ${jar}"
+}
+
+function build_ambra_admin_jar {
+
+    echo "Building ambra-admin.jar"
+
+    cp ./ambra-admin-pom.xml $AMBRA_ADMIN_DIR/
+    cd $AMBRA_ADMIN_DIR
+    mvn -f ./ambra-admin-pom.xml -DskipTests clean install
+    rm ./ambra-admin-pom.xml
+}
+
 
 function process_db_args {
     db_host=${1:-localhost}
@@ -186,6 +214,14 @@ deploy)
     deploy_jar "named-entity-password"
     ;;
 
+build-ambra-admin-jar)
+    build_ambra_admin_jar
+    ;;
+
+deploy-ambra-admin-jar)
+    deploy_ambra_admin_jar
+    ;;
+
 tomcat)
     shift && run_tomcat "$@"
     ;;
@@ -222,6 +258,9 @@ tomcat)
     echo ""
     echo "  deploy   # deploys pojo's to external ambra maven repo"
     echo "           # (http://maven.ambraproject.org/maven2/release/org/plos/)"
+    echo ""
+    echo "  build-ambra-admin-jar"
+    echo "  deploy-admra-admin-jar"
     echo ""
     exit 0
     ;;
