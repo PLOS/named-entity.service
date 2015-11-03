@@ -268,33 +268,11 @@ public abstract class NedResource extends BaseResource {
     }
   }
 
-//  protected  <S extends Entity> S getEntityRaw(int nedId, int pkId, Class<S> child) {
-//
-////    try {
-//
-//      return namedEntityService.findResolvedEntities(nedId, child)
-//          .stream().filter(e -> e.getId().equals(pkId)).findFirst()
-//          .orElseThrow(() -> new NedException(EntityNotFound, String.format("%s (id=%d)", child.getSimpleName(), pkId)));
-////
-////    } catch (NedException e) {
-////      return nedError(e, "Find by id failed");
-////
-////    } catch (Exception e) {
-////      return serverError(e, String.format("Find %s by id failed (nedId=%d, pkId=%d)",
-////          child.getSimpleName(), nedId, pkId));
-////    }
-//  }
-
   protected <S extends Entity>
   Response getEntity(int nedId, int pkId, Class<S> child) {
 
     try {
       namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
-
-//      return Response.status(Response.Status.OK)
-//          .entity(
-//            getEntityRaw(nedId, pkId, child)
-//                 ).build();
 
       List<S> entities = namedEntityService.findResolvedEntities(nedId, child);
 

@@ -1568,7 +1568,6 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals("foo@bar.com", email.getEmailaddress());
   }
 
-  //MCB:TODO: uncomment after fixing.
   @Test
   public void testCasIdAndPasswordDigestInCompositePayload() throws IOException, JAXBException {
 
