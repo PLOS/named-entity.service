@@ -56,6 +56,14 @@ public class AmbraServiceImpl implements AmbraService {
 
     ambraProfile.setAuthId(composite.getAuth().get(0).getAuthid());
 
+    /*
+    NOTE: This is a workaround to allow the ETL to work. This might look
+    strange, since we are erasing the password, but it should not be triggered
+    in practice since Akita will always get this far with a password.
+    */
+    if (ambraProfile.getPassword() == null)
+      ambraProfile.setPassword("");
+
     try {
       return userRegistrationService.registerUser(ambraProfile, ambraProfile.getPassword());
     } catch (DuplicateUserException e) {

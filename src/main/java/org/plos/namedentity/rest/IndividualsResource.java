@@ -364,15 +364,7 @@ public class IndividualsResource extends NedResource {
                                    @HeaderParam("Authorization") String authstring,
                                    Auth authEntity) {
 
-//MCB:TODO - digestpassword defined. plainpassword=null.
-ambraService.updatePassword("very nice", nedId);
-    //ambraService.updatePassword(authEntity.getPlainTextPassword(), nedId);
-
-    Response response = updateEntity(nedId, authId, authEntity, authstring);
-
-    // TODO: roll back ambra if updateEntity fails
-
-    return response;
+    return updateEntity(nedId, authId, authEntity, authstring);
   }
 
   @POST
