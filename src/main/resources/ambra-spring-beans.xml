@@ -43,7 +43,8 @@
         <property name="jndiName" value="java:comp/env/jdbc/AmbraDS"/>
     </bean>
 
-    <bean id="hibernateSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+    <bean id="hibernateSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
+          depends-on="ambraConfigFactory">
         <property name="dataSource" ref="ambraDataSource"/>
         <property name="mappingLocations">
             <list>
@@ -58,7 +59,8 @@
         </property>
     </bean>
 
-    <bean id="hibernateSessionFactoryForAdmin" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+    <bean id="hibernateSessionFactoryForAdmin" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
+          depends-on="ambraConfigFactory">
         <property name="dataSource" ref="ambraDataSource"/>
         <property name="mappingLocations">
             <list>

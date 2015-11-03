@@ -2,8 +2,6 @@
 
 shopt -s nullglob
 
-AMBRA_DOI_PREFIX_PARAM="-DSYSTEM_OBJECT_ID_PREFIX=info:doi/10.1371/"
-
 function check_ringgold_env {
     if [[ -z ${RINGGOLD_DB_DIR} ]]; then
         echo -e "\nUndefined RINGGOLD_DB_DIR (ex: export RINGGOLD_DB_DIR=~/work)\n"
@@ -139,7 +137,7 @@ function insert_app {
 function run_tomcat {
     process_db_args "$@"
     mvn -Dmaven.exec.skip=true -Dtomcat.db.url="$db_url" -Dtomcat.db.username="$db_username" -Dtomcat.db.password="$db_password" \
-        ${AMBRA_DOI_PREFIX_PARAM} clean tomcat:run
+        clean tomcat:run
 }
 
 case "$1" in
@@ -169,15 +167,15 @@ insertapp)
     ;;
 
 test)
-    mvn clean test ${AMBRA_DOI_PREFIX_PARAM}
+    mvn clean test
     ;;
 
 package)
-    mvn clean package ${AMBRA_DOI_PREFIX_PARAM}
+    mvn clean package
     ;;
 
 install)
-    mvn clean install ${AMBRA_DOI_PREFIX_PARAM}
+    mvn clean install
     ;;
 
 deploy)
