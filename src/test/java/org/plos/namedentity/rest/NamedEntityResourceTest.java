@@ -51,6 +51,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -466,7 +467,10 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     Individualprofile individualProfile = composite_in.getIndividualprofiles().get(0);
     assertNotNull(individualProfile.getNedid());
 
-    assertEquals(composite_in, composite_io);
+    //AMBRA-ADAPTER:
+    addAmbraUidToExpected(composite_io, composite_in);
+
+    assertEquals(composite_io, composite_in);
 
     /* ------------------------------------------------------------------ */
     /*  FIND INDIVIDUAL BY GUID                                           */
@@ -519,6 +523,16 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals(composite_og, composite_on);
 
     assertEquals(composite_og, composite_oo);
+  }
+
+  private void addAmbraUidToExpected(IndividualComposite expected, IndividualComposite actual) {
+
+    expected.getUniqueidentifiers().add(
+        actual.getUniqueidentifiers()
+              .stream()
+              .filter(u -> u.getType().equals(UidTypeEnum.AMBRA.getName()))
+              .findFirst()
+              .get());
   }
 
   @Test
@@ -1603,8 +1617,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertNotNull( auth.getAuthid() );
     assertNotNull( auth.getPassword() );
     assertNull( auth.getVerificationtoken() );
-    assertTrue( auth.getVerified().equals((byte)0) );
-    assertTrue( auth.getPasswordreset().equals((byte)0) );
+    assertFalse(auth.getVerified());
+    assertFalse(auth.getPasswordreset());
     assertEquals("jane.q.doe.work@foo.com", auth.getEmail());
     assertEquals(128, auth.getPassword().length());
 
@@ -1612,8 +1626,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    auth.setVerified((byte)1);
-    auth.setPasswordreset((byte)1);
+    auth.setVerified(true);
+    auth.setPasswordreset(true);
     auth.setVerificationtoken("0123456789abcdef");
 
     response = buildRequestDefaultAuth( authsURI+"/"+auth.getId() )
@@ -1628,8 +1642,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertNotNull( auth.getAuthid() );
     assertNotNull( auth.getPassword() );
     assertEquals("0123456789abcdef", auth.getVerificationtoken());
-    assertTrue( auth.getVerified().equals((byte)1) );
-    assertTrue( auth.getPasswordreset().equals((byte)1) );
+    assertTrue(auth.getVerified());
+    assertTrue(auth.getPasswordreset());
     assertEquals("jane.q.doe.work@foo.com", auth.getEmail());
     assertEquals(128, auth.getPassword().length());
 
@@ -1712,7 +1726,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals(nedIndividualId, auth.getNedid());
     assertEquals("jane.q.doe.work@foo.com", auth.getEmail());
     assertTrue( auth.getEmailid() > 0 );
-    assertTrue( auth.getIsactive().equals((byte)1) );
+    assertTrue(auth.getIsactive());
   }
 
   private Date getDate(int month, int day, int year) {

@@ -1,8 +1,11 @@
 {
   "credentials" : [
     {
-      "password" : "secret_password1",
-      "email"    : "jane.q.doe.work@foo.com"
+      "password"      : "secret_password1",
+      "email"         : "jane.q.doe.work@foo.com",
+      "verified"      : "false",
+      "isactive"      : "true",
+      "passwordreset" : "false"
     }
   ],
   "individualprofiles" : [
@@ -113,11 +116,6 @@
       "type"             : "Salesforce",
       "uniqueidentifier" : "001U0000008Qlfj",
       "source"           : "Salesforce"
-    },
-    {
-      "type"             : "Ambra",
-      "uniqueidentifier" : "1234",
-      "source"           : "Ambra"
     }
   ]
 }

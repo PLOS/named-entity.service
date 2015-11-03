@@ -9,6 +9,7 @@ import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Organization;
 import org.plos.namedentity.api.entity.Phonenumber;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.api.enums.NamedPartyEnum;
 import org.plos.namedentity.validate.Validatable;
 
 import javax.xml.bind.annotation.XmlTransient;
@@ -26,10 +27,8 @@ public class OrganizationComposite extends Composite implements Validatable {
   private List<Phonenumber>      phonenumbers;
   private List<Uniqueidentifier> uniqueidentifiers;
 
-  public static String typeName = "Organization";
-
-  public String getTypeName() {
-    return typeName;
+  public NamedPartyEnum getTypeName() {
+    return NamedPartyEnum.ORGANIZATION;
   }
 
   @XmlTransient

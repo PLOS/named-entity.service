@@ -1,5 +1,7 @@
 package org.plos.namedentity.api.entity;
 
+import org.plos.namedentity.api.enums.NamedPartyEnum;
+
 import javax.xml.bind.annotation.XmlTransient;
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +15,7 @@ public abstract class Composite {
 
   abstract public void setFromMap(Map<Class, List<? extends Entity>> map);
 
-  abstract public String getTypeName();
+  abstract public NamedPartyEnum getTypeName();
 
   @Override
   public boolean equals(Object o) {

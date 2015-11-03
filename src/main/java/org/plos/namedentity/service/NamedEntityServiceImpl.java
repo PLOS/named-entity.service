@@ -18,7 +18,9 @@ package org.plos.namedentity.service;
 
 import org.apache.log4j.Logger;
 import org.plos.namedentity.api.Consumer;
+import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
+import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.persist.NamedEntityDBService;
@@ -27,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -39,8 +42,11 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   private static Logger logger = Logger.getLogger(NamedEntityServiceImpl.class);
 
-  @Inject private NamedEntityDBService nedDBSvc;
+  @Inject
+  private NamedEntityDBService nedDBSvc;
 
+  @Inject
+  private AmbraService ambraService;
 
   public <T extends Entity> T resolveValuesToIds(T t) {
 
@@ -76,10 +82,10 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   private <T extends Entity> void resolveCreatedAndLastmodifiedBy(T entity) {
     if (entity.getCreatedbyname() != null) {
-      entity.setCreatedby( findAppuserId(entity.getCreatedbyname()) );
+      entity.setCreatedby(findAppuserId(entity.getCreatedbyname()));
     }
     if (entity.getLastmodifiedbyname() != null) {
-      entity.setLastmodifiedby( findAppuserId(entity.getLastmodifiedbyname()) );
+      entity.setLastmodifiedby(findAppuserId(entity.getLastmodifiedbyname()));
     }
   }
 
@@ -318,7 +324,41 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   @Override @Transactional
   public  <T extends Composite> T createComposite(T composite, Class<T> clazz) {
 
-    Integer nedId = nedDBSvc.newNamedEntityId(composite.getTypeName());
+    Integer nedId = null;
+
+    if (clazz == IndividualComposite.class) {
+
+      // insert user into Ambra DB first, then NED
+      Long ambraId = ambraService.createUser((IndividualComposite)composite);
+
+      //AMBRA-ADAPTER:
+      nedId = nedDBSvc.newNamedEntityId(composite.getTypeName(), ambraId.intValue());
+
+      // insert Ambra into NED UIDs
+      Email email = ((IndividualComposite) composite).getEmails().get(0);
+
+      Uniqueidentifier uniqueidentifier = new Uniqueidentifier();
+      uniqueidentifier.setNedid(nedId);   /* nedId == ambraId */
+      uniqueidentifier.setSource("Ambra");
+      uniqueidentifier.setType(UidTypeEnum.AMBRA.getName());
+      uniqueidentifier.setUniqueidentifier(ambraId.toString());
+      uniqueidentifier.setCreatedbyname(email.getCreatedbyname());
+      uniqueidentifier.setLastmodifiedbyname(email.getLastmodifiedbyname());
+      uniqueidentifier = resolveValuesToIds(uniqueidentifier);
+
+      if (((IndividualComposite) composite).getUniqueidentifiers() == null)
+        ((IndividualComposite) composite).setUniqueidentifiers(new ArrayList<>());
+
+      ((IndividualComposite) composite).getUniqueidentifiers().add(uniqueidentifier);
+    }
+    else if (clazz == OrganizationComposite.class) {
+      nedId = nedDBSvc.newNamedEntityId(composite.getTypeName());
+    }
+    else {
+      throw new UnsupportedOperationException("Unsupported composite: " + clazz);
+    }
+
+    // insert into NED
 
     Map<Class, List<? extends Entity>> compositeMap = composite.readAsMap();
 
@@ -331,7 +371,10 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       }
     }
 
+    // TODO: if NED insert fails, manually rollback ambra, but how to delete from ambra?
+
     return findComposite(nedId, clazz);
+
   }
 
   @Override
@@ -360,6 +403,14 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     
   public void setNamedEntityDBService(NamedEntityDBService nedDBSvc) {
     this.nedDBSvc = nedDBSvc;
+  }
+
+  public AmbraService getAmbraService() {
+    return ambraService;
+  }
+
+  public void setAmbraService(AmbraService ambraService) {
+    this.ambraService = ambraService;
   }
 
   private Integer findAppuserId(String username) {

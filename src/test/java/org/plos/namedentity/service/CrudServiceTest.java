@@ -43,10 +43,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.plos.namedentity.api.enums.NamedPartyEnum.*;
 import static org.plos.namedentity.api.NedException.ErrorType.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
+@ContextConfiguration(locations = {"/spring-beans.xml","/ambra-spring-beans.xml","/spring-beans.test.xml","/ambra-spring-beans.test.xml"})
 public class CrudServiceTest {
 
   @Autowired
@@ -61,14 +62,12 @@ public class CrudServiceTest {
   @Test
   public void testIndividualCRUD() {
 
-    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
-
     // CREATE
     Individualprofile individualProfile = _(new Individualprofile());
-    individualProfile.setNedid(nedId);
+    individualProfile.setNedid(1);
     individualProfile.setFirstname("firstname");
     individualProfile.setLastname("lastname");
-    individualProfile.setDisplayname("displayname_i");
+    individualProfile.setDisplayname("displayname_i_cs");
     individualProfile.setSource("Editorial Manager");
 
     Integer pkId = crudService.create(namedEntityService.resolveValuesToIds(individualProfile));
@@ -97,7 +96,7 @@ public class CrudServiceTest {
 
     // CREATE
 
-    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+    Integer nedId = nedDBSvc.newNamedEntityId(INDIVIDUAL);
 
     Organization organization = _(new Organization());
     organization.setNedid(nedId);
@@ -133,7 +132,7 @@ public class CrudServiceTest {
   @Test
   public void testIndividualInvalidEmail() {
 
-    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+    Integer nedId = nedDBSvc.newNamedEntityId(INDIVIDUAL);
 
     Individualprofile individualProfile = _(new Individualprofile());
     individualProfile.setNedid(nedId);
@@ -175,7 +174,7 @@ public class CrudServiceTest {
   @Test
   public void testNonNullConstraint() {
 
-    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+    Integer nedId = nedDBSvc.newNamedEntityId(INDIVIDUAL);
 
     Individualprofile individualProfile = _(new Individualprofile());
     individualProfile.setNedid(nedId);
@@ -590,7 +589,7 @@ public class CrudServiceTest {
 
     // fill in auth record attributes and try again (happy path)
 
-    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+    Integer nedId = nedDBSvc.newNamedEntityId(INDIVIDUAL);
 
     Email email = _(new Email());
     email.setNedid(nedId);

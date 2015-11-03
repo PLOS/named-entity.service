@@ -30,7 +30,7 @@ import static org.junit.Assert.assertEquals;
 import static org.plos.namedentity.api.NedException.ErrorType.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
+@ContextConfiguration(locations = {"/spring-beans.xml","/ambra-spring-beans.xml","/spring-beans.test.xml","/ambra-spring-beans.test.xml"})
 public class RinggoldServiceTest {
 
   @Autowired

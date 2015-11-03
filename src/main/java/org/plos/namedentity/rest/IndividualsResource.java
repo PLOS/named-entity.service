@@ -13,6 +13,7 @@ import org.plos.namedentity.api.entity.Group;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Relationship;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.api.enums.NamedPartyEnum;
 import org.plos.namedentity.service.PasswordDigestService;
 
 import javax.ws.rs.DELETE;
@@ -44,7 +45,7 @@ public class IndividualsResource extends NedResource {
 
   @Override
   protected String getNamedPartyType() {
-    return IndividualComposite.typeName;
+    return NamedPartyEnum.INDIVIDUAL.getName();
   }
 
   @POST
@@ -54,7 +55,7 @@ public class IndividualsResource extends NedResource {
     try {
       generateDisplaynameIfEmpty(composite);
 
-      setCreatedAndLastModifiedBy(authstring,composite);
+      setCreatedAndLastModifiedBy(authstring, composite);
 
       return Response.status(Response.Status.OK).entity(
           namedEntityService.createComposite(composite, IndividualComposite.class)).build();
@@ -69,17 +70,17 @@ public class IndividualsResource extends NedResource {
     List<Individualprofile> profiles = composite.getIndividualprofiles();
     if (profiles != null & profiles.size() > 0) {
       Individualprofile profile = profiles.get(0);
-      if ( isEmptyOrBlank(profile.getDisplayname()) ) {
-        profile.setDisplayname( namedEntityService.generateDisplayname(profile, new Random()) );
+      if (isEmptyOrBlank(profile.getDisplayname())) {
+        profile.setDisplayname(namedEntityService.generateDisplayname(profile, new Random()));
       }
     }
   }
 
   @GET
-  @ApiOperation(value = "Find individual matching specified attribute.", responseContainer = "List")
+  @ApiOperation(value = "Find individual matching specified attribute.", response = IndividualComposite.class, responseContainer = "List")
   public Response findIndividuals(@QueryParam("entity")    String entity,
                                   @QueryParam("attribute") String attribute,
-                                  @QueryParam("value")     String value) {
+                                  @QueryParam("value") String value) {
     try {
       if (isEmptyOrBlank(entity) || isEmptyOrBlank(attribute) || isEmptyOrBlank(value)) {
         throw new NedException(InvalidIndividualSearchQuery);
@@ -191,6 +192,7 @@ public class IndividualsResource extends NedResource {
                                 @PathParam("profileId") int profileId,
                                 @HeaderParam("Authorization") String authstring,
                                 Individualprofile entity) {
+
     return updateEntity(nedId, profileId, entity, authstring);
   }
 
@@ -362,6 +364,7 @@ public class IndividualsResource extends NedResource {
                                    @PathParam("authId") int authId,
                                    @HeaderParam("Authorization") String authstring,
                                    Auth authEntity) {
+
     return updateEntity(nedId, authId, authEntity, authstring);
   }
 

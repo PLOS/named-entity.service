@@ -57,10 +57,10 @@ public class Auth extends Entity {
   // digested password (salt + hashed password) stored in db
   private String   password;
 
-  private Byte     passwordreset;
+  private Boolean  passwordreset;
   private String   verificationtoken;
-  private Byte     verified;
-  private Byte     isactive;
+  private Boolean  verified;
+  private Boolean  isactive;
 
   public Auth() {
     this.authid = UUID.randomUUID().toString();  // cas id
@@ -137,11 +137,11 @@ public class Auth extends Entity {
     this.password = hashedPassword;
   }
 
-  public java.lang.Byte getPasswordreset() {
+  public Boolean getPasswordreset() {
     return this.passwordreset;
   }
 
-  public void setPasswordreset(java.lang.Byte passwordreset) {
+  public void setPasswordreset(Boolean passwordreset) {
     this.passwordreset = passwordreset;
   }
 
@@ -153,19 +153,19 @@ public class Auth extends Entity {
     this.verificationtoken = verificationtoken;
   }
 
-  public java.lang.Byte getVerified() {
+  public Boolean getVerified() {
     return this.verified;
   }
 
-  public void setVerified(java.lang.Byte verified) {
+  public void setVerified(Boolean verified) {
     this.verified = verified;
   }
 
-  public java.lang.Byte getIsactive() {
+  public Boolean getIsactive() {
     return this.isactive;
   }
 
-  public void setIsactive(java.lang.Byte isactive) {
+  public void setIsactive(Boolean isactive) {
     this.isactive = isactive;
   }
 

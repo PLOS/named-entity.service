@@ -55,10 +55,11 @@ import static org.plos.namedentity.api.NedException.ErrorType.InvalidUrl;
 import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
 import static org.plos.namedentity.persist.db.namedentities.Tables.GLOBALTYPES;
 import static org.plos.namedentity.persist.db.namedentities.Tables.TYPEDESCRIPTIONS;
+import static org.plos.namedentity.api.enums.NamedPartyEnum.*;
 import static org.plos.namedentity.api.enums.TypeClassEnum.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
+@ContextConfiguration(locations = {"/spring-beans.xml","/ambra-spring-beans.xml","/spring-beans.test.xml","/ambra-spring-beans.test.xml"})
 public class NamedEntityDBServiceTest {
 
   @Autowired NamedEntityDBService         nedDBSvc;
@@ -105,19 +106,22 @@ public class NamedEntityDBServiceTest {
   @Test
   public void testNamedEntityIdGeneration() throws Exception {
 
-    Integer nedId1 = nedDBSvc.newNamedEntityId("Individual");
-    Integer nedId2 = nedDBSvc.newNamedEntityId("Individual");
+    Integer nedId1 = nedDBSvc.newNamedEntityId(INDIVIDUAL);
+    Integer nedId2 = nedDBSvc.newNamedEntityId(INDIVIDUAL);
     assertTrue(nedId1.intValue() > 0);
     assertEquals(nedId2.intValue(), nedId1.intValue()+1);
 
+    assertEquals(100L, (long)nedDBSvc.newNamedEntityId(INDIVIDUAL,100));
+
     try {
-      nedDBSvc.newNamedEntityId("BogusEntityType");
+      assertEquals(100L, (long)nedDBSvc.newNamedEntityId(INDIVIDUAL,100));
       fail();
     }
-    catch (NullPointerException e) {
-      // TODO: NamedEntityDBService should throw a uniform runtime
-      //       exception (capturing this exception as cause)
+    catch (org.springframework.dao.DataIntegrityViolationException e) {
+      // dupe key db exception
     }
+
+    assertEquals(nedId2.intValue()+1, (long)nedDBSvc.newNamedEntityId(INDIVIDUAL,null));
   }
 
   @Test
@@ -261,7 +265,7 @@ public class NamedEntityDBServiceTest {
   @Test
   public void testEmailsCRUD() {
 
-    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+    Integer nedId = nedDBSvc.newNamedEntityId(INDIVIDUAL);
     Integer emailTypeClassId = nedDBSvc.findTypeClass("Email Address Types");
 
     // CREATE Work Email
@@ -408,7 +412,7 @@ public class NamedEntityDBServiceTest {
 
     // CREATE
 
-    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+    Integer nedId = nedDBSvc.newNamedEntityId(INDIVIDUAL);
 
     Integer prefixTypeClassId      = nedDBSvc.findTypeClass("Named Party Prefixes");
     Integer suffixTypeClassId      = nedDBSvc.findTypeClass("Named Party Suffixes");
@@ -425,7 +429,7 @@ public class NamedEntityDBServiceTest {
     individualProfile.setFirstname("firstname");
     individualProfile.setMiddlename("middlename");
     individualProfile.setLastname("lastname");
-    individualProfile.setDisplayname("displayname_i");
+    individualProfile.setDisplayname("displayname_i_nes");
     individualProfile.setBiography("bio");
     individualProfile.setNameprefixtypeid(prefixTypeId);
     individualProfile.setNamesuffixtypeid(suffixTypeId);
@@ -482,7 +486,7 @@ public class NamedEntityDBServiceTest {
 
     // CREATE
 
-    Integer nedId = nedDBSvc.newNamedEntityId("Organization");
+    Integer nedId = nedDBSvc.newNamedEntityId(ORGANIZATION);
 
     Integer organizationTypeId = nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Organization Types"), "University");
 
@@ -821,7 +825,7 @@ public class NamedEntityDBServiceTest {
     Integer orcidTypeId  = nedDBSvc.findTypeValue(uidIdType, UidTypeEnum.ORCID.getName());
     assertNotNull(orcidTypeId);
 
-    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+    Integer nedId = nedDBSvc.newNamedEntityId(INDIVIDUAL);
 
     Individualprofile individualProfile = _(new Individualprofile());
     individualProfile.setNedid(nedId);
@@ -968,8 +972,8 @@ public class NamedEntityDBServiceTest {
   @Test
   public void testValidate() {
 
-    Integer individualNedId       = nedDBSvc.newNamedEntityId("Individual");
-    Integer organizationNedId     = nedDBSvc.newNamedEntityId("Organization");
+    Integer individualNedId       = nedDBSvc.newNamedEntityId(INDIVIDUAL);
+    Integer organizationNedId     = nedDBSvc.newNamedEntityId(ORGANIZATION);
 
     Integer individualUidTypeId   = nedDBSvc.findTypeClass("UID Individual Types");
     Integer orcidTypeId           = nedDBSvc.findTypeValue(individualUidTypeId, UidTypeEnum.ORCID.getName());
@@ -1044,7 +1048,7 @@ public class NamedEntityDBServiceTest {
 
     // Lookup type in Uniqueidentifier (happy path)
 
-    uid.setNedid( nedDBSvc.newNamedEntityId("Individual") );
+    uid.setNedid( nedDBSvc.newNamedEntityId(INDIVIDUAL) );
     Integer typeClassId = nedDBSvc.findTypeClassByInspection("type",uid);
     assertTrue( typeClassId > 0 );
   }

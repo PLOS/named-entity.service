@@ -35,7 +35,7 @@ import java.util.List;
 
 @Path("/service")
 @Api("/service")
-@Produces({MediaType.APPLICATION_JSON})
+@Produces(MediaType.APPLICATION_JSON)
 public class InfoResource {
 
   @Inject

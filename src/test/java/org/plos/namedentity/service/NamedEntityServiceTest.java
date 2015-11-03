@@ -51,7 +51,7 @@ import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidTypeValue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
+@ContextConfiguration(locations = {"/spring-beans.xml","/ambra-spring-beans.xml","/spring-beans.test.xml","/ambra-spring-beans.test.xml"})
 public class NamedEntityServiceTest {
 
   @Autowired
@@ -81,8 +81,9 @@ public class NamedEntityServiceTest {
 
     composite2.getIndividualprofiles().get(0).setDisplayname(
         composite1.getIndividualprofiles().get(0).getDisplayname());
-    composite2.getUniqueidentifiers().get(0).setUniqueidentifier(
-        composite1.getUniqueidentifiers().get(0).getUniqueidentifier());
+    //AMBRA-ADAPTER:
+    //composite2.getUniqueidentifiers().get(0).setUniqueidentifier(
+        //composite1.getUniqueidentifiers().get(0).getUniqueidentifier());
 
     assertEquals(composite1, composite2);
 
@@ -446,7 +447,9 @@ public class NamedEntityServiceTest {
     assertEquals(1, groupEntities.size());
 
     List<Uniqueidentifier> uidEntities = namedEntityService.findResolvedEntities(nedId, Uniqueidentifier.class);
-    assertEquals(1, uidEntities.size());
+    //AMBRA-ADAPTER:
+    //assertEquals(1, uidEntities.size());
+    assertEquals(2, uidEntities.size());
 
     Individualprofile individualProfile = namedEntityService.findResolvedEntityByUid("ORCID", "0000-0001-9430-001X", Individualprofile.class);
 
@@ -513,7 +516,7 @@ public class NamedEntityServiceTest {
 
     Email workEmail = new Email();
     workEmail.setType("Work");
-    workEmail.setEmailaddress("valid@email.com");
+    workEmail.setEmailaddress("valid-"+UUID.randomUUID().toString()+"@email.com");
     workEmail.setSource("Ambra");
     emails.add(_(workEmail));
 
@@ -884,6 +887,8 @@ public class NamedEntityServiceTest {
 
     composite.setGroups(groups);
 
+    //AMBRA-ADAPTER:
+/*
     Uniqueidentifier uid = new Uniqueidentifier();
     uid.setSource("Ambra");
     uid.setType("Ambra");
@@ -893,7 +898,7 @@ public class NamedEntityServiceTest {
     uniqueidentifiers.add(_(uid));
 
     composite.setUniqueidentifiers(uniqueidentifiers);
-
+*/
     return composite;
   }
 

@@ -84,10 +84,10 @@ module NedClient
         :'authid' => :'String',
         :'plain_text_password' => :'String',
         :'password' => :'String',
-        :'passwordreset' => :'String',
+        :'passwordreset' => :'BOOLEAN',
         :'verificationtoken' => :'String',
-        :'verified' => :'String',
-        :'isactive' => :'String'
+        :'verified' => :'BOOLEAN',
+        :'isactive' => :'BOOLEAN'
         
       }
     end

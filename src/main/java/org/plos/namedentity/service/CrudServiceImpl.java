@@ -16,30 +16,45 @@
  */
 package org.plos.namedentity.service;
 
-import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
-
 import org.plos.namedentity.api.NedException;
+import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.persist.NamedEntityDBService;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
 
+import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
+
 public class CrudServiceImpl implements CrudService {
 
-  @Inject private NamedEntityDBService namedEntityDBService; 
+  @Inject
+  private NamedEntityDBService namedEntityDBService;
 
-  @Override @Transactional
+  @Inject
+  private AmbraService ambraService;
+
+  @Override
+  @Transactional
   public <T> Integer create(T t) {
     return namedEntityDBService.create(t);
   }
 
-  @Override @Transactional
+  @Override
+  @Transactional
   public <T> boolean update(T t) {
-    return namedEntityDBService.update(t);
+    boolean nedresponse = namedEntityDBService.update(t);
+
+    if (t instanceof Entity)
+      ambraService.update((Entity)t);
+
+    // TODO: something similar in the create method above (ie - create address)
+
+    return nedresponse;
   }
 
-  @Override @Transactional
+  @Override
+  @Transactional
   public <T> boolean delete(T t) {
     return namedEntityDBService.delete(t);
   }
@@ -62,12 +77,20 @@ public class CrudServiceImpl implements CrudService {
   public <T> List<T> findByAttribute(T t) {
     return namedEntityDBService.findByAttribute(t);
   }
-  
+
   public NamedEntityDBService getNamedEntityDBService() {
     return namedEntityDBService;
   }
-  
+
   public void setNamedEntityDBService(NamedEntityDBService namedEntityDBService) {
     this.namedEntityDBService = namedEntityDBService;
+  }
+
+  public AmbraService getAmbraService() {
+      return ambraService;
+  }
+
+  public void setAmbraService(AmbraService ambraService) {
+      this.ambraService = ambraService;
   }
 }

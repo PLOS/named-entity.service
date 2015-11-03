@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="rolesEhCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+        <property name="cacheName" value="RolesCache"/>
+    </bean>
+
+    <bean id="rolesCache" class="org.ambraproject.service.cache.EhcacheProvider">
+        <constructor-arg index="0" ref="rolesEhCache"/>
+    </bean>
+
+    <bean id="userService" class="org.ambraproject.service.user.UserServiceImpl">
+        <property name="permissionsService" ref="permissionsService"/>
+        <property name="sessionFactory" ref="hibernateSessionFactoryForAdmin"/>
+        <property name="configuration" ref="ambraConfiguration"/>
+    </bean>
+
+    <bean id="permissionsService" class="org.ambraproject.service.permission.PermissionsServiceImpl">
+        <property name="sessionFactory" ref="hibernateSessionFactoryForAdmin"/>
+        <property name="rolesCache" ref="rolesCache"/>
+    </bean>
+
+    <!--<bean id="rolesService" class="org.ambraproject.admin.service.impl.AdminRolesServiceImpl">-->
+        <!--<property name="sessionFactory" ref="hibernateSessionFactory"/>-->
+        <!--<property name="permissionsService" ref="permissionsService"/>-->
+    <!--</bean>-->
+
+    <bean id="configurationStore" class="org.ambraproject.configuration.ConfigurationStore" factory-method="getInstance"/>
+
+    <bean id="ambraConfigFactory" class="org.plos.ambra.config.AmbraConfigurationFactory"/>
+
+    <bean id="ambraConfiguration" factory-bean="ambraConfigFactory" factory-method="getConfiguration"/>
+
+    <bean id="ambraDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jdbc/AmbraDS"/>
+    </bean>
+
+    <bean id="hibernateSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
+          depends-on="ambraConfigFactory">
+        <property name="dataSource" ref="ambraDataSource"/>
+        <property name="mappingLocations">
+            <list>
+                <value>classpath:org/ambraproject/models/*.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="javax.persistence.validation.mode">none</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="hibernateSessionFactoryForAdmin" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
+          depends-on="ambraConfigFactory">
+        <property name="dataSource" ref="ambraDataSource"/>
+        <property name="mappingLocations">
+            <list>
+                <value>classpath:org/ambraproject/models/*.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="javax.persistence.validation.mode">none</prop>
+                <!-- We might use MySQLInnoDBDialect instead -->
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.format_sql">false</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="ambraPasswordDigestService" class="org.ambraproject.service.password.PasswordDigestService"/>
+
+    <bean id="ambraMailer" class="org.plos.namedentity.service.NullAmbraMailer"/>
+
+    <bean id="userRegistrationService" class="org.ambraproject.service.user.UserRegistrationServiceImpl">
+        <property name="sessionFactory" ref="hibernateSessionFactory"/>
+        <property name="ambraMailer" ref="ambraMailer"/>
+        <property name="passwordDigestService" ref="ambraPasswordDigestService"/>
+    </bean>
+
+    <bean id="ambraService" class="org.plos.namedentity.service.AmbraServiceImpl" />
+</beans>

@@ -63,7 +63,7 @@ class IndividualsApi(object):
         :param str entity: 
         :param str attribute: 
         :param str value: 
-        :return: None
+        :return: list[IndividualComposite]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -121,7 +121,7 @@ class IndividualsApi(object):
                                             body=body_params,
                                             post_params=form_params,
                                             files=files,
-                                            response_type=None,
+                                            response_type='list[IndividualComposite]',
                                             auth_settings=auth_settings,
                                             callback=params.get('callback'))
         return response
@@ -376,7 +376,7 @@ class IndividualsApi(object):
         :param callback function: The callback function
             for asynchronous request. (optional)
         :param int ned_id:  (required)
-        :return: Address
+        :return: list[Address]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -433,7 +433,7 @@ class IndividualsApi(object):
                                             body=body_params,
                                             post_params=form_params,
                                             files=files,
-                                            response_type='Address',
+                                            response_type='list[Address]',
                                             auth_settings=auth_settings,
                                             callback=params.get('callback'))
         return response

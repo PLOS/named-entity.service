@@ -32,6 +32,7 @@ import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.NedException.ErrorType;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.api.enums.TypeClassEnum;
+import org.plos.namedentity.api.enums.NamedPartyEnum;
 import org.plos.namedentity.persist.db.namedentities.tables.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -247,10 +248,16 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   }
 
   @Override
-  public Integer newNamedEntityId(String typeCode) {
+  public Integer newNamedEntityId(NamedPartyEnum typeCode) {
+    return newNamedEntityId(typeCode, null);
+  }
 
-    return this.context.insertInto(NAMEDENTITYIDENTIFIERS) 
-               .set(NAMEDENTITYIDENTIFIERS.TYPEID, findTypeIdByName(TypeClassEnum.NAMED_ENTITY_TYPES, typeCode))
+  @Override
+  public Integer newNamedEntityId(NamedPartyEnum typeCode, Integer ambraId) {
+
+    return this.context.insertInto(NAMEDENTITYIDENTIFIERS)
+               .set(NAMEDENTITYIDENTIFIERS.ID, ambraId)
+               .set(NAMEDENTITYIDENTIFIERS.TYPEID, findTypeIdByName(TypeClassEnum.NAMED_ENTITY_TYPES, typeCode.getName()))
                .set(NAMEDENTITYIDENTIFIERS.CREATEDBY, 1)
                .set(NAMEDENTITYIDENTIFIERS.LASTMODIFIEDBY, 1)
                .returning(NAMEDENTITYIDENTIFIERS.ID)

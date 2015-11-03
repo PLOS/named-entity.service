@@ -14,7 +14,7 @@ module NedClient
     # @option opts [String] :entity 
     # @option opts [String] :attribute 
     # @option opts [String] :value 
-    # @return [nil]
+    # @return [Array<IndividualComposite>]
     def find_individuals(opts = {})
       if Configuration.debugging
         Configuration.logger.debug "Calling API: IndividualsApi#find_individuals ..."
@@ -48,16 +48,17 @@ module NedClient
       
 
       auth_names = ['basic']
-      @api_client.call_api(:GET, path,
+      result = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names)
+        :auth_names => auth_names,
+        :return_type => 'Array<IndividualComposite>')
       if Configuration.debugging
-        Configuration.logger.debug "API called: IndividualsApi#find_individuals"
+        Configuration.logger.debug "API called: IndividualsApi#find_individuals. Result: #{result.inspect}"
       end
-      return nil
+      return result
     end
 
     # Create individual
@@ -216,7 +217,7 @@ module NedClient
     # 
     # @param ned_id 
     # @param [Hash] opts the optional parameters
-    # @return [Address]
+    # @return [Array<Address>]
     def get_addresses(ned_id, opts = {})
       if Configuration.debugging
         Configuration.logger.debug "Calling API: IndividualsApi#get_addresses ..."
@@ -256,7 +257,7 @@ module NedClient
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
-        :return_type => 'Address')
+        :return_type => 'Array<Address>')
       if Configuration.debugging
         Configuration.logger.debug "API called: IndividualsApi#get_addresses. Result: #{result.inspect}"
       end

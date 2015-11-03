@@ -34,7 +34,7 @@ public abstract class SpringContextAwareJerseyTest extends JerseyTest {
 
   @Override
   protected javax.ws.rs.core.Application configure() {
-    String[] springFiles = { "spring-beans.xml", "spring-beans.test.xml" };
+    String[] springFiles = {"/spring-beans.xml","/ambra-spring-beans.xml","/spring-beans.test.xml","/ambra-spring-beans.test.xml"};
     context = new ClassPathXmlApplicationContext(springFiles);
     ResourceConfig config = new Main().property("contextConfig", context);
     return config;
