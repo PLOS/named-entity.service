@@ -133,5 +133,13 @@ module NedClient
       
     end
 
+    def type_name=(type_name)
+      allowed_values = ["INDIVIDUAL", "ORGANIZATION", "INVALID_NAMEDPARTY_TYPE"]
+      if type_name && !allowed_values.include?(type_name)
+        fail "invalid value for 'type_name', must be one of #{allowed_values}"
+      end
+      @type_name = type_name
+    end
+
   end
 end

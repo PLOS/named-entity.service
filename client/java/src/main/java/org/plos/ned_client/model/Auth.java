@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-02T10:19:21.505-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-03T14:45:36.898-08:00")
 public class Auth   {
   
   private Integer id = null;
@@ -28,10 +28,10 @@ public class Auth   {
   private String authid = null;
   private String plainTextPassword = null;
   private String password = null;
-  private String passwordreset = null;
+  private Boolean passwordreset = false;
   private String verificationtoken = null;
-  private String verified = null;
-  private String isactive = null;
+  private Boolean verified = false;
+  private Boolean isactive = false;
 
   
   /**
@@ -218,10 +218,10 @@ public class Auth   {
    **/
   @ApiModelProperty(value = "")
   @JsonProperty("passwordreset")
-  public String getPasswordreset() {
+  public Boolean getPasswordreset() {
     return passwordreset;
   }
-  public void setPasswordreset(String passwordreset) {
+  public void setPasswordreset(Boolean passwordreset) {
     this.passwordreset = passwordreset;
   }
 
@@ -242,10 +242,10 @@ public class Auth   {
    **/
   @ApiModelProperty(value = "")
   @JsonProperty("verified")
-  public String getVerified() {
+  public Boolean getVerified() {
     return verified;
   }
-  public void setVerified(String verified) {
+  public void setVerified(Boolean verified) {
     this.verified = verified;
   }
 
@@ -254,10 +254,10 @@ public class Auth   {
    **/
   @ApiModelProperty(value = "")
   @JsonProperty("isactive")
-  public String getIsactive() {
+  public Boolean getIsactive() {
     return isactive;
   }
-  public void setIsactive(String isactive) {
+  public void setIsactive(Boolean isactive) {
     this.isactive = isactive;
   }
 

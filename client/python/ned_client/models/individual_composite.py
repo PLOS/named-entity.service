@@ -316,6 +316,12 @@ class IndividualComposite(object):
         :param type_name: The type_name of this IndividualComposite.
         :type: str
         """
+        allowed_values = ["INDIVIDUAL", "ORGANIZATION", "INVALID_NAMEDPARTY_TYPE"]
+        if type_name not in allowed_values:
+            raise ValueError(
+                "Invalid value for `type_name`, must be one of {0}"
+                .format(allowed_values)
+            )
         self._type_name = type_name
 
     def to_dict(self):

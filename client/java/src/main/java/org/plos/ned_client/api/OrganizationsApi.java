@@ -14,7 +14,7 @@ import org.plos.ned_client.model.Uniqueidentifier;
 
 import java.util.*;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-02T10:19:21.505-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-03T14:45:36.898-08:00")
 public class OrganizationsApi {
   private ApiClient apiClient;
 
@@ -65,7 +65,7 @@ public class OrganizationsApi {
     
 
     final String[] accepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -170,7 +170,7 @@ public class OrganizationsApi {
     
 
     final String[] accepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -197,9 +197,9 @@ public class OrganizationsApi {
    * List addresses
    * 
    * @param nedId 
-   * @return Address
+   * @return List<Address>
    */
-  public Address getAddresses (Integer nedId) throws ApiException {
+  public List<Address> getAddresses (Integer nedId) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -239,7 +239,7 @@ public class OrganizationsApi {
 
     
     
-    TypeRef returnType = new TypeRef<Address>() {};
+    TypeRef returnType = new TypeRef<List<Address>>() {};
     return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
     

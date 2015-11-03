@@ -42,8 +42,14 @@
           "type" : "string"
         } ],
         "responses" : {
-          "default" : {
-            "description" : "successful operation"
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/IndividualComposite"
+              }
+            }
           }
         },
         "security" : [ {
@@ -156,7 +162,10 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/Address"
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Address"
+              }
             }
           }
         },
@@ -1433,7 +1442,7 @@
         "summary" : "Find organizations matching specified attribute.",
         "description" : "",
         "operationId" : "findOrganizations",
-        "produces" : [ "application/json", "application/xml" ],
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "attribute",
           "in" : "query",
@@ -1493,7 +1502,7 @@
         "summary" : "Read organization by Ned ID",
         "description" : "",
         "operationId" : "readOrganization",
-        "produces" : [ "application/json", "application/xml" ],
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -1530,7 +1539,10 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/Address"
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Address"
+              }
             }
           }
         }
@@ -2674,21 +2686,25 @@
         "source" : {
           "type" : "string"
         },
-        "sourcetypeid" : {
+        "nedid" : {
           "type" : "integer",
           "format" : "int32"
         },
-        "isactive" : {
-          "type" : "boolean",
-          "default" : false
+        "typeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "sourcetypeid" : {
+          "type" : "integer",
+          "format" : "int32"
         },
         "lastmodified" : {
           "type" : "string",
           "format" : "date-time"
         },
-        "typeid" : {
-          "type" : "integer",
-          "format" : "int32"
+        "isactive" : {
+          "type" : "boolean",
+          "default" : false
         },
         "familiarname" : {
           "type" : "string"
@@ -2700,12 +2716,9 @@
           "type" : "integer",
           "format" : "int32"
         },
-        "nedid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
         "typeName" : {
-          "type" : "string"
+          "type" : "string",
+          "enum" : [ "INDIVIDUAL", "ORGANIZATION", "INVALID_NAMEDPARTY_TYPE" ]
         }
       }
     },
@@ -3032,19 +3045,19 @@
           }
         },
         "passwordreset" : {
-          "type" : "string",
-          "format" : "byte"
+          "type" : "boolean",
+          "default" : false
         },
         "verificationtoken" : {
           "type" : "string"
         },
         "verified" : {
-          "type" : "string",
-          "format" : "byte"
+          "type" : "boolean",
+          "default" : false
         },
         "isactive" : {
-          "type" : "string",
-          "format" : "byte"
+          "type" : "boolean",
+          "default" : false
         }
       }
     },
@@ -3114,7 +3127,8 @@
           }
         },
         "typeName" : {
-          "type" : "string"
+          "type" : "string",
+          "enum" : [ "INDIVIDUAL", "ORGANIZATION", "INVALID_NAMEDPARTY_TYPE" ]
         }
       }
     },

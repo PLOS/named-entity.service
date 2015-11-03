@@ -31,7 +31,7 @@ module NedClient
       header_params = {}
 
       # HTTP header 'Accept' (if needed)
-      _header_accept = ['application/json', 'application/xml']
+      _header_accept = ['application/json']
       _header_accept_result = @api_client.select_header_accept(_header_accept) and header_params['Accept'] = _header_accept_result
 
       # HTTP header 'Content-Type'
@@ -132,7 +132,7 @@ module NedClient
       header_params = {}
 
       # HTTP header 'Accept' (if needed)
-      _header_accept = ['application/json', 'application/xml']
+      _header_accept = ['application/json']
       _header_accept_result = @api_client.select_header_accept(_header_accept) and header_params['Accept'] = _header_accept_result
 
       # HTTP header 'Content-Type'
@@ -164,7 +164,7 @@ module NedClient
     # 
     # @param ned_id 
     # @param [Hash] opts the optional parameters
-    # @return [Address]
+    # @return [Array<Address>]
     def get_addresses(ned_id, opts = {})
       if Configuration.debugging
         Configuration.logger.debug "Calling API: OrganizationsApi#get_addresses ..."
@@ -204,7 +204,7 @@ module NedClient
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
-        :return_type => 'Address')
+        :return_type => 'Array<Address>')
       if Configuration.debugging
         Configuration.logger.debug "API called: OrganizationsApi#get_addresses. Result: #{result.inspect}"
       end

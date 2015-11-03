@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/typeclasses")
-@Api(value = "/typeclasses", authorizations = {@Authorization(value = "basicAuth")})
+@Api(value = "/typeclasses", authorizations = {@Authorization(value = "basic")})
 @Produces(MediaType.APPLICATION_JSON)
 public class TypeclassesResource extends BaseResource {
 
