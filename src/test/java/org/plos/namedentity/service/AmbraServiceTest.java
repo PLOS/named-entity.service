@@ -1,6 +1,7 @@
 package org.plos.namedentity.service;
 
 import org.ambraproject.models.UserProfile;
+import org.ambraproject.service.password.PasswordDigestService;
 import org.ambraproject.service.user.DuplicateUserException;
 import org.ambraproject.service.user.UserRegistrationService;
 import org.ambraproject.service.user.UserService;
@@ -24,10 +25,10 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
+import java.io.StringReader;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
-import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -35,16 +36,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
-import static org.mockito.Matchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring-beans.xml","/ambra-spring-beans.xml","/spring-beans.test.xml","/ambra-spring-beans.test.xml"})
@@ -260,6 +259,27 @@ public class AmbraServiceTest {
     assertEquals(userProfile.getEmail(), email.getEmailaddress());
   }
 
+  @Test
+  public void testUpdatePasswordInAmbraAndNed() throws Throwable {
+
+    IndividualComposite composite = getNew();
+
+    String newpassword = UUID.randomUUID().toString();
+
+    Auth auth = namedEntityService.createComposite(
+        composite, IndividualComposite.class).getAuth().get(0);
+
+    auth.setPlainTextPassword(newpassword);
+
+    crudService.update(auth);
+
+    UserProfile userProfile = userService.getUser(new Long(auth.getNedid()));
+
+    PasswordDigestService passwordDigestService = new PasswordDigestService();
+
+    assertTrue(
+        passwordDigestService.verifyPassword(newpassword, userProfile.getPassword())  );
+  }
 
   @Test
   public void testUpdateRollbackNed() throws Throwable {

@@ -1569,7 +1569,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   }
 
   //MCB:TODO: uncomment after fixing.
-  //@Test
+  @Test
   public void testCasIdAndPasswordDigestInCompositePayload() throws IOException, JAXBException {
 
     String compositeJsonTemplate = new String(Files.readAllBytes(

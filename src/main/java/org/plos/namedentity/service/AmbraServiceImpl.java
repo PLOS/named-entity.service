@@ -56,6 +56,14 @@ public class AmbraServiceImpl implements AmbraService {
 
     ambraProfile.setAuthId(composite.getAuth().get(0).getAuthid());
 
+    /*
+    NOTE: This is a workaround to allow the ETL to work. This might look
+    strange, since we are erasing the password, but it should not be triggered
+    in practice since Akita will always get this far with a password.
+    */
+    if (ambraProfile.getPassword() == null)
+      ambraProfile.setPassword("");
+
     try {
       return userRegistrationService.registerUser(ambraProfile, ambraProfile.getPassword());
     } catch (DuplicateUserException e) {
@@ -74,6 +82,8 @@ public class AmbraServiceImpl implements AmbraService {
       update((Address) entity, entity.getNedid());
     else if (cname.equals(Email.class.getCanonicalName()))
       update((Email) entity, entity.getNedid());
+    else if (cname.equals(Auth.class.getCanonicalName()))
+      update((Auth) entity, entity.getNedid());
     // else, its not something in Ambra, so nothing to update
 
   }
@@ -96,9 +106,9 @@ public class AmbraServiceImpl implements AmbraService {
     updateInAmbra(ambraProfile);
   }
 
-  @Override
-  public void updatePassword(String plaintext, int nedId) {
-    userRegistrationService.resetPassword(getEmailAddress(nedId), plaintext);
+  private void update(Auth auth, int nedId) {
+    if (auth.getPlainTextPassword() != null)
+      userRegistrationService.resetPassword(getEmailAddress(nedId), auth.getPlainTextPassword());
   }
 
   private UserProfile getAmbraProfile(int nedId) {
