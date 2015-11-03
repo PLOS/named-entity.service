@@ -82,6 +82,8 @@ public class AmbraServiceImpl implements AmbraService {
       update((Address) entity, entity.getNedid());
     else if (cname.equals(Email.class.getCanonicalName()))
       update((Email) entity, entity.getNedid());
+    else if (cname.equals(Auth.class.getCanonicalName()))
+      update((Auth) entity, entity.getNedid());
     // else, its not something in Ambra, so nothing to update
 
   }
@@ -104,9 +106,9 @@ public class AmbraServiceImpl implements AmbraService {
     updateInAmbra(ambraProfile);
   }
 
-  @Override
-  public void updatePassword(String plaintext, int nedId) {
-    userRegistrationService.resetPassword(getEmailAddress(nedId), plaintext);
+  private void update(Auth auth, int nedId) {
+    if (auth.getPlainTextPassword() != null)
+      userRegistrationService.resetPassword(getEmailAddress(nedId), auth.getPlainTextPassword());
   }
 
   private UserProfile getAmbraProfile(int nedId) {
