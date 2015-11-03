@@ -1,7 +1,8 @@
 package org.plos.namedentity.rest;
 
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.adapter.Container;
@@ -38,8 +39,8 @@ import static org.plos.namedentity.api.NedException.ErrorType.InvalidIndividualS
 import static org.plos.namedentity.api.NedException.ErrorType.PasswordNotSpecified;
 import static org.plos.namedentity.api.NedException.ErrorType.TooManyResultsFound;
 
-@Path("/individuals")
-@Api(value="/individuals")
+@Path("individuals")
+@Api(value="individuals", authorizations = {@Authorization(value = "basic")})
 public class IndividualsResource extends NedResource {
 
   @Override
@@ -77,7 +78,7 @@ public class IndividualsResource extends NedResource {
 
   @GET
   @ApiOperation(value = "Find individual matching specified attribute.", response = IndividualComposite.class, responseContainer = "List")
-  public Response findIndividuals(@QueryParam("entity") String entity,
+  public Response findIndividuals(@QueryParam("entity")    String entity,
                                   @QueryParam("attribute") String attribute,
                                   @QueryParam("value") String value) {
     try {

@@ -419,7 +419,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     return this.context
         .select(
-            uid.ID, uid.NEDID,
+            uid.ID, uid.NEDID, uid.METADATA,
             uid.UNIQUEIDENTIFIER, gt1.SHORTDESCRIPTION.as("type"),
             gt2.SHORTDESCRIPTION.as("source"),
             uid.CREATED, uid.LASTMODIFIED)

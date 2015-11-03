@@ -16,7 +16,7 @@
  */
 package org.plos.namedentity.rest;
 
-import com.wordnik.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.service.AmbraService;
@@ -125,7 +125,7 @@ public abstract class NedResource extends BaseResource {
 
   @DELETE
   @Path("/{nedId}/addresses/{addressId}")
-  @ApiOperation(value = "Delete address")
+  @ApiOperation(value = "Delete address", response = Address.class, responseContainer = "List")
   public Response deleteAddress(@PathParam("nedId")     int nedId,
                                 @PathParam("addressId") int addressId,
                                 @HeaderParam("Authorization") String authstring) {
@@ -192,7 +192,7 @@ public abstract class NedResource extends BaseResource {
 
   @GET
   @Path("/{nedId}/uids")
-  @ApiOperation(value = "List UIDs", response = Uniqueidentifier.class,  responseContainer = "List")
+  @ApiOperation(value = "List UIDs", response = Uniqueidentifier.class, responseContainer = "List")
   public Response getUids(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Uniqueidentifier.class);
   }

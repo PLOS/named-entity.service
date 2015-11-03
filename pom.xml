@@ -10,7 +10,7 @@
   <artifactId>named-entity-service</artifactId>
   <packaging>war</packaging>
   <name>Named Entity JAX-RS Service</name>
-  <version>0.11.0-SNAPSHOT</version>
+  <version>0.12.0-SNAPSHOT</version>
 
   <properties>
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
@@ -195,9 +195,9 @@
     </dependency>
 
     <dependency>
-      <groupId>com.wordnik</groupId>
-      <artifactId>swagger-jersey2-jaxrs_2.10</artifactId>
-      <version>1.3.12</version>
+      <groupId>io.swagger</groupId>
+      <artifactId>swagger-jersey2-jaxrs</artifactId>
+      <version>1.5.4</version>
     </dependency>
 
     <dependency>
@@ -387,7 +387,7 @@
         <version>1.1</version>
         <configuration>
           <contextFile>${basedir}/target/classes/context.xml</contextFile>
-          <path>/</path>
+          <path>/v0</path>
         </configuration>
         <dependencies>
           <dependency>

@@ -16,8 +16,8 @@
  */
 package org.plos.namedentity.rest;
 
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.ConfigInfo;
 import org.plos.namedentity.api.NedErrorResponse;
 import org.plos.namedentity.api.NedException;

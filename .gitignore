@@ -10,3 +10,5 @@ debug.sh
 mdb.ini
 target
 *.pyc
+.idea
+*.iml
