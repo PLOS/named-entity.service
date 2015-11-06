@@ -144,13 +144,6 @@ public class NamedEntityDBServiceTest {
   }
 
   @Test
-  public void testFindAllOnEmptyTable() {
-    List<Journal> journals = nedDBSvc.findAll(Journal.class, 0, Integer.MAX_VALUE);
-    assertNotNull(journals);
-    assertEquals(0, journals.size());
-  }
-
-  @Test
   public void testTypedescriptionCRUD() {
 
     // CREATE

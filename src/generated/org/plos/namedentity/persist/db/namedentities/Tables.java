@@ -22,6 +22,11 @@ public class Tables {
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Addresses ADDRESSES = org.plos.namedentity.persist.db.namedentities.tables.Addresses.ADDRESSES;
 
 	/**
+	 * The table namedEntities.alerts
+	 */
+	public static final org.plos.namedentity.persist.db.namedentities.tables.Alerts ALERTS = org.plos.namedentity.persist.db.namedentities.tables.Alerts.ALERTS;
+
+	/**
 	 * The table namedEntities.auditTrail
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Audittrail AUDITTRAIL = org.plos.namedentity.persist.db.namedentities.tables.Audittrail.AUDITTRAIL;
@@ -60,11 +65,6 @@ public class Tables {
 	 * The table namedEntities.individualProfiles
 	 */
 	public static final org.plos.namedentity.persist.db.namedentities.tables.Individualprofiles INDIVIDUALPROFILES = org.plos.namedentity.persist.db.namedentities.tables.Individualprofiles.INDIVIDUALPROFILES;
-
-	/**
-	 * The table namedEntities.journals
-	 */
-	public static final org.plos.namedentity.persist.db.namedentities.tables.Journals JOURNALS = org.plos.namedentity.persist.db.namedentities.tables.Journals.JOURNALS;
 
 	/**
 	 * The table namedEntities.namedEntityIdentifiers
