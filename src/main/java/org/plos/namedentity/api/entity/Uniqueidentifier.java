@@ -16,10 +16,13 @@
  */
 package org.plos.namedentity.api.entity;
 
+import org.plos.namedentity.api.adapter.JsonAdapter;
+
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.regex.Pattern;
 
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidOrcidId;
@@ -89,6 +92,7 @@ public class Uniqueidentifier extends Entity {
     this.uniqueidentifier = uniqueidentifier;
   }
 
+  @XmlJavaTypeAdapter(JsonAdapter.class)
   public String getMetadata() {
     return metadata;
   }
