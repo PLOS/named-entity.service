@@ -485,7 +485,9 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
             e.CREATED, e.LASTMODIFIED)
         .from(e)
         .leftOuterJoin(gt1).on(e.TYPEID.equal(gt1.ID))
-        .leftOuterJoin(gt2).on(e.SOURCETYPEID.equal(gt2.ID));
+        .leftOuterJoin(gt2).on(e.SOURCETYPEID.equal(gt2.ID))
+        .leftOuterJoin(gt3).on(e.FREQUENCYTYPEID.eq(gt3.ID))
+        .leftOuterJoin(gt4).on(e.JOURNALTYPEID.eq(gt4.ID));
   }
 
   private SelectOnConditionStep select(Relationships r) {

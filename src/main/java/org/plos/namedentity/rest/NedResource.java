@@ -323,6 +323,12 @@ public abstract class NedResource extends BaseResource {
                 namedEntityService.findResolvedEntities(nedId, Address.class)
             ){}).build();
       }
+      else if (cname.equals(Alert.class.getCanonicalName())) {
+        return Response.status(Response.Status.OK).entity(
+            new GenericEntity<List<Alert>>(
+                namedEntityService.findResolvedEntities(nedId, Alert.class)
+            ){}).build();
+      }
       else if (cname.equals(Email.class.getCanonicalName())) {
         return Response.status(Response.Status.OK).entity(
             new GenericEntity<List<Email>>(
