@@ -16,13 +16,18 @@
  */
 package org.plos.namedentity.api.entity;
 
-import org.plos.namedentity.api.adapter.JsonAdapter;
+import org.eclipse.persistence.oxm.annotations.XmlPath;
 
+import org.plos.namedentity.api.adapter.MetadataAdapter;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidOrcidId;
@@ -35,9 +40,12 @@ public class Uniqueidentifier extends Entity {
   private Integer typeid;
   private String  type;
   private String  uniqueidentifier;
-  private String  metadata;
 
-//TODO - verify metadata is valid json?!
+  // metadata json representation stored as string in database. map used for
+  // marshalling string to json.
+  private String  metadata;
+  private Map<String,String> metadataMap;
+
   private static Integer salesForceLengthA = 15;
   private static Integer salesForceLengthB = 18;
   private static Pattern salesForceRegexp  = Pattern.compile("^[a-zA-Z0-9]*$");
@@ -92,12 +100,22 @@ public class Uniqueidentifier extends Entity {
     this.uniqueidentifier = uniqueidentifier;
   }
 
-  @XmlJavaTypeAdapter(JsonAdapter.class)
+  @XmlElement(name = "metadata")
+  @XmlJavaTypeAdapter(MetadataAdapter.class)
+  @XmlPath(".")
+  public Map<String,String> getMetadataAsJson() {
+    return this.metadataMap;
+  }
+
+  @XmlTransient
   public String getMetadata() {
     return metadata;
   }
 
   public void setMetadata(String metadata) {
     this.metadata = metadata;
+    if (metadata != null) {
+      this.metadataMap = MetadataAdapter.parseAsMap(metadata);
+    }
   }
 }
