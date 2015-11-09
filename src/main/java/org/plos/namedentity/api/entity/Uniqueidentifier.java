@@ -22,11 +22,14 @@ import org.plos.namedentity.api.adapter.MetadataAdapter;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -34,6 +37,7 @@ import static org.plos.namedentity.api.NedException.ErrorType.InvalidOrcidId;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidSalesforceId;
 import static org.plos.namedentity.api.NedException.ErrorType.UidValueError;
 
+@XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlRootElement
 public class Uniqueidentifier extends Entity {
 
@@ -50,6 +54,10 @@ public class Uniqueidentifier extends Entity {
   private static Integer salesForceLengthB = 18;
   private static Pattern salesForceRegexp  = Pattern.compile("^[a-zA-Z0-9]*$");
   private static Pattern orcidRegexp  = Pattern.compile("^([\\d]{4}\\-?){3}[\\d]{3}[\\dxX]$");
+
+  public Uniqueidentifier() {
+    metadataMap = new HashMap<String, String>();
+  }
 
   @Override
   public void validate() {

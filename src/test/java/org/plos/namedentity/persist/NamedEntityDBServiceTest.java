@@ -841,7 +841,7 @@ public class NamedEntityDBServiceTest {
     uidEntity1.setNedid(nedId);
     uidEntity1.setTypeid(orcidTypeId);
     uidEntity1.setUniqueidentifier(ORCID_ID);
-    uidEntity1.setMetadata("[{'sometimes':'json','goes':'here'},{'sometimes':'not'}]");
+    uidEntity1.setMetadata("{\"sometimes\":\"json\",\"goes\":\"here\"},{\"sometimes\":\"not\"}");
     uidEntity1.setSourcetypeid( getSourceTypeId(UidTypeEnum.EDITORIAL_MANAGER.getName()) );
 
     assertNull(uidEntity1.getId());
