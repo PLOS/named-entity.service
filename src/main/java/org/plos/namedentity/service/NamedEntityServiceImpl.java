@@ -58,6 +58,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       resolveOrganization((Organization) t);
     else if (t instanceof Address)
       resolveAddress((Address) t);
+    else if (t instanceof Alert)
+      resolveAlert((Alert) t);
     else if (t instanceof Phonenumber)
       resolvePhonenumber((Phonenumber) t);
     else if (t instanceof Email)
@@ -193,6 +195,22 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     if (entity.getStatecodetype() != null)
       entity.setStatecodetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("State and Province Codes"), entity.getStatecodetype()));
+
+    return entity;
+  }
+
+  private Alert resolveAlert(Alert entity) {
+    if (entity.getType() != null)
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Alert Types"), entity.getType()));
+
+    if (entity.getSource() != null)
+      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
+
+    if (entity.getFrequency() != null)
+      entity.setFrequencytypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Alert Frequency"), entity.getFrequency()));
+
+    if (entity.getJournal() != null)
+      entity.setJournaltypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Journal Types"), entity.getJournal()));
 
     return entity;
   }
