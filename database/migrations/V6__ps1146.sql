@@ -22,7 +22,7 @@ INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,create
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'monthly', NULL, 'monthly', CURRENT_TIMESTAMP);
 
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Alert Types','Journal, Search, etc');
-SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Alert types';
+SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Alert Types';
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'journal', NULL, 'journal', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@typeIdVar, 'search', NULL, 'search', CURRENT_TIMESTAMP);
 

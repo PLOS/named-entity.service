@@ -725,6 +725,63 @@ public class NamedEntityDBServiceTest {
     assertTrue( nedDBSvc.delete(groupToDelete) );
   }
 
+
+  @Test
+  public void testAlertCRUD() {
+
+    // CREATE
+
+    Integer typeId = nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(ALERT_TYPES.getName()), "journal");
+    assertNotNull(typeId);
+
+    Integer frequencyId = nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(ALERT_FREQUENCY.getName()), "weekly");
+    assertNotNull(frequencyId);
+
+    Integer journalId = nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(JOURNAL_TYPES.getName()), "PLOS Biology");
+    assertNotNull(journalId);
+
+    Alert entity = _(new Alert());
+    entity.setNedid(1);
+    entity.setJournaltypeid(journalId);
+    entity.setFrequencytypeid(frequencyId);
+    entity.setTypeid(typeId);
+    entity.setName("name goes here");
+    entity.setQuery("{query goes here}");
+
+    entity.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    entity.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
+    entity.setSourcetypeid( getSourceTypeId("Ambra") );
+
+    Integer entityId = nedDBSvc.create( entity );
+    assertNotNull(entityId);
+
+    // UPDATE
+
+    Alert savedEntity = nedDBSvc.findById(entityId, Alert.class);
+
+    savedEntity.setQuery("a new query");
+
+    assertTrue( nedDBSvc.update(savedEntity) );
+
+    // Get another instance of same group record
+
+    Alert savedEntityAfterUpdate = nedDBSvc.findById(entityId, Alert.class);
+    assertEquals(savedEntity, savedEntityAfterUpdate);
+    assertEquals(savedEntity.getQuery(), savedEntityAfterUpdate.getQuery());
+    assertEquals(savedEntity.getName(), savedEntityAfterUpdate.getName());
+
+    // FIND (all assignments)
+
+    List<Alert> entityList = nedDBSvc.findAll(Alert.class, 0, Integer.MAX_VALUE);
+    assertTrue( entityList.size() == 1 );
+
+    // DELETE
+
+    Alert entityToDelete = new Alert();
+    entityToDelete.setId(entityId);
+    assertTrue( nedDBSvc.delete(entityToDelete) );
+  }
+
   @Test
   public void testRelationshipCRUD() {
 

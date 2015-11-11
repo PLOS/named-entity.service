@@ -794,6 +794,87 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals(204, response.getStatus());
   }
 
+
+  @Test
+  public void testAlertCrud() throws IOException, JAXBException {
+
+    String entityURI = String.format("%s/%d/alerts", INDIVIDUAL_URI, nedIndividualId);
+
+    /* ------------------------------------------------------------------ */
+    /*  CREATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    String requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "alert.json")));
+
+    Response response = buildRequestDefaultAuth(entityURI).post(Entity.json(requestJson));
+
+    assertEquals(200, response.getStatus());
+
+    String responseJson = response.readEntity(String.class);
+
+    Unmarshaller unmarshaller = jsonUnmarshaller(Alert.class);
+    Alert entity = unmarshalEntity(responseJson, Alert.class, unmarshaller);
+
+    assertTrue( entity.getId() > 0 );
+    assertEquals(nedIndividualId, entity.getNedid());
+    assertEquals("PLOS Biology", entity.getJournal());
+    assertEquals("weekly", entity.getFrequency());
+
+    String entityId = entityURI + "/" + entity.getId();
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY ENTITY ID (PK))                                          */
+    /* ------------------------------------------------------------------ */
+
+    response = target(entityId).request(MediaType.APPLICATION_JSON_TYPE).get();
+    assertEquals(200, response.getStatus());
+
+    responseJson = response.readEntity(String.class);
+
+    Alert foundEntity = unmarshalEntity(responseJson, Alert.class, unmarshaller);
+    assertEquals(entity, foundEntity);
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY NED ID)                                                  */
+    /* ------------------------------------------------------------------ */
+
+    response = target(entityURI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(200, response.getStatus());
+
+    responseJson = response.readEntity(String.class);
+
+    List<Alert> entities = unmarshalEntities(responseJson, Alert.class, unmarshaller);
+    assertEquals(1, entities.size());
+
+
+    Alert e = entities.get(0);
+    assertTrue(e.getId() > 0);
+    assertEquals(nedIndividualId, e.getNedid());
+
+    assertEquals("PLOS Biology", e.getJournal());
+    assertTrue(e.getQuery().length() > 10);
+
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    response = buildRequestDefaultAuth(entityId).put(Entity.json(writeValueAsString(entity)));
+
+    assertEquals(200, response.getStatus());
+
+    /* ------------------------------------------------------------------ */
+    /*  DELETE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    response = target(entityId)
+        .request(MediaType.APPLICATION_JSON_TYPE)
+        .delete();
+
+    assertEquals(204, response.getStatus());
+  }
+
   @Test
   public void testRelationshipCrud() throws Exception {
 
@@ -1739,6 +1820,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   private Invocation.Builder buildRequestDefaultAuth(String uri) {
     return buildRequest(uri, "test", "test");
   }
+
   private Invocation.Builder buildRequest(String uri, String username, String password) {
     Invocation.Builder builder = target(uri).request(MediaType.APPLICATION_JSON_TYPE);
 
