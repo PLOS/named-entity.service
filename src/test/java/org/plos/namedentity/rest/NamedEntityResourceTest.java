@@ -729,8 +729,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     assertTrue( group.getId() > 0 );
     assertEquals(nedIndividualId, group.getNedid());
-    assertEquals("Knowledge Base", group.getApplicationtype());
-    assertEquals("Knowledge Base - Genetics", group.getType());
+    assertEquals("Named Party DB", group.getApplicationtype());
+    assertEquals("NED Admin", group.getType());
 
     assertEquals(START_DATE, group.getStartdate());
 
@@ -762,16 +762,15 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals(3, groups.size());
 
     String assignedGroups[] = {
-      "Knowledge Base - PLOSONE",
-      "Knowledge Base - Computational Biology",
-      "Knowledge Base - Genetics"
+      "NED Manage Users",
+      "NED Admin"
     };
 
     for (int i = 0; i < groups.size(); i++) {
       Group grp = groups.get(i);
       assertTrue(grp.getId() > 0);
       assertEquals(nedIndividualId, grp.getNedid());
-      assertEquals("Knowledge Base", grp.getApplicationtype());
+      assertEquals("Named Party DB", grp.getApplicationtype());
       assertEquals(assignedGroups[i], grp.getType());
     }
 

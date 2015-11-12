@@ -24,17 +24,11 @@
   ],
   "groups" : [
     {
-      "type"                : "Knowledge Base - PLOSONE",
+      "type"                : "Named Party DB",
       "startdate"           : "2015-01-01",
       "enddate"             : "2015-01-22",
-      "applicationtype"     : "Knowledge Base",
+      "applicationtype"     : "NED Manage Users",
       "source"              : "Ambra"
-    },
-    {
-      "type"            : "Knowledge Base - Computational Biology",
-      "startdate"       : "2015-02-01",
-      "applicationtype" : "Knowledge Base",
-      "source"          : "Ambra"
     }
   ],
   "relationships" : [

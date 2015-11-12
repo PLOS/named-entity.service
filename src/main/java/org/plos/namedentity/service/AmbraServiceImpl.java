@@ -32,23 +32,6 @@ public class AmbraServiceImpl implements AmbraService {
   @Inject
   private UserService userService;
 
-//  @Inject
-//  private AdminRolesService rolesService;
-
-
-//  private static Map<String, String> ambraRoles = new HashMap<String, String>() {{
-//    put("NED Admin", "Admin");
-//    put("NED Manage Users", "Manage Users");
-//
-//    put("Knowledge Base - PLOSONE", "AE-PLOSONE");
-//    put("Knowledge Base - Pathogens", "Editor-Pathog");
-//    put("Knowledge Base - Neglected Tropical Diseases", "Editor-NTDs");
-//    put("Knowledge Base - Medicine", "Editor-MED");
-//    put("Knowledge Base - Genetics", "Editor-Gen");
-//    put("Knowledge Base - Computational Biology", "Editor-CB");
-//    put("Knowledge Base - Biology", "Editor-BIO");
-//  }};
-
   @Override
   public Long createUser(IndividualComposite composite) {
 

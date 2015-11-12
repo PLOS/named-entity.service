@@ -1,6 +1,6 @@
 {
-    "applicationtype" : "Knowledge Base",
-    "type"            : "Knowledge Base - Genetics",
+    "applicationtype" : "Named Party DB",
+    "type"            : "NED Admin",
     "startdate"       : "2014-06-30",
     "source"          : "Ambra"
 }
