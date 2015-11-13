@@ -282,6 +282,7 @@ public class NamedEntityServiceTest {
     workEmail.setType("Work");
     workEmail.setEmailaddress("fu.manchu.work@foo.com");
     workEmail.setSource("Ambra");
+    workEmail.setNedid(12345);
     emails.add(_(workEmail));
 
     Email personalEmail = new Email();
@@ -412,7 +413,9 @@ public class NamedEntityServiceTest {
     try {
       IndividualComposite responseComposite = namedEntityService.createComposite(composite, IndividualComposite.class);
       assertNotNull(responseComposite);
-      assertNotNull(responseComposite.getIndividualprofiles().get(0).getNedid());
+
+      // the NED ID can be set in the first email of the composite
+      assertEquals(responseComposite.getIndividualprofiles().get(0).getNedid().longValue(), 12345);
 
       // make sure foreign keys are resolved for sub entities
       assertNotNull(responseComposite.getEmails().get(0).getId());

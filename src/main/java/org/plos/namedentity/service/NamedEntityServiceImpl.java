@@ -346,14 +346,16 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     if (clazz == IndividualComposite.class) {
 
-      // insert user into Ambra DB first, then NED
-      Long ambraId = ambraService.createUser((IndividualComposite)composite);
+      Email email = ((IndividualComposite) composite).getEmails().get(0);
+      Integer ambraId = email.getNedid();
 
-      //AMBRA-ADAPTER:
-      nedId = nedDBSvc.newNamedEntityId(composite.getTypeName(), ambraId.intValue());
+      // only insert the person into Ambra if there is no NED ID specified
+      if (ambraId == null)
+        ambraId = ambraService.createUser((IndividualComposite)composite).intValue();
+
+      nedId = nedDBSvc.newNamedEntityId(composite.getTypeName(), ambraId);
 
       // insert Ambra into NED UIDs
-      Email email = ((IndividualComposite) composite).getEmails().get(0);
 
       Uniqueidentifier uniqueidentifier = new Uniqueidentifier();
       uniqueidentifier.setNedid(nedId);   /* nedId == ambraId */
