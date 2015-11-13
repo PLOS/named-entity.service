@@ -12,8 +12,6 @@ import org.plos.namedentity.api.entity.Auth;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Individualprofile;
-import org.plos.namedentity.api.entity.Uniqueidentifier;
-import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.persist.NamedEntityDBService;
 
 import javax.inject.Inject;
@@ -112,7 +110,8 @@ public class AmbraServiceImpl implements AmbraService {
   }
 
   private UserProfile getAmbraProfile(int nedId) {
-    UserProfile ambraProfile = userService.getUser(getAmbraId(nedId));
+    // assume the NED ID is the Ambra ID
+    UserProfile ambraProfile = userService.getUser((long)nedId);
     ambraProfile.setAuthId(getAuthId(nedId));
     return ambraProfile;
   }
@@ -134,19 +133,6 @@ public class AmbraServiceImpl implements AmbraService {
           .get().getEmailaddress();
     } catch (NoSuchElementException e) {
       throw new NedException(DatabaseError, "Email address not found in NED");
-    }
-  }
-
-  private Long getAmbraId(int nedId) {
-
-    try {
-      return Long.parseLong(namedEntityDBService.findResolvedEntities(nedId, Uniqueidentifier.class)
-          .stream()
-          .filter(u -> u.getType().equals(UidTypeEnum.AMBRA.getName()))
-          .findFirst()
-          .get().getUniqueidentifier());
-    } catch (NoSuchElementException e) {
-      throw new NedException(DatabaseError, "Ambra ID not found in NED");
     }
   }
 

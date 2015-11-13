@@ -41,6 +41,8 @@ public enum TypeClassEnum {
   UID_INDIVIDUAL_TYPES("UID Individual Types"),
   UID_ORGANIZATION_TYPES("UID Organization Types"),
   USER_APPLICATIONS("User Applications"),
+  ALERT_TYPES("Alert Types"),
+  ALERT_FREQUENCY("Alert Frequency"),
   INVALID_TYPE_CLASS("");
 
   String name;

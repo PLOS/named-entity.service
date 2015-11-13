@@ -6,6 +6,7 @@ import io.swagger.annotations.Authorization;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.adapter.Container;
+import org.plos.namedentity.api.entity.Alert;
 import org.plos.namedentity.api.entity.Auth;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Entity;
@@ -296,6 +297,54 @@ public class IndividualsResource extends NedResource {
   @ApiOperation(value = "List groups", response = Group.class, responseContainer = "List")
   public Response getGroups(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Group.class);
+  }
+
+  /* ----------------------------------------------------------------------- */
+  /*  ALERTS CRUD                                                            */
+  /* ----------------------------------------------------------------------- */
+
+  @POST
+  @Path("/{nedId}/alerts")
+  @ApiOperation(value = "Create alert", response = Alert.class)
+  public Response createAlert(@PathParam("nedId") int nedId,
+                              Alert entity,
+                              @HeaderParam("Authorization") String authstring) {
+    return createEntity(nedId, entity, authstring);
+  }
+
+  @PUT
+  @Path("/{nedId}/alerts/{alertId}")
+  @ApiOperation(value = "Update alert", response = Alert.class)
+  public Response updateAlert(@PathParam("nedId") int nedId,
+                              @PathParam("alertId") int entityId,
+                              @HeaderParam("Authorization") String authstring,
+                              Alert entity) {
+    return updateEntity(nedId, entityId, entity, authstring);
+  }
+
+  @DELETE
+  @Path("/{nedId}/alerts/{alertId}")
+  @ApiOperation(value = "Delete alert")
+  public Response deleteAlert(@PathParam("nedId")  int nedId,
+                              @PathParam("alertId") int entityId,
+                              @HeaderParam("Authorization") String authstring) {
+    //TODO: process authstring
+    return deleteEntity(nedId, entityId, Alert.class);
+  }
+
+  @GET
+  @Path("/{nedId}/alerts/{alertId}")
+  @ApiOperation(value = "Read group", response = Alert.class)
+  public Response getAlert(@PathParam("nedId")  int nedId,
+                           @PathParam("alertId") int entityId) {
+    return getEntity(nedId, entityId, Alert.class);
+  }
+
+  @GET
+  @Path("/{nedId}/alerts")
+  @ApiOperation(value = "List alerts", response = Alert.class, responseContainer = "List")
+  public Response getAlerts(@PathParam("nedId") int nedId) {
+    return getEntities(nedId, Alert.class);
   }
 
   /* ----------------------------------------------------------------------- */
