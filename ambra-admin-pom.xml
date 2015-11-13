@@ -58,7 +58,7 @@
     <commons-dbcp.version>1.4</commons-dbcp.version>
     <surefire.version>2.16</surefire.version>
     <guava.version>15.0</guava.version>
-    <ehcache.version>1.6.2</ehcache.version>
+    <ehcache.version>2.7.0</ehcache.version>
   </properties>
 
   <repositories>
@@ -428,8 +428,17 @@
       <artifactId>guava</artifactId>
       <version>${guava.version}</version>
     </dependency>
-
   </dependencies>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.5.11</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
     <finalName>ambra-admin</finalName>
