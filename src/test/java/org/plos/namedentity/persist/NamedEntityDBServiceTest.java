@@ -763,7 +763,7 @@ public class NamedEntityDBServiceTest {
 
     assertTrue( nedDBSvc.update(savedEntity) );
 
-    // Get another instance of same group record
+    // Get another instance of same entity
 
     Alert savedEntityAfterUpdate = nedDBSvc.findById(entityId, Alert.class);
     assertEquals(savedEntity, savedEntityAfterUpdate);
