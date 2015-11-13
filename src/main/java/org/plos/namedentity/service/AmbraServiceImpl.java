@@ -63,7 +63,7 @@ public class AmbraServiceImpl implements AmbraService {
       ambraProfile.setPassword("");
 
     try {
-      Long firstId = userRegistrationService.registerUser(ambraProfile, ambraProfile.getPassword());
+      return userRegistrationService.registerUser(ambraProfile, ambraProfile.getPassword());
     } catch (DuplicateUserException e) {
       throw new NedException(DatabaseError, "Duplicate user in Ambra Database", e);
     }
@@ -219,10 +219,6 @@ public class AmbraServiceImpl implements AmbraService {
 
   private void copyToAmbraPojo(Email email, UserProfile ambraUser) {
     ambraUser.setEmail(email.getEmailaddress());
-
-    // if there is a NED ID supplied, use it as the ambra user ID
-    if (email.getNedid() != null)
-      ambraUser.setID(email.getNedid().longValue());
   }
 
   private UserProfile toAmbraProfile(IndividualComposite composite) {
