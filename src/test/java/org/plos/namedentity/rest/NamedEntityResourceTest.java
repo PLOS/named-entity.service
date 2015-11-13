@@ -759,7 +759,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     responseJson = response.readEntity(String.class);
 
     List<Group> groups = unmarshalEntities(responseJson, Group.class, unmarshaller);
-    assertEquals(3, groups.size());
+    assertEquals(2, groups.size());
 
     String assignedGroups[] = {
       "NED Manage Users",

@@ -24,10 +24,10 @@
   ],
   "groups" : [
     {
-      "type"                : "Named Party DB",
+      "type"                : "NED Manage Users",
       "startdate"           : "2015-01-01",
       "enddate"             : "2015-01-22",
-      "applicationtype"     : "NED Manage Users",
+      "applicationtype"     : "Named Party DB",
       "source"              : "Ambra"
     }
   ],
