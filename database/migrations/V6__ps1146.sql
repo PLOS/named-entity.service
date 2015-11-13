@@ -47,3 +47,11 @@ CREATE TABLE IF NOT EXISTS alerts (
   FOREIGN KEY (frequencyTypeId) REFERENCES globalTypes(id),
   FOREIGN KEY (journalTypeId) REFERENCES globalTypes(id)
 )   ENGINE=INNODB;
+
+
+
+SET foreign_key_checks = 0;
+DROP INDEX uniqueIdentifier on uniqueIdentifiers;
+SET foreign_key_checks = 1;
+
+ALTER TABLE uniqueIdentifiers ADD UNIQUE INDEX uniqueIdentifier (nedId, uniqueIdentifier, sourceTypeId, typeId);

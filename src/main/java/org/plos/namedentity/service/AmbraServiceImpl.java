@@ -12,8 +12,6 @@ import org.plos.namedentity.api.entity.Auth;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Individualprofile;
-import org.plos.namedentity.api.entity.Uniqueidentifier;
-import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.persist.NamedEntityDBService;
 
 import javax.inject.Inject;
@@ -65,7 +63,7 @@ public class AmbraServiceImpl implements AmbraService {
       ambraProfile.setPassword("");
 
     try {
-      return userRegistrationService.registerUser(ambraProfile, ambraProfile.getPassword());
+      Long firstId = userRegistrationService.registerUser(ambraProfile, ambraProfile.getPassword());
     } catch (DuplicateUserException e) {
       throw new NedException(DatabaseError, "Duplicate user in Ambra Database", e);
     }
@@ -139,15 +137,16 @@ public class AmbraServiceImpl implements AmbraService {
 
   private Long getAmbraId(int nedId) {
 
-    try {
-      return Long.parseLong(namedEntityDBService.findResolvedEntities(nedId, Uniqueidentifier.class)
-          .stream()
-          .filter(u -> u.getType().equals(UidTypeEnum.AMBRA.getName()))
-          .findFirst()
-          .get().getUniqueidentifier());
-    } catch (NoSuchElementException e) {
-      throw new NedException(DatabaseError, "Ambra ID not found in NED");
-    }
+    return new Long(nedId);
+//    try {
+//      return Long.parseLong(namedEntityDBService.findResolvedEntities(nedId, Uniqueidentifier.class)
+//          .stream()
+//          .filter(u -> u.getType().equals(UidTypeEnum.AMBRA.getName()))
+//          .findFirst()
+//          .get().getUniqueidentifier());
+//    } catch (NoSuchElementException e) {
+//      throw new NedException(DatabaseError, "Ambra ID not found in NED");
+//    }
   }
 
   private String getAuthId(int nedId) {
@@ -220,6 +219,10 @@ public class AmbraServiceImpl implements AmbraService {
 
   private void copyToAmbraPojo(Email email, UserProfile ambraUser) {
     ambraUser.setEmail(email.getEmailaddress());
+
+    // if there is a NED ID supplied, use it as the ambra user ID
+    if (email.getNedid() != null)
+      ambraUser.setID(email.getNedid().longValue());
   }
 
   private UserProfile toAmbraProfile(IndividualComposite composite) {
