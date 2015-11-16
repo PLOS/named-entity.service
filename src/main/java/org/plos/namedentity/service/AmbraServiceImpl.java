@@ -93,7 +93,8 @@ public class AmbraServiceImpl implements AmbraService {
   }
 
   private UserProfile getAmbraProfile(int nedId) {
-    UserProfile ambraProfile = userService.getUser(getAmbraId(nedId));
+    // assume the NED ID is the Ambra ID
+    UserProfile ambraProfile = userService.getUser((long)nedId);
     ambraProfile.setAuthId(getAuthId(nedId));
     return ambraProfile;
   }
@@ -116,20 +117,6 @@ public class AmbraServiceImpl implements AmbraService {
     } catch (NoSuchElementException e) {
       throw new NedException(DatabaseError, "Email address not found in NED");
     }
-  }
-
-  private Long getAmbraId(int nedId) {
-
-    return new Long(nedId);
-//    try {
-//      return Long.parseLong(namedEntityDBService.findResolvedEntities(nedId, Uniqueidentifier.class)
-//          .stream()
-//          .filter(u -> u.getType().equals(UidTypeEnum.AMBRA.getName()))
-//          .findFirst()
-//          .get().getUniqueidentifier());
-//    } catch (NoSuchElementException e) {
-//      throw new NedException(DatabaseError, "Ambra ID not found in NED");
-//    }
   }
 
   private String getAuthId(int nedId) {
