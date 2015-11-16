@@ -17,24 +17,28 @@
 package org.plos.namedentity.api.adapter;
 
 import java.io.StringReader;
-
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 import javax.json.JsonValue;
+import javax.json.JsonWriter;
+
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
-
-public class MetadataAdapter extends XmlAdapter<AdaptedMap, Map<String,String>> {
+public class JsonAdapter extends XmlAdapter<AdaptedMap, Map<String,String>> {
 
   @Override
   public AdaptedMap marshal(Map<String,String> map) throws Exception {
@@ -43,7 +47,7 @@ public class MetadataAdapter extends XmlAdapter<AdaptedMap, Map<String,String>> 
     DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
     DocumentBuilder db = dbf.newDocumentBuilder();
     Document document = db.newDocument();
-    Element rootElement = document.createElement("metadata");
+    Element rootElement = document.createElement("json");
     document.appendChild(rootElement);
 
     for (Map.Entry<String,String> entry : map.entrySet()) {
@@ -59,12 +63,23 @@ public class MetadataAdapter extends XmlAdapter<AdaptedMap, Map<String,String>> 
 
   @Override
   public Map<String,String> unmarshal(AdaptedMap adaptedMap) throws Exception {
-    throw new UnsupportedOperationException("unmarshal() not implemented");
+    if (adaptedMap == null || adaptedMap.getValue() == null) return null;
+
+    Map<String, String> map = new HashMap<String, String>();
+    Element rootElement = (Element) adaptedMap.getValue();
+    NodeList childNodes = rootElement.getChildNodes();
+    for(int x=0,size=childNodes.getLength(); x<size; x++) {
+      Node childNode = childNodes.item(x);
+      if(childNode.getNodeType() == Node.ELEMENT_NODE) {
+        map.put(childNode.getLocalName(), childNode.getTextContent());
+      }
+    }
+    return map;
   }
 
   public static Map<String,String> parseAsMap(String json) {
 
-    JsonReader reader = Json.createReader(new StringReader(json));
+    JsonReader reader   = Json.createReader(new StringReader(json));
     JsonObject mdObject = reader.readObject();
     reader.close();
 
@@ -72,7 +87,27 @@ public class MetadataAdapter extends XmlAdapter<AdaptedMap, Map<String,String>> 
     for (Map.Entry<String,JsonValue> entry : mdObject.entrySet()) {
       map.put(entry.getKey(), entry.getValue().toString().replace("\"",""));
     }
-
     return map;
+  }
+
+  public static String jsonifyMap(Map<String,String> map) {
+
+    JsonObjectBuilder builder = Json.createObjectBuilder();
+
+    for (Map.Entry<String,String> entry : map.entrySet()) {
+      builder.add(entry.getKey(), entry.getValue());
+    }
+
+    StringWriter stWriter = new StringWriter();
+    JsonWriter jsonWriter = Json.createWriter(stWriter);
+    jsonWriter.writeObject(builder.build());
+    jsonWriter.close();
+
+    String jsonData = stWriter.toString();
+    return jsonData;
+  }
+
+  private boolean isEmptyOrBlank(String s) {
+    return s == null || s.trim().isEmpty();
   }
 }
