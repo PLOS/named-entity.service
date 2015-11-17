@@ -24,10 +24,12 @@ import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.adapter.Container;
 import org.plos.namedentity.api.adapter.DateAdapter;
+import org.plos.namedentity.api.adapter.JsonAdapter;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.service.NamedEntityService;
 
+import javax.json.stream.JsonParsingException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -1163,7 +1165,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   public void testUniqueIdentifiersMetadataCRUD() throws IOException, JAXBException {
 
     /* ------------------------------------------------------------------ */
-    /*  FIND UIDS (BY NED ID)                                             */
+    /*  Find UIDs By NED ID                                               */
     /* ------------------------------------------------------------------ */
 
     String uidsURI = String.format("%s/%d/uids", INDIVIDUAL_URI, nedIndividualId);
@@ -1182,67 +1184,80 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     String uidURI = uidsURI + "/" + uid.getId();
 
     /* ------------------------------------------------------------------ */
-    /*  UPDATE UID (varied metadata content)                              */
+    /*  Update UID w/ NULL/Empty Metadata                                 */
     /* ------------------------------------------------------------------ */
 
-    String[] metadata = {
-      null,
-      "",
-      "{ \"json\":{ \"x\":\"1\" }}"
-    };
-
-    String[] expected = {
-      null,
-      null,
-      "{ \"json\":{ \"x\":\"1\" }}"
-    };
+    String[] metadata = { null, ""   };
+    String[] expected = { null, null };
 
     for (int i = 0; i < metadata.length; i++)
     {
       uid.setMetadata(metadata[i]);
 
-      response = buildRequestDefaultAuth(uidURI).put(Entity.json(writeValueAsString(uid)));
+      String marshalledUid = writeValueAsString(uid);
+      assertFalse(marshalledUid.contains("\"metadata\""));
+
+      response = buildRequestDefaultAuth(uidURI).put(Entity.json(marshalledUid));
 
       assertEquals(200, response.getStatus());
 
       responseJson = response.readEntity(String.class);
+      assertFalse(marshalledUid.contains("\"metadata\""));
 
       Uniqueidentifier uid2 = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
 
       assertEquals(expected[i], uid2.getMetadata());
     }
 
-
     /* ------------------------------------------------------------------ */
-    /*  FIND (BY UID ID (PK))                                             */
-    /* ------------------------------------------------------------------ */
-
-    //response = target(uidURI).request(MediaType.APPLICATION_JSON_TYPE).get();
-
-    //assertEquals(200, response.getStatus());
-
-    //responseJson = response.readEntity(String.class);
-
-    //Uniqueidentifier foundUid = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
-    //assertEquals(uid, foundUid);
-
-    /* ------------------------------------------------------------------ */
-    /*  UPDATE                                                            */
+    /*  Update UID Metadata w/ Different JSON Payloads                    */
     /* ------------------------------------------------------------------ */
 
-    //response = buildRequestDefaultAuth(uidURI).put(Entity.json(writeValueAsString(foundUid)));
+    metadata = new String[] {
+      "{}",
+      "{\"x\":\"1\"}",
+      "{\"x\":\"1\",\"y\":\"2\"}"
+    };
 
-    //assertEquals(200, response.getStatus());
+    for (int i = 0; i < metadata.length; i++)
+    {
+      uid.setMetadata(metadata[i]);
+
+      // write value will "marshall" the object into a string wrapping the 
+      // metadata json in a transient root (aka "json").
+
+      String marshalledUid = writeValueAsString(uid);
+      assertTrue(marshalledUid.contains("\"metadata\":{\"json\":"));
+
+      response = buildRequestDefaultAuth(uidURI).put(Entity.json(marshalledUid));
+
+      assertEquals(200, response.getStatus());
+
+      // response will marshall uid read from database. metadata json payload
+      // will be decorated with "json" root.
+
+      responseJson = response.readEntity(String.class);
+      assertTrue(responseJson.contains("\"metadata\":{\"json\":"));
+
+      // "unmarshalling" will strip "json" root.
+
+      Uniqueidentifier uid2 = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
+
+      // compare json properties as map because order may be different
+
+      assertEquals(JsonAdapter.parseAsMap(metadata[i]),
+                   JsonAdapter.parseAsMap(uid2.getMetadata()));
+    }
 
     /* ------------------------------------------------------------------ */
-    /*  DELETE                                                            */
+    /*  Invalid Metadata JSON Payload)                                    */
     /* ------------------------------------------------------------------ */
 
-    //response = target(uidURI)
-      //.request(MediaType.APPLICATION_JSON_TYPE)
-        //.delete();
-
-    //assertEquals(204, response.getStatus());
+    try { 
+      uid.setMetadata("(invalid json)"); fail();
+    }
+    catch (JsonParsingException e) {  // expected
+    }
   }
 
   @Test
