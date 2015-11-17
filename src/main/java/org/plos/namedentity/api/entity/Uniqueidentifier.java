@@ -96,10 +96,6 @@ public class Uniqueidentifier extends Entity {
   private static Pattern salesForceRegexp  = Pattern.compile("^[a-zA-Z0-9]*$");
   private static Pattern orcidRegexp  = Pattern.compile("^([\\d]{4}\\-?){3}[\\d]{3}[\\dxX]$");
 
-  public Uniqueidentifier() {
-    metadataMap = new HashMap<String, String>();
-  }
-
   @Override
   public void validate() {
 

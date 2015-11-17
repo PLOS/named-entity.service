@@ -1160,6 +1160,92 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   }
 
   @Test
+  public void testUniqueIdentifiersMetadataCRUD() throws IOException, JAXBException {
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND UIDS (BY NED ID)                                             */
+    /* ------------------------------------------------------------------ */
+
+    String uidsURI = String.format("%s/%d/uids", INDIVIDUAL_URI, nedIndividualId);
+
+    Response response = target(uidsURI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(200, response.getStatus());
+
+    String responseJson = response.readEntity(String.class);
+
+    Unmarshaller unmarshaller = jsonUnmarshaller(Uniqueidentifier.class);
+    List<Uniqueidentifier> uids = unmarshalEntities(responseJson, Uniqueidentifier.class, unmarshaller);
+
+    Uniqueidentifier uid = uids.get(0);
+
+    String uidURI = uidsURI + "/" + uid.getId();
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE UID (varied metadata content)                              */
+    /* ------------------------------------------------------------------ */
+
+    String[] metadata = {
+      null,
+      "",
+      "{ \"json\":{ \"x\":\"1\" }}"
+    };
+
+    String[] expected = {
+      null,
+      null,
+      "{ \"json\":{ \"x\":\"1\" }}"
+    };
+
+    for (int i = 0; i < metadata.length; i++)
+    {
+      uid.setMetadata(metadata[i]);
+
+      response = buildRequestDefaultAuth(uidURI).put(Entity.json(writeValueAsString(uid)));
+
+      assertEquals(200, response.getStatus());
+
+      responseJson = response.readEntity(String.class);
+
+      Uniqueidentifier uid2 = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
+
+      assertEquals(expected[i], uid2.getMetadata());
+    }
+
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY UID ID (PK))                                             */
+    /* ------------------------------------------------------------------ */
+
+    //response = target(uidURI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    //assertEquals(200, response.getStatus());
+
+    //responseJson = response.readEntity(String.class);
+
+    //Uniqueidentifier foundUid = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
+    //assertEquals(uid, foundUid);
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    //response = buildRequestDefaultAuth(uidURI).put(Entity.json(writeValueAsString(foundUid)));
+
+    //assertEquals(200, response.getStatus());
+
+    /* ------------------------------------------------------------------ */
+    /*  DELETE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    //response = target(uidURI)
+      //.request(MediaType.APPLICATION_JSON_TYPE)
+        //.delete();
+
+    //assertEquals(204, response.getStatus());
+  }
+
+  @Test
   public void testInvalidPassword() throws IOException, JAXBException {
 
     String compositeJsonTemplate = new String(Files.readAllBytes(

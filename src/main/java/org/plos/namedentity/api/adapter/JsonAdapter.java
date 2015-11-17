@@ -78,6 +78,7 @@ public class JsonAdapter extends XmlAdapter<AdaptedMap, Map<String,String>> {
   }
 
   public static Map<String,String> parseAsMap(String json) {
+    if (isEmptyOrBlank(json)) return null;
 
     JsonReader reader   = Json.createReader(new StringReader(json));
     JsonObject mdObject = reader.readObject();
@@ -107,7 +108,7 @@ public class JsonAdapter extends XmlAdapter<AdaptedMap, Map<String,String>> {
     return jsonData;
   }
 
-  private boolean isEmptyOrBlank(String s) {
+  private static boolean isEmptyOrBlank(String s) {
     return s == null || s.trim().isEmpty();
   }
 }
