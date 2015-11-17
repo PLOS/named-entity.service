@@ -257,7 +257,7 @@ tomcat)
     echo "           # (http://maven.ambraproject.org/maven2/release/org/plos/)"
     echo ""
     echo "  build-ambra-admin-jar"
-    echo "  deploy-admra-admin-jar"
+    echo "  deploy-ambra-admin-jar"
     echo ""
     exit 0
     ;;

@@ -58,6 +58,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       resolveOrganization((Organization) t);
     else if (t instanceof Address)
       resolveAddress((Address) t);
+    else if (t instanceof Alert)
+      resolveAlert((Alert) t);
     else if (t instanceof Phonenumber)
       resolvePhonenumber((Phonenumber) t);
     else if (t instanceof Email)
@@ -197,6 +199,22 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     return entity;
   }
 
+  private Alert resolveAlert(Alert entity) {
+    if (entity.getType() != null)
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Alert Types"), entity.getType()));
+
+    if (entity.getSource() != null)
+      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
+
+    if (entity.getFrequency() != null)
+      entity.setFrequencytypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Alert Frequency"), entity.getFrequency()));
+
+    if (entity.getJournal() != null)
+      entity.setJournaltypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Journal Types"), entity.getJournal()));
+
+    return entity;
+  }
+
   private Phonenumber resolvePhonenumber(Phonenumber entity) {
 
     if (entity.getType() != null)
@@ -328,14 +346,16 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     if (clazz == IndividualComposite.class) {
 
-      // insert user into Ambra DB first, then NED
-      Long ambraId = ambraService.createUser((IndividualComposite)composite);
+      Email email = ((IndividualComposite) composite).getEmails().get(0);
+      Integer ambraId = email.getNedid();
 
-      //AMBRA-ADAPTER:
-      nedId = nedDBSvc.newNamedEntityId(composite.getTypeName(), ambraId.intValue());
+      // only insert the person into Ambra if there is no NED ID specified
+      if (ambraId == null)
+        ambraId = ambraService.createUser((IndividualComposite)composite).intValue();
+
+      nedId = nedDBSvc.newNamedEntityId(composite.getTypeName(), ambraId);
 
       // insert Ambra into NED UIDs
-      Email email = ((IndividualComposite) composite).getEmails().get(0);
 
       Uniqueidentifier uniqueidentifier = new Uniqueidentifier();
       uniqueidentifier.setNedid(nedId);   /* nedId == ambraId */

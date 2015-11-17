@@ -20,7 +20,13 @@ NED is configured to TEMPORARILY also talk to the Ambra database for some of its
 
 You must configure your context file accordingly. See the sample in config/tomcat/
 
-NED talks to the Ambra database via, a repackaged ambra-admin jar file that needs to be generated via the 'setup-ambra-libs.sh'. You need to run it once and it takes one argument which is the path to your local ambra-admin source directory.
+NED talks to the Ambra database via a repackaged ambra-admin jar file. This
+needs to be built at least once and deployed to our internal Maven repository.
+It is likely that this has already been done, so you don't need to do this.
+The ned script can build and deploy this jar.
+
+    ./ned.sh build-ambra-admin-jar
+    ./ned.sh deploy-ambra-admin-jar
 
 Adding userapps
 ---------------
@@ -30,7 +36,7 @@ auth, and there are fields for the appname and password on the swagger
 interface. To insert a userapp into the database, run this:
 
     ./ned.sh insertapp appname password
-    
+
 Running
 -------
 
