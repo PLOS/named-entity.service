@@ -155,9 +155,7 @@ public class Uniqueidentifier extends Entity {
   @XmlJavaTypeAdapter(JsonAdapter.class)
   public void setMetadataMap(Map<String,String> metadataMap) {
     this.metadataMap = metadataMap;
-    if (metadataMap != null) {
-      this.metadata = JsonAdapter.jsonifyMap(metadataMap);
-    }
+    this.metadata = (metadataMap != null) ? JsonAdapter.jsonifyMap(metadataMap) : null;
   }
 
   @XmlTransient
@@ -167,8 +165,6 @@ public class Uniqueidentifier extends Entity {
 
   public void setMetadata(String metadata) {
     this.metadata = metadata;
-    if (metadata != null) {
-      this.metadataMap = JsonAdapter.parseAsMap(metadata);
-    }
+    this.metadataMap = (metadata != null) ? JsonAdapter.parseAsMap(metadata) : null;
   }
 }

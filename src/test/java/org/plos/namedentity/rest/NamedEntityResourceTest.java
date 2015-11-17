@@ -1184,36 +1184,10 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     String uidURI = uidsURI + "/" + uid.getId();
 
     /* ------------------------------------------------------------------ */
-    /*  Update UID w/ NULL/Empty Metadata                                 */
-    /* ------------------------------------------------------------------ */
-
-    String[] metadata = { null, ""   };
-    String[] expected = { null, null };
-
-    for (int i = 0; i < metadata.length; i++)
-    {
-      uid.setMetadata(metadata[i]);
-
-      String marshalledUid = writeValueAsString(uid);
-      assertFalse(marshalledUid.contains("\"metadata\""));
-
-      response = buildRequestDefaultAuth(uidURI).put(Entity.json(marshalledUid));
-
-      assertEquals(200, response.getStatus());
-
-      responseJson = response.readEntity(String.class);
-      assertFalse(marshalledUid.contains("\"metadata\""));
-
-      Uniqueidentifier uid2 = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
-
-      assertEquals(expected[i], uid2.getMetadata());
-    }
-
-    /* ------------------------------------------------------------------ */
     /*  Update UID Metadata w/ Different JSON Payloads                    */
     /* ------------------------------------------------------------------ */
 
-    metadata = new String[] {
+    String[] metadata = {
       "{}",
       "{\"x\":\"1\"}",
       "{\"x\":\"1\",\"y\":\"2\"}"
@@ -1247,6 +1221,32 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
       assertEquals(JsonAdapter.parseAsMap(metadata[i]),
                    JsonAdapter.parseAsMap(uid2.getMetadata()));
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  Update UID w/ NULL/Empty Metadata                                 */
+    /* ------------------------------------------------------------------ */
+
+    String[] metadata2 = { null, ""   };
+    String[] expected  = { null, null };
+
+    for (int i = 0; i < metadata2.length; i++)
+    {
+      uid.setMetadata(metadata2[i]);
+
+      String marshalledUid = writeValueAsString(uid);
+      assertFalse(marshalledUid.contains("\"metadata\""));
+
+      response = buildRequestDefaultAuth(uidURI).put(Entity.json(marshalledUid));
+
+      assertEquals(200, response.getStatus());
+
+      responseJson = response.readEntity(String.class);
+      assertFalse(marshalledUid.contains("\"metadata\""));
+
+      Uniqueidentifier uid2 = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
+
+      assertEquals(expected[i], uid2.getMetadata());
     }
 
     /* ------------------------------------------------------------------ */
