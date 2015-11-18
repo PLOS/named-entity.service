@@ -4797,11 +4797,11 @@ font-style: italic;
   
   
   
-    <li><a href="#Relationship"><code>Relationship</code></a></li>
-  
-  
-  
     <li><a href="#Auth"><code>Auth</code></a></li>
+  
+  
+  
+    <li><a href="#Relationship"><code>Relationship</code></a></li>
   
   
   
@@ -5011,19 +5011,19 @@ font-style: italic;
       
       <div class="param">sourcetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
       
+      <div class="param">nedid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
       <div class="param">isactive </div><div class="param-desc"><span class="param-type">Boolean</span> </div>
       
       <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
       
       <div class="param">familiarname </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       <div class="param">legalname </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       <div class="param">maincontactid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">nedid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
       
       <div class="param">typeName </div><div class="param-desc"><span class="param-type">String</span> </div>
       
@@ -5182,47 +5182,6 @@ font-style: italic;
   
   
   <div class="model">
-    <h3 class="field-label"><a name="Relationship">Relationship</a> <a class="up" href="#__Models">Up</a></h3>
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">nedid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">source </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">sourcetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">created </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">createdby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">createdbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">lastmodifiedby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">lastmodifiedbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">nedidrelated </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">type </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">title </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">startdate </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">enddate </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      
-    </div>  <!-- field-items -->
-  </div>
-  
-  
-  
-  <div class="model">
     <h3 class="field-label"><a name="Auth">Auth</a> <a class="up" href="#__Models">Up</a></h3>
     <div class="field-items">
       <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
@@ -5262,6 +5221,47 @@ font-style: italic;
       <div class="param">verified </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       <div class="param">isactive </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Relationship">Relationship</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">nedid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">source </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">sourcetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">created </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      <div class="param">createdby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">createdbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">lastmodifiedby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">lastmodifiedbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">nedidrelated </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">type </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">title </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">startdate </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      <div class="param">enddate </div><div class="param-desc"><span class="param-type">Date</span> </div>
       
       
     </div>  <!-- field-items -->

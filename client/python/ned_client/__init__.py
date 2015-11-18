@@ -12,8 +12,8 @@ from .models.globaltype import Globaltype
 from .models.url import Url
 from .models.ned_error_response import NedErrorResponse
 from .models.typedescription import Typedescription
-from .models.relationship import Relationship
 from .models.auth import Auth
+from .models.relationship import Relationship
 from .models.individual_composite import IndividualComposite
 from .models.phonenumber import Phonenumber
 from .models.individualprofile import Individualprofile

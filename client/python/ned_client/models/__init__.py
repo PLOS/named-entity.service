@@ -12,8 +12,8 @@ from .globaltype import Globaltype
 from .url import Url
 from .ned_error_response import NedErrorResponse
 from .typedescription import Typedescription
-from .relationship import Relationship
 from .auth import Auth
+from .relationship import Relationship
 from .individual_composite import IndividualComposite
 from .phonenumber import Phonenumber
 from .individualprofile import Individualprofile
