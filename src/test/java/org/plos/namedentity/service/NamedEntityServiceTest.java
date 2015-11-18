@@ -758,8 +758,8 @@ public class NamedEntityServiceTest {
 
     Group groupEntity = new Group();
     groupEntity.setNedid(1);
-    groupEntity.setApplicationtype("Knowledge Base");
-    groupEntity.setType("Knowledge Base - Pathogens");
+    groupEntity.setApplicationtype("Named Party DB");
+    groupEntity.setType("NED Admin");
     groupEntity.setStartdate( dateNow() );
     groupEntity.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
     groupEntity.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
@@ -880,7 +880,7 @@ public class NamedEntityServiceTest {
     List<Group> groups = new ArrayList<>();
     Group group = new Group();
 
-    group.setType("Knowledge Base - Medicine");
+    group.setType("NED Admin");
     group.setStartdate(new java.sql.Date(1401408000));  // "2014-05-30"
 
     group.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
