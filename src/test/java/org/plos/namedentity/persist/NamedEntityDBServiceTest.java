@@ -665,11 +665,11 @@ public class NamedEntityDBServiceTest {
     // CREATE
 
     Integer srcAppTypeClassId = nedDBSvc.findTypeClass(USER_APPLICATIONS.getName());
-    Integer srcAppTypeId = nedDBSvc.findTypeValue(srcAppTypeClassId, "Knowledge Base");
+    Integer srcAppTypeId = nedDBSvc.findTypeValue(srcAppTypeClassId, "Named party DB");
     assertNotNull(srcAppTypeId);
 
     Integer groupTypeClassId  = nedDBSvc.findTypeClass(GROUPS.getName());
-    Integer groupTypeId = nedDBSvc.findTypeValue(groupTypeClassId, "Knowledge Base - PLOSONE");
+    Integer groupTypeId = nedDBSvc.findTypeValue(groupTypeClassId, "NED Manage Users");
     assertNotNull(groupTypeId);
 
     Group kbPlosOneGrp = _(new Group());
@@ -715,7 +715,7 @@ public class NamedEntityDBServiceTest {
 
     List<Group> groups = nedDBSvc.findResolvedEntities(savedGroup.getNedid(), Group.class);
     Group group = groups.get(0);
-    assertEquals("Knowledge Base - PLOSONE", group.getType());
+    assertEquals("NED Manage Users", group.getType());
     assertEquals(kbPlosOneGrp.getNedid(), group.getNedid());
 
     // DELETE

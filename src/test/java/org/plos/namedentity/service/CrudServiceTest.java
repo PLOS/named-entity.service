@@ -388,8 +388,8 @@ public class CrudServiceTest {
 
     Group newGroup = _(new Group());
     newGroup.setNedid(1);
-    newGroup.setApplicationtype("Knowledge Base");
-    newGroup.setType("Knowledge Base - Biology");
+    newGroup.setApplicationtype("Named Party DB");
+    newGroup.setType("NED Admin");
     newGroup.setStartdate( dateNow() );
     newGroup.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
     newGroup.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
