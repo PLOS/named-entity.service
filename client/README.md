@@ -20,7 +20,7 @@ Run the generator (open the script to see possible arguments):
 
 Make sure your settings have the ambraproject.org credentials in them. After the clients have been generated, you should be able to run:
 
-    java_deploy/deploy.sh
+    cd java_deploy && ./deploy.sh
 
 Then you should be able to find them in
 http://maven.ambraproject.org/maven2/release/org/plos/ned-client
