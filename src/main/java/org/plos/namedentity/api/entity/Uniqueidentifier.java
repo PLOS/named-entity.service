@@ -43,8 +43,6 @@ public class Uniqueidentifier extends Entity {
   @XmlAnyElement(MetadataDomHandler.class)
   private String metadata;
 
-  private Map<String,String> metadataMap;
-
   private static Integer salesForceLengthA = 15;
   private static Integer salesForceLengthB = 18;
   private static Pattern salesForceRegexp  = Pattern.compile("^[a-zA-Z0-9]*$");
