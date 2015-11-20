@@ -16,18 +16,15 @@
  */
 package org.plos.namedentity.api.entity;
 
-import org.eclipse.persistence.oxm.annotations.XmlPath;
-
-import org.plos.namedentity.api.adapter.JsonAdapter;
 import org.plos.namedentity.api.NedException;
+import org.plos.namedentity.api.adapter.MetadataDomHandler;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -35,52 +32,7 @@ import static org.plos.namedentity.api.NedException.ErrorType.InvalidOrcidId;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidSalesforceId;
 import static org.plos.namedentity.api.NedException.ErrorType.UidValueError;
 
-/*
-  Here's a brief explanation of the annotations used in this pojo. Some of the
-  complexity is because the pojo is used in more than one context. In a
-  nutshell, JOOQ calls the metadata's getter when constructing update SQL, and
-  the setter when populating pojo from a sql result. On the other hand, JAXB
-  calls the accessors marked with the XmlElement "metadata" annotation. There
-  are two representations of metadata. One is a string of the json metadata that
-  is stored in the database; the other representation is a map of the parsed
-  json metadata. The map is used by JAXB to render the JSON object.
-
-  Here is a high-level sequence diagram of the marshalling.
-
-    MARSHALLING [JSON <- POJO] (ex: Reading Metadata From Database)
-
-      // JOOQ reflects on pojo and calls setter
-
-      Uniqueidentifier.setMetadata()
-
-      // JAXB calls getter on "metadata" property
-
-      Uniqueidentifier.getMetadataMap()
-
-      // JAXB marshals metadata from map of strings to json.
-
-      org.plos.namedentity.api.adapter.MetadataAdapter.marshal()
-
-
-    UNMARSHALLING [JSON -> POJO] (ex: Invoking API To Update UID Record)
-
-      // caller invokes update uid endpoint. if metadata is defined, it is expected
-      // to have a transient root, such as "json", but can be anything. root isn't
-      // persisted to the database.
-
-      org.plos.namedentity.api.adapter.MetadataAdapter.unmarshal()
-
-      // JAXB calls setter on "metadata" property.
-
-      Uniqueidentifier.setMetadataMap()
-
-      // JOOQ calls metadata getter to retrieve value to update in database.
-
-      Uniqueidentifier.getMetadata()
-
-      // NED-API reads updated composite from database (ie, marshals. see above)
-*/
-
+@XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class Uniqueidentifier extends Entity {
 
@@ -88,7 +40,9 @@ public class Uniqueidentifier extends Entity {
   private String  type;
   private String  uniqueidentifier;
 
+  @XmlAnyElement(MetadataDomHandler.class)
   private String metadata;
+
   private Map<String,String> metadataMap;
 
   private static Integer salesForceLengthA = 15;
@@ -145,26 +99,11 @@ public class Uniqueidentifier extends Entity {
     this.uniqueidentifier = uniqueidentifier;
   }
 
-  @XmlElement(name = "metadata")
-  @XmlJavaTypeAdapter(JsonAdapter.class)
-  public Map<String,String> getMetadataMap() {
-    return this.metadataMap;
-  }
-
-  @XmlElement(name = "metadata")
-  @XmlJavaTypeAdapter(JsonAdapter.class)
-  public void setMetadataMap(Map<String,String> metadataMap) {
-    this.metadataMap = metadataMap;
-    this.metadata = (metadataMap != null) ? JsonAdapter.jsonifyMap(metadataMap) : null;
-  }
-
-  @XmlTransient
   public String getMetadata() {
     return metadata;
   }
 
   public void setMetadata(String metadata) {
     this.metadata = metadata;
-    this.metadataMap = (metadata != null) ? JsonAdapter.parseAsMap(metadata) : null;
   }
 }

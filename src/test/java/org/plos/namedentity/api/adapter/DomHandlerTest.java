@@ -30,8 +30,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class JsonAdapterTest {
-
+public class DomHandlerTest {
+/*
   private JsonAdapter jsonAdapter = new JsonAdapter();
 
   private final String orcidMetadata =
@@ -52,7 +52,7 @@ public class JsonAdapterTest {
     AdaptedMap adaptedMap = jsonAdapter.marshal(jsonMap);
     Document doc = (Document) adaptedMap.getValue();  // xml document
     Element root = doc.getDocumentElement();          // <json>
-    /*
+
       <json>
         <accessToken>a9d2479e-9ff4-470a-a9c2-0b4ff9391cae</accessToken>
         <refreshToken>0c91a121-a6b2-4058-b731-305708159360</refreshToken>
@@ -61,7 +61,7 @@ public class JsonAdapterTest {
         <lastModified>2014-06-02T08:33:31Z</lastModified>
         <created>2014-06-02T08:33:31Z</created>
       </json>
-    */
+
     NodeList nodes = root.getChildNodes();
     for(int i=0; i<nodes.getLength(); i++){
       Node node = nodes.item(i);
@@ -124,4 +124,5 @@ public class JsonAdapterTest {
     }
     return docNS;
   }
+  */
 }
