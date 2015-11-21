@@ -36,6 +36,8 @@
         url = window.location.pathname.split('/').slice(0,-2).concat("swagger.json").join("/");
       }
 
+      var baseUrl = url.split('/').slice(0,-2).join("/");
+
       // Pre load translate...
       if(window.SwaggerTranslator) {
         window.SwaggerTranslator.translate();
@@ -64,6 +66,12 @@
           });
 
           //addApiKeyAuthorization();
+
+          window.swaggerUi.api.setHost(location.hostname+(location.port ? ':'+location.port: ''));
+
+//          window.swaggerUi.api.setScheme(window.location.protocol);
+
+          window.swaggerUi.api.setBasePath('/v0');
         },
         onFailure: function(data) {
           log("Unable to Load SwaggerUI");
