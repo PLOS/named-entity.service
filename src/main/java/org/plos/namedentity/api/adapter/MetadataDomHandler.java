@@ -23,8 +23,8 @@ public class MetadataDomHandler extends BaseDomHandler {
 
   // MOXY JAXB UNMARSHALLING code must be doing some kind of reflective stuff,
   // because if we remove either createUnmarshaller() or getElement() methods, 
-  // which are implemented in the parent class, unmarshalling fails (unable to 
-  // pinpoint exactly why).
+  // both of which are implemented in the parent class, unmarshalling fails 
+  // (unable to pinpoint exactly why).
 
   @Override
   public StreamResult createUnmarshaller(ValidationEventHandler errorHandler) {

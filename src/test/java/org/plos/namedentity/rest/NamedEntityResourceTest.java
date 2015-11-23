@@ -16,6 +16,7 @@
  */
 package org.plos.namedentity.rest;
 
+import org.json.XMLTokener;
 import org.junit.Before;
 import org.junit.Test;
 import org.plos.namedentity.api.IndividualComposite;
@@ -1246,10 +1247,6 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   @Test
   public void testUniqueIdentifiersMetadataCRUD() throws IOException, JAXBException {
 
-    /* ------------------------------------------------------------------ */
-    /*  Find UIDs By NED ID                                               */
-    /* ------------------------------------------------------------------ */
-
     String uidsURI = String.format("%s/%d/uids", INDIVIDUAL_URI, nedIndividualId);
 
     Response response = target(uidsURI).request(MediaType.APPLICATION_JSON_TYPE).get();
@@ -1265,38 +1262,36 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     String uidURI = uidsURI + "/" + uid.getId();
 
-    String[] metadata = {
-      "{\"x\":\"1\"}",
-      "{\"x\":\"1\",\"y\":\"2\"}",
-      null,
-      "",
-      "{}"
+    String[][] metadata = {
+      { "{\"x\":\"1\",\"y\":\"2\"}", "<x>1</x><y>2</y>", "{\"x\":\"1\",\"y\":\"2\"}" },
+      { "<x>1</x><y>2</y>",          "<x>1</x><y>2</y>", "{\"x\":\"1\",\"y\":\"2\"}" },
+      { "{\"x\":\"1\"}",             "<x>1</x>",         "{\"x\":\"1\"}" },
+      { "<x>1</x>",                  "<x>1</x>",         "{\"x\":\"1\"}" },
+      { null, null, null },
+      { ""  , null, null },
+      { "{}", null, null }
     };
 
-    String[] expected = {
-      "{\"x\":\"1\"}",
-      "{\"x\":\"1\",\"y\":\"2\"}",
-      null,
-      null,
-      null
-    };
+    final int INPUT_IDX                 = 0;
+    final int EXPECTED_INTERNAL_XML_IDX = 1;
+    final int EXPECTED_JSON_OUTPUT_IDX  = 2;
 
     for (int i = 0; i < metadata.length; i++)
     {
-      uid.setMetadata(metadata[i]);
+      uid.setMetadata(metadata[i][INPUT_IDX]);
 
       response = buildRequestDefaultAuth(uidURI).put(Entity.json(writeValueAsString(uid)));
 
       assertEquals(200, response.getStatus());
 
       responseJson = response.readEntity(String.class);
+      Map<String,String> jsonMap = parseJsonAsMap(responseJson);
+      assertEquals(metadata[i][EXPECTED_JSON_OUTPUT_IDX], jsonMap.get("metadata"));
 
       Uniqueidentifier uid2 = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
 
-      // compare json properties as map because order may be different
-
-      assertEquals(parseAsMap(metadata[i]),
-                   parseAsMap(uid2.getMetadata()));
+      assertEquals(parseXmlAsSet(metadata[i][EXPECTED_INTERNAL_XML_IDX]),
+                   parseXmlAsSet(uid2.getMetadata()));
     }
   }
 
@@ -1901,7 +1896,26 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     return s == null || s.trim().isEmpty();
   }
 
-  public Map<String,String> parseAsMap(String json) {
+  private Set<String> parseXmlAsSet(String xml) {
+    if (isEmptyOrBlank(xml)) return null;
+
+    Set<String> elements = new HashSet<>();
+
+    XMLTokener tokener = new XMLTokener(xml);
+    Object token = tokener.nextContent();
+    while (token != null) {
+      String content = token.toString();
+      if ("<".equals(content) || content.startsWith("/")) {
+        token = tokener.nextContent();
+        continue;
+      }
+      elements.add(content);
+      token = tokener.nextContent();
+    }
+    return elements;
+  }
+
+  private Map<String,String> parseJsonAsMap(String json) {
     if (isEmptyOrBlank(json)) return null;
 
     JsonReader reader   = Json.createReader(new StringReader(json));
@@ -1910,7 +1924,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     Map<String,String> map = new HashMap<>();
     for (Map.Entry<String,JsonValue> entry : mdObject.entrySet()) {
-      map.put(entry.getKey(), entry.getValue().toString().replace("\"",""));
+      map.put(entry.getKey(), entry.getValue().toString());
     }
     return map;
   }

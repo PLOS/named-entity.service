@@ -171,6 +171,12 @@
       <artifactId>javax.json</artifactId>
       <version>1.0.4</version>
     </dependency>
+    <!-- converting json <-> xml -->
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20150729</version>
+    </dependency>
 
     <dependency>
       <groupId>org.glassfish.jersey.media</groupId>
@@ -186,6 +192,9 @@
     <dependency>
       <groupId>org.glassfish.jersey.test-framework.providers</groupId>
       <artifactId>jersey-test-framework-provider-grizzly2</artifactId>
+      <!--<artifactId>jersey-test-framework-provider-jdk-http</artifactId>-->
+      <!--<artifactId>jersey-test-framework-provider-simple</artifactId>-->
+      <!--<artifactId>jersey-test-framework-provider-jetty</artifactId>-->
       <version>${org.glassfish.jersey-version}</version>
       <scope>test</scope>
     </dependency>

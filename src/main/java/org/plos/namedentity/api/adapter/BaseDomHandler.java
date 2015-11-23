@@ -23,53 +23,67 @@ import javax.xml.bind.annotation.DomHandler;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.*;
 
-public abstract class BaseDomHandler implements DomHandler<String, StreamResult> {
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.XML;
 
-  // TODO: flushing/closing writer instance doesn't clear buffer. workaround 
-  // by instantiating new writer.
-  //private StringWriter xmlWriter = new StringWriter();
+public abstract class BaseDomHandler implements DomHandler<String, StreamResult> {
 
   @Override
   public StreamResult createUnmarshaller(ValidationEventHandler errorHandler) {
-    //return new StreamResult(xmlWriter);
     return new StreamResult(new StringWriter());
   }
 
   @Override
   public String getElement(StreamResult rt) {
 
-    // json properties are stored as attributes in the root element, and also as
-    // child nodes. we'll process the latter for now. sample playload:
-    //
-    // JSON : "metadata" : { "x":"1","y":"2" }
-    // <?xml version="1.0" encoding="UTF-8"?><metadata x="1" y="2"><x>1</x><y>2</y></metadata>"
+    String xml = getTagContent(rt.getWriter().toString());
 
-    String xml = rt.getWriter().toString();
-
-    // look for first greater than (>) character after start of tag. assume
-    // greater than in content is escaped (ie, &gt;)
-
-    int beginIndex = xml.indexOf(">", xml.indexOf("<"+getTagName())) + 1;
-
-    // endtag won't be found if xml element has no content (ex: <metadata/>)
-    int endIndex = xml.indexOf(getEndTag());
-
-    // return value will be stored in database
-    return (endIndex != -1) ? xml.substring(beginIndex, endIndex) : null;
+    try {
+      // content may be json (less common), so try to parse it as such.
+      // if succeeds, update xml representation with parsed result.
+      xml = XML.toString(new JSONObject(xml));
+    }
+    catch (org.json.JSONException e) {
+      // not valid json. assume original content is valid xml.
+    }
+    // return value stored in database
+    return isEmptyOrBlank(xml) ? null : xml;
   }
 
   @Override
   public Source marshal(String n, ValidationEventHandler errorHandler) {
     try {
-      //String xml = getStartTag() + n.trim() + getEndTag();
-      String xml = getStartTag() + "<accessToken>a9d2479e-9ff4-470a-a9c2-0b4ff9391cae</accessToken><x>1</x>" + getEndTag();
-//| 2337 |   957 |    529 | 0000-0002-7680-7527 |            7 | {"accessToken":"a9d2479e-9ff4-470a-a9c2-0b4ff9391cae","refreshToken":"0c91a121-a6b2-4058-b731-305708159360","tokenScope":"/orcid-profile/read-limited","tokenExpires":"2034-06-02T04:48:49Z","lastModified":"2014-06-02T08:33:31Z","created":"2014-06-02T08:33:31Z"} | 2015-10-15 
+      String xml = getStartTag() + n.trim() + getEndTag();
       StringReader xmlReader = new StringReader(xml);
       return new StreamSource(xmlReader);
     } catch(Exception e) {
       throw new RuntimeException(e);
     }
   }
+
+  protected String getTagContent(String xml) {
+
+    // tag content will either be xml or a stringified json representation.
+    // in either case, we'll extract and return content "as is".
+    //
+    // Note that JAXB unmarshals payload into xml attributes and child nodes.
+    // We ignore the attributes and process the nodes.
+    //
+    //   <?xml version="1.0" encoding="UTF-8"?><metadata>{ "x":"1","y":"2" }</metadata>"
+    //   <?xml version="1.0" encoding="UTF-8"?><metadata x="1" y="2"><x>1</x><y>2</y></metadata>"
+
+    // look for first greater than (>) character after start of tag.
+    // assume greater than in content is escaped (ie, &gt;)
+
+    int beginIndex = xml.indexOf(">", xml.indexOf("<"+getTagName())) + 1;
+
+    // end tag won't be found if xml element has no content (ex: <metadata/>)
+    int endIndex = xml.indexOf(getEndTag());
+
+    return (endIndex != -1) ? xml.substring(beginIndex, endIndex) : "";
+  }
+
 
   protected String getTagName() {
     throw new UnsupportedOperationException("Tag name not defined!");
@@ -79,5 +93,9 @@ public abstract class BaseDomHandler implements DomHandler<String, StreamResult>
   }
   protected String getEndTag() {
     return "</"+getTagName()+">";
+  }
+
+  protected boolean isEmptyOrBlank(String s) {
+    return s == null || s.trim().isEmpty();
   }
 }
