@@ -17,7 +17,11 @@
 package org.plos.namedentity.rest;
 
 import org.eclipse.persistence.jaxb.rs.MOXyJsonProvider;
+import org.eclipse.persistence.jaxb.MarshallerProperties;
+
 import org.glassfish.jersey.server.ResourceConfig;
+
+import org.plos.namedentity.api.adapter.CharacterEscapeHandlerImpl;
 
 public class Main extends ResourceConfig {
 
@@ -34,9 +38,7 @@ public class Main extends ResourceConfig {
 
     register(moxyJsonProvider);
 
-//    register(LoggingFilter.class);
-
     // set json provider properties here (moxy)
-    //property(MarshallerProperties.JSON_INCLUDE_ROOT, false);
+    //property(MarshallerProperties.CHARACTER_ESCAPE_HANDLER, new CharacterEscapeHandlerImpl());
   }
 }

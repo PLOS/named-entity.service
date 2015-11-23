@@ -54,9 +54,11 @@ public abstract class BaseDomHandler implements DomHandler<String, StreamResult>
   @Override
   public Source marshal(String n, ValidationEventHandler errorHandler) {
     try {
+      //String xml = getStartTag() + n.trim() + getEndTag();
       String xml = getStartTag() + n.trim() + getEndTag();
       StringReader xmlReader = new StringReader(xml);
       return new StreamSource(xmlReader);
+
     } catch(Exception e) {
       throw new RuntimeException(e);
     }

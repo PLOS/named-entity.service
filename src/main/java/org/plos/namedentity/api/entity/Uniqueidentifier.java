@@ -20,9 +20,6 @@ import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.adapter.MetadataDomHandler;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import java.util.Map;
@@ -32,16 +29,13 @@ import static org.plos.namedentity.api.NedException.ErrorType.InvalidOrcidId;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidSalesforceId;
 import static org.plos.namedentity.api.NedException.ErrorType.UidValueError;
 
-@XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class Uniqueidentifier extends Entity {
 
   private Integer typeid;
   private String  type;
   private String  uniqueidentifier;
-
-  @XmlAnyElement(MetadataDomHandler.class)
-  private String metadata;
+  private String  metadata;
 
   private static Integer salesForceLengthA = 15;
   private static Integer salesForceLengthB = 18;
