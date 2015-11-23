@@ -17,9 +17,12 @@
 package org.plos.namedentity.api.entity;
 
 import org.plos.namedentity.api.NedException;
+import org.plos.namedentity.api.adapter.MetadataDomHandler;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 
 import javax.xml.bind.annotation.XmlRootElement;
+
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidOrcidId;
@@ -34,7 +37,6 @@ public class Uniqueidentifier extends Entity {
   private String  uniqueidentifier;
   private String  metadata;
 
-//TODO - verify metadata is valid json?!
   private static Integer salesForceLengthA = 15;
   private static Integer salesForceLengthB = 18;
   private static Pattern salesForceRegexp  = Pattern.compile("^[a-zA-Z0-9]*$");

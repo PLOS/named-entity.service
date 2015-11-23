@@ -2,5 +2,5 @@
   "type"             : "ORCID",
   "uniqueidentifier" : "0000-0002-9430-004X",
   "source"           : "Ambra",
-  "metadata"         : "[{'userProfileMetaDataID':'7883','metaKey':'profile_field_JoinDate','metaValue':'1167552000'},{'userProfileMetaDataID':'7885','metaKey':'profile_field_welcome','metaValue':''},{'userProfileMetaDataID':'7887','metaKey':'profile_field_EMPeopleID','metaValue':'237036'},{'userProfileMetaDataID':'7889','metaKey':'profile_field_course','metaValue':''}]"
+  "metadata"         : {"accessToken":"aa01a947-1659-4903-9a9f-3de6af8cca8f","refreshToken":"16d9bfbe-6f52-40bd-9a37-fb24665774a9","tokenScope":"/orcid-profile/read-limited","tokenExpires":"2035-08-04T11:00:19Z","lastModified":"2015-08-04T14:45:02Z","created":"2015-08-04T14:45:02Z"}
 }

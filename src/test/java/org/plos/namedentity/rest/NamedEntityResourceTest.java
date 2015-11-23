@@ -16,6 +16,7 @@
  */
 package org.plos.namedentity.rest;
 
+import org.json.XMLTokener;
 import org.junit.Before;
 import org.junit.Test;
 import org.plos.namedentity.api.IndividualComposite;
@@ -28,6 +29,7 @@ import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.service.NamedEntityService;
 
+import javax.json.stream.JsonParsingException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -37,6 +39,7 @@ import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.IOException;
+import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -45,17 +48,19 @@ import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import javax.json.JsonValue;
+
+import static org.junit.Assert.*;
 import static org.plos.namedentity.api.NedException.ErrorType.DupeEmailError;
 import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidIndividualSearchQuery;
@@ -1240,6 +1245,57 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   }
 
   @Test
+  public void testUniqueIdentifiersMetadataCRUD() throws IOException, JAXBException {
+
+    String uidsURI = String.format("%s/%d/uids", INDIVIDUAL_URI, nedIndividualId);
+
+    Response response = target(uidsURI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(200, response.getStatus());
+
+    String responseJson = response.readEntity(String.class);
+
+    Unmarshaller unmarshaller = jsonUnmarshaller(Uniqueidentifier.class);
+    List<Uniqueidentifier> uids = unmarshalEntities(responseJson, Uniqueidentifier.class, unmarshaller);
+
+    Uniqueidentifier uid = uids.get(0);
+
+    String uidURI = uidsURI + "/" + uid.getId();
+
+    String[][] metadata = {
+      { "{\"x\":\"1\",\"y\":\"2\"}", "<x>1</x><y>2</y>", "{\"x\":\"1\",\"y\":\"2\"}" },
+      { "<x>1</x><y>2</y>",          "<x>1</x><y>2</y>", "{\"x\":\"1\",\"y\":\"2\"}" },
+      { "{\"x\":\"1\"}",             "<x>1</x>",         "{\"x\":\"1\"}" },
+      { "<x>1</x>",                  "<x>1</x>",         "{\"x\":\"1\"}" },
+      { null, null, null },
+      { ""  , null, null },
+      { "{}", null, null }
+    };
+
+    final int INPUT_IDX                 = 0;
+    final int EXPECTED_INTERNAL_XML_IDX = 1;
+    final int EXPECTED_JSON_OUTPUT_IDX  = 2;
+
+    for (int i = 0; i < metadata.length; i++)
+    {
+      uid.setMetadata(metadata[i][INPUT_IDX]);
+
+      response = buildRequestDefaultAuth(uidURI).put(Entity.json(writeValueAsString(uid)));
+
+      assertEquals(200, response.getStatus());
+
+      responseJson = response.readEntity(String.class);
+      Map<String,String> jsonMap = parseJsonAsMap(responseJson);
+      assertEquals(metadata[i][EXPECTED_JSON_OUTPUT_IDX], jsonMap.get("metadata"));
+
+      Uniqueidentifier uid2 = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
+
+      assertEquals(parseXmlAsSet(metadata[i][EXPECTED_INTERNAL_XML_IDX]),
+                   parseXmlAsSet(uid2.getMetadata()));
+    }
+  }
+
+  @Test
   public void testInvalidPassword() throws IOException, JAXBException {
 
     String compositeJsonTemplate = new String(Files.readAllBytes(
@@ -1838,5 +1894,38 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
   private boolean isEmptyOrBlank(String s) {
     return s == null || s.trim().isEmpty();
+  }
+
+  private Set<String> parseXmlAsSet(String xml) {
+    if (isEmptyOrBlank(xml)) return null;
+
+    Set<String> elements = new HashSet<>();
+
+    XMLTokener tokener = new XMLTokener(xml);
+    Object token = tokener.nextContent();
+    while (token != null) {
+      String content = token.toString();
+      if ("<".equals(content) || content.startsWith("/")) {
+        token = tokener.nextContent();
+        continue;
+      }
+      elements.add(content);
+      token = tokener.nextContent();
+    }
+    return elements;
+  }
+
+  private Map<String,String> parseJsonAsMap(String json) {
+    if (isEmptyOrBlank(json)) return null;
+
+    JsonReader reader   = Json.createReader(new StringReader(json));
+    JsonObject mdObject = reader.readObject();
+    reader.close();
+
+    Map<String,String> map = new HashMap<>();
+    for (Map.Entry<String,JsonValue> entry : mdObject.entrySet()) {
+      map.put(entry.getKey(), entry.getValue().toString());
+    }
+    return map;
   }
 }
