@@ -64,6 +64,10 @@
           });
 
           //addApiKeyAuthorization();
+
+          // NOTE: swagger-ui.js was monkey patched because of https://github.com/swagger-api/swagger-ui/issues/1382
+
+          window.swaggerUi.api.setBasePath(url.split('/').slice(0, -1).join('/'));
         },
         onFailure: function(data) {
           log("Unable to Load SwaggerUI");

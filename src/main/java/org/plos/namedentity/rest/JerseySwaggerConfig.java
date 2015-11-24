@@ -17,7 +17,6 @@ public class JerseySwaggerConfig extends HttpServlet {
         Swagger swagger = new Swagger();
 
         swagger.securityDefinition("basic", new BasicAuthDefinition());
-
         context.setAttribute("swagger", swagger);
     }
 }
