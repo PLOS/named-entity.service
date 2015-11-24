@@ -23,8 +23,6 @@ import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.validate.JsonValidator;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidJsonError;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidOrcidId;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidSalesforceId;
@@ -32,8 +30,6 @@ import static org.plos.namedentity.api.NedException.ErrorType.UidValueError;
 
 @XmlRootElement
 public class Uniqueidentifier extends Entity {
-
-  @Autowired JsonValidator jsonValidator;
 
   private Integer typeid;
   private String  type;
@@ -58,7 +54,7 @@ public class Uniqueidentifier extends Entity {
         && !validateOrcid(uniqueidentifier))
       throw new NedException(InvalidOrcidId, "invalid ORCID " + uniqueidentifier);
 
-    if (metadata != null && !jsonValidator.isJSONValid(metadata)) {
+    if (metadata != null && !JsonValidator.isJSONValid(metadata)) {
       throw new NedException(InvalidJsonError, "metadata field contains invalid JSON : "+metadata);
     }
   }

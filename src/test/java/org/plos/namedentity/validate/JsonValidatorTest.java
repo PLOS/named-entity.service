@@ -21,15 +21,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/spring-beans.xml","/ambra-spring-beans.xml","/spring-beans.test.xml","/ambra-spring-beans.test.xml"})
 public class JsonValidatorTest {
-
-  @Autowired JsonValidator jsonValidator;
 
   @Test
   public void testInvalidJson() {
@@ -42,19 +34,19 @@ public class JsonValidatorTest {
       "[abc,def]"           // strings not quoted
     };
     for (String badjson : badJsons) {
-      assertFalse(badjson, jsonValidator.isJSONValid(badjson));
+      assertFalse(badjson, JsonValidator.isJSONValid(badjson));
     }
   }
 
   @Test
   public void testEmptyJson() {
-    assertNotNull(jsonValidator.isJSONValid("{}"));
-    assertNotNull(jsonValidator.isJSONValid("[]"));
+    assertNotNull(JsonValidator.isJSONValid("{}"));
+    assertNotNull(JsonValidator.isJSONValid("[]"));
   }
 
   @Test
   public void testOrcidTokenJson() {
-    assertTrue(jsonValidator.isJSONValid(
+    assertTrue(JsonValidator.isJSONValid(
       "{\"accessToken\":\"a9d2479e-9ff4-470a-a9c2-0b4ff9391cae\"," +
       "\"refreshToken\":\"0c91a121-a6b2-4058-b731-305708159360\"," +
       "\"tokenScope\":\"/orcid-profile/read-limited\","            +
@@ -66,7 +58,7 @@ public class JsonValidatorTest {
 
   @Test
   public void testSolrQueryJson() {
-    assertTrue(jsonValidator.isJSONValid(
+    assertTrue(JsonValidator.isJSONValid(
       "{\"query\":\"*:*\",\"unformattedQuery\":\"\",\"volume\":\"\","          +
       "\"eLocationId\":\"\",\"id\":\"\",\"filterSubjects\":[],"                +
       "\"filterSubjectsDisjunction\":[\"Ecology\",\"Conservation science\","   +

@@ -1240,6 +1240,56 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   }
 
   @Test
+  public void testUniqueIdentifiersMetadata() throws IOException, JAXBException {
+
+    String uidsURI = String.format("%s/%d/uids", INDIVIDUAL_URI, nedIndividualId);
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND UIDs FOR INDIVIDUAL (BY NED ID)                              */
+    /* ------------------------------------------------------------------ */
+
+    Response response = target(uidsURI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(200, response.getStatus());
+
+    String responseJson = response.readEntity(String.class);
+
+    Unmarshaller unmarshaller = jsonUnmarshaller(Uniqueidentifier.class);
+    List<Uniqueidentifier> uids = unmarshalEntities(responseJson, Uniqueidentifier.class,
+        unmarshaller);
+
+    String uidURI = null;
+
+    for (Uniqueidentifier uid : uids) {
+      if ("ORCID".equals(uid.getType())) {
+        uidURI = uidsURI + "/" + uid.getId();
+      }
+    }
+    assertNotNull(uidURI);
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY UID ID (PK))                                             */
+    /* ------------------------------------------------------------------ */
+
+    response = target(uidURI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(200, response.getStatus());
+
+    responseJson = response.readEntity(String.class);
+
+    Uniqueidentifier orcidUid = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    orcidUid.setMetadata("invalidjson");
+    response = buildRequestDefaultAuth(uidURI).put(Entity.json(writeValueAsString(orcidUid)));
+
+    assertEquals(200, response.getStatus());
+  }
+
+  @Test
   public void testInvalidPassword() throws IOException, JAXBException {
 
     String compositeJsonTemplate = new String(Files.readAllBytes(

@@ -30,7 +30,7 @@ import javax.json.stream.JsonParsingException;
 
 public class JsonValidator {
 
-  public boolean isJSONValid(String json) {
+  public static boolean isJSONValid(String json) {
     if ( !isEmptyOrBlank(json)) {
       try {
         JsonReader    reader  = Json.createReader(new StringReader(json));
@@ -44,7 +44,7 @@ public class JsonValidator {
     return false;
   }
 
-  public Map<String,String> parseJsonObjectAsMap(String json) {
+  public static Map<String,String> parseJsonObjectAsMap(String json) {
     if (isEmptyOrBlank(json)) return null;
 
     JsonReader reader   = Json.createReader(new StringReader(json));
@@ -58,7 +58,7 @@ public class JsonValidator {
     return map;
   }
 
-  private boolean isEmptyOrBlank(String s) {
+  private static boolean isEmptyOrBlank(String s) {
     return s == null || s.trim().isEmpty();
   }
 }
