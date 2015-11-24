@@ -16,22 +16,49 @@
  */
 package org.plos.namedentity.validate;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.io.StringReader;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonStructure;
+import javax.json.JsonReader;
+import javax.json.JsonValue;
+import javax.json.stream.JsonParsingException;
 
 public class JsonValidator {
 
-  public static boolean isJSONValid(String json) {
-    try {
-      new JSONObject(json);
-    } catch (JSONException e) {
+  public boolean isJSONValid(String json) {
+    if ( !isEmptyOrBlank(json)) {
       try {
-        new JSONArray(json);
-      } catch (JSONException e1) {
-        return false;
+        JsonReader    reader  = Json.createReader(new StringReader(json));
+        JsonStructure jstruct = reader.read();
+        reader.close();
+        return true;
+      } catch (JsonParsingException e) {
+        // fall through
       }
     }
-    return true;
+    return false;
+  }
+
+  public Map<String,String> parseJsonObjectAsMap(String json) {
+    if (isEmptyOrBlank(json)) return null;
+
+    JsonReader reader   = Json.createReader(new StringReader(json));
+    JsonObject mdObject = reader.readObject();
+    reader.close();
+
+    Map<String,String> map = new HashMap<>();
+    for (Map.Entry<String,JsonValue> entry : mdObject.entrySet()) {
+      map.put(entry.getKey(), entry.getValue().toString());
+    }
+    return map;
+  }
+
+  private boolean isEmptyOrBlank(String s) {
+    return s == null || s.trim().isEmpty();
   }
 }

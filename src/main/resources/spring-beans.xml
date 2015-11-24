@@ -77,6 +77,8 @@
         <property name="entityPostValidator" ref="entityPostValidator"/>
     </bean>
 
+    <bean id="jsonValidator" class="org.plos.namedentity.validate.JsonValidator"/>
+
     <aop:config>
         <aop:aspect id="validatingAspect" ref="validator">
             <aop:pointcut id="createOrUpdate"
