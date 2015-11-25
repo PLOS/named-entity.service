@@ -6,7 +6,7 @@
   },
   "basePath" : "/v0",
   "tags" : [ {
-    "name" : "institutionsearch"
+    "name" : "service"
   }, {
     "name" : "organizations"
   }, {
@@ -14,7 +14,7 @@
   }, {
     "name" : "individuals"
   }, {
-    "name" : "service"
+    "name" : "institutionsearch"
   } ],
   "schemes" : [ "http" ],
   "paths" : {
@@ -42,14 +42,8 @@
           "type" : "string"
         } ],
         "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/IndividualComposite"
-              }
-            }
+          "default" : {
+            "description" : "successful operation"
           }
         },
         "security" : [ {
@@ -162,10 +156,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Address"
-              }
+              "$ref" : "#/definitions/Address"
             }
           }
         },
@@ -1442,7 +1433,7 @@
         "summary" : "Find organizations matching specified attribute.",
         "description" : "",
         "operationId" : "findOrganizations",
-        "produces" : [ "application/json" ],
+        "produces" : [ "application/json", "application/xml" ],
         "parameters" : [ {
           "name" : "attribute",
           "in" : "query",
@@ -1502,7 +1493,7 @@
         "summary" : "Read organization by Ned ID",
         "description" : "",
         "operationId" : "readOrganization",
-        "produces" : [ "application/json" ],
+        "produces" : [ "application/json", "application/xml" ],
         "parameters" : [ {
           "name" : "nedId",
           "in" : "path",
@@ -1539,10 +1530,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Address"
-              }
+              "$ref" : "#/definitions/Address"
             }
           }
         }
@@ -2686,6 +2674,10 @@
         "source" : {
           "type" : "string"
         },
+        "sourcetypeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
         "nedid" : {
           "type" : "integer",
           "format" : "int32"
@@ -2694,17 +2686,13 @@
           "type" : "integer",
           "format" : "int32"
         },
-        "sourcetypeid" : {
-          "type" : "integer",
-          "format" : "int32"
+        "isactive" : {
+          "type" : "boolean",
+          "default" : false
         },
         "lastmodified" : {
           "type" : "string",
           "format" : "date-time"
-        },
-        "isactive" : {
-          "type" : "boolean",
-          "default" : false
         },
         "familiarname" : {
           "type" : "string"
@@ -2717,8 +2705,7 @@
           "format" : "int32"
         },
         "typeName" : {
-          "type" : "string",
-          "enum" : [ "INDIVIDUAL", "ORGANIZATION", "INVALID_NAMEDPARTY_TYPE" ]
+          "type" : "string"
         }
       }
     },
@@ -2920,69 +2907,6 @@
         }
       }
     },
-    "Relationship" : {
-      "properties" : {
-        "id" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "nedid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "source" : {
-          "type" : "string"
-        },
-        "sourcetypeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "created" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "lastmodified" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "createdby" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "createdbyname" : {
-          "type" : "string"
-        },
-        "lastmodifiedby" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "lastmodifiedbyname" : {
-          "type" : "string"
-        },
-        "nedidrelated" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "typeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "type" : {
-          "type" : "string"
-        },
-        "title" : {
-          "type" : "string"
-        },
-        "startdate" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "enddate" : {
-          "type" : "string",
-          "format" : "date-time"
-        }
-      }
-    },
     "Auth" : {
       "properties" : {
         "id" : {
@@ -3045,19 +2969,82 @@
           }
         },
         "passwordreset" : {
-          "type" : "boolean",
-          "default" : false
+          "type" : "string",
+          "format" : "byte"
         },
         "verificationtoken" : {
           "type" : "string"
         },
         "verified" : {
-          "type" : "boolean",
-          "default" : false
+          "type" : "string",
+          "format" : "byte"
         },
         "isactive" : {
-          "type" : "boolean",
-          "default" : false
+          "type" : "string",
+          "format" : "byte"
+        }
+      }
+    },
+    "Relationship" : {
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "nedid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "source" : {
+          "type" : "string"
+        },
+        "sourcetypeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lastmodified" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "createdby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "createdbyname" : {
+          "type" : "string"
+        },
+        "lastmodifiedby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "lastmodifiedbyname" : {
+          "type" : "string"
+        },
+        "nedidrelated" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "typeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "startdate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "enddate" : {
+          "type" : "string",
+          "format" : "date-time"
         }
       }
     },
@@ -3127,8 +3114,7 @@
           }
         },
         "typeName" : {
-          "type" : "string",
-          "enum" : [ "INDIVIDUAL", "ORGANIZATION", "INVALID_NAMEDPARTY_TYPE" ]
+          "type" : "string"
         }
       }
     },

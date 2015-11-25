@@ -1,7 +1,7 @@
 module NedClient
   # 
   class OrganizationComposite < BaseObject
-    attr_accessor :addresses, :emails, :phonenumbers, :uniqueidentifiers, :created, :type, :source, :nedid, :typeid, :sourcetypeid, :lastmodified, :isactive, :familiarname, :legalname, :maincontactid, :type_name
+    attr_accessor :addresses, :emails, :phonenumbers, :uniqueidentifiers, :created, :type, :source, :sourcetypeid, :nedid, :typeid, :isactive, :lastmodified, :familiarname, :legalname, :maincontactid, :type_name
     # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
@@ -28,19 +28,19 @@ module NedClient
         :'source' => :'source',
         
         # 
+        :'sourcetypeid' => :'sourcetypeid',
+        
+        # 
         :'nedid' => :'nedid',
         
         # 
         :'typeid' => :'typeid',
         
         # 
-        :'sourcetypeid' => :'sourcetypeid',
+        :'isactive' => :'isactive',
         
         # 
         :'lastmodified' => :'lastmodified',
-        
-        # 
-        :'isactive' => :'isactive',
         
         # 
         :'familiarname' => :'familiarname',
@@ -67,11 +67,11 @@ module NedClient
         :'created' => :'DateTime',
         :'type' => :'String',
         :'source' => :'String',
+        :'sourcetypeid' => :'Integer',
         :'nedid' => :'Integer',
         :'typeid' => :'Integer',
-        :'sourcetypeid' => :'Integer',
-        :'lastmodified' => :'DateTime',
         :'isactive' => :'BOOLEAN',
+        :'lastmodified' => :'DateTime',
         :'familiarname' => :'String',
         :'legalname' => :'String',
         :'maincontactid' => :'Integer',
@@ -123,6 +123,10 @@ module NedClient
         self.source = attributes[:'source']
       end
       
+      if attributes[:'sourcetypeid']
+        self.sourcetypeid = attributes[:'sourcetypeid']
+      end
+      
       if attributes[:'nedid']
         self.nedid = attributes[:'nedid']
       end
@@ -131,16 +135,12 @@ module NedClient
         self.typeid = attributes[:'typeid']
       end
       
-      if attributes[:'sourcetypeid']
-        self.sourcetypeid = attributes[:'sourcetypeid']
+      if attributes[:'isactive']
+        self.isactive = attributes[:'isactive']
       end
       
       if attributes[:'lastmodified']
         self.lastmodified = attributes[:'lastmodified']
-      end
-      
-      if attributes[:'isactive']
-        self.isactive = attributes[:'isactive']
       end
       
       if attributes[:'familiarname']
@@ -159,14 +159,6 @@ module NedClient
         self.type_name = attributes[:'typeName']
       end
       
-    end
-
-    def type_name=(type_name)
-      allowed_values = ["INDIVIDUAL", "ORGANIZATION", "INVALID_NAMEDPARTY_TYPE"]
-      if type_name && !allowed_values.include?(type_name)
-        fail "invalid value for 'type_name', must be one of #{allowed_values}"
-      end
-      @type_name = type_name
     end
 
   end

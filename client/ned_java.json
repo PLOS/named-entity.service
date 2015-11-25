@@ -4,5 +4,5 @@
   "apiPackage": "org.plos.ned_client.api",
   "modelPackage": "org.plos.ned_client.model",
   "invokerPackage": "org.plos.ned_client",
-  "artifactVersion": "0.12.0-SNAPSHOT"
+  "artifactVersion": "0.12.0"
 }

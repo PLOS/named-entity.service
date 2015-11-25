@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-03T14:45:36.898-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-18T14:38:21.393-08:00")
 public class OrganizationComposite   {
   
   private List<Address> addresses = new ArrayList<Address>();
@@ -25,33 +25,15 @@ public class OrganizationComposite   {
   private Date created = null;
   private String type = null;
   private String source = null;
+  private Integer sourcetypeid = null;
   private Integer nedid = null;
   private Integer typeid = null;
-  private Integer sourcetypeid = null;
-  private Date lastmodified = null;
   private Boolean isactive = false;
+  private Date lastmodified = null;
   private String familiarname = null;
   private String legalname = null;
   private Integer maincontactid = null;
-
-public enum TypeNameEnum {
-  INDIVIDUAL("INDIVIDUAL"),
-  ORGANIZATION("ORGANIZATION"),
-  INVALID_NAMEDPARTY_TYPE("INVALID_NAMEDPARTY_TYPE");
-
-  private String value;
-
-  TypeNameEnum(String value) {
-    this.value = value;
-  }
-
-  @Override
-  public String toString() {
-    return value;
-  }
-}
-
-  private TypeNameEnum typeName = null;
+  private String typeName = null;
 
   
   /**
@@ -141,6 +123,18 @@ public enum TypeNameEnum {
   /**
    **/
   @ApiModelProperty(value = "")
+  @JsonProperty("sourcetypeid")
+  public Integer getSourcetypeid() {
+    return sourcetypeid;
+  }
+  public void setSourcetypeid(Integer sourcetypeid) {
+    this.sourcetypeid = sourcetypeid;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
   @JsonProperty("nedid")
   public Integer getNedid() {
     return nedid;
@@ -165,12 +159,12 @@ public enum TypeNameEnum {
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("sourcetypeid")
-  public Integer getSourcetypeid() {
-    return sourcetypeid;
+  @JsonProperty("isactive")
+  public Boolean getIsactive() {
+    return isactive;
   }
-  public void setSourcetypeid(Integer sourcetypeid) {
-    this.sourcetypeid = sourcetypeid;
+  public void setIsactive(Boolean isactive) {
+    this.isactive = isactive;
   }
 
   
@@ -183,18 +177,6 @@ public enum TypeNameEnum {
   }
   public void setLastmodified(Date lastmodified) {
     this.lastmodified = lastmodified;
-  }
-
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("isactive")
-  public Boolean getIsactive() {
-    return isactive;
-  }
-  public void setIsactive(Boolean isactive) {
-    this.isactive = isactive;
   }
 
   
@@ -238,10 +220,10 @@ public enum TypeNameEnum {
    **/
   @ApiModelProperty(value = "")
   @JsonProperty("typeName")
-  public TypeNameEnum getTypeName() {
+  public String getTypeName() {
     return typeName;
   }
-  public void setTypeName(TypeNameEnum typeName) {
+  public void setTypeName(String typeName) {
     this.typeName = typeName;
   }
 
@@ -259,11 +241,11 @@ public enum TypeNameEnum {
     sb.append("    created: ").append(StringUtil.toIndentedString(created)).append("\n");
     sb.append("    type: ").append(StringUtil.toIndentedString(type)).append("\n");
     sb.append("    source: ").append(StringUtil.toIndentedString(source)).append("\n");
+    sb.append("    sourcetypeid: ").append(StringUtil.toIndentedString(sourcetypeid)).append("\n");
     sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
     sb.append("    typeid: ").append(StringUtil.toIndentedString(typeid)).append("\n");
-    sb.append("    sourcetypeid: ").append(StringUtil.toIndentedString(sourcetypeid)).append("\n");
-    sb.append("    lastmodified: ").append(StringUtil.toIndentedString(lastmodified)).append("\n");
     sb.append("    isactive: ").append(StringUtil.toIndentedString(isactive)).append("\n");
+    sb.append("    lastmodified: ").append(StringUtil.toIndentedString(lastmodified)).append("\n");
     sb.append("    familiarname: ").append(StringUtil.toIndentedString(familiarname)).append("\n");
     sb.append("    legalname: ").append(StringUtil.toIndentedString(legalname)).append("\n");
     sb.append("    maincontactid: ").append(StringUtil.toIndentedString(maincontactid)).append("\n");

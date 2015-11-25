@@ -387,12 +387,6 @@ font-style: italic;
     
 
     
-    <h3 class="field-label">Return type</h3>
-    <div class="return-type">
-      array[<a href="#IndividualComposite">IndividualComposite</a>]
-      
-    </div>
-    
 
     <!--Todo: process Response Object and its headers, schema, examples -->
 
@@ -411,7 +405,7 @@ font-style: italic;
 
     <h3 class="field-label">Responses</h3>
     
-    <h4 class="field-label">200</h4>
+    <h4 class="field-label">0</h4>
     successful operation
     
     
@@ -625,7 +619,7 @@ font-style: italic;
     
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
-      array[<a href="#Address">Address</a>]
+      <a href="#Address">Address</a>
       
     </div>
     
@@ -2917,6 +2911,8 @@ font-style: italic;
     
       <li><code>application/json</code></li>
     
+      <li><code>application/xml</code></li>
+    
     </ul>
     
 
@@ -3035,6 +3031,8 @@ font-style: italic;
     
       <li><code>application/json</code></li>
     
+      <li><code>application/xml</code></li>
+    
     </ul>
     
 
@@ -3077,7 +3075,7 @@ font-style: italic;
     
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
-      array[<a href="#Address">Address</a>]
+      <a href="#Address">Address</a>
       
     </div>
     
@@ -4799,11 +4797,11 @@ font-style: italic;
   
   
   
-    <li><a href="#Relationship"><code>Relationship</code></a></li>
-  
-  
-  
     <li><a href="#Auth"><code>Auth</code></a></li>
+  
+  
+  
+    <li><a href="#Relationship"><code>Relationship</code></a></li>
   
   
   
@@ -5011,15 +5009,15 @@ font-style: italic;
       
       <div class="param">source </div><div class="param-desc"><span class="param-type">String</span> </div>
       
+      <div class="param">sourcetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
       <div class="param">nedid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
       
       <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
       
-      <div class="param">sourcetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      <div class="param">isactive </div><div class="param-desc"><span class="param-type">Boolean</span> </div>
       
       <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">isactive </div><div class="param-desc"><span class="param-type">Boolean</span> </div>
       
       <div class="param">familiarname </div><div class="param-desc"><span class="param-type">String</span> </div>
       
@@ -5028,9 +5026,6 @@ font-style: italic;
       <div class="param">maincontactid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
       
       <div class="param">typeName </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-        <div class="param-enum-header">Enum:</div>
-        <div class="param-enum">INDIVIDUAL</div><div class="param-enum">ORGANIZATION</div><div class="param-enum">INVALID_NAMEDPARTY_TYPE</div>
       
       
     </div>  <!-- field-items -->
@@ -5187,6 +5182,53 @@ font-style: italic;
   
   
   <div class="model">
+    <h3 class="field-label"><a name="Auth">Auth</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">nedid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">source </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">sourcetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">created </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      <div class="param">createdby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">createdbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">lastmodifiedby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">lastmodifiedbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">email </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">emailid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">authid </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">plainTextPassword </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">password </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">passwordreset </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">verificationtoken </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">verified </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">isactive </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
     <h3 class="field-label"><a name="Relationship">Relationship</a> <a class="up" href="#__Models">Up</a></h3>
     <div class="field-items">
       <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
@@ -5228,53 +5270,6 @@ font-style: italic;
   
   
   <div class="model">
-    <h3 class="field-label"><a name="Auth">Auth</a> <a class="up" href="#__Models">Up</a></h3>
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">nedid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">source </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">sourcetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">created </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">createdby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">createdbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">lastmodifiedby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">lastmodifiedbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">email </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">emailid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">authid </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">plainTextPassword </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">password </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">passwordreset </div><div class="param-desc"><span class="param-type">Boolean</span> </div>
-      
-      <div class="param">verificationtoken </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">verified </div><div class="param-desc"><span class="param-type">Boolean</span> </div>
-      
-      <div class="param">isactive </div><div class="param-desc"><span class="param-type">Boolean</span> </div>
-      
-      
-    </div>  <!-- field-items -->
-  </div>
-  
-  
-  
-  <div class="model">
     <h3 class="field-label"><a name="IndividualComposite">IndividualComposite</a> <a class="up" href="#__Models">Up</a></h3>
     <div class="field-items">
       <div class="param">auth </div><div class="param-desc"><span class="param-type">array[Auth]</span> </div>
@@ -5298,9 +5293,6 @@ font-style: italic;
       <div class="param">relationships </div><div class="param-desc"><span class="param-type">array[Relationship]</span> </div>
       
       <div class="param">typeName </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-        <div class="param-enum-header">Enum:</div>
-        <div class="param-enum">INDIVIDUAL</div><div class="param-enum">ORGANIZATION</div><div class="param-enum">INVALID_NAMEDPARTY_TYPE</div>
       
       
     </div>  <!-- field-items -->
