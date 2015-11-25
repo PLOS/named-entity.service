@@ -56,14 +56,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static org.plos.namedentity.api.NedException.ErrorType.DupeEmailError;
-import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
-import static org.plos.namedentity.api.NedException.ErrorType.InvalidIndividualSearchQuery;
-import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchCriteria;
-import static org.plos.namedentity.api.NedException.ErrorType.InvalidTypeValue;
-import static org.plos.namedentity.api.NedException.ErrorType.PasswordError;
-import static org.plos.namedentity.api.NedException.ErrorType.PasswordFormatError;
-import static org.plos.namedentity.api.NedException.ErrorType.PasswordNotSpecified;
+import static org.plos.namedentity.api.NedException.ErrorType.*;
 
 public class NamedEntityResourceTest extends BaseResourceTest {
 
@@ -1280,13 +1273,20 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     Uniqueidentifier orcidUid = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
 
     /* ------------------------------------------------------------------ */
-    /*  UPDATE                                                            */
+    /*  UPDATE (BAD JSON PAYLOAD)                                         */
     /* ------------------------------------------------------------------ */
 
     orcidUid.setMetadata("invalidjson");
     response = buildRequestDefaultAuth(uidURI).put(Entity.json(writeValueAsString(orcidUid)));
 
-    assertEquals(200, response.getStatus());
+    assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+
+    responseJson = response.readEntity(String.class);
+
+    NedErrorResponse ner = unmarshalEntity(responseJson, NedErrorResponse.class,
+                                           jsonUnmarshaller(NedErrorResponse.class));
+
+    assertEquals(InvalidJsonError.getErrorCode(), ner.errorCode);
   }
 
   @Test
