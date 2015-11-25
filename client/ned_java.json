@@ -1,0 +1,8 @@
+{
+  "groupId": "org.plos",
+  "artifactId": "ned-client",
+  "apiPackage": "org.plos.ned_client.api",
+  "modelPackage": "org.plos.ned_client.model",
+  "invokerPackage": "org.plos.ned_client",
+  "artifactVersion": "0.12.0"
+}

@@ -1,26 +1,31 @@
 package org.plos.namedentity.rest;
 
-import com.wordnik.swagger.config.ConfigFactory;
-import com.wordnik.swagger.model.ApiInfo;
+import io.swagger.models.Scheme;
+import io.swagger.models.Swagger;
+import io.swagger.models.auth.BasicAuthDefinition;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JerseySwaggerConfig extends HttpServlet {
 
-  static {
+    @Override
+    public void init(ServletConfig config) throws ServletException {
 
-// ConfigFactory.config().setBasePath("http://www.foo.com/");
-    ApiInfo info = new ApiInfo(
-        null,//"Named Entity Database API", // title
-        null, // description
-        null, // TOS URL
-        null, // Contact
-        null, // license
-        null // license URL
-    );
+        ServletContext context = config.getServletContext();
+        Swagger swagger = new Swagger();
 
-    ConfigFactory.config().setApiInfo(info);
-    //ConfigFactory.config().setApiVersion("v1");
+        swagger.securityDefinition("basic", new BasicAuthDefinition());
+        List<Scheme> schemes = new ArrayList<Scheme>();
+        schemes.add(Scheme.HTTP);
+        schemes.add(Scheme.HTTPS);
 
-  }
+        swagger.setSchemes(schemes);
+
+        context.setAttribute("swagger", swagger);
+    }
 }

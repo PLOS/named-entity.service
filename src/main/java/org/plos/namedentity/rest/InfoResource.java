@@ -16,8 +16,8 @@
  */
 package org.plos.namedentity.rest;
 
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.ConfigInfo;
 import org.plos.namedentity.api.NedErrorResponse;
 import org.plos.namedentity.api.NedException;
@@ -26,13 +26,16 @@ import org.plos.namedentity.service.InfoService;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
 @Path("/service")
 @Api("/service")
+@Produces({MediaType.APPLICATION_JSON})
 public class InfoResource {
 
   @Inject
@@ -49,7 +52,7 @@ public class InfoResource {
 
   @GET
   @Path("/errorcodes")
-  @ApiOperation(value = "List possible error codes")
+  @ApiOperation(value = "List possible error codes", response = NedErrorResponse.class, responseContainer = "List")
   public Response errorcodes() {
 
     List<NedErrorResponse> list = new ArrayList<>();
