@@ -435,6 +435,65 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   }
 
   @Test
+  public void testDeleteIndividual() throws Exception {
+//
+//    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
+//    IndividualComposite composite_io = unmarshalEntity(
+//        new String(Files.readAllBytes(
+//            Paths.get(TEST_RESOURCE_PATH + "composite-individual.json"))),
+//        IndividualComposite.class, unmarshaller);
+//
+//
+//1
+//
+//
+//    assertEquals(Response.Status.NO_CONTENT.getStatusCode(),
+//        target(profileURI).request().delete().getStatus());
+//
+
+
+
+
+    String compositeJsonTemplate = new String(Files.readAllBytes(
+        Paths.get(TEST_RESOURCE_PATH + "composite-individual.template.json")));
+
+    Response response = buildRequestDefaultAuth(INDIVIDUAL_URI)
+        .post(Entity.json(String.format(compositeJsonTemplate,
+            UUID.randomUUID(), "jane.q.doe.workD@foo.com", "Editorial Manager",
+            "secret_password4", "jane.q.doe.workD@foo.com")));
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+
+
+    String jsonPayload = response.readEntity(String.class);
+
+    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
+    IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
+    Individualprofile individualProfile = composite.getIndividualprofiles().get(0);
+    assertNotNull(individualProfile.getNedid());
+
+    Integer nedid = individualProfile.getNedid();
+
+
+
+
+    response = target(INDIVIDUAL_URI + "/" + nedid)
+        .request().delete();
+
+    assertEquals(Response.Status.NO_CONTENT.getStatusCode(), response.getStatus());
+
+
+
+//    assertEquals(Response.Status.NO_CONTENT.getStatusCode(),
+//        target(INDIVIDUAL_URI + "/" + nedIndividualId).request().delete().getStatus());
+
+
+  }
+
+
+
+  @Test
   public void testCompositeFinders() throws Exception {
 
     Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);

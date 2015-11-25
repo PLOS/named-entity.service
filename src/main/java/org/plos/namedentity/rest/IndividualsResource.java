@@ -12,6 +12,7 @@ import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Group;
 import org.plos.namedentity.api.entity.Individualprofile;
+import org.plos.namedentity.api.entity.Namedentityidentifier;
 import org.plos.namedentity.api.entity.Relationship;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.api.enums.NamedPartyEnum;
@@ -129,6 +130,27 @@ public class IndividualsResource extends NedResource {
       return nedError(e, "Unable to read individual composite");
     } catch (Exception e) {
       return serverError(e, "Unable to read individual composite");
+    }
+  }
+
+  @DELETE
+  @Path("/{nedId}")
+  @ApiOperation(value = "Delete individual", response = IndividualComposite.class)
+  public Response deleteIndividual(@PathParam("nedId") int nedId) {
+    try {
+
+      namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
+
+      namedEntityService.deleteIndividual(nedId);  // TODO: validate response code
+
+      crudService.delete(crudService.findById(nedId, Namedentityidentifier.class));
+
+      return Response.status(Response.Status.NO_CONTENT).build();
+
+    } catch (NedException e) {
+      return nedError(e, "Unable to delete individual");
+    } catch (Exception e) {
+      return serverError(e, "Unable to delete individual");
     }
   }
 

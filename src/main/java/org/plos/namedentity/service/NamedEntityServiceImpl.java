@@ -339,6 +339,24 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     }
   }
 
+  public void deleteIndividual(Integer nedId) {
+
+    IndividualComposite composite = findComposite(nedId, IndividualComposite.class);
+
+    // delete auth because it has a foreign key to emails
+    composite.getAuth().stream().forEach(e -> nedDBSvc.delete(e));
+    composite.setAuth(new ArrayList<>());
+
+    // delete the composite sub entities
+    composite.readAsMap().values().stream()
+        .forEach(entities -> entities.forEach(e -> nedDBSvc.delete(e)));
+
+    // delete the items that belong to an individual but are outside of a composite
+    findResolvedEntities(nedId, Alert.class).stream()
+        .forEach(e -> nedDBSvc.delete(e));
+
+  }
+
   @Override @Transactional
   public  <T extends Composite> T createComposite(T composite, Class<T> clazz) {
 
