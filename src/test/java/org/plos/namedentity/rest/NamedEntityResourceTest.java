@@ -27,6 +27,7 @@ import org.plos.namedentity.api.adapter.DateAdapter;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.service.NamedEntityService;
+import org.plos.namedentity.validate.JsonValidator;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
@@ -47,6 +48,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -1292,9 +1294,11 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     /*  UPDATE (VALID JSON PAYLOAD)                                       */
     /* ------------------------------------------------------------------ */
 
-    String orcidApiTokenJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "uid.orcid.metadata.json")));
+    String orcidUidJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "uid.orcid.json")));
+    Map<String,String> orcidMap    = JsonValidator.parseJsonObjectAsMap(orcidUidJson);
+    Map<String,String> metadataMap = JsonValidator.parseJsonObjectAsMap(orcidMap.get("metadata"));
 
-    orcidUid.setMetadata(orcidApiTokenJson);
+    orcidUid.setMetadata(orcidMap.get("metadata"));
     response = buildRequestDefaultAuth(uidURI).put(Entity.json(writeValueAsString(orcidUid)));
 
     assertEquals(200, response.getStatus());
@@ -1302,6 +1306,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     responseJson = response.readEntity(String.class);
 
     Uniqueidentifier uidWithMetadata = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
+    Map<String,String> metadataMap2 = JsonValidator.parseJsonObjectAsMap(uidWithMetadata.getMetadata());
+    assertEquals(metadataMap, metadataMap2);
   }
 
   @Test
