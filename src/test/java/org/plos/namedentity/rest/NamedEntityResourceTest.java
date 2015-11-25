@@ -436,34 +436,18 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
   @Test
   public void testDeleteIndividual() throws Exception {
-//
-//    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
-//    IndividualComposite composite_io = unmarshalEntity(
-//        new String(Files.readAllBytes(
-//            Paths.get(TEST_RESOURCE_PATH + "composite-individual.json"))),
-//        IndividualComposite.class, unmarshaller);
-//
-//
-//1
-//
-//
-//    assertEquals(Response.Status.NO_CONTENT.getStatusCode(),
-//        target(profileURI).request().delete().getStatus());
-//
 
-
-
+    // create a user
 
     String compositeJsonTemplate = new String(Files.readAllBytes(
         Paths.get(TEST_RESOURCE_PATH + "composite-individual.template.json")));
 
     Response response = buildRequestDefaultAuth(INDIVIDUAL_URI)
         .post(Entity.json(String.format(compositeJsonTemplate,
-            UUID.randomUUID(), "jane.q.doe.workD@foo.com", "Editorial Manager",
+            UUID.randomUUID(), "jane.q.doe.workD@foo.com", "Ambra",
             "secret_password4", "jane.q.doe.workD@foo.com")));
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-
 
 
     String jsonPayload = response.readEntity(String.class);
@@ -476,7 +460,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     Integer nedid = individualProfile.getNedid();
 
 
-
+    // delete the user
 
     response = target(INDIVIDUAL_URI + "/" + nedid)
         .request().delete();
@@ -484,15 +468,23 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals(Response.Status.NO_CONTENT.getStatusCode(), response.getStatus());
 
 
+    // try to delete a non-existing user
 
-//    assertEquals(Response.Status.NO_CONTENT.getStatusCode(),
-//        target(INDIVIDUAL_URI + "/" + nedIndividualId).request().delete().getStatus());
+    response = target(INDIVIDUAL_URI + "/" + "99999999")
+        .request().delete();
 
+    assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+
+
+    jsonPayload = response.readEntity(String.class);
+
+    NedErrorResponse ner = unmarshalEntity(jsonPayload, NedErrorResponse.class,
+        jsonUnmarshaller(NedErrorResponse.class));
+
+    assertEquals(EntityNotFound.getErrorCode(), ner.errorCode);
 
   }
-
-
-
+  
   @Test
   public void testCompositeFinders() throws Exception {
 
