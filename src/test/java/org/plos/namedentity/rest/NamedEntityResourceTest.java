@@ -1292,21 +1292,16 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     /*  UPDATE (VALID JSON PAYLOAD)                                       */
     /* ------------------------------------------------------------------ */
 
-    String orcidMetadataJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "uid.orcid.metadata.json")));
-    int x = 1;
+    String orcidApiTokenJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "uid.orcid.metadata.json")));
 
-    //orcidUid.setMetadata("invalidjson");
-    //response = buildRequestDefaultAuth(uidURI).put(Entity.json(writeValueAsString(orcidUid)));
+    orcidUid.setMetadata(orcidApiTokenJson);
+    response = buildRequestDefaultAuth(uidURI).put(Entity.json(writeValueAsString(orcidUid)));
 
-    //assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+    assertEquals(200, response.getStatus());
 
-    //responseJson = response.readEntity(String.class);
+    responseJson = response.readEntity(String.class);
 
-    //NedErrorResponse ner = unmarshalEntity(responseJson, NedErrorResponse.class,
-                                           //jsonUnmarshaller(NedErrorResponse.class));
-
-    //assertEquals(InvalidJsonError.getErrorCode(), ner.errorCode);
-
+    Uniqueidentifier uidWithMetadata = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
   }
 
   @Test
