@@ -1329,7 +1329,10 @@ SwaggerClient.prototype.buildFromSpec = function (response) {
     if (typeof this.scheme === 'undefined' && typeof this.schemes === 'undefined' || this.schemes.length === 0) {
       this.scheme = location.scheme || 'http';
     } else if (typeof this.scheme === 'undefined') {
-      this.scheme = this.schemes[0];
+      //this.scheme = this.schemes[0];
+
+      // NOTE: workaround for https://github.com/swagger-api/swagger-ui/issues/1382
+      this.scheme = location.scheme || this.schemes[0];
     }
 
     if (typeof this.host === 'undefined' || this.host === '') {
