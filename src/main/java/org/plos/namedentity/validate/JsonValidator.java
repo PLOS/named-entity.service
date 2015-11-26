@@ -19,6 +19,7 @@ package org.plos.namedentity.validate;
 import java.io.StringReader;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.json.Json;
@@ -28,9 +29,13 @@ import javax.json.JsonReader;
 import javax.json.JsonValue;
 import javax.json.stream.JsonParsingException;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class JsonValidator {
 
-  public static boolean isJSONValid(String json) {
+  public static boolean isValid(String json) {
     if ( !isEmptyOrBlank(json)) {
       try {
         JsonReader    reader  = Json.createReader(new StringReader(json));
@@ -45,17 +50,40 @@ public class JsonValidator {
   }
 
   public static Map<String,String> parseJsonObjectAsMap(String json) {
-    if (isEmptyOrBlank(json)) return null;
-
-    JsonReader reader   = Json.createReader(new StringReader(json));
-    JsonObject mdObject = reader.readObject();
-    reader.close();
-
     Map<String,String> map = new HashMap<>();
-    for (Map.Entry<String,JsonValue> entry : mdObject.entrySet()) {
-      map.put(entry.getKey(), entry.getValue().toString());
+
+    if (isEmptyOrBlank(json)) return map;
+
+    try {
+      JSONObject jobject = new JSONObject(json);
+      for (Iterator<String> iter = jobject.keys(); iter.hasNext(); ) {
+        String key = iter.next();
+        map.put(key, jobject.get(key).toString());
+      }
+    } catch (JSONException je) {
+      // fall through
     }
     return map;
+  }
+
+  /**
+   * Validates and coerces json-like payload into valid JSON.
+   * @param json - payload to validate and transform
+   * @return valid json if successful, otherwise null.
+   */
+  public static String validJson(String json) {
+    if (isEmptyOrBlank(json)) return null;
+
+    try {
+      return new JSONObject(json).toString();
+    } catch (JSONException je1) {
+      try {
+        return new JSONArray(json).toString();
+      } catch (JSONException je2) {
+        // fall through
+      }
+    }
+    return null;
   }
 
   private static boolean isEmptyOrBlank(String s) {

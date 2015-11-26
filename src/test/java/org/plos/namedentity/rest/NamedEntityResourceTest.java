@@ -52,13 +52,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import static org.plos.namedentity.api.NedException.ErrorType.*;
+import static org.plos.namedentity.validate.JsonValidator.validJson;
+import static org.plos.namedentity.validate.JsonValidator.parseJsonObjectAsMap;
 
 public class NamedEntityResourceTest extends BaseResourceTest {
 
@@ -841,7 +838,6 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     List<Alert> entities = unmarshalEntities(responseJson, Alert.class, unmarshaller);
     assertEquals(1, entities.size());
 
-
     Alert e = entities.get(0);
     assertTrue(e.getId() > 0);
     assertEquals(nedIndividualId, e.getNedid());
@@ -1295,8 +1291,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     /* ------------------------------------------------------------------ */
 
     String orcidUidJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "uid.orcid.json")));
-    Map<String,String> orcidMap    = JsonValidator.parseJsonObjectAsMap(orcidUidJson);
-    Map<String,String> metadataMap = JsonValidator.parseJsonObjectAsMap(orcidMap.get("metadata"));
+    Map<String,String> orcidMap    = parseJsonObjectAsMap(orcidUidJson);
+    Map<String,String> metadataMap = parseJsonObjectAsMap(orcidMap.get("metadata"));
 
     orcidUid.setMetadata(orcidMap.get("metadata"));
     response = buildRequestDefaultAuth(uidURI).put(Entity.json(writeValueAsString(orcidUid)));
@@ -1306,8 +1302,22 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     responseJson = response.readEntity(String.class);
 
     Uniqueidentifier uidWithMetadata = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
-    Map<String,String> metadataMap2 = JsonValidator.parseJsonObjectAsMap(uidWithMetadata.getMetadata());
+    Map<String,String> metadataMap2 = parseJsonObjectAsMap(uidWithMetadata.getMetadata());
     assertEquals(metadataMap, metadataMap2);
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE (CLEAR METADATA)                                           */
+    /* ------------------------------------------------------------------ */
+
+    orcidUid.setMetadata(null);
+    response = buildRequestDefaultAuth(uidURI).put(Entity.json(writeValueAsString(orcidUid)));
+
+    assertEquals(200, response.getStatus());
+
+    responseJson = response.readEntity(String.class);
+
+    Uniqueidentifier uidNoMetadata = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
+    assertNull(uidNoMetadata.getMetadata());
   }
 
   @Test

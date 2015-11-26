@@ -27,6 +27,7 @@ import static org.plos.namedentity.api.NedException.ErrorType.InvalidJsonError;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidOrcidId;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidSalesforceId;
 import static org.plos.namedentity.api.NedException.ErrorType.UidValueError;
+import static org.plos.namedentity.validate.JsonValidator.validJson;
 
 @XmlRootElement
 public class Uniqueidentifier extends Entity {
@@ -54,8 +55,12 @@ public class Uniqueidentifier extends Entity {
         && !validateOrcid(uniqueidentifier))
       throw new NedException(InvalidOrcidId, "invalid ORCID " + uniqueidentifier);
 
-    if (metadata != null && !JsonValidator.isJSONValid(metadata)) {
-      throw new NedException(InvalidJsonError, "metadata field contains invalid JSON : "+metadata);
+    if (metadata != null) {
+      String validMetadataJson = validJson(metadata);
+      if (validMetadataJson == null) {
+        throw new NedException(InvalidJsonError, "metadata field contains invalid JSON : "+metadata);
+      }
+      this.metadata = validMetadataJson;
     }
   }
 
