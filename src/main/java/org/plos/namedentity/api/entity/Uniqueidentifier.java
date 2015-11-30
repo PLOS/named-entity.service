@@ -16,12 +16,11 @@
  */
 package org.plos.namedentity.api.entity;
 
-import java.util.regex.Pattern;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.enums.UidTypeEnum;
-import org.plos.namedentity.validate.JsonValidator;
+
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.regex.Pattern;
 
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidJsonError;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidOrcidId;
