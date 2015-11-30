@@ -33,6 +33,8 @@ public interface NamedEntityService {
 
   public <T extends Composite> T createComposite(T composite, Class<T> clazz);
 
+  public void deleteIndividual(Integer nedId);
+
   /**
    * Finds entity by a unique identifier. Type id references in entity are
    * replaced by equivalent type names (ie, "resolved"). Unique identifiers are

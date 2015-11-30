@@ -474,6 +474,35 @@ public class NamedEntityServiceTest {
   }
 
   @Test
+  public void testDeleteIndividual() {
+
+    IndividualComposite composite = newCompositeIndividualWithGroup();
+
+    List<Email> emails = new ArrayList<>();
+    Email workEmail = new Email();
+    workEmail.setType("Work");
+    workEmail.setEmailaddress("fu.manchu.work555@foo.com");
+    workEmail.setSource("Ambra");
+    workEmail.setNedid(555);
+    emails.add(_(workEmail));
+    composite.setEmails( emails );
+
+    List<Auth> auths = new ArrayList<>();
+    Auth auth = new Auth();
+    auth.setEmail(workEmail.getEmailaddress());
+    auth.setPlainTextPassword("password123");
+    auths.add(_(auth));
+    composite.setAuth( auths );
+
+    IndividualComposite compositeOut = namedEntityService.createComposite(composite, IndividualComposite.class);
+
+    Integer nedId = compositeOut.getEmails().get(0).getNedid();
+
+    namedEntityService.deleteIndividual(nedId);
+
+  }
+
+  @Test
   public void testCreateIndividualCompositeWithInvalidEmail() {
 
     IndividualComposite composite = newCompositeIndividualWithGroup();
