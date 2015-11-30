@@ -27,6 +27,7 @@ import org.plos.namedentity.api.adapter.DateAdapter;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.service.NamedEntityService;
+import org.plos.namedentity.validate.JsonValidator;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
@@ -47,23 +48,14 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.plos.namedentity.api.NedException.ErrorType.DupeEmailError;
-import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
-import static org.plos.namedentity.api.NedException.ErrorType.InvalidIndividualSearchQuery;
-import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchCriteria;
-import static org.plos.namedentity.api.NedException.ErrorType.InvalidTypeValue;
-import static org.plos.namedentity.api.NedException.ErrorType.PasswordError;
-import static org.plos.namedentity.api.NedException.ErrorType.PasswordFormatError;
-import static org.plos.namedentity.api.NedException.ErrorType.PasswordNotSpecified;
+import static org.junit.Assert.*;
+import static org.plos.namedentity.api.NedException.ErrorType.*;
+import static org.plos.namedentity.validate.JsonValidator.validJson;
+import static org.plos.namedentity.validate.JsonValidator.parseJsonObjectAsMap;
 
 public class NamedEntityResourceTest extends BaseResourceTest {
 
@@ -846,7 +838,6 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     List<Alert> entities = unmarshalEntities(responseJson, Alert.class, unmarshaller);
     assertEquals(1, entities.size());
 
-
     Alert e = entities.get(0);
     assertTrue(e.getId() > 0);
     assertEquals(nedIndividualId, e.getNedid());
@@ -1237,6 +1228,96 @@ public class NamedEntityResourceTest extends BaseResourceTest {
         .delete();
 
     assertEquals(204, response.getStatus());
+  }
+
+  @Test
+  public void testUniqueIdentifiersMetadata() throws IOException, JAXBException {
+
+    String uidsURI = String.format("%s/%d/uids", INDIVIDUAL_URI, nedIndividualId);
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND UIDs FOR INDIVIDUAL (BY NED ID)                              */
+    /* ------------------------------------------------------------------ */
+
+    Response response = target(uidsURI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(200, response.getStatus());
+
+    String responseJson = response.readEntity(String.class);
+
+    Unmarshaller unmarshaller = jsonUnmarshaller(Uniqueidentifier.class);
+    List<Uniqueidentifier> uids = unmarshalEntities(responseJson, Uniqueidentifier.class,
+        unmarshaller);
+
+    String uidURI = null;
+
+    for (Uniqueidentifier uid : uids) {
+      if ("ORCID".equals(uid.getType())) {
+        uidURI = uidsURI + "/" + uid.getId();
+      }
+    }
+    assertNotNull(uidURI);
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY UID ID (PK))                                             */
+    /* ------------------------------------------------------------------ */
+
+    response = target(uidURI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(200, response.getStatus());
+
+    responseJson = response.readEntity(String.class);
+
+    Uniqueidentifier orcidUid = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE (BAD JSON PAYLOAD)                                         */
+    /* ------------------------------------------------------------------ */
+
+    orcidUid.setMetadata("invalidjson");
+    response = buildRequestDefaultAuth(uidURI).put(Entity.json(writeValueAsString(orcidUid)));
+
+    assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+
+    responseJson = response.readEntity(String.class);
+
+    NedErrorResponse ner = unmarshalEntity(responseJson, NedErrorResponse.class,
+                                           jsonUnmarshaller(NedErrorResponse.class));
+
+    assertEquals(InvalidJsonError.getErrorCode(), ner.errorCode);
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE (VALID JSON PAYLOAD)                                       */
+    /* ------------------------------------------------------------------ */
+
+    String orcidUidJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "uid.orcid.json")));
+    Map<String,String> orcidMap    = parseJsonObjectAsMap(orcidUidJson);
+    Map<String,String> metadataMap = parseJsonObjectAsMap(orcidMap.get("metadata"));
+
+    orcidUid.setMetadata(orcidMap.get("metadata"));
+    response = buildRequestDefaultAuth(uidURI).put(Entity.json(writeValueAsString(orcidUid)));
+
+    assertEquals(200, response.getStatus());
+
+    responseJson = response.readEntity(String.class);
+
+    Uniqueidentifier uidWithMetadata = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
+    Map<String,String> metadataMap2 = parseJsonObjectAsMap(uidWithMetadata.getMetadata());
+    assertEquals(metadataMap, metadataMap2);
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE (CLEAR METADATA)                                           */
+    /* ------------------------------------------------------------------ */
+
+    orcidUid.setMetadata(null);
+    response = buildRequestDefaultAuth(uidURI).put(Entity.json(writeValueAsString(orcidUid)));
+
+    assertEquals(200, response.getStatus());
+
+    responseJson = response.readEntity(String.class);
+
+    Uniqueidentifier uidNoMetadata = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
+    assertNull(uidNoMetadata.getMetadata());
   }
 
   @Test

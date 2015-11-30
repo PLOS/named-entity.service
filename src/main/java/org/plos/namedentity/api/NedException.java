@@ -56,6 +56,7 @@ public class NedException extends RuntimeException {
     DigestPasswordError              (1320, "Password Storage Error"),
     TamperedPasswordError            (1330, "Tampered Password Error"),
     PasswordFormatError              (1340, "Password Format Error"),
+    InvalidJsonError                 (1350, "Invalid JSON"),
 
     // Composite-Level Validation Errors
 
