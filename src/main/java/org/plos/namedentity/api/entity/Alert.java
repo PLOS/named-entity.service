@@ -16,7 +16,12 @@
  */
 package org.plos.namedentity.api.entity;
 
+import org.plos.namedentity.api.NedException;
+
 import javax.xml.bind.annotation.XmlRootElement;
+
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidJsonError;
+import static org.plos.namedentity.validate.JsonValidator.validJson;
 
 /**
  * Created by jfinger on 11/5/15.
@@ -34,9 +39,19 @@ public class Alert extends Entity {
   private Integer journaltypeid;
   private String  journal;
 
-
   private String name;
   private String query;
+
+  @Override
+  public void validate() {
+    if (query != null) {
+      String validMetadataJson = validJson(query);
+      if (validMetadataJson == null) {
+        throw new NedException(InvalidJsonError, "query field contains invalid JSON : " + query);
+      }
+      this.query = validMetadataJson;
+    }
+  }
 
   public Integer getTypeid() {
     return typeid;
