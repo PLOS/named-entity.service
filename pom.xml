@@ -474,6 +474,7 @@
               <includes>
                 <include>**/namedentity/api/**/*</include>
                 <include>**/validate/Validatable.class</include>
+                <include>**/validate/JsonValidator.class</include>
               </includes>
             </configuration>
           </execution>
