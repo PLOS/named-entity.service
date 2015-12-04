@@ -53,6 +53,15 @@ public class AmbraServiceImpl implements AmbraService {
   }
 
   @Override
+  public void deleteUser(int nedId) {
+
+    UserProfile ambraProfile = userService.getUser((long)nedId);
+    ambraProfile.setVerified(false);
+
+    // TODO: log and do sweeping delete via cron later?
+  }
+
+  @Override
   public <S extends Entity> void update(S entity) {
 
     String cname = entity.getClass().getCanonicalName();

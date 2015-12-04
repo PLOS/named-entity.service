@@ -7,6 +7,8 @@ public interface AmbraService {
 
   Long createUser(IndividualComposite composite);
 
+  void deleteUser(int nedId);
+
   <S extends Entity> void update(S entity);
 
 }

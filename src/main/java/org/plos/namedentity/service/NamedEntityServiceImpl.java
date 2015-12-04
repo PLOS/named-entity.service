@@ -355,6 +355,11 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     findResolvedEntities(nedId, Alert.class).stream()
         .forEach(e -> nedDBSvc.delete(e));
 
+
+    // TODO: handle rollbacks
+
+    ambraService.deleteUser(nedId);
+
   }
 
   @Override @Transactional
