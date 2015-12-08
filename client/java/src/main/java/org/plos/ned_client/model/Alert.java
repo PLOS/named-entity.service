@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @ApiModel(description = "")
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-07T17:01:32.713-08:00")
-public class Auth   {
+public class Alert   {
   
   private Integer id = null;
   private Integer nedid = null;
@@ -23,15 +23,14 @@ public class Auth   {
   private String createdbyname = null;
   private Integer lastmodifiedby = null;
   private String lastmodifiedbyname = null;
-  private String email = null;
-  private Integer emailid = null;
-  private String authid = null;
-  private String plainTextPassword = null;
-  private String password = null;
-  private Boolean passwordreset = false;
-  private String verificationtoken = null;
-  private Boolean verified = false;
-  private Boolean isactive = false;
+  private Integer typeid = null;
+  private String type = null;
+  private Integer frequencytypeid = null;
+  private String frequency = null;
+  private Integer journaltypeid = null;
+  private String journal = null;
+  private String name = null;
+  private String query = null;
 
   
   /**
@@ -157,108 +156,96 @@ public class Auth   {
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("email")
-  public String getEmail() {
-    return email;
+  @JsonProperty("typeid")
+  public Integer getTypeid() {
+    return typeid;
   }
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("emailid")
-  public Integer getEmailid() {
-    return emailid;
-  }
-  public void setEmailid(Integer emailid) {
-    this.emailid = emailid;
+  public void setTypeid(Integer typeid) {
+    this.typeid = typeid;
   }
 
   
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("authid")
-  public String getAuthid() {
-    return authid;
+  @JsonProperty("type")
+  public String getType() {
+    return type;
   }
-  public void setAuthid(String authid) {
-    this.authid = authid;
-  }
-
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("plainTextPassword")
-  public String getPlainTextPassword() {
-    return plainTextPassword;
-  }
-  public void setPlainTextPassword(String plainTextPassword) {
-    this.plainTextPassword = plainTextPassword;
+  public void setType(String type) {
+    this.type = type;
   }
 
   
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("password")
-  public String getPassword() {
-    return password;
+  @JsonProperty("frequencytypeid")
+  public Integer getFrequencytypeid() {
+    return frequencytypeid;
   }
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("passwordreset")
-  public Boolean getPasswordreset() {
-    return passwordreset;
-  }
-  public void setPasswordreset(Boolean passwordreset) {
-    this.passwordreset = passwordreset;
+  public void setFrequencytypeid(Integer frequencytypeid) {
+    this.frequencytypeid = frequencytypeid;
   }
 
   
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("verificationtoken")
-  public String getVerificationtoken() {
-    return verificationtoken;
+  @JsonProperty("frequency")
+  public String getFrequency() {
+    return frequency;
   }
-  public void setVerificationtoken(String verificationtoken) {
-    this.verificationtoken = verificationtoken;
-  }
-
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("verified")
-  public Boolean getVerified() {
-    return verified;
-  }
-  public void setVerified(Boolean verified) {
-    this.verified = verified;
+  public void setFrequency(String frequency) {
+    this.frequency = frequency;
   }
 
   
   /**
    **/
   @ApiModelProperty(value = "")
-  @JsonProperty("isactive")
-  public Boolean getIsactive() {
-    return isactive;
+  @JsonProperty("journaltypeid")
+  public Integer getJournaltypeid() {
+    return journaltypeid;
   }
-  public void setIsactive(Boolean isactive) {
-    this.isactive = isactive;
+  public void setJournaltypeid(Integer journaltypeid) {
+    this.journaltypeid = journaltypeid;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("journal")
+  public String getJournal() {
+    return journal;
+  }
+  public void setJournal(String journal) {
+    this.journal = journal;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("name")
+  public String getName() {
+    return name;
+  }
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("query")
+  public String getQuery() {
+    return query;
+  }
+  public void setQuery(String query) {
+    this.query = query;
   }
 
   
@@ -266,7 +253,7 @@ public class Auth   {
   @Override
   public String toString()  {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Auth {\n");
+    sb.append("class Alert {\n");
     
     sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
     sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
@@ -278,15 +265,14 @@ public class Auth   {
     sb.append("    createdbyname: ").append(StringUtil.toIndentedString(createdbyname)).append("\n");
     sb.append("    lastmodifiedby: ").append(StringUtil.toIndentedString(lastmodifiedby)).append("\n");
     sb.append("    lastmodifiedbyname: ").append(StringUtil.toIndentedString(lastmodifiedbyname)).append("\n");
-    sb.append("    email: ").append(StringUtil.toIndentedString(email)).append("\n");
-    sb.append("    emailid: ").append(StringUtil.toIndentedString(emailid)).append("\n");
-    sb.append("    authid: ").append(StringUtil.toIndentedString(authid)).append("\n");
-    sb.append("    plainTextPassword: ").append(StringUtil.toIndentedString(plainTextPassword)).append("\n");
-    sb.append("    password: ").append(StringUtil.toIndentedString(password)).append("\n");
-    sb.append("    passwordreset: ").append(StringUtil.toIndentedString(passwordreset)).append("\n");
-    sb.append("    verificationtoken: ").append(StringUtil.toIndentedString(verificationtoken)).append("\n");
-    sb.append("    verified: ").append(StringUtil.toIndentedString(verified)).append("\n");
-    sb.append("    isactive: ").append(StringUtil.toIndentedString(isactive)).append("\n");
+    sb.append("    typeid: ").append(StringUtil.toIndentedString(typeid)).append("\n");
+    sb.append("    type: ").append(StringUtil.toIndentedString(type)).append("\n");
+    sb.append("    frequencytypeid: ").append(StringUtil.toIndentedString(frequencytypeid)).append("\n");
+    sb.append("    frequency: ").append(StringUtil.toIndentedString(frequency)).append("\n");
+    sb.append("    journaltypeid: ").append(StringUtil.toIndentedString(journaltypeid)).append("\n");
+    sb.append("    journal: ").append(StringUtil.toIndentedString(journal)).append("\n");
+    sb.append("    name: ").append(StringUtil.toIndentedString(name)).append("\n");
+    sb.append("    query: ").append(StringUtil.toIndentedString(query)).append("\n");
     sb.append("}");
     return sb.toString();
   }

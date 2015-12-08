@@ -213,6 +213,57 @@ module NedClient
       return result
     end
 
+    # Delete individual
+    # 
+    # @param ned_id 
+    # @param [Hash] opts the optional parameters
+    # @return [IndividualComposite]
+    def delete_individual(ned_id, opts = {})
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: IndividualsApi#delete_individual ..."
+      end
+      
+      # verify the required parameter 'ned_id' is set
+      fail "Missing the required parameter 'ned_id' when calling delete_individual" if ned_id.nil?
+      
+      # resource path
+      path = "/individuals/{nedId}".sub('{format}','json').sub('{' + 'nedId' + '}', ned_id.to_s)
+
+      # query parameters
+      query_params = {}
+
+      # header parameters
+      header_params = {}
+
+      # HTTP header 'Accept' (if needed)
+      _header_accept = ['application/json']
+      _header_accept_result = @api_client.select_header_accept(_header_accept) and header_params['Accept'] = _header_accept_result
+
+      # HTTP header 'Content-Type'
+      _header_content_type = []
+      header_params['Content-Type'] = @api_client.select_header_content_type(_header_content_type)
+
+      # form parameters
+      form_params = {}
+
+      # http body (model)
+      post_body = nil
+      
+
+      auth_names = ['basic']
+      result = @api_client.call_api(:DELETE, path,
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => 'IndividualComposite')
+      if Configuration.debugging
+        Configuration.logger.debug "API called: IndividualsApi#delete_individual. Result: #{result.inspect}"
+      end
+      return result
+    end
+
     # List addresses
     # 
     # @param ned_id 
@@ -488,11 +539,285 @@ module NedClient
       return result
     end
 
+    # List alerts
+    # 
+    # @param ned_id 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<Alert>]
+    def get_alerts(ned_id, opts = {})
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: IndividualsApi#get_alerts ..."
+      end
+      
+      # verify the required parameter 'ned_id' is set
+      fail "Missing the required parameter 'ned_id' when calling get_alerts" if ned_id.nil?
+      
+      # resource path
+      path = "/individuals/{nedId}/alerts".sub('{format}','json').sub('{' + 'nedId' + '}', ned_id.to_s)
+
+      # query parameters
+      query_params = {}
+
+      # header parameters
+      header_params = {}
+
+      # HTTP header 'Accept' (if needed)
+      _header_accept = ['application/json']
+      _header_accept_result = @api_client.select_header_accept(_header_accept) and header_params['Accept'] = _header_accept_result
+
+      # HTTP header 'Content-Type'
+      _header_content_type = []
+      header_params['Content-Type'] = @api_client.select_header_content_type(_header_content_type)
+
+      # form parameters
+      form_params = {}
+
+      # http body (model)
+      post_body = nil
+      
+
+      auth_names = ['basic']
+      result = @api_client.call_api(:GET, path,
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => 'Array<Alert>')
+      if Configuration.debugging
+        Configuration.logger.debug "API called: IndividualsApi#get_alerts. Result: #{result.inspect}"
+      end
+      return result
+    end
+
+    # Create alert
+    # 
+    # @param ned_id 
+    # @param [Hash] opts the optional parameters
+    # @option opts [Alert] :body 
+    # @option opts [String] :authorization 
+    # @return [Alert]
+    def create_alert(ned_id, opts = {})
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: IndividualsApi#create_alert ..."
+      end
+      
+      # verify the required parameter 'ned_id' is set
+      fail "Missing the required parameter 'ned_id' when calling create_alert" if ned_id.nil?
+      
+      # resource path
+      path = "/individuals/{nedId}/alerts".sub('{format}','json').sub('{' + 'nedId' + '}', ned_id.to_s)
+
+      # query parameters
+      query_params = {}
+
+      # header parameters
+      header_params = {}
+
+      # HTTP header 'Accept' (if needed)
+      _header_accept = ['application/json']
+      _header_accept_result = @api_client.select_header_accept(_header_accept) and header_params['Accept'] = _header_accept_result
+
+      # HTTP header 'Content-Type'
+      _header_content_type = []
+      header_params['Content-Type'] = @api_client.select_header_content_type(_header_content_type)
+      header_params[:'Authorization'] = opts[:'authorization'] if opts[:'authorization']
+
+      # form parameters
+      form_params = {}
+
+      # http body (model)
+      post_body = @api_client.object_to_http_body(opts[:'body'])
+      
+
+      auth_names = ['basic']
+      result = @api_client.call_api(:POST, path,
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => 'Alert')
+      if Configuration.debugging
+        Configuration.logger.debug "API called: IndividualsApi#create_alert. Result: #{result.inspect}"
+      end
+      return result
+    end
+
+    # Read group
+    # 
+    # @param ned_id 
+    # @param alert_id 
+    # @param [Hash] opts the optional parameters
+    # @return [Alert]
+    def get_alert(ned_id, alert_id, opts = {})
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: IndividualsApi#get_alert ..."
+      end
+      
+      # verify the required parameter 'ned_id' is set
+      fail "Missing the required parameter 'ned_id' when calling get_alert" if ned_id.nil?
+      
+      # verify the required parameter 'alert_id' is set
+      fail "Missing the required parameter 'alert_id' when calling get_alert" if alert_id.nil?
+      
+      # resource path
+      path = "/individuals/{nedId}/alerts/{alertId}".sub('{format}','json').sub('{' + 'nedId' + '}', ned_id.to_s).sub('{' + 'alertId' + '}', alert_id.to_s)
+
+      # query parameters
+      query_params = {}
+
+      # header parameters
+      header_params = {}
+
+      # HTTP header 'Accept' (if needed)
+      _header_accept = ['application/json']
+      _header_accept_result = @api_client.select_header_accept(_header_accept) and header_params['Accept'] = _header_accept_result
+
+      # HTTP header 'Content-Type'
+      _header_content_type = []
+      header_params['Content-Type'] = @api_client.select_header_content_type(_header_content_type)
+
+      # form parameters
+      form_params = {}
+
+      # http body (model)
+      post_body = nil
+      
+
+      auth_names = ['basic']
+      result = @api_client.call_api(:GET, path,
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => 'Alert')
+      if Configuration.debugging
+        Configuration.logger.debug "API called: IndividualsApi#get_alert. Result: #{result.inspect}"
+      end
+      return result
+    end
+
+    # Update alert
+    # 
+    # @param ned_id 
+    # @param alert_id 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :authorization 
+    # @option opts [Alert] :body 
+    # @return [Alert]
+    def update_alert(ned_id, alert_id, opts = {})
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: IndividualsApi#update_alert ..."
+      end
+      
+      # verify the required parameter 'ned_id' is set
+      fail "Missing the required parameter 'ned_id' when calling update_alert" if ned_id.nil?
+      
+      # verify the required parameter 'alert_id' is set
+      fail "Missing the required parameter 'alert_id' when calling update_alert" if alert_id.nil?
+      
+      # resource path
+      path = "/individuals/{nedId}/alerts/{alertId}".sub('{format}','json').sub('{' + 'nedId' + '}', ned_id.to_s).sub('{' + 'alertId' + '}', alert_id.to_s)
+
+      # query parameters
+      query_params = {}
+
+      # header parameters
+      header_params = {}
+
+      # HTTP header 'Accept' (if needed)
+      _header_accept = ['application/json']
+      _header_accept_result = @api_client.select_header_accept(_header_accept) and header_params['Accept'] = _header_accept_result
+
+      # HTTP header 'Content-Type'
+      _header_content_type = []
+      header_params['Content-Type'] = @api_client.select_header_content_type(_header_content_type)
+      header_params[:'Authorization'] = opts[:'authorization'] if opts[:'authorization']
+
+      # form parameters
+      form_params = {}
+
+      # http body (model)
+      post_body = @api_client.object_to_http_body(opts[:'body'])
+      
+
+      auth_names = ['basic']
+      result = @api_client.call_api(:PUT, path,
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => 'Alert')
+      if Configuration.debugging
+        Configuration.logger.debug "API called: IndividualsApi#update_alert. Result: #{result.inspect}"
+      end
+      return result
+    end
+
+    # Delete alert
+    # 
+    # @param ned_id 
+    # @param alert_id 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :authorization 
+    # @return [nil]
+    def delete_alert(ned_id, alert_id, opts = {})
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: IndividualsApi#delete_alert ..."
+      end
+      
+      # verify the required parameter 'ned_id' is set
+      fail "Missing the required parameter 'ned_id' when calling delete_alert" if ned_id.nil?
+      
+      # verify the required parameter 'alert_id' is set
+      fail "Missing the required parameter 'alert_id' when calling delete_alert" if alert_id.nil?
+      
+      # resource path
+      path = "/individuals/{nedId}/alerts/{alertId}".sub('{format}','json').sub('{' + 'nedId' + '}', ned_id.to_s).sub('{' + 'alertId' + '}', alert_id.to_s)
+
+      # query parameters
+      query_params = {}
+
+      # header parameters
+      header_params = {}
+
+      # HTTP header 'Accept' (if needed)
+      _header_accept = ['application/json']
+      _header_accept_result = @api_client.select_header_accept(_header_accept) and header_params['Accept'] = _header_accept_result
+
+      # HTTP header 'Content-Type'
+      _header_content_type = []
+      header_params['Content-Type'] = @api_client.select_header_content_type(_header_content_type)
+      header_params[:'Authorization'] = opts[:'authorization'] if opts[:'authorization']
+
+      # form parameters
+      form_params = {}
+
+      # http body (model)
+      post_body = nil
+      
+
+      auth_names = ['basic']
+      @api_client.call_api(:DELETE, path,
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names)
+      if Configuration.debugging
+        Configuration.logger.debug "API called: IndividualsApi#delete_alert"
+      end
+      return nil
+    end
+
     # List auth record(s)
     # 
     # @param ned_id 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [Array<Auth>]
     def get_auth_record(ned_id, opts = {})
       if Configuration.debugging
         Configuration.logger.debug "Calling API: IndividualsApi#get_auth_record ..."
@@ -526,16 +851,17 @@ module NedClient
       
 
       auth_names = ['basic']
-      @api_client.call_api(:GET, path,
+      result = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names)
+        :auth_names => auth_names,
+        :return_type => 'Array<Auth>')
       if Configuration.debugging
-        Configuration.logger.debug "API called: IndividualsApi#get_auth_record"
+        Configuration.logger.debug "API called: IndividualsApi#get_auth_record. Result: #{result.inspect}"
       end
-      return nil
+      return result
     end
 
     # Validate password

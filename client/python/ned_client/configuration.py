@@ -232,5 +232,5 @@ class Configuration(object):
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: Swagger Server\n"\
-               "SDK Package Version: 0.12.0".\
+               "SDK Package Version: 0.13.0-SNAPSHOT".\
                format(env=sys.platform, pyversion=sys.version)
