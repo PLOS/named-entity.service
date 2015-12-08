@@ -423,7 +423,7 @@ public class IndividualsResource extends NedResource {
 
   @GET
   @Path("/{nedId}/auth")
-  @ApiOperation(value = "List auth record(s)")
+  @ApiOperation(value = "List auth record(s)", response = Auth.class, responseContainer = "List")
   public Response getAuthRecord(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Auth.class);
   }
