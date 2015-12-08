@@ -81,11 +81,11 @@
   ],
   "degrees" : [
     {
-      "type"   : "MD",
+      "type"   : "Masters",
       "source" : "Ambra"
     },
     {
-      "type"   : "PhD",
+      "type"   : "Doctorate",
       "source" : "Editorial Manager"
     }
   ],
