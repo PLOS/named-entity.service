@@ -21,12 +21,13 @@ import org.junit.runner.RunWith;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Auth;
+import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Globaltype;
+import org.plos.namedentity.api.entity.Group;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Organization;
-import org.plos.namedentity.api.entity.Group;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.persist.NamedEntityDBService;
@@ -487,6 +488,66 @@ public class CrudServiceTest {
 
     assertTrue( crudService.delete(savedAddress) );
   }
+
+  @Test
+  public void testDegreeCRUD() {
+
+    /* ------------------------------------------------------------------ */
+    /*  CREATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    Degree newDegree = _(new Degree());
+    newDegree.setNedid(1);
+    newDegree.setType("Masters");
+    newDegree.setSource("Ambra");
+    namedEntityService.resolveValuesToIds(newDegree);
+
+    // save record
+
+    Integer pkId = crudService.create(newDegree);
+    assertNotNull( pkId );
+
+    Degree savedDegree = crudService.findById(pkId, Degree.class);
+    assertNotNull( savedDegree );
+    assertEquals(pkId, savedDegree.getId());
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    final String degreeDesc = "M.S. Computer Science "+UUID.randomUUID().toString();
+
+    savedDegree.setDescription(degreeDesc);
+    assertTrue( crudService.update(savedDegree) );
+    Degree savedDegree2 = crudService.findById(pkId, Degree.class);
+    assertEquals(savedDegree, savedDegree2);
+
+    /* ------------------------------------------------------------------ */
+    /*  FINDERS                                                           */
+    /* ------------------------------------------------------------------ */
+
+    // FIND All
+
+    List<Degree> allDegrees = crudService.findAll(Degree.class, 0, Integer.MAX_VALUE);
+    assertNotNull(allDegrees);
+    assertTrue(allDegrees.contains(savedDegree2));
+
+    // FIND BY ATTRIBUTE(S)
+
+    Degree degreeSearchCriteria = new Degree();
+    degreeSearchCriteria.setDescription(degreeDesc);
+
+    List<Degree> foundDegrees = crudService.findByAttribute(degreeSearchCriteria);
+    assertNotNull(foundDegrees);
+    assertEquals(savedDegree2.getDescription(), foundDegrees.get(0).getDescription());
+
+    /* ------------------------------------------------------------------ */
+    /*  DELETE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    assertTrue( crudService.delete(savedDegree) );
+  }
+
 
   @Test
   public void testUniqueIdentifiersCRUD() {

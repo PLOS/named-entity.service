@@ -23,6 +23,7 @@ public class Degree extends Entity {
 
   private Integer typeid;
   private String  type;
+  private String  description;
 
   public String getType() {
     return type;
@@ -38,5 +39,13 @@ public class Degree extends Entity {
 
   public void setTypeid(Integer typeid) {
     this.typeid = typeid;
+  }
+
+  public String getDescription() {
+      return description;
+  }
+
+  public void setDescription(String description) {
+      this.description = description;
   }
 }

@@ -3,7 +3,8 @@ USE namedEntities;
 
 SELECT id INTO @typeIdVar FROM typeDescriptions WHERE description='Degrees';
 
-/* Replace placeholder degrees with these */
+/* Replace seeded placeholder degrees with these values */
+
 DELETE FROM globalTypes WHERE typeId=@typeIdVar;
 
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) 
@@ -23,3 +24,9 @@ INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,create
 
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) 
   VALUES (@typeIdVar, 'High School', NULL, 'HS', CURRENT_TIMESTAMP);
+
+/* Add description field to Degrees table (ex: to store Field of Study) */
+
+ALTER TABLE namedEntities.degrees
+  ADD description varchar(100) NULL
+    AFTER typeId;

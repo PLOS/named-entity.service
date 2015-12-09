@@ -85,8 +85,9 @@
       "source" : "Ambra"
     },
     {
-      "type"   : "Doctorate",
-      "source" : "Editorial Manager"
+      "type"        : "Doctorate",
+      "description" : "Ph.D Physics",
+      "source"      : "Editorial Manager"
     }
   ],
   "urls" : [
