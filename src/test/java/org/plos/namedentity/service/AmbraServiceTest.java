@@ -182,7 +182,7 @@ public class AmbraServiceTest {
   }
 
   @Test
-  public void testCreateInAmbra() throws Throwable {
+  public void testCreateUserInAmbra() throws Throwable {
 
     IndividualComposite composite = getNew();
 
@@ -197,12 +197,35 @@ public class AmbraServiceTest {
   }
 
   @Test
-  public void testCreateInAmbraAndNed() throws Throwable {
+  public void testCreateUserInAmbraAndNed() throws Throwable {
 
     IndividualComposite composite = getNew();
 
     int nedIdResponse = namedEntityService.createComposite(
         composite, IndividualComposite.class).getEmails().get(0).getNedid();
+
+    IndividualComposite compositeFetched = namedEntityService.findComposite(
+        nedIdResponse, IndividualComposite.class);
+
+    UserProfile userProfile = userService.getUser(new Long(nedIdResponse));
+
+    assertEqual(compositeFetched, userProfile);
+
+  }
+
+  @Test
+  public void testCreateEntityInAmbraAndNed() throws Throwable {
+
+    IndividualComposite composite = getNew();
+
+    int nedIdResponse = namedEntityService.createComposite(
+        composite, IndividualComposite.class).getEmails().get(0).getNedid();
+
+    Address address = new Address();
+    address.setCity("Plosville");
+    address.setNedid(nedIdResponse);
+
+    crudService.create( namedEntityService.resolveValuesToIds(address) );
 
     IndividualComposite compositeFetched = namedEntityService.findComposite(
         nedIdResponse, IndividualComposite.class);

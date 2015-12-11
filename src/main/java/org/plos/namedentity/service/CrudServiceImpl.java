@@ -39,8 +39,10 @@ public class CrudServiceImpl implements CrudService {
   public <T> Integer create(T t) {
     Integer nedresponse = namedEntityDBService.create(t);
 
-    if (t instanceof Entity)
-      ambraService.update((Entity)t);
+    if (t instanceof Entity) {
+      ((Entity) t).setNedid(nedresponse);
+      ambraService.update((Entity) t);
+    }
 
     return nedresponse;
   }
