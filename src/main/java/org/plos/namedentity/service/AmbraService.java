@@ -9,4 +9,6 @@ public interface AmbraService {
 
   <S extends Entity> void update(S entity);
 
+  <S extends Entity> void delete(S entity);
+
 }
