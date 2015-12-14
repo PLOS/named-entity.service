@@ -161,7 +161,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
           if (v instanceof Number || v instanceof Boolean) {
             where.append(v);
           } else {
-            where.append("'").append(v).append("'");
+            // escape single quote
+            where.append("'").append( ((String)v).replace("'","''") ).append("'");
           }
         }
       }

@@ -1077,6 +1077,15 @@ public class NamedEntityDBServiceTest {
   }
 
   @Test
+  public void testFindByAttribute() {
+    // verify single quote is escaped
+    Organization orgFilter = new Organization();
+    orgFilter.setFamiliarname("ABC's Inc (FN)");
+    List<Organization> foundOrgs = nedDBSvc.findByAttribute(orgFilter);
+    assertEquals(1, foundOrgs.size());
+  }
+
+  @Test
   public void testFindTypeClassByInspection() {
 
     // Unsupported Entity Type
