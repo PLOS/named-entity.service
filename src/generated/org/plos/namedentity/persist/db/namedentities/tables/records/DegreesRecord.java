@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.namedentities.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DegreesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord> implements org.jooq.Record9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.sql.Timestamp, java.lang.Integer, java.sql.Timestamp, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1462969505;
+	private static final long serialVersionUID = -1321139310;
 
 	/**
 	 * Setter for <code>namedEntities.degrees.id</code>.
@@ -61,16 +61,16 @@ public class DegreesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.na
 	}
 
 	/**
-	 * Setter for <code>namedEntities.degrees.description</code>.
+	 * Setter for <code>namedEntities.degrees.fulltitle</code>.
 	 */
-	public void setDescription(java.lang.String value) {
+	public void setFulltitle(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>namedEntities.degrees.description</code>.
+	 * Getter for <code>namedEntities.degrees.fulltitle</code>.
 	 */
-	public java.lang.String getDescription() {
+	public java.lang.String getFulltitle() {
 		return (java.lang.String) getValue(3);
 	}
 
@@ -205,7 +205,7 @@ public class DegreesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.na
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field4() {
-		return org.plos.namedentity.persist.db.namedentities.tables.Degrees.DEGREES.DESCRIPTION;
+		return org.plos.namedentity.persist.db.namedentities.tables.Degrees.DEGREES.FULLTITLE;
 	}
 
 	/**
@@ -277,7 +277,7 @@ public class DegreesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.na
 	 */
 	@Override
 	public java.lang.String value4() {
-		return getDescription();
+		return getFulltitle();
 	}
 
 	/**
@@ -352,7 +352,7 @@ public class DegreesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.na
 	 */
 	@Override
 	public DegreesRecord value4(java.lang.String value) {
-		setDescription(value);
+		setFulltitle(value);
 		return this;
 	}
 
@@ -423,13 +423,13 @@ public class DegreesRecord extends org.jooq.impl.UpdatableRecordImpl<org.plos.na
 	/**
 	 * Create a detached, initialised DegreesRecord
 	 */
-	public DegreesRecord(java.lang.Integer id, java.lang.Integer nedid, java.lang.Integer typeid, java.lang.String description, java.lang.Integer sourcetypeid, java.sql.Timestamp created, java.lang.Integer createdby, java.sql.Timestamp lastmodified, java.lang.Integer lastmodifiedby) {
+	public DegreesRecord(java.lang.Integer id, java.lang.Integer nedid, java.lang.Integer typeid, java.lang.String fulltitle, java.lang.Integer sourcetypeid, java.sql.Timestamp created, java.lang.Integer createdby, java.sql.Timestamp lastmodified, java.lang.Integer lastmodifiedby) {
 		super(org.plos.namedentity.persist.db.namedentities.tables.Degrees.DEGREES);
 
 		setValue(0, id);
 		setValue(1, nedid);
 		setValue(2, typeid);
-		setValue(3, description);
+		setValue(3, fulltitle);
 		setValue(4, sourcetypeid);
 		setValue(5, created);
 		setValue(6, createdby);

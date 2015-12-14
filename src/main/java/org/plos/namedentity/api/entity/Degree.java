@@ -16,14 +16,27 @@
  */
 package org.plos.namedentity.api.entity;
 
+import org.plos.namedentity.api.NedException;
+
 import javax.xml.bind.annotation.XmlRootElement;
+
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidDegreeError;
 
 @XmlRootElement
 public class Degree extends Entity {
 
   private Integer typeid;
   private String  type;
-  private String  description;
+  private String  fulltitle;
+
+  @Override
+  public void validate() {
+    if ((type == null || type.length() < 1) &&
+        (fulltitle == null || fulltitle.length() < 1)) {
+      throw new NedException(InvalidDegreeError, 
+        "a valid degree requires a type and/or full title.");
+    }
+  }
 
   public String getType() {
     return type;
@@ -41,11 +54,11 @@ public class Degree extends Entity {
     this.typeid = typeid;
   }
 
-  public String getDescription() {
-      return description;
+  public String getFulltitle() {
+      return fulltitle;
   }
 
-  public void setDescription(String description) {
-      this.description = description;
+  public void setFulltitle(String fulltitle) {
+      this.fulltitle = fulltitle;
   }
 }

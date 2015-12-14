@@ -25,8 +25,10 @@ INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,create
 INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) 
   VALUES (@typeIdVar, 'High School', NULL, 'HS', CURRENT_TIMESTAMP);
 
-/* Add description field to Degrees table (ex: to store Field of Study) */
+/* Modify Degrees table. Add title attribute and make type id optional. */
 
 ALTER TABLE namedEntities.degrees
-  ADD description varchar(100) NULL
+  ADD fulltitle varchar(250) NULL
     AFTER typeId;
+
+ALTER TABLE namedEntities.degrees MODIFY COLUMN typeId INT NULL;
