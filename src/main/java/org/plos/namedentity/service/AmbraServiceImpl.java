@@ -67,19 +67,13 @@ public class AmbraServiceImpl implements AmbraService {
 
     String cname = entity.getClass().getCanonicalName();
 
-    if (cname.equals(Individualprofile.class.getCanonicalName())) {
-      ambraProfile.setGivenNames(null);
-      ambraProfile.setSurname(null);
-      ambraProfile.setRealName(null);
-      ambraProfile.setBiography(null);
-      ambraProfile.setTitle(null);
-    } else if (cname.equals(Address.class.getCanonicalName())) {
+    if (cname.equals(Address.class.getCanonicalName())) {
       ambraProfile.setCity(null);
       ambraProfile.setCountry(null);
       ambraProfile.setPostalAddress(null);
-    } else if (cname.equals(Email.class.getCanonicalName())) {
-      ambraProfile.setEmail(null);
     }
+
+    // NOTE: email and profile cannot be deleted so it wont get this far in the code
 
   }
 
@@ -90,8 +84,6 @@ public class AmbraServiceImpl implements AmbraService {
       getAmbraProfile(entity.getNedid());
     } catch (NedException e) {
       // only update entities that are attached to existing NED individuals
-      return;
-    } catch (NullPointerException e) {
       return;
     }
 
@@ -141,6 +133,10 @@ public class AmbraServiceImpl implements AmbraService {
   private UserProfile getAmbraProfile(int nedId) {
     // assume the NED ID is the Ambra ID
     UserProfile ambraProfile = userService.getUser((long)nedId);
+
+    if (ambraProfile == null)
+      throw new NedException("Individual not found in Ambra");
+
     ambraProfile.setAuthId(getAuthId(nedId));
     return ambraProfile;
   }
