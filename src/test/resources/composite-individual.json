@@ -81,12 +81,13 @@
   ],
   "degrees" : [
     {
-      "type"   : "MD",
+      "type"   : "Masters",
       "source" : "Ambra"
     },
     {
-      "type"   : "PhD",
-      "source" : "Editorial Manager"
+      "type"        : "Doctorate",
+      "description" : "Ph.D Physics",
+      "source"      : "Editorial Manager"
     }
   ],
   "urls" : [

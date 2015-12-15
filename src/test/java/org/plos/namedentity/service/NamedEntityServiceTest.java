@@ -361,7 +361,7 @@ public class NamedEntityServiceTest {
     List<Degree> degrees = new ArrayList<>();
 
     Degree degree = new Degree();
-    degree.setType("MD");
+    degree.setType("Masters");
     degree.setSource("Editorial Manager");
     degrees.add(_(degree));
 

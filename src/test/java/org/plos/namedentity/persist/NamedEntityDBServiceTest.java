@@ -998,6 +998,50 @@ public class NamedEntityDBServiceTest {
   }
 
   @Test
+  public void testDegreeCRUD() {
+
+    // CREATE
+
+    Integer degreeType = nedDBSvc.findTypeClass(DEGREES.getName());
+
+    Degree degree = _(new Degree());
+    degree.setNedid(1);
+    degree.setTypeid( nedDBSvc.findTypeValue(degreeType,"Doctorate") );
+    degree.setSourcetypeid( getSourceTypeId(UidTypeEnum.AMBRA.getName()) );
+
+    Integer degreeId = nedDBSvc.create(degree);
+    assertNotNull(degreeId);
+
+    // UPDATE
+
+    Degree savedDegree = nedDBSvc.findById(degreeId, Degree.class);
+    savedDegree.setFulltitle("Ph.D Physics");
+    assertTrue( nedDBSvc.update(savedDegree) );
+
+    // Get another instance of same degree record.
+
+    Degree savedDegree2 = nedDBSvc.findById(degreeId, Degree.class);
+    assertEquals(savedDegree, savedDegree2);
+
+    // FIND ALL DEGREE's 
+
+    List<Degree> allDegreesInDb = nedDBSvc.findAll(Degree.class, 0, Integer.MAX_VALUE);
+    assertTrue( allDegreesInDb.size() > 0 );
+
+    // FIND BY JOIN-QUERY 
+
+    List<Degree> degrees = nedDBSvc.findResolvedEntities(savedDegree.getNedid(), Degree.class);
+    assertTrue( degrees.size() > 0 );
+    assertEquals(degree.getNedid(), degrees.get(0).getNedid());
+
+    // DELETE
+
+    Degree degreeToDelete = new Degree();
+    degreeToDelete.setId(degreeId);
+    assertTrue( nedDBSvc.delete(degreeToDelete) );
+  }
+
+  @Test
   public void testConsumerTableFinders() {
 
     List<Consumer> allConsumersInDb = nedDBSvc.findAll(Consumer.class, 0, Integer.MAX_VALUE);
