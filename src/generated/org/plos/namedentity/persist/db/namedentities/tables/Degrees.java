@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Degrees extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord> {
 
-	private static final long serialVersionUID = 1099977541;
+	private static final long serialVersionUID = 345499813;
 
 	/**
 	 * The reference instance of <code>namedEntities.degrees</code>
@@ -44,7 +44,12 @@ public class Degrees extends org.jooq.impl.TableImpl<org.plos.namedentity.persis
 	/**
 	 * The column <code>namedEntities.degrees.typeId</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> TYPEID = createField("typeId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.Integer> TYPEID = createField("typeId", org.jooq.impl.SQLDataType.INTEGER, this, "");
+
+	/**
+	 * The column <code>namedEntities.degrees.fulltitle</code>.
+	 */
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.DegreesRecord, java.lang.String> FULLTITLE = createField("fulltitle", org.jooq.impl.SQLDataType.VARCHAR.length(250), this, "");
 
 	/**
 	 * The column <code>namedEntities.degrees.sourceTypeId</code>.

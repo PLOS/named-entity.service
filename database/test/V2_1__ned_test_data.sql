@@ -42,7 +42,7 @@ INSERT INTO namedEntities.namedEntityIdentifiers(id,typeId)
                where td.description='Named Party Types' and gt.shortDescription='Organization'));
 
 INSERT INTO  namedEntities.organizations (id, nedId, familiarName, legalName, isActive, createdBy, lastModifiedBy, sourceTypeId)
-  VALUES (1,2,'ABC Inc (FN)','ABC Inc (LN)',1,1,1,
+  VALUES (1,2,'ABC''s Inc (FN)','ABC''s Inc (LN)',1,1,1,
     (select gt.id from namedEntities.globalTypes gt
        join namedEntities.typeDescriptions td on gt.typeid = td.id
       where td.description='Source Applications' and gt.shortDescription='Ambra'));
