@@ -496,6 +496,21 @@ public class CrudServiceTest {
     /*  CREATE                                                            */
     /* ------------------------------------------------------------------ */
 
+    // try to create a degree without a title or type
+
+    try {
+      Degree newDegree = _(new Degree());
+      newDegree.setNedid(1);
+      newDegree.setSource("Ambra");
+      namedEntityService.resolveValuesToIds(newDegree);
+      crudService.create(newDegree);
+      fail();
+    } catch (NedException expected) {
+      assertEquals(InvalidDegreeError, expected.getErrorType());
+    }
+
+    // create valid degree
+
     Degree newDegree = _(new Degree());
     newDegree.setNedid(1);
     newDegree.setType("Masters");
@@ -517,10 +532,21 @@ public class CrudServiceTest {
 
     final String degreeDesc = "M.S. Computer Science "+UUID.randomUUID().toString();
 
-    savedDegree.setDescription(degreeDesc);
+    savedDegree.setFulltitle(degreeDesc);
     assertTrue( crudService.update(savedDegree) );
     Degree savedDegree2 = crudService.findById(pkId, Degree.class);
     assertEquals(savedDegree, savedDegree2);
+
+    // try to update degree w/o a title or type
+
+    try {
+      savedDegree.setFulltitle(null);
+      savedDegree.setType(null);
+      crudService.update(savedDegree);
+      fail();
+    } catch (NedException expected) {
+      assertEquals(InvalidDegreeError, expected.getErrorType());
+    }
 
     /* ------------------------------------------------------------------ */
     /*  FINDERS                                                           */
@@ -535,11 +561,11 @@ public class CrudServiceTest {
     // FIND BY ATTRIBUTE(S)
 
     Degree degreeSearchCriteria = new Degree();
-    degreeSearchCriteria.setDescription(degreeDesc);
+    degreeSearchCriteria.setFulltitle(degreeDesc);
 
     List<Degree> foundDegrees = crudService.findByAttribute(degreeSearchCriteria);
     assertNotNull(foundDegrees);
-    assertEquals(savedDegree2.getDescription(), foundDegrees.get(0).getDescription());
+    assertEquals(savedDegree2.getFulltitle(), foundDegrees.get(0).getFulltitle());
 
     /* ------------------------------------------------------------------ */
     /*  DELETE                                                            */

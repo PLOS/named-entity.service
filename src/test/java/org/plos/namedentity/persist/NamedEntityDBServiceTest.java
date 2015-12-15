@@ -1015,7 +1015,7 @@ public class NamedEntityDBServiceTest {
     // UPDATE
 
     Degree savedDegree = nedDBSvc.findById(degreeId, Degree.class);
-    savedDegree.setDescription("Ph.D Physics");
+    savedDegree.setFulltitle("Ph.D Physics");
     assertTrue( nedDBSvc.update(savedDegree) );
 
     // Get another instance of same degree record.
