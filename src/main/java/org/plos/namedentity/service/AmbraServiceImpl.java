@@ -56,9 +56,16 @@ public class AmbraServiceImpl implements AmbraService {
   @Override
   public <S extends Entity> void delete(S entity) {
 
-    String cname = entity.getClass().getCanonicalName();
+    UserProfile ambraProfile = null;
 
-    UserProfile ambraProfile = getAmbraProfile(entity.getNedid());
+    try {
+      ambraProfile = getAmbraProfile(entity.getNedid());
+    } catch (NedException e) {
+      // only update entities that are attached to existing NED individuals
+      return;
+    }
+
+    String cname = entity.getClass().getCanonicalName();
 
     if (cname.equals(Individualprofile.class.getCanonicalName())) {
       ambraProfile.setGivenNames(null);
@@ -76,6 +83,20 @@ public class AmbraServiceImpl implements AmbraService {
 
   }
 
+  @Override
+  public <S extends Entity> void create(S entity) {
+
+    try {
+      getAmbraProfile(entity.getNedid());
+    } catch (NedException e) {
+      // only update entities that are attached to existing NED individuals
+      return;
+    } catch (NullPointerException e) {
+      return;
+    }
+
+    update(entity);
+  }
 
   @Override
   public <S extends Entity> void update(S entity) {
