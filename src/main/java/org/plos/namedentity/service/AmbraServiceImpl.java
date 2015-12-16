@@ -72,8 +72,9 @@ public class AmbraServiceImpl implements AmbraService {
       ambraProfile.setCountry(null);
       ambraProfile.setPostalAddress(null);
     }
-
     // NOTE: email and profile cannot be deleted so it wont get this far in the code
+
+    updateInAmbra(ambraProfile);
 
   }
 
