@@ -31,7 +31,9 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -143,10 +145,10 @@ public class AmbraServiceTest {
 
     assertEqual(ned.getEmails().get(0), ambra);
 
-    if (ned.getAddresses() != null)
+    if (ned.getAddresses() != null && ned.getAddresses().size() != 0)
       assertEqual(ned.getAddresses().get(0), ambra);
 
-    if (ned.getUrls() != null)
+    if (ned.getUrls() != null && ned.getUrls().size() != 0)
       assertEquals(ned.getUrls().get(0).getUrl(), ambra.getHomePage());
 
   }
@@ -182,7 +184,7 @@ public class AmbraServiceTest {
   }
 
   @Test
-  public void testCreateInAmbra() throws Throwable {
+  public void testCreateUserInAmbra() throws Throwable {
 
     IndividualComposite composite = getNew();
 
@@ -197,7 +199,7 @@ public class AmbraServiceTest {
   }
 
   @Test
-  public void testCreateInAmbraAndNed() throws Throwable {
+  public void testCreateUserInAmbraAndNed() throws Throwable {
 
     IndividualComposite composite = getNew();
 
@@ -210,6 +212,49 @@ public class AmbraServiceTest {
     UserProfile userProfile = userService.getUser(new Long(nedIdResponse));
 
     assertEqual(compositeFetched, userProfile);
+
+  }
+
+  @Test
+  public void testDeleteCreateEntityInAmbraAndNed() throws Throwable {
+
+    IndividualComposite composite = getNew();
+
+    IndividualComposite dbComposite = namedEntityService.createComposite(
+        composite, IndividualComposite.class);
+
+    Integer nedId = dbComposite.getEmails().get(0).getNedid();
+
+    Address origAddress = dbComposite.getAddresses().get(0);
+
+    crudService.delete(origAddress);
+
+    UserProfile userProfile = userService.getUser(new Long(nedId));
+
+    IndividualComposite compositeOut = namedEntityService.findComposite(
+        nedId, IndividualComposite.class);
+
+    assertEqual(compositeOut, userProfile);
+
+
+    Address address = new Address();
+    address.setCity("new city");
+    address.setCountrycodetype("United States of America");
+    address.setSource("Ambra");
+    address.setNedid(nedId);
+    address.setCreatedby(1);
+    address.setLastmodified(new Timestamp(new Date().getTime()));
+    address.setLastmodifiedby(1);
+    address.setCreated(new Timestamp(new Date().getTime()));
+
+    crudService.create( namedEntityService.resolveValuesToIds(address) );
+
+    userProfile = userService.getUser(new Long(nedId));
+
+    compositeOut = namedEntityService.findComposite(
+        nedId, IndividualComposite.class);
+
+    assertEqual(compositeOut, userProfile);
 
   }
 

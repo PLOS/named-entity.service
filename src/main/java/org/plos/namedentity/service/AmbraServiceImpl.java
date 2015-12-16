@@ -52,6 +52,45 @@ public class AmbraServiceImpl implements AmbraService {
     }
   }
 
+
+  @Override
+  public <S extends Entity> void delete(S entity) {
+
+    UserProfile ambraProfile = null;
+
+    try {
+      ambraProfile = getAmbraProfile(entity.getNedid());
+    } catch (NedException e) {
+      // only update entities that are attached to existing NED individuals
+      return;
+    }
+
+    String cname = entity.getClass().getCanonicalName();
+
+    if (cname.equals(Address.class.getCanonicalName())) {
+      ambraProfile.setCity(null);
+      ambraProfile.setCountry(null);
+      ambraProfile.setPostalAddress(null);
+    }
+    // NOTE: email and profile cannot be deleted so it wont get this far in the code
+
+    updateInAmbra(ambraProfile);
+
+  }
+
+  @Override
+  public <S extends Entity> void create(S entity) {
+
+    try {
+      getAmbraProfile(entity.getNedid());
+    } catch (NedException e) {
+      // only update entities that are attached to existing NED individuals
+      return;
+    }
+
+    update(entity);
+  }
+
   @Override
   public <S extends Entity> void update(S entity) {
 
@@ -95,6 +134,10 @@ public class AmbraServiceImpl implements AmbraService {
   private UserProfile getAmbraProfile(int nedId) {
     // assume the NED ID is the Ambra ID
     UserProfile ambraProfile = userService.getUser((long)nedId);
+
+    if (ambraProfile == null)
+      throw new NedException("Individual not found in Ambra");
+
     ambraProfile.setAuthId(getAuthId(nedId));
     return ambraProfile;
   }
@@ -131,36 +174,6 @@ public class AmbraServiceImpl implements AmbraService {
       throw new NedException(DatabaseError, "Unable to find authId");
     }
   }
-
-//  // this method is probably not needed
-//  public void addRole(Group group, int nedId) {
-//
-//    // use the nedid to find the ambraid
-//    Uniqueidentifier uniqueidentifier = new Uniqueidentifier();
-//
-//    Integer individualUidTypeId = namedEntityDBService.findTypeClass("UID Individual Types");
-//    Integer ambraTypeId = namedEntityDBService.findTypeValue(individualUidTypeId, UidTypeEnum.AMBRA.getName());
-//
-//    uniqueidentifier.setTypeid(ambraTypeId);
-//    uniqueidentifier.setNedid(nedId);
-//
-//    Long ambraId = Long.parseLong(namedEntityDBService.findByAttribute(uniqueidentifier).get(0).getUniqueidentifier());
-//
-//    List<UserRoleView> possibleRoles = rolesService.getAllRoles(ambraId);
-//
-//    String ambraRole = ambraRoles.get(group.getType());
-//
-//    try {
-//      Long roleId = possibleRoles.stream()
-//          .filter(r -> r.getRoleName().equals(ambraRole))
-//          .findFirst().get().getID();
-//
-//      rolesService.grantRole(ambraId, roleId);
-//    } catch (NoSuchElementException e) {
-//
-//      throw new NedException(DatabaseError, "Specified role does not exist in Ambra");
-//    }
-//  }
 
   private void copyToAmbraPojo(Individualprofile nedUser, UserProfile ambraUser) {
 

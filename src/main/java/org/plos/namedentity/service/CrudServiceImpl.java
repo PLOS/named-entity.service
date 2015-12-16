@@ -37,7 +37,12 @@ public class CrudServiceImpl implements CrudService {
   @Override
   @Transactional
   public <T> Integer create(T t) {
-    return namedEntityDBService.create(t);
+    Integer nedresponse = namedEntityDBService.create(t);
+
+    if (t instanceof Entity)
+      ambraService.create((Entity) t);
+
+    return nedresponse;
   }
 
   @Override
@@ -48,15 +53,18 @@ public class CrudServiceImpl implements CrudService {
     if (t instanceof Entity)
       ambraService.update((Entity)t);
 
-    // TODO: something similar in the create method above (ie - create address)
-
     return nedresponse;
   }
 
   @Override
   @Transactional
   public <T> boolean delete(T t) {
-    return namedEntityDBService.delete(t);
+    boolean nedresponse = namedEntityDBService.delete(t);
+
+    if (t instanceof Entity)
+      ambraService.delete((Entity)t);
+
+    return nedresponse;
   }
 
   @Override
