@@ -16,7 +16,11 @@
  */
 package org.plos.namedentity.api.entity;
 
+import static org.plos.namedentity.api.NedException.ErrorType.*;
+
+import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.adapter.DateAdapter;
+import org.plos.namedentity.api.enums.RelationshipTypeEnum;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -37,6 +41,12 @@ public class Relationship extends Entity {
 
   @XmlJavaTypeAdapter(DateAdapter.class)
   private Date enddate;
+
+  @Override
+  public void validate() {
+    if (type == null || !validateRelationType(type))
+      throw new NedException(InvalidRelationshipError, "Relationship type not valid");
+  }
 
   public Integer getNedidrelated() {
     return nedidrelated;
@@ -84,5 +94,10 @@ public class Relationship extends Entity {
 
   public void setType(String type) {
       this.type = type;
+  }
+
+  public static boolean validateRelationType(String relType) {
+    RelationshipTypeEnum relEnum = RelationshipTypeEnum.getRelationshipTypeEnum(relType);
+    return (relEnum != RelationshipTypeEnum.INVALID_RELATIONSHIP_TYPE);
   }
 }
