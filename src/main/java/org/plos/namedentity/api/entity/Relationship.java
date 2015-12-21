@@ -46,6 +46,9 @@ public class Relationship extends Entity {
   public void validate() {
     if (type == null || !validateRelationType(type))
       throw new NedException(InvalidRelationshipError, "Relationship type not valid");
+
+    if (nedidrelated == null)
+      throw new NedException(InvalidRelationshipError, "Relationship nedidrelated not defined");
   }
 
   public Integer getNedidrelated() {
