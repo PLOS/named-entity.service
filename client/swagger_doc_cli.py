@@ -39,7 +39,7 @@ def show_method_list(args):
             set_color(op.method)
             print ("{:<7}{:<50}".format(op.method.upper(), path))
             set_color()
-            print (get_curl_command(urllib.parse.urljoin(args.spec, op.path[1:]), op.method) + '\n')
+            print (get_curl_command(urllib.parse.urljoin(args.spec, path[1:]), op.method) + '\n')
         else:
             summary = (op.summary[:15] + '..') if len(op.summary) > 15 else op.summary
             # print ("{}{}{:<6}{}{}{}{} {:<50}{}{:>20}{}".format(Fore.WHITE, back_color(op.method), op.method.upper(), Style.DIM, Back.BLACK, Style.NORMAL, Fore.WHITE, path, fore_color(op.method), summary, Style.RESET_ALL))
@@ -97,9 +97,9 @@ def get_curl_command(path, method):
 def parse_args():
 
     parser = argparse.ArgumentParser(description='Swagger Doc CLI')
-    parser.add_argument('spec', help="Location of swagger spec")
-    parser.add_argument('-v', action='store_true', required=False)
-    parser.add_argument('-c', help="Show colors", action='store_true', required=False)
+    parser.add_argument('spec', help="location of swagger spec")
+    parser.add_argument('-v', help="verbose", action='store_true', required=False)
+    parser.add_argument('-c', help="show colors", action='store_true', required=False)
 
     args = parser.parse_args()
 
