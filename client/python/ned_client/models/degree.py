@@ -48,7 +48,8 @@ class Degree(object):
             'lastmodifiedby': 'int',
             'lastmodifiedbyname': 'str',
             'typeid': 'int',
-            'type': 'str'
+            'type': 'str',
+            'fulltitle': 'str'
         }
 
         self.attribute_map = {
@@ -63,7 +64,8 @@ class Degree(object):
             'lastmodifiedby': 'lastmodifiedby',
             'lastmodifiedbyname': 'lastmodifiedbyname',
             'typeid': 'typeid',
-            'type': 'type'
+            'type': 'type',
+            'fulltitle': 'fulltitle'
         }
 
         self._id = None
@@ -78,6 +80,7 @@ class Degree(object):
         self._lastmodifiedbyname = None
         self._typeid = None
         self._type = None
+        self._fulltitle = None
 
     @property
     def id(self):
@@ -343,6 +346,28 @@ class Degree(object):
         """
         self._type = type
 
+    @property
+    def fulltitle(self):
+        """
+        Gets the fulltitle of this Degree.
+
+
+        :return: The fulltitle of this Degree.
+        :rtype: str
+        """
+        return self._fulltitle
+
+    @fulltitle.setter
+    def fulltitle(self, fulltitle):
+        """
+        Sets the fulltitle of this Degree.
+
+
+        :param fulltitle: The fulltitle of this Degree.
+        :type: str
+        """
+        self._fulltitle = fulltitle
+
     def to_dict(self):
         """
         Returns the model properties as a dict
@@ -374,3 +399,16 @@ class Degree(object):
         For `print` and `pprint`
         """
         return self.to_str()
+
+    def __eq__(self, other): 
+        """
+        Returns true if both objects are equal
+        """
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        """ 
+        Returns true if both objects are not equal
+        """
+        return not self == other
+

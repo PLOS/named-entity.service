@@ -1,14 +1,7 @@
 require 'uri'
-require 'singleton'
 
 module NedClient
   class Configuration
-
-    include Singleton
-
-    # Default api client
-    attr_accessor :api_client
-
     # Defines url scheme
     attr_accessor :scheme
 
@@ -43,6 +36,9 @@ module NedClient
     #
     # @return [String]
     attr_accessor :password
+
+    # Defines the access token (Bearer) used with OAuth2.
+    attr_accessor :access_token
 
     # Set this to enable/disable debugging. When enabled (set to true), HTTP request/response
     # details will be logged with `logger.debug` (see the `logger` attribute).
@@ -91,17 +87,6 @@ module NedClient
 
     attr_accessor :force_ending_format
 
-    class << self
-      def method_missing(method_name, *args, &block)
-        config = Configuration.instance
-        if config.respond_to?(method_name)
-          config.send(method_name, *args, &block)
-        else
-          super
-        end
-      end
-    end
-
     def initialize
       @scheme = 'http'
       @host = ''
@@ -115,10 +100,17 @@ module NedClient
       @inject_format = false
       @force_ending_format = false
       @logger = defined?(Rails) ? Rails.logger : Logger.new(STDOUT)
+
+      yield(self) if block_given?
     end
 
-    def api_client
-      @api_client ||= ApiClient.new
+    # The default Configuration object.
+    def self.default
+      @@default ||= Configuration.new
+    end
+
+    def configure
+      yield(self) if block_given?
     end
 
     def scheme=(scheme)

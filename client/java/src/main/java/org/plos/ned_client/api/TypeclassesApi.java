@@ -1,17 +1,18 @@
 package org.plos.ned_client.api;
 
+import com.sun.jersey.api.client.GenericType;
+
 import org.plos.ned_client.ApiException;
 import org.plos.ned_client.ApiClient;
 import org.plos.ned_client.Configuration;
 import org.plos.ned_client.Pair;
-import org.plos.ned_client.TypeRef;
 
 import org.plos.ned_client.model.Typedescription;
 import org.plos.ned_client.model.Globaltype;
 
 import java.util.*;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-07T17:01:32.713-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-21T13:36:13.082-08:00")
 public class TypeclassesApi {
   private ApiClient apiClient;
 
@@ -39,9 +40,8 @@ public class TypeclassesApi {
    * @param limit 
    * @return List<Typedescription>
    */
-  public List<Typedescription> list (Integer offset, Integer limit) throws ApiException {
+  public List<Typedescription> list(Integer offset, Integer limit) throws ApiException {
     Object postBody = null;
-    byte[] postBinaryBody = null;
     
     // create path and map variables
     String path = "/typeclasses".replaceAll("\\{format\\}","json");
@@ -74,15 +74,9 @@ public class TypeclassesApi {
     String[] authNames = new String[] { "basic" };
 
     
-
+    GenericType<List<Typedescription>> returnType = new GenericType<List<Typedescription>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
-    
-    TypeRef returnType = new TypeRef<List<Typedescription>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
-    
-    
-
-
   }
   
   /**
@@ -91,9 +85,8 @@ public class TypeclassesApi {
    * @param body 
    * @return Typedescription
    */
-  public Typedescription create (Typedescription body) throws ApiException {
+  public Typedescription create(Typedescription body) throws ApiException {
     Object postBody = body;
-    byte[] postBinaryBody = null;
     
     // create path and map variables
     String path = "/typeclasses".replaceAll("\\{format\\}","json");
@@ -122,15 +115,9 @@ public class TypeclassesApi {
     String[] authNames = new String[] { "basic" };
 
     
-
+    GenericType<Typedescription> returnType = new GenericType<Typedescription>() {};
+    return apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
-    
-    TypeRef returnType = new TypeRef<Typedescription>() {};
-    return apiClient.invokeAPI(path, "POST", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
-    
-    
-
-
   }
   
   /**
@@ -139,9 +126,8 @@ public class TypeclassesApi {
    * @param id 
    * @return Typedescription
    */
-  public Typedescription read (Integer id) throws ApiException {
+  public Typedescription read(Integer id) throws ApiException {
     Object postBody = null;
-    byte[] postBinaryBody = null;
     
      // verify the required parameter 'id' is set
      if (id == null) {
@@ -176,15 +162,9 @@ public class TypeclassesApi {
     String[] authNames = new String[] { "basic" };
 
     
-
+    GenericType<Typedescription> returnType = new GenericType<Typedescription>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
-    
-    TypeRef returnType = new TypeRef<Typedescription>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
-    
-    
-
-
   }
   
   /**
@@ -193,9 +173,8 @@ public class TypeclassesApi {
    * @param body 
    * @return Typedescription
    */
-  public Typedescription update (Typedescription body) throws ApiException {
+  public Typedescription update(Typedescription body) throws ApiException {
     Object postBody = body;
-    byte[] postBinaryBody = null;
     
     // create path and map variables
     String path = "/typeclasses/{id}".replaceAll("\\{format\\}","json");
@@ -224,15 +203,9 @@ public class TypeclassesApi {
     String[] authNames = new String[] { "basic" };
 
     
-
+    GenericType<Typedescription> returnType = new GenericType<Typedescription>() {};
+    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
-    
-    TypeRef returnType = new TypeRef<Typedescription>() {};
-    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
-    
-    
-
-
   }
   
   /**
@@ -241,9 +214,8 @@ public class TypeclassesApi {
    * @param id 
    * @return void
    */
-  public void delete (Integer id) throws ApiException {
+  public void delete(Integer id) throws ApiException {
     Object postBody = null;
-    byte[] postBinaryBody = null;
     
      // verify the required parameter 'id' is set
      if (id == null) {
@@ -278,14 +250,8 @@ public class TypeclassesApi {
     String[] authNames = new String[] { "basic" };
 
     
-
+    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, null);
     
-    
-    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
-    
-    
-
-
   }
   
   /**
@@ -294,9 +260,8 @@ public class TypeclassesApi {
    * @param typeclassid 
    * @return void
    */
-  public void getGlobalTypeForTypeClass (Integer typeclassid) throws ApiException {
+  public void getGlobalTypeForTypeClass(Integer typeclassid) throws ApiException {
     Object postBody = null;
-    byte[] postBinaryBody = null;
     
      // verify the required parameter 'typeclassid' is set
      if (typeclassid == null) {
@@ -331,14 +296,8 @@ public class TypeclassesApi {
     String[] authNames = new String[] { "basic" };
 
     
-
+    apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, null);
     
-    
-    apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
-    
-    
-
-
   }
   
   /**
@@ -348,9 +307,8 @@ public class TypeclassesApi {
    * @param body 
    * @return Globaltype
    */
-  public Globaltype createGlobalType (Integer typeclassid, Globaltype body) throws ApiException {
+  public Globaltype createGlobalType(Integer typeclassid, Globaltype body) throws ApiException {
     Object postBody = body;
-    byte[] postBinaryBody = null;
     
      // verify the required parameter 'typeclassid' is set
      if (typeclassid == null) {
@@ -385,15 +343,9 @@ public class TypeclassesApi {
     String[] authNames = new String[] { "basic" };
 
     
-
+    GenericType<Globaltype> returnType = new GenericType<Globaltype>() {};
+    return apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
-    
-    TypeRef returnType = new TypeRef<Globaltype>() {};
-    return apiClient.invokeAPI(path, "POST", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
-    
-    
-
-
   }
   
   /**
@@ -403,9 +355,8 @@ public class TypeclassesApi {
    * @param typevalueid 
    * @return Globaltype
    */
-  public Globaltype getGlobalType (Integer typeclassid, Integer typevalueid) throws ApiException {
+  public Globaltype getGlobalType(Integer typeclassid, Integer typevalueid) throws ApiException {
     Object postBody = null;
-    byte[] postBinaryBody = null;
     
      // verify the required parameter 'typeclassid' is set
      if (typeclassid == null) {
@@ -446,15 +397,9 @@ public class TypeclassesApi {
     String[] authNames = new String[] { "basic" };
 
     
-
+    GenericType<Globaltype> returnType = new GenericType<Globaltype>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
-    
-    TypeRef returnType = new TypeRef<Globaltype>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
-    
-    
-
-
   }
   
   /**
@@ -465,9 +410,8 @@ public class TypeclassesApi {
    * @param body 
    * @return Globaltype
    */
-  public Globaltype updateGlobalType (Integer typeclassid, Integer typevalueid, Globaltype body) throws ApiException {
+  public Globaltype updateGlobalType(Integer typeclassid, Integer typevalueid, Globaltype body) throws ApiException {
     Object postBody = body;
-    byte[] postBinaryBody = null;
     
      // verify the required parameter 'typeclassid' is set
      if (typeclassid == null) {
@@ -508,15 +452,9 @@ public class TypeclassesApi {
     String[] authNames = new String[] { "basic" };
 
     
-
+    GenericType<Globaltype> returnType = new GenericType<Globaltype>() {};
+    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
-    
-    TypeRef returnType = new TypeRef<Globaltype>() {};
-    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
-    
-    
-
-
   }
   
   /**
@@ -526,9 +464,8 @@ public class TypeclassesApi {
    * @param typevalueid 
    * @return void
    */
-  public void deleteGlobalType (Integer typeclassid, Integer typevalueid) throws ApiException {
+  public void deleteGlobalType(Integer typeclassid, Integer typevalueid) throws ApiException {
     Object postBody = null;
-    byte[] postBinaryBody = null;
     
      // verify the required parameter 'typeclassid' is set
      if (typeclassid == null) {
@@ -569,14 +506,8 @@ public class TypeclassesApi {
     String[] authNames = new String[] { "basic" };
 
     
-
+    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, null);
     
-    
-    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
-    
-    
-
-
   }
   
 }

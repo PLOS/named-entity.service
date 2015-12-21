@@ -4,8 +4,8 @@ module NedClient
   class ServiceApi
     attr_accessor :api_client
 
-    def initialize(api_client = nil)
-      @api_client = api_client || Configuration.api_client
+    def initialize(api_client = ApiClient.default)
+      @api_client = api_client
     end
 
     # Config info
@@ -13,8 +13,17 @@ module NedClient
     # @param [Hash] opts the optional parameters
     # @return [ConfigInfo]
     def config(opts = {})
-      if Configuration.debugging
-        Configuration.logger.debug "Calling API: ServiceApi#config ..."
+      data, status_code, headers = config_with_http_info(opts)
+      return data
+    end
+
+    # Config info
+    # 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(ConfigInfo, Fixnum, Hash)>] ConfigInfo data, response status code and response headers
+    def config_with_http_info(opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "Calling API: ServiceApi#config ..."
       end
       
       # resource path
@@ -42,17 +51,17 @@ module NedClient
       
 
       auth_names = []
-      result = @api_client.call_api(:GET, path,
+      data, status_code, headers = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'ConfigInfo')
-      if Configuration.debugging
-        Configuration.logger.debug "API called: ServiceApi#config. Result: #{result.inspect}"
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: ServiceApi#config\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
-      return result
+      return data, status_code, headers
     end
 
     # List possible error codes
@@ -60,8 +69,17 @@ module NedClient
     # @param [Hash] opts the optional parameters
     # @return [Array<NedErrorResponse>]
     def errorcodes(opts = {})
-      if Configuration.debugging
-        Configuration.logger.debug "Calling API: ServiceApi#errorcodes ..."
+      data, status_code, headers = errorcodes_with_http_info(opts)
+      return data
+    end
+
+    # List possible error codes
+    # 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(Array<NedErrorResponse>, Fixnum, Hash)>] Array<NedErrorResponse> data, response status code and response headers
+    def errorcodes_with_http_info(opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "Calling API: ServiceApi#errorcodes ..."
       end
       
       # resource path
@@ -89,17 +107,17 @@ module NedClient
       
 
       auth_names = []
-      result = @api_client.call_api(:GET, path,
+      data, status_code, headers = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Array<NedErrorResponse>')
-      if Configuration.debugging
-        Configuration.logger.debug "API called: ServiceApi#errorcodes. Result: #{result.inspect}"
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: ServiceApi#errorcodes\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
-      return result
+      return data, status_code, headers
     end
   end
 end
