@@ -196,9 +196,9 @@ public class NamedEntityServiceTest {
     /* ---------------------------------------------------------------------- */
 
     relationshipEntity = new Relationship();
-    relationshipEntity.setNedid(2);        /* seeded organization */
-    relationshipEntity.setNedidrelated(1); /* seeded individual   */
-    relationshipEntity.setType("Organization-Author");
+    relationshipEntity.setNedid(1);        /* seeded individual   */
+    relationshipEntity.setNedidrelated(2); /* seeded organization */
+    relationshipEntity.setType("Individual Affiliated with Organization");
     relationshipEntity.setStartdate( dateNow() );
     relationshipEntity.setSource("Ambra");
 
