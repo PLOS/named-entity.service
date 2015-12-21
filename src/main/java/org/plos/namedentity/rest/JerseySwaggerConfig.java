@@ -25,6 +25,8 @@ public class JerseySwaggerConfig extends HttpServlet {
         schemes.add(Scheme.HTTPS);
         schemes.add(Scheme.HTTP);
 
+        swagger.setSchemes(schemes);
+
         context.setAttribute("swagger", swagger);
     }
 }
