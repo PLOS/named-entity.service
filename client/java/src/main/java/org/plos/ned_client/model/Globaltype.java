@@ -4,13 +4,15 @@ import org.plos.ned_client.StringUtil;
 import java.util.Date;
 
 
+import java.util.Objects;
 
 import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-07T17:01:32.713-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-21T13:36:13.082-08:00")
 public class Globaltype   {
   
   private Integer id = null;
@@ -132,6 +134,31 @@ public class Globaltype   {
   }
 
   
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Globaltype globaltype = (Globaltype) o;
+    return Objects.equals(id, globaltype.id) &&
+        Objects.equals(typeid, globaltype.typeid) &&
+        Objects.equals(shortdescription, globaltype.shortdescription) &&
+        Objects.equals(longdescription, globaltype.longdescription) &&
+        Objects.equals(typecode, globaltype.typecode) &&
+        Objects.equals(created, globaltype.created) &&
+        Objects.equals(lastmodified, globaltype.lastmodified) &&
+        Objects.equals(createdby, globaltype.createdby) &&
+        Objects.equals(lastmodifiedby, globaltype.lastmodifiedby);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, typeid, shortdescription, longdescription, typecode, created, lastmodified, createdby, lastmodifiedby);
+  }
 
   @Override
   public String toString()  {

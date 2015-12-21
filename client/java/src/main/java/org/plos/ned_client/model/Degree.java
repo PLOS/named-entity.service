@@ -4,13 +4,15 @@ import org.plos.ned_client.StringUtil;
 import java.util.Date;
 
 
+import java.util.Objects;
 
 import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-07T17:01:32.713-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-21T13:36:13.082-08:00")
 public class Degree   {
   
   private Integer id = null;
@@ -25,6 +27,7 @@ public class Degree   {
   private String lastmodifiedbyname = null;
   private Integer typeid = null;
   private String type = null;
+  private String fulltitle = null;
 
   
   /**
@@ -171,6 +174,47 @@ public class Degree   {
   }
 
   
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  @JsonProperty("fulltitle")
+  public String getFulltitle() {
+    return fulltitle;
+  }
+  public void setFulltitle(String fulltitle) {
+    this.fulltitle = fulltitle;
+  }
+
+  
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Degree degree = (Degree) o;
+    return Objects.equals(id, degree.id) &&
+        Objects.equals(nedid, degree.nedid) &&
+        Objects.equals(source, degree.source) &&
+        Objects.equals(sourcetypeid, degree.sourcetypeid) &&
+        Objects.equals(created, degree.created) &&
+        Objects.equals(lastmodified, degree.lastmodified) &&
+        Objects.equals(createdby, degree.createdby) &&
+        Objects.equals(createdbyname, degree.createdbyname) &&
+        Objects.equals(lastmodifiedby, degree.lastmodifiedby) &&
+        Objects.equals(lastmodifiedbyname, degree.lastmodifiedbyname) &&
+        Objects.equals(typeid, degree.typeid) &&
+        Objects.equals(type, degree.type) &&
+        Objects.equals(fulltitle, degree.fulltitle);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, nedid, source, sourcetypeid, created, lastmodified, createdby, createdbyname, lastmodifiedby, lastmodifiedbyname, typeid, type, fulltitle);
+  }
 
   @Override
   public String toString()  {
@@ -189,6 +233,7 @@ public class Degree   {
     sb.append("    lastmodifiedbyname: ").append(StringUtil.toIndentedString(lastmodifiedbyname)).append("\n");
     sb.append("    typeid: ").append(StringUtil.toIndentedString(typeid)).append("\n");
     sb.append("    type: ").append(StringUtil.toIndentedString(type)).append("\n");
+    sb.append("    fulltitle: ").append(StringUtil.toIndentedString(fulltitle)).append("\n");
     sb.append("}");
     return sb.toString();
   }

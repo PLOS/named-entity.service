@@ -1,4 +1,6 @@
-"""Swagger CLI client"""
+#!/usr/bin/env python
+
+"""Swagger Doc CLI client"""
 
 import sys
 import argparse

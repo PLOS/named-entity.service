@@ -4,13 +4,15 @@ import org.plos.ned_client.StringUtil;
 import java.util.Date;
 
 
+import java.util.Objects;
 
 import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-07T17:01:32.713-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-21T13:36:13.082-08:00")
 public class Uniqueidentifier   {
   
   private Integer id = null;
@@ -197,6 +199,36 @@ public class Uniqueidentifier   {
   }
 
   
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Uniqueidentifier uniqueidentifier = (Uniqueidentifier) o;
+    return Objects.equals(id, uniqueidentifier.id) &&
+        Objects.equals(nedid, uniqueidentifier.nedid) &&
+        Objects.equals(source, uniqueidentifier.source) &&
+        Objects.equals(sourcetypeid, uniqueidentifier.sourcetypeid) &&
+        Objects.equals(created, uniqueidentifier.created) &&
+        Objects.equals(lastmodified, uniqueidentifier.lastmodified) &&
+        Objects.equals(createdby, uniqueidentifier.createdby) &&
+        Objects.equals(createdbyname, uniqueidentifier.createdbyname) &&
+        Objects.equals(lastmodifiedby, uniqueidentifier.lastmodifiedby) &&
+        Objects.equals(lastmodifiedbyname, uniqueidentifier.lastmodifiedbyname) &&
+        Objects.equals(typeid, uniqueidentifier.typeid) &&
+        Objects.equals(type, uniqueidentifier.type) &&
+        Objects.equals(uniqueidentifier, uniqueidentifier.uniqueidentifier) &&
+        Objects.equals(metadata, uniqueidentifier.metadata);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, nedid, source, sourcetypeid, created, lastmodified, createdby, createdbyname, lastmodifiedby, lastmodifiedbyname, typeid, type, uniqueidentifier, metadata);
+  }
 
   @Override
   public String toString()  {

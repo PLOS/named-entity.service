@@ -79,6 +79,7 @@ class InstitutionsearchApi(object):
             params[key] = val
         del params['kwargs']
 
+
         resource_path = '/institutionsearch'.replace('{format}', 'json')
         method = 'GET'
 

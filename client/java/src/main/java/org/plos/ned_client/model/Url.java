@@ -4,13 +4,15 @@ import org.plos.ned_client.StringUtil;
 import java.util.Date;
 
 
+import java.util.Objects;
 
 import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-07T17:01:32.713-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-21T13:36:13.082-08:00")
 public class Url   {
   
   private Integer id = null;
@@ -158,6 +160,33 @@ public class Url   {
   }
 
   
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Url url = (Url) o;
+    return Objects.equals(id, url.id) &&
+        Objects.equals(nedid, url.nedid) &&
+        Objects.equals(source, url.source) &&
+        Objects.equals(sourcetypeid, url.sourcetypeid) &&
+        Objects.equals(created, url.created) &&
+        Objects.equals(lastmodified, url.lastmodified) &&
+        Objects.equals(createdby, url.createdby) &&
+        Objects.equals(createdbyname, url.createdbyname) &&
+        Objects.equals(lastmodifiedby, url.lastmodifiedby) &&
+        Objects.equals(lastmodifiedbyname, url.lastmodifiedbyname) &&
+        Objects.equals(url, url.url);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, nedid, source, sourcetypeid, created, lastmodified, createdby, createdbyname, lastmodifiedby, lastmodifiedbyname, url);
+  }
 
   @Override
   public String toString()  {
