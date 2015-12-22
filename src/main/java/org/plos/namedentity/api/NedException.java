@@ -58,6 +58,7 @@ public class NedException extends RuntimeException {
     PasswordFormatError              (1340, "Password Format Error"),
     InvalidJsonError                 (1350, "Invalid JSON"),
     InvalidDegreeError               (1360, "Invalid Degree"),
+    InvalidRelationshipError         (1370, "Invalid Relationship Error"),
 
     // Composite-Level Validation Errors
 

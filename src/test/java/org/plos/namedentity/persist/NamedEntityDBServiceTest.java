@@ -788,7 +788,7 @@ public class NamedEntityDBServiceTest {
     // CREATE
 
     Integer relationshipTypeClassId = nedDBSvc.findTypeClass("Relationship Types");
-    Integer relationshipTypeId = nedDBSvc.findTypeValue(relationshipTypeClassId, "Organization-Author");
+    Integer relationshipTypeId = nedDBSvc.findTypeValue(relationshipTypeClassId, "Individual Affiliated with Organization");
     assertNotNull(relationshipTypeId);
 
     // create a relationship where individual participates on the "related" id
@@ -797,8 +797,8 @@ public class NamedEntityDBServiceTest {
 
     Relationship orgAuthRel = _(new Relationship());
     orgAuthRel.setTypeid(relationshipTypeId);
-    orgAuthRel.setNedid(2);        /* seeded organization */
-    orgAuthRel.setNedidrelated(1); /* seeded individual   */
+    orgAuthRel.setNedid(1);        /* seeded individual   */
+    orgAuthRel.setNedidrelated(2); /* seeded organization */
     orgAuthRel.setStartdate(dateNow());
     orgAuthRel.setSourcetypeid( getSourceTypeId(UidTypeEnum.EDITORIAL_MANAGER.getName()) );
 
