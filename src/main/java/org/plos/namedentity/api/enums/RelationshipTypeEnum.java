@@ -20,7 +20,6 @@ import java.util.EnumSet;
 
 public enum RelationshipTypeEnum {
 
-  ORG_AUTHOR("Organization-Author"),
   I_AFF_O("Individual Affiliated with Organization"),
   INVALID_RELATIONSHIP_TYPE("");
 
