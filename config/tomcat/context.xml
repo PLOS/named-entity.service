@@ -32,6 +32,18 @@
             url="${tomcat.db.url}"
             closeMethod="close" />
 
+  <Resource name="jdbc/ringgold" 
+            auth="Container" 
+            type="javax.sql.DataSource" 
+            factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" 
+            validationQuery="SELECT 1" 
+            testOnBorrow="true" 
+            driverClassName="${tomcat.ringgolddb.driver}" 
+            username="${tomcat.ringgolddb.username}" 
+            password="${tomcat.ringgolddb.password}" 
+            url="${tomcat.ringgolddb.url}"
+            closeMethod="close" />
+
   <Resource name="jdbc/AmbraDS"
             auth="Container"
             type="javax.sql.DataSource"
