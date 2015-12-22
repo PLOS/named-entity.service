@@ -17,7 +17,7 @@
     </appender>
 
     <category name="org.jooq">
-        <priority value="info" />
+        <priority value="debug" />
     </category>
 
     <category name="org.plos">

@@ -21,7 +21,7 @@ import java.util.List;
 public class QueriesResource extends BaseResource {
 
   @GET
-  @Path("/alerts")
+  @Path("/alerts/{frequency}")
   @ApiOperation(value="Get a list of search alerts by type", response=Alert.class, responseContainer = "List")
   public Response getAlerts(@PathParam("frequency") String frequency) {
     try {

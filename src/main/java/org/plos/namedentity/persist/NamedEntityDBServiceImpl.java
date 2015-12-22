@@ -704,7 +704,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .leftOuterJoin(gt1).on(a.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(a.JOURNALTYPEID.equal(gt2.ID))
         .leftOuterJoin(gt3).on(a.FREQUENCYTYPEID.equal(gt3.ID))
-        .where(gt2.SHORTDESCRIPTION.equal(frequency))
+        .where(gt3.SHORTDESCRIPTION.equal(frequency))
         .fetch()
         .into(Alert.class);
   }
