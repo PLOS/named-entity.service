@@ -16,6 +16,7 @@
  */
 package org.plos.namedentity.service;
 
+import org.plos.namedentity.api.entity.Alert;
 import org.plos.namedentity.api.entity.Composite;
 import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Individualprofile;
@@ -29,11 +30,11 @@ import java.util.Random;
 
 public interface NamedEntityService {
 
-  public <T extends Composite> T findComposite(Integer nedId, Class<T> clazz);
+  <T extends Composite> T findComposite(Integer nedId, Class<T> clazz);
 
-  public <T extends Composite> T createComposite(T composite, Class<T> clazz);
+  <T extends Composite> T createComposite(T composite, Class<T> clazz);
 
-  public void deleteIndividual(Integer nedId);
+  void deleteIndividual(Integer nedId);
 
   /**
    * Finds entity by a unique identifier. Type id references in entity are
@@ -48,7 +49,7 @@ public interface NamedEntityService {
    *
    * @return list of entities with unique identifier (typically just one)
    */
-  public <T extends Entity> T findResolvedEntityByUid(String srcType, String uid, Class<T> clazz);
+  <T extends Entity> T findResolvedEntityByUid(String srcType, String uid, Class<T> clazz);
 
 
   /**
@@ -60,7 +61,7 @@ public interface NamedEntityService {
    *
    * @return entity with specified primary key
    */
-  public <T extends Entity> T findResolvedEntityByKey(Integer pk, Class<T> clazz);
+  <T extends Entity> T findResolvedEntityByKey(Integer pk, Class<T> clazz);
 
 
   /**
@@ -74,7 +75,7 @@ public interface NamedEntityService {
    *
    * @return       a list of entities (of type T) that have ned id.
    */
-  public <T extends Entity> List<T> findResolvedEntities(Integer nedId, Class<T> clazz);
+  <T extends Entity> List<T> findResolvedEntities(Integer nedId, Class<T> clazz);
 
 
   /**
@@ -84,7 +85,7 @@ public interface NamedEntityService {
    * @param  t  entity object containing type names to resolve
    * @return    same entity object with type ids populated (ie, resolved) 
    */
-  public <T extends Entity> T resolveValuesToIds(T t);
+  <T extends Entity> T resolveValuesToIds(T t);
 
 
   /**
@@ -94,7 +95,7 @@ public interface NamedEntityService {
    * @param nedId
    * @param namedPartyType
    */
-  public void checkNedIdForType(Integer nedId, String namedPartyType);
+  void checkNedIdForType(Integer nedId, String namedPartyType);
 
 
   /**
@@ -105,5 +106,14 @@ public interface NamedEntityService {
    *
    * @return        generated displayname if successful, null otherwise.
    */
-  public String generateDisplayname(Individualprofile profile, Random rand);
+  String generateDisplayname(Individualprofile profile, Random rand);
+
+
+  /**
+   * Get a list of search alerts by frequency
+   *
+   * @param frequency
+   * @return  List of Alert objects
+   */
+  List<Alert> getAlerts(String frequency);
 }

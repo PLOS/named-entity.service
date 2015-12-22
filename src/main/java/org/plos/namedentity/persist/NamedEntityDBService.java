@@ -16,6 +16,7 @@
  */
 package org.plos.namedentity.persist;
 
+import org.plos.namedentity.api.entity.Alert;
 import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.enums.NamedPartyEnum;
 
@@ -23,9 +24,11 @@ import java.util.List;
 
 public interface NamedEntityDBService {
 
-  //AMBRA-ADAPTER:
   Integer newNamedEntityId(NamedPartyEnum typeCode);
+
   Integer newNamedEntityId(NamedPartyEnum typeCode, Integer ambraId);
+
+  List<Alert> getAlerts(String frequency);
 
   <T> Integer create(T t);
 

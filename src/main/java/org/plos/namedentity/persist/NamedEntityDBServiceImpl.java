@@ -685,6 +685,30 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .fetch().into(Uniqueidentifier.class);
   }
 
+  public List<Alert> getAlerts(String frequency) {
+
+    Globaltypes  gt1 = GLOBALTYPES.as("gt1");
+    Globaltypes  gt2 = GLOBALTYPES.as("gt2");
+    Globaltypes  gt3 = GLOBALTYPES.as("gt3");
+    Alerts a = ALERTS.as("a");
+
+    return this.context
+        .select(
+            a.ID, a.NEDID,
+            a.NAME, a.QUERY,
+            gt1.SHORTDESCRIPTION.as("type"),
+            gt2.SHORTDESCRIPTION.as("journal"),
+            gt3.SHORTDESCRIPTION.as("frequency"),
+            a.CREATED, a.LASTMODIFIED)
+        .from(a)
+        .leftOuterJoin(gt1).on(a.TYPEID.equal(gt1.ID))
+        .leftOuterJoin(gt2).on(a.JOURNALTYPEID.equal(gt2.ID))
+        .leftOuterJoin(gt3).on(a.FREQUENCYTYPEID.equal(gt3.ID))
+        .where(gt2.SHORTDESCRIPTION.equal(frequency))
+        .fetch()
+        .into(Alert.class);
+  }
+
   private List<Phonenumber> findPhoneNumbersByNedId(Integer nedId) {
 
     Globaltypes  gt1 = GLOBALTYPES.as("gt1");

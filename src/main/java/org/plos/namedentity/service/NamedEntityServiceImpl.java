@@ -171,6 +171,10 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     return null;
   }
 
+  public List<Alert> getAlerts(String frequency) {
+    return nedDBSvc.getAlerts(frequency);
+  }
+
   private Organization resolveOrganization(Organization entity) {
 
     if (entity.getSource() != null)
