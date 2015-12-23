@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.plos.namedentity.api.ringgold.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.lang.reflect.Method;
@@ -36,7 +37,7 @@ import static org.junit.Assert.*;
 public class RinggoldDBServiceTest {
 
   @Autowired RinggoldDBService ringgoldDBService;
-  @Autowired DSLContext        context;
+  @Autowired @Qualifier("ringgoldDsl") DSLContext context;
 
   @Test
   public void testFindById() {

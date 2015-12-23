@@ -13,36 +13,52 @@
     <!-- Enable configuration of transactional behavior based on annotations -->
     <tx:annotation-driven transaction-manager="transactionManager" order="1"/>
 
-    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+    <bean id="nedDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="java:comp/env/jdbc/ned"/>
+    </bean>
+
+    <bean id="ringgoldDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jdbc/ringgold"/>
     </bean>
 
     <!-- Configure Spring's transaction manager to use a DataSource -->
     <bean id="transactionManager"
         class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource" />
+        <property name="dataSource" ref="nedDataSource" />
     </bean>
 
     <!-- Configure jOOQ's ConnectionProvider to use Spring's TransactionAwareDataSourceProxy,
          which can dynamically discover the transaction context -->
-    <bean id="transactionAwareDataSource"
+    <bean id="nedTxAwareDataSource"
         class="org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy">
-        <constructor-arg ref="dataSource" />
+        <constructor-arg ref="nedDataSource" />
     </bean>
 
-    <bean class="org.jooq.impl.DataSourceConnectionProvider" name="connectionProvider">
-        <constructor-arg ref="transactionAwareDataSource" />
+    <bean class="org.jooq.impl.DataSourceConnectionProvider" name="nedConnectionProvider">
+        <constructor-arg ref="nedTxAwareDataSource" />
+    </bean>
+
+    <bean class="org.jooq.impl.DataSourceConnectionProvider" name="ringgoldConnectionProvider">
+        <constructor-arg ref="ringgoldDataSource" />
     </bean>
 
     <!-- Configure jOOQ DSL object -->
-    <bean id="dsl" class="org.jooq.impl.DefaultDSLContext">
-        <constructor-arg ref="config" />
+    <bean id="nedDsl" class="org.jooq.impl.DefaultDSLContext">
+        <constructor-arg ref="nedConfig" />
     </bean>
-    
+
+    <bean id="ringgoldDsl" class="org.jooq.impl.DefaultDSLContext">
+        <constructor-arg ref="ringgoldConfig" />
+    </bean>
+
+    <bean class="org.jooq.conf.Settings" name="jooqSettings">
+        <property name="renderSchema" value="false" />
+    </bean>
+
     <bean id="exceptionTranslator" class="org.plos.namedentity.spring.exception.SqlExceptionTranslator" />
-    
-    <bean class="org.jooq.impl.DefaultConfiguration" name="config">
-        <constructor-arg index="0" ref="connectionProvider" />
+
+    <bean class="org.jooq.impl.DefaultConfiguration" name="nedConfig">
+        <constructor-arg index="0" ref="nedConnectionProvider" />
         <constructor-arg index="1"><null /></constructor-arg>
         <constructor-arg index="2"><null /></constructor-arg>
         <constructor-arg index="3">
@@ -54,7 +70,24 @@
         </constructor-arg>
         <constructor-arg index="4"><null /></constructor-arg>
         <constructor-arg index="5"><value type="org.jooq.SQLDialect">MYSQL</value></constructor-arg>
-        <constructor-arg index="6"><null /></constructor-arg>
+        <constructor-arg index="6" ref="jooqSettings" />
+        <constructor-arg index="7"><null /></constructor-arg>
+    </bean>
+
+    <bean class="org.jooq.impl.DefaultConfiguration" name="ringgoldConfig">
+        <constructor-arg index="0" ref="ringgoldConnectionProvider" />
+        <constructor-arg index="1"><null /></constructor-arg>
+        <constructor-arg index="2"><null /></constructor-arg>
+        <constructor-arg index="3">
+            <list>
+                <bean class="org.jooq.impl.DefaultExecuteListenerProvider">
+                    <constructor-arg index="0" ref="exceptionTranslator"/>
+                </bean>
+            </list>
+        </constructor-arg>
+        <constructor-arg index="4"><null /></constructor-arg>
+        <constructor-arg index="5"><value type="org.jooq.SQLDialect">MYSQL</value></constructor-arg>
+        <constructor-arg index="6" ref="jooqSettings" />
         <constructor-arg index="7"><null /></constructor-arg>
     </bean>
 

@@ -9,11 +9,18 @@
                            http://www.springframework.org/schema/aop   http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
 
     <!-- use tomcat's 7.x jdbc connection pool -->
-    <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close" >
+    <bean id="nedDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close" >
        <property name="url" value="${db.url}" />
        <property name="driverClassName" value="${db.driver}" />
        <property name="username" value="${db.username}" />
        <property name="password" value="${db.password}" />
+    </bean>
+
+    <bean id="ringgoldDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close" >
+       <property name="url" value="${ringgolddb.url}" />
+       <property name="driverClassName" value="${ringgolddb.driver}" />
+       <property name="username" value="${ringgolddb.username}" />
+       <property name="password" value="${ringgolddb.password}" />
     </bean>
 
     <bean id="authenticationFilter" class="org.plos.namedentity.filter.AuthenticationFilter">
@@ -30,11 +37,11 @@
     </bean>
 
     <bean id="ringgoldDBService" class="org.plos.namedentity.persist.RinggoldDBServiceImpl">
-       <property name="context" ref="dsl" />
+       <property name="context" ref="ringgoldDsl" />
     </bean>
 
     <bean id="namedEntityDBService" class="org.plos.namedentity.persist.NamedEntityDBServiceImpl">
-       <property name="context" ref="dsl" />
+       <property name="context" ref="nedDsl" />
     </bean>
 
     <bean id="namedEntityService" class="org.plos.namedentity.service.NamedEntityServiceImpl">
