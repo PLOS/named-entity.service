@@ -1043,6 +1043,11 @@ public class NamedEntityDBServiceTest {
   }
 
   @Test
+  public void testGetAlerts() {
+    // TODO: finish this
+  }
+
+  @Test
   public void testConsumerTableFinders() {
 
     List<Consumer> allConsumersInDb = nedDBSvc.findAll(Consumer.class, 0, Integer.MAX_VALUE);

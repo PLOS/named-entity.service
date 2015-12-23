@@ -1,0 +1,2 @@
+-- INSERT INTO namedEntities.alerts ()
+-- TODO: populate this

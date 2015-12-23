@@ -688,6 +688,9 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
   public List<Alert> getAlerts(String frequency) {
 
+    // check the global type so it can return a meaningful error about acceptable types
+    findTypeValue(findTypeClass("Alert Frequency"), frequency);
+
     Globaltypes  gt1 = GLOBALTYPES.as("gt1");
     Globaltypes  gt2 = GLOBALTYPES.as("gt2");
     Globaltypes  gt3 = GLOBALTYPES.as("gt3");
