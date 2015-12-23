@@ -35,6 +35,7 @@ import org.plos.namedentity.api.enums.TypeClassEnum;
 import org.plos.namedentity.api.enums.NamedPartyEnum;
 import org.plos.namedentity.persist.db.namedentities.tables.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ import static org.plos.namedentity.persist.db.namedentities.Tables.*;
 
 public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
-  @Autowired DSLContext context;
+  @Autowired @Qualifier("nedDsl") DSLContext context;
   public void setContext(DSLContext context) {
     this.context = context;
   }

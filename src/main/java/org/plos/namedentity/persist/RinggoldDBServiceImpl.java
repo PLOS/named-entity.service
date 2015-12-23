@@ -24,6 +24,7 @@ import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.ringgold.*;
 import org.plos.namedentity.persist.db.ringgold.tables.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ import static org.plos.namedentity.persist.db.ringgold.Tables.*;
 
 public final class RinggoldDBServiceImpl implements RinggoldDBService {
 
-  @Autowired DSLContext context;
+  @Autowired @Qualifier("ringgoldDsl") DSLContext context;
   public void setContext(DSLContext context) {
     this.context = context;
   }

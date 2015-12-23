@@ -29,6 +29,7 @@ import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.persist.db.namedentities.tables.Globaltypes;
 import org.plos.namedentity.persist.db.namedentities.tables.Typedescriptions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -62,9 +63,9 @@ import static org.plos.namedentity.api.enums.TypeClassEnum.*;
 @ContextConfiguration(locations = {"/spring-beans.xml","/ambra-spring-beans.xml","/spring-beans.test.xml","/ambra-spring-beans.test.xml"})
 public class NamedEntityDBServiceTest {
 
-  @Autowired NamedEntityDBService         nedDBSvc;
-  @Autowired DSLContext                   context;
+  @Autowired NamedEntityDBService nedDBSvc;
   @Autowired DataSourceTransactionManager txMgr;
+  @Autowired @Qualifier("nedDsl") DSLContext context;
 
   @Test
   public void testTypeClassesAndTypeValues() {
