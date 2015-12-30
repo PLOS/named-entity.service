@@ -4,8 +4,8 @@ module NedClient
   class OrganizationsApi
     attr_accessor :api_client
 
-    def initialize(api_client = ApiClient.default)
-      @api_client = api_client
+    def initialize(api_client = nil)
+      @api_client = api_client || Configuration.api_client
     end
 
     # Find organizations matching specified attribute.
@@ -15,19 +15,8 @@ module NedClient
     # @option opts [String] :value 
     # @return [Array<OrganizationComposite>]
     def find_organizations(opts = {})
-      data, status_code, headers = find_organizations_with_http_info(opts)
-      return data
-    end
-
-    # Find organizations matching specified attribute.
-    # 
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :attribute 
-    # @option opts [String] :value 
-    # @return [Array<(Array<OrganizationComposite>, Fixnum, Hash)>] Array<OrganizationComposite> data, response status code and response headers
-    def find_organizations_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: OrganizationsApi#find_organizations ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: OrganizationsApi#find_organizations ..."
       end
       
       # resource path
@@ -57,17 +46,17 @@ module NedClient
       
 
       auth_names = []
-      data, status_code, headers = @api_client.call_api(:GET, path,
+      result = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Array<OrganizationComposite>')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: OrganizationsApi#find_organizations\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: OrganizationsApi#find_organizations. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
     # Create organization
@@ -77,19 +66,8 @@ module NedClient
     # @option opts [String] :authorization 
     # @return [OrganizationComposite]
     def create_organization(opts = {})
-      data, status_code, headers = create_organization_with_http_info(opts)
-      return data
-    end
-
-    # Create organization
-    # 
-    # @param [Hash] opts the optional parameters
-    # @option opts [OrganizationComposite] :body 
-    # @option opts [String] :authorization 
-    # @return [Array<(OrganizationComposite, Fixnum, Hash)>] OrganizationComposite data, response status code and response headers
-    def create_organization_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: OrganizationsApi#create_organization ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: OrganizationsApi#create_organization ..."
       end
       
       # resource path
@@ -118,17 +96,17 @@ module NedClient
       
 
       auth_names = []
-      data, status_code, headers = @api_client.call_api(:POST, path,
+      result = @api_client.call_api(:POST, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'OrganizationComposite')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: OrganizationsApi#create_organization\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: OrganizationsApi#create_organization. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
     # Read organization by Ned ID
@@ -137,18 +115,8 @@ module NedClient
     # @param [Hash] opts the optional parameters
     # @return [OrganizationComposite]
     def read_organization(ned_id, opts = {})
-      data, status_code, headers = read_organization_with_http_info(ned_id, opts)
-      return data
-    end
-
-    # Read organization by Ned ID
-    # 
-    # @param ned_id 
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(OrganizationComposite, Fixnum, Hash)>] OrganizationComposite data, response status code and response headers
-    def read_organization_with_http_info(ned_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: OrganizationsApi#read_organization ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: OrganizationsApi#read_organization ..."
       end
       
       # verify the required parameter 'ned_id' is set
@@ -179,17 +147,17 @@ module NedClient
       
 
       auth_names = []
-      data, status_code, headers = @api_client.call_api(:GET, path,
+      result = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'OrganizationComposite')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: OrganizationsApi#read_organization\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: OrganizationsApi#read_organization. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
     # List addresses
@@ -198,18 +166,8 @@ module NedClient
     # @param [Hash] opts the optional parameters
     # @return [Array<Address>]
     def get_addresses(ned_id, opts = {})
-      data, status_code, headers = get_addresses_with_http_info(ned_id, opts)
-      return data
-    end
-
-    # List addresses
-    # 
-    # @param ned_id 
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(Array<Address>, Fixnum, Hash)>] Array<Address> data, response status code and response headers
-    def get_addresses_with_http_info(ned_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: OrganizationsApi#get_addresses ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: OrganizationsApi#get_addresses ..."
       end
       
       # verify the required parameter 'ned_id' is set
@@ -240,17 +198,17 @@ module NedClient
       
 
       auth_names = []
-      data, status_code, headers = @api_client.call_api(:GET, path,
+      result = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Array<Address>')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: OrganizationsApi#get_addresses\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: OrganizationsApi#get_addresses. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
     # Create address
@@ -261,20 +219,8 @@ module NedClient
     # @option opts [String] :authorization 
     # @return [Address]
     def create_address(ned_id, opts = {})
-      data, status_code, headers = create_address_with_http_info(ned_id, opts)
-      return data
-    end
-
-    # Create address
-    # 
-    # @param ned_id 
-    # @param [Hash] opts the optional parameters
-    # @option opts [Address] :body 
-    # @option opts [String] :authorization 
-    # @return [Array<(Address, Fixnum, Hash)>] Address data, response status code and response headers
-    def create_address_with_http_info(ned_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: OrganizationsApi#create_address ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: OrganizationsApi#create_address ..."
       end
       
       # verify the required parameter 'ned_id' is set
@@ -306,17 +252,17 @@ module NedClient
       
 
       auth_names = []
-      data, status_code, headers = @api_client.call_api(:POST, path,
+      result = @api_client.call_api(:POST, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Address')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: OrganizationsApi#create_address\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: OrganizationsApi#create_address. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
     # Read address
@@ -326,19 +272,8 @@ module NedClient
     # @param [Hash] opts the optional parameters
     # @return [Address]
     def get_address(ned_id, address_id, opts = {})
-      data, status_code, headers = get_address_with_http_info(ned_id, address_id, opts)
-      return data
-    end
-
-    # Read address
-    # 
-    # @param ned_id 
-    # @param address_id 
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(Address, Fixnum, Hash)>] Address data, response status code and response headers
-    def get_address_with_http_info(ned_id, address_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: OrganizationsApi#get_address ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: OrganizationsApi#get_address ..."
       end
       
       # verify the required parameter 'ned_id' is set
@@ -372,17 +307,17 @@ module NedClient
       
 
       auth_names = []
-      data, status_code, headers = @api_client.call_api(:GET, path,
+      result = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Address')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: OrganizationsApi#get_address\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: OrganizationsApi#get_address. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
     # Update address
@@ -394,21 +329,8 @@ module NedClient
     # @option opts [String] :authorization 
     # @return [Address]
     def update_address(ned_id, address_id, opts = {})
-      data, status_code, headers = update_address_with_http_info(ned_id, address_id, opts)
-      return data
-    end
-
-    # Update address
-    # 
-    # @param ned_id 
-    # @param address_id 
-    # @param [Hash] opts the optional parameters
-    # @option opts [Address] :body 
-    # @option opts [String] :authorization 
-    # @return [Array<(Address, Fixnum, Hash)>] Address data, response status code and response headers
-    def update_address_with_http_info(ned_id, address_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: OrganizationsApi#update_address ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: OrganizationsApi#update_address ..."
       end
       
       # verify the required parameter 'ned_id' is set
@@ -443,17 +365,17 @@ module NedClient
       
 
       auth_names = []
-      data, status_code, headers = @api_client.call_api(:PUT, path,
+      result = @api_client.call_api(:PUT, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Address')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: OrganizationsApi#update_address\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: OrganizationsApi#update_address. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
     # Delete address
@@ -464,20 +386,8 @@ module NedClient
     # @option opts [String] :authorization 
     # @return [Array<Address>]
     def delete_address(ned_id, address_id, opts = {})
-      data, status_code, headers = delete_address_with_http_info(ned_id, address_id, opts)
-      return data
-    end
-
-    # Delete address
-    # 
-    # @param ned_id 
-    # @param address_id 
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
-    # @return [Array<(Array<Address>, Fixnum, Hash)>] Array<Address> data, response status code and response headers
-    def delete_address_with_http_info(ned_id, address_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: OrganizationsApi#delete_address ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: OrganizationsApi#delete_address ..."
       end
       
       # verify the required parameter 'ned_id' is set
@@ -512,17 +422,17 @@ module NedClient
       
 
       auth_names = []
-      data, status_code, headers = @api_client.call_api(:DELETE, path,
+      result = @api_client.call_api(:DELETE, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Array<Address>')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: OrganizationsApi#delete_address\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: OrganizationsApi#delete_address. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
     # List emails
@@ -531,18 +441,8 @@ module NedClient
     # @param [Hash] opts the optional parameters
     # @return [Array<Email>]
     def get_emails(ned_id, opts = {})
-      data, status_code, headers = get_emails_with_http_info(ned_id, opts)
-      return data
-    end
-
-    # List emails
-    # 
-    # @param ned_id 
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(Array<Email>, Fixnum, Hash)>] Array<Email> data, response status code and response headers
-    def get_emails_with_http_info(ned_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: OrganizationsApi#get_emails ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: OrganizationsApi#get_emails ..."
       end
       
       # verify the required parameter 'ned_id' is set
@@ -573,17 +473,17 @@ module NedClient
       
 
       auth_names = []
-      data, status_code, headers = @api_client.call_api(:GET, path,
+      result = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Array<Email>')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: OrganizationsApi#get_emails\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: OrganizationsApi#get_emails. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
     # Create email
@@ -594,20 +494,8 @@ module NedClient
     # @option opts [String] :authorization 
     # @return [Email]
     def create_email(ned_id, opts = {})
-      data, status_code, headers = create_email_with_http_info(ned_id, opts)
-      return data
-    end
-
-    # Create email
-    # 
-    # @param ned_id 
-    # @param [Hash] opts the optional parameters
-    # @option opts [Email] :body 
-    # @option opts [String] :authorization 
-    # @return [Array<(Email, Fixnum, Hash)>] Email data, response status code and response headers
-    def create_email_with_http_info(ned_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: OrganizationsApi#create_email ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: OrganizationsApi#create_email ..."
       end
       
       # verify the required parameter 'ned_id' is set
@@ -639,17 +527,17 @@ module NedClient
       
 
       auth_names = []
-      data, status_code, headers = @api_client.call_api(:POST, path,
+      result = @api_client.call_api(:POST, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Email')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: OrganizationsApi#create_email\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: OrganizationsApi#create_email. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
     # Read email
@@ -659,19 +547,8 @@ module NedClient
     # @param [Hash] opts the optional parameters
     # @return [Email]
     def get_email(ned_id, email_id, opts = {})
-      data, status_code, headers = get_email_with_http_info(ned_id, email_id, opts)
-      return data
-    end
-
-    # Read email
-    # 
-    # @param ned_id 
-    # @param email_id 
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(Email, Fixnum, Hash)>] Email data, response status code and response headers
-    def get_email_with_http_info(ned_id, email_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: OrganizationsApi#get_email ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: OrganizationsApi#get_email ..."
       end
       
       # verify the required parameter 'ned_id' is set
@@ -705,17 +582,17 @@ module NedClient
       
 
       auth_names = []
-      data, status_code, headers = @api_client.call_api(:GET, path,
+      result = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Email')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: OrganizationsApi#get_email\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: OrganizationsApi#get_email. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
     # Update email
@@ -727,21 +604,8 @@ module NedClient
     # @option opts [String] :authorization 
     # @return [Email]
     def update_email(ned_id, email_id, opts = {})
-      data, status_code, headers = update_email_with_http_info(ned_id, email_id, opts)
-      return data
-    end
-
-    # Update email
-    # 
-    # @param ned_id 
-    # @param email_id 
-    # @param [Hash] opts the optional parameters
-    # @option opts [Email] :body 
-    # @option opts [String] :authorization 
-    # @return [Array<(Email, Fixnum, Hash)>] Email data, response status code and response headers
-    def update_email_with_http_info(ned_id, email_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: OrganizationsApi#update_email ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: OrganizationsApi#update_email ..."
       end
       
       # verify the required parameter 'ned_id' is set
@@ -776,17 +640,17 @@ module NedClient
       
 
       auth_names = []
-      data, status_code, headers = @api_client.call_api(:PUT, path,
+      result = @api_client.call_api(:PUT, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Email')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: OrganizationsApi#update_email\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: OrganizationsApi#update_email. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
     # Delete email
@@ -797,20 +661,8 @@ module NedClient
     # @option opts [String] :authorization 
     # @return [nil]
     def delete_email(ned_id, email_id, opts = {})
-      delete_email_with_http_info(ned_id, email_id, opts)
-      return nil
-    end
-
-    # Delete email
-    # 
-    # @param ned_id 
-    # @param email_id 
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
-    # @return [Array<(nil, Fixnum, Hash)>] nil, response status code and response headers
-    def delete_email_with_http_info(ned_id, email_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: OrganizationsApi#delete_email ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: OrganizationsApi#delete_email ..."
       end
       
       # verify the required parameter 'ned_id' is set
@@ -845,16 +697,16 @@ module NedClient
       
 
       auth_names = []
-      data, status_code, headers = @api_client.call_api(:DELETE, path,
+      @api_client.call_api(:DELETE, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: OrganizationsApi#delete_email\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: OrganizationsApi#delete_email"
       end
-      return data, status_code, headers
+      return nil
     end
 
     # List phone numbers
@@ -863,18 +715,8 @@ module NedClient
     # @param [Hash] opts the optional parameters
     # @return [Array<Phonenumber>]
     def get_phonenumbers(ned_id, opts = {})
-      data, status_code, headers = get_phonenumbers_with_http_info(ned_id, opts)
-      return data
-    end
-
-    # List phone numbers
-    # 
-    # @param ned_id 
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(Array<Phonenumber>, Fixnum, Hash)>] Array<Phonenumber> data, response status code and response headers
-    def get_phonenumbers_with_http_info(ned_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: OrganizationsApi#get_phonenumbers ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: OrganizationsApi#get_phonenumbers ..."
       end
       
       # verify the required parameter 'ned_id' is set
@@ -905,17 +747,17 @@ module NedClient
       
 
       auth_names = []
-      data, status_code, headers = @api_client.call_api(:GET, path,
+      result = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Array<Phonenumber>')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: OrganizationsApi#get_phonenumbers\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: OrganizationsApi#get_phonenumbers. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
     # List UIDs
@@ -924,18 +766,8 @@ module NedClient
     # @param [Hash] opts the optional parameters
     # @return [Array<Uniqueidentifier>]
     def get_uids(ned_id, opts = {})
-      data, status_code, headers = get_uids_with_http_info(ned_id, opts)
-      return data
-    end
-
-    # List UIDs
-    # 
-    # @param ned_id 
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(Array<Uniqueidentifier>, Fixnum, Hash)>] Array<Uniqueidentifier> data, response status code and response headers
-    def get_uids_with_http_info(ned_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: OrganizationsApi#get_uids ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: OrganizationsApi#get_uids ..."
       end
       
       # verify the required parameter 'ned_id' is set
@@ -966,17 +798,17 @@ module NedClient
       
 
       auth_names = []
-      data, status_code, headers = @api_client.call_api(:GET, path,
+      result = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Array<Uniqueidentifier>')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: OrganizationsApi#get_uids\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: OrganizationsApi#get_uids. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
     # Create UID
@@ -987,20 +819,8 @@ module NedClient
     # @option opts [String] :authorization 
     # @return [Uniqueidentifier]
     def create_uid(ned_id, opts = {})
-      data, status_code, headers = create_uid_with_http_info(ned_id, opts)
-      return data
-    end
-
-    # Create UID
-    # 
-    # @param ned_id 
-    # @param [Hash] opts the optional parameters
-    # @option opts [Uniqueidentifier] :body 
-    # @option opts [String] :authorization 
-    # @return [Array<(Uniqueidentifier, Fixnum, Hash)>] Uniqueidentifier data, response status code and response headers
-    def create_uid_with_http_info(ned_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: OrganizationsApi#create_uid ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: OrganizationsApi#create_uid ..."
       end
       
       # verify the required parameter 'ned_id' is set
@@ -1032,17 +852,17 @@ module NedClient
       
 
       auth_names = []
-      data, status_code, headers = @api_client.call_api(:POST, path,
+      result = @api_client.call_api(:POST, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Uniqueidentifier')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: OrganizationsApi#create_uid\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: OrganizationsApi#create_uid. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
     # Read uid
@@ -1052,19 +872,8 @@ module NedClient
     # @param [Hash] opts the optional parameters
     # @return [Uniqueidentifier]
     def get_uid(ned_id, id, opts = {})
-      data, status_code, headers = get_uid_with_http_info(ned_id, id, opts)
-      return data
-    end
-
-    # Read uid
-    # 
-    # @param ned_id 
-    # @param id 
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(Uniqueidentifier, Fixnum, Hash)>] Uniqueidentifier data, response status code and response headers
-    def get_uid_with_http_info(ned_id, id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: OrganizationsApi#get_uid ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: OrganizationsApi#get_uid ..."
       end
       
       # verify the required parameter 'ned_id' is set
@@ -1098,17 +907,17 @@ module NedClient
       
 
       auth_names = []
-      data, status_code, headers = @api_client.call_api(:GET, path,
+      result = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Uniqueidentifier')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: OrganizationsApi#get_uid\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: OrganizationsApi#get_uid. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
     # Update UID
@@ -1120,21 +929,8 @@ module NedClient
     # @option opts [Uniqueidentifier] :body 
     # @return [Uniqueidentifier]
     def update_uid(ned_id, id, opts = {})
-      data, status_code, headers = update_uid_with_http_info(ned_id, id, opts)
-      return data
-    end
-
-    # Update UID
-    # 
-    # @param ned_id 
-    # @param id 
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
-    # @option opts [Uniqueidentifier] :body 
-    # @return [Array<(Uniqueidentifier, Fixnum, Hash)>] Uniqueidentifier data, response status code and response headers
-    def update_uid_with_http_info(ned_id, id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: OrganizationsApi#update_uid ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: OrganizationsApi#update_uid ..."
       end
       
       # verify the required parameter 'ned_id' is set
@@ -1169,17 +965,17 @@ module NedClient
       
 
       auth_names = []
-      data, status_code, headers = @api_client.call_api(:PUT, path,
+      result = @api_client.call_api(:PUT, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Uniqueidentifier')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: OrganizationsApi#update_uid\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: OrganizationsApi#update_uid. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
     # Read organization by UID
@@ -1189,19 +985,8 @@ module NedClient
     # @param [Hash] opts the optional parameters
     # @return [OrganizationComposite]
     def read_organization_by_uid(uid_type, uid_value, opts = {})
-      data, status_code, headers = read_organization_by_uid_with_http_info(uid_type, uid_value, opts)
-      return data
-    end
-
-    # Read organization by UID
-    # 
-    # @param uid_type 
-    # @param uid_value 
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(OrganizationComposite, Fixnum, Hash)>] OrganizationComposite data, response status code and response headers
-    def read_organization_by_uid_with_http_info(uid_type, uid_value, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: OrganizationsApi#read_organization_by_uid ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: OrganizationsApi#read_organization_by_uid ..."
       end
       
       # verify the required parameter 'uid_type' is set
@@ -1235,17 +1020,17 @@ module NedClient
       
 
       auth_names = []
-      data, status_code, headers = @api_client.call_api(:GET, path,
+      result = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'OrganizationComposite')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: OrganizationsApi#read_organization_by_uid\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: OrganizationsApi#read_organization_by_uid. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
   end
 end

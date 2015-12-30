@@ -14,15 +14,13 @@ import org.plos.ned_client.model.Phonenumber;
 import org.plos.ned_client.model.Url;
 
 
-import java.util.Objects;
 
 import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.*;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-21T13:36:13.082-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-29T17:05:32.045-08:00")
 public class IndividualComposite   {
   
   private List<Auth> auth = new ArrayList<Auth>();
@@ -36,7 +34,6 @@ public class IndividualComposite   {
   private List<Url> urls = new ArrayList<Url>();
   private List<Relationship> relationships = new ArrayList<Relationship>();
 
-
 public enum TypeNameEnum {
   INDIVIDUAL("INDIVIDUAL"),
   ORGANIZATION("ORGANIZATION"),
@@ -49,7 +46,6 @@ public enum TypeNameEnum {
   }
 
   @Override
-  @JsonValue
   public String toString() {
     return value;
   }
@@ -190,33 +186,6 @@ public enum TypeNameEnum {
   }
 
   
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    IndividualComposite individualComposite = (IndividualComposite) o;
-    return Objects.equals(auth, individualComposite.auth) &&
-        Objects.equals(individualprofiles, individualComposite.individualprofiles) &&
-        Objects.equals(groups, individualComposite.groups) &&
-        Objects.equals(addresses, individualComposite.addresses) &&
-        Objects.equals(emails, individualComposite.emails) &&
-        Objects.equals(phonenumbers, individualComposite.phonenumbers) &&
-        Objects.equals(uniqueidentifiers, individualComposite.uniqueidentifiers) &&
-        Objects.equals(degrees, individualComposite.degrees) &&
-        Objects.equals(urls, individualComposite.urls) &&
-        Objects.equals(relationships, individualComposite.relationships) &&
-        Objects.equals(typeName, individualComposite.typeName);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(auth, individualprofiles, groups, addresses, emails, phonenumbers, uniqueidentifiers, degrees, urls, relationships, typeName);
-  }
 
   @Override
   public String toString()  {

@@ -4,15 +4,13 @@ import org.plos.ned_client.StringUtil;
 import java.util.Date;
 
 
-import java.util.Objects;
 
 import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.*;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-21T13:36:13.082-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-29T17:05:32.045-08:00")
 public class Phonenumber   {
   
   private Integer id = null;
@@ -238,39 +236,6 @@ public class Phonenumber   {
   }
 
   
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Phonenumber phonenumber = (Phonenumber) o;
-    return Objects.equals(id, phonenumber.id) &&
-        Objects.equals(nedid, phonenumber.nedid) &&
-        Objects.equals(source, phonenumber.source) &&
-        Objects.equals(sourcetypeid, phonenumber.sourcetypeid) &&
-        Objects.equals(created, phonenumber.created) &&
-        Objects.equals(lastmodified, phonenumber.lastmodified) &&
-        Objects.equals(createdby, phonenumber.createdby) &&
-        Objects.equals(createdbyname, phonenumber.createdbyname) &&
-        Objects.equals(lastmodifiedby, phonenumber.lastmodifiedby) &&
-        Objects.equals(lastmodifiedbyname, phonenumber.lastmodifiedbyname) &&
-        Objects.equals(typeid, phonenumber.typeid) &&
-        Objects.equals(type, phonenumber.type) &&
-        Objects.equals(countrycodetypeid, phonenumber.countrycodetypeid) &&
-        Objects.equals(countrycodetype, phonenumber.countrycodetype) &&
-        Objects.equals(phonenumber, phonenumber.phonenumber) &&
-        Objects.equals(extension, phonenumber.extension) &&
-        Objects.equals(isactive, phonenumber.isactive);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, nedid, source, sourcetypeid, created, lastmodified, createdby, createdbyname, lastmodifiedby, lastmodifiedbyname, typeid, type, countrycodetypeid, countrycodetype, phonenumber, extension, isactive);
-  }
 
   @Override
   public String toString()  {

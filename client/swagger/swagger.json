@@ -6,17 +6,19 @@
   },
   "basePath" : "/v0",
   "tags" : [ {
-    "name" : "service"
+    "name" : "queries"
   }, {
     "name" : "institutionsearch"
+  }, {
+    "name" : "service"
+  }, {
+    "name" : "organizations"
   }, {
     "name" : "typeclasses"
   }, {
     "name" : "individuals"
-  }, {
-    "name" : "organizations"
   } ],
-  "schemes" : [ "http" ],
+  "schemes" : [ "https", "http" ],
   "paths" : {
     "/individuals" : {
       "get" : {
@@ -86,7 +88,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/CAS/{casId}" : {
       "get" : {
@@ -112,7 +115,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}" : {
       "get" : {
@@ -164,7 +168,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/addresses" : {
       "get" : {
@@ -231,7 +236,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/addresses/{addressId}" : {
       "get" : {
@@ -346,7 +352,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/alerts" : {
       "get" : {
@@ -413,7 +420,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/alerts/{alertId}" : {
       "get" : {
@@ -522,7 +530,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/auth" : {
       "get" : {
@@ -552,7 +561,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/auth/checkpassword" : {
       "post" : {
@@ -583,7 +593,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/auth/{authId}" : {
       "put" : {
@@ -628,7 +639,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/degrees" : {
       "get" : {
@@ -658,7 +670,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/emails" : {
       "get" : {
@@ -725,7 +738,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/emails/{emailId}" : {
       "get" : {
@@ -834,7 +848,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/groups" : {
       "get" : {
@@ -901,7 +916,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/groups/{groupId}" : {
       "get" : {
@@ -1010,7 +1026,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/individualprofiles" : {
       "get" : {
@@ -1077,7 +1094,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/individualprofiles/{profileId}" : {
       "get" : {
@@ -1186,7 +1204,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/phonenumbers" : {
       "get" : {
@@ -1216,7 +1235,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/relationships" : {
       "get" : {
@@ -1283,7 +1303,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/relationships/{relationshipId}" : {
       "get" : {
@@ -1392,7 +1413,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/uids" : {
       "get" : {
@@ -1459,7 +1481,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{nedId}/uids/{id}" : {
       "get" : {
@@ -1568,7 +1591,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/individuals/{uidType}/{uidValue}" : {
       "get" : {
@@ -1599,7 +1623,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/institutionsearch" : {
       "get" : {
@@ -1619,7 +1644,8 @@
             "description" : "successful operation"
           }
         }
-      }
+      },
+      "parameters" : [ ]
     },
     "/organizations" : {
       "get" : {
@@ -1678,7 +1704,8 @@
             }
           }
         }
-      }
+      },
+      "parameters" : [ ]
     },
     "/organizations/{nedId}" : {
       "get" : {
@@ -1702,7 +1729,8 @@
             }
           }
         }
-      }
+      },
+      "parameters" : [ ]
     },
     "/organizations/{nedId}/addresses" : {
       "get" : {
@@ -1763,7 +1791,8 @@
             }
           }
         }
-      }
+      },
+      "parameters" : [ ]
     },
     "/organizations/{nedId}/addresses/{addressId}" : {
       "get" : {
@@ -1869,7 +1898,8 @@
             }
           }
         }
-      }
+      },
+      "parameters" : [ ]
     },
     "/organizations/{nedId}/emails" : {
       "get" : {
@@ -1930,7 +1960,8 @@
             }
           }
         }
-      }
+      },
+      "parameters" : [ ]
     },
     "/organizations/{nedId}/emails/{emailId}" : {
       "get" : {
@@ -2030,7 +2061,8 @@
             "description" : "successful operation"
           }
         }
-      }
+      },
+      "parameters" : [ ]
     },
     "/organizations/{nedId}/phonenumbers" : {
       "get" : {
@@ -2057,7 +2089,8 @@
             }
           }
         }
-      }
+      },
+      "parameters" : [ ]
     },
     "/organizations/{nedId}/uids" : {
       "get" : {
@@ -2118,7 +2151,8 @@
             }
           }
         }
-      }
+      },
+      "parameters" : [ ]
     },
     "/organizations/{nedId}/uids/{id}" : {
       "get" : {
@@ -2188,7 +2222,8 @@
             }
           }
         }
-      }
+      },
+      "parameters" : [ ]
     },
     "/organizations/{uidType}/{uidValue}" : {
       "get" : {
@@ -2216,7 +2251,37 @@
             }
           }
         }
-      }
+      },
+      "parameters" : [ ]
+    },
+    "/queries/alerts/{frequency}" : {
+      "get" : {
+        "tags" : [ "queries" ],
+        "summary" : "Get a list of search alerts by type",
+        "description" : "",
+        "operationId" : "getAlerts",
+        "parameters" : [ {
+          "name" : "frequency",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Alert"
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basic" : [ ]
+        } ]
+      },
+      "parameters" : [ ]
     },
     "/service/config" : {
       "get" : {
@@ -2234,7 +2299,8 @@
             }
           }
         }
-      }
+      },
+      "parameters" : [ ]
     },
     "/service/errorcodes" : {
       "get" : {
@@ -2255,12 +2321,13 @@
             }
           }
         }
-      }
+      },
+      "parameters" : [ ]
     },
     "/typeclasses" : {
       "get" : {
         "tags" : [ "typeclasses" ],
-        "summary" : "List",
+        "summary" : "List global types",
         "description" : "",
         "operationId" : "list",
         "produces" : [ "application/json" ],
@@ -2294,7 +2361,7 @@
       },
       "post" : {
         "tags" : [ "typeclasses" ],
-        "summary" : "Create",
+        "summary" : "Create global type",
         "description" : "",
         "operationId" : "create",
         "produces" : [ "application/json" ],
@@ -2317,12 +2384,13 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/typeclasses/{id}" : {
       "get" : {
         "tags" : [ "typeclasses" ],
-        "summary" : "Read",
+        "summary" : "Read global type",
         "description" : "",
         "operationId" : "read",
         "produces" : [ "application/json" ],
@@ -2347,7 +2415,7 @@
       },
       "put" : {
         "tags" : [ "typeclasses" ],
-        "summary" : "Update",
+        "summary" : "Update global type",
         "description" : "",
         "operationId" : "update",
         "produces" : [ "application/json" ],
@@ -2373,7 +2441,7 @@
       },
       "delete" : {
         "tags" : [ "typeclasses" ],
-        "summary" : "Delete",
+        "summary" : "Delete global type",
         "description" : "",
         "operationId" : "delete",
         "produces" : [ "application/json" ],
@@ -2392,12 +2460,13 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/typeclasses/{typeclassid}/typevalues" : {
       "get" : {
         "tags" : [ "typeclasses" ],
-        "summary" : "List global types",
+        "summary" : "List global type values",
         "description" : "",
         "operationId" : "getGlobalTypeForTypeClass",
         "produces" : [ "application/json" ],
@@ -2419,7 +2488,7 @@
       },
       "post" : {
         "tags" : [ "typeclasses" ],
-        "summary" : "Create global type",
+        "summary" : "Create global type value",
         "description" : "",
         "operationId" : "createGlobalType",
         "produces" : [ "application/json" ],
@@ -2448,12 +2517,13 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     },
     "/typeclasses/{typeclassid}/typevalues/{typevalueid}" : {
       "get" : {
         "tags" : [ "typeclasses" ],
-        "summary" : "Read global type",
+        "summary" : "Read global type value",
         "description" : "",
         "operationId" : "getGlobalType",
         "produces" : [ "application/json" ],
@@ -2484,7 +2554,7 @@
       },
       "put" : {
         "tags" : [ "typeclasses" ],
-        "summary" : "Update global type",
+        "summary" : "Update global type value",
         "description" : "",
         "operationId" : "updateGlobalType",
         "produces" : [ "application/json" ],
@@ -2522,7 +2592,7 @@
       },
       "delete" : {
         "tags" : [ "typeclasses" ],
-        "summary" : "Delete global type",
+        "summary" : "Delete global type value",
         "description" : "",
         "operationId" : "deleteGlobalType",
         "produces" : [ "application/json" ],
@@ -2547,7 +2617,8 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      }
+      },
+      "parameters" : [ ]
     }
   },
   "securityDefinitions" : {
@@ -2557,7 +2628,6 @@
   },
   "definitions" : {
     "Group" : {
-      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -2621,7 +2691,6 @@
       }
     },
     "Email" : {
-      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -2681,7 +2750,6 @@
       }
     },
     "Address" : {
-      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -2775,7 +2843,6 @@
       }
     },
     "Degree" : {
-      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -2827,7 +2894,6 @@
       }
     },
     "OrganizationComposite" : {
-      "type" : "object",
       "properties" : {
         "addresses" : {
           "type" : "array",
@@ -2900,7 +2966,6 @@
       }
     },
     "ConfigInfo" : {
-      "type" : "object",
       "properties" : {
         "version" : {
           "type" : "string"
@@ -2911,46 +2976,7 @@
         }
       }
     },
-    "Globaltype" : {
-      "type" : "object",
-      "properties" : {
-        "id" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "typeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "shortdescription" : {
-          "type" : "string"
-        },
-        "longdescription" : {
-          "type" : "string"
-        },
-        "typecode" : {
-          "type" : "string"
-        },
-        "created" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "lastmodified" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "createdby" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "lastmodifiedby" : {
-          "type" : "integer",
-          "format" : "int32"
-        }
-      }
-    },
     "Uniqueidentifier" : {
-      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -3004,8 +3030,44 @@
         }
       }
     },
+    "Globaltype" : {
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "typeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "shortdescription" : {
+          "type" : "string"
+        },
+        "longdescription" : {
+          "type" : "string"
+        },
+        "typecode" : {
+          "type" : "string"
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lastmodified" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "createdby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "lastmodifiedby" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
     "Url" : {
-      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -3050,7 +3112,6 @@
       }
     },
     "NedErrorResponse" : {
-      "type" : "object",
       "properties" : {
         "failureMsg" : {
           "type" : "string",
@@ -3081,7 +3142,6 @@
       }
     },
     "Typedescription" : {
-      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -3104,7 +3164,6 @@
       }
     },
     "Auth" : {
-      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -3183,7 +3242,6 @@
       }
     },
     "Relationship" : {
-      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -3246,8 +3304,75 @@
         }
       }
     },
+    "Alert" : {
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "nedid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "source" : {
+          "type" : "string"
+        },
+        "sourcetypeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lastmodified" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "createdby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "createdbyname" : {
+          "type" : "string"
+        },
+        "lastmodifiedby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "lastmodifiedbyname" : {
+          "type" : "string"
+        },
+        "typeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "frequencytypeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "frequency" : {
+          "type" : "string"
+        },
+        "journaltypeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "journal" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "query" : {
+          "type" : "string"
+        }
+      }
+    },
     "IndividualComposite" : {
-      "type" : "object",
       "properties" : {
         "auth" : {
           "type" : "array",
@@ -3318,8 +3443,7 @@
         }
       }
     },
-    "Alert" : {
-      "type" : "object",
+    "Phonenumber" : {
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -3365,30 +3489,26 @@
         "type" : {
           "type" : "string"
         },
-        "frequencytypeid" : {
+        "countrycodetypeid" : {
           "type" : "integer",
           "format" : "int32"
         },
-        "frequency" : {
+        "countrycodetype" : {
           "type" : "string"
         },
-        "journaltypeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "journal" : {
+        "phonenumber" : {
           "type" : "string"
         },
-        "name" : {
+        "extension" : {
           "type" : "string"
         },
-        "query" : {
-          "type" : "string"
+        "isactive" : {
+          "type" : "boolean",
+          "default" : false
         }
       }
     },
     "Individualprofile" : {
-      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -3457,72 +3577,6 @@
           "type" : "string"
         },
         "biography" : {
-          "type" : "string"
-        },
-        "isactive" : {
-          "type" : "boolean",
-          "default" : false
-        }
-      }
-    },
-    "Phonenumber" : {
-      "type" : "object",
-      "properties" : {
-        "id" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "nedid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "source" : {
-          "type" : "string"
-        },
-        "sourcetypeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "created" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "lastmodified" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "createdby" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "createdbyname" : {
-          "type" : "string"
-        },
-        "lastmodifiedby" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "lastmodifiedbyname" : {
-          "type" : "string"
-        },
-        "typeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "type" : {
-          "type" : "string"
-        },
-        "countrycodetypeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "countrycodetype" : {
-          "type" : "string"
-        },
-        "phonenumber" : {
-          "type" : "string"
-        },
-        "extension" : {
           "type" : "string"
         },
         "isactive" : {

@@ -1,18 +1,17 @@
 package org.plos.ned_client.api;
 
-import com.sun.jersey.api.client.GenericType;
-
 import org.plos.ned_client.ApiException;
 import org.plos.ned_client.ApiClient;
 import org.plos.ned_client.Configuration;
 import org.plos.ned_client.Pair;
+import org.plos.ned_client.TypeRef;
 
 import org.plos.ned_client.model.ConfigInfo;
 import org.plos.ned_client.model.NedErrorResponse;
 
 import java.util.*;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-21T13:36:13.082-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-29T17:05:32.045-08:00")
 public class ServiceApi {
   private ApiClient apiClient;
 
@@ -38,8 +37,9 @@ public class ServiceApi {
    * 
    * @return ConfigInfo
    */
-  public ConfigInfo config() throws ApiException {
+  public ConfigInfo config () throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
     // create path and map variables
     String path = "/service/config".replaceAll("\\{format\\}","json");
@@ -68,9 +68,15 @@ public class ServiceApi {
     String[] authNames = new String[] {  };
 
     
-    GenericType<ConfigInfo> returnType = new GenericType<ConfigInfo>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<ConfigInfo>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -78,8 +84,9 @@ public class ServiceApi {
    * 
    * @return List<NedErrorResponse>
    */
-  public List<NedErrorResponse> errorcodes() throws ApiException {
+  public List<NedErrorResponse> errorcodes () throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
     // create path and map variables
     String path = "/service/errorcodes".replaceAll("\\{format\\}","json");
@@ -108,9 +115,15 @@ public class ServiceApi {
     String[] authNames = new String[] {  };
 
     
-    GenericType<List<NedErrorResponse>> returnType = new GenericType<List<NedErrorResponse>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<List<NedErrorResponse>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
 }

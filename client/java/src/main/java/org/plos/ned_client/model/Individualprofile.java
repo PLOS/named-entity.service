@@ -4,15 +4,13 @@ import org.plos.ned_client.StringUtil;
 import java.util.Date;
 
 
-import java.util.Objects;
 
 import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.*;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-21T13:36:13.082-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-29T17:05:32.045-08:00")
 public class Individualprofile   {
   
   private Integer id = null;
@@ -290,43 +288,6 @@ public class Individualprofile   {
   }
 
   
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Individualprofile individualprofile = (Individualprofile) o;
-    return Objects.equals(id, individualprofile.id) &&
-        Objects.equals(nedid, individualprofile.nedid) &&
-        Objects.equals(source, individualprofile.source) &&
-        Objects.equals(sourcetypeid, individualprofile.sourcetypeid) &&
-        Objects.equals(created, individualprofile.created) &&
-        Objects.equals(lastmodified, individualprofile.lastmodified) &&
-        Objects.equals(createdby, individualprofile.createdby) &&
-        Objects.equals(createdbyname, individualprofile.createdbyname) &&
-        Objects.equals(lastmodifiedby, individualprofile.lastmodifiedby) &&
-        Objects.equals(lastmodifiedbyname, individualprofile.lastmodifiedbyname) &&
-        Objects.equals(firstname, individualprofile.firstname) &&
-        Objects.equals(middlename, individualprofile.middlename) &&
-        Objects.equals(lastname, individualprofile.lastname) &&
-        Objects.equals(nickname, individualprofile.nickname) &&
-        Objects.equals(nameprefix, individualprofile.nameprefix) &&
-        Objects.equals(nameprefixtypeid, individualprofile.nameprefixtypeid) &&
-        Objects.equals(namesuffix, individualprofile.namesuffix) &&
-        Objects.equals(namesuffixtypeid, individualprofile.namesuffixtypeid) &&
-        Objects.equals(displayname, individualprofile.displayname) &&
-        Objects.equals(biography, individualprofile.biography) &&
-        Objects.equals(isactive, individualprofile.isactive);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, nedid, source, sourcetypeid, created, lastmodified, createdby, createdbyname, lastmodifiedby, lastmodifiedbyname, firstname, middlename, lastname, nickname, nameprefix, nameprefixtypeid, namesuffix, namesuffixtypeid, displayname, biography, isactive);
-  }
 
   @Override
   public String toString()  {

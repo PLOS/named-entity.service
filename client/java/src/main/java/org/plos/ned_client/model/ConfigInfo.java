@@ -4,15 +4,13 @@ import org.plos.ned_client.StringUtil;
 import java.util.Date;
 
 
-import java.util.Objects;
 
 import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.*;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-21T13:36:13.082-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-29T17:05:32.045-08:00")
 public class ConfigInfo   {
   
   private String version = null;
@@ -43,24 +41,6 @@ public class ConfigInfo   {
   }
 
   
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    ConfigInfo configInfo = (ConfigInfo) o;
-    return Objects.equals(version, configInfo.version) &&
-        Objects.equals(startime, configInfo.startime);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(version, startime);
-  }
 
   @Override
   public String toString()  {

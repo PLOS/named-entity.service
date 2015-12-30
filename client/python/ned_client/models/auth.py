@@ -95,10 +95,10 @@ class Auth(object):
         self._authid = None
         self._plain_text_password = None
         self._password = None
-        self._passwordreset = False
+        self._passwordreset = None
         self._verificationtoken = None
-        self._verified = False
-        self._isactive = False
+        self._verified = None
+        self._isactive = None
 
     @property
     def id(self):
@@ -549,16 +549,3 @@ class Auth(object):
         For `print` and `pprint`
         """
         return self.to_str()
-
-    def __eq__(self, other): 
-        """
-        Returns true if both objects are equal
-        """
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other):
-        """ 
-        Returns true if both objects are not equal
-        """
-        return not self == other
-

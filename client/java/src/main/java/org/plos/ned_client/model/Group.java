@@ -4,15 +4,13 @@ import org.plos.ned_client.StringUtil;
 import java.util.Date;
 
 
-import java.util.Objects;
 
 import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.*;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-21T13:36:13.082-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-29T17:05:32.045-08:00")
 public class Group   {
   
   private Integer id = null;
@@ -225,38 +223,6 @@ public class Group   {
   }
 
   
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Group group = (Group) o;
-    return Objects.equals(id, group.id) &&
-        Objects.equals(nedid, group.nedid) &&
-        Objects.equals(source, group.source) &&
-        Objects.equals(sourcetypeid, group.sourcetypeid) &&
-        Objects.equals(created, group.created) &&
-        Objects.equals(lastmodified, group.lastmodified) &&
-        Objects.equals(createdby, group.createdby) &&
-        Objects.equals(createdbyname, group.createdbyname) &&
-        Objects.equals(lastmodifiedby, group.lastmodifiedby) &&
-        Objects.equals(lastmodifiedbyname, group.lastmodifiedbyname) &&
-        Objects.equals(typeid, group.typeid) &&
-        Objects.equals(type, group.type) &&
-        Objects.equals(startdate, group.startdate) &&
-        Objects.equals(enddate, group.enddate) &&
-        Objects.equals(applicationtype, group.applicationtype) &&
-        Objects.equals(applicationtypeid, group.applicationtypeid);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, nedid, source, sourcetypeid, created, lastmodified, createdby, createdbyname, lastmodifiedby, lastmodifiedbyname, typeid, type, startdate, enddate, applicationtype, applicationtypeid);
-  }
 
   @Override
   public String toString()  {

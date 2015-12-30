@@ -334,6 +334,8 @@ font-style: italic;
   
   <li><a href="#readOrganizationByUid"><code><span class="http-method">get</span> /organizations/{uidType}/{uidValue}</code></a></li>
   
+  <li><a href="#getAlerts_16"><code><span class="http-method">get</span> /queries/alerts/{frequency}</code></a></li>
+  
   <li><a href="#config"><code><span class="http-method">get</span> /service/config</code></a></li>
   
   <li><a href="#errorcodes"><code><span class="http-method">get</span> /service/errorcodes</code></a></li>
@@ -4431,6 +4433,56 @@ font-style: italic;
   </div> <!-- method -->
   <hr/>
   
+  <div class="method"><a name="getAlerts_16"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /queries/alerts/{frequency}</code></pre></div>
+    <div class="method-summary">Get a list of search alerts by type (<span class="nickname">getAlerts_16</span>)</div>
+    
+    <div class="method-notes"></div>
+
+    
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">frequency (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Alert">Alert</a>]
+      
+    </div>
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    successful operation
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
   <div class="method"><a name="config"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -4539,7 +4591,7 @@ font-style: italic;
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /typeclasses</code></pre></div>
-    <div class="method-summary">List (<span class="nickname">list</span>)</div>
+    <div class="method-summary">List global types (<span class="nickname">list</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -4600,7 +4652,7 @@ font-style: italic;
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="post"><code class="huge"><span class="http-method">post</span> /typeclasses</code></pre></div>
-    <div class="method-summary">Create (<span class="nickname">create</span>)</div>
+    <div class="method-summary">Create global type (<span class="nickname">create</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -4659,7 +4711,7 @@ font-style: italic;
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /typeclasses/{id}</code></pre></div>
-    <div class="method-summary">Read (<span class="nickname">read</span>)</div>
+    <div class="method-summary">Read global type (<span class="nickname">read</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -4718,7 +4770,7 @@ font-style: italic;
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="put"><code class="huge"><span class="http-method">put</span> /typeclasses/{id}</code></pre></div>
-    <div class="method-summary">Update (<span class="nickname">update</span>)</div>
+    <div class="method-summary">Update global type (<span class="nickname">update</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -4777,7 +4829,7 @@ font-style: italic;
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="delete"><code class="huge"><span class="http-method">delete</span> /typeclasses/{id}</code></pre></div>
-    <div class="method-summary">Delete (<span class="nickname">delete</span>)</div>
+    <div class="method-summary">Delete global type (<span class="nickname">delete</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -4830,7 +4882,7 @@ font-style: italic;
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /typeclasses/{typeclassid}/typevalues</code></pre></div>
-    <div class="method-summary">List global types (<span class="nickname">getGlobalTypeForTypeClass</span>)</div>
+    <div class="method-summary">List global type values (<span class="nickname">getGlobalTypeForTypeClass</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -4883,7 +4935,7 @@ font-style: italic;
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="post"><code class="huge"><span class="http-method">post</span> /typeclasses/{typeclassid}/typevalues</code></pre></div>
-    <div class="method-summary">Create global type (<span class="nickname">createGlobalType</span>)</div>
+    <div class="method-summary">Create global type value (<span class="nickname">createGlobalType</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -4949,7 +5001,7 @@ font-style: italic;
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /typeclasses/{typeclassid}/typevalues/{typevalueid}</code></pre></div>
-    <div class="method-summary">Read global type (<span class="nickname">getGlobalType</span>)</div>
+    <div class="method-summary">Read global type value (<span class="nickname">getGlobalType</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -5010,7 +5062,7 @@ font-style: italic;
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="put"><code class="huge"><span class="http-method">put</span> /typeclasses/{typeclassid}/typevalues/{typevalueid}</code></pre></div>
-    <div class="method-summary">Update global type (<span class="nickname">updateGlobalType</span>)</div>
+    <div class="method-summary">Update global type value (<span class="nickname">updateGlobalType</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -5078,7 +5130,7 @@ font-style: italic;
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="delete"><code class="huge"><span class="http-method">delete</span> /typeclasses/{typeclassid}/typevalues/{typevalueid}</code></pre></div>
-    <div class="method-summary">Delete global type (<span class="nickname">deleteGlobalType</span>)</div>
+    <div class="method-summary">Delete global type value (<span class="nickname">deleteGlobalType</span>)</div>
     
     <div class="method-notes"></div>
 
@@ -5165,11 +5217,11 @@ font-style: italic;
   
   
   
-    <li><a href="#Globaltype"><code>Globaltype</code></a></li>
-  
-  
-  
     <li><a href="#Uniqueidentifier"><code>Uniqueidentifier</code></a></li>
+  
+  
+  
+    <li><a href="#Globaltype"><code>Globaltype</code></a></li>
   
   
   
@@ -5193,19 +5245,19 @@ font-style: italic;
   
   
   
-    <li><a href="#IndividualComposite"><code>IndividualComposite</code></a></li>
-  
-  
-  
     <li><a href="#Alert"><code>Alert</code></a></li>
   
   
   
-    <li><a href="#Individualprofile"><code>Individualprofile</code></a></li>
+    <li><a href="#IndividualComposite"><code>IndividualComposite</code></a></li>
   
   
   
     <li><a href="#Phonenumber"><code>Phonenumber</code></a></li>
+  
+  
+  
+    <li><a href="#Individualprofile"><code>Individualprofile</code></a></li>
   
   
   </ol>
@@ -5444,33 +5496,6 @@ font-style: italic;
   
   
   <div class="model">
-    <h3 class="field-label"><a name="Globaltype">Globaltype</a> <a class="up" href="#__Models">Up</a></h3>
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">shortdescription </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">longdescription </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">typecode </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">created </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">createdby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">lastmodifiedby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      
-    </div>  <!-- field-items -->
-  </div>
-  
-  
-  
-  <div class="model">
     <h3 class="field-label"><a name="Uniqueidentifier">Uniqueidentifier</a> <a class="up" href="#__Models">Up</a></h3>
     <div class="field-items">
       <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
@@ -5500,6 +5525,33 @@ font-style: italic;
       <div class="param">uniqueidentifier </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       <div class="param">metadata </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Globaltype">Globaltype</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">shortdescription </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">longdescription </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">typecode </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">created </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      <div class="param">createdby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">lastmodifiedby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
       
       
     </div>  <!-- field-items -->
@@ -5667,40 +5719,6 @@ font-style: italic;
   
   
   <div class="model">
-    <h3 class="field-label"><a name="IndividualComposite">IndividualComposite</a> <a class="up" href="#__Models">Up</a></h3>
-    <div class="field-items">
-      <div class="param">auth </div><div class="param-desc"><span class="param-type">array[Auth]</span> </div>
-      
-      <div class="param">individualprofiles </div><div class="param-desc"><span class="param-type">array[Individualprofile]</span> </div>
-      
-      <div class="param">groups </div><div class="param-desc"><span class="param-type">array[Group]</span> </div>
-      
-      <div class="param">addresses </div><div class="param-desc"><span class="param-type">array[Address]</span> </div>
-      
-      <div class="param">emails </div><div class="param-desc"><span class="param-type">array[Email]</span> </div>
-      
-      <div class="param">phonenumbers </div><div class="param-desc"><span class="param-type">array[Phonenumber]</span> </div>
-      
-      <div class="param">uniqueidentifiers </div><div class="param-desc"><span class="param-type">array[Uniqueidentifier]</span> </div>
-      
-      <div class="param">degrees </div><div class="param-desc"><span class="param-type">array[Degree]</span> </div>
-      
-      <div class="param">urls </div><div class="param-desc"><span class="param-type">array[Url]</span> </div>
-      
-      <div class="param">relationships </div><div class="param-desc"><span class="param-type">array[Relationship]</span> </div>
-      
-      <div class="param">typeName </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-        <div class="param-enum-header">Enum:</div>
-        <div class="param-enum">INDIVIDUAL</div><div class="param-enum">ORGANIZATION</div><div class="param-enum">INVALID_NAMEDPARTY_TYPE</div>
-      
-      
-    </div>  <!-- field-items -->
-  </div>
-  
-  
-  
-  <div class="model">
     <h3 class="field-label"><a name="Alert">Alert</a> <a class="up" href="#__Models">Up</a></h3>
     <div class="field-items">
       <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
@@ -5738,6 +5756,83 @@ font-style: italic;
       <div class="param">name </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       <div class="param">query </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="IndividualComposite">IndividualComposite</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">auth </div><div class="param-desc"><span class="param-type">array[Auth]</span> </div>
+      
+      <div class="param">individualprofiles </div><div class="param-desc"><span class="param-type">array[Individualprofile]</span> </div>
+      
+      <div class="param">groups </div><div class="param-desc"><span class="param-type">array[Group]</span> </div>
+      
+      <div class="param">addresses </div><div class="param-desc"><span class="param-type">array[Address]</span> </div>
+      
+      <div class="param">emails </div><div class="param-desc"><span class="param-type">array[Email]</span> </div>
+      
+      <div class="param">phonenumbers </div><div class="param-desc"><span class="param-type">array[Phonenumber]</span> </div>
+      
+      <div class="param">uniqueidentifiers </div><div class="param-desc"><span class="param-type">array[Uniqueidentifier]</span> </div>
+      
+      <div class="param">degrees </div><div class="param-desc"><span class="param-type">array[Degree]</span> </div>
+      
+      <div class="param">urls </div><div class="param-desc"><span class="param-type">array[Url]</span> </div>
+      
+      <div class="param">relationships </div><div class="param-desc"><span class="param-type">array[Relationship]</span> </div>
+      
+      <div class="param">typeName </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">INDIVIDUAL</div><div class="param-enum">ORGANIZATION</div><div class="param-enum">INVALID_NAMEDPARTY_TYPE</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Phonenumber">Phonenumber</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">nedid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">source </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">sourcetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">created </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      <div class="param">createdby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">createdbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">lastmodifiedby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">lastmodifiedbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">type </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">countrycodetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">countrycodetype </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">phonenumber </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">extension </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">isactive </div><div class="param-desc"><span class="param-type">Boolean</span> </div>
       
       
     </div>  <!-- field-items -->
@@ -5787,49 +5882,6 @@ font-style: italic;
       <div class="param">displayname </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       <div class="param">biography </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">isactive </div><div class="param-desc"><span class="param-type">Boolean</span> </div>
-      
-      
-    </div>  <!-- field-items -->
-  </div>
-  
-  
-  
-  <div class="model">
-    <h3 class="field-label"><a name="Phonenumber">Phonenumber</a> <a class="up" href="#__Models">Up</a></h3>
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">nedid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">source </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">sourcetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">created </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">createdby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">createdbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">lastmodifiedby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">lastmodifiedbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">type </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">countrycodetypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">countrycodetype </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">phonenumber </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">extension </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       <div class="param">isactive </div><div class="param-desc"><span class="param-type">Boolean</span> </div>
       

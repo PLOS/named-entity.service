@@ -1,35 +1,37 @@
 require "uri"
 
 module NedClient
-  class InstitutionsearchApi
+  class QueriesApi
     attr_accessor :api_client
 
     def initialize(api_client = nil)
       @api_client = api_client || Configuration.api_client
     end
 
-    # Find institution(s) by name fragment (wildcard search).
+    # Get a list of search alerts by type
     # 
+    # @param frequency 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :substring 
-    # @return [nil]
-    def find_institutions_by_name(opts = {})
+    # @return [Array<Alert>]
+    def get_alerts(frequency, opts = {})
       if Configuration.debugging
-        Configuration.logger.debug "Calling API: InstitutionsearchApi#find_institutions_by_name ..."
+        Configuration.logger.debug "Calling API: QueriesApi#get_alerts ..."
       end
       
+      # verify the required parameter 'frequency' is set
+      fail "Missing the required parameter 'frequency' when calling get_alerts" if frequency.nil?
+      
       # resource path
-      path = "/institutionsearch".sub('{format}','json')
+      path = "/queries/alerts/{frequency}".sub('{format}','json').sub('{' + 'frequency' + '}', frequency.to_s)
 
       # query parameters
       query_params = {}
-      query_params[:'substring'] = opts[:'substring'] if opts[:'substring']
 
       # header parameters
       header_params = {}
 
       # HTTP header 'Accept' (if needed)
-      _header_accept = ['application/json']
+      _header_accept = []
       _header_accept_result = @api_client.select_header_accept(_header_accept) and header_params['Accept'] = _header_accept_result
 
       # HTTP header 'Content-Type'
@@ -43,17 +45,18 @@ module NedClient
       post_body = nil
       
 
-      auth_names = []
-      @api_client.call_api(:GET, path,
+      auth_names = ['basic']
+      result = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names)
+        :auth_names => auth_names,
+        :return_type => 'Array<Alert>')
       if Configuration.debugging
-        Configuration.logger.debug "API called: InstitutionsearchApi#find_institutions_by_name"
+        Configuration.logger.debug "API called: QueriesApi#get_alerts. Result: #{result.inspect}"
       end
-      return nil
+      return result
     end
   end
 end

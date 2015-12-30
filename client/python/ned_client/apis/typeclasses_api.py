@@ -47,7 +47,7 @@ class TypeclassesApi(object):
 
     def list(self, **kwargs):
         """
-        List
+        List global types
         
 
         This method makes a synchronous HTTP request by default. To make an
@@ -79,7 +79,6 @@ class TypeclassesApi(object):
                 )
             params[key] = val
         del params['kwargs']
-
 
         resource_path = '/typeclasses'.replace('{format}', 'json')
         method = 'GET'
@@ -126,7 +125,7 @@ class TypeclassesApi(object):
 
     def create(self, **kwargs):
         """
-        Create
+        Create global type
         
 
         This method makes a synchronous HTTP request by default. To make an
@@ -157,7 +156,6 @@ class TypeclassesApi(object):
                 )
             params[key] = val
         del params['kwargs']
-
 
         resource_path = '/typeclasses'.replace('{format}', 'json')
         method = 'POST'
@@ -202,7 +200,7 @@ class TypeclassesApi(object):
 
     def read(self, id, **kwargs):
         """
-        Read
+        Read global type
         
 
         This method makes a synchronous HTTP request by default. To make an
@@ -220,6 +218,9 @@ class TypeclassesApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
+        # verify the required parameter 'id' is set
+        if id is None:
+            raise ValueError("Missing the required parameter `id` when calling `read`")
 
         all_params = ['id']
         all_params.append('callback')
@@ -233,10 +234,6 @@ class TypeclassesApi(object):
                 )
             params[key] = val
         del params['kwargs']
-
-        # verify the required parameter 'id' is set
-        if ('id' not in params) or (params['id'] is None):
-            raise ValueError("Missing the required parameter `id` when calling `read`")
 
         resource_path = '/typeclasses/{id}'.replace('{format}', 'json')
         method = 'GET'
@@ -281,7 +278,7 @@ class TypeclassesApi(object):
 
     def update(self, **kwargs):
         """
-        Update
+        Update global type
         
 
         This method makes a synchronous HTTP request by default. To make an
@@ -312,7 +309,6 @@ class TypeclassesApi(object):
                 )
             params[key] = val
         del params['kwargs']
-
 
         resource_path = '/typeclasses/{id}'.replace('{format}', 'json')
         method = 'PUT'
@@ -357,7 +353,7 @@ class TypeclassesApi(object):
 
     def delete(self, id, **kwargs):
         """
-        Delete
+        Delete global type
         
 
         This method makes a synchronous HTTP request by default. To make an
@@ -375,6 +371,9 @@ class TypeclassesApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
+        # verify the required parameter 'id' is set
+        if id is None:
+            raise ValueError("Missing the required parameter `id` when calling `delete`")
 
         all_params = ['id']
         all_params.append('callback')
@@ -388,10 +387,6 @@ class TypeclassesApi(object):
                 )
             params[key] = val
         del params['kwargs']
-
-        # verify the required parameter 'id' is set
-        if ('id' not in params) or (params['id'] is None):
-            raise ValueError("Missing the required parameter `id` when calling `delete`")
 
         resource_path = '/typeclasses/{id}'.replace('{format}', 'json')
         method = 'DELETE'
@@ -436,7 +431,7 @@ class TypeclassesApi(object):
 
     def get_global_type_for_type_class(self, typeclassid, **kwargs):
         """
-        List global types
+        List global type values
         
 
         This method makes a synchronous HTTP request by default. To make an
@@ -454,6 +449,9 @@ class TypeclassesApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
+        # verify the required parameter 'typeclassid' is set
+        if typeclassid is None:
+            raise ValueError("Missing the required parameter `typeclassid` when calling `get_global_type_for_type_class`")
 
         all_params = ['typeclassid']
         all_params.append('callback')
@@ -467,10 +465,6 @@ class TypeclassesApi(object):
                 )
             params[key] = val
         del params['kwargs']
-
-        # verify the required parameter 'typeclassid' is set
-        if ('typeclassid' not in params) or (params['typeclassid'] is None):
-            raise ValueError("Missing the required parameter `typeclassid` when calling `get_global_type_for_type_class`")
 
         resource_path = '/typeclasses/{typeclassid}/typevalues'.replace('{format}', 'json')
         method = 'GET'
@@ -515,7 +509,7 @@ class TypeclassesApi(object):
 
     def create_global_type(self, typeclassid, **kwargs):
         """
-        Create global type
+        Create global type value
         
 
         This method makes a synchronous HTTP request by default. To make an
@@ -534,6 +528,9 @@ class TypeclassesApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
+        # verify the required parameter 'typeclassid' is set
+        if typeclassid is None:
+            raise ValueError("Missing the required parameter `typeclassid` when calling `create_global_type`")
 
         all_params = ['typeclassid', 'body']
         all_params.append('callback')
@@ -547,10 +544,6 @@ class TypeclassesApi(object):
                 )
             params[key] = val
         del params['kwargs']
-
-        # verify the required parameter 'typeclassid' is set
-        if ('typeclassid' not in params) or (params['typeclassid'] is None):
-            raise ValueError("Missing the required parameter `typeclassid` when calling `create_global_type`")
 
         resource_path = '/typeclasses/{typeclassid}/typevalues'.replace('{format}', 'json')
         method = 'POST'
@@ -597,7 +590,7 @@ class TypeclassesApi(object):
 
     def get_global_type(self, typeclassid, typevalueid, **kwargs):
         """
-        Read global type
+        Read global type value
         
 
         This method makes a synchronous HTTP request by default. To make an
@@ -616,6 +609,12 @@ class TypeclassesApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
+        # verify the required parameter 'typeclassid' is set
+        if typeclassid is None:
+            raise ValueError("Missing the required parameter `typeclassid` when calling `get_global_type`")
+        # verify the required parameter 'typevalueid' is set
+        if typevalueid is None:
+            raise ValueError("Missing the required parameter `typevalueid` when calling `get_global_type`")
 
         all_params = ['typeclassid', 'typevalueid']
         all_params.append('callback')
@@ -629,13 +628,6 @@ class TypeclassesApi(object):
                 )
             params[key] = val
         del params['kwargs']
-
-        # verify the required parameter 'typeclassid' is set
-        if ('typeclassid' not in params) or (params['typeclassid'] is None):
-            raise ValueError("Missing the required parameter `typeclassid` when calling `get_global_type`")
-        # verify the required parameter 'typevalueid' is set
-        if ('typevalueid' not in params) or (params['typevalueid'] is None):
-            raise ValueError("Missing the required parameter `typevalueid` when calling `get_global_type`")
 
         resource_path = '/typeclasses/{typeclassid}/typevalues/{typevalueid}'.replace('{format}', 'json')
         method = 'GET'
@@ -682,7 +674,7 @@ class TypeclassesApi(object):
 
     def update_global_type(self, typeclassid, typevalueid, **kwargs):
         """
-        Update global type
+        Update global type value
         
 
         This method makes a synchronous HTTP request by default. To make an
@@ -702,6 +694,12 @@ class TypeclassesApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
+        # verify the required parameter 'typeclassid' is set
+        if typeclassid is None:
+            raise ValueError("Missing the required parameter `typeclassid` when calling `update_global_type`")
+        # verify the required parameter 'typevalueid' is set
+        if typevalueid is None:
+            raise ValueError("Missing the required parameter `typevalueid` when calling `update_global_type`")
 
         all_params = ['typeclassid', 'typevalueid', 'body']
         all_params.append('callback')
@@ -715,13 +713,6 @@ class TypeclassesApi(object):
                 )
             params[key] = val
         del params['kwargs']
-
-        # verify the required parameter 'typeclassid' is set
-        if ('typeclassid' not in params) or (params['typeclassid'] is None):
-            raise ValueError("Missing the required parameter `typeclassid` when calling `update_global_type`")
-        # verify the required parameter 'typevalueid' is set
-        if ('typevalueid' not in params) or (params['typevalueid'] is None):
-            raise ValueError("Missing the required parameter `typevalueid` when calling `update_global_type`")
 
         resource_path = '/typeclasses/{typeclassid}/typevalues/{typevalueid}'.replace('{format}', 'json')
         method = 'PUT'
@@ -770,7 +761,7 @@ class TypeclassesApi(object):
 
     def delete_global_type(self, typeclassid, typevalueid, **kwargs):
         """
-        Delete global type
+        Delete global type value
         
 
         This method makes a synchronous HTTP request by default. To make an
@@ -789,6 +780,12 @@ class TypeclassesApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
+        # verify the required parameter 'typeclassid' is set
+        if typeclassid is None:
+            raise ValueError("Missing the required parameter `typeclassid` when calling `delete_global_type`")
+        # verify the required parameter 'typevalueid' is set
+        if typevalueid is None:
+            raise ValueError("Missing the required parameter `typevalueid` when calling `delete_global_type`")
 
         all_params = ['typeclassid', 'typevalueid']
         all_params.append('callback')
@@ -802,13 +799,6 @@ class TypeclassesApi(object):
                 )
             params[key] = val
         del params['kwargs']
-
-        # verify the required parameter 'typeclassid' is set
-        if ('typeclassid' not in params) or (params['typeclassid'] is None):
-            raise ValueError("Missing the required parameter `typeclassid` when calling `delete_global_type`")
-        # verify the required parameter 'typevalueid' is set
-        if ('typevalueid' not in params) or (params['typevalueid'] is None):
-            raise ValueError("Missing the required parameter `typevalueid` when calling `delete_global_type`")
 
         resource_path = '/typeclasses/{typeclassid}/typevalues/{typevalueid}'.replace('{format}', 'json')
         method = 'DELETE'

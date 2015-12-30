@@ -4,15 +4,13 @@ import org.plos.ned_client.StringUtil;
 import java.util.Date;
 
 
-import java.util.Objects;
 
 import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.*;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-21T13:36:13.082-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-29T17:05:32.045-08:00")
 public class Auth   {
   
   private Integer id = null;
@@ -264,41 +262,6 @@ public class Auth   {
   }
 
   
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Auth auth = (Auth) o;
-    return Objects.equals(id, auth.id) &&
-        Objects.equals(nedid, auth.nedid) &&
-        Objects.equals(source, auth.source) &&
-        Objects.equals(sourcetypeid, auth.sourcetypeid) &&
-        Objects.equals(created, auth.created) &&
-        Objects.equals(lastmodified, auth.lastmodified) &&
-        Objects.equals(createdby, auth.createdby) &&
-        Objects.equals(createdbyname, auth.createdbyname) &&
-        Objects.equals(lastmodifiedby, auth.lastmodifiedby) &&
-        Objects.equals(lastmodifiedbyname, auth.lastmodifiedbyname) &&
-        Objects.equals(email, auth.email) &&
-        Objects.equals(emailid, auth.emailid) &&
-        Objects.equals(authid, auth.authid) &&
-        Objects.equals(plainTextPassword, auth.plainTextPassword) &&
-        Objects.equals(password, auth.password) &&
-        Objects.equals(passwordreset, auth.passwordreset) &&
-        Objects.equals(verificationtoken, auth.verificationtoken) &&
-        Objects.equals(verified, auth.verified) &&
-        Objects.equals(isactive, auth.isactive);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, nedid, source, sourcetypeid, created, lastmodified, createdby, createdbyname, lastmodifiedby, lastmodifiedbyname, email, emailid, authid, plainTextPassword, password, passwordreset, verificationtoken, verified, isactive);
-  }
 
   @Override
   public String toString()  {

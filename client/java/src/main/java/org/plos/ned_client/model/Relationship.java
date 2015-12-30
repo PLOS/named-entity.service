@@ -4,15 +4,13 @@ import org.plos.ned_client.StringUtil;
 import java.util.Date;
 
 
-import java.util.Objects;
 
 import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.*;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-21T13:36:13.082-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-29T17:05:32.045-08:00")
 public class Relationship   {
   
   private Integer id = null;
@@ -225,38 +223,6 @@ public class Relationship   {
   }
 
   
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Relationship relationship = (Relationship) o;
-    return Objects.equals(id, relationship.id) &&
-        Objects.equals(nedid, relationship.nedid) &&
-        Objects.equals(source, relationship.source) &&
-        Objects.equals(sourcetypeid, relationship.sourcetypeid) &&
-        Objects.equals(created, relationship.created) &&
-        Objects.equals(lastmodified, relationship.lastmodified) &&
-        Objects.equals(createdby, relationship.createdby) &&
-        Objects.equals(createdbyname, relationship.createdbyname) &&
-        Objects.equals(lastmodifiedby, relationship.lastmodifiedby) &&
-        Objects.equals(lastmodifiedbyname, relationship.lastmodifiedbyname) &&
-        Objects.equals(nedidrelated, relationship.nedidrelated) &&
-        Objects.equals(typeid, relationship.typeid) &&
-        Objects.equals(type, relationship.type) &&
-        Objects.equals(title, relationship.title) &&
-        Objects.equals(startdate, relationship.startdate) &&
-        Objects.equals(enddate, relationship.enddate);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, nedid, source, sourcetypeid, created, lastmodified, createdby, createdbyname, lastmodifiedby, lastmodifiedbyname, nedidrelated, typeid, type, title, startdate, enddate);
-  }
 
   @Override
   public String toString()  {
