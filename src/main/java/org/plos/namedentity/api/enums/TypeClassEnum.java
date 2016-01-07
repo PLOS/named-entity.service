@@ -41,6 +41,8 @@ public enum TypeClassEnum {
   UID_INDIVIDUAL_TYPES("UID Individual Types"),
   UID_ORGANIZATION_TYPES("UID Organization Types"),
   USER_APPLICATIONS("User Applications"),
+  ALERT_TYPES("Alert Types"),
+  ALERT_FREQUENCY("Alert Frequency"),
   INVALID_TYPE_CLASS("");
 
   String name;
@@ -49,7 +51,6 @@ public enum TypeClassEnum {
     this.name = name;
   }
 
-  // assume uom names are unique; may not be true for symbols.
   public static TypeClassEnum getTypeClassEnum(String name) {
     for (TypeClassEnum typeclass : EnumSet.allOf(TypeClassEnum.class))
       if (typeclass.name.equals(name))

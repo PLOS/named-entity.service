@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-18T14:38:21.393-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-07T17:01:32.713-08:00")
 public class IndividualComposite   {
   
   private List<Auth> auth = new ArrayList<Auth>();
@@ -33,7 +33,25 @@ public class IndividualComposite   {
   private List<Degree> degrees = new ArrayList<Degree>();
   private List<Url> urls = new ArrayList<Url>();
   private List<Relationship> relationships = new ArrayList<Relationship>();
-  private String typeName = null;
+
+public enum TypeNameEnum {
+  INDIVIDUAL("INDIVIDUAL"),
+  ORGANIZATION("ORGANIZATION"),
+  INVALID_NAMEDPARTY_TYPE("INVALID_NAMEDPARTY_TYPE");
+
+  private String value;
+
+  TypeNameEnum(String value) {
+    this.value = value;
+  }
+
+  @Override
+  public String toString() {
+    return value;
+  }
+}
+
+  private TypeNameEnum typeName = null;
 
   
   /**
@@ -160,10 +178,10 @@ public class IndividualComposite   {
    **/
   @ApiModelProperty(value = "")
   @JsonProperty("typeName")
-  public String getTypeName() {
+  public TypeNameEnum getTypeName() {
     return typeName;
   }
-  public void setTypeName(String typeName) {
+  public void setTypeName(TypeNameEnum typeName) {
     this.typeName = typeName;
   }
 

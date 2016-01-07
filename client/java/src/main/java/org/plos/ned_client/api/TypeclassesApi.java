@@ -11,7 +11,7 @@ import org.plos.ned_client.model.Globaltype;
 
 import java.util.*;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-18T14:38:21.393-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-07T17:01:32.713-08:00")
 public class TypeclassesApi {
   private ApiClient apiClient;
 

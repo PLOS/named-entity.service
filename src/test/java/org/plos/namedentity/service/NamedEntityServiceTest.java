@@ -51,7 +51,7 @@ import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidTypeValue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
+@ContextConfiguration(locations = {"/spring-beans.xml","/ambra-spring-beans.xml","/spring-beans.test.xml","/ambra-spring-beans.test.xml"})
 public class NamedEntityServiceTest {
 
   @Autowired
@@ -81,8 +81,9 @@ public class NamedEntityServiceTest {
 
     composite2.getIndividualprofiles().get(0).setDisplayname(
         composite1.getIndividualprofiles().get(0).getDisplayname());
-    composite2.getUniqueidentifiers().get(0).setUniqueidentifier(
-        composite1.getUniqueidentifiers().get(0).getUniqueidentifier());
+    //AMBRA-ADAPTER:
+    //composite2.getUniqueidentifiers().get(0).setUniqueidentifier(
+        //composite1.getUniqueidentifiers().get(0).getUniqueidentifier());
 
     assertEquals(composite1, composite2);
 
@@ -281,6 +282,7 @@ public class NamedEntityServiceTest {
     workEmail.setType("Work");
     workEmail.setEmailaddress("fu.manchu.work@foo.com");
     workEmail.setSource("Ambra");
+    workEmail.setNedid(12345);
     emails.add(_(workEmail));
 
     Email personalEmail = new Email();
@@ -359,7 +361,7 @@ public class NamedEntityServiceTest {
     List<Degree> degrees = new ArrayList<>();
 
     Degree degree = new Degree();
-    degree.setType("MD");
+    degree.setType("Masters");
     degree.setSource("Editorial Manager");
     degrees.add(_(degree));
 
@@ -411,7 +413,9 @@ public class NamedEntityServiceTest {
     try {
       IndividualComposite responseComposite = namedEntityService.createComposite(composite, IndividualComposite.class);
       assertNotNull(responseComposite);
-      assertNotNull(responseComposite.getIndividualprofiles().get(0).getNedid());
+
+      // the NED ID can be set in the first email of the composite
+      assertEquals(responseComposite.getIndividualprofiles().get(0).getNedid().longValue(), 12345);
 
       // make sure foreign keys are resolved for sub entities
       assertNotNull(responseComposite.getEmails().get(0).getId());
@@ -446,7 +450,9 @@ public class NamedEntityServiceTest {
     assertEquals(1, groupEntities.size());
 
     List<Uniqueidentifier> uidEntities = namedEntityService.findResolvedEntities(nedId, Uniqueidentifier.class);
-    assertEquals(1, uidEntities.size());
+    //AMBRA-ADAPTER:
+    //assertEquals(1, uidEntities.size());
+    assertEquals(2, uidEntities.size());
 
     Individualprofile individualProfile = namedEntityService.findResolvedEntityByUid("ORCID", "0000-0001-9430-001X", Individualprofile.class);
 
@@ -465,6 +471,35 @@ public class NamedEntityServiceTest {
     assertEquals(1, globalTypesResult.size());
 
     return globalTypesResult.get(0).getId();
+  }
+
+  @Test
+  public void testDeleteIndividual() {
+
+    IndividualComposite composite = newCompositeIndividualWithGroup();
+
+    List<Email> emails = new ArrayList<>();
+    Email workEmail = new Email();
+    workEmail.setType("Work");
+    workEmail.setEmailaddress("fu.manchu.work555@foo.com");
+    workEmail.setSource("Ambra");
+    workEmail.setNedid(555);
+    emails.add(_(workEmail));
+    composite.setEmails( emails );
+
+    List<Auth> auths = new ArrayList<>();
+    Auth auth = new Auth();
+    auth.setEmail(workEmail.getEmailaddress());
+    auth.setPlainTextPassword("password123");
+    auths.add(_(auth));
+    composite.setAuth( auths );
+
+    IndividualComposite compositeOut = namedEntityService.createComposite(composite, IndividualComposite.class);
+
+    Integer nedId = compositeOut.getEmails().get(0).getNedid();
+
+    namedEntityService.deleteIndividual(nedId);
+
   }
 
   @Test
@@ -513,7 +548,7 @@ public class NamedEntityServiceTest {
 
     Email workEmail = new Email();
     workEmail.setType("Work");
-    workEmail.setEmailaddress("valid@email.com");
+    workEmail.setEmailaddress("valid-"+UUID.randomUUID().toString()+"@email.com");
     workEmail.setSource("Ambra");
     emails.add(_(workEmail));
 
@@ -752,8 +787,8 @@ public class NamedEntityServiceTest {
 
     Group groupEntity = new Group();
     groupEntity.setNedid(1);
-    groupEntity.setApplicationtype("Knowledge Base");
-    groupEntity.setType("Knowledge Base - Pathogens");
+    groupEntity.setApplicationtype("Named Party DB");
+    groupEntity.setType("NED Admin");
     groupEntity.setStartdate( dateNow() );
     groupEntity.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
     groupEntity.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
@@ -874,7 +909,7 @@ public class NamedEntityServiceTest {
     List<Group> groups = new ArrayList<>();
     Group group = new Group();
 
-    group.setType("Knowledge Base - Medicine");
+    group.setType("NED Admin");
     group.setStartdate(new java.sql.Date(1401408000));  // "2014-05-30"
 
     group.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
@@ -884,6 +919,8 @@ public class NamedEntityServiceTest {
 
     composite.setGroups(groups);
 
+    //AMBRA-ADAPTER:
+/*
     Uniqueidentifier uid = new Uniqueidentifier();
     uid.setSource("Ambra");
     uid.setType("Ambra");
@@ -893,7 +930,7 @@ public class NamedEntityServiceTest {
     uniqueidentifiers.add(_(uid));
 
     composite.setUniqueidentifiers(uniqueidentifiers);
-
+*/
     return composite;
   }
 

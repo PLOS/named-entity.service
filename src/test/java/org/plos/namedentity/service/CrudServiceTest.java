@@ -21,12 +21,13 @@ import org.junit.runner.RunWith;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.Address;
 import org.plos.namedentity.api.entity.Auth;
+import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Globaltype;
+import org.plos.namedentity.api.entity.Group;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.api.entity.Organization;
-import org.plos.namedentity.api.entity.Group;
 import org.plos.namedentity.api.entity.Typedescription;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.persist.NamedEntityDBService;
@@ -43,10 +44,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.plos.namedentity.api.enums.NamedPartyEnum.*;
 import static org.plos.namedentity.api.NedException.ErrorType.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
+@ContextConfiguration(locations = {"/spring-beans.xml","/ambra-spring-beans.xml","/spring-beans.test.xml","/ambra-spring-beans.test.xml"})
 public class CrudServiceTest {
 
   @Autowired
@@ -61,14 +63,12 @@ public class CrudServiceTest {
   @Test
   public void testIndividualCRUD() {
 
-    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
-
     // CREATE
     Individualprofile individualProfile = _(new Individualprofile());
-    individualProfile.setNedid(nedId);
+    individualProfile.setNedid(1);
     individualProfile.setFirstname("firstname");
     individualProfile.setLastname("lastname");
-    individualProfile.setDisplayname("displayname_i");
+    individualProfile.setDisplayname("displayname_i_cs");
     individualProfile.setSource("Editorial Manager");
 
     Integer pkId = crudService.create(namedEntityService.resolveValuesToIds(individualProfile));
@@ -97,7 +97,7 @@ public class CrudServiceTest {
 
     // CREATE
 
-    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+    Integer nedId = nedDBSvc.newNamedEntityId(INDIVIDUAL);
 
     Organization organization = _(new Organization());
     organization.setNedid(nedId);
@@ -133,7 +133,7 @@ public class CrudServiceTest {
   @Test
   public void testIndividualInvalidEmail() {
 
-    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+    Integer nedId = nedDBSvc.newNamedEntityId(INDIVIDUAL);
 
     Individualprofile individualProfile = _(new Individualprofile());
     individualProfile.setNedid(nedId);
@@ -175,7 +175,7 @@ public class CrudServiceTest {
   @Test
   public void testNonNullConstraint() {
 
-    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+    Integer nedId = nedDBSvc.newNamedEntityId(INDIVIDUAL);
 
     Individualprofile individualProfile = _(new Individualprofile());
     individualProfile.setNedid(nedId);
@@ -389,8 +389,8 @@ public class CrudServiceTest {
 
     Group newGroup = _(new Group());
     newGroup.setNedid(1);
-    newGroup.setApplicationtype("Knowledge Base");
-    newGroup.setType("Knowledge Base - Biology");
+    newGroup.setApplicationtype("Named Party DB");
+    newGroup.setType("NED Admin");
     newGroup.setStartdate( dateNow() );
     newGroup.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
     newGroup.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
@@ -488,6 +488,92 @@ public class CrudServiceTest {
 
     assertTrue( crudService.delete(savedAddress) );
   }
+
+  @Test
+  public void testDegreeCRUD() {
+
+    /* ------------------------------------------------------------------ */
+    /*  CREATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    // try to create a degree without a title or type
+
+    try {
+      Degree newDegree = _(new Degree());
+      newDegree.setNedid(1);
+      newDegree.setSource("Ambra");
+      namedEntityService.resolveValuesToIds(newDegree);
+      crudService.create(newDegree);
+      fail();
+    } catch (NedException expected) {
+      assertEquals(InvalidDegreeError, expected.getErrorType());
+    }
+
+    // create valid degree
+
+    Degree newDegree = _(new Degree());
+    newDegree.setNedid(1);
+    newDegree.setType("Masters");
+    newDegree.setSource("Ambra");
+    namedEntityService.resolveValuesToIds(newDegree);
+
+    // save record
+
+    Integer pkId = crudService.create(newDegree);
+    assertNotNull( pkId );
+
+    Degree savedDegree = crudService.findById(pkId, Degree.class);
+    assertNotNull( savedDegree );
+    assertEquals(pkId, savedDegree.getId());
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    final String degreeDesc = "M.S. Computer Science "+UUID.randomUUID().toString();
+
+    savedDegree.setFulltitle(degreeDesc);
+    assertTrue( crudService.update(savedDegree) );
+    Degree savedDegree2 = crudService.findById(pkId, Degree.class);
+    assertEquals(savedDegree, savedDegree2);
+
+    // try to update degree w/o a title or type
+
+    try {
+      savedDegree.setFulltitle(null);
+      savedDegree.setType(null);
+      crudService.update(savedDegree);
+      fail();
+    } catch (NedException expected) {
+      assertEquals(InvalidDegreeError, expected.getErrorType());
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  FINDERS                                                           */
+    /* ------------------------------------------------------------------ */
+
+    // FIND All
+
+    List<Degree> allDegrees = crudService.findAll(Degree.class, 0, Integer.MAX_VALUE);
+    assertNotNull(allDegrees);
+    assertTrue(allDegrees.contains(savedDegree2));
+
+    // FIND BY ATTRIBUTE(S)
+
+    Degree degreeSearchCriteria = new Degree();
+    degreeSearchCriteria.setFulltitle(degreeDesc);
+
+    List<Degree> foundDegrees = crudService.findByAttribute(degreeSearchCriteria);
+    assertNotNull(foundDegrees);
+    assertEquals(savedDegree2.getFulltitle(), foundDegrees.get(0).getFulltitle());
+
+    /* ------------------------------------------------------------------ */
+    /*  DELETE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    assertTrue( crudService.delete(savedDegree) );
+  }
+
 
   @Test
   public void testUniqueIdentifiersCRUD() {
@@ -590,7 +676,7 @@ public class CrudServiceTest {
 
     // fill in auth record attributes and try again (happy path)
 
-    Integer nedId = nedDBSvc.newNamedEntityId("Individual");
+    Integer nedId = nedDBSvc.newNamedEntityId(INDIVIDUAL);
 
     Email email = _(new Email());
     email.setNedid(nedId);

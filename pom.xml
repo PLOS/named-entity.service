@@ -10,23 +10,74 @@
   <artifactId>named-entity-service</artifactId>
   <packaging>war</packaging>
   <name>Named Entity JAX-RS Service</name>
-  <version>0.12.0</version>
+  <version>1.0.0</version>
 
   <properties>
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
     <buildDate>${maven.build.timestamp}</buildDate>
     <mysql.connector.version>5.1.36</mysql.connector.version> 
     <org.apache.commons.version>3.3.2</org.apache.commons.version>
-    <org.glassfish.jersey-version>2.17</org.glassfish.jersey-version>
+    <org.glassfish.jersey-version>2.22.1</org.glassfish.jersey-version>
     <org.hamcrest.version>1.3</org.hamcrest.version>
     <org.jooq.version>3.5.1</org.jooq.version>
+    <!-- AMBRA-ADAPTER: -->
+    <org.slf4j.version>1.5.11</org.slf4j.version>
     <org.springframework.version>4.1.6.RELEASE</org.springframework.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <tomcat.jdbc.version>7.0.54</tomcat.jdbc.version>
+    <ambra.version>2.10.12</ambra.version>
     <maven.exec.skip>false</maven.exec.skip>
   </properties>
 
   <dependencies>
+
+    <!--ambra DB access-->
+
+    <dependency>
+      <groupId>org.plos</groupId>
+      <artifactId>ned-ambra-admin-lib</artifactId>
+      <version>2.9.28</version>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.testng</groupId>
+          <artifactId>testng</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.ambraproject</groupId>
+      <artifactId>ambra-models</artifactId>
+      <version>${ambra.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.ambraproject</groupId>
+      <artifactId>conf-helper</artifactId>
+      <version>${ambra.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${org.slf4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${org.slf4j.version}</version>
+    </dependency>
+
+
     <!-- database access -->
     <dependency>
       <groupId>org.jooq</groupId>
@@ -120,6 +171,12 @@
       <artifactId>javax.json</artifactId>
       <version>1.0.4</version>
     </dependency>
+    <!-- json validation -->
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20150729</version>
+    </dependency>
 
     <dependency>
       <groupId>org.glassfish.jersey.media</groupId>
@@ -154,7 +211,7 @@
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
-      <version>1.2.16</version>
+      <version>1.2.14</version>
     </dependency>
 
     <dependency>
@@ -214,6 +271,31 @@
       <version>${mysql.connector.version}</version>
     </dependency>
   </dependencies>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context-support</artifactId>
+        <version>${org.springframework.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-orm</artifactId>
+        <version>${org.springframework.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-webmvc</artifactId>
+        <version>${org.springframework.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-tx</artifactId>
+        <version>${org.springframework.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
     <finalName>${project.artifactId}-${project.version}</finalName>
@@ -332,7 +414,7 @@
         <version>1.1</version>
         <configuration>
           <contextFile>${basedir}/target/classes/context.xml</contextFile>
-          <path>/v0</path>
+          <path>/v1</path>
         </configuration>
         <dependencies>
           <dependency>
@@ -392,6 +474,7 @@
               <includes>
                 <include>**/namedentity/api/**/*</include>
                 <include>**/validate/Validatable.class</include>
+                <include>**/validate/JsonValidator.class</include>
               </includes>
             </configuration>
           </execution>
@@ -413,6 +496,10 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.16</version>
+        <configuration>
+          <!--uncomment to see classes loaded by jvm-->
+          <!--<argLine>-verbose</argLine>-->
+        </configuration>
       </plugin>
 
       <plugin>
@@ -594,5 +681,19 @@
       </build>
     </profile>
   </profiles>
+
+  <repositories>
+    <repository>
+      <id>ambra</id>
+      <name>Maven 2 Release Repository for Ambra</name>
+      <url>http://maven.ambraproject.org/maven2/release/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
 
 </project>

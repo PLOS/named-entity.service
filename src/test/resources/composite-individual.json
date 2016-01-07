@@ -1,8 +1,11 @@
 {
   "credentials" : [
     {
-      "password" : "secret_password1",
-      "email"    : "jane.q.doe.work@foo.com"
+      "password"      : "secret_password1",
+      "email"         : "jane.q.doe.work@foo.com",
+      "verified"      : "false",
+      "isactive"      : "true",
+      "passwordreset" : "false"
     }
   ],
   "individualprofiles" : [
@@ -21,17 +24,11 @@
   ],
   "groups" : [
     {
-      "type"                : "Knowledge Base - PLOSONE",
+      "type"                : "NED Manage Users",
       "startdate"           : "2015-01-01",
       "enddate"             : "2015-01-22",
-      "applicationtype"     : "Knowledge Base",
+      "applicationtype"     : "Named Party DB",
       "source"              : "Ambra"
-    },
-    {
-      "type"            : "Knowledge Base - Computational Biology",
-      "startdate"       : "2015-02-01",
-      "applicationtype" : "Knowledge Base",
-      "source"          : "Ambra"
     }
   ],
   "relationships" : [
@@ -84,12 +81,13 @@
   ],
   "degrees" : [
     {
-      "type"   : "MD",
+      "type"   : "Masters",
       "source" : "Ambra"
     },
     {
-      "type"   : "PhD",
-      "source" : "Editorial Manager"
+      "type"        : "Doctorate",
+      "description" : "Ph.D Physics",
+      "source"      : "Editorial Manager"
     }
   ],
   "urls" : [
@@ -113,11 +111,6 @@
       "type"             : "Salesforce",
       "uniqueidentifier" : "001U0000008Qlfj",
       "source"           : "Salesforce"
-    },
-    {
-      "type"             : "Ambra",
-      "uniqueidentifier" : "1234",
-      "source"           : "Ambra"
     }
   ]
 }

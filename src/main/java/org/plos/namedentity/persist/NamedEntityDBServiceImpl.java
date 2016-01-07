@@ -32,6 +32,7 @@ import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.NedException.ErrorType;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.api.enums.TypeClassEnum;
+import org.plos.namedentity.api.enums.NamedPartyEnum;
 import org.plos.namedentity.persist.db.namedentities.tables.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -160,7 +161,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
           if (v instanceof Number || v instanceof Boolean) {
             where.append(v);
           } else {
-            where.append("'").append(v).append("'");
+            // escape single quote
+            where.append("'").append( ((String)v).replace("'","''") ).append("'");
           }
         }
       }
@@ -247,10 +249,16 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   }
 
   @Override
-  public Integer newNamedEntityId(String typeCode) {
+  public Integer newNamedEntityId(NamedPartyEnum typeCode) {
+    return newNamedEntityId(typeCode, null);
+  }
 
-    return this.context.insertInto(NAMEDENTITYIDENTIFIERS) 
-               .set(NAMEDENTITYIDENTIFIERS.TYPEID, findTypeIdByName(TypeClassEnum.NAMED_ENTITY_TYPES, typeCode))
+  @Override
+  public Integer newNamedEntityId(NamedPartyEnum typeCode, Integer ambraId) {
+
+    return this.context.insertInto(NAMEDENTITYIDENTIFIERS)
+               .set(NAMEDENTITYIDENTIFIERS.ID, ambraId)
+               .set(NAMEDENTITYIDENTIFIERS.TYPEID, findTypeIdByName(TypeClassEnum.NAMED_ENTITY_TYPES, typeCode.getName()))
                .set(NAMEDENTITYIDENTIFIERS.CREATEDBY, 1)
                .set(NAMEDENTITYIDENTIFIERS.LASTMODIFIEDBY, 1)
                .returning(NAMEDENTITYIDENTIFIERS.ID)
@@ -357,6 +365,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       return (T)findAuthCasByPrimaryKey(pk);
     if (cname.equals(Relationship.class.getCanonicalName()))
       return (T)findRelationshipByPrimaryKey(pk);
+    if (cname.equals(Alert.class.getCanonicalName()))
+      return (T)findAlertByPrimaryKey(pk);
 
     throw new UnsupportedOperationException("Can not resolve entity for " + clazz);
   }
@@ -384,6 +394,8 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
       return (List<T>)findOrganizationsByNedId(nedId);
     if (cname.equals(Address.class.getCanonicalName()))
       return (List<T>)findAddressesByNedId(nedId);
+    if (cname.equals(Alert.class.getCanonicalName()))
+      return (List<T>)findAlertsByNedId(nedId);
     if (cname.equals(Email.class.getCanonicalName()))
       return (List<T>)findEmailsByNedId(nedId);
     if (cname.equals(Phonenumber.class.getCanonicalName()))
@@ -455,6 +467,28 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .from(e)
         .leftOuterJoin(gt1).on(e.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(e.SOURCETYPEID.equal(gt2.ID));
+  }
+
+  private SelectOnConditionStep select(Alerts e) {
+
+    Globaltypes gt1 = GLOBALTYPES.as("gt1");
+    Globaltypes gt2 = GLOBALTYPES.as("gt2");
+    Globaltypes gt3 = GLOBALTYPES.as("gt3");
+    Globaltypes gt4 = GLOBALTYPES.as("gt4");
+
+    return this.context
+        .select(
+            e.ID, e.NEDID, e.QUERY, e.NAME,
+            gt1.SHORTDESCRIPTION.as("type"),
+            gt2.SHORTDESCRIPTION.as("source"),
+            gt3.SHORTDESCRIPTION.as("frequency"),
+            gt4.SHORTDESCRIPTION.as("journal"),
+            e.CREATED, e.LASTMODIFIED)
+        .from(e)
+        .leftOuterJoin(gt1).on(e.TYPEID.equal(gt1.ID))
+        .leftOuterJoin(gt2).on(e.SOURCETYPEID.equal(gt2.ID))
+        .leftOuterJoin(gt3).on(e.FREQUENCYTYPEID.eq(gt3.ID))
+        .leftOuterJoin(gt4).on(e.JOURNALTYPEID.eq(gt4.ID));
   }
 
   private SelectOnConditionStep select(Relationships r) {
@@ -628,6 +662,11 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     return select(a).where(a.NEDID.equal(nedId)).fetch().into(Address.class);
   }
 
+  private List<Alert> findAlertsByNedId(Integer nedId) {
+    Alerts a = ALERTS.as("a");
+    return select(a).where(a.NEDID.equal(nedId)).fetch().into(Alert.class);
+  }
+
   private List<Email> findEmailsByNedId(Integer nedId) {
     Emails e   = EMAILS.as("e");
     return select(e).where(e.NEDID.equal(nedId)).fetch().into(Email.class);
@@ -678,7 +717,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     return this.context
         .select(
-            d.ID, d.NEDID,
+            d.ID, d.NEDID, d.FULLTITLE,
             gt1.SHORTDESCRIPTION.as("type"),
             gt2.SHORTDESCRIPTION.as("source"),
             d.CREATED, d.LASTMODIFIED)
@@ -819,6 +858,18 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     return record.into(Address.class);
   }
 
+  private Alert findAlertByPrimaryKey(Integer entityId) {
+
+    Alerts e = ALERTS.as("a");
+
+    Record record = select(e).where(e.ID.equal(entityId)).fetchOne();
+
+    if (record == null)
+      throw new NedException(EntityNotFound, String.format("Alert not found with id %d", entityId));
+
+    return record.into(Alert.class);
+  }
+
   private Group findGroupByPrimaryKey(Integer groupId) {
 
     Groups g = GROUPS.as("g");
@@ -867,12 +918,12 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     entityTableMap.put(Address.class, new TablePkPair(ADDRESSES, ADDRESSES.ID));
     entityTableMap.put(Auth.class, new TablePkPair(AUTHCAS, AUTHCAS.ID));
+    entityTableMap.put(Alert.class, new TablePkPair(ALERTS, ALERTS.ID));
     entityTableMap.put(Consumer.class, new TablePkPair(CONSUMERS, CONSUMERS.ID));
     entityTableMap.put(Degree.class, new TablePkPair(DEGREES, DEGREES.ID));
     entityTableMap.put(Email.class, new TablePkPair(EMAILS, EMAILS.ID));
     entityTableMap.put(Globaltype.class, new TablePkPair(GLOBALTYPES, GLOBALTYPES.ID));
     entityTableMap.put(Individualprofile.class, new TablePkPair(INDIVIDUALPROFILES, INDIVIDUALPROFILES.ID));
-    entityTableMap.put(Journal.class, new TablePkPair(JOURNALS, JOURNALS.ID));
     entityTableMap.put(Namedentityidentifier.class, new TablePkPair(NAMEDENTITYIDENTIFIERS, NAMEDENTITYIDENTIFIERS.ID));
     entityTableMap.put(Organization.class, new TablePkPair(ORGANIZATIONS, ORGANIZATIONS.ID));
     entityTableMap.put(Phonenumber.class, new TablePkPair(PHONENUMBERS, PHONENUMBERS.ID));

@@ -17,13 +17,15 @@
 package org.plos.namedentity.persist;
 
 import org.plos.namedentity.api.entity.Entity;
+import org.plos.namedentity.api.enums.NamedPartyEnum;
 
 import java.util.List;
 
 public interface NamedEntityDBService {
 
-  //TODO - replace typecode string with enum?
-  Integer newNamedEntityId(String typeCode);
+  //AMBRA-ADAPTER:
+  Integer newNamedEntityId(NamedPartyEnum typeCode);
+  Integer newNamedEntityId(NamedPartyEnum typeCode, Integer ambraId);
 
   <T> Integer create(T t);
 

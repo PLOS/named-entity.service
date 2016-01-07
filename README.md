@@ -13,6 +13,21 @@ You need to build and deploy the Docker Maven Plugin to your Maven repo before
 building NED. See readme in config/docker-maven-plugin for details on how to do
 this.
 
+Ambra Integration
+-----------------
+
+NED is configured to TEMPORARILY also talk to the Ambra database for some of its requests. It should be noted that the Ambra database is assumed to be configured and running alongside NED.
+
+You must configure your context file accordingly. See the sample in config/tomcat/
+
+NED talks to the Ambra database via a repackaged ambra-admin jar file. This
+needs to be built at least once and deployed to our internal Maven repository.
+It is likely that this has already been done, so you don't need to do this.
+The ned script can build and deploy this jar.
+
+    ./ned.sh build-ambra-admin-jar
+    ./ned.sh deploy-ambra-admin-jar
+
 Adding userapps
 ---------------
 
@@ -21,7 +36,7 @@ auth, and there are fields for the appname and password on the swagger
 interface. To insert a userapp into the database, run this:
 
     ./ned.sh insertapp appname password
-    
+
 Running
 -------
 
@@ -49,7 +64,7 @@ to use the API and see the REST documentation visit the root of the service
 Running Tests
 -------------
 
-tests use an embedded jersey container (grizzly)
+tests using an embedded jersey container (grizzly)
 
     ./ned.sh test
 

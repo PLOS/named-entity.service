@@ -6,13 +6,16 @@ import io.swagger.annotations.Authorization;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.adapter.Container;
+import org.plos.namedentity.api.entity.Alert;
 import org.plos.namedentity.api.entity.Auth;
 import org.plos.namedentity.api.entity.Degree;
 import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Group;
 import org.plos.namedentity.api.entity.Individualprofile;
+import org.plos.namedentity.api.entity.Namedentityidentifier;
 import org.plos.namedentity.api.entity.Relationship;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
+import org.plos.namedentity.api.enums.NamedPartyEnum;
 import org.plos.namedentity.service.PasswordDigestService;
 
 import javax.ws.rs.DELETE;
@@ -44,7 +47,7 @@ public class IndividualsResource extends NedResource {
 
   @Override
   protected String getNamedPartyType() {
-    return IndividualComposite.typeName;
+    return NamedPartyEnum.INDIVIDUAL.getName();
   }
 
   @POST
@@ -54,7 +57,7 @@ public class IndividualsResource extends NedResource {
     try {
       generateDisplaynameIfEmpty(composite);
 
-      setCreatedAndLastModifiedBy(authstring,composite);
+      setCreatedAndLastModifiedBy(authstring, composite);
 
       return Response.status(Response.Status.OK).entity(
           namedEntityService.createComposite(composite, IndividualComposite.class)).build();
@@ -69,17 +72,17 @@ public class IndividualsResource extends NedResource {
     List<Individualprofile> profiles = composite.getIndividualprofiles();
     if (profiles != null & profiles.size() > 0) {
       Individualprofile profile = profiles.get(0);
-      if ( isEmptyOrBlank(profile.getDisplayname()) ) {
-        profile.setDisplayname( namedEntityService.generateDisplayname(profile, new Random()) );
+      if (isEmptyOrBlank(profile.getDisplayname())) {
+        profile.setDisplayname(namedEntityService.generateDisplayname(profile, new Random()));
       }
     }
   }
 
   @GET
-  @ApiOperation(value = "Find individual matching specified attribute.", responseContainer = "List")
+  @ApiOperation(value = "Find individual matching specified attribute.", response = IndividualComposite.class, responseContainer = "List")
   public Response findIndividuals(@QueryParam("entity")    String entity,
                                   @QueryParam("attribute") String attribute,
-                                  @QueryParam("value")     String value) {
+                                  @QueryParam("value") String value) {
     try {
       if (isEmptyOrBlank(entity) || isEmptyOrBlank(attribute) || isEmptyOrBlank(value)) {
         throw new NedException(InvalidIndividualSearchQuery);
@@ -127,6 +130,27 @@ public class IndividualsResource extends NedResource {
       return nedError(e, "Unable to read individual composite");
     } catch (Exception e) {
       return serverError(e, "Unable to read individual composite");
+    }
+  }
+
+  @DELETE
+  @Path("/{nedId}")
+  @ApiOperation(value = "Delete individual", response = IndividualComposite.class)
+  public Response deleteIndividual(@PathParam("nedId") int nedId) {
+    try {
+
+      namedEntityService.checkNedIdForType(nedId, getNamedPartyType());
+
+      namedEntityService.deleteIndividual(nedId);  // TODO: validate response code
+
+      crudService.delete(crudService.findById(nedId, Namedentityidentifier.class));
+
+      return Response.status(Response.Status.NO_CONTENT).build();
+
+    } catch (NedException e) {
+      return nedError(e, "Unable to delete individual");
+    } catch (Exception e) {
+      return serverError(e, "Unable to delete individual");
     }
   }
 
@@ -191,6 +215,7 @@ public class IndividualsResource extends NedResource {
                                 @PathParam("profileId") int profileId,
                                 @HeaderParam("Authorization") String authstring,
                                 Individualprofile entity) {
+
     return updateEntity(nedId, profileId, entity, authstring);
   }
 
@@ -297,6 +322,54 @@ public class IndividualsResource extends NedResource {
   }
 
   /* ----------------------------------------------------------------------- */
+  /*  ALERTS CRUD                                                            */
+  /* ----------------------------------------------------------------------- */
+
+  @POST
+  @Path("/{nedId}/alerts")
+  @ApiOperation(value = "Create alert", response = Alert.class)
+  public Response createAlert(@PathParam("nedId") int nedId,
+                              Alert entity,
+                              @HeaderParam("Authorization") String authstring) {
+    return createEntity(nedId, entity, authstring);
+  }
+
+  @PUT
+  @Path("/{nedId}/alerts/{alertId}")
+  @ApiOperation(value = "Update alert", response = Alert.class)
+  public Response updateAlert(@PathParam("nedId") int nedId,
+                              @PathParam("alertId") int entityId,
+                              @HeaderParam("Authorization") String authstring,
+                              Alert entity) {
+    return updateEntity(nedId, entityId, entity, authstring);
+  }
+
+  @DELETE
+  @Path("/{nedId}/alerts/{alertId}")
+  @ApiOperation(value = "Delete alert")
+  public Response deleteAlert(@PathParam("nedId")  int nedId,
+                              @PathParam("alertId") int entityId,
+                              @HeaderParam("Authorization") String authstring) {
+    //TODO: process authstring
+    return deleteEntity(nedId, entityId, Alert.class);
+  }
+
+  @GET
+  @Path("/{nedId}/alerts/{alertId}")
+  @ApiOperation(value = "Read group", response = Alert.class)
+  public Response getAlert(@PathParam("nedId")  int nedId,
+                           @PathParam("alertId") int entityId) {
+    return getEntity(nedId, entityId, Alert.class);
+  }
+
+  @GET
+  @Path("/{nedId}/alerts")
+  @ApiOperation(value = "List alerts", response = Alert.class, responseContainer = "List")
+  public Response getAlerts(@PathParam("nedId") int nedId) {
+    return getEntities(nedId, Alert.class);
+  }
+
+  /* ----------------------------------------------------------------------- */
   /*  RELATIONSHIP CRUD                                                      */
   /* ----------------------------------------------------------------------- */
 
@@ -350,7 +423,7 @@ public class IndividualsResource extends NedResource {
 
   @GET
   @Path("/{nedId}/auth")
-  @ApiOperation(value = "List auth record(s)")
+  @ApiOperation(value = "List auth record(s)", response = Auth.class, responseContainer = "List")
   public Response getAuthRecord(@PathParam("nedId") int nedId) {
     return getEntities(nedId, Auth.class);
   }
@@ -362,6 +435,7 @@ public class IndividualsResource extends NedResource {
                                    @PathParam("authId") int authId,
                                    @HeaderParam("Authorization") String authstring,
                                    Auth authEntity) {
+
     return updateEntity(nedId, authId, authEntity, authstring);
   }
 

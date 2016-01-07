@@ -1,0 +1,8 @@
+{
+  "type"      : "search",
+  "frequency" : "weekly",
+  "journal"   : "PLOS Biology",
+  "name"      : "Conservation science",
+  "source"    : "Ambra",
+  "query"     : "{\"query\":\"*:*\",\"unformattedQuery\":\"\",\"volume\":\"\",\"eLocationId\":\"\",\"id\":\"\",\"filterSubjects\":[],\"filterSubjectsDisjunction\":[\"Ecology\",\"Conservation science\",\"Environmental impacts\",\"Environmental protection\",\"Habitats\",\"Environmental management\",\"Sustainability science\",\"Population biology\",\"Species interactions\",\"Zoology\"],\"filterAuthors\":[],\"filterKeyword\":\"\",\"filterArticleTypes\":[],\"filterJournals\":[\"PLoSONE\"],\"sortKey\":\"\",\"sortValue\":\"\",\"startPage\":0,\"pageSize\":0,\"resultView\":\"\"}"
+}

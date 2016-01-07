@@ -27,6 +27,7 @@ import org.plos.namedentity.api.adapter.DateAdapter;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.service.NamedEntityService;
+import org.plos.namedentity.validate.JsonValidator;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
@@ -47,22 +48,14 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.plos.namedentity.api.NedException.ErrorType.DupeEmailError;
-import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
-import static org.plos.namedentity.api.NedException.ErrorType.InvalidIndividualSearchQuery;
-import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchCriteria;
-import static org.plos.namedentity.api.NedException.ErrorType.InvalidTypeValue;
-import static org.plos.namedentity.api.NedException.ErrorType.PasswordError;
-import static org.plos.namedentity.api.NedException.ErrorType.PasswordFormatError;
-import static org.plos.namedentity.api.NedException.ErrorType.PasswordNotSpecified;
+import static org.junit.Assert.*;
+import static org.plos.namedentity.api.NedException.ErrorType.*;
+import static org.plos.namedentity.validate.JsonValidator.validJson;
+import static org.plos.namedentity.validate.JsonValidator.parseJsonObjectAsMap;
 
 public class NamedEntityResourceTest extends BaseResourceTest {
 
@@ -434,6 +427,57 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   }
 
   @Test
+  public void testDeleteIndividual() throws Exception {
+
+    // create a user
+
+    String compositeJsonTemplate = new String(Files.readAllBytes(
+        Paths.get(TEST_RESOURCE_PATH + "composite-individual.template.json")));
+
+    Response response = buildRequestDefaultAuth(INDIVIDUAL_URI)
+        .post(Entity.json(String.format(compositeJsonTemplate,
+            UUID.randomUUID(), "jane.q.doe.workD@foo.com", "Ambra",
+            "secret_password4", "jane.q.doe.workD@foo.com")));
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+
+    String jsonPayload = response.readEntity(String.class);
+
+    Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
+    IndividualComposite composite = unmarshalEntity(jsonPayload, IndividualComposite.class, unmarshaller);
+    Individualprofile individualProfile = composite.getIndividualprofiles().get(0);
+    assertNotNull(individualProfile.getNedid());
+
+    Integer nedid = individualProfile.getNedid();
+
+
+    // delete the user
+
+    response = target(INDIVIDUAL_URI + "/" + nedid)
+        .request().delete();
+
+    assertEquals(Response.Status.NO_CONTENT.getStatusCode(), response.getStatus());
+
+
+    // try to delete a non-existing user
+
+    response = target(INDIVIDUAL_URI + "/" + "99999999")
+        .request().delete();
+
+    assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+
+
+    jsonPayload = response.readEntity(String.class);
+
+    NedErrorResponse ner = unmarshalEntity(jsonPayload, NedErrorResponse.class,
+        jsonUnmarshaller(NedErrorResponse.class));
+
+    assertEquals(EntityNotFound.getErrorCode(), ner.errorCode);
+
+  }
+  
+  @Test
   public void testCompositeFinders() throws Exception {
 
     Unmarshaller unmarshaller = jsonUnmarshaller(IndividualComposite.class);
@@ -466,7 +510,10 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     Individualprofile individualProfile = composite_in.getIndividualprofiles().get(0);
     assertNotNull(individualProfile.getNedid());
 
-    assertEquals(composite_in, composite_io);
+    //AMBRA-ADAPTER:
+    addAmbraUidToExpected(composite_io, composite_in);
+
+    assertEquals(composite_io, composite_in);
 
     /* ------------------------------------------------------------------ */
     /*  FIND INDIVIDUAL BY GUID                                           */
@@ -519,6 +566,16 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals(composite_og, composite_on);
 
     assertEquals(composite_og, composite_oo);
+  }
+
+  private void addAmbraUidToExpected(IndividualComposite expected, IndividualComposite actual) {
+
+    expected.getUniqueidentifiers().add(
+        actual.getUniqueidentifiers()
+              .stream()
+              .filter(u -> u.getType().equals(UidTypeEnum.AMBRA.getName()))
+              .findFirst()
+              .get());
   }
 
   @Test
@@ -715,8 +772,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     assertTrue( group.getId() > 0 );
     assertEquals(nedIndividualId, group.getNedid());
-    assertEquals("Knowledge Base", group.getApplicationtype());
-    assertEquals("Knowledge Base - Genetics", group.getType());
+    assertEquals("Named Party DB", group.getApplicationtype());
+    assertEquals("NED Admin", group.getType());
 
     assertEquals(START_DATE, group.getStartdate());
 
@@ -745,19 +802,18 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     responseJson = response.readEntity(String.class);
 
     List<Group> groups = unmarshalEntities(responseJson, Group.class, unmarshaller);
-    assertEquals(3, groups.size());
+    assertEquals(2, groups.size());
 
     String assignedGroups[] = {
-      "Knowledge Base - PLOSONE",
-      "Knowledge Base - Computational Biology",
-      "Knowledge Base - Genetics"
+      "NED Manage Users",
+      "NED Admin"
     };
 
     for (int i = 0; i < groups.size(); i++) {
       Group grp = groups.get(i);
       assertTrue(grp.getId() > 0);
       assertEquals(nedIndividualId, grp.getNedid());
-      assertEquals("Knowledge Base", grp.getApplicationtype());
+      assertEquals("Named Party DB", grp.getApplicationtype());
       assertEquals(assignedGroups[i], grp.getType());
     }
 
@@ -775,6 +831,86 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     response = target(groupURI)
       .request(MediaType.APPLICATION_JSON_TYPE)
+        .delete();
+
+    assertEquals(204, response.getStatus());
+  }
+
+
+  @Test
+  public void testAlertCrud() throws IOException, JAXBException {
+
+    String entityURI = String.format("%s/%d/alerts", INDIVIDUAL_URI, nedIndividualId);
+
+    /* ------------------------------------------------------------------ */
+    /*  CREATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    String requestJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "alert.json")));
+
+    Response response = buildRequestDefaultAuth(entityURI).post(Entity.json(requestJson));
+
+    assertEquals(200, response.getStatus());
+
+    String responseJson = response.readEntity(String.class);
+
+    Unmarshaller unmarshaller = jsonUnmarshaller(Alert.class);
+    Alert entity = unmarshalEntity(responseJson, Alert.class, unmarshaller);
+
+    assertTrue( entity.getId() > 0 );
+    assertEquals(nedIndividualId, entity.getNedid());
+    assertEquals("PLOS Biology", entity.getJournal());
+    assertEquals("weekly", entity.getFrequency());
+
+    String entityId = entityURI + "/" + entity.getId();
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY ENTITY ID (PK))                                          */
+    /* ------------------------------------------------------------------ */
+
+    response = target(entityId).request(MediaType.APPLICATION_JSON_TYPE).get();
+    assertEquals(200, response.getStatus());
+
+    responseJson = response.readEntity(String.class);
+
+    Alert foundEntity = unmarshalEntity(responseJson, Alert.class, unmarshaller);
+    assertEquals(entity, foundEntity);
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY NED ID)                                                  */
+    /* ------------------------------------------------------------------ */
+
+    response = target(entityURI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(200, response.getStatus());
+
+    responseJson = response.readEntity(String.class);
+
+    List<Alert> entities = unmarshalEntities(responseJson, Alert.class, unmarshaller);
+    assertEquals(1, entities.size());
+
+    Alert e = entities.get(0);
+    assertTrue(e.getId() > 0);
+    assertEquals(nedIndividualId, e.getNedid());
+
+    assertEquals("PLOS Biology", e.getJournal());
+    assertTrue(e.getQuery().length() > 10);
+
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    response = buildRequestDefaultAuth(entityId).put(Entity.json(writeValueAsString(entity)));
+
+    assertEquals(200, response.getStatus());
+
+    /* ------------------------------------------------------------------ */
+    /*  DELETE                                                            */
+    /* ------------------------------------------------------------------ */
+
+    response = target(entityId)
+        .request(MediaType.APPLICATION_JSON_TYPE)
         .delete();
 
     assertEquals(204, response.getStatus());
@@ -1143,6 +1279,96 @@ public class NamedEntityResourceTest extends BaseResourceTest {
         .delete();
 
     assertEquals(204, response.getStatus());
+  }
+
+  @Test
+  public void testUniqueIdentifiersMetadata() throws IOException, JAXBException {
+
+    String uidsURI = String.format("%s/%d/uids", INDIVIDUAL_URI, nedIndividualId);
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND UIDs FOR INDIVIDUAL (BY NED ID)                              */
+    /* ------------------------------------------------------------------ */
+
+    Response response = target(uidsURI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(200, response.getStatus());
+
+    String responseJson = response.readEntity(String.class);
+
+    Unmarshaller unmarshaller = jsonUnmarshaller(Uniqueidentifier.class);
+    List<Uniqueidentifier> uids = unmarshalEntities(responseJson, Uniqueidentifier.class,
+        unmarshaller);
+
+    String uidURI = null;
+
+    for (Uniqueidentifier uid : uids) {
+      if ("ORCID".equals(uid.getType())) {
+        uidURI = uidsURI + "/" + uid.getId();
+      }
+    }
+    assertNotNull(uidURI);
+
+    /* ------------------------------------------------------------------ */
+    /*  FIND (BY UID ID (PK))                                             */
+    /* ------------------------------------------------------------------ */
+
+    response = target(uidURI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(200, response.getStatus());
+
+    responseJson = response.readEntity(String.class);
+
+    Uniqueidentifier orcidUid = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE (BAD JSON PAYLOAD)                                         */
+    /* ------------------------------------------------------------------ */
+
+    orcidUid.setMetadata("invalidjson");
+    response = buildRequestDefaultAuth(uidURI).put(Entity.json(writeValueAsString(orcidUid)));
+
+    assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+
+    responseJson = response.readEntity(String.class);
+
+    NedErrorResponse ner = unmarshalEntity(responseJson, NedErrorResponse.class,
+                                           jsonUnmarshaller(NedErrorResponse.class));
+
+    assertEquals(InvalidJsonError.getErrorCode(), ner.errorCode);
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE (VALID JSON PAYLOAD)                                       */
+    /* ------------------------------------------------------------------ */
+
+    String orcidUidJson = new String(Files.readAllBytes(Paths.get(TEST_RESOURCE_PATH + "uid.orcid.json")));
+    Map<String,String> orcidMap    = parseJsonObjectAsMap(orcidUidJson);
+    Map<String,String> metadataMap = parseJsonObjectAsMap(orcidMap.get("metadata"));
+
+    orcidUid.setMetadata(orcidMap.get("metadata"));
+    response = buildRequestDefaultAuth(uidURI).put(Entity.json(writeValueAsString(orcidUid)));
+
+    assertEquals(200, response.getStatus());
+
+    responseJson = response.readEntity(String.class);
+
+    Uniqueidentifier uidWithMetadata = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
+    Map<String,String> metadataMap2 = parseJsonObjectAsMap(uidWithMetadata.getMetadata());
+    assertEquals(metadataMap, metadataMap2);
+
+    /* ------------------------------------------------------------------ */
+    /*  UPDATE (CLEAR METADATA)                                           */
+    /* ------------------------------------------------------------------ */
+
+    orcidUid.setMetadata(null);
+    response = buildRequestDefaultAuth(uidURI).put(Entity.json(writeValueAsString(orcidUid)));
+
+    assertEquals(200, response.getStatus());
+
+    responseJson = response.readEntity(String.class);
+
+    Uniqueidentifier uidNoMetadata = unmarshalEntity(responseJson, Uniqueidentifier.class, unmarshaller);
+    assertNull(uidNoMetadata.getMetadata());
   }
 
   @Test
@@ -1603,8 +1829,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertNotNull( auth.getAuthid() );
     assertNotNull( auth.getPassword() );
     assertNull( auth.getVerificationtoken() );
-    assertTrue( auth.getVerified().equals((byte)0) );
-    assertTrue( auth.getPasswordreset().equals((byte)0) );
+    assertFalse(auth.getVerified());
+    assertFalse(auth.getPasswordreset());
     assertEquals("jane.q.doe.work@foo.com", auth.getEmail());
     assertEquals(128, auth.getPassword().length());
 
@@ -1612,8 +1838,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    auth.setVerified((byte)1);
-    auth.setPasswordreset((byte)1);
+    auth.setVerified(true);
+    auth.setPasswordreset(true);
     auth.setVerificationtoken("0123456789abcdef");
 
     response = buildRequestDefaultAuth( authsURI+"/"+auth.getId() )
@@ -1628,8 +1854,8 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertNotNull( auth.getAuthid() );
     assertNotNull( auth.getPassword() );
     assertEquals("0123456789abcdef", auth.getVerificationtoken());
-    assertTrue( auth.getVerified().equals((byte)1) );
-    assertTrue( auth.getPasswordreset().equals((byte)1) );
+    assertTrue(auth.getVerified());
+    assertTrue(auth.getPasswordreset());
     assertEquals("jane.q.doe.work@foo.com", auth.getEmail());
     assertEquals(128, auth.getPassword().length());
 
@@ -1712,7 +1938,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals(nedIndividualId, auth.getNedid());
     assertEquals("jane.q.doe.work@foo.com", auth.getEmail());
     assertTrue( auth.getEmailid() > 0 );
-    assertTrue( auth.getIsactive().equals((byte)1) );
+    assertTrue(auth.getIsactive());
   }
 
   private Date getDate(int month, int day, int year) {
@@ -1725,6 +1951,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   private Invocation.Builder buildRequestDefaultAuth(String uri) {
     return buildRequest(uri, "test", "test");
   }
+
   private Invocation.Builder buildRequest(String uri, String username, String password) {
     Invocation.Builder builder = target(uri).request(MediaType.APPLICATION_JSON_TYPE);
 

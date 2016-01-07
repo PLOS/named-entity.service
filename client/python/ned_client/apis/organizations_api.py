@@ -100,7 +100,7 @@ class OrganizationsApi(object):
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
-            select_header_accept(['application/json', 'application/xml'])
+            select_header_accept(['application/json'])
         if not header_params['Accept']:
             del header_params['Accept']
 
@@ -256,7 +256,7 @@ class OrganizationsApi(object):
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
-            select_header_accept(['application/json', 'application/xml'])
+            select_header_accept(['application/json'])
         if not header_params['Accept']:
             del header_params['Accept']
 
@@ -295,7 +295,7 @@ class OrganizationsApi(object):
         :param callback function: The callback function
             for asynchronous request. (optional)
         :param int ned_id:  (required)
-        :return: Address
+        :return: list[Address]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -352,7 +352,7 @@ class OrganizationsApi(object):
                                             body=body_params,
                                             post_params=form_params,
                                             files=files,
-                                            response_type='Address',
+                                            response_type='list[Address]',
                                             auth_settings=auth_settings,
                                             callback=params.get('callback'))
         return response

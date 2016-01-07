@@ -63,7 +63,7 @@ class IndividualsApi(object):
         :param str entity: 
         :param str attribute: 
         :param str value: 
-        :return: None
+        :return: list[IndividualComposite]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -121,7 +121,7 @@ class IndividualsApi(object):
                                             body=body_params,
                                             post_params=form_params,
                                             files=files,
-                                            response_type=None,
+                                            response_type='list[IndividualComposite]',
                                             auth_settings=auth_settings,
                                             callback=params.get('callback'))
         return response
@@ -360,6 +360,84 @@ class IndividualsApi(object):
                                             callback=params.get('callback'))
         return response
 
+    def delete_individual(self, ned_id, **kwargs):
+        """
+        Delete individual
+        
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please define a `callback` function
+        to be invoked when receiving the response.
+        >>> def callback_function(response):
+        >>>     pprint(response)
+        >>>
+        >>> thread = api.delete_individual(ned_id, callback=callback_function)
+
+        :param callback function: The callback function
+            for asynchronous request. (optional)
+        :param int ned_id:  (required)
+        :return: IndividualComposite
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        # verify the required parameter 'ned_id' is set
+        if ned_id is None:
+            raise ValueError("Missing the required parameter `ned_id` when calling `delete_individual`")
+
+        all_params = ['ned_id']
+        all_params.append('callback')
+
+        params = locals()
+        for key, val in iteritems(params['kwargs']):
+            if key not in all_params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method delete_individual" % key
+                )
+            params[key] = val
+        del params['kwargs']
+
+        resource_path = '/individuals/{nedId}'.replace('{format}', 'json')
+        method = 'DELETE'
+
+        path_params = {}
+        if 'ned_id' in params:
+            path_params['nedId'] = params['ned_id']
+
+        query_params = {}
+
+        header_params = {}
+
+        form_params = {}
+        files = {}
+
+        body_params = None
+
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.\
+            select_header_accept(['application/json'])
+        if not header_params['Accept']:
+            del header_params['Accept']
+
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.\
+            select_header_content_type([])
+
+        # Authentication setting
+        auth_settings = ['basic']
+
+        response = self.api_client.call_api(resource_path, method,
+                                            path_params,
+                                            query_params,
+                                            header_params,
+                                            body=body_params,
+                                            post_params=form_params,
+                                            files=files,
+                                            response_type='IndividualComposite',
+                                            auth_settings=auth_settings,
+                                            callback=params.get('callback'))
+        return response
+
     def get_addresses(self, ned_id, **kwargs):
         """
         List addresses
@@ -376,7 +454,7 @@ class IndividualsApi(object):
         :param callback function: The callback function
             for asynchronous request. (optional)
         :param int ned_id:  (required)
-        :return: Address
+        :return: list[Address]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -433,7 +511,7 @@ class IndividualsApi(object):
                                             body=body_params,
                                             post_params=form_params,
                                             files=files,
-                                            response_type='Address',
+                                            response_type='list[Address]',
                                             auth_settings=auth_settings,
                                             callback=params.get('callback'))
         return response
@@ -783,6 +861,429 @@ class IndividualsApi(object):
                                             callback=params.get('callback'))
         return response
 
+    def get_alerts(self, ned_id, **kwargs):
+        """
+        List alerts
+        
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please define a `callback` function
+        to be invoked when receiving the response.
+        >>> def callback_function(response):
+        >>>     pprint(response)
+        >>>
+        >>> thread = api.get_alerts(ned_id, callback=callback_function)
+
+        :param callback function: The callback function
+            for asynchronous request. (optional)
+        :param int ned_id:  (required)
+        :return: list[Alert]
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        # verify the required parameter 'ned_id' is set
+        if ned_id is None:
+            raise ValueError("Missing the required parameter `ned_id` when calling `get_alerts`")
+
+        all_params = ['ned_id']
+        all_params.append('callback')
+
+        params = locals()
+        for key, val in iteritems(params['kwargs']):
+            if key not in all_params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method get_alerts" % key
+                )
+            params[key] = val
+        del params['kwargs']
+
+        resource_path = '/individuals/{nedId}/alerts'.replace('{format}', 'json')
+        method = 'GET'
+
+        path_params = {}
+        if 'ned_id' in params:
+            path_params['nedId'] = params['ned_id']
+
+        query_params = {}
+
+        header_params = {}
+
+        form_params = {}
+        files = {}
+
+        body_params = None
+
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.\
+            select_header_accept(['application/json'])
+        if not header_params['Accept']:
+            del header_params['Accept']
+
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.\
+            select_header_content_type([])
+
+        # Authentication setting
+        auth_settings = ['basic']
+
+        response = self.api_client.call_api(resource_path, method,
+                                            path_params,
+                                            query_params,
+                                            header_params,
+                                            body=body_params,
+                                            post_params=form_params,
+                                            files=files,
+                                            response_type='list[Alert]',
+                                            auth_settings=auth_settings,
+                                            callback=params.get('callback'))
+        return response
+
+    def create_alert(self, ned_id, **kwargs):
+        """
+        Create alert
+        
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please define a `callback` function
+        to be invoked when receiving the response.
+        >>> def callback_function(response):
+        >>>     pprint(response)
+        >>>
+        >>> thread = api.create_alert(ned_id, callback=callback_function)
+
+        :param callback function: The callback function
+            for asynchronous request. (optional)
+        :param int ned_id:  (required)
+        :param Alert body: 
+        :param str authorization: 
+        :return: Alert
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        # verify the required parameter 'ned_id' is set
+        if ned_id is None:
+            raise ValueError("Missing the required parameter `ned_id` when calling `create_alert`")
+
+        all_params = ['ned_id', 'body', 'authorization']
+        all_params.append('callback')
+
+        params = locals()
+        for key, val in iteritems(params['kwargs']):
+            if key not in all_params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method create_alert" % key
+                )
+            params[key] = val
+        del params['kwargs']
+
+        resource_path = '/individuals/{nedId}/alerts'.replace('{format}', 'json')
+        method = 'POST'
+
+        path_params = {}
+        if 'ned_id' in params:
+            path_params['nedId'] = params['ned_id']
+
+        query_params = {}
+
+        header_params = {}
+        if 'authorization' in params:
+            header_params['Authorization'] = params['authorization']
+
+        form_params = {}
+        files = {}
+
+        body_params = None
+        if 'body' in params:
+            body_params = params['body']
+
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.\
+            select_header_accept(['application/json'])
+        if not header_params['Accept']:
+            del header_params['Accept']
+
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.\
+            select_header_content_type([])
+
+        # Authentication setting
+        auth_settings = ['basic']
+
+        response = self.api_client.call_api(resource_path, method,
+                                            path_params,
+                                            query_params,
+                                            header_params,
+                                            body=body_params,
+                                            post_params=form_params,
+                                            files=files,
+                                            response_type='Alert',
+                                            auth_settings=auth_settings,
+                                            callback=params.get('callback'))
+        return response
+
+    def get_alert(self, ned_id, alert_id, **kwargs):
+        """
+        Read group
+        
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please define a `callback` function
+        to be invoked when receiving the response.
+        >>> def callback_function(response):
+        >>>     pprint(response)
+        >>>
+        >>> thread = api.get_alert(ned_id, alert_id, callback=callback_function)
+
+        :param callback function: The callback function
+            for asynchronous request. (optional)
+        :param int ned_id:  (required)
+        :param int alert_id:  (required)
+        :return: Alert
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        # verify the required parameter 'ned_id' is set
+        if ned_id is None:
+            raise ValueError("Missing the required parameter `ned_id` when calling `get_alert`")
+        # verify the required parameter 'alert_id' is set
+        if alert_id is None:
+            raise ValueError("Missing the required parameter `alert_id` when calling `get_alert`")
+
+        all_params = ['ned_id', 'alert_id']
+        all_params.append('callback')
+
+        params = locals()
+        for key, val in iteritems(params['kwargs']):
+            if key not in all_params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method get_alert" % key
+                )
+            params[key] = val
+        del params['kwargs']
+
+        resource_path = '/individuals/{nedId}/alerts/{alertId}'.replace('{format}', 'json')
+        method = 'GET'
+
+        path_params = {}
+        if 'ned_id' in params:
+            path_params['nedId'] = params['ned_id']
+        if 'alert_id' in params:
+            path_params['alertId'] = params['alert_id']
+
+        query_params = {}
+
+        header_params = {}
+
+        form_params = {}
+        files = {}
+
+        body_params = None
+
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.\
+            select_header_accept(['application/json'])
+        if not header_params['Accept']:
+            del header_params['Accept']
+
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.\
+            select_header_content_type([])
+
+        # Authentication setting
+        auth_settings = ['basic']
+
+        response = self.api_client.call_api(resource_path, method,
+                                            path_params,
+                                            query_params,
+                                            header_params,
+                                            body=body_params,
+                                            post_params=form_params,
+                                            files=files,
+                                            response_type='Alert',
+                                            auth_settings=auth_settings,
+                                            callback=params.get('callback'))
+        return response
+
+    def update_alert(self, ned_id, alert_id, **kwargs):
+        """
+        Update alert
+        
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please define a `callback` function
+        to be invoked when receiving the response.
+        >>> def callback_function(response):
+        >>>     pprint(response)
+        >>>
+        >>> thread = api.update_alert(ned_id, alert_id, callback=callback_function)
+
+        :param callback function: The callback function
+            for asynchronous request. (optional)
+        :param int ned_id:  (required)
+        :param int alert_id:  (required)
+        :param str authorization: 
+        :param Alert body: 
+        :return: Alert
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        # verify the required parameter 'ned_id' is set
+        if ned_id is None:
+            raise ValueError("Missing the required parameter `ned_id` when calling `update_alert`")
+        # verify the required parameter 'alert_id' is set
+        if alert_id is None:
+            raise ValueError("Missing the required parameter `alert_id` when calling `update_alert`")
+
+        all_params = ['ned_id', 'alert_id', 'authorization', 'body']
+        all_params.append('callback')
+
+        params = locals()
+        for key, val in iteritems(params['kwargs']):
+            if key not in all_params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method update_alert" % key
+                )
+            params[key] = val
+        del params['kwargs']
+
+        resource_path = '/individuals/{nedId}/alerts/{alertId}'.replace('{format}', 'json')
+        method = 'PUT'
+
+        path_params = {}
+        if 'ned_id' in params:
+            path_params['nedId'] = params['ned_id']
+        if 'alert_id' in params:
+            path_params['alertId'] = params['alert_id']
+
+        query_params = {}
+
+        header_params = {}
+        if 'authorization' in params:
+            header_params['Authorization'] = params['authorization']
+
+        form_params = {}
+        files = {}
+
+        body_params = None
+        if 'body' in params:
+            body_params = params['body']
+
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.\
+            select_header_accept(['application/json'])
+        if not header_params['Accept']:
+            del header_params['Accept']
+
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.\
+            select_header_content_type([])
+
+        # Authentication setting
+        auth_settings = ['basic']
+
+        response = self.api_client.call_api(resource_path, method,
+                                            path_params,
+                                            query_params,
+                                            header_params,
+                                            body=body_params,
+                                            post_params=form_params,
+                                            files=files,
+                                            response_type='Alert',
+                                            auth_settings=auth_settings,
+                                            callback=params.get('callback'))
+        return response
+
+    def delete_alert(self, ned_id, alert_id, **kwargs):
+        """
+        Delete alert
+        
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please define a `callback` function
+        to be invoked when receiving the response.
+        >>> def callback_function(response):
+        >>>     pprint(response)
+        >>>
+        >>> thread = api.delete_alert(ned_id, alert_id, callback=callback_function)
+
+        :param callback function: The callback function
+            for asynchronous request. (optional)
+        :param int ned_id:  (required)
+        :param int alert_id:  (required)
+        :param str authorization: 
+        :return: None
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        # verify the required parameter 'ned_id' is set
+        if ned_id is None:
+            raise ValueError("Missing the required parameter `ned_id` when calling `delete_alert`")
+        # verify the required parameter 'alert_id' is set
+        if alert_id is None:
+            raise ValueError("Missing the required parameter `alert_id` when calling `delete_alert`")
+
+        all_params = ['ned_id', 'alert_id', 'authorization']
+        all_params.append('callback')
+
+        params = locals()
+        for key, val in iteritems(params['kwargs']):
+            if key not in all_params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method delete_alert" % key
+                )
+            params[key] = val
+        del params['kwargs']
+
+        resource_path = '/individuals/{nedId}/alerts/{alertId}'.replace('{format}', 'json')
+        method = 'DELETE'
+
+        path_params = {}
+        if 'ned_id' in params:
+            path_params['nedId'] = params['ned_id']
+        if 'alert_id' in params:
+            path_params['alertId'] = params['alert_id']
+
+        query_params = {}
+
+        header_params = {}
+        if 'authorization' in params:
+            header_params['Authorization'] = params['authorization']
+
+        form_params = {}
+        files = {}
+
+        body_params = None
+
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.\
+            select_header_accept(['application/json'])
+        if not header_params['Accept']:
+            del header_params['Accept']
+
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.\
+            select_header_content_type([])
+
+        # Authentication setting
+        auth_settings = ['basic']
+
+        response = self.api_client.call_api(resource_path, method,
+                                            path_params,
+                                            query_params,
+                                            header_params,
+                                            body=body_params,
+                                            post_params=form_params,
+                                            files=files,
+                                            response_type=None,
+                                            auth_settings=auth_settings,
+                                            callback=params.get('callback'))
+        return response
+
     def get_auth_record(self, ned_id, **kwargs):
         """
         List auth record(s)
@@ -799,7 +1300,7 @@ class IndividualsApi(object):
         :param callback function: The callback function
             for asynchronous request. (optional)
         :param int ned_id:  (required)
-        :return: None
+        :return: list[Auth]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -856,7 +1357,7 @@ class IndividualsApi(object):
                                             body=body_params,
                                             post_params=form_params,
                                             files=files,
-                                            response_type=None,
+                                            response_type='list[Auth]',
                                             auth_settings=auth_settings,
                                             callback=params.get('callback'))
         return response

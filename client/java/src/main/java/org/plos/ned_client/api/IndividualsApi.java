@@ -8,6 +8,7 @@ import org.plos.ned_client.TypeRef;
 
 import org.plos.ned_client.model.IndividualComposite;
 import org.plos.ned_client.model.Address;
+import org.plos.ned_client.model.Alert;
 import org.plos.ned_client.model.Auth;
 import org.plos.ned_client.model.Degree;
 import org.plos.ned_client.model.Email;
@@ -19,7 +20,7 @@ import org.plos.ned_client.model.Uniqueidentifier;
 
 import java.util.*;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-11-18T14:38:21.393-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-07T17:01:32.713-08:00")
 public class IndividualsApi {
   private ApiClient apiClient;
 
@@ -46,9 +47,9 @@ public class IndividualsApi {
    * @param entity 
    * @param attribute 
    * @param value 
-   * @return void
+   * @return List<IndividualComposite>
    */
-  public void findIndividuals (String entity, String attribute, String value) throws ApiException {
+  public List<IndividualComposite> findIndividuals (String entity, String attribute, String value) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -88,7 +89,8 @@ public class IndividualsApi {
 
     
     
-    apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
+    TypeRef returnType = new TypeRef<List<IndividualComposite>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
     
 
@@ -255,12 +257,66 @@ public class IndividualsApi {
   }
   
   /**
+   * Delete individual
+   * 
+   * @param nedId 
+   * @return IndividualComposite
+   */
+  public IndividualComposite deleteIndividual (Integer nedId) throws ApiException {
+    Object postBody = null;
+    byte[] postBinaryBody = null;
+    
+     // verify the required parameter 'nedId' is set
+     if (nedId == null) {
+        throw new ApiException(400, "Missing the required parameter 'nedId' when calling deleteIndividual");
+     }
+     
+    // create path and map variables
+    String path = "/individuals/{nedId}".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "nedId" + "\\}", apiClient.escapeString(nedId.toString()));
+
+    // query params
+    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> headerParams = new HashMap<String, String>();
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
+    
+
+    
+
+    
+
+    final String[] accepts = {
+      "application/json"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+
+    final String[] contentTypes = {
+      
+    };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+
+    String[] authNames = new String[] { "basic" };
+
+    
+
+    
+    
+    TypeRef returnType = new TypeRef<IndividualComposite>() {};
+    return apiClient.invokeAPI(path, "DELETE", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
+  }
+  
+  /**
    * List addresses
    * 
    * @param nedId 
-   * @return Address
+   * @return List<Address>
    */
-  public Address getAddresses (Integer nedId) throws ApiException {
+  public List<Address> getAddresses (Integer nedId) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -300,7 +356,7 @@ public class IndividualsApi {
 
     
     
-    TypeRef returnType = new TypeRef<Address>() {};
+    TypeRef returnType = new TypeRef<List<Address>>() {};
     return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
     
@@ -557,12 +613,313 @@ public class IndividualsApi {
   }
   
   /**
+   * List alerts
+   * 
+   * @param nedId 
+   * @return List<Alert>
+   */
+  public List<Alert> getAlerts (Integer nedId) throws ApiException {
+    Object postBody = null;
+    byte[] postBinaryBody = null;
+    
+     // verify the required parameter 'nedId' is set
+     if (nedId == null) {
+        throw new ApiException(400, "Missing the required parameter 'nedId' when calling getAlerts");
+     }
+     
+    // create path and map variables
+    String path = "/individuals/{nedId}/alerts".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "nedId" + "\\}", apiClient.escapeString(nedId.toString()));
+
+    // query params
+    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> headerParams = new HashMap<String, String>();
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
+    
+
+    
+
+    
+
+    final String[] accepts = {
+      "application/json"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+
+    final String[] contentTypes = {
+      
+    };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+
+    String[] authNames = new String[] { "basic" };
+
+    
+
+    
+    
+    TypeRef returnType = new TypeRef<List<Alert>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
+  }
+  
+  /**
+   * Create alert
+   * 
+   * @param nedId 
+   * @param body 
+   * @param authorization 
+   * @return Alert
+   */
+  public Alert createAlert (Integer nedId, Alert body, String authorization) throws ApiException {
+    Object postBody = body;
+    byte[] postBinaryBody = null;
+    
+     // verify the required parameter 'nedId' is set
+     if (nedId == null) {
+        throw new ApiException(400, "Missing the required parameter 'nedId' when calling createAlert");
+     }
+     
+    // create path and map variables
+    String path = "/individuals/{nedId}/alerts".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "nedId" + "\\}", apiClient.escapeString(nedId.toString()));
+
+    // query params
+    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> headerParams = new HashMap<String, String>();
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
+    
+
+    if (authorization != null)
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    
+
+    
+
+    final String[] accepts = {
+      "application/json"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+
+    final String[] contentTypes = {
+      
+    };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+
+    String[] authNames = new String[] { "basic" };
+
+    
+
+    
+    
+    TypeRef returnType = new TypeRef<Alert>() {};
+    return apiClient.invokeAPI(path, "POST", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
+  }
+  
+  /**
+   * Read group
+   * 
+   * @param nedId 
+   * @param alertId 
+   * @return Alert
+   */
+  public Alert getAlert (Integer nedId, Integer alertId) throws ApiException {
+    Object postBody = null;
+    byte[] postBinaryBody = null;
+    
+     // verify the required parameter 'nedId' is set
+     if (nedId == null) {
+        throw new ApiException(400, "Missing the required parameter 'nedId' when calling getAlert");
+     }
+     
+     // verify the required parameter 'alertId' is set
+     if (alertId == null) {
+        throw new ApiException(400, "Missing the required parameter 'alertId' when calling getAlert");
+     }
+     
+    // create path and map variables
+    String path = "/individuals/{nedId}/alerts/{alertId}".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "nedId" + "\\}", apiClient.escapeString(nedId.toString()))
+      .replaceAll("\\{" + "alertId" + "\\}", apiClient.escapeString(alertId.toString()));
+
+    // query params
+    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> headerParams = new HashMap<String, String>();
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
+    
+
+    
+
+    
+
+    final String[] accepts = {
+      "application/json"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+
+    final String[] contentTypes = {
+      
+    };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+
+    String[] authNames = new String[] { "basic" };
+
+    
+
+    
+    
+    TypeRef returnType = new TypeRef<Alert>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
+  }
+  
+  /**
+   * Update alert
+   * 
+   * @param nedId 
+   * @param alertId 
+   * @param authorization 
+   * @param body 
+   * @return Alert
+   */
+  public Alert updateAlert (Integer nedId, Integer alertId, String authorization, Alert body) throws ApiException {
+    Object postBody = body;
+    byte[] postBinaryBody = null;
+    
+     // verify the required parameter 'nedId' is set
+     if (nedId == null) {
+        throw new ApiException(400, "Missing the required parameter 'nedId' when calling updateAlert");
+     }
+     
+     // verify the required parameter 'alertId' is set
+     if (alertId == null) {
+        throw new ApiException(400, "Missing the required parameter 'alertId' when calling updateAlert");
+     }
+     
+    // create path and map variables
+    String path = "/individuals/{nedId}/alerts/{alertId}".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "nedId" + "\\}", apiClient.escapeString(nedId.toString()))
+      .replaceAll("\\{" + "alertId" + "\\}", apiClient.escapeString(alertId.toString()));
+
+    // query params
+    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> headerParams = new HashMap<String, String>();
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
+    
+
+    if (authorization != null)
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    
+
+    
+
+    final String[] accepts = {
+      "application/json"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+
+    final String[] contentTypes = {
+      
+    };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+
+    String[] authNames = new String[] { "basic" };
+
+    
+
+    
+    
+    TypeRef returnType = new TypeRef<Alert>() {};
+    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
+  }
+  
+  /**
+   * Delete alert
+   * 
+   * @param nedId 
+   * @param alertId 
+   * @param authorization 
+   * @return void
+   */
+  public void deleteAlert (Integer nedId, Integer alertId, String authorization) throws ApiException {
+    Object postBody = null;
+    byte[] postBinaryBody = null;
+    
+     // verify the required parameter 'nedId' is set
+     if (nedId == null) {
+        throw new ApiException(400, "Missing the required parameter 'nedId' when calling deleteAlert");
+     }
+     
+     // verify the required parameter 'alertId' is set
+     if (alertId == null) {
+        throw new ApiException(400, "Missing the required parameter 'alertId' when calling deleteAlert");
+     }
+     
+    // create path and map variables
+    String path = "/individuals/{nedId}/alerts/{alertId}".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "nedId" + "\\}", apiClient.escapeString(nedId.toString()))
+      .replaceAll("\\{" + "alertId" + "\\}", apiClient.escapeString(alertId.toString()));
+
+    // query params
+    List<Pair> queryParams = new ArrayList<Pair>();
+    Map<String, String> headerParams = new HashMap<String, String>();
+    Map<String, Object> formParams = new HashMap<String, Object>();
+
+    
+
+    if (authorization != null)
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    
+
+    
+
+    final String[] accepts = {
+      "application/json"
+    };
+    final String accept = apiClient.selectHeaderAccept(accepts);
+
+    final String[] contentTypes = {
+      
+    };
+    final String contentType = apiClient.selectHeaderContentType(contentTypes);
+
+    String[] authNames = new String[] { "basic" };
+
+    
+
+    
+    
+    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
+    
+    
+
+
+  }
+  
+  /**
    * List auth record(s)
    * 
    * @param nedId 
-   * @return void
+   * @return List<Auth>
    */
-  public void getAuthRecord (Integer nedId) throws ApiException {
+  public List<Auth> getAuthRecord (Integer nedId) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
@@ -602,7 +959,8 @@ public class IndividualsApi {
 
     
     
-    apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
+    TypeRef returnType = new TypeRef<List<Auth>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
     
 

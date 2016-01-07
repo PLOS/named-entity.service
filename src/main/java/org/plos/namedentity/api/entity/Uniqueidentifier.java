@@ -22,9 +22,11 @@ import org.plos.namedentity.api.enums.UidTypeEnum;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.regex.Pattern;
 
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidJsonError;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidOrcidId;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidSalesforceId;
 import static org.plos.namedentity.api.NedException.ErrorType.UidValueError;
+import static org.plos.namedentity.validate.JsonValidator.validJson;
 
 @XmlRootElement
 public class Uniqueidentifier extends Entity {
@@ -34,7 +36,6 @@ public class Uniqueidentifier extends Entity {
   private String  uniqueidentifier;
   private String  metadata;
 
-//TODO - verify metadata is valid json?!
   private static Integer salesForceLengthA = 15;
   private static Integer salesForceLengthB = 18;
   private static Pattern salesForceRegexp  = Pattern.compile("^[a-zA-Z0-9]*$");
@@ -52,6 +53,14 @@ public class Uniqueidentifier extends Entity {
     else if (UidTypeEnum.ORCID.getName().equals(type)
         && !validateOrcid(uniqueidentifier))
       throw new NedException(InvalidOrcidId, "invalid ORCID " + uniqueidentifier);
+
+    if (metadata != null) {
+      String validMetadataJson = validJson(metadata);
+      if (validMetadataJson == null) {
+        throw new NedException(InvalidJsonError, "metadata field contains invalid JSON : "+metadata);
+      }
+      this.metadata = validMetadataJson;
+    }
   }
 
   private static boolean validateSalesforceId(String salesforceId) {

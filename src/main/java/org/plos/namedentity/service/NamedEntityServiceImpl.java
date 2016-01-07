@@ -18,7 +18,9 @@ package org.plos.namedentity.service;
 
 import org.apache.log4j.Logger;
 import org.plos.namedentity.api.Consumer;
+import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
+import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.persist.NamedEntityDBService;
@@ -27,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -39,8 +42,11 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   private static Logger logger = Logger.getLogger(NamedEntityServiceImpl.class);
 
-  @Inject private NamedEntityDBService nedDBSvc;
+  @Inject
+  private NamedEntityDBService nedDBSvc;
 
+  @Inject
+  private AmbraService ambraService;
 
   public <T extends Entity> T resolveValuesToIds(T t) {
 
@@ -52,6 +58,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       resolveOrganization((Organization) t);
     else if (t instanceof Address)
       resolveAddress((Address) t);
+    else if (t instanceof Alert)
+      resolveAlert((Alert) t);
     else if (t instanceof Phonenumber)
       resolvePhonenumber((Phonenumber) t);
     else if (t instanceof Email)
@@ -76,10 +84,10 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   private <T extends Entity> void resolveCreatedAndLastmodifiedBy(T entity) {
     if (entity.getCreatedbyname() != null) {
-      entity.setCreatedby( findAppuserId(entity.getCreatedbyname()) );
+      entity.setCreatedby(findAppuserId(entity.getCreatedbyname()));
     }
     if (entity.getLastmodifiedbyname() != null) {
-      entity.setLastmodifiedby( findAppuserId(entity.getLastmodifiedbyname()) );
+      entity.setLastmodifiedby(findAppuserId(entity.getLastmodifiedbyname()));
     }
   }
 
@@ -187,6 +195,22 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     if (entity.getStatecodetype() != null)
       entity.setStatecodetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("State and Province Codes"), entity.getStatecodetype()));
+
+    return entity;
+  }
+
+  private Alert resolveAlert(Alert entity) {
+    if (entity.getType() != null)
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Alert Types"), entity.getType()));
+
+    if (entity.getSource() != null)
+      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
+
+    if (entity.getFrequency() != null)
+      entity.setFrequencytypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Alert Frequency"), entity.getFrequency()));
+
+    if (entity.getJournal() != null)
+      entity.setJournaltypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Journal Types"), entity.getJournal()));
 
     return entity;
   }
@@ -315,10 +339,64 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     }
   }
 
+  public void deleteIndividual(Integer nedId) {
+
+    IndividualComposite composite = findComposite(nedId, IndividualComposite.class);
+
+    // delete auth because it has a foreign key to emails
+    composite.getAuth().stream().forEach(e -> nedDBSvc.delete(e));
+    composite.setAuth(new ArrayList<>());
+
+    // delete the composite sub entities
+    composite.readAsMap().values().stream()
+        .forEach(entities -> entities.forEach(e -> nedDBSvc.delete(e)));
+
+    // delete the items that belong to an individual but are outside of a composite
+    findResolvedEntities(nedId, Alert.class).stream()
+        .forEach(e -> nedDBSvc.delete(e));
+
+  }
+
   @Override @Transactional
   public  <T extends Composite> T createComposite(T composite, Class<T> clazz) {
 
-    Integer nedId = nedDBSvc.newNamedEntityId(composite.getTypeName());
+    Integer nedId = null;
+
+    if (clazz == IndividualComposite.class) {
+
+      Email email = ((IndividualComposite) composite).getEmails().get(0);
+      Integer ambraId = email.getNedid();
+
+      // only insert the person into Ambra if there is no NED ID specified
+      if (ambraId == null)
+        ambraId = ambraService.createUser((IndividualComposite)composite).intValue();
+
+      nedId = nedDBSvc.newNamedEntityId(composite.getTypeName(), ambraId);
+
+      // insert Ambra into NED UIDs
+
+      Uniqueidentifier uniqueidentifier = new Uniqueidentifier();
+      uniqueidentifier.setNedid(nedId);   /* nedId == ambraId */
+      uniqueidentifier.setSource("Ambra");
+      uniqueidentifier.setType(UidTypeEnum.AMBRA.getName());
+      uniqueidentifier.setUniqueidentifier(ambraId.toString());
+      uniqueidentifier.setCreatedbyname(email.getCreatedbyname());
+      uniqueidentifier.setLastmodifiedbyname(email.getLastmodifiedbyname());
+      uniqueidentifier = resolveValuesToIds(uniqueidentifier);
+
+      if (((IndividualComposite) composite).getUniqueidentifiers() == null)
+        ((IndividualComposite) composite).setUniqueidentifiers(new ArrayList<>());
+
+      ((IndividualComposite) composite).getUniqueidentifiers().add(uniqueidentifier);
+    }
+    else if (clazz == OrganizationComposite.class) {
+      nedId = nedDBSvc.newNamedEntityId(composite.getTypeName());
+    }
+    else {
+      throw new UnsupportedOperationException("Unsupported composite: " + clazz);
+    }
+
+    // insert into NED
 
     Map<Class, List<? extends Entity>> compositeMap = composite.readAsMap();
 
@@ -331,7 +409,10 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       }
     }
 
+    // TODO: if NED insert fails, manually rollback ambra, but how to delete from ambra?
+
     return findComposite(nedId, clazz);
+
   }
 
   @Override
@@ -360,6 +441,14 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     
   public void setNamedEntityDBService(NamedEntityDBService nedDBSvc) {
     this.nedDBSvc = nedDBSvc;
+  }
+
+  public AmbraService getAmbraService() {
+    return ambraService;
+  }
+
+  public void setAmbraService(AmbraService ambraService) {
+    this.ambraService = ambraService;
   }
 
   private Integer findAppuserId(String username) {

@@ -17,6 +17,7 @@
 package org.plos.namedentity.api;
 
 import org.plos.namedentity.api.entity.*;
+import org.plos.namedentity.api.enums.NamedPartyEnum;
 import org.plos.namedentity.validate.Validatable;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -46,10 +47,8 @@ public class IndividualComposite extends Composite implements Validatable {
   private List<Url>               urls;
   private List<Relationship>      relationships;
 
-  public static String typeName = "Individual";
-
-  public String getTypeName() {
-    return typeName;
+  public NamedPartyEnum getTypeName() {
+    return NamedPartyEnum.INDIVIDUAL;
   }
 
   @XmlTransient

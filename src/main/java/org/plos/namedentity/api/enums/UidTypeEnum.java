@@ -35,7 +35,6 @@ public enum UidTypeEnum {
     this.name = name;
   }
 
-  // assume uom names are unique; may not be true for symbols.
   public static UidTypeEnum getUidTypeEnum(String name) {
     for (UidTypeEnum uidtype : EnumSet.allOf(UidTypeEnum.class))
       if (uidtype.name.equals(name))

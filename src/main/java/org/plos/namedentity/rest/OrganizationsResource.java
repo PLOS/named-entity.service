@@ -25,6 +25,7 @@ import org.plos.namedentity.api.entity.Organization;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.api.ringgold.Institution;
+import org.plos.namedentity.api.enums.NamedPartyEnum;
 import org.plos.namedentity.service.RinggoldService;
 
 import javax.inject.Inject;
@@ -33,10 +34,8 @@ import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -58,7 +57,7 @@ public class OrganizationsResource extends NedResource {
 
   @Override
   protected String getNamedPartyType() {
-    return OrganizationComposite.typeName;
+    return NamedPartyEnum.ORGANIZATION.getName();
   }
 
   @POST
@@ -126,7 +125,6 @@ public class OrganizationsResource extends NedResource {
   }
 
   @GET
-  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   @ApiOperation(value = "Find organizations matching specified attribute.",
           response = OrganizationComposite.class, responseContainer = "List")
   public Response findOrganizations(@QueryParam("attribute") String attribute,
@@ -171,7 +169,6 @@ public class OrganizationsResource extends NedResource {
 
   @GET
   @Path("/{nedId}")
-  @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   @ApiOperation(value = "Read organization by Ned ID", response = OrganizationComposite.class)
   public Response readOrganization(@PathParam("nedId") int nedId) {
     try {

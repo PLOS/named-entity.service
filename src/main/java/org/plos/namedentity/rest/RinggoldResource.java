@@ -20,6 +20,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.ringgold.Institution;
 import org.plos.namedentity.api.NedException;
+import org.plos.namedentity.api.ringgold.Institution;
 import org.plos.namedentity.service.RinggoldService;
 
 import javax.inject.Inject;
@@ -32,9 +33,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidInstitutionQuery;
-import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
 
 @Path("/institutionsearch")
 @Api("/institutionsearch")

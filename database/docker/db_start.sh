@@ -40,6 +40,8 @@ function build () {
 
   echo "Docker IP: $DB_HOST"
 
+  echo "SET GLOBAL max_connections = 500" | $MYSQL_ROOT 2>/dev/null
+
   echo "Create DB User: ned"
   echo "CREATE USER 'ned' IDENTIFIED BY ''" | $MYSQL_ROOT 2>/dev/null
   echo "GRANT ALL PRIVILEGES ON *.* TO 'ned'@'%' WITH GRANT OPTION; FLUSH PRIVILEGES" | $MYSQL_ROOT
@@ -49,6 +51,15 @@ function build () {
   echo "Create Schema: namedEntities"
   echo "DROP SCHEMA IF EXISTS namedEntities;" | $MYSQL_ROOT
   echo "CREATE SCHEMA namedEntities DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;" | $MYSQL_ROOT
+
+  echo "Create Schema: ambra"
+  echo "DROP SCHEMA IF EXISTS ambra;" | $MYSQL_ROOT
+  echo "CREATE SCHEMA ambra DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;" | $MYSQL_ROOT
+
+  for F in `ls -v ambra/V*.sql`
+  do
+    cat "$F" | $MYSQL_ROOT ambra
+  done
 
   echo "Create Schema: ringgold"
   echo "DROP SCHEMA IF EXISTS ringgold;" | $MYSQL_ROOT
