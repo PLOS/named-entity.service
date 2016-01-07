@@ -11,7 +11,7 @@ public class App {
     public static void main( String[] args ) throws ApiException {
 
         ApiClient apiclient = new ApiClient();
-        apiclient.setBasePath("http://localhost:8080/v0");
+        apiclient.setBasePath("http://localhost:8080/v1");
         apiclient.setUsername("akita");
         apiclient.setPassword("akita");
         apiclient.setDebugging(true);

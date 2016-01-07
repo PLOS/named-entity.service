@@ -1,7 +1,7 @@
 require 'ned_client'
 
 NedClient.configure { |c| [
-   c.debugging = false, c.host='http://localhost:8080/v0',
+   c.debugging = false, c.host='http://localhost:8080/v1',
    c.username = 'akita', c.password = 'akita'] }
 
 apiclient = NedClient::ApiClient.new

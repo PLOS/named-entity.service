@@ -414,7 +414,7 @@
         <version>1.1</version>
         <configuration>
           <contextFile>${basedir}/target/classes/context.xml</contextFile>
-          <path>/v0</path>
+          <path>/v1</path>
         </configuration>
         <dependencies>
           <dependency>
