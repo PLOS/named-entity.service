@@ -774,7 +774,7 @@ public class NamedEntityDBServiceTest {
     // FIND (all assignments)
 
     List<Alert> entityList = nedDBSvc.findAll(Alert.class, 0, Integer.MAX_VALUE);
-    assertTrue( entityList.size() == 1 );
+    assertTrue( entityList.size() == 3 ); // the seed contains data as well
 
     // DELETE
 
@@ -1045,6 +1045,17 @@ public class NamedEntityDBServiceTest {
   @Test
   public void testGetAlerts() {
     // TODO: finish this
+
+    assertTrue(nedDBSvc.getAlerts("weekly").size() == 2);
+
+    assertTrue(nedDBSvc.getAlerts("monthly").size() == 0);
+
+    try {
+      nedDBSvc.getAlerts("nanosecondly");
+      fail();
+    } catch (NedException e) {
+      // expected
+    }
   }
 
   @Test
