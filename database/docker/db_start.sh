@@ -32,9 +32,17 @@ function build () {
   # We've seen a weird pattern (especially on teamcity build agents) where the percona
   # server is up, but it takes some unpredictable time until the correct permissions
   # are applied.  So we have to just try once per second until this works.
+  TRY_CONNECT_COUNT=0
+
   until $MYSQL_ROOT -e exit 2> /dev/null
   do
-    echo "Trying to connect to MySQL $DB_HOST:$DB_PORT"
+    echo "Trying to connect to MySQL $DB_HOST:$DB_PORT  ($TRY_CONNECT_COUNT)"
+    ((TRY_CONNECT_COUNT++))
+    if [ $TRY_CONNECT_COUNT -gt 60 ]
+    then
+      echo "MySQL connection tries exceeded"
+      exit 1
+    fi
     sleep 1
   done
 
