@@ -30,7 +30,7 @@ public class DockerMojo extends AbstractMojo
           Process p1 = Runtime.getRuntime().exec(dockerStopCmd);
           int p1ExitValue = p1.waitFor();
           if (p1ExitValue == 0) {
-            String dockerRemoveCmd = "docker rm " + dockerInstance;
+            String dockerRemoveCmd = "docker rm -v " + dockerInstance;
             getLog().info(dockerRemoveCmd);
             Process p2 = Runtime.getRuntime().exec(dockerRemoveCmd);
             int p2ExitValue = p2.waitFor();
