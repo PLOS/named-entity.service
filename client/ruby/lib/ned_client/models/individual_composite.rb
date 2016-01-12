@@ -1,57 +1,48 @@
 module NedClient
+  # 
   class IndividualComposite < BaseObject
-    attr_accessor :auth
-
-    attr_accessor :individualprofiles
-
-    attr_accessor :groups
-
-    attr_accessor :addresses
-
-    attr_accessor :emails
-
-    attr_accessor :phonenumbers
-
-    attr_accessor :uniqueidentifiers
-
-    attr_accessor :degrees
-
-    attr_accessor :urls
-
-    attr_accessor :relationships
-
-    attr_accessor :type_name
-
-    # Attribute mapping from ruby-style variable name to JSON key.
+    attr_accessor :auth, :individualprofiles, :groups, :addresses, :emails, :phonenumbers, :uniqueidentifiers, :degrees, :urls, :relationships, :type_name
+    # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
         
+        # 
         :'auth' => :'auth',
         
+        # 
         :'individualprofiles' => :'individualprofiles',
         
+        # 
         :'groups' => :'groups',
         
+        # 
         :'addresses' => :'addresses',
         
+        # 
         :'emails' => :'emails',
         
+        # 
         :'phonenumbers' => :'phonenumbers',
         
+        # 
         :'uniqueidentifiers' => :'uniqueidentifiers',
         
+        # 
         :'degrees' => :'degrees',
         
+        # 
         :'urls' => :'urls',
         
+        # 
         :'relationships' => :'relationships',
         
+        # 
         :'type_name' => :'typeName'
         
       }
     end
 
-    # Attribute type mapping.
+    # attribute type
     def self.swagger_types
       {
         :'auth' => :'Array<Auth>',
@@ -70,7 +61,7 @@ module NedClient
     end
 
     def initialize(attributes = {})
-      return unless attributes.is_a?(Hash)
+      return if !attributes.is_a?(Hash) || attributes.empty?
 
       # convert string to symbol for hash key
       attributes = attributes.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
@@ -142,7 +133,6 @@ module NedClient
       
     end
 
-    # Custom attribute writer method checking allowed values (enum).
     def type_name=(type_name)
       allowed_values = ["INDIVIDUAL", "ORGANIZATION", "INVALID_NAMEDPARTY_TYPE"]
       if type_name && !allowed_values.include?(type_name)
@@ -151,31 +141,5 @@ module NedClient
       @type_name = type_name
     end
 
-    # Check equality by comparing each attribute.
-    def ==(o)
-      return true if self.equal?(o)
-      self.class == o.class &&
-          auth == o.auth &&
-          individualprofiles == o.individualprofiles &&
-          groups == o.groups &&
-          addresses == o.addresses &&
-          emails == o.emails &&
-          phonenumbers == o.phonenumbers &&
-          uniqueidentifiers == o.uniqueidentifiers &&
-          degrees == o.degrees &&
-          urls == o.urls &&
-          relationships == o.relationships &&
-          type_name == o.type_name
-    end
-
-    # @see the `==` method
-    def eql?(o)
-      self == o
-    end
-
-    # Calculate hash code according to all attributes.
-    def hash
-      [auth, individualprofiles, groups, addresses, emails, phonenumbers, uniqueidentifiers, degrees, urls, relationships, type_name].hash
-    end
   end
 end

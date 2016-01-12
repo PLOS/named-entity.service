@@ -18,21 +18,13 @@ package org.plos.namedentity.persist;
 
 // to reduce verbosity, static import generated tables and jooq functions
 
-import org.jooq.DSLContext;
-import org.jooq.Field;
-import org.jooq.Record;
-import org.jooq.Record1;
-import org.jooq.SelectConditionStep;
-import org.jooq.SelectOnConditionStep;
-import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.UpdatableRecord;
+import org.jooq.*;
 import org.plos.namedentity.api.Consumer;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.NedException.ErrorType;
 import org.plos.namedentity.api.entity.*;
-import org.plos.namedentity.api.enums.TypeClassEnum;
 import org.plos.namedentity.api.enums.NamedPartyEnum;
+import org.plos.namedentity.api.enums.TypeClassEnum;
 import org.plos.namedentity.persist.db.namedentities.tables.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -684,6 +676,43 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
     return select(uid).where(uid.NEDID.equal(nedId))
         .fetch().into(Uniqueidentifier.class);
+  }
+
+  public List<Alert> getAlerts(String frequency, String journal) {
+
+    StringBuilder where = new StringBuilder();
+    where.append("true");
+
+    Globaltypes  gt1 = GLOBALTYPES.as("gt1");
+    Globaltypes  gt2 = GLOBALTYPES.as("gt2");
+    Globaltypes  gt3 = GLOBALTYPES.as("gt3");
+    Alerts a = ALERTS.as("a");
+
+    if (frequency != null) {
+      // check the global type so it can return a meaningful error about acceptable types
+      findTypeValue(findTypeClass("Alert Frequency"), frequency);
+      where.append(" AND " + gt3.SHORTDESCRIPTION.equal(frequency));
+    }
+    if (journal != null) {
+      findTypeValue(findTypeClass("Journal Types"), journal);
+      where.append(" AND " + gt2.SHORTDESCRIPTION.equal(journal));
+    }
+
+    return this.context
+        .select(
+            a.ID, a.NEDID,
+            a.NAME, a.QUERY,
+            gt1.SHORTDESCRIPTION.as("type"),
+            gt2.SHORTDESCRIPTION.as("journal"),
+            gt3.SHORTDESCRIPTION.as("frequency"),
+            a.CREATED, a.LASTMODIFIED)
+        .from(a)
+        .leftOuterJoin(gt1).on(a.TYPEID.equal(gt1.ID))
+        .leftOuterJoin(gt2).on(a.JOURNALTYPEID.equal(gt2.ID))
+        .leftOuterJoin(gt3).on(a.FREQUENCYTYPEID.equal(gt3.ID))
+        .where(where.toString().replace("\"", "`"))
+        .fetch()
+        .into(Alert.class);
   }
 
   private List<Phonenumber> findPhoneNumbersByNedId(Integer nedId) {

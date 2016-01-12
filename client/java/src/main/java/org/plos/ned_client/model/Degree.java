@@ -4,15 +4,13 @@ import org.plos.ned_client.StringUtil;
 import java.util.Date;
 
 
-import java.util.Objects;
 
 import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.*;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-21T13:36:13.082-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
 public class Degree   {
   
   private Integer id = null;
@@ -186,35 +184,6 @@ public class Degree   {
   }
 
   
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Degree degree = (Degree) o;
-    return Objects.equals(id, degree.id) &&
-        Objects.equals(nedid, degree.nedid) &&
-        Objects.equals(source, degree.source) &&
-        Objects.equals(sourcetypeid, degree.sourcetypeid) &&
-        Objects.equals(created, degree.created) &&
-        Objects.equals(lastmodified, degree.lastmodified) &&
-        Objects.equals(createdby, degree.createdby) &&
-        Objects.equals(createdbyname, degree.createdbyname) &&
-        Objects.equals(lastmodifiedby, degree.lastmodifiedby) &&
-        Objects.equals(lastmodifiedbyname, degree.lastmodifiedbyname) &&
-        Objects.equals(typeid, degree.typeid) &&
-        Objects.equals(type, degree.type) &&
-        Objects.equals(fulltitle, degree.fulltitle);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, nedid, source, sourcetypeid, created, lastmodified, createdby, createdbyname, lastmodifiedby, lastmodifiedbyname, typeid, type, fulltitle);
-  }
 
   @Override
   public String toString()  {

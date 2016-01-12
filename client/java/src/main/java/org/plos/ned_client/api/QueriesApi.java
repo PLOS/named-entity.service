@@ -6,18 +6,19 @@ import org.plos.ned_client.Configuration;
 import org.plos.ned_client.Pair;
 import org.plos.ned_client.TypeRef;
 
+import org.plos.ned_client.model.Alert;
 
 import java.util.*;
 
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
-public class InstitutionsearchApi {
+public class QueriesApi {
   private ApiClient apiClient;
 
-  public InstitutionsearchApi() {
+  public QueriesApi() {
     this(Configuration.getDefaultApiClient());
   }
 
-  public InstitutionsearchApi(ApiClient apiClient) {
+  public QueriesApi(ApiClient apiClient) {
     this.apiClient = apiClient;
   }
 
@@ -31,17 +32,18 @@ public class InstitutionsearchApi {
 
   
   /**
-   * Find institution(s) by name fragment (wildcard search).
+   * Get a list of search alerts by type
    * 
-   * @param substring 
-   * @return void
+   * @param frequency 
+   * @param journal 
+   * @return List<Alert>
    */
-  public void findInstitutionsByName (String substring) throws ApiException {
+  public List<Alert> getAlerts (String frequency, String journal) throws ApiException {
     Object postBody = null;
     byte[] postBinaryBody = null;
     
     // create path and map variables
-    String path = "/institutionsearch".replaceAll("\\{format\\}","json");
+    String path = "/queries/alerts".replaceAll("\\{format\\}","json");
 
     // query params
     List<Pair> queryParams = new ArrayList<Pair>();
@@ -49,7 +51,9 @@ public class InstitutionsearchApi {
     Map<String, Object> formParams = new HashMap<String, Object>();
 
     
-    queryParams.addAll(apiClient.parameterToPairs("", "substring", substring));
+    queryParams.addAll(apiClient.parameterToPairs("", "frequency", frequency));
+    
+    queryParams.addAll(apiClient.parameterToPairs("", "journal", journal));
     
 
     
@@ -57,7 +61,7 @@ public class InstitutionsearchApi {
     
 
     final String[] accepts = {
-      "application/json"
+      
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -66,13 +70,14 @@ public class InstitutionsearchApi {
     };
     final String contentType = apiClient.selectHeaderContentType(contentTypes);
 
-    String[] authNames = new String[] {  };
+    String[] authNames = new String[] { "basic" };
 
     
 
     
     
-    apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
+    TypeRef returnType = new TypeRef<List<Alert>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
     
 

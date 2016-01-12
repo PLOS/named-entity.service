@@ -78,7 +78,6 @@ class ServiceApi(object):
             params[key] = val
         del params['kwargs']
 
-
         resource_path = '/service/config'.replace('{format}', 'json')
         method = 'GET'
 
@@ -150,7 +149,6 @@ class ServiceApi(object):
                 )
             params[key] = val
         del params['kwargs']
-
 
         resource_path = '/service/errorcodes'.replace('{format}', 'json')
         method = 'GET'

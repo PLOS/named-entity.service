@@ -774,7 +774,7 @@ public class NamedEntityDBServiceTest {
     // FIND (all assignments)
 
     List<Alert> entityList = nedDBSvc.findAll(Alert.class, 0, Integer.MAX_VALUE);
-    assertTrue( entityList.size() == 1 );
+    assertTrue( entityList.size() == 4 ); // the seed contains data as well
 
     // DELETE
 
@@ -1040,6 +1040,23 @@ public class NamedEntityDBServiceTest {
     Degree degreeToDelete = new Degree();
     degreeToDelete.setId(degreeId);
     assertTrue( nedDBSvc.delete(degreeToDelete) );
+  }
+
+  @Test
+  public void testGetAlerts() {
+
+    assertTrue(nedDBSvc.getAlerts("weekly", null).size() == 3);
+
+    assertTrue(nedDBSvc.getAlerts("monthly", null).size() == 0);
+
+    assertTrue(nedDBSvc.getAlerts(null, "PLOS Biology").size() == 2);
+
+    try {
+      nedDBSvc.getAlerts("nanosecondly", null);
+      fail();
+    } catch (NedException e) {
+      // expected
+    }
   }
 
   @Test

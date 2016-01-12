@@ -4,15 +4,13 @@ import org.plos.ned_client.StringUtil;
 import java.util.Date;
 
 
-import java.util.Objects;
 
 import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.*;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-21T13:36:13.082-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
 public class Address   {
   
   private Integer id = null;
@@ -342,47 +340,6 @@ public class Address   {
   }
 
   
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Address address = (Address) o;
-    return Objects.equals(id, address.id) &&
-        Objects.equals(nedid, address.nedid) &&
-        Objects.equals(source, address.source) &&
-        Objects.equals(sourcetypeid, address.sourcetypeid) &&
-        Objects.equals(created, address.created) &&
-        Objects.equals(lastmodified, address.lastmodified) &&
-        Objects.equals(createdby, address.createdby) &&
-        Objects.equals(createdbyname, address.createdbyname) &&
-        Objects.equals(lastmodifiedby, address.lastmodifiedby) &&
-        Objects.equals(lastmodifiedbyname, address.lastmodifiedbyname) &&
-        Objects.equals(typeid, address.typeid) &&
-        Objects.equals(type, address.type) &&
-        Objects.equals(addressline1, address.addressline1) &&
-        Objects.equals(addressline2, address.addressline2) &&
-        Objects.equals(addressline3, address.addressline3) &&
-        Objects.equals(city, address.city) &&
-        Objects.equals(statecodetypeid, address.statecodetypeid) &&
-        Objects.equals(statecodetype, address.statecodetype) &&
-        Objects.equals(countrycodetypeid, address.countrycodetypeid) &&
-        Objects.equals(countrycodetype, address.countrycodetype) &&
-        Objects.equals(postalcode, address.postalcode) &&
-        Objects.equals(maincontactnamedentityid, address.maincontactnamedentityid) &&
-        Objects.equals(latitude, address.latitude) &&
-        Objects.equals(longitude, address.longitude) &&
-        Objects.equals(isactive, address.isactive);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, nedid, source, sourcetypeid, created, lastmodified, createdby, createdbyname, lastmodifiedby, lastmodifiedbyname, typeid, type, addressline1, addressline2, addressline3, city, statecodetypeid, statecodetype, countrycodetypeid, countrycodetype, postalcode, maincontactnamedentityid, latitude, longitude, isactive);
-  }
 
   @Override
   public String toString()  {

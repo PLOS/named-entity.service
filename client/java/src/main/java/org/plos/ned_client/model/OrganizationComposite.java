@@ -9,15 +9,13 @@ import org.plos.ned_client.model.Phonenumber;
 import java.util.Date;
 
 
-import java.util.Objects;
 
 import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.*;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-21T13:36:13.082-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
 public class OrganizationComposite   {
   
   private List<Address> addresses = new ArrayList<Address>();
@@ -36,7 +34,6 @@ public class OrganizationComposite   {
   private String legalname = null;
   private Integer maincontactid = null;
 
-
 public enum TypeNameEnum {
   INDIVIDUAL("INDIVIDUAL"),
   ORGANIZATION("ORGANIZATION"),
@@ -49,7 +46,6 @@ public enum TypeNameEnum {
   }
 
   @Override
-  @JsonValue
   public String toString() {
     return value;
   }
@@ -250,38 +246,6 @@ public enum TypeNameEnum {
   }
 
   
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    OrganizationComposite organizationComposite = (OrganizationComposite) o;
-    return Objects.equals(addresses, organizationComposite.addresses) &&
-        Objects.equals(emails, organizationComposite.emails) &&
-        Objects.equals(phonenumbers, organizationComposite.phonenumbers) &&
-        Objects.equals(uniqueidentifiers, organizationComposite.uniqueidentifiers) &&
-        Objects.equals(created, organizationComposite.created) &&
-        Objects.equals(type, organizationComposite.type) &&
-        Objects.equals(source, organizationComposite.source) &&
-        Objects.equals(nedid, organizationComposite.nedid) &&
-        Objects.equals(typeid, organizationComposite.typeid) &&
-        Objects.equals(sourcetypeid, organizationComposite.sourcetypeid) &&
-        Objects.equals(lastmodified, organizationComposite.lastmodified) &&
-        Objects.equals(isactive, organizationComposite.isactive) &&
-        Objects.equals(familiarname, organizationComposite.familiarname) &&
-        Objects.equals(legalname, organizationComposite.legalname) &&
-        Objects.equals(maincontactid, organizationComposite.maincontactid) &&
-        Objects.equals(typeName, organizationComposite.typeName);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(addresses, emails, phonenumbers, uniqueidentifiers, created, type, source, nedid, typeid, sourcetypeid, lastmodified, isactive, familiarname, legalname, maincontactid, typeName);
-  }
 
   @Override
   public String toString()  {

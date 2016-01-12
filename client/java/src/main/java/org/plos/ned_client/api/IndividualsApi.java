@@ -1,11 +1,10 @@
 package org.plos.ned_client.api;
 
-import com.sun.jersey.api.client.GenericType;
-
 import org.plos.ned_client.ApiException;
 import org.plos.ned_client.ApiClient;
 import org.plos.ned_client.Configuration;
 import org.plos.ned_client.Pair;
+import org.plos.ned_client.TypeRef;
 
 import org.plos.ned_client.model.IndividualComposite;
 import org.plos.ned_client.model.Address;
@@ -21,7 +20,7 @@ import org.plos.ned_client.model.Uniqueidentifier;
 
 import java.util.*;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-21T13:36:13.082-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
 public class IndividualsApi {
   private ApiClient apiClient;
 
@@ -50,8 +49,9 @@ public class IndividualsApi {
    * @param value 
    * @return List<IndividualComposite>
    */
-  public List<IndividualComposite> findIndividuals(String entity, String attribute, String value) throws ApiException {
+  public List<IndividualComposite> findIndividuals (String entity, String attribute, String value) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
     // create path and map variables
     String path = "/individuals".replaceAll("\\{format\\}","json");
@@ -86,9 +86,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<List<IndividualComposite>> returnType = new GenericType<List<IndividualComposite>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<List<IndividualComposite>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -98,8 +104,9 @@ public class IndividualsApi {
    * @param authorization 
    * @return IndividualComposite
    */
-  public IndividualComposite createIndividual(IndividualComposite body, String authorization) throws ApiException {
+  public IndividualComposite createIndividual (IndividualComposite body, String authorization) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
     // create path and map variables
     String path = "/individuals".replaceAll("\\{format\\}","json");
@@ -112,7 +119,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -130,9 +137,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<IndividualComposite> returnType = new GenericType<IndividualComposite>() {};
-    return apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<IndividualComposite>() {};
+    return apiClient.invokeAPI(path, "POST", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -141,8 +154,9 @@ public class IndividualsApi {
    * @param casId 
    * @return IndividualComposite
    */
-  public IndividualComposite readIndividualByCasId(String casId) throws ApiException {
+  public IndividualComposite readIndividualByCasId (String casId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'casId' is set
      if (casId == null) {
@@ -177,9 +191,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<IndividualComposite> returnType = new GenericType<IndividualComposite>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<IndividualComposite>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -188,8 +208,9 @@ public class IndividualsApi {
    * @param nedId 
    * @return IndividualComposite
    */
-  public IndividualComposite readIndividual(Integer nedId) throws ApiException {
+  public IndividualComposite readIndividual (Integer nedId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -224,9 +245,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<IndividualComposite> returnType = new GenericType<IndividualComposite>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<IndividualComposite>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -235,8 +262,9 @@ public class IndividualsApi {
    * @param nedId 
    * @return IndividualComposite
    */
-  public IndividualComposite deleteIndividual(Integer nedId) throws ApiException {
+  public IndividualComposite deleteIndividual (Integer nedId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -271,9 +299,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<IndividualComposite> returnType = new GenericType<IndividualComposite>() {};
-    return apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<IndividualComposite>() {};
+    return apiClient.invokeAPI(path, "DELETE", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -282,8 +316,9 @@ public class IndividualsApi {
    * @param nedId 
    * @return List<Address>
    */
-  public List<Address> getAddresses(Integer nedId) throws ApiException {
+  public List<Address> getAddresses (Integer nedId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -318,9 +353,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<List<Address>> returnType = new GenericType<List<Address>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<List<Address>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -331,8 +372,9 @@ public class IndividualsApi {
    * @param authorization 
    * @return Address
    */
-  public Address createAddress(Integer nedId, Address body, String authorization) throws ApiException {
+  public Address createAddress (Integer nedId, Address body, String authorization) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -351,7 +393,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -369,9 +411,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<Address> returnType = new GenericType<Address>() {};
-    return apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Address>() {};
+    return apiClient.invokeAPI(path, "POST", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -381,8 +429,9 @@ public class IndividualsApi {
    * @param addressId 
    * @return Address
    */
-  public Address getAddress(Integer nedId, Integer addressId) throws ApiException {
+  public Address getAddress (Integer nedId, Integer addressId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -423,9 +472,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<Address> returnType = new GenericType<Address>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Address>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -437,8 +492,9 @@ public class IndividualsApi {
    * @param authorization 
    * @return Address
    */
-  public Address updateAddress(Integer nedId, Integer addressId, Address body, String authorization) throws ApiException {
+  public Address updateAddress (Integer nedId, Integer addressId, Address body, String authorization) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -463,7 +519,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -481,9 +537,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<Address> returnType = new GenericType<Address>() {};
-    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Address>() {};
+    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -494,8 +556,9 @@ public class IndividualsApi {
    * @param authorization 
    * @return List<Address>
    */
-  public List<Address> deleteAddress(Integer nedId, Integer addressId, String authorization) throws ApiException {
+  public List<Address> deleteAddress (Integer nedId, Integer addressId, String authorization) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -520,7 +583,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -538,9 +601,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<List<Address>> returnType = new GenericType<List<Address>>() {};
-    return apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<List<Address>>() {};
+    return apiClient.invokeAPI(path, "DELETE", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -549,8 +618,9 @@ public class IndividualsApi {
    * @param nedId 
    * @return List<Alert>
    */
-  public List<Alert> getAlerts(Integer nedId) throws ApiException {
+  public List<Alert> getAlerts (Integer nedId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -585,9 +655,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<List<Alert>> returnType = new GenericType<List<Alert>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<List<Alert>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -598,8 +674,9 @@ public class IndividualsApi {
    * @param authorization 
    * @return Alert
    */
-  public Alert createAlert(Integer nedId, Alert body, String authorization) throws ApiException {
+  public Alert createAlert (Integer nedId, Alert body, String authorization) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -618,7 +695,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -636,9 +713,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<Alert> returnType = new GenericType<Alert>() {};
-    return apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Alert>() {};
+    return apiClient.invokeAPI(path, "POST", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -648,8 +731,9 @@ public class IndividualsApi {
    * @param alertId 
    * @return Alert
    */
-  public Alert getAlert(Integer nedId, Integer alertId) throws ApiException {
+  public Alert getAlert (Integer nedId, Integer alertId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -690,9 +774,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<Alert> returnType = new GenericType<Alert>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Alert>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -704,8 +794,9 @@ public class IndividualsApi {
    * @param body 
    * @return Alert
    */
-  public Alert updateAlert(Integer nedId, Integer alertId, String authorization, Alert body) throws ApiException {
+  public Alert updateAlert (Integer nedId, Integer alertId, String authorization, Alert body) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -730,7 +821,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -748,9 +839,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<Alert> returnType = new GenericType<Alert>() {};
-    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Alert>() {};
+    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -761,8 +858,9 @@ public class IndividualsApi {
    * @param authorization 
    * @return void
    */
-  public void deleteAlert(Integer nedId, Integer alertId, String authorization) throws ApiException {
+  public void deleteAlert (Integer nedId, Integer alertId, String authorization) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -787,7 +885,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -805,8 +903,14 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, null);
+
     
+    
+    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
+    
+    
+
+
   }
   
   /**
@@ -815,8 +919,9 @@ public class IndividualsApi {
    * @param nedId 
    * @return List<Auth>
    */
-  public List<Auth> getAuthRecord(Integer nedId) throws ApiException {
+  public List<Auth> getAuthRecord (Integer nedId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -851,9 +956,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<List<Auth>> returnType = new GenericType<List<Auth>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<List<Auth>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -863,8 +974,9 @@ public class IndividualsApi {
    * @param body 
    * @return void
    */
-  public void checkPassword(Integer nedId, Auth body) throws ApiException {
+  public void checkPassword (Integer nedId, Auth body) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -899,8 +1011,14 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, null);
+
     
+    
+    apiClient.invokeAPI(path, "POST", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
+    
+    
+
+
   }
   
   /**
@@ -912,8 +1030,9 @@ public class IndividualsApi {
    * @param body 
    * @return Auth
    */
-  public Auth updateAuthRecord(Integer nedId, Integer authId, String authorization, Auth body) throws ApiException {
+  public Auth updateAuthRecord (Integer nedId, Integer authId, String authorization, Auth body) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -938,7 +1057,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -956,9 +1075,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<Auth> returnType = new GenericType<Auth>() {};
-    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Auth>() {};
+    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -967,8 +1092,9 @@ public class IndividualsApi {
    * @param nedId 
    * @return List<Degree>
    */
-  public List<Degree> getDegrees(Integer nedId) throws ApiException {
+  public List<Degree> getDegrees (Integer nedId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -1003,9 +1129,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<List<Degree>> returnType = new GenericType<List<Degree>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<List<Degree>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -1014,8 +1146,9 @@ public class IndividualsApi {
    * @param nedId 
    * @return List<Email>
    */
-  public List<Email> getEmails(Integer nedId) throws ApiException {
+  public List<Email> getEmails (Integer nedId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -1050,9 +1183,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<List<Email>> returnType = new GenericType<List<Email>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<List<Email>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -1063,8 +1202,9 @@ public class IndividualsApi {
    * @param authorization 
    * @return Email
    */
-  public Email createEmail(Integer nedId, Email body, String authorization) throws ApiException {
+  public Email createEmail (Integer nedId, Email body, String authorization) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -1083,7 +1223,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -1101,9 +1241,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<Email> returnType = new GenericType<Email>() {};
-    return apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Email>() {};
+    return apiClient.invokeAPI(path, "POST", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -1113,8 +1259,9 @@ public class IndividualsApi {
    * @param emailId 
    * @return Email
    */
-  public Email getEmail(Integer nedId, Integer emailId) throws ApiException {
+  public Email getEmail (Integer nedId, Integer emailId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -1155,9 +1302,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<Email> returnType = new GenericType<Email>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Email>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -1169,8 +1322,9 @@ public class IndividualsApi {
    * @param authorization 
    * @return Email
    */
-  public Email updateEmail(Integer nedId, Integer emailId, Email body, String authorization) throws ApiException {
+  public Email updateEmail (Integer nedId, Integer emailId, Email body, String authorization) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -1195,7 +1349,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -1213,9 +1367,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<Email> returnType = new GenericType<Email>() {};
-    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Email>() {};
+    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -1226,8 +1386,9 @@ public class IndividualsApi {
    * @param authorization 
    * @return void
    */
-  public void deleteEmail(Integer nedId, Integer emailId, String authorization) throws ApiException {
+  public void deleteEmail (Integer nedId, Integer emailId, String authorization) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -1252,7 +1413,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -1270,8 +1431,14 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, null);
+
     
+    
+    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
+    
+    
+
+
   }
   
   /**
@@ -1280,8 +1447,9 @@ public class IndividualsApi {
    * @param nedId 
    * @return List<Group>
    */
-  public List<Group> getGroups(Integer nedId) throws ApiException {
+  public List<Group> getGroups (Integer nedId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -1316,9 +1484,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<List<Group>> returnType = new GenericType<List<Group>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<List<Group>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -1329,8 +1503,9 @@ public class IndividualsApi {
    * @param authorization 
    * @return Group
    */
-  public Group createGroup(Integer nedId, Group body, String authorization) throws ApiException {
+  public Group createGroup (Integer nedId, Group body, String authorization) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -1349,7 +1524,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -1367,9 +1542,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<Group> returnType = new GenericType<Group>() {};
-    return apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Group>() {};
+    return apiClient.invokeAPI(path, "POST", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -1379,8 +1560,9 @@ public class IndividualsApi {
    * @param groupId 
    * @return Group
    */
-  public Group getGroup(Integer nedId, Integer groupId) throws ApiException {
+  public Group getGroup (Integer nedId, Integer groupId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -1421,9 +1603,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<Group> returnType = new GenericType<Group>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Group>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -1435,8 +1623,9 @@ public class IndividualsApi {
    * @param body 
    * @return Group
    */
-  public Group updateGroup(Integer nedId, Integer groupId, String authorization, Group body) throws ApiException {
+  public Group updateGroup (Integer nedId, Integer groupId, String authorization, Group body) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -1461,7 +1650,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -1479,9 +1668,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<Group> returnType = new GenericType<Group>() {};
-    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Group>() {};
+    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -1492,8 +1687,9 @@ public class IndividualsApi {
    * @param authorization 
    * @return void
    */
-  public void deleteGroup(Integer nedId, Integer groupId, String authorization) throws ApiException {
+  public void deleteGroup (Integer nedId, Integer groupId, String authorization) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -1518,7 +1714,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -1536,8 +1732,14 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, null);
+
     
+    
+    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
+    
+    
+
+
   }
   
   /**
@@ -1546,8 +1748,9 @@ public class IndividualsApi {
    * @param nedId 
    * @return List<Individualprofile>
    */
-  public List<Individualprofile> getProfiles(Integer nedId) throws ApiException {
+  public List<Individualprofile> getProfiles (Integer nedId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -1582,9 +1785,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<List<Individualprofile>> returnType = new GenericType<List<Individualprofile>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<List<Individualprofile>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -1595,8 +1804,9 @@ public class IndividualsApi {
    * @param authorization 
    * @return Individualprofile
    */
-  public Individualprofile addProfile(Integer nedId, Individualprofile body, String authorization) throws ApiException {
+  public Individualprofile addProfile (Integer nedId, Individualprofile body, String authorization) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -1615,7 +1825,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -1633,9 +1843,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<Individualprofile> returnType = new GenericType<Individualprofile>() {};
-    return apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Individualprofile>() {};
+    return apiClient.invokeAPI(path, "POST", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -1645,8 +1861,9 @@ public class IndividualsApi {
    * @param profileId 
    * @return Individualprofile
    */
-  public Individualprofile getProfile(Integer nedId, Integer profileId) throws ApiException {
+  public Individualprofile getProfile (Integer nedId, Integer profileId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -1687,9 +1904,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<Individualprofile> returnType = new GenericType<Individualprofile>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Individualprofile>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -1701,8 +1924,9 @@ public class IndividualsApi {
    * @param body 
    * @return Individualprofile
    */
-  public Individualprofile updateProfile(Integer nedId, Integer profileId, String authorization, Individualprofile body) throws ApiException {
+  public Individualprofile updateProfile (Integer nedId, Integer profileId, String authorization, Individualprofile body) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -1727,7 +1951,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -1745,9 +1969,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<Individualprofile> returnType = new GenericType<Individualprofile>() {};
-    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Individualprofile>() {};
+    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -1758,8 +1988,9 @@ public class IndividualsApi {
    * @param authorization 
    * @return void
    */
-  public void deleteProfile(Integer nedId, Integer profileId, String authorization) throws ApiException {
+  public void deleteProfile (Integer nedId, Integer profileId, String authorization) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -1784,7 +2015,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -1802,8 +2033,14 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, null);
+
     
+    
+    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
+    
+    
+
+
   }
   
   /**
@@ -1812,8 +2049,9 @@ public class IndividualsApi {
    * @param nedId 
    * @return List<Phonenumber>
    */
-  public List<Phonenumber> getPhonenumbers(Integer nedId) throws ApiException {
+  public List<Phonenumber> getPhonenumbers (Integer nedId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -1848,9 +2086,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<List<Phonenumber>> returnType = new GenericType<List<Phonenumber>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<List<Phonenumber>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -1859,8 +2103,9 @@ public class IndividualsApi {
    * @param nedId 
    * @return List<Relationship>
    */
-  public List<Relationship> getRelationships(Integer nedId) throws ApiException {
+  public List<Relationship> getRelationships (Integer nedId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -1895,9 +2140,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<List<Relationship>> returnType = new GenericType<List<Relationship>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<List<Relationship>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -1908,8 +2159,9 @@ public class IndividualsApi {
    * @param authorization 
    * @return Relationship
    */
-  public Relationship createRelationship(Integer nedId, Relationship body, String authorization) throws ApiException {
+  public Relationship createRelationship (Integer nedId, Relationship body, String authorization) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -1928,7 +2180,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -1946,9 +2198,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<Relationship> returnType = new GenericType<Relationship>() {};
-    return apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Relationship>() {};
+    return apiClient.invokeAPI(path, "POST", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -1958,8 +2216,9 @@ public class IndividualsApi {
    * @param relationshipId 
    * @return Relationship
    */
-  public Relationship getRelationship(Integer nedId, Integer relationshipId) throws ApiException {
+  public Relationship getRelationship (Integer nedId, Integer relationshipId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -2000,9 +2259,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<Relationship> returnType = new GenericType<Relationship>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Relationship>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -2014,8 +2279,9 @@ public class IndividualsApi {
    * @param body 
    * @return Relationship
    */
-  public Relationship updateRelationship(Integer nedId, Integer relationshipId, String authorization, Relationship body) throws ApiException {
+  public Relationship updateRelationship (Integer nedId, Integer relationshipId, String authorization, Relationship body) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -2040,7 +2306,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -2058,9 +2324,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<Relationship> returnType = new GenericType<Relationship>() {};
-    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Relationship>() {};
+    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -2071,8 +2343,9 @@ public class IndividualsApi {
    * @param authorization 
    * @return void
    */
-  public void deleteRelationship(Integer nedId, Integer relationshipId, String authorization) throws ApiException {
+  public void deleteRelationship (Integer nedId, Integer relationshipId, String authorization) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -2097,7 +2370,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -2115,8 +2388,14 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, null);
+
     
+    
+    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
+    
+    
+
+
   }
   
   /**
@@ -2125,8 +2404,9 @@ public class IndividualsApi {
    * @param nedId 
    * @return List<Uniqueidentifier>
    */
-  public List<Uniqueidentifier> getUids(Integer nedId) throws ApiException {
+  public List<Uniqueidentifier> getUids (Integer nedId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -2161,9 +2441,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<List<Uniqueidentifier>> returnType = new GenericType<List<Uniqueidentifier>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<List<Uniqueidentifier>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -2174,8 +2460,9 @@ public class IndividualsApi {
    * @param authorization 
    * @return Uniqueidentifier
    */
-  public Uniqueidentifier createUid(Integer nedId, Uniqueidentifier body, String authorization) throws ApiException {
+  public Uniqueidentifier createUid (Integer nedId, Uniqueidentifier body, String authorization) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -2194,7 +2481,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -2212,9 +2499,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<Uniqueidentifier> returnType = new GenericType<Uniqueidentifier>() {};
-    return apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Uniqueidentifier>() {};
+    return apiClient.invokeAPI(path, "POST", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -2224,8 +2517,9 @@ public class IndividualsApi {
    * @param id 
    * @return Uniqueidentifier
    */
-  public Uniqueidentifier getUid(Integer nedId, Integer id) throws ApiException {
+  public Uniqueidentifier getUid (Integer nedId, Integer id) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -2266,9 +2560,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<Uniqueidentifier> returnType = new GenericType<Uniqueidentifier>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Uniqueidentifier>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -2280,8 +2580,9 @@ public class IndividualsApi {
    * @param body 
    * @return Uniqueidentifier
    */
-  public Uniqueidentifier updateUid(Integer nedId, Integer id, String authorization, Uniqueidentifier body) throws ApiException {
+  public Uniqueidentifier updateUid (Integer nedId, Integer id, String authorization, Uniqueidentifier body) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -2306,7 +2607,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -2324,9 +2625,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<Uniqueidentifier> returnType = new GenericType<Uniqueidentifier>() {};
-    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Uniqueidentifier>() {};
+    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -2337,8 +2644,9 @@ public class IndividualsApi {
    * @param authorization 
    * @return void
    */
-  public void deleteUid(Integer nedId, Integer id, String authorization) throws ApiException {
+  public void deleteUid (Integer nedId, Integer id, String authorization) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -2363,7 +2671,7 @@ public class IndividualsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -2381,8 +2689,14 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, null);
+
     
+    
+    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
+    
+    
+
+
   }
   
   /**
@@ -2392,8 +2706,9 @@ public class IndividualsApi {
    * @param uidValue 
    * @return IndividualComposite
    */
-  public IndividualComposite readIndividualByUid(String uidType, String uidValue) throws ApiException {
+  public IndividualComposite readIndividualByUid (String uidType, String uidValue) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'uidType' is set
      if (uidType == null) {
@@ -2434,9 +2749,15 @@ public class IndividualsApi {
     String[] authNames = new String[] { "basic" };
 
     
-    GenericType<IndividualComposite> returnType = new GenericType<IndividualComposite>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<IndividualComposite>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
 }

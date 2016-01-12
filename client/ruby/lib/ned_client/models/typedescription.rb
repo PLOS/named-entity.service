@@ -1,33 +1,30 @@
 module NedClient
+  # 
   class Typedescription < BaseObject
-    attr_accessor :id
-
-    attr_accessor :description
-
-    attr_accessor :howused
-
-    attr_accessor :created
-
-    attr_accessor :lastmodified
-
-    # Attribute mapping from ruby-style variable name to JSON key.
+    attr_accessor :id, :description, :howused, :created, :lastmodified
+    # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
         
+        # 
         :'id' => :'id',
         
+        # 
         :'description' => :'description',
         
+        # 
         :'howused' => :'howused',
         
+        # 
         :'created' => :'created',
         
+        # 
         :'lastmodified' => :'lastmodified'
         
       }
     end
 
-    # Attribute type mapping.
+    # attribute type
     def self.swagger_types
       {
         :'id' => :'Integer',
@@ -40,7 +37,7 @@ module NedClient
     end
 
     def initialize(attributes = {})
-      return unless attributes.is_a?(Hash)
+      return if !attributes.is_a?(Hash) || attributes.empty?
 
       # convert string to symbol for hash key
       attributes = attributes.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
@@ -68,25 +65,5 @@ module NedClient
       
     end
 
-    # Check equality by comparing each attribute.
-    def ==(o)
-      return true if self.equal?(o)
-      self.class == o.class &&
-          id == o.id &&
-          description == o.description &&
-          howused == o.howused &&
-          created == o.created &&
-          lastmodified == o.lastmodified
-    end
-
-    # @see the `==` method
-    def eql?(o)
-      self == o
-    end
-
-    # Calculate hash code according to all attributes.
-    def hash
-      [id, description, howused, created, lastmodified].hash
-    end
   end
 end

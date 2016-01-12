@@ -1,69 +1,57 @@
 module NedClient
+  # 
   class Uniqueidentifier < BaseObject
-    attr_accessor :id
-
-    attr_accessor :nedid
-
-    attr_accessor :source
-
-    attr_accessor :sourcetypeid
-
-    attr_accessor :created
-
-    attr_accessor :lastmodified
-
-    attr_accessor :createdby
-
-    attr_accessor :createdbyname
-
-    attr_accessor :lastmodifiedby
-
-    attr_accessor :lastmodifiedbyname
-
-    attr_accessor :typeid
-
-    attr_accessor :type
-
-    attr_accessor :uniqueidentifier
-
-    attr_accessor :metadata
-
-    # Attribute mapping from ruby-style variable name to JSON key.
+    attr_accessor :id, :nedid, :source, :sourcetypeid, :created, :lastmodified, :createdby, :createdbyname, :lastmodifiedby, :lastmodifiedbyname, :typeid, :type, :uniqueidentifier, :metadata
+    # attribute mapping from ruby-style variable name to JSON key
     def self.attribute_map
       {
         
+        # 
         :'id' => :'id',
         
+        # 
         :'nedid' => :'nedid',
         
+        # 
         :'source' => :'source',
         
+        # 
         :'sourcetypeid' => :'sourcetypeid',
         
+        # 
         :'created' => :'created',
         
+        # 
         :'lastmodified' => :'lastmodified',
         
+        # 
         :'createdby' => :'createdby',
         
+        # 
         :'createdbyname' => :'createdbyname',
         
+        # 
         :'lastmodifiedby' => :'lastmodifiedby',
         
+        # 
         :'lastmodifiedbyname' => :'lastmodifiedbyname',
         
+        # 
         :'typeid' => :'typeid',
         
+        # 
         :'type' => :'type',
         
+        # 
         :'uniqueidentifier' => :'uniqueidentifier',
         
+        # 
         :'metadata' => :'metadata'
         
       }
     end
 
-    # Attribute type mapping.
+    # attribute type
     def self.swagger_types
       {
         :'id' => :'Integer',
@@ -85,7 +73,7 @@ module NedClient
     end
 
     def initialize(attributes = {})
-      return unless attributes.is_a?(Hash)
+      return if !attributes.is_a?(Hash) || attributes.empty?
 
       # convert string to symbol for hash key
       attributes = attributes.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
@@ -149,34 +137,5 @@ module NedClient
       
     end
 
-    # Check equality by comparing each attribute.
-    def ==(o)
-      return true if self.equal?(o)
-      self.class == o.class &&
-          id == o.id &&
-          nedid == o.nedid &&
-          source == o.source &&
-          sourcetypeid == o.sourcetypeid &&
-          created == o.created &&
-          lastmodified == o.lastmodified &&
-          createdby == o.createdby &&
-          createdbyname == o.createdbyname &&
-          lastmodifiedby == o.lastmodifiedby &&
-          lastmodifiedbyname == o.lastmodifiedbyname &&
-          typeid == o.typeid &&
-          type == o.type &&
-          uniqueidentifier == o.uniqueidentifier &&
-          metadata == o.metadata
-    end
-
-    # @see the `==` method
-    def eql?(o)
-      self == o
-    end
-
-    # Calculate hash code according to all attributes.
-    def hash
-      [id, nedid, source, sourcetypeid, created, lastmodified, createdby, createdbyname, lastmodifiedby, lastmodifiedbyname, typeid, type, uniqueidentifier, metadata].hash
-    end
   end
 end

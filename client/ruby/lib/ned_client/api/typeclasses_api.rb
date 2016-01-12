@@ -4,30 +4,19 @@ module NedClient
   class TypeclassesApi
     attr_accessor :api_client
 
-    def initialize(api_client = ApiClient.default)
-      @api_client = api_client
+    def initialize(api_client = nil)
+      @api_client = api_client || Configuration.api_client
     end
 
-    # List
+    # List global types
     # 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :offset 
     # @option opts [Integer] :limit 
     # @return [Array<Typedescription>]
     def list(opts = {})
-      data, status_code, headers = list_with_http_info(opts)
-      return data
-    end
-
-    # List
-    # 
-    # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :offset 
-    # @option opts [Integer] :limit 
-    # @return [Array<(Array<Typedescription>, Fixnum, Hash)>] Array<Typedescription> data, response status code and response headers
-    def list_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: TypeclassesApi#list ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: TypeclassesApi#list ..."
       end
       
       # resource path
@@ -57,37 +46,27 @@ module NedClient
       
 
       auth_names = ['basic']
-      data, status_code, headers = @api_client.call_api(:GET, path,
+      result = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Array<Typedescription>')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: TypeclassesApi#list\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: TypeclassesApi#list. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
-    # Create
+    # Create global type
     # 
     # @param [Hash] opts the optional parameters
     # @option opts [Typedescription] :body 
     # @return [Typedescription]
     def create(opts = {})
-      data, status_code, headers = create_with_http_info(opts)
-      return data
-    end
-
-    # Create
-    # 
-    # @param [Hash] opts the optional parameters
-    # @option opts [Typedescription] :body 
-    # @return [Array<(Typedescription, Fixnum, Hash)>] Typedescription data, response status code and response headers
-    def create_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: TypeclassesApi#create ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: TypeclassesApi#create ..."
       end
       
       # resource path
@@ -115,37 +94,27 @@ module NedClient
       
 
       auth_names = ['basic']
-      data, status_code, headers = @api_client.call_api(:POST, path,
+      result = @api_client.call_api(:POST, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Typedescription')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: TypeclassesApi#create\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: TypeclassesApi#create. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
-    # Read
+    # Read global type
     # 
     # @param id 
     # @param [Hash] opts the optional parameters
     # @return [Typedescription]
     def read(id, opts = {})
-      data, status_code, headers = read_with_http_info(id, opts)
-      return data
-    end
-
-    # Read
-    # 
-    # @param id 
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(Typedescription, Fixnum, Hash)>] Typedescription data, response status code and response headers
-    def read_with_http_info(id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: TypeclassesApi#read ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: TypeclassesApi#read ..."
       end
       
       # verify the required parameter 'id' is set
@@ -176,37 +145,27 @@ module NedClient
       
 
       auth_names = ['basic']
-      data, status_code, headers = @api_client.call_api(:GET, path,
+      result = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Typedescription')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: TypeclassesApi#read\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: TypeclassesApi#read. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
-    # Update
+    # Update global type
     # 
     # @param [Hash] opts the optional parameters
     # @option opts [Typedescription] :body 
     # @return [Typedescription]
     def update(opts = {})
-      data, status_code, headers = update_with_http_info(opts)
-      return data
-    end
-
-    # Update
-    # 
-    # @param [Hash] opts the optional parameters
-    # @option opts [Typedescription] :body 
-    # @return [Array<(Typedescription, Fixnum, Hash)>] Typedescription data, response status code and response headers
-    def update_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: TypeclassesApi#update ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: TypeclassesApi#update ..."
       end
       
       # resource path
@@ -234,37 +193,27 @@ module NedClient
       
 
       auth_names = ['basic']
-      data, status_code, headers = @api_client.call_api(:PUT, path,
+      result = @api_client.call_api(:PUT, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Typedescription')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: TypeclassesApi#update\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: TypeclassesApi#update. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
-    # Delete
+    # Delete global type
     # 
     # @param id 
     # @param [Hash] opts the optional parameters
     # @return [nil]
     def delete(id, opts = {})
-      delete_with_http_info(id, opts)
-      return nil
-    end
-
-    # Delete
-    # 
-    # @param id 
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Fixnum, Hash)>] nil, response status code and response headers
-    def delete_with_http_info(id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: TypeclassesApi#delete ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: TypeclassesApi#delete ..."
       end
       
       # verify the required parameter 'id' is set
@@ -295,36 +244,26 @@ module NedClient
       
 
       auth_names = ['basic']
-      data, status_code, headers = @api_client.call_api(:DELETE, path,
+      @api_client.call_api(:DELETE, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: TypeclassesApi#delete\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: TypeclassesApi#delete"
       end
-      return data, status_code, headers
+      return nil
     end
 
-    # List global types
+    # List global type values
     # 
     # @param typeclassid 
     # @param [Hash] opts the optional parameters
     # @return [nil]
     def get_global_type_for_type_class(typeclassid, opts = {})
-      get_global_type_for_type_class_with_http_info(typeclassid, opts)
-      return nil
-    end
-
-    # List global types
-    # 
-    # @param typeclassid 
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Fixnum, Hash)>] nil, response status code and response headers
-    def get_global_type_for_type_class_with_http_info(typeclassid, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: TypeclassesApi#get_global_type_for_type_class ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: TypeclassesApi#get_global_type_for_type_class ..."
       end
       
       # verify the required parameter 'typeclassid' is set
@@ -355,38 +294,27 @@ module NedClient
       
 
       auth_names = ['basic']
-      data, status_code, headers = @api_client.call_api(:GET, path,
+      @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: TypeclassesApi#get_global_type_for_type_class\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: TypeclassesApi#get_global_type_for_type_class"
       end
-      return data, status_code, headers
+      return nil
     end
 
-    # Create global type
+    # Create global type value
     # 
     # @param typeclassid 
     # @param [Hash] opts the optional parameters
     # @option opts [Globaltype] :body 
     # @return [Globaltype]
     def create_global_type(typeclassid, opts = {})
-      data, status_code, headers = create_global_type_with_http_info(typeclassid, opts)
-      return data
-    end
-
-    # Create global type
-    # 
-    # @param typeclassid 
-    # @param [Hash] opts the optional parameters
-    # @option opts [Globaltype] :body 
-    # @return [Array<(Globaltype, Fixnum, Hash)>] Globaltype data, response status code and response headers
-    def create_global_type_with_http_info(typeclassid, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: TypeclassesApi#create_global_type ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: TypeclassesApi#create_global_type ..."
       end
       
       # verify the required parameter 'typeclassid' is set
@@ -417,39 +345,28 @@ module NedClient
       
 
       auth_names = ['basic']
-      data, status_code, headers = @api_client.call_api(:POST, path,
+      result = @api_client.call_api(:POST, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Globaltype')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: TypeclassesApi#create_global_type\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: TypeclassesApi#create_global_type. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
-    # Read global type
+    # Read global type value
     # 
     # @param typeclassid 
     # @param typevalueid 
     # @param [Hash] opts the optional parameters
     # @return [Globaltype]
     def get_global_type(typeclassid, typevalueid, opts = {})
-      data, status_code, headers = get_global_type_with_http_info(typeclassid, typevalueid, opts)
-      return data
-    end
-
-    # Read global type
-    # 
-    # @param typeclassid 
-    # @param typevalueid 
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(Globaltype, Fixnum, Hash)>] Globaltype data, response status code and response headers
-    def get_global_type_with_http_info(typeclassid, typevalueid, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: TypeclassesApi#get_global_type ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: TypeclassesApi#get_global_type ..."
       end
       
       # verify the required parameter 'typeclassid' is set
@@ -483,20 +400,20 @@ module NedClient
       
 
       auth_names = ['basic']
-      data, status_code, headers = @api_client.call_api(:GET, path,
+      result = @api_client.call_api(:GET, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Globaltype')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: TypeclassesApi#get_global_type\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: TypeclassesApi#get_global_type. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
-    # Update global type
+    # Update global type value
     # 
     # @param typeclassid 
     # @param typevalueid 
@@ -504,20 +421,8 @@ module NedClient
     # @option opts [Globaltype] :body 
     # @return [Globaltype]
     def update_global_type(typeclassid, typevalueid, opts = {})
-      data, status_code, headers = update_global_type_with_http_info(typeclassid, typevalueid, opts)
-      return data
-    end
-
-    # Update global type
-    # 
-    # @param typeclassid 
-    # @param typevalueid 
-    # @param [Hash] opts the optional parameters
-    # @option opts [Globaltype] :body 
-    # @return [Array<(Globaltype, Fixnum, Hash)>] Globaltype data, response status code and response headers
-    def update_global_type_with_http_info(typeclassid, typevalueid, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: TypeclassesApi#update_global_type ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: TypeclassesApi#update_global_type ..."
       end
       
       # verify the required parameter 'typeclassid' is set
@@ -551,39 +456,28 @@ module NedClient
       
 
       auth_names = ['basic']
-      data, status_code, headers = @api_client.call_api(:PUT, path,
+      result = @api_client.call_api(:PUT, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names,
         :return_type => 'Globaltype')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: TypeclassesApi#update_global_type\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: TypeclassesApi#update_global_type. Result: #{result.inspect}"
       end
-      return data, status_code, headers
+      return result
     end
 
-    # Delete global type
+    # Delete global type value
     # 
     # @param typeclassid 
     # @param typevalueid 
     # @param [Hash] opts the optional parameters
     # @return [nil]
     def delete_global_type(typeclassid, typevalueid, opts = {})
-      delete_global_type_with_http_info(typeclassid, typevalueid, opts)
-      return nil
-    end
-
-    # Delete global type
-    # 
-    # @param typeclassid 
-    # @param typevalueid 
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Fixnum, Hash)>] nil, response status code and response headers
-    def delete_global_type_with_http_info(typeclassid, typevalueid, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: TypeclassesApi#delete_global_type ..."
+      if Configuration.debugging
+        Configuration.logger.debug "Calling API: TypeclassesApi#delete_global_type ..."
       end
       
       # verify the required parameter 'typeclassid' is set
@@ -617,16 +511,16 @@ module NedClient
       
 
       auth_names = ['basic']
-      data, status_code, headers = @api_client.call_api(:DELETE, path,
+      @api_client.call_api(:DELETE, path,
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
         :auth_names => auth_names)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: TypeclassesApi#delete_global_type\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      if Configuration.debugging
+        Configuration.logger.debug "API called: TypeclassesApi#delete_global_type"
       end
-      return data, status_code, headers
+      return nil
     end
   end
 end

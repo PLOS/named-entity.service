@@ -4,15 +4,13 @@ import org.plos.ned_client.StringUtil;
 import java.util.Date;
 
 
-import java.util.Objects;
 
 import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.*;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-21T13:36:13.082-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
 public class Email   {
   
   private Integer id = null;
@@ -212,37 +210,6 @@ public class Email   {
   }
 
   
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Email email = (Email) o;
-    return Objects.equals(id, email.id) &&
-        Objects.equals(nedid, email.nedid) &&
-        Objects.equals(source, email.source) &&
-        Objects.equals(sourcetypeid, email.sourcetypeid) &&
-        Objects.equals(created, email.created) &&
-        Objects.equals(lastmodified, email.lastmodified) &&
-        Objects.equals(createdby, email.createdby) &&
-        Objects.equals(createdbyname, email.createdbyname) &&
-        Objects.equals(lastmodifiedby, email.lastmodifiedby) &&
-        Objects.equals(lastmodifiedbyname, email.lastmodifiedbyname) &&
-        Objects.equals(type, email.type) &&
-        Objects.equals(typeid, email.typeid) &&
-        Objects.equals(emailaddress, email.emailaddress) &&
-        Objects.equals(verified, email.verified) &&
-        Objects.equals(isactive, email.isactive);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, nedid, source, sourcetypeid, created, lastmodified, createdby, createdbyname, lastmodifiedby, lastmodifiedbyname, type, typeid, emailaddress, verified, isactive);
-  }
 
   @Override
   public String toString()  {

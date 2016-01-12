@@ -79,7 +79,7 @@ class ApiClient(object):
         self.host = host
         self.cookie = cookie
         # Set default User-Agent.
-        self.user_agent = 'Python-Swagger/0.13.0-SNAPSHOT'
+        self.user_agent = 'Python-Swagger/1.1.0-SNAPSHOT'
 
     @property
     def user_agent(self):
@@ -453,9 +453,7 @@ class ApiClient(object):
         for auth in auth_settings:
             auth_setting = config.auth_settings().get(auth)
             if auth_setting:
-                if not auth_setting['value']:
-                    continue
-                elif auth_setting['in'] == 'header':
+                if auth_setting['in'] == 'header':
                     headers[auth_setting['key']] = auth_setting['value']
                 elif auth_setting['in'] == 'query':
                     querys[auth_setting['key']] = auth_setting['value']

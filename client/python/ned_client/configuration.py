@@ -56,7 +56,7 @@ class Configuration(object):
         Constructor
         """
         # Default Base url
-        self.host = "http://localhost/v0"
+        self.host = "https://localhost/v1"
         # Default api client
         self.api_client = None
         # Temp file folder for downloading files
@@ -71,7 +71,6 @@ class Configuration(object):
         self.username = ""
         # Password for HTTP basic authentication
         self.password = ""
-
 
         # Logging Settings
         self.logger = {}
@@ -221,7 +220,6 @@ class Configuration(object):
                     'key': 'Authorization',
                     'value': self.get_basic_auth_token()
                 },
-
         }
 
     def to_debug_report(self):
@@ -234,5 +232,5 @@ class Configuration(object):
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: Swagger Server\n"\
-               "SDK Package Version: 0.13.0-SNAPSHOT".\
+               "SDK Package Version: 1.1.0-SNAPSHOT".\
                format(env=sys.platform, pyversion=sys.version)

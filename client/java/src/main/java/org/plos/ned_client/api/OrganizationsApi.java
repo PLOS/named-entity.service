@@ -1,11 +1,10 @@
 package org.plos.ned_client.api;
 
-import com.sun.jersey.api.client.GenericType;
-
 import org.plos.ned_client.ApiException;
 import org.plos.ned_client.ApiClient;
 import org.plos.ned_client.Configuration;
 import org.plos.ned_client.Pair;
+import org.plos.ned_client.TypeRef;
 
 import org.plos.ned_client.model.OrganizationComposite;
 import org.plos.ned_client.model.Address;
@@ -15,7 +14,7 @@ import org.plos.ned_client.model.Uniqueidentifier;
 
 import java.util.*;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-21T13:36:13.082-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
 public class OrganizationsApi {
   private ApiClient apiClient;
 
@@ -43,8 +42,9 @@ public class OrganizationsApi {
    * @param value 
    * @return List<OrganizationComposite>
    */
-  public List<OrganizationComposite> findOrganizations(String attribute, String value) throws ApiException {
+  public List<OrganizationComposite> findOrganizations (String attribute, String value) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
     // create path and map variables
     String path = "/organizations".replaceAll("\\{format\\}","json");
@@ -77,9 +77,15 @@ public class OrganizationsApi {
     String[] authNames = new String[] {  };
 
     
-    GenericType<List<OrganizationComposite>> returnType = new GenericType<List<OrganizationComposite>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<List<OrganizationComposite>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -89,8 +95,9 @@ public class OrganizationsApi {
    * @param authorization 
    * @return OrganizationComposite
    */
-  public OrganizationComposite createOrganization(OrganizationComposite body, String authorization) throws ApiException {
+  public OrganizationComposite createOrganization (OrganizationComposite body, String authorization) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
     // create path and map variables
     String path = "/organizations".replaceAll("\\{format\\}","json");
@@ -103,7 +110,7 @@ public class OrganizationsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -121,9 +128,15 @@ public class OrganizationsApi {
     String[] authNames = new String[] {  };
 
     
-    GenericType<OrganizationComposite> returnType = new GenericType<OrganizationComposite>() {};
-    return apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<OrganizationComposite>() {};
+    return apiClient.invokeAPI(path, "POST", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -132,8 +145,9 @@ public class OrganizationsApi {
    * @param nedId 
    * @return OrganizationComposite
    */
-  public OrganizationComposite readOrganization(Integer nedId) throws ApiException {
+  public OrganizationComposite readOrganization (Integer nedId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -168,9 +182,15 @@ public class OrganizationsApi {
     String[] authNames = new String[] {  };
 
     
-    GenericType<OrganizationComposite> returnType = new GenericType<OrganizationComposite>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<OrganizationComposite>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -179,8 +199,9 @@ public class OrganizationsApi {
    * @param nedId 
    * @return List<Address>
    */
-  public List<Address> getAddresses(Integer nedId) throws ApiException {
+  public List<Address> getAddresses (Integer nedId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -215,9 +236,15 @@ public class OrganizationsApi {
     String[] authNames = new String[] {  };
 
     
-    GenericType<List<Address>> returnType = new GenericType<List<Address>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<List<Address>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -228,8 +255,9 @@ public class OrganizationsApi {
    * @param authorization 
    * @return Address
    */
-  public Address createAddress(Integer nedId, Address body, String authorization) throws ApiException {
+  public Address createAddress (Integer nedId, Address body, String authorization) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -248,7 +276,7 @@ public class OrganizationsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -266,9 +294,15 @@ public class OrganizationsApi {
     String[] authNames = new String[] {  };
 
     
-    GenericType<Address> returnType = new GenericType<Address>() {};
-    return apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Address>() {};
+    return apiClient.invokeAPI(path, "POST", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -278,8 +312,9 @@ public class OrganizationsApi {
    * @param addressId 
    * @return Address
    */
-  public Address getAddress(Integer nedId, Integer addressId) throws ApiException {
+  public Address getAddress (Integer nedId, Integer addressId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -320,9 +355,15 @@ public class OrganizationsApi {
     String[] authNames = new String[] {  };
 
     
-    GenericType<Address> returnType = new GenericType<Address>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Address>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -334,8 +375,9 @@ public class OrganizationsApi {
    * @param authorization 
    * @return Address
    */
-  public Address updateAddress(Integer nedId, Integer addressId, Address body, String authorization) throws ApiException {
+  public Address updateAddress (Integer nedId, Integer addressId, Address body, String authorization) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -360,7 +402,7 @@ public class OrganizationsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -378,9 +420,15 @@ public class OrganizationsApi {
     String[] authNames = new String[] {  };
 
     
-    GenericType<Address> returnType = new GenericType<Address>() {};
-    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Address>() {};
+    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -391,8 +439,9 @@ public class OrganizationsApi {
    * @param authorization 
    * @return List<Address>
    */
-  public List<Address> deleteAddress(Integer nedId, Integer addressId, String authorization) throws ApiException {
+  public List<Address> deleteAddress (Integer nedId, Integer addressId, String authorization) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -417,7 +466,7 @@ public class OrganizationsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -435,9 +484,15 @@ public class OrganizationsApi {
     String[] authNames = new String[] {  };
 
     
-    GenericType<List<Address>> returnType = new GenericType<List<Address>>() {};
-    return apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<List<Address>>() {};
+    return apiClient.invokeAPI(path, "DELETE", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -446,8 +501,9 @@ public class OrganizationsApi {
    * @param nedId 
    * @return List<Email>
    */
-  public List<Email> getEmails(Integer nedId) throws ApiException {
+  public List<Email> getEmails (Integer nedId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -482,9 +538,15 @@ public class OrganizationsApi {
     String[] authNames = new String[] {  };
 
     
-    GenericType<List<Email>> returnType = new GenericType<List<Email>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<List<Email>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -495,8 +557,9 @@ public class OrganizationsApi {
    * @param authorization 
    * @return Email
    */
-  public Email createEmail(Integer nedId, Email body, String authorization) throws ApiException {
+  public Email createEmail (Integer nedId, Email body, String authorization) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -515,7 +578,7 @@ public class OrganizationsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -533,9 +596,15 @@ public class OrganizationsApi {
     String[] authNames = new String[] {  };
 
     
-    GenericType<Email> returnType = new GenericType<Email>() {};
-    return apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Email>() {};
+    return apiClient.invokeAPI(path, "POST", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -545,8 +614,9 @@ public class OrganizationsApi {
    * @param emailId 
    * @return Email
    */
-  public Email getEmail(Integer nedId, Integer emailId) throws ApiException {
+  public Email getEmail (Integer nedId, Integer emailId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -587,9 +657,15 @@ public class OrganizationsApi {
     String[] authNames = new String[] {  };
 
     
-    GenericType<Email> returnType = new GenericType<Email>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Email>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -601,8 +677,9 @@ public class OrganizationsApi {
    * @param authorization 
    * @return Email
    */
-  public Email updateEmail(Integer nedId, Integer emailId, Email body, String authorization) throws ApiException {
+  public Email updateEmail (Integer nedId, Integer emailId, Email body, String authorization) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -627,7 +704,7 @@ public class OrganizationsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -645,9 +722,15 @@ public class OrganizationsApi {
     String[] authNames = new String[] {  };
 
     
-    GenericType<Email> returnType = new GenericType<Email>() {};
-    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Email>() {};
+    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -658,8 +741,9 @@ public class OrganizationsApi {
    * @param authorization 
    * @return void
    */
-  public void deleteEmail(Integer nedId, Integer emailId, String authorization) throws ApiException {
+  public void deleteEmail (Integer nedId, Integer emailId, String authorization) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -684,7 +768,7 @@ public class OrganizationsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -702,8 +786,14 @@ public class OrganizationsApi {
     String[] authNames = new String[] {  };
 
     
-    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, null);
+
     
+    
+    apiClient.invokeAPI(path, "DELETE", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
+    
+    
+
+
   }
   
   /**
@@ -712,8 +802,9 @@ public class OrganizationsApi {
    * @param nedId 
    * @return List<Phonenumber>
    */
-  public List<Phonenumber> getPhonenumbers(Integer nedId) throws ApiException {
+  public List<Phonenumber> getPhonenumbers (Integer nedId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -748,9 +839,15 @@ public class OrganizationsApi {
     String[] authNames = new String[] {  };
 
     
-    GenericType<List<Phonenumber>> returnType = new GenericType<List<Phonenumber>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<List<Phonenumber>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -759,8 +856,9 @@ public class OrganizationsApi {
    * @param nedId 
    * @return List<Uniqueidentifier>
    */
-  public List<Uniqueidentifier> getUids(Integer nedId) throws ApiException {
+  public List<Uniqueidentifier> getUids (Integer nedId) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -795,9 +893,15 @@ public class OrganizationsApi {
     String[] authNames = new String[] {  };
 
     
-    GenericType<List<Uniqueidentifier>> returnType = new GenericType<List<Uniqueidentifier>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<List<Uniqueidentifier>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -808,8 +912,9 @@ public class OrganizationsApi {
    * @param authorization 
    * @return Uniqueidentifier
    */
-  public Uniqueidentifier createUid(Integer nedId, Uniqueidentifier body, String authorization) throws ApiException {
+  public Uniqueidentifier createUid (Integer nedId, Uniqueidentifier body, String authorization) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -828,7 +933,7 @@ public class OrganizationsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -846,9 +951,15 @@ public class OrganizationsApi {
     String[] authNames = new String[] {  };
 
     
-    GenericType<Uniqueidentifier> returnType = new GenericType<Uniqueidentifier>() {};
-    return apiClient.invokeAPI(path, "POST", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Uniqueidentifier>() {};
+    return apiClient.invokeAPI(path, "POST", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -858,8 +969,9 @@ public class OrganizationsApi {
    * @param id 
    * @return Uniqueidentifier
    */
-  public Uniqueidentifier getUid(Integer nedId, Integer id) throws ApiException {
+  public Uniqueidentifier getUid (Integer nedId, Integer id) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -900,9 +1012,15 @@ public class OrganizationsApi {
     String[] authNames = new String[] {  };
 
     
-    GenericType<Uniqueidentifier> returnType = new GenericType<Uniqueidentifier>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Uniqueidentifier>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -914,8 +1032,9 @@ public class OrganizationsApi {
    * @param body 
    * @return Uniqueidentifier
    */
-  public Uniqueidentifier updateUid(Integer nedId, Integer id, String authorization, Uniqueidentifier body) throws ApiException {
+  public Uniqueidentifier updateUid (Integer nedId, Integer id, String authorization, Uniqueidentifier body) throws ApiException {
     Object postBody = body;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'nedId' is set
      if (nedId == null) {
@@ -940,7 +1059,7 @@ public class OrganizationsApi {
     
 
     if (authorization != null)
-      headerParams.put("Authorization", apiClient.parameterToString(authorization));
+    headerParams.put("Authorization", apiClient.parameterToString(authorization));
     
 
     
@@ -958,9 +1077,15 @@ public class OrganizationsApi {
     String[] authNames = new String[] {  };
 
     
-    GenericType<Uniqueidentifier> returnType = new GenericType<Uniqueidentifier>() {};
-    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<Uniqueidentifier>() {};
+    return apiClient.invokeAPI(path, "PUT", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
   /**
@@ -970,8 +1095,9 @@ public class OrganizationsApi {
    * @param uidValue 
    * @return OrganizationComposite
    */
-  public OrganizationComposite readOrganizationByUid(String uidType, String uidValue) throws ApiException {
+  public OrganizationComposite readOrganizationByUid (String uidType, String uidValue) throws ApiException {
     Object postBody = null;
+    byte[] postBinaryBody = null;
     
      // verify the required parameter 'uidType' is set
      if (uidType == null) {
@@ -1012,9 +1138,15 @@ public class OrganizationsApi {
     String[] authNames = new String[] {  };
 
     
-    GenericType<OrganizationComposite> returnType = new GenericType<OrganizationComposite>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+
     
+    
+    TypeRef returnType = new TypeRef<OrganizationComposite>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    
+    
+
+
   }
   
 }

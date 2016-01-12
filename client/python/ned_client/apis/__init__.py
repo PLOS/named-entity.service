@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 
 # import apis into api package
+from .queries_api import QueriesApi
 from .institutionsearch_api import InstitutionsearchApi
 from .typeclasses_api import TypeclassesApi
 from .organizations_api import OrganizationsApi

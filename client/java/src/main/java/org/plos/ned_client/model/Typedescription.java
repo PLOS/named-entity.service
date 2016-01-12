@@ -4,15 +4,13 @@ import org.plos.ned_client.StringUtil;
 import java.util.Date;
 
 
-import java.util.Objects;
 
 import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.*;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-21T13:36:13.082-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
 public class Typedescription   {
   
   private Integer id = null;
@@ -82,27 +80,6 @@ public class Typedescription   {
   }
 
   
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Typedescription typedescription = (Typedescription) o;
-    return Objects.equals(id, typedescription.id) &&
-        Objects.equals(description, typedescription.description) &&
-        Objects.equals(howused, typedescription.howused) &&
-        Objects.equals(created, typedescription.created) &&
-        Objects.equals(lastmodified, typedescription.lastmodified);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, description, howused, created, lastmodified);
-  }
 
   @Override
   public String toString()  {

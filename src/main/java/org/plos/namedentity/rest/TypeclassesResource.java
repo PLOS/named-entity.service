@@ -28,7 +28,7 @@ public class TypeclassesResource extends BaseResource {
 
   @GET
   @Path("/{id}")
-  @ApiOperation(value = "Read", response = Typedescription.class)
+  @ApiOperation(value = "Read global type", response = Typedescription.class)
   public Response read(@PathParam("id") int id) {
     try {
       return Response.status(Response.Status.OK).entity(
@@ -41,7 +41,7 @@ public class TypeclassesResource extends BaseResource {
   }
 
   @GET
-  @ApiOperation(value = "List", response = Typedescription.class, responseContainer = "List")
+  @ApiOperation(value = "List global types", response = Typedescription.class, responseContainer = "List")
   public Response list(@ApiParam(required = false) @QueryParam("offset") Integer offset,
                        @ApiParam(required = false) @QueryParam("limit") Integer limit) {
     try {
@@ -64,7 +64,7 @@ public class TypeclassesResource extends BaseResource {
   }
 
   @POST
-  @ApiOperation(value = "Create", response = Typedescription.class)
+  @ApiOperation(value = "Create global type", response = Typedescription.class)
   public Response create(Typedescription typeDescription) {
     try {
       Integer pkId = crudService.create(typeDescription);
@@ -80,7 +80,7 @@ public class TypeclassesResource extends BaseResource {
 
   @PUT
   @Path("/{id}")
-  @ApiOperation(value = "Update", response = Typedescription.class)
+  @ApiOperation(value = "Update global type", response = Typedescription.class)
   public Response update(Typedescription typeDescription) {
     try {
       crudService.update(typeDescription);
@@ -97,7 +97,7 @@ public class TypeclassesResource extends BaseResource {
 
   @DELETE
   @Path("/{id}")
-  @ApiOperation("Delete")
+  @ApiOperation("Delete global type")
   public Response delete(@PathParam("id") int id) {
     try {
       Typedescription entity = new Typedescription();
@@ -119,7 +119,7 @@ public class TypeclassesResource extends BaseResource {
 
   @GET
   @Path("/{typeclassid}/typevalues/{typevalueid}")
-  @ApiOperation(value = "Read global type", response = Globaltype.class)
+  @ApiOperation(value = "Read global type value", response = Globaltype.class)
   public Response getGlobalType(@PathParam("typeclassid") int typeClassId,
                                 @PathParam("typevalueid") int typeValueId) {
     try {
@@ -136,7 +136,7 @@ public class TypeclassesResource extends BaseResource {
 
   @GET
   @Path("/{typeclassid}/typevalues")
-  @ApiOperation("List global types")
+  @ApiOperation("List global type values")
   public Response getGlobalTypeForTypeClass(@PathParam("typeclassid") int typeClassId) {
     try {
       Globaltype searchCriteria = new Globaltype();
@@ -157,7 +157,7 @@ public class TypeclassesResource extends BaseResource {
 
   @POST
   @Path("/{typeclassid}/typevalues")
-  @ApiOperation(value = "Create global type", response = Globaltype.class)
+  @ApiOperation(value = "Create global type value", response = Globaltype.class)
   public Response createGlobalType(@PathParam("typeclassid") int typeClassId, Globaltype globalType) {
     try {
       globalType.setTypeid(typeClassId);
@@ -176,7 +176,7 @@ public class TypeclassesResource extends BaseResource {
 
   @PUT
   @Path("/{typeclassid}/typevalues/{typevalueid}")
-  @ApiOperation(value = "Update global type", response = Globaltype.class)
+  @ApiOperation(value = "Update global type value", response = Globaltype.class)
   public Response updateGlobalType(@PathParam("typeclassid") int typeClassId,
                                    @PathParam("typevalueid") int typeValueId,
                                    Globaltype globalType) {
@@ -198,7 +198,7 @@ public class TypeclassesResource extends BaseResource {
 
   @DELETE
   @Path("/{typeclassid}/typevalues/{typevalueid}")
-  @ApiOperation("Delete global type")
+  @ApiOperation("Delete global type value")
   public Response deleteGlobalType(@PathParam("typeclassid") int typeClassId,
                                    @PathParam("typevalueid") int typeValueId) {
     try {

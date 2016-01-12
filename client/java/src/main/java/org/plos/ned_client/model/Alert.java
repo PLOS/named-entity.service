@@ -4,15 +4,13 @@ import org.plos.ned_client.StringUtil;
 import java.util.Date;
 
 
-import java.util.Objects;
 
 import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.*;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-21T13:36:13.082-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
 public class Alert   {
   
   private Integer id = null;
@@ -251,40 +249,6 @@ public class Alert   {
   }
 
   
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Alert alert = (Alert) o;
-    return Objects.equals(id, alert.id) &&
-        Objects.equals(nedid, alert.nedid) &&
-        Objects.equals(source, alert.source) &&
-        Objects.equals(sourcetypeid, alert.sourcetypeid) &&
-        Objects.equals(created, alert.created) &&
-        Objects.equals(lastmodified, alert.lastmodified) &&
-        Objects.equals(createdby, alert.createdby) &&
-        Objects.equals(createdbyname, alert.createdbyname) &&
-        Objects.equals(lastmodifiedby, alert.lastmodifiedby) &&
-        Objects.equals(lastmodifiedbyname, alert.lastmodifiedbyname) &&
-        Objects.equals(typeid, alert.typeid) &&
-        Objects.equals(type, alert.type) &&
-        Objects.equals(frequencytypeid, alert.frequencytypeid) &&
-        Objects.equals(frequency, alert.frequency) &&
-        Objects.equals(journaltypeid, alert.journaltypeid) &&
-        Objects.equals(journal, alert.journal) &&
-        Objects.equals(name, alert.name) &&
-        Objects.equals(query, alert.query);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, nedid, source, sourcetypeid, created, lastmodified, createdby, createdbyname, lastmodifiedby, lastmodifiedbyname, typeid, type, frequencytypeid, frequency, journaltypeid, journal, name, query);
-  }
 
   @Override
   public String toString()  {
