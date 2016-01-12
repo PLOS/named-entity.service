@@ -28,7 +28,7 @@ public interface NamedEntityDBService {
 
   Integer newNamedEntityId(NamedPartyEnum typeCode, Integer ambraId);
 
-  List<Alert> getAlerts(String frequency);
+  List<Alert> getAlerts(String frequency, String journal);
 
   <T> Integer create(T t);
 

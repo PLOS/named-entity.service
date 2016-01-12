@@ -8,7 +8,7 @@ import org.plos.namedentity.api.entity.Alert;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -21,13 +21,14 @@ import java.util.List;
 public class QueriesResource extends BaseResource {
 
   @GET
-  @Path("/alerts/{frequency}")
+  @Path("/alerts")
   @ApiOperation(value="Get a list of search alerts by type", response=Alert.class, responseContainer = "List")
-  public Response getAlerts(@PathParam("frequency") String frequency) {
+  public Response getAlerts(@QueryParam("frequency") String frequency,
+                            @QueryParam("journal") String journal) {
     try {
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<Alert>>(
-              namedEntityService.getAlerts(frequency)
+              namedEntityService.getAlerts(frequency, journal)
           ) {
           }).build();
     } catch (NedException e) {
