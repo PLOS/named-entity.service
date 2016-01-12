@@ -39,12 +39,12 @@ import org.plos.ned_client.auth.HttpBasicAuth;
 import org.plos.ned_client.auth.ApiKeyAuth;
 import org.plos.ned_client.auth.OAuth;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-12-29T17:05:32.045-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
 public class ApiClient {
   private Map<String, Client> hostMap = new HashMap<String, Client>();
   private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
   private boolean debugging = false;
-  private String basePath = "https://localhost/v0";
+  private String basePath = "https://localhost/v1";
   private JSON json = new JSON();
 
   private Map<String, Authentication> authentications;

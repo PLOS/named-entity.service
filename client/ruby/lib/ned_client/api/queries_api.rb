@@ -10,22 +10,22 @@ module NedClient
 
     # Get a list of search alerts by type
     # 
-    # @param frequency 
     # @param [Hash] opts the optional parameters
+    # @option opts [String] :frequency 
+    # @option opts [String] :journal 
     # @return [Array<Alert>]
-    def get_alerts(frequency, opts = {})
+    def get_alerts(opts = {})
       if Configuration.debugging
         Configuration.logger.debug "Calling API: QueriesApi#get_alerts ..."
       end
       
-      # verify the required parameter 'frequency' is set
-      fail "Missing the required parameter 'frequency' when calling get_alerts" if frequency.nil?
-      
       # resource path
-      path = "/queries/alerts/{frequency}".sub('{format}','json').sub('{' + 'frequency' + '}', frequency.to_s)
+      path = "/queries/alerts".sub('{format}','json')
 
       # query parameters
       query_params = {}
+      query_params[:'frequency'] = opts[:'frequency'] if opts[:'frequency']
+      query_params[:'journal'] = opts[:'journal'] if opts[:'journal']
 
       # header parameters
       header_params = {}

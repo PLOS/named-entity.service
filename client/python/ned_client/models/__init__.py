@@ -16,5 +16,5 @@ from .auth import Auth
 from .relationship import Relationship
 from .alert import Alert
 from .individual_composite import IndividualComposite
-from .phonenumber import Phonenumber
 from .individualprofile import Individualprofile
+from .phonenumber import Phonenumber

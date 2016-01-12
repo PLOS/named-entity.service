@@ -16,8 +16,8 @@ from .models.auth import Auth
 from .models.relationship import Relationship
 from .models.alert import Alert
 from .models.individual_composite import IndividualComposite
-from .models.phonenumber import Phonenumber
 from .models.individualprofile import Individualprofile
+from .models.phonenumber import Phonenumber
 
 # import apis into sdk package
 from .apis.queries_api import QueriesApi

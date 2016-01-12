@@ -21,8 +21,8 @@ require 'ned_client/models/auth'
 require 'ned_client/models/relationship'
 require 'ned_client/models/alert'
 require 'ned_client/models/individual_composite'
-require 'ned_client/models/phonenumber'
 require 'ned_client/models/individualprofile'
+require 'ned_client/models/phonenumber'
 
 # APIs
 require 'ned_client/api/queries_api'

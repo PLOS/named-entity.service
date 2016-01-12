@@ -105,7 +105,7 @@ module NedClient
     def initialize
       @scheme = 'https'
       @host = ''
-      @base_path = '/v0'
+      @base_path = '/v1'
       @api_key = {}
       @api_key_prefix = {}
       @verify_ssl = true

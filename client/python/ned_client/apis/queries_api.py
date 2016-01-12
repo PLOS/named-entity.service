@@ -45,7 +45,7 @@ class QueriesApi(object):
                 config.api_client = ApiClient()
             self.api_client = config.api_client
 
-    def get_alerts(self, frequency, **kwargs):
+    def get_alerts(self, **kwargs):
         """
         Get a list of search alerts by type
         
@@ -56,20 +56,18 @@ class QueriesApi(object):
         >>> def callback_function(response):
         >>>     pprint(response)
         >>>
-        >>> thread = api.get_alerts(frequency, callback=callback_function)
+        >>> thread = api.get_alerts(callback=callback_function)
 
         :param callback function: The callback function
             for asynchronous request. (optional)
-        :param str frequency:  (required)
+        :param str frequency: 
+        :param str journal: 
         :return: list[Alert]
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'frequency' is set
-        if frequency is None:
-            raise ValueError("Missing the required parameter `frequency` when calling `get_alerts`")
 
-        all_params = ['frequency']
+        all_params = ['frequency', 'journal']
         all_params.append('callback')
 
         params = locals()
@@ -82,14 +80,16 @@ class QueriesApi(object):
             params[key] = val
         del params['kwargs']
 
-        resource_path = '/queries/alerts/{frequency}'.replace('{format}', 'json')
+        resource_path = '/queries/alerts'.replace('{format}', 'json')
         method = 'GET'
 
         path_params = {}
-        if 'frequency' in params:
-            path_params['frequency'] = params['frequency']
 
         query_params = {}
+        if 'frequency' in params:
+            query_params['frequency'] = params['frequency']
+        if 'journal' in params:
+            query_params['journal'] = params['journal']
 
         header_params = {}
 
