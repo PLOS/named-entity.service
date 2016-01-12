@@ -4,8 +4,8 @@ ned_client.configuration.username = 'akita'
 ned_client.configuration.password = 'akita'
 # ned_client.configuration.debug = True
 
-apiclient = ned_client.ApiClient('http://localhost:8080/v0')
-# apiclient = ned_client.ApiClient('http://localhost:8080/v0', header_name="Authorization", header_value=ned_client.configuration.get_basic_auth_token())
+apiclient = ned_client.ApiClient('http://localhost:8080/v1')
+# apiclient = ned_client.ApiClient('http://localhost:8080/v1', header_name="Authorization", header_value=ned_client.configuration.get_basic_auth_token())
 
 serviceapi = ned_client.ServiceApi(apiclient)
 typeclassesapi = ned_client.TypeclassesApi(apiclient)

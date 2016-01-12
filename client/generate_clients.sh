@@ -2,7 +2,7 @@
 
 CODEGEN=~/applications/swagger-codegen
 
-SERVICE=http://localhost:8080/v0
+SERVICE=http://localhost:8080/v1
 
 SWAGGER=$SERVICE/swagger.json
 

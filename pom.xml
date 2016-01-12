@@ -10,7 +10,7 @@
   <artifactId>named-entity-service</artifactId>
   <packaging>war</packaging>
   <name>Named Entity JAX-RS Service</name>
-  <version>0.13.0-SNAPSHOT</version>
+  <version>1.0.0</version>
 
   <properties>
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
@@ -414,7 +414,7 @@
         <version>1.1</version>
         <configuration>
           <contextFile>${basedir}/target/classes/context.xml</contextFile>
-          <path>/v0</path>
+          <path>/v1</path>
         </configuration>
         <dependencies>
           <dependency>
