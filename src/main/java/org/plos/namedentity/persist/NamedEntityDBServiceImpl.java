@@ -681,6 +681,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   public List<Alert> getAlerts(String frequency, String journal) {
 
     StringBuilder where = new StringBuilder();
+    where.append("true");
 
     Globaltypes  gt1 = GLOBALTYPES.as("gt1");
     Globaltypes  gt2 = GLOBALTYPES.as("gt2");
@@ -690,16 +691,12 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     if (frequency != null) {
       // check the global type so it can return a meaningful error about acceptable types
       findTypeValue(findTypeClass("Alert Frequency"), frequency);
-//      where.append(gt3.SHORTDESCRIPTION + " = " + frequency);
-//      .where(gt3.SHORTDESCRIPTION.equal(frequency))
-      where.append(gt3.SHORTDESCRIPTION.equal(frequency));
+      where.append(" AND " + gt3.SHORTDESCRIPTION.equal(frequency));
     }
-//    if (journal != null) {
-//      findTypeValue(findTypeClass("Journal Types"), journal);
-//      if (where.length() > 0)
-//        where.append(" AND ");
-//      where.append(gt2.SHORTDESCRIPTION + " = '" + journal + "'");
-//    }
+    if (journal != null) {
+      findTypeValue(findTypeClass("Journal Types"), journal);
+      where.append(" AND " + gt2.SHORTDESCRIPTION.equal(journal));
+    }
 
     return this.context
         .select(
@@ -713,11 +710,9 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .leftOuterJoin(gt1).on(a.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(a.JOURNALTYPEID.equal(gt2.ID))
         .leftOuterJoin(gt3).on(a.FREQUENCYTYPEID.equal(gt3.ID))
-        .where(where.toString())
+        .where(where.toString().replace("\"", "`"))
         .fetch()
         .into(Alert.class);
-
-
   }
 
   private List<Phonenumber> findPhoneNumbersByNedId(Integer nedId) {
