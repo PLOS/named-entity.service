@@ -32,7 +32,6 @@ import java.lang.invoke.MethodType;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -327,7 +326,7 @@ public class AmbraServiceTest {
   }
 
   @Test
-  public void testUpdateRollbackNed() throws Throwable {
+  public void testUpdateEntityRollbackNed() throws Throwable {
 
     IndividualComposite composite = getNew();
 
@@ -358,34 +357,54 @@ public class AmbraServiceTest {
         userProfile.getEmail());
 
   }
-
+  
   @Test
-  public void testUpdateRollbackAmbra() throws Throwable {
+  public void testUpdateEntityRollbackAmbra() throws Throwable {
 
     IndividualComposite composite = getNew();
 
-    String authId = composite.getAuth().get(0).getAuthid();
+    // invalid email should trigger NED validation error
 
-    // remove Auth, which should cause the Ambra update to fail, but allow NED to work
-    composite.setAuth(new ArrayList<>());
+    Email email = namedEntityService.createComposite(
+        composite, IndividualComposite.class).getEmails().get(0);
+
+    namedEntityService.resolveValuesToIds(email);
+
+    String origEmail = email.getEmailaddress();
+
+    email.setEmailaddress("valid@email.com");
+
+    // inject mock Ambra service into NED service.
+    AmbraService mockAmbraSvc = Mockito.mock(AmbraService.class);
+    Mockito.doThrow(NedException.class).when(mockAmbraSvc).update(any());
+
+    CrudServiceImpl crudServiceLocal = new CrudServiceImpl();
+    crudServiceLocal.setNamedEntityDBService(nedDBSvc);
+    crudServiceLocal.setAmbraService(mockAmbraSvc);
 
     try {
-      namedEntityService.createComposite(composite, IndividualComposite.class);
+      crudServiceLocal.update(email);
       fail();
     } catch (NedException expected) {
+      System.out.println(expected.getMessage());
     }
 
-    // make sure it did not get inserted in NED
-    Email filter = new Email();
-    filter.setEmailaddress(composite.getEmails().get(0).getEmailaddress());
-    assertEquals(0, crudService.findByAttribute(filter).size());
+    UserProfile userProfile = userService.getUser(new Long(email.getNedid()));
 
-    // make sure it did not get inserted in Ambra
-    assertNull(userService.getUserByAuthId(authId));
+    IndividualComposite compositeOut = namedEntityService.findComposite(
+        email.getNedid(), IndividualComposite.class);
+
+    // ACK! Rollback does not appear to be working!
+    assertEqual(compositeOut, userProfile);
+
+    assertEquals(origEmail, userProfile.getEmail());
+    assertEquals(composite.getEmails().get(0).getEmailaddress(),
+        userProfile.getEmail());
+
   }
 
   @Test
-  public void testCreateRollbackNed() throws Throwable {
+  public void testCreateCompositeRollbackNed() throws Throwable {
 
     IndividualComposite composite = getNew();
 
@@ -409,7 +428,7 @@ public class AmbraServiceTest {
   }
 
   @Test
-  public void testCreateRollbackAmbra() throws Throwable {
+  public void testCreateCompositeRollbackAmbra() throws Throwable {
 
     // inject mock Ambra service into NED service.
 
@@ -439,4 +458,5 @@ public class AmbraServiceTest {
     // make sure it did not get inserted in Ambra
     assertNull(userService.getUserByAuthId(authId));
   }
+
 }
