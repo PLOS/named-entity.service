@@ -311,13 +311,26 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   private Uniqueidentifier resolveReference(Uniqueidentifier entity) {
 
-    if (entity.getType() != null)
-      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClassByInspection("type", entity), entity.getType()));
 
-    if (entity.getSource() != null)
-      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
+//    try {
+      if (entity.getType() != null)
+        entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClassByInspection("type", entity), entity.getType()));
 
-    return entity;
+      if (entity.getSource() != null)
+        entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
+
+      return entity;
+//    } catch (Exception e) {
+//
+//
+//      if (entity.getType() != null)
+//        entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClassByInspection("type", entity), entity.getType()));
+//
+//      if (entity.getSource() != null)
+//        entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
+//
+//      throw e;
+//    }
   }
 
   @SuppressWarnings("unchecked")
@@ -368,6 +381,51 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     if (clazz == IndividualComposite.class) {
 
+      // do a temp first pass for resolve errors so Ambra does not get early insert
+      // this still will not capture issues like unique DB constraints
+//      Map<Class, List<? extends Entity>> compositeMap = composite.readAsMap();
+//
+//      for (List<? extends Entity> entities : compositeMap.values()) {
+//        if (entities != null) {
+//          for (Entity entity : entities) {
+////            entity.setNedid(nedId);
+//            try {
+//              Entity t = entity;
+//              if (t instanceof Individualprofile)
+//                resolveProfile((Individualprofile) t);
+//              else if (t instanceof Organization)
+//                resolveOrganization((Organization) t);
+//              else if (t instanceof Address)
+//                resolveAddress((Address) t);
+//              else if (t instanceof Alert)
+//                resolveAlert((Alert) t);
+//              else if (t instanceof Phonenumber)
+//                resolvePhonenumber((Phonenumber) t);
+//              else if (t instanceof Email)
+//                resolveEmail((Email) t);
+//              else if (t instanceof Uniqueidentifier)
+//                ;//resolveReference((Uniqueidentifier) t);
+//              else if (t instanceof Degree)
+//                resolveDegree((Degree) t);
+//              else if (t instanceof Group)
+//                resolveGroup((Group) t);
+//              else if (t instanceof Url)
+//                resolveUrl((Url) t);
+//              else if (t instanceof Auth)
+//                ;
+////                resolveAuth((Auth) t);
+//              else if (t instanceof Relationship)
+//                resolveIndividualRelationship((Relationship) t);
+//              else
+//                throw new UnsupportedOperationException("Can not resolve entity for " + t.getClass());
+//            } catch (Exception e) {
+//              throw e;
+//            }
+//          }
+//        }
+//      }
+
+
       Email email = ((IndividualComposite) composite).getEmails().get(0);
       Integer ambraId = email.getNedid();
 
@@ -414,6 +472,11 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     }
 
     // TODO: if NED insert fails, manually rollback ambra, but how to delete from ambra?
+
+
+
+    // NEW IDEA: make name/email bogus to mark for deletion
+
 
     return findComposite(nedId, clazz);
 

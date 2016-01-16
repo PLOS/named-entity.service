@@ -17,7 +17,9 @@ import org.plos.namedentity.api.entity.Email;
 import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.api.entity.Individualprofile;
 import org.plos.namedentity.persist.NamedEntityDBService;
+import org.springframework.aop.framework.Advised;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -51,7 +53,7 @@ import static org.mockito.Mockito.when;
 public class AmbraServiceTest {
 
   @Autowired
-  NamedEntityService namedEntityService;  // inject so can resolve type names to ids
+  NamedEntityService namedEntityService;
 
   @Autowired
   NamedEntityDBService nedDBSvc;
@@ -67,6 +69,9 @@ public class AmbraServiceTest {
 
   @Autowired
   UserRegistrationService userRegistrationService;
+
+  @Autowired
+  private ApplicationContext appContext;
 
 
   private static final String TEST_RESOURCE_PATH = "src/test/resources/";
@@ -378,12 +383,12 @@ public class AmbraServiceTest {
     AmbraService mockAmbraSvc = Mockito.mock(AmbraService.class);
     Mockito.doThrow(NedException.class).when(mockAmbraSvc).update(any());
 
-    CrudServiceImpl crudServiceLocal = new CrudServiceImpl();
-    crudServiceLocal.setNamedEntityDBService(nedDBSvc);
-    crudServiceLocal.setAmbraService(mockAmbraSvc);
+    CrudServiceImpl serv = (CrudServiceImpl)(((Advised)crudService).getTargetSource().getTarget());
+
+    serv.setAmbraService(mockAmbraSvc);
 
     try {
-      crudServiceLocal.update(email);
+      crudService.update(email);
       fail();
     } catch (NedException expected) {
       System.out.println(expected.getMessage());
@@ -394,12 +399,13 @@ public class AmbraServiceTest {
     IndividualComposite compositeOut = namedEntityService.findComposite(
         email.getNedid(), IndividualComposite.class);
 
-    // ACK! Rollback does not appear to be working!
     assertEqual(compositeOut, userProfile);
 
     assertEquals(origEmail, userProfile.getEmail());
     assertEquals(composite.getEmails().get(0).getEmailaddress(),
         userProfile.getEmail());
+
+    serv.setAmbraService(ambraService);
 
   }
 
@@ -448,6 +454,15 @@ public class AmbraServiceTest {
       namedEntityService.createComposite(composite, IndividualComposite.class);
       fail();
     } catch (Exception expected) {
+
+
+
+
+
+
+
+
+      // fix this as above
     }
 
     // make sure it did not get inserted in NED
