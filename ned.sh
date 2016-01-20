@@ -19,10 +19,10 @@ function import_ringgold {
     cd "${RINGGOLD_DB_DIR}"
 
     # delete sql file plus backup
-    rm -f PLOS_Identify_*_utf8.sql*
-    rm -f PLOS_Identify_*_counts.txt
+    rm -f Ringgold_Identify_mysql.sql*
+    rm -f Ringgold_Identify_mysql_counts.txt 
 
-    ringgold_zip=(PLOS_Identify_*.zip)
+    ringgold_zip=(Ringgold_Identify_mysql.zip)
 
     if [ ${#ringgold_zip[@]} -ne 1 ]; then
         echo -e "\nUnexpected # of Ringgold zip's found (expected:1 found:${#ringgold_zip[@]}). Aborting.\n"
@@ -30,14 +30,14 @@ function import_ringgold {
     fi
 
     unzip -o $ringgold_zip
-    ringgold_sql=(PLOS_Identify_*_utf8.sql)
+    ringgold_sql=(Ringgold_Identify_mysql.sql)
 
     # add ".bak" to -i option for compatibility between GNU/BSD sed flavors
-    # rename ringgold schema: identify_test -> ringgold
-    sed -i.bak 's/identify_test/ringgold/g' $ringgold_sql
+    # rename ringgold schema: identify -> ringgold
+    sed -i.bak 's/ identify;/ ringgold;/g' $ringgold_sql
 
     # remove "_new" from table names
-    sed -i.bak 's/_new / /g' $ringgold_sql
+    sed -i.bak 's/_new\(;\| \|`\)/\1/g' $ringgold_sql
 
     echo -e "\nImporting Ringgold ... (this may take a few minutes)"
     mysql -u ned < $ringgold_sql
