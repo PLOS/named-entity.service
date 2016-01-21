@@ -25,71 +25,88 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 public class Institution {
 
-  private Integer rec_id;     // primary key
-  private Integer p_code;     // parent code (aka, ringgold id)
-  private Integer gp_code;    // grandparent code
-  private String  name;
-  private String  type;
-  private String  city;
-  private String  state;
-  private String  country;
+  private Integer recId;
+  private Integer ringgoldId;
+  private Integer parentRinggoldId;
+  private Integer topRinggoldId;
+
+  private String name;
+  private String city;
+  private String state;
+  private String postCode;
+  private String country;
+  private String type;
 
   public String getName() {
-      return name;
+    return name;
   }
   public void setName(String name) {
-      this.name = name;
+    this.name = name;
   }
-  
+
   public String getType() {
-      return type;
+    return type;
   }
   public void setType(String type) {
-      this.type = type;
+    this.type = type;
   }
-  
+
   public String getCity() {
-      return city;
+    return city;
   }
   public void setCity(String city) {
-      this.city = city;
+    this.city = city;
   }
-  
+
   public String getState() {
-      return state;
+    return state;
   }
   public void setState(String state) {
-      this.state = state;
+    this.state = state;
   }
-  
+
+  public String getPostCode() {
+    return postCode;
+  }
+  public void setPostCode(String postCode) {
+    this.postCode = postCode;
+  }
+
   public String getCountry() {
-      return country;
+    return country;
   }
   public void setCountry(String country) {
-      this.country = country;
+    this.country = country;
   }
-  
+
   @XmlElement(name = "institution-id")
-  public Integer getPCode() {
-      return p_code;
+  public Integer getRinggoldId() {
+    return ringgoldId;
   }
   @XmlElement(name = "institution-id")
-  public void setPCode(Integer p_code) {
-      this.p_code = p_code;
+  public void setRinggoldId(Integer ringgoldId) {
+    this.ringgoldId = ringgoldId;
   }
-  
-  @XmlTransient public Integer getGpCode() {
-      return gp_code;
+
+  @XmlTransient public Integer getParentRinggoldId() {
+    return parentRinggoldId;
   }
-  @XmlTransient public void setGpCode(Integer gp_code) {
-      this.gp_code = gp_code;
+  @XmlTransient public void setParentRinggoldId(Integer parentRinggoldId) {
+    this.parentRinggoldId = parentRinggoldId;
   }
 
   @XmlTransient public Integer getRecId() {
-      return rec_id;
+    return recId;
   }
-  @XmlTransient public void setRecId(Integer rec_id) {
-      this.rec_id = rec_id;
+  @XmlTransient public void setRecId(Integer recId) {
+    this.recId = recId;
+  }
+
+  @XmlTransient public Integer getTopRinggoldId() {
+    return topRinggoldId;
+  }
+  @XmlTransient public void setTopRinggoldId(Integer topRinggoldId) {
+    this.topRinggoldId = topRinggoldId;
   }
 
   @Override
