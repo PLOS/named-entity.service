@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.ringgold;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Ringgold extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 1399704614;
+	private static final long serialVersionUID = -848609575;
 
 	/**
 	 * The reference instance of <code>ringgold</code>
@@ -39,17 +39,16 @@ public class Ringgold extends org.jooq.impl.SchemaImpl {
 
 	private final java.util.List<org.jooq.Table<?>> getTables0() {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
-			org.plos.namedentity.persist.db.ringgold.tables.AltName.ALT_NAME,
+			org.plos.namedentity.persist.db.ringgold.tables.AltNames.ALT_NAMES,
 			org.plos.namedentity.persist.db.ringgold.tables.Consortia.CONSORTIA,
-			org.plos.namedentity.persist.db.ringgold.tables.DeletedId.DELETED_ID,
+			org.plos.namedentity.persist.db.ringgold.tables.DeletedIds.DELETED_IDS,
 			org.plos.namedentity.persist.db.ringgold.tables.Identifiers.IDENTIFIERS,
-			org.plos.namedentity.persist.db.ringgold.tables.Multi.MULTI,
+			org.plos.namedentity.persist.db.ringgold.tables.Institutions.INSTITUTIONS,
+			org.plos.namedentity.persist.db.ringgold.tables.Multies.MULTIES,
 			org.plos.namedentity.persist.db.ringgold.tables.Notes.NOTES,
-			org.plos.namedentity.persist.db.ringgold.tables.Parents.PARENTS,
-			org.plos.namedentity.persist.db.ringgold.tables.RgTiers.RG_TIERS,
 			org.plos.namedentity.persist.db.ringgold.tables.Sizes.SIZES,
+			org.plos.namedentity.persist.db.ringgold.tables.Taxonomy.TAXONOMY,
 			org.plos.namedentity.persist.db.ringgold.tables.Tiers.TIERS,
-			org.plos.namedentity.persist.db.ringgold.tables.Types.TYPES,
-			org.plos.namedentity.persist.db.ringgold.tables.Url.URL);
+			org.plos.namedentity.persist.db.ringgold.tables.Urls.URLS);
 	}
 }

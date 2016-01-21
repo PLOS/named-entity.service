@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.ringgold.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tiers extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.ringgold.tables.records.TiersRecord> {
 
-	private static final long serialVersionUID = -958947658;
+	private static final long serialVersionUID = 958218264;
 
 	/**
 	 * The reference instance of <code>ringgold.tiers</code>
@@ -32,29 +32,29 @@ public class Tiers extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.
 	}
 
 	/**
-	 * The column <code>ringgold.tiers.Rec_ID</code>.
+	 * The column <code>ringgold.tiers.rec_id</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.TiersRecord, java.lang.Integer> REC_ID = createField("Rec_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.TiersRecord, java.lang.Integer> REC_ID = createField("rec_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>ringgold.tiers.P_Code</code>.
+	 * The column <code>ringgold.tiers.ringgold_id</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.TiersRecord, java.lang.Long> P_CODE = createField("P_Code", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.TiersRecord, java.lang.Integer> RINGGOLD_ID = createField("ringgold_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>ringgold.tiers.Tier_Type</code>.
+	 * The column <code>ringgold.tiers.tier_type</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.TiersRecord, java.lang.String> TIER_TYPE = createField("Tier_Type", org.jooq.impl.SQLDataType.VARCHAR.length(25).nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.TiersRecord, java.lang.String> TIER_TYPE = createField("tier_type", org.jooq.impl.SQLDataType.VARCHAR.length(25).nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>ringgold.tiers.Tier</code>.
+	 * The column <code>ringgold.tiers.value</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.TiersRecord, java.lang.String> TIER = createField("Tier", org.jooq.impl.SQLDataType.VARCHAR.length(40).nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.TiersRecord, java.lang.String> VALUE = createField("value", org.jooq.impl.SQLDataType.VARCHAR.length(40).nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>ringgold.tiers.Timestamp</code>.
+	 * The column <code>ringgold.tiers.timestamp</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.TiersRecord, java.sql.Timestamp> TIMESTAMP = createField("Timestamp", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.TiersRecord, java.sql.Timestamp> TIMESTAMP = createField("timestamp", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * Create a <code>ringgold.tiers</code> table reference

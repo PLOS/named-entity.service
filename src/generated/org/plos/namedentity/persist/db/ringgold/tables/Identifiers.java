@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.ringgold.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Identifiers extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.ringgold.tables.records.IdentifiersRecord> {
 
-	private static final long serialVersionUID = -1329264294;
+	private static final long serialVersionUID = -339433839;
 
 	/**
 	 * The reference instance of <code>ringgold.identifiers</code>
@@ -32,29 +32,29 @@ public class Identifiers extends org.jooq.impl.TableImpl<org.plos.namedentity.pe
 	}
 
 	/**
-	 * The column <code>ringgold.identifiers.Rec_ID</code>.
+	 * The column <code>ringgold.identifiers.rec_id</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.IdentifiersRecord, java.lang.Long> REC_ID = createField("Rec_ID", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.IdentifiersRecord, java.lang.Integer> REC_ID = createField("rec_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>ringgold.identifiers.P_Code</code>.
+	 * The column <code>ringgold.identifiers.ringgold_id</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.IdentifiersRecord, java.lang.Long> P_CODE = createField("P_Code", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.IdentifiersRecord, java.lang.Integer> RINGGOLD_ID = createField("ringgold_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>ringgold.identifiers.Identifier</code>.
+	 * The column <code>ringgold.identifiers.identifier_type</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.IdentifiersRecord, java.lang.String> IDENTIFIER = createField("Identifier", org.jooq.impl.SQLDataType.VARCHAR.length(30).nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.IdentifiersRecord, java.lang.String> IDENTIFIER_TYPE = createField("identifier_type", org.jooq.impl.SQLDataType.VARCHAR.length(30).nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>ringgold.identifiers.Value</code>.
+	 * The column <code>ringgold.identifiers.value</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.IdentifiersRecord, java.lang.String> VALUE = createField("Value", org.jooq.impl.SQLDataType.VARCHAR.length(35).nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.IdentifiersRecord, java.lang.String> VALUE = createField("value", org.jooq.impl.SQLDataType.VARCHAR.length(35).nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>ringgold.identifiers.Timestamp</code>.
+	 * The column <code>ringgold.identifiers.timestamp</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.IdentifiersRecord, java.sql.Timestamp> TIMESTAMP = createField("Timestamp", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.IdentifiersRecord, java.sql.Timestamp> TIMESTAMP = createField("timestamp", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * Create a <code>ringgold.identifiers</code> table reference
@@ -82,7 +82,7 @@ public class Identifiers extends org.jooq.impl.TableImpl<org.plos.namedentity.pe
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Identity<org.plos.namedentity.persist.db.ringgold.tables.records.IdentifiersRecord, java.lang.Long> getIdentity() {
+	public org.jooq.Identity<org.plos.namedentity.persist.db.ringgold.tables.records.IdentifiersRecord, java.lang.Integer> getIdentity() {
 		return org.plos.namedentity.persist.db.ringgold.Keys.IDENTITY_IDENTIFIERS;
 	}
 

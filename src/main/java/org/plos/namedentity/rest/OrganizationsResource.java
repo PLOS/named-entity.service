@@ -72,10 +72,10 @@ public class OrganizationsResource extends NedResource {
       if (uids != null)
         uids.stream().filter(uid -> uid.getType().equalsIgnoreCase("Ringgold")).findFirst().ifPresent(
             uid -> {
-              Integer ringgold_pcode = Integer.parseInt(uid.getUniqueidentifier());
+              Integer ringgold_id = Integer.parseInt(uid.getUniqueidentifier());
 
               Institution ifilter = new Institution();
-              ifilter.setPCode(ringgold_pcode);
+              ifilter.setRinggoldId(ringgold_id);
 
               List<Institution> ringgoldResults = ringgoldService.findByAttribute(ifilter);
 

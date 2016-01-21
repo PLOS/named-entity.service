@@ -62,11 +62,11 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
 
   @Override
   public List<Institution> findByInstitutionName(String searchString) {
-    List<Institution> results = context.select(PARENTS.fields())
-      .from(PARENTS)
+    List<Institution> results = context.select(INSTITUTIONS.fields())
+      .from(INSTITUTIONS)
       .leftOuterJoin(SIZES)
-      .on(PARENTS.P_CODE.equal(SIZES.P_CODE))
-      .and(SIZES.KIND.equal("size"))
+      .on(INSTITUTIONS.RINGGOLD_ID.equal(SIZES.RINGGOLD_ID))
+      .and(SIZES.SIZE_TYPE.equal("size"))
       .where(institutionNameSearchCondition(searchString))
       .orderBy(SIZES.VALUE.desc().nullsLast())
       .limit(100)
@@ -183,7 +183,7 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
   private static final Map<Class,TablePkPair> entityTableMap;
   static {
     entityTableMap = new ConcurrentHashMap<>();
-    entityTableMap.put(Institution.class, new TablePkPair(PARENTS, PARENTS.REC_ID));
+    entityTableMap.put(Institution.class, new TablePkPair(INSTITUTIONS, INSTITUTIONS.REC_ID));
   }
   private static Table table(Class key) {
     return entityTableMap.get(key).table();

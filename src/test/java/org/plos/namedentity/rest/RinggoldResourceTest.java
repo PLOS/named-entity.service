@@ -117,7 +117,7 @@ public class RinggoldResourceTest extends BaseResourceTest {
     assertEquals(1, institutions.size());
 
     Institution institution = institutions.get(0);
-    assertEquals(Integer.valueOf(158423), institution.getPCode());
+    assertEquals(Integer.valueOf(158423), institution.getRinggoldId());
     assertTrue(institution.getName().toLowerCase().contains("stanford medicine"));
   }
 
