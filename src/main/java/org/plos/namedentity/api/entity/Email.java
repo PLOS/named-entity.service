@@ -16,12 +16,12 @@
  */
 package org.plos.namedentity.api.entity;
 
-import static org.plos.namedentity.api.NedException.ErrorType.*;
-
 import org.plos.namedentity.api.NedException;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.regex.Pattern;
+
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidEmail;
 
 @XmlRootElement
 public class Email extends Entity {
