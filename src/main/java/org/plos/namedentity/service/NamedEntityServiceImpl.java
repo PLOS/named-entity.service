@@ -311,26 +311,13 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   private Uniqueidentifier resolveReference(Uniqueidentifier entity) {
 
+    if (entity.getType() != null)
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClassByInspection("type", entity), entity.getType()));
 
-//    try {
-      if (entity.getType() != null)
-        entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClassByInspection("type", entity), entity.getType()));
+    if (entity.getSource() != null)
+      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
 
-      if (entity.getSource() != null)
-        entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
-
-      return entity;
-//    } catch (Exception e) {
-//
-//
-//      if (entity.getType() != null)
-//        entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClassByInspection("type", entity), entity.getType()));
-//
-//      if (entity.getSource() != null)
-//        entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
-//
-//      throw e;
-//    }
+    return entity;
   }
 
   @SuppressWarnings("unchecked")

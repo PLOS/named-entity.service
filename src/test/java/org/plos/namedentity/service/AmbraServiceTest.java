@@ -410,11 +410,37 @@ public class AmbraServiceTest {
   }
 
   @Test
-  public void testCreateCompositeRollbackNed() throws Throwable {
+  public void testCreateCompositeValidationRollbackNed() throws Throwable {
 
     IndividualComposite composite = getNew();
 
+    // cause a validation error in NED
     composite.getEmails().get(0).setEmailaddress("invalid2@email");
+
+    String authId = composite.getAuth().get(0).getAuthid();
+
+    try {
+      namedEntityService.createComposite(composite, IndividualComposite.class);
+      fail();
+    } catch (NedException expected) {
+    }
+
+    // make sure it did not get inserted in NED
+    Email filter = new Email();
+    filter.setEmailaddress(composite.getEmails().get(0).getEmailaddress());
+    assertEquals(0, crudService.findByAttribute(filter).size());
+
+    // make sure it did not get inserted in Ambra
+    assertNull(userService.getUserByAuthId(authId));
+  }
+
+  @Test
+  public void testCreateCompositeGlobalTypeRollbackNed() throws Throwable {
+
+    IndividualComposite composite = getNew();
+
+    // cause a global type lookup error
+    composite.getIndividualprofiles().get(0).setNameprefix("King");
 
     String authId = composite.getAuth().get(0).getAuthid();
 
@@ -436,9 +462,11 @@ public class AmbraServiceTest {
   @Test
   public void testCreateCompositeRollbackAmbra() throws Throwable {
 
-    // inject mock Ambra service into NED service.
+    // inject mock Ambra service into NED service
 
     AmbraService mockAmbraSvc = Mockito.mock(AmbraService.class);
+
+    // make ambra insert fail
     when(mockAmbraSvc.createUser(any(IndividualComposite.class)))
         .thenThrow(DuplicateUserException.class);
 
@@ -454,15 +482,7 @@ public class AmbraServiceTest {
       namedEntityService.createComposite(composite, IndividualComposite.class);
       fail();
     } catch (Exception expected) {
-
-
-
-
-
-
-
-
-      // fix this as above
+      assertTrue(expected instanceof DuplicateUserException);
     }
 
     // make sure it did not get inserted in NED

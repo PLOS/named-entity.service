@@ -75,6 +75,7 @@ public class AmbraServiceImpl implements AmbraService {
     copyToAmbraPojo(email, ambraProfile);
 
     ambraProfile.setRealName("INVALID NED USER");
+    ambraProfile.setAuthId(invalidTag);
 
     updateInAmbra(ambraProfile);
   }
