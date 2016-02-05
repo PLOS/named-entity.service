@@ -23,12 +23,11 @@ public class QueriesResource extends BaseResource {
   @GET
   @Path("/alerts")
   @ApiOperation(value="Get a list of search alerts by type", response=Alert.class, responseContainer = "List")
-  public Response getAlerts(@QueryParam("frequency") String frequency,
-                            @QueryParam("journal") String journal) {
+  public Response getAlerts(@QueryParam("frequency") String frequency) {
     try {
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<Alert>>(
-              namedEntityService.getAlerts(frequency, journal)
+              namedEntityService.getAlerts(frequency)
           ) {
           }).build();
     } catch (NedException e) {

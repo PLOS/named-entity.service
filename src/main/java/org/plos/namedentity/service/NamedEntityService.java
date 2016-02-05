@@ -113,8 +113,7 @@ public interface NamedEntityService {
    * Get a list of search alerts by frequency
    *
    * @param frequency
-   * @param journal
    * @return  List of Alert objects
    */
-  List<Alert> getAlerts(String frequency, String journal);
+  List<Alert> getAlerts(String frequency);
 }

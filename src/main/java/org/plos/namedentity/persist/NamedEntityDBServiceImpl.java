@@ -464,24 +464,18 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
   private SelectOnConditionStep select(Alerts e) {
 
-    Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
     Globaltypes gt3 = GLOBALTYPES.as("gt3");
-    Globaltypes gt4 = GLOBALTYPES.as("gt4");
 
     return this.context
         .select(
             e.ID, e.NEDID, e.QUERY, e.NAME,
-            gt1.SHORTDESCRIPTION.as("type"),
             gt2.SHORTDESCRIPTION.as("source"),
             gt3.SHORTDESCRIPTION.as("frequency"),
-            gt4.SHORTDESCRIPTION.as("journal"),
             e.CREATED, e.LASTMODIFIED)
         .from(e)
-        .leftOuterJoin(gt1).on(e.TYPEID.equal(gt1.ID))
         .leftOuterJoin(gt2).on(e.SOURCETYPEID.equal(gt2.ID))
-        .leftOuterJoin(gt3).on(e.FREQUENCYTYPEID.eq(gt3.ID))
-        .leftOuterJoin(gt4).on(e.JOURNALTYPEID.eq(gt4.ID));
+        .leftOuterJoin(gt3).on(e.FREQUENCYTYPEID.eq(gt3.ID));
   }
 
   private SelectOnConditionStep select(Relationships r) {
@@ -678,38 +672,28 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         .fetch().into(Uniqueidentifier.class);
   }
 
-  public List<Alert> getAlerts(String frequency, String journal) {
+  public List<Alert> getAlerts(String frequency) {
 
     StringBuilder where = new StringBuilder();
     where.append("true");
 
-    Globaltypes  gt1 = GLOBALTYPES.as("gt1");
-    Globaltypes  gt2 = GLOBALTYPES.as("gt2");
-    Globaltypes  gt3 = GLOBALTYPES.as("gt3");
+    Globaltypes gt1 = GLOBALTYPES.as("gt3");
     Alerts a = ALERTS.as("a");
 
     if (frequency != null) {
       // check the global type so it can return a meaningful error about acceptable types
       findTypeValue(findTypeClass("Alert Frequency"), frequency);
-      where.append(" AND " + gt3.SHORTDESCRIPTION.equal(frequency));
-    }
-    if (journal != null) {
-      findTypeValue(findTypeClass("Journal Types"), journal);
-      where.append(" AND " + gt2.SHORTDESCRIPTION.equal(journal));
+      where.append(" AND " + gt1.SHORTDESCRIPTION.equal(frequency));
     }
 
     return this.context
         .select(
             a.ID, a.NEDID,
             a.NAME, a.QUERY,
-            gt1.SHORTDESCRIPTION.as("type"),
-            gt2.SHORTDESCRIPTION.as("journal"),
-            gt3.SHORTDESCRIPTION.as("frequency"),
+            gt1.SHORTDESCRIPTION.as("frequency"),
             a.CREATED, a.LASTMODIFIED)
         .from(a)
-        .leftOuterJoin(gt1).on(a.TYPEID.equal(gt1.ID))
-        .leftOuterJoin(gt2).on(a.JOURNALTYPEID.equal(gt2.ID))
-        .leftOuterJoin(gt3).on(a.FREQUENCYTYPEID.equal(gt3.ID))
+        .leftOuterJoin(gt1).on(a.FREQUENCYTYPEID.equal(gt1.ID))
         .where(where.toString().replace("\"", "`"))
         .fetch()
         .into(Alert.class);

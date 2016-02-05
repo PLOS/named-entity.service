@@ -859,7 +859,6 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     assertTrue( entity.getId() > 0 );
     assertEquals(nedIndividualId, entity.getNedid());
-    assertEquals("PLOS Biology", entity.getJournal());
     assertEquals("weekly", entity.getFrequency());
 
     String entityId = entityURI + "/" + entity.getId();
@@ -893,7 +892,6 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertTrue(e.getId() > 0);
     assertEquals(nedIndividualId, e.getNedid());
 
-    assertEquals("PLOS Biology", e.getJournal());
     assertTrue(e.getQuery().length() > 10);
 
 

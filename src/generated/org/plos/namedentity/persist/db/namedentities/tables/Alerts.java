@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.namedentities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Alerts extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.namedentities.tables.records.AlertsRecord> {
 
-	private static final long serialVersionUID = 726426342;
+	private static final long serialVersionUID = -1295176616;
 
 	/**
 	 * The reference instance of <code>namedEntities.alerts</code>
@@ -42,19 +42,9 @@ public class Alerts extends org.jooq.impl.TableImpl<org.plos.namedentity.persist
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AlertsRecord, java.lang.Integer> NEDID = createField("nedId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>namedEntities.alerts.typeId</code>.
-	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AlertsRecord, java.lang.Integer> TYPEID = createField("typeId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
-	/**
 	 * The column <code>namedEntities.alerts.frequencyTypeId</code>.
 	 */
 	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AlertsRecord, java.lang.Integer> FREQUENCYTYPEID = createField("frequencyTypeId", org.jooq.impl.SQLDataType.INTEGER, this, "");
-
-	/**
-	 * The column <code>namedEntities.alerts.journalTypeId</code>.
-	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.namedentities.tables.records.AlertsRecord, java.lang.Integer> JOURNALTYPEID = createField("journalTypeId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>namedEntities.alerts.name</code>.
@@ -142,7 +132,7 @@ public class Alerts extends org.jooq.impl.TableImpl<org.plos.namedentity.persist
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.AlertsRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.AlertsRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.ALERTS_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.ALERTS_IBFK_2, org.plos.namedentity.persist.db.namedentities.Keys.ALERTS_IBFK_4, org.plos.namedentity.persist.db.namedentities.Keys.ALERTS_IBFK_5, org.plos.namedentity.persist.db.namedentities.Keys.ALERTS_IBFK_3);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.plos.namedentity.persist.db.namedentities.tables.records.AlertsRecord, ?>>asList(org.plos.namedentity.persist.db.namedentities.Keys.ALERTS_IBFK_1, org.plos.namedentity.persist.db.namedentities.Keys.ALERTS_IBFK_4, org.plos.namedentity.persist.db.namedentities.Keys.ALERTS_IBFK_3);
 	}
 
 	/**
