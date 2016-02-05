@@ -1,16 +1,17 @@
 package org.plos.ned_client.model;
 
-import org.plos.ned_client.StringUtil;
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 
 
 
-import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
 public class Alert   {
   
   private Integer id = null;
@@ -23,18 +24,15 @@ public class Alert   {
   private String createdbyname = null;
   private Integer lastmodifiedby = null;
   private String lastmodifiedbyname = null;
-  private Integer typeid = null;
-  private String type = null;
   private Integer frequencytypeid = null;
   private String frequency = null;
-  private Integer journaltypeid = null;
-  private String journal = null;
   private String name = null;
   private String query = null;
 
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("id")
   public Integer getId() {
@@ -47,6 +45,7 @@ public class Alert   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("nedid")
   public Integer getNedid() {
@@ -59,6 +58,7 @@ public class Alert   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("source")
   public String getSource() {
@@ -71,6 +71,7 @@ public class Alert   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("sourcetypeid")
   public Integer getSourcetypeid() {
@@ -83,6 +84,7 @@ public class Alert   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("created")
   public Date getCreated() {
@@ -95,6 +97,7 @@ public class Alert   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodified")
   public Date getLastmodified() {
@@ -107,6 +110,7 @@ public class Alert   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("createdby")
   public Integer getCreatedby() {
@@ -119,6 +123,7 @@ public class Alert   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("createdbyname")
   public String getCreatedbyname() {
@@ -131,6 +136,7 @@ public class Alert   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodifiedby")
   public Integer getLastmodifiedby() {
@@ -143,6 +149,7 @@ public class Alert   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodifiedbyname")
   public String getLastmodifiedbyname() {
@@ -155,30 +162,7 @@ public class Alert   {
   
   /**
    **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("typeid")
-  public Integer getTypeid() {
-    return typeid;
-  }
-  public void setTypeid(Integer typeid) {
-    this.typeid = typeid;
-  }
-
   
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("type")
-  public String getType() {
-    return type;
-  }
-  public void setType(String type) {
-    this.type = type;
-  }
-
-  
-  /**
-   **/
   @ApiModelProperty(value = "")
   @JsonProperty("frequencytypeid")
   public Integer getFrequencytypeid() {
@@ -191,6 +175,7 @@ public class Alert   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("frequency")
   public String getFrequency() {
@@ -203,30 +188,7 @@ public class Alert   {
   
   /**
    **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("journaltypeid")
-  public Integer getJournaltypeid() {
-    return journaltypeid;
-  }
-  public void setJournaltypeid(Integer journaltypeid) {
-    this.journaltypeid = journaltypeid;
-  }
-
   
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  @JsonProperty("journal")
-  public String getJournal() {
-    return journal;
-  }
-  public void setJournal(String journal) {
-    this.journal = journal;
-  }
-
-  
-  /**
-   **/
   @ApiModelProperty(value = "")
   @JsonProperty("name")
   public String getName() {
@@ -239,6 +201,7 @@ public class Alert   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("query")
   public String getQuery() {
@@ -251,29 +214,69 @@ public class Alert   {
   
 
   @Override
-  public String toString()  {
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Alert alert = (Alert) o;
+
+    return true && Objects.equals(id, alert.id) &&
+        Objects.equals(nedid, alert.nedid) &&
+        Objects.equals(source, alert.source) &&
+        Objects.equals(sourcetypeid, alert.sourcetypeid) &&
+        Objects.equals(created, alert.created) &&
+        Objects.equals(lastmodified, alert.lastmodified) &&
+        Objects.equals(createdby, alert.createdby) &&
+        Objects.equals(createdbyname, alert.createdbyname) &&
+        Objects.equals(lastmodifiedby, alert.lastmodifiedby) &&
+        Objects.equals(lastmodifiedbyname, alert.lastmodifiedbyname) &&
+        Objects.equals(frequencytypeid, alert.frequencytypeid) &&
+        Objects.equals(frequency, alert.frequency) &&
+        Objects.equals(name, alert.name) &&
+        Objects.equals(query, alert.query)
+    ;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, nedid, source, sourcetypeid, created, lastmodified, createdby, createdbyname, lastmodifiedby, lastmodifiedbyname, frequencytypeid, frequency, name, query);
+  }
+
+  @Override
+  public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Alert {\n");
     
-    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
-    sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
-    sb.append("    source: ").append(StringUtil.toIndentedString(source)).append("\n");
-    sb.append("    sourcetypeid: ").append(StringUtil.toIndentedString(sourcetypeid)).append("\n");
-    sb.append("    created: ").append(StringUtil.toIndentedString(created)).append("\n");
-    sb.append("    lastmodified: ").append(StringUtil.toIndentedString(lastmodified)).append("\n");
-    sb.append("    createdby: ").append(StringUtil.toIndentedString(createdby)).append("\n");
-    sb.append("    createdbyname: ").append(StringUtil.toIndentedString(createdbyname)).append("\n");
-    sb.append("    lastmodifiedby: ").append(StringUtil.toIndentedString(lastmodifiedby)).append("\n");
-    sb.append("    lastmodifiedbyname: ").append(StringUtil.toIndentedString(lastmodifiedbyname)).append("\n");
-    sb.append("    typeid: ").append(StringUtil.toIndentedString(typeid)).append("\n");
-    sb.append("    type: ").append(StringUtil.toIndentedString(type)).append("\n");
-    sb.append("    frequencytypeid: ").append(StringUtil.toIndentedString(frequencytypeid)).append("\n");
-    sb.append("    frequency: ").append(StringUtil.toIndentedString(frequency)).append("\n");
-    sb.append("    journaltypeid: ").append(StringUtil.toIndentedString(journaltypeid)).append("\n");
-    sb.append("    journal: ").append(StringUtil.toIndentedString(journal)).append("\n");
-    sb.append("    name: ").append(StringUtil.toIndentedString(name)).append("\n");
-    sb.append("    query: ").append(StringUtil.toIndentedString(query)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    nedid: ").append(toIndentedString(nedid)).append("\n");
+    sb.append("    source: ").append(toIndentedString(source)).append("\n");
+    sb.append("    sourcetypeid: ").append(toIndentedString(sourcetypeid)).append("\n");
+    sb.append("    created: ").append(toIndentedString(created)).append("\n");
+    sb.append("    lastmodified: ").append(toIndentedString(lastmodified)).append("\n");
+    sb.append("    createdby: ").append(toIndentedString(createdby)).append("\n");
+    sb.append("    createdbyname: ").append(toIndentedString(createdbyname)).append("\n");
+    sb.append("    lastmodifiedby: ").append(toIndentedString(lastmodifiedby)).append("\n");
+    sb.append("    lastmodifiedbyname: ").append(toIndentedString(lastmodifiedbyname)).append("\n");
+    sb.append("    frequencytypeid: ").append(toIndentedString(frequencytypeid)).append("\n");
+    sb.append("    frequency: ").append(toIndentedString(frequency)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb.append("}");
     return sb.toString();
   }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
 }
+

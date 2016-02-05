@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-Copyright 2015 SmartBear Software
+Copyright 2016 SmartBear Software
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -85,8 +85,8 @@ class Email(object):
         self._type = None
         self._typeid = None
         self._emailaddress = None
-        self._verified = None
-        self._isactive = None
+        self._verified = False
+        self._isactive = False
 
     @property
     def id(self):
@@ -449,3 +449,16 @@ class Email(object):
         For `print` and `pprint`
         """
         return self.to_str()
+
+    def __eq__(self, other): 
+        """
+        Returns true if both objects are equal
+        """
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        """ 
+        Returns true if both objects are not equal
+        """
+        return not self == other
+

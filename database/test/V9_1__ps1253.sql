@@ -30,6 +30,7 @@ SELECT gt.id INTO @srcTypeIdVar
 
 SELECT id INTO @consumerIdVar FROM namedEntities.consumers WHERE name = 'test';
 
+-- note: this one will be deleted via migration 10
 INSERT INTO namedEntities.alerts(id, nedId, typeId, frequencyTypeId, journalTypeId, name, query, sourceTypeId, createdBy, lastModifiedBy)
     VALUES (1, 1, @alertTypeJournalIdVar, @alertFreqTypeIdVar, @journalTypeBioIdVar, "alert one", "", @srcTypeIdVar, @consumerIdVar, @consumerIdVar);
 

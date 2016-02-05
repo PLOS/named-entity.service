@@ -1,16 +1,17 @@
 package org.plos.ned_client.model;
 
-import org.plos.ned_client.StringUtil;
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 
 
 
-import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
 public class Individualprofile   {
   
   private Integer id = null;
@@ -38,6 +39,7 @@ public class Individualprofile   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("id")
   public Integer getId() {
@@ -50,6 +52,7 @@ public class Individualprofile   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("nedid")
   public Integer getNedid() {
@@ -62,6 +65,7 @@ public class Individualprofile   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("source")
   public String getSource() {
@@ -74,6 +78,7 @@ public class Individualprofile   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("sourcetypeid")
   public Integer getSourcetypeid() {
@@ -86,6 +91,7 @@ public class Individualprofile   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("created")
   public Date getCreated() {
@@ -98,6 +104,7 @@ public class Individualprofile   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodified")
   public Date getLastmodified() {
@@ -110,6 +117,7 @@ public class Individualprofile   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("createdby")
   public Integer getCreatedby() {
@@ -122,6 +130,7 @@ public class Individualprofile   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("createdbyname")
   public String getCreatedbyname() {
@@ -134,6 +143,7 @@ public class Individualprofile   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodifiedby")
   public Integer getLastmodifiedby() {
@@ -146,6 +156,7 @@ public class Individualprofile   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodifiedbyname")
   public String getLastmodifiedbyname() {
@@ -158,6 +169,7 @@ public class Individualprofile   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("firstname")
   public String getFirstname() {
@@ -170,6 +182,7 @@ public class Individualprofile   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("middlename")
   public String getMiddlename() {
@@ -182,6 +195,7 @@ public class Individualprofile   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastname")
   public String getLastname() {
@@ -194,6 +208,7 @@ public class Individualprofile   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("nickname")
   public String getNickname() {
@@ -206,6 +221,7 @@ public class Individualprofile   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("nameprefix")
   public String getNameprefix() {
@@ -218,6 +234,7 @@ public class Individualprofile   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("nameprefixtypeid")
   public Integer getNameprefixtypeid() {
@@ -230,6 +247,7 @@ public class Individualprofile   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("namesuffix")
   public String getNamesuffix() {
@@ -242,6 +260,7 @@ public class Individualprofile   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("namesuffixtypeid")
   public Integer getNamesuffixtypeid() {
@@ -254,6 +273,7 @@ public class Individualprofile   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("displayname")
   public String getDisplayname() {
@@ -266,6 +286,7 @@ public class Individualprofile   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("biography")
   public String getBiography() {
@@ -278,6 +299,7 @@ public class Individualprofile   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("isactive")
   public Boolean getIsactive() {
@@ -290,32 +312,83 @@ public class Individualprofile   {
   
 
   @Override
-  public String toString()  {
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Individualprofile individualprofile = (Individualprofile) o;
+
+    return true && Objects.equals(id, individualprofile.id) &&
+        Objects.equals(nedid, individualprofile.nedid) &&
+        Objects.equals(source, individualprofile.source) &&
+        Objects.equals(sourcetypeid, individualprofile.sourcetypeid) &&
+        Objects.equals(created, individualprofile.created) &&
+        Objects.equals(lastmodified, individualprofile.lastmodified) &&
+        Objects.equals(createdby, individualprofile.createdby) &&
+        Objects.equals(createdbyname, individualprofile.createdbyname) &&
+        Objects.equals(lastmodifiedby, individualprofile.lastmodifiedby) &&
+        Objects.equals(lastmodifiedbyname, individualprofile.lastmodifiedbyname) &&
+        Objects.equals(firstname, individualprofile.firstname) &&
+        Objects.equals(middlename, individualprofile.middlename) &&
+        Objects.equals(lastname, individualprofile.lastname) &&
+        Objects.equals(nickname, individualprofile.nickname) &&
+        Objects.equals(nameprefix, individualprofile.nameprefix) &&
+        Objects.equals(nameprefixtypeid, individualprofile.nameprefixtypeid) &&
+        Objects.equals(namesuffix, individualprofile.namesuffix) &&
+        Objects.equals(namesuffixtypeid, individualprofile.namesuffixtypeid) &&
+        Objects.equals(displayname, individualprofile.displayname) &&
+        Objects.equals(biography, individualprofile.biography) &&
+        Objects.equals(isactive, individualprofile.isactive)
+    ;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, nedid, source, sourcetypeid, created, lastmodified, createdby, createdbyname, lastmodifiedby, lastmodifiedbyname, firstname, middlename, lastname, nickname, nameprefix, nameprefixtypeid, namesuffix, namesuffixtypeid, displayname, biography, isactive);
+  }
+
+  @Override
+  public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Individualprofile {\n");
     
-    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
-    sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
-    sb.append("    source: ").append(StringUtil.toIndentedString(source)).append("\n");
-    sb.append("    sourcetypeid: ").append(StringUtil.toIndentedString(sourcetypeid)).append("\n");
-    sb.append("    created: ").append(StringUtil.toIndentedString(created)).append("\n");
-    sb.append("    lastmodified: ").append(StringUtil.toIndentedString(lastmodified)).append("\n");
-    sb.append("    createdby: ").append(StringUtil.toIndentedString(createdby)).append("\n");
-    sb.append("    createdbyname: ").append(StringUtil.toIndentedString(createdbyname)).append("\n");
-    sb.append("    lastmodifiedby: ").append(StringUtil.toIndentedString(lastmodifiedby)).append("\n");
-    sb.append("    lastmodifiedbyname: ").append(StringUtil.toIndentedString(lastmodifiedbyname)).append("\n");
-    sb.append("    firstname: ").append(StringUtil.toIndentedString(firstname)).append("\n");
-    sb.append("    middlename: ").append(StringUtil.toIndentedString(middlename)).append("\n");
-    sb.append("    lastname: ").append(StringUtil.toIndentedString(lastname)).append("\n");
-    sb.append("    nickname: ").append(StringUtil.toIndentedString(nickname)).append("\n");
-    sb.append("    nameprefix: ").append(StringUtil.toIndentedString(nameprefix)).append("\n");
-    sb.append("    nameprefixtypeid: ").append(StringUtil.toIndentedString(nameprefixtypeid)).append("\n");
-    sb.append("    namesuffix: ").append(StringUtil.toIndentedString(namesuffix)).append("\n");
-    sb.append("    namesuffixtypeid: ").append(StringUtil.toIndentedString(namesuffixtypeid)).append("\n");
-    sb.append("    displayname: ").append(StringUtil.toIndentedString(displayname)).append("\n");
-    sb.append("    biography: ").append(StringUtil.toIndentedString(biography)).append("\n");
-    sb.append("    isactive: ").append(StringUtil.toIndentedString(isactive)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    nedid: ").append(toIndentedString(nedid)).append("\n");
+    sb.append("    source: ").append(toIndentedString(source)).append("\n");
+    sb.append("    sourcetypeid: ").append(toIndentedString(sourcetypeid)).append("\n");
+    sb.append("    created: ").append(toIndentedString(created)).append("\n");
+    sb.append("    lastmodified: ").append(toIndentedString(lastmodified)).append("\n");
+    sb.append("    createdby: ").append(toIndentedString(createdby)).append("\n");
+    sb.append("    createdbyname: ").append(toIndentedString(createdbyname)).append("\n");
+    sb.append("    lastmodifiedby: ").append(toIndentedString(lastmodifiedby)).append("\n");
+    sb.append("    lastmodifiedbyname: ").append(toIndentedString(lastmodifiedbyname)).append("\n");
+    sb.append("    firstname: ").append(toIndentedString(firstname)).append("\n");
+    sb.append("    middlename: ").append(toIndentedString(middlename)).append("\n");
+    sb.append("    lastname: ").append(toIndentedString(lastname)).append("\n");
+    sb.append("    nickname: ").append(toIndentedString(nickname)).append("\n");
+    sb.append("    nameprefix: ").append(toIndentedString(nameprefix)).append("\n");
+    sb.append("    nameprefixtypeid: ").append(toIndentedString(nameprefixtypeid)).append("\n");
+    sb.append("    namesuffix: ").append(toIndentedString(namesuffix)).append("\n");
+    sb.append("    namesuffixtypeid: ").append(toIndentedString(namesuffixtypeid)).append("\n");
+    sb.append("    displayname: ").append(toIndentedString(displayname)).append("\n");
+    sb.append("    biography: ").append(toIndentedString(biography)).append("\n");
+    sb.append("    isactive: ").append(toIndentedString(isactive)).append("\n");
     sb.append("}");
     return sb.toString();
   }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
 }
+

@@ -1,16 +1,17 @@
 package org.plos.ned_client.model;
 
-import org.plos.ned_client.StringUtil;
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 
 
 
-import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
 public class Address   {
   
   private Integer id = null;
@@ -42,6 +43,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("id")
   public Integer getId() {
@@ -54,6 +56,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("nedid")
   public Integer getNedid() {
@@ -66,6 +69,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("source")
   public String getSource() {
@@ -78,6 +82,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("sourcetypeid")
   public Integer getSourcetypeid() {
@@ -90,6 +95,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("created")
   public Date getCreated() {
@@ -102,6 +108,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodified")
   public Date getLastmodified() {
@@ -114,6 +121,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("createdby")
   public Integer getCreatedby() {
@@ -126,6 +134,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("createdbyname")
   public String getCreatedbyname() {
@@ -138,6 +147,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodifiedby")
   public Integer getLastmodifiedby() {
@@ -150,6 +160,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodifiedbyname")
   public String getLastmodifiedbyname() {
@@ -162,6 +173,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("typeid")
   public Integer getTypeid() {
@@ -174,6 +186,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("type")
   public String getType() {
@@ -186,6 +199,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("addressline1")
   public String getAddressline1() {
@@ -198,6 +212,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("addressline2")
   public String getAddressline2() {
@@ -210,6 +225,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("addressline3")
   public String getAddressline3() {
@@ -222,6 +238,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("city")
   public String getCity() {
@@ -234,6 +251,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("statecodetypeid")
   public Integer getStatecodetypeid() {
@@ -246,6 +264,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("statecodetype")
   public String getStatecodetype() {
@@ -258,6 +277,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("countrycodetypeid")
   public Integer getCountrycodetypeid() {
@@ -270,6 +290,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("countrycodetype")
   public String getCountrycodetype() {
@@ -282,6 +303,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("postalcode")
   public String getPostalcode() {
@@ -294,6 +316,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("maincontactnamedentityid")
   public Integer getMaincontactnamedentityid() {
@@ -306,6 +329,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("latitude")
   public Integer getLatitude() {
@@ -318,6 +342,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("longitude")
   public Integer getLongitude() {
@@ -330,6 +355,7 @@ public class Address   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("isactive")
   public Boolean getIsactive() {
@@ -342,36 +368,91 @@ public class Address   {
   
 
   @Override
-  public String toString()  {
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Address address = (Address) o;
+
+    return true && Objects.equals(id, address.id) &&
+        Objects.equals(nedid, address.nedid) &&
+        Objects.equals(source, address.source) &&
+        Objects.equals(sourcetypeid, address.sourcetypeid) &&
+        Objects.equals(created, address.created) &&
+        Objects.equals(lastmodified, address.lastmodified) &&
+        Objects.equals(createdby, address.createdby) &&
+        Objects.equals(createdbyname, address.createdbyname) &&
+        Objects.equals(lastmodifiedby, address.lastmodifiedby) &&
+        Objects.equals(lastmodifiedbyname, address.lastmodifiedbyname) &&
+        Objects.equals(typeid, address.typeid) &&
+        Objects.equals(type, address.type) &&
+        Objects.equals(addressline1, address.addressline1) &&
+        Objects.equals(addressline2, address.addressline2) &&
+        Objects.equals(addressline3, address.addressline3) &&
+        Objects.equals(city, address.city) &&
+        Objects.equals(statecodetypeid, address.statecodetypeid) &&
+        Objects.equals(statecodetype, address.statecodetype) &&
+        Objects.equals(countrycodetypeid, address.countrycodetypeid) &&
+        Objects.equals(countrycodetype, address.countrycodetype) &&
+        Objects.equals(postalcode, address.postalcode) &&
+        Objects.equals(maincontactnamedentityid, address.maincontactnamedentityid) &&
+        Objects.equals(latitude, address.latitude) &&
+        Objects.equals(longitude, address.longitude) &&
+        Objects.equals(isactive, address.isactive)
+    ;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, nedid, source, sourcetypeid, created, lastmodified, createdby, createdbyname, lastmodifiedby, lastmodifiedbyname, typeid, type, addressline1, addressline2, addressline3, city, statecodetypeid, statecodetype, countrycodetypeid, countrycodetype, postalcode, maincontactnamedentityid, latitude, longitude, isactive);
+  }
+
+  @Override
+  public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Address {\n");
     
-    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
-    sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
-    sb.append("    source: ").append(StringUtil.toIndentedString(source)).append("\n");
-    sb.append("    sourcetypeid: ").append(StringUtil.toIndentedString(sourcetypeid)).append("\n");
-    sb.append("    created: ").append(StringUtil.toIndentedString(created)).append("\n");
-    sb.append("    lastmodified: ").append(StringUtil.toIndentedString(lastmodified)).append("\n");
-    sb.append("    createdby: ").append(StringUtil.toIndentedString(createdby)).append("\n");
-    sb.append("    createdbyname: ").append(StringUtil.toIndentedString(createdbyname)).append("\n");
-    sb.append("    lastmodifiedby: ").append(StringUtil.toIndentedString(lastmodifiedby)).append("\n");
-    sb.append("    lastmodifiedbyname: ").append(StringUtil.toIndentedString(lastmodifiedbyname)).append("\n");
-    sb.append("    typeid: ").append(StringUtil.toIndentedString(typeid)).append("\n");
-    sb.append("    type: ").append(StringUtil.toIndentedString(type)).append("\n");
-    sb.append("    addressline1: ").append(StringUtil.toIndentedString(addressline1)).append("\n");
-    sb.append("    addressline2: ").append(StringUtil.toIndentedString(addressline2)).append("\n");
-    sb.append("    addressline3: ").append(StringUtil.toIndentedString(addressline3)).append("\n");
-    sb.append("    city: ").append(StringUtil.toIndentedString(city)).append("\n");
-    sb.append("    statecodetypeid: ").append(StringUtil.toIndentedString(statecodetypeid)).append("\n");
-    sb.append("    statecodetype: ").append(StringUtil.toIndentedString(statecodetype)).append("\n");
-    sb.append("    countrycodetypeid: ").append(StringUtil.toIndentedString(countrycodetypeid)).append("\n");
-    sb.append("    countrycodetype: ").append(StringUtil.toIndentedString(countrycodetype)).append("\n");
-    sb.append("    postalcode: ").append(StringUtil.toIndentedString(postalcode)).append("\n");
-    sb.append("    maincontactnamedentityid: ").append(StringUtil.toIndentedString(maincontactnamedentityid)).append("\n");
-    sb.append("    latitude: ").append(StringUtil.toIndentedString(latitude)).append("\n");
-    sb.append("    longitude: ").append(StringUtil.toIndentedString(longitude)).append("\n");
-    sb.append("    isactive: ").append(StringUtil.toIndentedString(isactive)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    nedid: ").append(toIndentedString(nedid)).append("\n");
+    sb.append("    source: ").append(toIndentedString(source)).append("\n");
+    sb.append("    sourcetypeid: ").append(toIndentedString(sourcetypeid)).append("\n");
+    sb.append("    created: ").append(toIndentedString(created)).append("\n");
+    sb.append("    lastmodified: ").append(toIndentedString(lastmodified)).append("\n");
+    sb.append("    createdby: ").append(toIndentedString(createdby)).append("\n");
+    sb.append("    createdbyname: ").append(toIndentedString(createdbyname)).append("\n");
+    sb.append("    lastmodifiedby: ").append(toIndentedString(lastmodifiedby)).append("\n");
+    sb.append("    lastmodifiedbyname: ").append(toIndentedString(lastmodifiedbyname)).append("\n");
+    sb.append("    typeid: ").append(toIndentedString(typeid)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    addressline1: ").append(toIndentedString(addressline1)).append("\n");
+    sb.append("    addressline2: ").append(toIndentedString(addressline2)).append("\n");
+    sb.append("    addressline3: ").append(toIndentedString(addressline3)).append("\n");
+    sb.append("    city: ").append(toIndentedString(city)).append("\n");
+    sb.append("    statecodetypeid: ").append(toIndentedString(statecodetypeid)).append("\n");
+    sb.append("    statecodetype: ").append(toIndentedString(statecodetype)).append("\n");
+    sb.append("    countrycodetypeid: ").append(toIndentedString(countrycodetypeid)).append("\n");
+    sb.append("    countrycodetype: ").append(toIndentedString(countrycodetype)).append("\n");
+    sb.append("    postalcode: ").append(toIndentedString(postalcode)).append("\n");
+    sb.append("    maincontactnamedentityid: ").append(toIndentedString(maincontactnamedentityid)).append("\n");
+    sb.append("    latitude: ").append(toIndentedString(latitude)).append("\n");
+    sb.append("    longitude: ").append(toIndentedString(longitude)).append("\n");
+    sb.append("    isactive: ").append(toIndentedString(isactive)).append("\n");
     sb.append("}");
     return sb.toString();
   }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
 }
+

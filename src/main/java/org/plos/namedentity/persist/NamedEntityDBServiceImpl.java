@@ -677,7 +677,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     StringBuilder where = new StringBuilder();
     where.append("true");
 
-    Globaltypes gt1 = GLOBALTYPES.as("gt3");
+    Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Alerts a = ALERTS.as("a");
 
     if (frequency != null) {

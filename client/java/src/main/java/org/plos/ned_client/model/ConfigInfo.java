@@ -1,16 +1,17 @@
 package org.plos.ned_client.model;
 
-import org.plos.ned_client.StringUtil;
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 
 
 
-import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
 public class ConfigInfo   {
   
   private String version = null;
@@ -19,6 +20,7 @@ public class ConfigInfo   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("version")
   public String getVersion() {
@@ -31,6 +33,7 @@ public class ConfigInfo   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("startime")
   public Date getStartime() {
@@ -43,13 +46,45 @@ public class ConfigInfo   {
   
 
   @Override
-  public String toString()  {
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ConfigInfo configInfo = (ConfigInfo) o;
+
+    return true && Objects.equals(version, configInfo.version) &&
+        Objects.equals(startime, configInfo.startime)
+    ;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(version, startime);
+  }
+
+  @Override
+  public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ConfigInfo {\n");
     
-    sb.append("    version: ").append(StringUtil.toIndentedString(version)).append("\n");
-    sb.append("    startime: ").append(StringUtil.toIndentedString(startime)).append("\n");
+    sb.append("    version: ").append(toIndentedString(version)).append("\n");
+    sb.append("    startime: ").append(toIndentedString(startime)).append("\n");
     sb.append("}");
     return sb.toString();
   }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
 }
+

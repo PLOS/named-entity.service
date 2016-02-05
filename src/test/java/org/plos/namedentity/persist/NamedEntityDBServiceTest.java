@@ -732,9 +732,6 @@ public class NamedEntityDBServiceTest {
 
     // CREATE
 
-    Integer typeId = nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(ALERT_TYPES.getName()), "journal");
-    assertNotNull(typeId);
-
     Integer frequencyId = nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(ALERT_FREQUENCY.getName()), "weekly");
     assertNotNull(frequencyId);
 
@@ -769,7 +766,7 @@ public class NamedEntityDBServiceTest {
     // FIND (all assignments)
 
     List<Alert> entityList = nedDBSvc.findAll(Alert.class, 0, Integer.MAX_VALUE);
-    assertTrue( entityList.size() == 4 ); // the seed contains data as well
+    assertTrue( entityList.size() == 3 ); // the seed contains data as well
 
     // DELETE
 
@@ -1040,11 +1037,11 @@ public class NamedEntityDBServiceTest {
   @Test
   public void testGetAlerts() {
 
-    assertTrue(nedDBSvc.getAlerts("weekly").size() == 3);
+    assertTrue(nedDBSvc.getAlerts(null).size() == 2);
 
     assertTrue(nedDBSvc.getAlerts("monthly").size() == 0);
 
-    assertTrue(nedDBSvc.getAlerts(null).size() == 2);
+    assertTrue(nedDBSvc.getAlerts("weekly").size() == 2);
 
     try {
       nedDBSvc.getAlerts("nanosecondly");

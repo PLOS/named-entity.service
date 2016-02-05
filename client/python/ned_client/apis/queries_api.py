@@ -2,7 +2,7 @@
 
 """
 QueriesApi.py
-Copyright 2015 SmartBear Software
+Copyright 2016 SmartBear Software
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -61,13 +61,12 @@ class QueriesApi(object):
         :param callback function: The callback function
             for asynchronous request. (optional)
         :param str frequency: 
-        :param str journal: 
         :return: list[Alert]
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['frequency', 'journal']
+        all_params = ['frequency']
         all_params.append('callback')
 
         params = locals()
@@ -80,6 +79,7 @@ class QueriesApi(object):
             params[key] = val
         del params['kwargs']
 
+
         resource_path = '/queries/alerts'.replace('{format}', 'json')
         method = 'GET'
 
@@ -88,8 +88,6 @@ class QueriesApi(object):
         query_params = {}
         if 'frequency' in params:
             query_params['frequency'] = params['frequency']
-        if 'journal' in params:
-            query_params['journal'] = params['journal']
 
         header_params = {}
 
@@ -100,7 +98,7 @@ class QueriesApi(object):
 
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.\
-            select_header_accept([])
+            select_header_accept(['application/json'])
         if not header_params['Accept']:
             del header_params['Accept']
 
