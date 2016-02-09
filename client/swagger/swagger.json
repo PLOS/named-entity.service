@@ -6,15 +6,15 @@
   },
   "basePath" : "/v1",
   "tags" : [ {
-    "name" : "institutionsearch"
-  }, {
-    "name" : "individuals"
-  }, {
     "name" : "typeclasses"
   }, {
     "name" : "service"
   }, {
     "name" : "queries"
+  }, {
+    "name" : "individuals"
+  }, {
+    "name" : "institutionsearch"
   }, {
     "name" : "organizations"
   } ],
@@ -88,8 +88,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/individuals/CAS/{casId}" : {
       "get" : {
@@ -115,8 +114,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/individuals/{nedId}" : {
       "get" : {
@@ -168,8 +166,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/individuals/{nedId}/addresses" : {
       "get" : {
@@ -236,8 +233,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/individuals/{nedId}/addresses/{addressId}" : {
       "get" : {
@@ -352,8 +348,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/individuals/{nedId}/alerts" : {
       "get" : {
@@ -420,8 +415,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/individuals/{nedId}/alerts/{alertId}" : {
       "get" : {
@@ -530,8 +524,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/individuals/{nedId}/auth" : {
       "get" : {
@@ -561,8 +554,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/individuals/{nedId}/auth/checkpassword" : {
       "post" : {
@@ -593,8 +585,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/individuals/{nedId}/auth/{authId}" : {
       "put" : {
@@ -639,8 +630,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/individuals/{nedId}/degrees" : {
       "get" : {
@@ -670,8 +660,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/individuals/{nedId}/emails" : {
       "get" : {
@@ -738,8 +727,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/individuals/{nedId}/emails/{emailId}" : {
       "get" : {
@@ -848,8 +836,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/individuals/{nedId}/groups" : {
       "get" : {
@@ -916,8 +903,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/individuals/{nedId}/groups/{groupId}" : {
       "get" : {
@@ -1026,8 +1012,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/individuals/{nedId}/individualprofiles" : {
       "get" : {
@@ -1094,8 +1079,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/individuals/{nedId}/individualprofiles/{profileId}" : {
       "get" : {
@@ -1204,8 +1188,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/individuals/{nedId}/phonenumbers" : {
       "get" : {
@@ -1235,8 +1218,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/individuals/{nedId}/relationships" : {
       "get" : {
@@ -1303,8 +1285,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/individuals/{nedId}/relationships/{relationshipId}" : {
       "get" : {
@@ -1413,8 +1394,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/individuals/{nedId}/uids" : {
       "get" : {
@@ -1481,8 +1461,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/individuals/{nedId}/uids/{id}" : {
       "get" : {
@@ -1591,8 +1570,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/individuals/{uidType}/{uidValue}" : {
       "get" : {
@@ -1623,8 +1601,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/institutionsearch" : {
       "get" : {
@@ -1644,8 +1621,7 @@
             "description" : "successful operation"
           }
         }
-      },
-      "parameters" : [ ]
+      }
     },
     "/organizations" : {
       "get" : {
@@ -1704,8 +1680,7 @@
             }
           }
         }
-      },
-      "parameters" : [ ]
+      }
     },
     "/organizations/{nedId}" : {
       "get" : {
@@ -1729,8 +1704,7 @@
             }
           }
         }
-      },
-      "parameters" : [ ]
+      }
     },
     "/organizations/{nedId}/addresses" : {
       "get" : {
@@ -1791,8 +1765,7 @@
             }
           }
         }
-      },
-      "parameters" : [ ]
+      }
     },
     "/organizations/{nedId}/addresses/{addressId}" : {
       "get" : {
@@ -1898,8 +1871,7 @@
             }
           }
         }
-      },
-      "parameters" : [ ]
+      }
     },
     "/organizations/{nedId}/emails" : {
       "get" : {
@@ -1960,8 +1932,7 @@
             }
           }
         }
-      },
-      "parameters" : [ ]
+      }
     },
     "/organizations/{nedId}/emails/{emailId}" : {
       "get" : {
@@ -2061,8 +2032,7 @@
             "description" : "successful operation"
           }
         }
-      },
-      "parameters" : [ ]
+      }
     },
     "/organizations/{nedId}/phonenumbers" : {
       "get" : {
@@ -2089,8 +2059,7 @@
             }
           }
         }
-      },
-      "parameters" : [ ]
+      }
     },
     "/organizations/{nedId}/uids" : {
       "get" : {
@@ -2151,8 +2120,7 @@
             }
           }
         }
-      },
-      "parameters" : [ ]
+      }
     },
     "/organizations/{nedId}/uids/{id}" : {
       "get" : {
@@ -2222,8 +2190,7 @@
             }
           }
         }
-      },
-      "parameters" : [ ]
+      }
     },
     "/organizations/{uidType}/{uidValue}" : {
       "get" : {
@@ -2251,8 +2218,7 @@
             }
           }
         }
-      },
-      "parameters" : [ ]
+      }
     },
     "/queries/alerts" : {
       "get" : {
@@ -2260,13 +2226,9 @@
         "summary" : "Get a list of search alerts by type",
         "description" : "",
         "operationId" : "getAlerts",
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "frequency",
-          "in" : "query",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "journal",
           "in" : "query",
           "required" : false,
           "type" : "string"
@@ -2285,8 +2247,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/service/config" : {
       "get" : {
@@ -2304,8 +2265,7 @@
             }
           }
         }
-      },
-      "parameters" : [ ]
+      }
     },
     "/service/errorcodes" : {
       "get" : {
@@ -2326,8 +2286,7 @@
             }
           }
         }
-      },
-      "parameters" : [ ]
+      }
     },
     "/typeclasses" : {
       "get" : {
@@ -2389,8 +2348,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/typeclasses/{id}" : {
       "get" : {
@@ -2465,8 +2423,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/typeclasses/{typeclassid}/typevalues" : {
       "get" : {
@@ -2522,8 +2479,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     },
     "/typeclasses/{typeclassid}/typevalues/{typevalueid}" : {
       "get" : {
@@ -2622,8 +2578,7 @@
         "security" : [ {
           "basic" : [ ]
         } ]
-      },
-      "parameters" : [ ]
+      }
     }
   },
   "securityDefinitions" : {
@@ -2633,6 +2588,7 @@
   },
   "definitions" : {
     "Group" : {
+      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -2696,6 +2652,7 @@
       }
     },
     "Email" : {
+      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -2755,6 +2712,7 @@
       }
     },
     "Address" : {
+      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -2848,6 +2806,7 @@
       }
     },
     "Degree" : {
+      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -2899,6 +2858,7 @@
       }
     },
     "OrganizationComposite" : {
+      "type" : "object",
       "properties" : {
         "addresses" : {
           "type" : "array",
@@ -2971,6 +2931,7 @@
       }
     },
     "ConfigInfo" : {
+      "type" : "object",
       "properties" : {
         "version" : {
           "type" : "string"
@@ -2981,7 +2942,46 @@
         }
       }
     },
+    "Globaltype" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "typeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "shortdescription" : {
+          "type" : "string"
+        },
+        "longdescription" : {
+          "type" : "string"
+        },
+        "typecode" : {
+          "type" : "string"
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lastmodified" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "createdby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "lastmodifiedby" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
     "Uniqueidentifier" : {
+      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -3035,44 +3035,8 @@
         }
       }
     },
-    "Globaltype" : {
-      "properties" : {
-        "id" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "typeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "shortdescription" : {
-          "type" : "string"
-        },
-        "longdescription" : {
-          "type" : "string"
-        },
-        "typecode" : {
-          "type" : "string"
-        },
-        "created" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "lastmodified" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "createdby" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "lastmodifiedby" : {
-          "type" : "integer",
-          "format" : "int32"
-        }
-      }
-    },
     "Url" : {
+      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -3117,6 +3081,7 @@
       }
     },
     "NedErrorResponse" : {
+      "type" : "object",
       "properties" : {
         "failureMsg" : {
           "type" : "string",
@@ -3147,6 +3112,7 @@
       }
     },
     "Typedescription" : {
+      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -3169,6 +3135,7 @@
       }
     },
     "Auth" : {
+      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -3247,6 +3214,7 @@
       }
     },
     "Relationship" : {
+      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -3310,6 +3278,7 @@
       }
     },
     "Alert" : {
+      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -3348,25 +3317,11 @@
         "lastmodifiedbyname" : {
           "type" : "string"
         },
-        "typeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "type" : {
-          "type" : "string"
-        },
         "frequencytypeid" : {
           "type" : "integer",
           "format" : "int32"
         },
         "frequency" : {
-          "type" : "string"
-        },
-        "journaltypeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "journal" : {
           "type" : "string"
         },
         "name" : {
@@ -3378,6 +3333,7 @@
       }
     },
     "IndividualComposite" : {
+      "type" : "object",
       "properties" : {
         "auth" : {
           "type" : "array",
@@ -3449,6 +3405,7 @@
       }
     },
     "Individualprofile" : {
+      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -3526,6 +3483,7 @@
       }
     },
     "Phonenumber" : {
+      "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",

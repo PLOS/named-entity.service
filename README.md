@@ -99,6 +99,10 @@ to attach to a debug unit test with IntelliJ, create a remote test config with t
 Database Migrations
 -------------------
 
+Make sure you have a schema to hold the tables. 
+
+    CREATE SCHEMA namedEntities DEFAULT CHARACTER SET utf8 COLLATE utf8_bin
+
 NED uses Flyway to manage database migrations. See ned script for usage.
 
 Generating Eclipse Project Files

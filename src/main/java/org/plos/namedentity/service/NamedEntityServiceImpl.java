@@ -171,8 +171,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     return null;
   }
 
-  public List<Alert> getAlerts(String frequency, String journal) {
-    return nedDBSvc.getAlerts(frequency, journal);
+  public List<Alert> getAlerts(String frequency) {
+    return nedDBSvc.getAlerts(frequency);
   }
 
   private Organization resolveOrganization(Organization entity) {
@@ -204,17 +204,12 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   }
 
   private Alert resolveAlert(Alert entity) {
-    if (entity.getType() != null)
-      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Alert Types"), entity.getType()));
 
     if (entity.getSource() != null)
       entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
 
     if (entity.getFrequency() != null)
       entity.setFrequencytypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Alert Frequency"), entity.getFrequency()));
-
-    if (entity.getJournal() != null)
-      entity.setJournaltypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Journal Types"), entity.getJournal()));
 
     return entity;
   }

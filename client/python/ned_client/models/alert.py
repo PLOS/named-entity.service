@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-Copyright 2015 SmartBear Software
+Copyright 2016 SmartBear Software
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -47,12 +47,8 @@ class Alert(object):
             'createdbyname': 'str',
             'lastmodifiedby': 'int',
             'lastmodifiedbyname': 'str',
-            'typeid': 'int',
-            'type': 'str',
             'frequencytypeid': 'int',
             'frequency': 'str',
-            'journaltypeid': 'int',
-            'journal': 'str',
             'name': 'str',
             'query': 'str'
         }
@@ -68,12 +64,8 @@ class Alert(object):
             'createdbyname': 'createdbyname',
             'lastmodifiedby': 'lastmodifiedby',
             'lastmodifiedbyname': 'lastmodifiedbyname',
-            'typeid': 'typeid',
-            'type': 'type',
             'frequencytypeid': 'frequencytypeid',
             'frequency': 'frequency',
-            'journaltypeid': 'journaltypeid',
-            'journal': 'journal',
             'name': 'name',
             'query': 'query'
         }
@@ -88,12 +80,8 @@ class Alert(object):
         self._createdbyname = None
         self._lastmodifiedby = None
         self._lastmodifiedbyname = None
-        self._typeid = None
-        self._type = None
         self._frequencytypeid = None
         self._frequency = None
-        self._journaltypeid = None
-        self._journal = None
         self._name = None
         self._query = None
 
@@ -318,50 +306,6 @@ class Alert(object):
         self._lastmodifiedbyname = lastmodifiedbyname
 
     @property
-    def typeid(self):
-        """
-        Gets the typeid of this Alert.
-
-
-        :return: The typeid of this Alert.
-        :rtype: int
-        """
-        return self._typeid
-
-    @typeid.setter
-    def typeid(self, typeid):
-        """
-        Sets the typeid of this Alert.
-
-
-        :param typeid: The typeid of this Alert.
-        :type: int
-        """
-        self._typeid = typeid
-
-    @property
-    def type(self):
-        """
-        Gets the type of this Alert.
-
-
-        :return: The type of this Alert.
-        :rtype: str
-        """
-        return self._type
-
-    @type.setter
-    def type(self, type):
-        """
-        Sets the type of this Alert.
-
-
-        :param type: The type of this Alert.
-        :type: str
-        """
-        self._type = type
-
-    @property
     def frequencytypeid(self):
         """
         Gets the frequencytypeid of this Alert.
@@ -404,50 +348,6 @@ class Alert(object):
         :type: str
         """
         self._frequency = frequency
-
-    @property
-    def journaltypeid(self):
-        """
-        Gets the journaltypeid of this Alert.
-
-
-        :return: The journaltypeid of this Alert.
-        :rtype: int
-        """
-        return self._journaltypeid
-
-    @journaltypeid.setter
-    def journaltypeid(self, journaltypeid):
-        """
-        Sets the journaltypeid of this Alert.
-
-
-        :param journaltypeid: The journaltypeid of this Alert.
-        :type: int
-        """
-        self._journaltypeid = journaltypeid
-
-    @property
-    def journal(self):
-        """
-        Gets the journal of this Alert.
-
-
-        :return: The journal of this Alert.
-        :rtype: str
-        """
-        return self._journal
-
-    @journal.setter
-    def journal(self, journal):
-        """
-        Sets the journal of this Alert.
-
-
-        :param journal: The journal of this Alert.
-        :type: str
-        """
-        self._journal = journal
 
     @property
     def name(self):
@@ -524,3 +424,16 @@ class Alert(object):
         For `print` and `pprint`
         """
         return self.to_str()
+
+    def __eq__(self, other): 
+        """
+        Returns true if both objects are equal
+        """
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        """ 
+        Returns true if both objects are not equal
+        """
+        return not self == other
+

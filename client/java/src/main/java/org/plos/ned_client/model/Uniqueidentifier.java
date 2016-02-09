@@ -1,16 +1,17 @@
 package org.plos.ned_client.model;
 
-import org.plos.ned_client.StringUtil;
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 
 
 
-import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
 public class Uniqueidentifier   {
   
   private Integer id = null;
@@ -31,6 +32,7 @@ public class Uniqueidentifier   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("id")
   public Integer getId() {
@@ -43,6 +45,7 @@ public class Uniqueidentifier   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("nedid")
   public Integer getNedid() {
@@ -55,6 +58,7 @@ public class Uniqueidentifier   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("source")
   public String getSource() {
@@ -67,6 +71,7 @@ public class Uniqueidentifier   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("sourcetypeid")
   public Integer getSourcetypeid() {
@@ -79,6 +84,7 @@ public class Uniqueidentifier   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("created")
   public Date getCreated() {
@@ -91,6 +97,7 @@ public class Uniqueidentifier   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodified")
   public Date getLastmodified() {
@@ -103,6 +110,7 @@ public class Uniqueidentifier   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("createdby")
   public Integer getCreatedby() {
@@ -115,6 +123,7 @@ public class Uniqueidentifier   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("createdbyname")
   public String getCreatedbyname() {
@@ -127,6 +136,7 @@ public class Uniqueidentifier   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodifiedby")
   public Integer getLastmodifiedby() {
@@ -139,6 +149,7 @@ public class Uniqueidentifier   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodifiedbyname")
   public String getLastmodifiedbyname() {
@@ -151,6 +162,7 @@ public class Uniqueidentifier   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("typeid")
   public Integer getTypeid() {
@@ -163,6 +175,7 @@ public class Uniqueidentifier   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("type")
   public String getType() {
@@ -175,6 +188,7 @@ public class Uniqueidentifier   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("uniqueidentifier")
   public String getUniqueidentifier() {
@@ -187,6 +201,7 @@ public class Uniqueidentifier   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("metadata")
   public String getMetadata() {
@@ -199,25 +214,69 @@ public class Uniqueidentifier   {
   
 
   @Override
-  public String toString()  {
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Uniqueidentifier uniqueidentifier = (Uniqueidentifier) o;
+
+    return true && Objects.equals(id, uniqueidentifier.id) &&
+        Objects.equals(nedid, uniqueidentifier.nedid) &&
+        Objects.equals(source, uniqueidentifier.source) &&
+        Objects.equals(sourcetypeid, uniqueidentifier.sourcetypeid) &&
+        Objects.equals(created, uniqueidentifier.created) &&
+        Objects.equals(lastmodified, uniqueidentifier.lastmodified) &&
+        Objects.equals(createdby, uniqueidentifier.createdby) &&
+        Objects.equals(createdbyname, uniqueidentifier.createdbyname) &&
+        Objects.equals(lastmodifiedby, uniqueidentifier.lastmodifiedby) &&
+        Objects.equals(lastmodifiedbyname, uniqueidentifier.lastmodifiedbyname) &&
+        Objects.equals(typeid, uniqueidentifier.typeid) &&
+        Objects.equals(type, uniqueidentifier.type) &&
+        Objects.equals(uniqueidentifier, uniqueidentifier.uniqueidentifier) &&
+        Objects.equals(metadata, uniqueidentifier.metadata)
+    ;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, nedid, source, sourcetypeid, created, lastmodified, createdby, createdbyname, lastmodifiedby, lastmodifiedbyname, typeid, type, uniqueidentifier, metadata);
+  }
+
+  @Override
+  public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Uniqueidentifier {\n");
     
-    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
-    sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
-    sb.append("    source: ").append(StringUtil.toIndentedString(source)).append("\n");
-    sb.append("    sourcetypeid: ").append(StringUtil.toIndentedString(sourcetypeid)).append("\n");
-    sb.append("    created: ").append(StringUtil.toIndentedString(created)).append("\n");
-    sb.append("    lastmodified: ").append(StringUtil.toIndentedString(lastmodified)).append("\n");
-    sb.append("    createdby: ").append(StringUtil.toIndentedString(createdby)).append("\n");
-    sb.append("    createdbyname: ").append(StringUtil.toIndentedString(createdbyname)).append("\n");
-    sb.append("    lastmodifiedby: ").append(StringUtil.toIndentedString(lastmodifiedby)).append("\n");
-    sb.append("    lastmodifiedbyname: ").append(StringUtil.toIndentedString(lastmodifiedbyname)).append("\n");
-    sb.append("    typeid: ").append(StringUtil.toIndentedString(typeid)).append("\n");
-    sb.append("    type: ").append(StringUtil.toIndentedString(type)).append("\n");
-    sb.append("    uniqueidentifier: ").append(StringUtil.toIndentedString(uniqueidentifier)).append("\n");
-    sb.append("    metadata: ").append(StringUtil.toIndentedString(metadata)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    nedid: ").append(toIndentedString(nedid)).append("\n");
+    sb.append("    source: ").append(toIndentedString(source)).append("\n");
+    sb.append("    sourcetypeid: ").append(toIndentedString(sourcetypeid)).append("\n");
+    sb.append("    created: ").append(toIndentedString(created)).append("\n");
+    sb.append("    lastmodified: ").append(toIndentedString(lastmodified)).append("\n");
+    sb.append("    createdby: ").append(toIndentedString(createdby)).append("\n");
+    sb.append("    createdbyname: ").append(toIndentedString(createdbyname)).append("\n");
+    sb.append("    lastmodifiedby: ").append(toIndentedString(lastmodifiedby)).append("\n");
+    sb.append("    lastmodifiedbyname: ").append(toIndentedString(lastmodifiedbyname)).append("\n");
+    sb.append("    typeid: ").append(toIndentedString(typeid)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    uniqueidentifier: ").append(toIndentedString(uniqueidentifier)).append("\n");
+    sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
     sb.append("}");
     return sb.toString();
   }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
 }
+

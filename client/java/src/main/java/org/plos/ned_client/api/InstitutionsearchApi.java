@@ -1,15 +1,16 @@
 package org.plos.ned_client.api;
 
+import com.sun.jersey.api.client.GenericType;
+
 import org.plos.ned_client.ApiException;
 import org.plos.ned_client.ApiClient;
 import org.plos.ned_client.Configuration;
 import org.plos.ned_client.Pair;
-import org.plos.ned_client.TypeRef;
 
 
 import java.util.*;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
 public class InstitutionsearchApi {
   private ApiClient apiClient;
 
@@ -36,9 +37,8 @@ public class InstitutionsearchApi {
    * @param substring 
    * @return void
    */
-  public void findInstitutionsByName (String substring) throws ApiException {
+  public void findInstitutionsByName(String substring) throws ApiException {
     Object postBody = null;
-    byte[] postBinaryBody = null;
     
     // create path and map variables
     String path = "/institutionsearch".replaceAll("\\{format\\}","json");
@@ -69,14 +69,8 @@ public class InstitutionsearchApi {
     String[] authNames = new String[] {  };
 
     
-
+    apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, null);
     
-    
-    apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, null);
-    
-    
-
-
   }
   
 }

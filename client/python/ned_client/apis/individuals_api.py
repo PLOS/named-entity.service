@@ -2,7 +2,7 @@
 
 """
 IndividualsApi.py
-Copyright 2015 SmartBear Software
+Copyright 2016 SmartBear Software
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -80,6 +80,7 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
 
         resource_path = '/individuals'.replace('{format}', 'json')
         method = 'GET'
@@ -161,6 +162,7 @@ class IndividualsApi(object):
             params[key] = val
         del params['kwargs']
 
+
         resource_path = '/individuals'.replace('{format}', 'json')
         method = 'POST'
 
@@ -224,9 +226,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'cas_id' is set
-        if cas_id is None:
-            raise ValueError("Missing the required parameter `cas_id` when calling `read_individual_by_cas_id`")
 
         all_params = ['cas_id']
         all_params.append('callback')
@@ -240,6 +239,10 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'cas_id' is set
+        if ('cas_id' not in params) or (params['cas_id'] is None):
+            raise ValueError("Missing the required parameter `cas_id` when calling `read_individual_by_cas_id`")
 
         resource_path = '/individuals/CAS/{casId}'.replace('{format}', 'json')
         method = 'GET'
@@ -302,9 +305,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `read_individual`")
 
         all_params = ['ned_id']
         all_params.append('callback')
@@ -318,6 +318,10 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `read_individual`")
 
         resource_path = '/individuals/{nedId}'.replace('{format}', 'json')
         method = 'GET'
@@ -380,9 +384,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `delete_individual`")
 
         all_params = ['ned_id']
         all_params.append('callback')
@@ -396,6 +397,10 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `delete_individual`")
 
         resource_path = '/individuals/{nedId}'.replace('{format}', 'json')
         method = 'DELETE'
@@ -458,9 +463,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `get_addresses`")
 
         all_params = ['ned_id']
         all_params.append('callback')
@@ -474,6 +476,10 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `get_addresses`")
 
         resource_path = '/individuals/{nedId}/addresses'.replace('{format}', 'json')
         method = 'GET'
@@ -538,9 +544,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `create_address`")
 
         all_params = ['ned_id', 'body', 'authorization']
         all_params.append('callback')
@@ -554,6 +557,10 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `create_address`")
 
         resource_path = '/individuals/{nedId}/addresses'.replace('{format}', 'json')
         method = 'POST'
@@ -621,12 +628,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `get_address`")
-        # verify the required parameter 'address_id' is set
-        if address_id is None:
-            raise ValueError("Missing the required parameter `address_id` when calling `get_address`")
 
         all_params = ['ned_id', 'address_id']
         all_params.append('callback')
@@ -640,6 +641,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `get_address`")
+        # verify the required parameter 'address_id' is set
+        if ('address_id' not in params) or (params['address_id'] is None):
+            raise ValueError("Missing the required parameter `address_id` when calling `get_address`")
 
         resource_path = '/individuals/{nedId}/addresses/{addressId}'.replace('{format}', 'json')
         method = 'GET'
@@ -707,12 +715,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `update_address`")
-        # verify the required parameter 'address_id' is set
-        if address_id is None:
-            raise ValueError("Missing the required parameter `address_id` when calling `update_address`")
 
         all_params = ['ned_id', 'address_id', 'body', 'authorization']
         all_params.append('callback')
@@ -726,6 +728,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `update_address`")
+        # verify the required parameter 'address_id' is set
+        if ('address_id' not in params) or (params['address_id'] is None):
+            raise ValueError("Missing the required parameter `address_id` when calling `update_address`")
 
         resource_path = '/individuals/{nedId}/addresses/{addressId}'.replace('{format}', 'json')
         method = 'PUT'
@@ -796,12 +805,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `delete_address`")
-        # verify the required parameter 'address_id' is set
-        if address_id is None:
-            raise ValueError("Missing the required parameter `address_id` when calling `delete_address`")
 
         all_params = ['ned_id', 'address_id', 'authorization']
         all_params.append('callback')
@@ -815,6 +818,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `delete_address`")
+        # verify the required parameter 'address_id' is set
+        if ('address_id' not in params) or (params['address_id'] is None):
+            raise ValueError("Missing the required parameter `address_id` when calling `delete_address`")
 
         resource_path = '/individuals/{nedId}/addresses/{addressId}'.replace('{format}', 'json')
         method = 'DELETE'
@@ -881,9 +891,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `get_alerts`")
 
         all_params = ['ned_id']
         all_params.append('callback')
@@ -897,6 +904,10 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `get_alerts`")
 
         resource_path = '/individuals/{nedId}/alerts'.replace('{format}', 'json')
         method = 'GET'
@@ -961,9 +972,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `create_alert`")
 
         all_params = ['ned_id', 'body', 'authorization']
         all_params.append('callback')
@@ -977,6 +985,10 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `create_alert`")
 
         resource_path = '/individuals/{nedId}/alerts'.replace('{format}', 'json')
         method = 'POST'
@@ -1044,12 +1056,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `get_alert`")
-        # verify the required parameter 'alert_id' is set
-        if alert_id is None:
-            raise ValueError("Missing the required parameter `alert_id` when calling `get_alert`")
 
         all_params = ['ned_id', 'alert_id']
         all_params.append('callback')
@@ -1063,6 +1069,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `get_alert`")
+        # verify the required parameter 'alert_id' is set
+        if ('alert_id' not in params) or (params['alert_id'] is None):
+            raise ValueError("Missing the required parameter `alert_id` when calling `get_alert`")
 
         resource_path = '/individuals/{nedId}/alerts/{alertId}'.replace('{format}', 'json')
         method = 'GET'
@@ -1130,12 +1143,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `update_alert`")
-        # verify the required parameter 'alert_id' is set
-        if alert_id is None:
-            raise ValueError("Missing the required parameter `alert_id` when calling `update_alert`")
 
         all_params = ['ned_id', 'alert_id', 'authorization', 'body']
         all_params.append('callback')
@@ -1149,6 +1156,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `update_alert`")
+        # verify the required parameter 'alert_id' is set
+        if ('alert_id' not in params) or (params['alert_id'] is None):
+            raise ValueError("Missing the required parameter `alert_id` when calling `update_alert`")
 
         resource_path = '/individuals/{nedId}/alerts/{alertId}'.replace('{format}', 'json')
         method = 'PUT'
@@ -1219,12 +1233,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `delete_alert`")
-        # verify the required parameter 'alert_id' is set
-        if alert_id is None:
-            raise ValueError("Missing the required parameter `alert_id` when calling `delete_alert`")
 
         all_params = ['ned_id', 'alert_id', 'authorization']
         all_params.append('callback')
@@ -1238,6 +1246,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `delete_alert`")
+        # verify the required parameter 'alert_id' is set
+        if ('alert_id' not in params) or (params['alert_id'] is None):
+            raise ValueError("Missing the required parameter `alert_id` when calling `delete_alert`")
 
         resource_path = '/individuals/{nedId}/alerts/{alertId}'.replace('{format}', 'json')
         method = 'DELETE'
@@ -1304,9 +1319,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `get_auth_record`")
 
         all_params = ['ned_id']
         all_params.append('callback')
@@ -1320,6 +1332,10 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `get_auth_record`")
 
         resource_path = '/individuals/{nedId}/auth'.replace('{format}', 'json')
         method = 'GET'
@@ -1383,9 +1399,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `check_password`")
 
         all_params = ['ned_id', 'body']
         all_params.append('callback')
@@ -1399,6 +1412,10 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `check_password`")
 
         resource_path = '/individuals/{nedId}/auth/checkpassword'.replace('{format}', 'json')
         method = 'POST'
@@ -1466,12 +1483,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `update_auth_record`")
-        # verify the required parameter 'auth_id' is set
-        if auth_id is None:
-            raise ValueError("Missing the required parameter `auth_id` when calling `update_auth_record`")
 
         all_params = ['ned_id', 'auth_id', 'authorization', 'body']
         all_params.append('callback')
@@ -1485,6 +1496,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `update_auth_record`")
+        # verify the required parameter 'auth_id' is set
+        if ('auth_id' not in params) or (params['auth_id'] is None):
+            raise ValueError("Missing the required parameter `auth_id` when calling `update_auth_record`")
 
         resource_path = '/individuals/{nedId}/auth/{authId}'.replace('{format}', 'json')
         method = 'PUT'
@@ -1553,9 +1571,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `get_degrees`")
 
         all_params = ['ned_id']
         all_params.append('callback')
@@ -1569,6 +1584,10 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `get_degrees`")
 
         resource_path = '/individuals/{nedId}/degrees'.replace('{format}', 'json')
         method = 'GET'
@@ -1631,9 +1650,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `get_emails`")
 
         all_params = ['ned_id']
         all_params.append('callback')
@@ -1647,6 +1663,10 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `get_emails`")
 
         resource_path = '/individuals/{nedId}/emails'.replace('{format}', 'json')
         method = 'GET'
@@ -1711,9 +1731,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `create_email`")
 
         all_params = ['ned_id', 'body', 'authorization']
         all_params.append('callback')
@@ -1727,6 +1744,10 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `create_email`")
 
         resource_path = '/individuals/{nedId}/emails'.replace('{format}', 'json')
         method = 'POST'
@@ -1794,12 +1815,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `get_email`")
-        # verify the required parameter 'email_id' is set
-        if email_id is None:
-            raise ValueError("Missing the required parameter `email_id` when calling `get_email`")
 
         all_params = ['ned_id', 'email_id']
         all_params.append('callback')
@@ -1813,6 +1828,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `get_email`")
+        # verify the required parameter 'email_id' is set
+        if ('email_id' not in params) or (params['email_id'] is None):
+            raise ValueError("Missing the required parameter `email_id` when calling `get_email`")
 
         resource_path = '/individuals/{nedId}/emails/{emailId}'.replace('{format}', 'json')
         method = 'GET'
@@ -1880,12 +1902,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `update_email`")
-        # verify the required parameter 'email_id' is set
-        if email_id is None:
-            raise ValueError("Missing the required parameter `email_id` when calling `update_email`")
 
         all_params = ['ned_id', 'email_id', 'body', 'authorization']
         all_params.append('callback')
@@ -1899,6 +1915,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `update_email`")
+        # verify the required parameter 'email_id' is set
+        if ('email_id' not in params) or (params['email_id'] is None):
+            raise ValueError("Missing the required parameter `email_id` when calling `update_email`")
 
         resource_path = '/individuals/{nedId}/emails/{emailId}'.replace('{format}', 'json')
         method = 'PUT'
@@ -1969,12 +1992,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `delete_email`")
-        # verify the required parameter 'email_id' is set
-        if email_id is None:
-            raise ValueError("Missing the required parameter `email_id` when calling `delete_email`")
 
         all_params = ['ned_id', 'email_id', 'authorization']
         all_params.append('callback')
@@ -1988,6 +2005,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `delete_email`")
+        # verify the required parameter 'email_id' is set
+        if ('email_id' not in params) or (params['email_id'] is None):
+            raise ValueError("Missing the required parameter `email_id` when calling `delete_email`")
 
         resource_path = '/individuals/{nedId}/emails/{emailId}'.replace('{format}', 'json')
         method = 'DELETE'
@@ -2054,9 +2078,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `get_groups`")
 
         all_params = ['ned_id']
         all_params.append('callback')
@@ -2070,6 +2091,10 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `get_groups`")
 
         resource_path = '/individuals/{nedId}/groups'.replace('{format}', 'json')
         method = 'GET'
@@ -2134,9 +2159,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `create_group`")
 
         all_params = ['ned_id', 'body', 'authorization']
         all_params.append('callback')
@@ -2150,6 +2172,10 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `create_group`")
 
         resource_path = '/individuals/{nedId}/groups'.replace('{format}', 'json')
         method = 'POST'
@@ -2217,12 +2243,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `get_group`")
-        # verify the required parameter 'group_id' is set
-        if group_id is None:
-            raise ValueError("Missing the required parameter `group_id` when calling `get_group`")
 
         all_params = ['ned_id', 'group_id']
         all_params.append('callback')
@@ -2236,6 +2256,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `get_group`")
+        # verify the required parameter 'group_id' is set
+        if ('group_id' not in params) or (params['group_id'] is None):
+            raise ValueError("Missing the required parameter `group_id` when calling `get_group`")
 
         resource_path = '/individuals/{nedId}/groups/{groupId}'.replace('{format}', 'json')
         method = 'GET'
@@ -2303,12 +2330,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `update_group`")
-        # verify the required parameter 'group_id' is set
-        if group_id is None:
-            raise ValueError("Missing the required parameter `group_id` when calling `update_group`")
 
         all_params = ['ned_id', 'group_id', 'authorization', 'body']
         all_params.append('callback')
@@ -2322,6 +2343,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `update_group`")
+        # verify the required parameter 'group_id' is set
+        if ('group_id' not in params) or (params['group_id'] is None):
+            raise ValueError("Missing the required parameter `group_id` when calling `update_group`")
 
         resource_path = '/individuals/{nedId}/groups/{groupId}'.replace('{format}', 'json')
         method = 'PUT'
@@ -2392,12 +2420,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `delete_group`")
-        # verify the required parameter 'group_id' is set
-        if group_id is None:
-            raise ValueError("Missing the required parameter `group_id` when calling `delete_group`")
 
         all_params = ['ned_id', 'group_id', 'authorization']
         all_params.append('callback')
@@ -2411,6 +2433,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `delete_group`")
+        # verify the required parameter 'group_id' is set
+        if ('group_id' not in params) or (params['group_id'] is None):
+            raise ValueError("Missing the required parameter `group_id` when calling `delete_group`")
 
         resource_path = '/individuals/{nedId}/groups/{groupId}'.replace('{format}', 'json')
         method = 'DELETE'
@@ -2477,9 +2506,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `get_profiles`")
 
         all_params = ['ned_id']
         all_params.append('callback')
@@ -2493,6 +2519,10 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `get_profiles`")
 
         resource_path = '/individuals/{nedId}/individualprofiles'.replace('{format}', 'json')
         method = 'GET'
@@ -2557,9 +2587,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `add_profile`")
 
         all_params = ['ned_id', 'body', 'authorization']
         all_params.append('callback')
@@ -2573,6 +2600,10 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `add_profile`")
 
         resource_path = '/individuals/{nedId}/individualprofiles'.replace('{format}', 'json')
         method = 'POST'
@@ -2640,12 +2671,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `get_profile`")
-        # verify the required parameter 'profile_id' is set
-        if profile_id is None:
-            raise ValueError("Missing the required parameter `profile_id` when calling `get_profile`")
 
         all_params = ['ned_id', 'profile_id']
         all_params.append('callback')
@@ -2659,6 +2684,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `get_profile`")
+        # verify the required parameter 'profile_id' is set
+        if ('profile_id' not in params) or (params['profile_id'] is None):
+            raise ValueError("Missing the required parameter `profile_id` when calling `get_profile`")
 
         resource_path = '/individuals/{nedId}/individualprofiles/{profileId}'.replace('{format}', 'json')
         method = 'GET'
@@ -2726,12 +2758,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `update_profile`")
-        # verify the required parameter 'profile_id' is set
-        if profile_id is None:
-            raise ValueError("Missing the required parameter `profile_id` when calling `update_profile`")
 
         all_params = ['ned_id', 'profile_id', 'authorization', 'body']
         all_params.append('callback')
@@ -2745,6 +2771,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `update_profile`")
+        # verify the required parameter 'profile_id' is set
+        if ('profile_id' not in params) or (params['profile_id'] is None):
+            raise ValueError("Missing the required parameter `profile_id` when calling `update_profile`")
 
         resource_path = '/individuals/{nedId}/individualprofiles/{profileId}'.replace('{format}', 'json')
         method = 'PUT'
@@ -2815,12 +2848,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `delete_profile`")
-        # verify the required parameter 'profile_id' is set
-        if profile_id is None:
-            raise ValueError("Missing the required parameter `profile_id` when calling `delete_profile`")
 
         all_params = ['ned_id', 'profile_id', 'authorization']
         all_params.append('callback')
@@ -2834,6 +2861,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `delete_profile`")
+        # verify the required parameter 'profile_id' is set
+        if ('profile_id' not in params) or (params['profile_id'] is None):
+            raise ValueError("Missing the required parameter `profile_id` when calling `delete_profile`")
 
         resource_path = '/individuals/{nedId}/individualprofiles/{profileId}'.replace('{format}', 'json')
         method = 'DELETE'
@@ -2900,9 +2934,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `get_phonenumbers`")
 
         all_params = ['ned_id']
         all_params.append('callback')
@@ -2916,6 +2947,10 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `get_phonenumbers`")
 
         resource_path = '/individuals/{nedId}/phonenumbers'.replace('{format}', 'json')
         method = 'GET'
@@ -2978,9 +3013,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `get_relationships`")
 
         all_params = ['ned_id']
         all_params.append('callback')
@@ -2994,6 +3026,10 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `get_relationships`")
 
         resource_path = '/individuals/{nedId}/relationships'.replace('{format}', 'json')
         method = 'GET'
@@ -3058,9 +3094,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `create_relationship`")
 
         all_params = ['ned_id', 'body', 'authorization']
         all_params.append('callback')
@@ -3074,6 +3107,10 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `create_relationship`")
 
         resource_path = '/individuals/{nedId}/relationships'.replace('{format}', 'json')
         method = 'POST'
@@ -3141,12 +3178,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `get_relationship`")
-        # verify the required parameter 'relationship_id' is set
-        if relationship_id is None:
-            raise ValueError("Missing the required parameter `relationship_id` when calling `get_relationship`")
 
         all_params = ['ned_id', 'relationship_id']
         all_params.append('callback')
@@ -3160,6 +3191,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `get_relationship`")
+        # verify the required parameter 'relationship_id' is set
+        if ('relationship_id' not in params) or (params['relationship_id'] is None):
+            raise ValueError("Missing the required parameter `relationship_id` when calling `get_relationship`")
 
         resource_path = '/individuals/{nedId}/relationships/{relationshipId}'.replace('{format}', 'json')
         method = 'GET'
@@ -3227,12 +3265,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `update_relationship`")
-        # verify the required parameter 'relationship_id' is set
-        if relationship_id is None:
-            raise ValueError("Missing the required parameter `relationship_id` when calling `update_relationship`")
 
         all_params = ['ned_id', 'relationship_id', 'authorization', 'body']
         all_params.append('callback')
@@ -3246,6 +3278,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `update_relationship`")
+        # verify the required parameter 'relationship_id' is set
+        if ('relationship_id' not in params) or (params['relationship_id'] is None):
+            raise ValueError("Missing the required parameter `relationship_id` when calling `update_relationship`")
 
         resource_path = '/individuals/{nedId}/relationships/{relationshipId}'.replace('{format}', 'json')
         method = 'PUT'
@@ -3316,12 +3355,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `delete_relationship`")
-        # verify the required parameter 'relationship_id' is set
-        if relationship_id is None:
-            raise ValueError("Missing the required parameter `relationship_id` when calling `delete_relationship`")
 
         all_params = ['ned_id', 'relationship_id', 'authorization']
         all_params.append('callback')
@@ -3335,6 +3368,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `delete_relationship`")
+        # verify the required parameter 'relationship_id' is set
+        if ('relationship_id' not in params) or (params['relationship_id'] is None):
+            raise ValueError("Missing the required parameter `relationship_id` when calling `delete_relationship`")
 
         resource_path = '/individuals/{nedId}/relationships/{relationshipId}'.replace('{format}', 'json')
         method = 'DELETE'
@@ -3401,9 +3441,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `get_uids`")
 
         all_params = ['ned_id']
         all_params.append('callback')
@@ -3417,6 +3454,10 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `get_uids`")
 
         resource_path = '/individuals/{nedId}/uids'.replace('{format}', 'json')
         method = 'GET'
@@ -3481,9 +3522,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `create_uid`")
 
         all_params = ['ned_id', 'body', 'authorization']
         all_params.append('callback')
@@ -3497,6 +3535,10 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `create_uid`")
 
         resource_path = '/individuals/{nedId}/uids'.replace('{format}', 'json')
         method = 'POST'
@@ -3564,12 +3606,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `get_uid`")
-        # verify the required parameter 'id' is set
-        if id is None:
-            raise ValueError("Missing the required parameter `id` when calling `get_uid`")
 
         all_params = ['ned_id', 'id']
         all_params.append('callback')
@@ -3583,6 +3619,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `get_uid`")
+        # verify the required parameter 'id' is set
+        if ('id' not in params) or (params['id'] is None):
+            raise ValueError("Missing the required parameter `id` when calling `get_uid`")
 
         resource_path = '/individuals/{nedId}/uids/{id}'.replace('{format}', 'json')
         method = 'GET'
@@ -3650,12 +3693,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `update_uid`")
-        # verify the required parameter 'id' is set
-        if id is None:
-            raise ValueError("Missing the required parameter `id` when calling `update_uid`")
 
         all_params = ['ned_id', 'id', 'authorization', 'body']
         all_params.append('callback')
@@ -3669,6 +3706,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `update_uid`")
+        # verify the required parameter 'id' is set
+        if ('id' not in params) or (params['id'] is None):
+            raise ValueError("Missing the required parameter `id` when calling `update_uid`")
 
         resource_path = '/individuals/{nedId}/uids/{id}'.replace('{format}', 'json')
         method = 'PUT'
@@ -3739,12 +3783,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'ned_id' is set
-        if ned_id is None:
-            raise ValueError("Missing the required parameter `ned_id` when calling `delete_uid`")
-        # verify the required parameter 'id' is set
-        if id is None:
-            raise ValueError("Missing the required parameter `id` when calling `delete_uid`")
 
         all_params = ['ned_id', 'id', 'authorization']
         all_params.append('callback')
@@ -3758,6 +3796,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'ned_id' is set
+        if ('ned_id' not in params) or (params['ned_id'] is None):
+            raise ValueError("Missing the required parameter `ned_id` when calling `delete_uid`")
+        # verify the required parameter 'id' is set
+        if ('id' not in params) or (params['id'] is None):
+            raise ValueError("Missing the required parameter `id` when calling `delete_uid`")
 
         resource_path = '/individuals/{nedId}/uids/{id}'.replace('{format}', 'json')
         method = 'DELETE'
@@ -3825,12 +3870,6 @@ class IndividualsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        # verify the required parameter 'uid_type' is set
-        if uid_type is None:
-            raise ValueError("Missing the required parameter `uid_type` when calling `read_individual_by_uid`")
-        # verify the required parameter 'uid_value' is set
-        if uid_value is None:
-            raise ValueError("Missing the required parameter `uid_value` when calling `read_individual_by_uid`")
 
         all_params = ['uid_type', 'uid_value']
         all_params.append('callback')
@@ -3844,6 +3883,13 @@ class IndividualsApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
+        # verify the required parameter 'uid_type' is set
+        if ('uid_type' not in params) or (params['uid_type'] is None):
+            raise ValueError("Missing the required parameter `uid_type` when calling `read_individual_by_uid`")
+        # verify the required parameter 'uid_value' is set
+        if ('uid_value' not in params) or (params['uid_value'] is None):
+            raise ValueError("Missing the required parameter `uid_value` when calling `read_individual_by_uid`")
 
         resource_path = '/individuals/{uidType}/{uidValue}'.replace('{format}', 'json')
         method = 'GET'

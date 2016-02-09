@@ -4454,8 +4454,6 @@ font-style: italic;
     <div class="field-items">
       <div class="param">frequency (optional)</div>
 
-      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div><div class="param">journal (optional)</div>
-
       <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div>
     </div>  <!-- field-items -->
     
@@ -4474,6 +4472,15 @@ font-style: italic;
 
     
 
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
     
 
     <h3 class="field-label">Responses</h3>
@@ -5219,11 +5226,11 @@ font-style: italic;
   
   
   
-    <li><a href="#Uniqueidentifier"><code>Uniqueidentifier</code></a></li>
-  
-  
-  
     <li><a href="#Globaltype"><code>Globaltype</code></a></li>
+  
+  
+  
+    <li><a href="#Uniqueidentifier"><code>Uniqueidentifier</code></a></li>
   
   
   
@@ -5498,6 +5505,33 @@ font-style: italic;
   
   
   <div class="model">
+    <h3 class="field-label"><a name="Globaltype">Globaltype</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">shortdescription </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">longdescription </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">typecode </div><div class="param-desc"><span class="param-type">String</span> </div>
+      
+      <div class="param">created </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
+      
+      <div class="param">createdby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      <div class="param">lastmodifiedby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
     <h3 class="field-label"><a name="Uniqueidentifier">Uniqueidentifier</a> <a class="up" href="#__Models">Up</a></h3>
     <div class="field-items">
       <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
@@ -5527,33 +5561,6 @@ font-style: italic;
       <div class="param">uniqueidentifier </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       <div class="param">metadata </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      
-    </div>  <!-- field-items -->
-  </div>
-  
-  
-  
-  <div class="model">
-    <h3 class="field-label"><a name="Globaltype">Globaltype</a> <a class="up" href="#__Models">Up</a></h3>
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">shortdescription </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">longdescription </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">typecode </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">created </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">lastmodified </div><div class="param-desc"><span class="param-type">Date</span> </div>
-      
-      <div class="param">createdby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">lastmodifiedby </div><div class="param-desc"><span class="param-type">Integer</span> </div>
       
       
     </div>  <!-- field-items -->
@@ -5743,17 +5750,9 @@ font-style: italic;
       
       <div class="param">lastmodifiedbyname </div><div class="param-desc"><span class="param-type">String</span> </div>
       
-      <div class="param">typeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">type </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
       <div class="param">frequencytypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
       
       <div class="param">frequency </div><div class="param-desc"><span class="param-type">String</span> </div>
-      
-      <div class="param">journaltypeid </div><div class="param-desc"><span class="param-type">Integer</span> </div>
-      
-      <div class="param">journal </div><div class="param-desc"><span class="param-type">String</span> </div>
       
       <div class="param">name </div><div class="param-desc"><span class="param-type">String</span> </div>
       

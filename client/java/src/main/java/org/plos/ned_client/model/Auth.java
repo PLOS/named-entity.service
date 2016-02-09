@@ -1,16 +1,17 @@
 package org.plos.ned_client.model;
 
-import org.plos.ned_client.StringUtil;
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 
 
 
-import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
 public class Auth   {
   
   private Integer id = null;
@@ -36,6 +37,7 @@ public class Auth   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("id")
   public Integer getId() {
@@ -48,6 +50,7 @@ public class Auth   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("nedid")
   public Integer getNedid() {
@@ -60,6 +63,7 @@ public class Auth   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("source")
   public String getSource() {
@@ -72,6 +76,7 @@ public class Auth   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("sourcetypeid")
   public Integer getSourcetypeid() {
@@ -84,6 +89,7 @@ public class Auth   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("created")
   public Date getCreated() {
@@ -96,6 +102,7 @@ public class Auth   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodified")
   public Date getLastmodified() {
@@ -108,6 +115,7 @@ public class Auth   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("createdby")
   public Integer getCreatedby() {
@@ -120,6 +128,7 @@ public class Auth   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("createdbyname")
   public String getCreatedbyname() {
@@ -132,6 +141,7 @@ public class Auth   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodifiedby")
   public Integer getLastmodifiedby() {
@@ -144,6 +154,7 @@ public class Auth   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodifiedbyname")
   public String getLastmodifiedbyname() {
@@ -156,6 +167,7 @@ public class Auth   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("email")
   public String getEmail() {
@@ -168,6 +180,7 @@ public class Auth   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("emailid")
   public Integer getEmailid() {
@@ -180,6 +193,7 @@ public class Auth   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("authid")
   public String getAuthid() {
@@ -192,6 +206,7 @@ public class Auth   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("plainTextPassword")
   public String getPlainTextPassword() {
@@ -204,6 +219,7 @@ public class Auth   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("password")
   public String getPassword() {
@@ -216,6 +232,7 @@ public class Auth   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("passwordreset")
   public Boolean getPasswordreset() {
@@ -228,6 +245,7 @@ public class Auth   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("verificationtoken")
   public String getVerificationtoken() {
@@ -240,6 +258,7 @@ public class Auth   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("verified")
   public Boolean getVerified() {
@@ -252,6 +271,7 @@ public class Auth   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("isactive")
   public Boolean getIsactive() {
@@ -264,30 +284,79 @@ public class Auth   {
   
 
   @Override
-  public String toString()  {
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Auth auth = (Auth) o;
+
+    return true && Objects.equals(id, auth.id) &&
+        Objects.equals(nedid, auth.nedid) &&
+        Objects.equals(source, auth.source) &&
+        Objects.equals(sourcetypeid, auth.sourcetypeid) &&
+        Objects.equals(created, auth.created) &&
+        Objects.equals(lastmodified, auth.lastmodified) &&
+        Objects.equals(createdby, auth.createdby) &&
+        Objects.equals(createdbyname, auth.createdbyname) &&
+        Objects.equals(lastmodifiedby, auth.lastmodifiedby) &&
+        Objects.equals(lastmodifiedbyname, auth.lastmodifiedbyname) &&
+        Objects.equals(email, auth.email) &&
+        Objects.equals(emailid, auth.emailid) &&
+        Objects.equals(authid, auth.authid) &&
+        Objects.equals(plainTextPassword, auth.plainTextPassword) &&
+        Objects.equals(password, auth.password) &&
+        Objects.equals(passwordreset, auth.passwordreset) &&
+        Objects.equals(verificationtoken, auth.verificationtoken) &&
+        Objects.equals(verified, auth.verified) &&
+        Objects.equals(isactive, auth.isactive)
+    ;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, nedid, source, sourcetypeid, created, lastmodified, createdby, createdbyname, lastmodifiedby, lastmodifiedbyname, email, emailid, authid, plainTextPassword, password, passwordreset, verificationtoken, verified, isactive);
+  }
+
+  @Override
+  public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Auth {\n");
     
-    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
-    sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
-    sb.append("    source: ").append(StringUtil.toIndentedString(source)).append("\n");
-    sb.append("    sourcetypeid: ").append(StringUtil.toIndentedString(sourcetypeid)).append("\n");
-    sb.append("    created: ").append(StringUtil.toIndentedString(created)).append("\n");
-    sb.append("    lastmodified: ").append(StringUtil.toIndentedString(lastmodified)).append("\n");
-    sb.append("    createdby: ").append(StringUtil.toIndentedString(createdby)).append("\n");
-    sb.append("    createdbyname: ").append(StringUtil.toIndentedString(createdbyname)).append("\n");
-    sb.append("    lastmodifiedby: ").append(StringUtil.toIndentedString(lastmodifiedby)).append("\n");
-    sb.append("    lastmodifiedbyname: ").append(StringUtil.toIndentedString(lastmodifiedbyname)).append("\n");
-    sb.append("    email: ").append(StringUtil.toIndentedString(email)).append("\n");
-    sb.append("    emailid: ").append(StringUtil.toIndentedString(emailid)).append("\n");
-    sb.append("    authid: ").append(StringUtil.toIndentedString(authid)).append("\n");
-    sb.append("    plainTextPassword: ").append(StringUtil.toIndentedString(plainTextPassword)).append("\n");
-    sb.append("    password: ").append(StringUtil.toIndentedString(password)).append("\n");
-    sb.append("    passwordreset: ").append(StringUtil.toIndentedString(passwordreset)).append("\n");
-    sb.append("    verificationtoken: ").append(StringUtil.toIndentedString(verificationtoken)).append("\n");
-    sb.append("    verified: ").append(StringUtil.toIndentedString(verified)).append("\n");
-    sb.append("    isactive: ").append(StringUtil.toIndentedString(isactive)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    nedid: ").append(toIndentedString(nedid)).append("\n");
+    sb.append("    source: ").append(toIndentedString(source)).append("\n");
+    sb.append("    sourcetypeid: ").append(toIndentedString(sourcetypeid)).append("\n");
+    sb.append("    created: ").append(toIndentedString(created)).append("\n");
+    sb.append("    lastmodified: ").append(toIndentedString(lastmodified)).append("\n");
+    sb.append("    createdby: ").append(toIndentedString(createdby)).append("\n");
+    sb.append("    createdbyname: ").append(toIndentedString(createdbyname)).append("\n");
+    sb.append("    lastmodifiedby: ").append(toIndentedString(lastmodifiedby)).append("\n");
+    sb.append("    lastmodifiedbyname: ").append(toIndentedString(lastmodifiedbyname)).append("\n");
+    sb.append("    email: ").append(toIndentedString(email)).append("\n");
+    sb.append("    emailid: ").append(toIndentedString(emailid)).append("\n");
+    sb.append("    authid: ").append(toIndentedString(authid)).append("\n");
+    sb.append("    plainTextPassword: ").append(toIndentedString(plainTextPassword)).append("\n");
+    sb.append("    password: ").append(toIndentedString(password)).append("\n");
+    sb.append("    passwordreset: ").append(toIndentedString(passwordreset)).append("\n");
+    sb.append("    verificationtoken: ").append(toIndentedString(verificationtoken)).append("\n");
+    sb.append("    verified: ").append(toIndentedString(verified)).append("\n");
+    sb.append("    isactive: ").append(toIndentedString(isactive)).append("\n");
     sb.append("}");
     return sb.toString();
   }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
 }
+

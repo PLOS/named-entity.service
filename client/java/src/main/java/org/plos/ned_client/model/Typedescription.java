@@ -1,16 +1,17 @@
 package org.plos.ned_client.model;
 
-import org.plos.ned_client.StringUtil;
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 
 
 
-import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
 public class Typedescription   {
   
   private Integer id = null;
@@ -22,6 +23,7 @@ public class Typedescription   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("id")
   public Integer getId() {
@@ -34,6 +36,7 @@ public class Typedescription   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("description")
   public String getDescription() {
@@ -46,6 +49,7 @@ public class Typedescription   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("howused")
   public String getHowused() {
@@ -58,6 +62,7 @@ public class Typedescription   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("created")
   public Date getCreated() {
@@ -70,6 +75,7 @@ public class Typedescription   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodified")
   public Date getLastmodified() {
@@ -82,16 +88,51 @@ public class Typedescription   {
   
 
   @Override
-  public String toString()  {
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Typedescription typedescription = (Typedescription) o;
+
+    return true && Objects.equals(id, typedescription.id) &&
+        Objects.equals(description, typedescription.description) &&
+        Objects.equals(howused, typedescription.howused) &&
+        Objects.equals(created, typedescription.created) &&
+        Objects.equals(lastmodified, typedescription.lastmodified)
+    ;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, description, howused, created, lastmodified);
+  }
+
+  @Override
+  public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Typedescription {\n");
     
-    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
-    sb.append("    description: ").append(StringUtil.toIndentedString(description)).append("\n");
-    sb.append("    howused: ").append(StringUtil.toIndentedString(howused)).append("\n");
-    sb.append("    created: ").append(StringUtil.toIndentedString(created)).append("\n");
-    sb.append("    lastmodified: ").append(StringUtil.toIndentedString(lastmodified)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    howused: ").append(toIndentedString(howused)).append("\n");
+    sb.append("    created: ").append(toIndentedString(created)).append("\n");
+    sb.append("    lastmodified: ").append(toIndentedString(lastmodified)).append("\n");
     sb.append("}");
     return sb.toString();
   }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
 }
+

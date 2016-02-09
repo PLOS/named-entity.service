@@ -1,16 +1,17 @@
 package org.plos.ned_client.model;
 
-import org.plos.ned_client.StringUtil;
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 
 
 
-import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
 public class Group   {
   
   private Integer id = null;
@@ -33,6 +34,7 @@ public class Group   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("id")
   public Integer getId() {
@@ -45,6 +47,7 @@ public class Group   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("nedid")
   public Integer getNedid() {
@@ -57,6 +60,7 @@ public class Group   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("source")
   public String getSource() {
@@ -69,6 +73,7 @@ public class Group   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("sourcetypeid")
   public Integer getSourcetypeid() {
@@ -81,6 +86,7 @@ public class Group   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("created")
   public Date getCreated() {
@@ -93,6 +99,7 @@ public class Group   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodified")
   public Date getLastmodified() {
@@ -105,6 +112,7 @@ public class Group   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("createdby")
   public Integer getCreatedby() {
@@ -117,6 +125,7 @@ public class Group   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("createdbyname")
   public String getCreatedbyname() {
@@ -129,6 +138,7 @@ public class Group   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodifiedby")
   public Integer getLastmodifiedby() {
@@ -141,6 +151,7 @@ public class Group   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodifiedbyname")
   public String getLastmodifiedbyname() {
@@ -153,6 +164,7 @@ public class Group   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("typeid")
   public Integer getTypeid() {
@@ -165,6 +177,7 @@ public class Group   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("type")
   public String getType() {
@@ -177,6 +190,7 @@ public class Group   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("startdate")
   public Date getStartdate() {
@@ -189,6 +203,7 @@ public class Group   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("enddate")
   public Date getEnddate() {
@@ -201,6 +216,7 @@ public class Group   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("applicationtype")
   public String getApplicationtype() {
@@ -213,6 +229,7 @@ public class Group   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("applicationtypeid")
   public Integer getApplicationtypeid() {
@@ -225,27 +242,73 @@ public class Group   {
   
 
   @Override
-  public String toString()  {
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Group group = (Group) o;
+
+    return true && Objects.equals(id, group.id) &&
+        Objects.equals(nedid, group.nedid) &&
+        Objects.equals(source, group.source) &&
+        Objects.equals(sourcetypeid, group.sourcetypeid) &&
+        Objects.equals(created, group.created) &&
+        Objects.equals(lastmodified, group.lastmodified) &&
+        Objects.equals(createdby, group.createdby) &&
+        Objects.equals(createdbyname, group.createdbyname) &&
+        Objects.equals(lastmodifiedby, group.lastmodifiedby) &&
+        Objects.equals(lastmodifiedbyname, group.lastmodifiedbyname) &&
+        Objects.equals(typeid, group.typeid) &&
+        Objects.equals(type, group.type) &&
+        Objects.equals(startdate, group.startdate) &&
+        Objects.equals(enddate, group.enddate) &&
+        Objects.equals(applicationtype, group.applicationtype) &&
+        Objects.equals(applicationtypeid, group.applicationtypeid)
+    ;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, nedid, source, sourcetypeid, created, lastmodified, createdby, createdbyname, lastmodifiedby, lastmodifiedbyname, typeid, type, startdate, enddate, applicationtype, applicationtypeid);
+  }
+
+  @Override
+  public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Group {\n");
     
-    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
-    sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
-    sb.append("    source: ").append(StringUtil.toIndentedString(source)).append("\n");
-    sb.append("    sourcetypeid: ").append(StringUtil.toIndentedString(sourcetypeid)).append("\n");
-    sb.append("    created: ").append(StringUtil.toIndentedString(created)).append("\n");
-    sb.append("    lastmodified: ").append(StringUtil.toIndentedString(lastmodified)).append("\n");
-    sb.append("    createdby: ").append(StringUtil.toIndentedString(createdby)).append("\n");
-    sb.append("    createdbyname: ").append(StringUtil.toIndentedString(createdbyname)).append("\n");
-    sb.append("    lastmodifiedby: ").append(StringUtil.toIndentedString(lastmodifiedby)).append("\n");
-    sb.append("    lastmodifiedbyname: ").append(StringUtil.toIndentedString(lastmodifiedbyname)).append("\n");
-    sb.append("    typeid: ").append(StringUtil.toIndentedString(typeid)).append("\n");
-    sb.append("    type: ").append(StringUtil.toIndentedString(type)).append("\n");
-    sb.append("    startdate: ").append(StringUtil.toIndentedString(startdate)).append("\n");
-    sb.append("    enddate: ").append(StringUtil.toIndentedString(enddate)).append("\n");
-    sb.append("    applicationtype: ").append(StringUtil.toIndentedString(applicationtype)).append("\n");
-    sb.append("    applicationtypeid: ").append(StringUtil.toIndentedString(applicationtypeid)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    nedid: ").append(toIndentedString(nedid)).append("\n");
+    sb.append("    source: ").append(toIndentedString(source)).append("\n");
+    sb.append("    sourcetypeid: ").append(toIndentedString(sourcetypeid)).append("\n");
+    sb.append("    created: ").append(toIndentedString(created)).append("\n");
+    sb.append("    lastmodified: ").append(toIndentedString(lastmodified)).append("\n");
+    sb.append("    createdby: ").append(toIndentedString(createdby)).append("\n");
+    sb.append("    createdbyname: ").append(toIndentedString(createdbyname)).append("\n");
+    sb.append("    lastmodifiedby: ").append(toIndentedString(lastmodifiedby)).append("\n");
+    sb.append("    lastmodifiedbyname: ").append(toIndentedString(lastmodifiedbyname)).append("\n");
+    sb.append("    typeid: ").append(toIndentedString(typeid)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    startdate: ").append(toIndentedString(startdate)).append("\n");
+    sb.append("    enddate: ").append(toIndentedString(enddate)).append("\n");
+    sb.append("    applicationtype: ").append(toIndentedString(applicationtype)).append("\n");
+    sb.append("    applicationtypeid: ").append(toIndentedString(applicationtypeid)).append("\n");
     sb.append("}");
     return sb.toString();
   }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
 }
+

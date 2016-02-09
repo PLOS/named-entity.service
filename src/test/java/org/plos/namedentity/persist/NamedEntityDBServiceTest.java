@@ -732,20 +732,12 @@ public class NamedEntityDBServiceTest {
 
     // CREATE
 
-    Integer typeId = nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(ALERT_TYPES.getName()), "journal");
-    assertNotNull(typeId);
-
     Integer frequencyId = nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(ALERT_FREQUENCY.getName()), "weekly");
     assertNotNull(frequencyId);
 
-    Integer journalId = nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(JOURNAL_TYPES.getName()), "PLOS Biology");
-    assertNotNull(journalId);
-
     Alert entity = _(new Alert());
     entity.setNedid(1);
-    entity.setJournaltypeid(journalId);
     entity.setFrequencytypeid(frequencyId);
-    entity.setTypeid(typeId);
     entity.setName("name goes here");
     entity.setQuery("{query goes here}");
 
@@ -774,7 +766,7 @@ public class NamedEntityDBServiceTest {
     // FIND (all assignments)
 
     List<Alert> entityList = nedDBSvc.findAll(Alert.class, 0, Integer.MAX_VALUE);
-    assertTrue( entityList.size() == 4 ); // the seed contains data as well
+    assertTrue( entityList.size() == 3 ); // the seed contains data as well
 
     // DELETE
 
@@ -1045,14 +1037,14 @@ public class NamedEntityDBServiceTest {
   @Test
   public void testGetAlerts() {
 
-    assertTrue(nedDBSvc.getAlerts("weekly", null).size() == 3);
+    assertTrue(nedDBSvc.getAlerts(null).size() == 2);
 
-    assertTrue(nedDBSvc.getAlerts("monthly", null).size() == 0);
+    assertTrue(nedDBSvc.getAlerts("monthly").size() == 0);
 
-    assertTrue(nedDBSvc.getAlerts(null, "PLOS Biology").size() == 2);
+    assertTrue(nedDBSvc.getAlerts("weekly").size() == 2);
 
     try {
-      nedDBSvc.getAlerts("nanosecondly", null);
+      nedDBSvc.getAlerts("nanosecondly");
       fail();
     } catch (NedException e) {
       // expected

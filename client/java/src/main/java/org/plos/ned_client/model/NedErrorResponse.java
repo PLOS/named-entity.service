@@ -1,17 +1,18 @@
 package org.plos.ned_client.model;
 
-import org.plos.ned_client.StringUtil;
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.*;
 import java.util.Date;
 
 
 
-import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
 public class NedErrorResponse   {
   
   private String failureMsg = null;
@@ -24,6 +25,7 @@ public class NedErrorResponse   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("failureMsg")
   public String getFailureMsg() {
@@ -36,6 +38,7 @@ public class NedErrorResponse   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("errorCode")
   public Integer getErrorCode() {
@@ -48,6 +51,7 @@ public class NedErrorResponse   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("errorMsg")
   public String getErrorMsg() {
@@ -60,6 +64,7 @@ public class NedErrorResponse   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("detailedMsg")
   public String getDetailedMsg() {
@@ -72,6 +77,7 @@ public class NedErrorResponse   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("acceptableValues")
   public List<String> getAcceptableValues() {
@@ -84,6 +90,7 @@ public class NedErrorResponse   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("timestamp")
   public Date getTimestamp() {
@@ -96,17 +103,53 @@ public class NedErrorResponse   {
   
 
   @Override
-  public String toString()  {
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    NedErrorResponse nedErrorResponse = (NedErrorResponse) o;
+
+    return true && Objects.equals(failureMsg, nedErrorResponse.failureMsg) &&
+        Objects.equals(errorCode, nedErrorResponse.errorCode) &&
+        Objects.equals(errorMsg, nedErrorResponse.errorMsg) &&
+        Objects.equals(detailedMsg, nedErrorResponse.detailedMsg) &&
+        Objects.equals(acceptableValues, nedErrorResponse.acceptableValues) &&
+        Objects.equals(timestamp, nedErrorResponse.timestamp)
+    ;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(failureMsg, errorCode, errorMsg, detailedMsg, acceptableValues, timestamp);
+  }
+
+  @Override
+  public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class NedErrorResponse {\n");
     
-    sb.append("    failureMsg: ").append(StringUtil.toIndentedString(failureMsg)).append("\n");
-    sb.append("    errorCode: ").append(StringUtil.toIndentedString(errorCode)).append("\n");
-    sb.append("    errorMsg: ").append(StringUtil.toIndentedString(errorMsg)).append("\n");
-    sb.append("    detailedMsg: ").append(StringUtil.toIndentedString(detailedMsg)).append("\n");
-    sb.append("    acceptableValues: ").append(StringUtil.toIndentedString(acceptableValues)).append("\n");
-    sb.append("    timestamp: ").append(StringUtil.toIndentedString(timestamp)).append("\n");
+    sb.append("    failureMsg: ").append(toIndentedString(failureMsg)).append("\n");
+    sb.append("    errorCode: ").append(toIndentedString(errorCode)).append("\n");
+    sb.append("    errorMsg: ").append(toIndentedString(errorMsg)).append("\n");
+    sb.append("    detailedMsg: ").append(toIndentedString(detailedMsg)).append("\n");
+    sb.append("    acceptableValues: ").append(toIndentedString(acceptableValues)).append("\n");
+    sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
     sb.append("}");
     return sb.toString();
   }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
 }
+
