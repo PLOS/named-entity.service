@@ -38,8 +38,8 @@ public class RinggoldServiceTest {
 
   @Test
   public void testFindById() {
-    Institution institution = ringgoldService.findById(5, Institution.class);
-    assertEquals(Integer.valueOf(5), institution.getRecId());
+    Institution institution = ringgoldService.findById(22737, Institution.class);
+    assertEquals(Integer.valueOf(22737), institution.getRecId());
     assertEquals(Integer.valueOf(25985), institution.getRinggoldId()); 
     assertEquals("Stanford University Stanford Law School", institution.getName());
     assertEquals("Stanford", institution.getCity());
@@ -63,7 +63,7 @@ public class RinggoldServiceTest {
     assertEquals(1, institutions.size());
 
     Institution institution = institutions.get(0);
-    assertEquals(Integer.valueOf(12), institution.getRecId());
+    assertEquals(Integer.valueOf(161839), institution.getRecId());
     assertEquals(Integer.valueOf(174507), institution.getRinggoldId()); 
     assertEquals("Stanford University Press", institution.getName());
     assertEquals("Palo Alto", institution.getCity());

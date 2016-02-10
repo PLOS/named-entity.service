@@ -136,13 +136,27 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
 
     // default handler
     StringBuilder condition = new StringBuilder();
-    condition.append(field).append("=");
+    condition.append( dbFieldName(field) ).append("=");
     if (value instanceof Number || value instanceof Boolean) {
       condition.append(value);
     } else {
       condition.append("'").append(value).append("'");
     }
     return condition.toString();
+  }
+
+  protected String dbFieldName(String field) {
+    StringBuilder dbfield = new StringBuilder();
+
+    // convert camel case to snake case (ex: ringgoldId -> ringgold_id)
+    for (char c : field.toCharArray()) {
+      if (Character.isUpperCase(c)) {
+        dbfield.append("_"+Character.toLowerCase(c));
+      } else {
+        dbfield.append(c);
+      }
+    }
+    return dbfield.toString();
   }
 
   private String institutionNameSearchCondition(String searchString) {

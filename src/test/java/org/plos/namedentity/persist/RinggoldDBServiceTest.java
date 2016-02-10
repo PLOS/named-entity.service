@@ -41,8 +41,8 @@ public class RinggoldDBServiceTest {
 
   @Test
   public void testFindById() {
-    Institution institution = ringgoldDBService.findById(1, Institution.class);
-    assertEquals(Integer.valueOf(1), institution.getRecId());
+    Institution institution = ringgoldDBService.findById(4959, Institution.class);
+    assertEquals(Integer.valueOf(4959), institution.getRecId());
     assertEquals("Stanford University", institution.getName());
     assertEquals("Stanford", institution.getCity());
     assertEquals("CA", institution.getState());
@@ -57,11 +57,11 @@ public class RinggoldDBServiceTest {
     Institution ifilter = new Institution();
     ifilter.setName("Stanford U");
     List<Institution> institutions = ringgoldDBService.findByAttribute(ifilter);
-    assertEquals(25, institutions.size());
+    assertEquals(24, institutions.size());
 
     ifilter.setState("CA");
     institutions = ringgoldDBService.findByAttribute(ifilter);
-    assertEquals(23, institutions.size());
+    assertEquals(22, institutions.size());
 
     ifilter.setType("academic/earth");
     institutions = ringgoldDBService.findByAttribute(ifilter);
@@ -118,6 +118,42 @@ public class RinggoldDBServiceTest {
     assertEquals(6, institutions.size());
     for (int i = 0; i < institutions.size(); i++) {
       assertTrue( institutions.get(i).getName().contains("I00"+(i+1)) );
+    }
+  }
+
+  @Test
+  public void testAttributeNameConversion() throws Exception {
+    String[] pojoFieldNames = {
+      "city",
+      "country",
+      "name",
+      "parentRinggoldId",
+      "postCode",
+      "recId",
+      "ringgoldId",
+      "state",
+      "topRinggoldId",
+      "type"
+    };
+
+    String[] expectedDbFieldNames = {
+      "city",
+      "country",
+      "name",
+      "parent_ringgold_id",
+      "post_code",
+      "rec_id",
+      "ringgold_id",
+      "state",
+      "top_ringgold_id",
+      "type"
+    };
+
+    Method method = RinggoldDBServiceImpl.class.getDeclaredMethod("dbFieldName", String.class);
+    method.setAccessible(true);
+
+    for (int i = 0; i < pojoFieldNames.length; i++) {
+      assertEquals(expectedDbFieldNames[i], method.invoke(ringgoldDBService, pojoFieldNames[i]));
     }
   }
 }

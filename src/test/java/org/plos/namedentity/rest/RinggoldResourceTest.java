@@ -91,7 +91,7 @@ public class RinggoldResourceTest extends BaseResourceTest {
 
     Unmarshaller unmarshaller = jsonUnmarshaller(Institution.class);
     List<Institution> institutions = unmarshalEntities(jsonPayload, Institution.class, unmarshaller);
-    assertEquals(25, institutions.size());
+    assertEquals(24, institutions.size());
 
     for (Institution institution : institutions) {
       assertTrue(institution.getName().contains(INSTITUTION_SUBSTRING));
