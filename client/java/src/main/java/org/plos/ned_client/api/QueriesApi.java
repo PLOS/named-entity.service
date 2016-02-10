@@ -1,16 +1,17 @@
 package org.plos.ned_client.api;
 
+import com.sun.jersey.api.client.GenericType;
+
 import org.plos.ned_client.ApiException;
 import org.plos.ned_client.ApiClient;
 import org.plos.ned_client.Configuration;
 import org.plos.ned_client.Pair;
-import org.plos.ned_client.TypeRef;
 
 import org.plos.ned_client.model.Alert;
 
 import java.util.*;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
 public class QueriesApi {
   private ApiClient apiClient;
 
@@ -35,12 +36,10 @@ public class QueriesApi {
    * Get a list of search alerts by type
    * 
    * @param frequency 
-   * @param journal 
    * @return List<Alert>
    */
-  public List<Alert> getAlerts (String frequency, String journal) throws ApiException {
+  public List<Alert> getAlerts(String frequency) throws ApiException {
     Object postBody = null;
-    byte[] postBinaryBody = null;
     
     // create path and map variables
     String path = "/queries/alerts".replaceAll("\\{format\\}","json");
@@ -53,15 +52,13 @@ public class QueriesApi {
     
     queryParams.addAll(apiClient.parameterToPairs("", "frequency", frequency));
     
-    queryParams.addAll(apiClient.parameterToPairs("", "journal", journal));
-    
 
     
 
     
 
     final String[] accepts = {
-      
+      "application/json"
     };
     final String accept = apiClient.selectHeaderAccept(accepts);
 
@@ -73,15 +70,9 @@ public class QueriesApi {
     String[] authNames = new String[] { "basic" };
 
     
-
+    GenericType<List<Alert>> returnType = new GenericType<List<Alert>>() {};
+    return apiClient.invokeAPI(path, "GET", queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     
-    
-    TypeRef returnType = new TypeRef<List<Alert>>() {};
-    return apiClient.invokeAPI(path, "GET", queryParams, postBody, postBinaryBody, headerParams, formParams, accept, contentType, authNames, returnType);
-    
-    
-
-
   }
   
 }

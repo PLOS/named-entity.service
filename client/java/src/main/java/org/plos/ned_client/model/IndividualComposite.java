@@ -1,26 +1,27 @@
 package org.plos.ned_client.model;
 
-import org.plos.ned_client.StringUtil;
-import org.plos.ned_client.model.Group;
-import org.plos.ned_client.model.Email;
-import org.plos.ned_client.model.Address;
-import org.plos.ned_client.model.Degree;
-import org.plos.ned_client.model.Auth;
-import org.plos.ned_client.model.Relationship;
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.*;
-import org.plos.ned_client.model.Uniqueidentifier;
+import org.plos.ned_client.model.Address;
+import org.plos.ned_client.model.Auth;
+import org.plos.ned_client.model.Degree;
+import org.plos.ned_client.model.Email;
+import org.plos.ned_client.model.Group;
 import org.plos.ned_client.model.Individualprofile;
 import org.plos.ned_client.model.Phonenumber;
+import org.plos.ned_client.model.Relationship;
+import org.plos.ned_client.model.Uniqueidentifier;
 import org.plos.ned_client.model.Url;
 
 
 
-import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
 public class IndividualComposite   {
   
   private List<Auth> auth = new ArrayList<Auth>();
@@ -34,28 +35,31 @@ public class IndividualComposite   {
   private List<Url> urls = new ArrayList<Url>();
   private List<Relationship> relationships = new ArrayList<Relationship>();
 
-public enum TypeNameEnum {
-  INDIVIDUAL("INDIVIDUAL"),
-  ORGANIZATION("ORGANIZATION"),
-  INVALID_NAMEDPARTY_TYPE("INVALID_NAMEDPARTY_TYPE");
 
-  private String value;
+  public enum TypeNameEnum {
+    INDIVIDUAL("INDIVIDUAL"),
+    ORGANIZATION("ORGANIZATION"),
+    INVALID_NAMEDPARTY_TYPE("INVALID_NAMEDPARTY_TYPE");
 
-  TypeNameEnum(String value) {
-    this.value = value;
+    private String value;
+
+    TypeNameEnum(String value) {
+      this.value = value;
+    }
+
+    @Override
+    @JsonValue
+    public String toString() {
+      return value;
+    }
   }
-
-  @Override
-  public String toString() {
-    return value;
-  }
-}
 
   private TypeNameEnum typeName = null;
 
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("auth")
   public List<Auth> getAuth() {
@@ -68,6 +72,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("individualprofiles")
   public List<Individualprofile> getIndividualprofiles() {
@@ -80,6 +85,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("groups")
   public List<Group> getGroups() {
@@ -92,6 +98,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("addresses")
   public List<Address> getAddresses() {
@@ -104,6 +111,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("emails")
   public List<Email> getEmails() {
@@ -116,6 +124,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("phonenumbers")
   public List<Phonenumber> getPhonenumbers() {
@@ -128,6 +137,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("uniqueidentifiers")
   public List<Uniqueidentifier> getUniqueidentifiers() {
@@ -140,6 +150,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("degrees")
   public List<Degree> getDegrees() {
@@ -152,6 +163,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("urls")
   public List<Url> getUrls() {
@@ -164,6 +176,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("relationships")
   public List<Relationship> getRelationships() {
@@ -176,6 +189,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("typeName")
   public TypeNameEnum getTypeName() {
@@ -188,22 +202,63 @@ public enum TypeNameEnum {
   
 
   @Override
-  public String toString()  {
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    IndividualComposite individualComposite = (IndividualComposite) o;
+
+    return true && Objects.equals(auth, individualComposite.auth) &&
+        Objects.equals(individualprofiles, individualComposite.individualprofiles) &&
+        Objects.equals(groups, individualComposite.groups) &&
+        Objects.equals(addresses, individualComposite.addresses) &&
+        Objects.equals(emails, individualComposite.emails) &&
+        Objects.equals(phonenumbers, individualComposite.phonenumbers) &&
+        Objects.equals(uniqueidentifiers, individualComposite.uniqueidentifiers) &&
+        Objects.equals(degrees, individualComposite.degrees) &&
+        Objects.equals(urls, individualComposite.urls) &&
+        Objects.equals(relationships, individualComposite.relationships) &&
+        Objects.equals(typeName, individualComposite.typeName)
+    ;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(auth, individualprofiles, groups, addresses, emails, phonenumbers, uniqueidentifiers, degrees, urls, relationships, typeName);
+  }
+
+  @Override
+  public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class IndividualComposite {\n");
     
-    sb.append("    auth: ").append(StringUtil.toIndentedString(auth)).append("\n");
-    sb.append("    individualprofiles: ").append(StringUtil.toIndentedString(individualprofiles)).append("\n");
-    sb.append("    groups: ").append(StringUtil.toIndentedString(groups)).append("\n");
-    sb.append("    addresses: ").append(StringUtil.toIndentedString(addresses)).append("\n");
-    sb.append("    emails: ").append(StringUtil.toIndentedString(emails)).append("\n");
-    sb.append("    phonenumbers: ").append(StringUtil.toIndentedString(phonenumbers)).append("\n");
-    sb.append("    uniqueidentifiers: ").append(StringUtil.toIndentedString(uniqueidentifiers)).append("\n");
-    sb.append("    degrees: ").append(StringUtil.toIndentedString(degrees)).append("\n");
-    sb.append("    urls: ").append(StringUtil.toIndentedString(urls)).append("\n");
-    sb.append("    relationships: ").append(StringUtil.toIndentedString(relationships)).append("\n");
-    sb.append("    typeName: ").append(StringUtil.toIndentedString(typeName)).append("\n");
+    sb.append("    auth: ").append(toIndentedString(auth)).append("\n");
+    sb.append("    individualprofiles: ").append(toIndentedString(individualprofiles)).append("\n");
+    sb.append("    groups: ").append(toIndentedString(groups)).append("\n");
+    sb.append("    addresses: ").append(toIndentedString(addresses)).append("\n");
+    sb.append("    emails: ").append(toIndentedString(emails)).append("\n");
+    sb.append("    phonenumbers: ").append(toIndentedString(phonenumbers)).append("\n");
+    sb.append("    uniqueidentifiers: ").append(toIndentedString(uniqueidentifiers)).append("\n");
+    sb.append("    degrees: ").append(toIndentedString(degrees)).append("\n");
+    sb.append("    urls: ").append(toIndentedString(urls)).append("\n");
+    sb.append("    relationships: ").append(toIndentedString(relationships)).append("\n");
+    sb.append("    typeName: ").append(toIndentedString(typeName)).append("\n");
     sb.append("}");
     return sb.toString();
   }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
 }
+

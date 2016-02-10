@@ -1,21 +1,22 @@
 package org.plos.ned_client.model;
 
-import org.plos.ned_client.StringUtil;
-import org.plos.ned_client.model.Email;
-import org.plos.ned_client.model.Address;
-import java.util.*;
-import org.plos.ned_client.model.Uniqueidentifier;
-import org.plos.ned_client.model.Phonenumber;
-import java.util.Date;
-
-
-
-import io.swagger.annotations.*;
+import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.util.*;
+import java.util.Date;
+import org.plos.ned_client.model.Address;
+import org.plos.ned_client.model.Email;
+import org.plos.ned_client.model.Phonenumber;
+import org.plos.ned_client.model.Uniqueidentifier;
 
 
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
+
+
+
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
 public class OrganizationComposite   {
   
   private List<Address> addresses = new ArrayList<Address>();
@@ -34,28 +35,31 @@ public class OrganizationComposite   {
   private String legalname = null;
   private Integer maincontactid = null;
 
-public enum TypeNameEnum {
-  INDIVIDUAL("INDIVIDUAL"),
-  ORGANIZATION("ORGANIZATION"),
-  INVALID_NAMEDPARTY_TYPE("INVALID_NAMEDPARTY_TYPE");
 
-  private String value;
+  public enum TypeNameEnum {
+    INDIVIDUAL("INDIVIDUAL"),
+    ORGANIZATION("ORGANIZATION"),
+    INVALID_NAMEDPARTY_TYPE("INVALID_NAMEDPARTY_TYPE");
 
-  TypeNameEnum(String value) {
-    this.value = value;
+    private String value;
+
+    TypeNameEnum(String value) {
+      this.value = value;
+    }
+
+    @Override
+    @JsonValue
+    public String toString() {
+      return value;
+    }
   }
-
-  @Override
-  public String toString() {
-    return value;
-  }
-}
 
   private TypeNameEnum typeName = null;
 
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("addresses")
   public List<Address> getAddresses() {
@@ -68,6 +72,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("emails")
   public List<Email> getEmails() {
@@ -80,6 +85,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("phonenumbers")
   public List<Phonenumber> getPhonenumbers() {
@@ -92,6 +98,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("uniqueidentifiers")
   public List<Uniqueidentifier> getUniqueidentifiers() {
@@ -104,6 +111,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("created")
   public Date getCreated() {
@@ -116,6 +124,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("type")
   public String getType() {
@@ -128,6 +137,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("source")
   public String getSource() {
@@ -140,6 +150,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("nedid")
   public Integer getNedid() {
@@ -152,6 +163,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("typeid")
   public Integer getTypeid() {
@@ -164,6 +176,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("sourcetypeid")
   public Integer getSourcetypeid() {
@@ -176,6 +189,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodified")
   public Date getLastmodified() {
@@ -188,6 +202,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("isactive")
   public Boolean getIsactive() {
@@ -200,6 +215,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("familiarname")
   public String getFamiliarname() {
@@ -212,6 +228,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("legalname")
   public String getLegalname() {
@@ -224,6 +241,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("maincontactid")
   public Integer getMaincontactid() {
@@ -236,6 +254,7 @@ public enum TypeNameEnum {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("typeName")
   public TypeNameEnum getTypeName() {
@@ -248,27 +267,73 @@ public enum TypeNameEnum {
   
 
   @Override
-  public String toString()  {
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    OrganizationComposite organizationComposite = (OrganizationComposite) o;
+
+    return true && Objects.equals(addresses, organizationComposite.addresses) &&
+        Objects.equals(emails, organizationComposite.emails) &&
+        Objects.equals(phonenumbers, organizationComposite.phonenumbers) &&
+        Objects.equals(uniqueidentifiers, organizationComposite.uniqueidentifiers) &&
+        Objects.equals(created, organizationComposite.created) &&
+        Objects.equals(type, organizationComposite.type) &&
+        Objects.equals(source, organizationComposite.source) &&
+        Objects.equals(nedid, organizationComposite.nedid) &&
+        Objects.equals(typeid, organizationComposite.typeid) &&
+        Objects.equals(sourcetypeid, organizationComposite.sourcetypeid) &&
+        Objects.equals(lastmodified, organizationComposite.lastmodified) &&
+        Objects.equals(isactive, organizationComposite.isactive) &&
+        Objects.equals(familiarname, organizationComposite.familiarname) &&
+        Objects.equals(legalname, organizationComposite.legalname) &&
+        Objects.equals(maincontactid, organizationComposite.maincontactid) &&
+        Objects.equals(typeName, organizationComposite.typeName)
+    ;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(addresses, emails, phonenumbers, uniqueidentifiers, created, type, source, nedid, typeid, sourcetypeid, lastmodified, isactive, familiarname, legalname, maincontactid, typeName);
+  }
+
+  @Override
+  public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class OrganizationComposite {\n");
     
-    sb.append("    addresses: ").append(StringUtil.toIndentedString(addresses)).append("\n");
-    sb.append("    emails: ").append(StringUtil.toIndentedString(emails)).append("\n");
-    sb.append("    phonenumbers: ").append(StringUtil.toIndentedString(phonenumbers)).append("\n");
-    sb.append("    uniqueidentifiers: ").append(StringUtil.toIndentedString(uniqueidentifiers)).append("\n");
-    sb.append("    created: ").append(StringUtil.toIndentedString(created)).append("\n");
-    sb.append("    type: ").append(StringUtil.toIndentedString(type)).append("\n");
-    sb.append("    source: ").append(StringUtil.toIndentedString(source)).append("\n");
-    sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
-    sb.append("    typeid: ").append(StringUtil.toIndentedString(typeid)).append("\n");
-    sb.append("    sourcetypeid: ").append(StringUtil.toIndentedString(sourcetypeid)).append("\n");
-    sb.append("    lastmodified: ").append(StringUtil.toIndentedString(lastmodified)).append("\n");
-    sb.append("    isactive: ").append(StringUtil.toIndentedString(isactive)).append("\n");
-    sb.append("    familiarname: ").append(StringUtil.toIndentedString(familiarname)).append("\n");
-    sb.append("    legalname: ").append(StringUtil.toIndentedString(legalname)).append("\n");
-    sb.append("    maincontactid: ").append(StringUtil.toIndentedString(maincontactid)).append("\n");
-    sb.append("    typeName: ").append(StringUtil.toIndentedString(typeName)).append("\n");
+    sb.append("    addresses: ").append(toIndentedString(addresses)).append("\n");
+    sb.append("    emails: ").append(toIndentedString(emails)).append("\n");
+    sb.append("    phonenumbers: ").append(toIndentedString(phonenumbers)).append("\n");
+    sb.append("    uniqueidentifiers: ").append(toIndentedString(uniqueidentifiers)).append("\n");
+    sb.append("    created: ").append(toIndentedString(created)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    source: ").append(toIndentedString(source)).append("\n");
+    sb.append("    nedid: ").append(toIndentedString(nedid)).append("\n");
+    sb.append("    typeid: ").append(toIndentedString(typeid)).append("\n");
+    sb.append("    sourcetypeid: ").append(toIndentedString(sourcetypeid)).append("\n");
+    sb.append("    lastmodified: ").append(toIndentedString(lastmodified)).append("\n");
+    sb.append("    isactive: ").append(toIndentedString(isactive)).append("\n");
+    sb.append("    familiarname: ").append(toIndentedString(familiarname)).append("\n");
+    sb.append("    legalname: ").append(toIndentedString(legalname)).append("\n");
+    sb.append("    maincontactid: ").append(toIndentedString(maincontactid)).append("\n");
+    sb.append("    typeName: ").append(toIndentedString(typeName)).append("\n");
     sb.append("}");
     return sb.toString();
   }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
 }
+

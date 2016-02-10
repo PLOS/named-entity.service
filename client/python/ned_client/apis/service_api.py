@@ -2,7 +2,7 @@
 
 """
 ServiceApi.py
-Copyright 2015 SmartBear Software
+Copyright 2016 SmartBear Software
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -78,6 +78,7 @@ class ServiceApi(object):
             params[key] = val
         del params['kwargs']
 
+
         resource_path = '/service/config'.replace('{format}', 'json')
         method = 'GET'
 
@@ -149,6 +150,7 @@ class ServiceApi(object):
                 )
             params[key] = val
         del params['kwargs']
+
 
         resource_path = '/service/errorcodes'.replace('{format}', 'json')
         method = 'GET'

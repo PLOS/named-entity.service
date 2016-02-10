@@ -71,6 +71,7 @@
     <url-pattern>/institutionsearch/*</url-pattern>
     <url-pattern>/organizations/*</url-pattern>
     <url-pattern>/typeclasses/*</url-pattern>
+    <url-pattern>/queries/*</url-pattern>
   </filter-mapping>
 
   <filter-mapping>

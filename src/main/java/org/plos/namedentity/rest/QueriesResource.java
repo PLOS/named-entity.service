@@ -8,8 +8,10 @@ import org.plos.namedentity.api.entity.Alert;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
@@ -18,17 +20,17 @@ import java.util.List;
  */
 @Path("queries")
 @Api(value="queries", authorizations = {@Authorization(value = "basic")})
+@Produces(MediaType.APPLICATION_JSON)
 public class QueriesResource extends BaseResource {
 
   @GET
   @Path("/alerts")
   @ApiOperation(value="Get a list of search alerts by type", response=Alert.class, responseContainer = "List")
-  public Response getAlerts(@QueryParam("frequency") String frequency,
-                            @QueryParam("journal") String journal) {
+  public Response getAlerts(@QueryParam("frequency") String frequency) {
     try {
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<Alert>>(
-              namedEntityService.getAlerts(frequency, journal)
+              namedEntityService.getAlerts(frequency)
           ) {
           }).build();
     } catch (NedException e) {

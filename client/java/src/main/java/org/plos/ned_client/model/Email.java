@@ -1,16 +1,17 @@
 package org.plos.ned_client.model;
 
-import org.plos.ned_client.StringUtil;
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 
 
 
-import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
 public class Email   {
   
   private Integer id = null;
@@ -32,6 +33,7 @@ public class Email   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("id")
   public Integer getId() {
@@ -44,6 +46,7 @@ public class Email   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("nedid")
   public Integer getNedid() {
@@ -56,6 +59,7 @@ public class Email   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("source")
   public String getSource() {
@@ -68,6 +72,7 @@ public class Email   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("sourcetypeid")
   public Integer getSourcetypeid() {
@@ -80,6 +85,7 @@ public class Email   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("created")
   public Date getCreated() {
@@ -92,6 +98,7 @@ public class Email   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodified")
   public Date getLastmodified() {
@@ -104,6 +111,7 @@ public class Email   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("createdby")
   public Integer getCreatedby() {
@@ -116,6 +124,7 @@ public class Email   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("createdbyname")
   public String getCreatedbyname() {
@@ -128,6 +137,7 @@ public class Email   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodifiedby")
   public Integer getLastmodifiedby() {
@@ -140,6 +150,7 @@ public class Email   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodifiedbyname")
   public String getLastmodifiedbyname() {
@@ -152,6 +163,7 @@ public class Email   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("type")
   public String getType() {
@@ -164,6 +176,7 @@ public class Email   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("typeid")
   public Integer getTypeid() {
@@ -176,6 +189,7 @@ public class Email   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("emailaddress")
   public String getEmailaddress() {
@@ -188,6 +202,7 @@ public class Email   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("verified")
   public Boolean getVerified() {
@@ -200,6 +215,7 @@ public class Email   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("isactive")
   public Boolean getIsactive() {
@@ -212,26 +228,71 @@ public class Email   {
   
 
   @Override
-  public String toString()  {
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Email email = (Email) o;
+
+    return true && Objects.equals(id, email.id) &&
+        Objects.equals(nedid, email.nedid) &&
+        Objects.equals(source, email.source) &&
+        Objects.equals(sourcetypeid, email.sourcetypeid) &&
+        Objects.equals(created, email.created) &&
+        Objects.equals(lastmodified, email.lastmodified) &&
+        Objects.equals(createdby, email.createdby) &&
+        Objects.equals(createdbyname, email.createdbyname) &&
+        Objects.equals(lastmodifiedby, email.lastmodifiedby) &&
+        Objects.equals(lastmodifiedbyname, email.lastmodifiedbyname) &&
+        Objects.equals(type, email.type) &&
+        Objects.equals(typeid, email.typeid) &&
+        Objects.equals(emailaddress, email.emailaddress) &&
+        Objects.equals(verified, email.verified) &&
+        Objects.equals(isactive, email.isactive)
+    ;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, nedid, source, sourcetypeid, created, lastmodified, createdby, createdbyname, lastmodifiedby, lastmodifiedbyname, type, typeid, emailaddress, verified, isactive);
+  }
+
+  @Override
+  public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Email {\n");
     
-    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
-    sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
-    sb.append("    source: ").append(StringUtil.toIndentedString(source)).append("\n");
-    sb.append("    sourcetypeid: ").append(StringUtil.toIndentedString(sourcetypeid)).append("\n");
-    sb.append("    created: ").append(StringUtil.toIndentedString(created)).append("\n");
-    sb.append("    lastmodified: ").append(StringUtil.toIndentedString(lastmodified)).append("\n");
-    sb.append("    createdby: ").append(StringUtil.toIndentedString(createdby)).append("\n");
-    sb.append("    createdbyname: ").append(StringUtil.toIndentedString(createdbyname)).append("\n");
-    sb.append("    lastmodifiedby: ").append(StringUtil.toIndentedString(lastmodifiedby)).append("\n");
-    sb.append("    lastmodifiedbyname: ").append(StringUtil.toIndentedString(lastmodifiedbyname)).append("\n");
-    sb.append("    type: ").append(StringUtil.toIndentedString(type)).append("\n");
-    sb.append("    typeid: ").append(StringUtil.toIndentedString(typeid)).append("\n");
-    sb.append("    emailaddress: ").append(StringUtil.toIndentedString(emailaddress)).append("\n");
-    sb.append("    verified: ").append(StringUtil.toIndentedString(verified)).append("\n");
-    sb.append("    isactive: ").append(StringUtil.toIndentedString(isactive)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    nedid: ").append(toIndentedString(nedid)).append("\n");
+    sb.append("    source: ").append(toIndentedString(source)).append("\n");
+    sb.append("    sourcetypeid: ").append(toIndentedString(sourcetypeid)).append("\n");
+    sb.append("    created: ").append(toIndentedString(created)).append("\n");
+    sb.append("    lastmodified: ").append(toIndentedString(lastmodified)).append("\n");
+    sb.append("    createdby: ").append(toIndentedString(createdby)).append("\n");
+    sb.append("    createdbyname: ").append(toIndentedString(createdbyname)).append("\n");
+    sb.append("    lastmodifiedby: ").append(toIndentedString(lastmodifiedby)).append("\n");
+    sb.append("    lastmodifiedbyname: ").append(toIndentedString(lastmodifiedbyname)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    typeid: ").append(toIndentedString(typeid)).append("\n");
+    sb.append("    emailaddress: ").append(toIndentedString(emailaddress)).append("\n");
+    sb.append("    verified: ").append(toIndentedString(verified)).append("\n");
+    sb.append("    isactive: ").append(toIndentedString(isactive)).append("\n");
     sb.append("}");
     return sb.toString();
   }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
 }
+

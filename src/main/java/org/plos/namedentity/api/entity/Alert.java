@@ -30,14 +30,8 @@ import static org.plos.namedentity.validate.JsonValidator.validJson;
 @XmlRootElement
 public class Alert extends Entity {
 
-  private Integer typeid;
-  private String type;
-
   private Integer frequencytypeid;
   private String  frequency;
-
-  private Integer journaltypeid;
-  private String  journal;
 
   private String name;
   private String query;
@@ -51,22 +45,6 @@ public class Alert extends Entity {
       }
       this.query = validMetadataJson;
     }
-  }
-
-  public Integer getTypeid() {
-    return typeid;
-  }
-
-  public void setTypeid(Integer typeid) {
-    this.typeid = typeid;
-  }
-
-  public String getType() {
-    return type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
   }
 
   public Integer getFrequencytypeid() {
@@ -83,22 +61,6 @@ public class Alert extends Entity {
 
   public void setFrequency(String frequency) {
     this.frequency = frequency;
-  }
-
-  public Integer getJournaltypeid() {
-    return journaltypeid;
-  }
-
-  public void setJournaltypeid(Integer journaltypeid) {
-    this.journaltypeid = journaltypeid;
-  }
-
-  public String getJournal() {
-    return journal;
-  }
-
-  public void setJournal(String journal) {
-    this.journal = journal;
   }
 
   public String getQuery() {

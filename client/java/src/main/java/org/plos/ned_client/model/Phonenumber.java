@@ -1,16 +1,17 @@
 package org.plos.ned_client.model;
 
-import org.plos.ned_client.StringUtil;
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 
 
 
-import io.swagger.annotations.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-01-12T14:52:24.884-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
 public class Phonenumber   {
   
   private Integer id = null;
@@ -34,6 +35,7 @@ public class Phonenumber   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("id")
   public Integer getId() {
@@ -46,6 +48,7 @@ public class Phonenumber   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("nedid")
   public Integer getNedid() {
@@ -58,6 +61,7 @@ public class Phonenumber   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("source")
   public String getSource() {
@@ -70,6 +74,7 @@ public class Phonenumber   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("sourcetypeid")
   public Integer getSourcetypeid() {
@@ -82,6 +87,7 @@ public class Phonenumber   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("created")
   public Date getCreated() {
@@ -94,6 +100,7 @@ public class Phonenumber   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodified")
   public Date getLastmodified() {
@@ -106,6 +113,7 @@ public class Phonenumber   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("createdby")
   public Integer getCreatedby() {
@@ -118,6 +126,7 @@ public class Phonenumber   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("createdbyname")
   public String getCreatedbyname() {
@@ -130,6 +139,7 @@ public class Phonenumber   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodifiedby")
   public Integer getLastmodifiedby() {
@@ -142,6 +152,7 @@ public class Phonenumber   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("lastmodifiedbyname")
   public String getLastmodifiedbyname() {
@@ -154,6 +165,7 @@ public class Phonenumber   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("typeid")
   public Integer getTypeid() {
@@ -166,6 +178,7 @@ public class Phonenumber   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("type")
   public String getType() {
@@ -178,6 +191,7 @@ public class Phonenumber   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("countrycodetypeid")
   public Integer getCountrycodetypeid() {
@@ -190,6 +204,7 @@ public class Phonenumber   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("countrycodetype")
   public String getCountrycodetype() {
@@ -202,6 +217,7 @@ public class Phonenumber   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("phonenumber")
   public String getPhonenumber() {
@@ -214,6 +230,7 @@ public class Phonenumber   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("extension")
   public String getExtension() {
@@ -226,6 +243,7 @@ public class Phonenumber   {
   
   /**
    **/
+  
   @ApiModelProperty(value = "")
   @JsonProperty("isactive")
   public Boolean getIsactive() {
@@ -238,28 +256,75 @@ public class Phonenumber   {
   
 
   @Override
-  public String toString()  {
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Phonenumber phonenumber = (Phonenumber) o;
+
+    return true && Objects.equals(id, phonenumber.id) &&
+        Objects.equals(nedid, phonenumber.nedid) &&
+        Objects.equals(source, phonenumber.source) &&
+        Objects.equals(sourcetypeid, phonenumber.sourcetypeid) &&
+        Objects.equals(created, phonenumber.created) &&
+        Objects.equals(lastmodified, phonenumber.lastmodified) &&
+        Objects.equals(createdby, phonenumber.createdby) &&
+        Objects.equals(createdbyname, phonenumber.createdbyname) &&
+        Objects.equals(lastmodifiedby, phonenumber.lastmodifiedby) &&
+        Objects.equals(lastmodifiedbyname, phonenumber.lastmodifiedbyname) &&
+        Objects.equals(typeid, phonenumber.typeid) &&
+        Objects.equals(type, phonenumber.type) &&
+        Objects.equals(countrycodetypeid, phonenumber.countrycodetypeid) &&
+        Objects.equals(countrycodetype, phonenumber.countrycodetype) &&
+        Objects.equals(phonenumber, phonenumber.phonenumber) &&
+        Objects.equals(extension, phonenumber.extension) &&
+        Objects.equals(isactive, phonenumber.isactive)
+    ;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, nedid, source, sourcetypeid, created, lastmodified, createdby, createdbyname, lastmodifiedby, lastmodifiedbyname, typeid, type, countrycodetypeid, countrycodetype, phonenumber, extension, isactive);
+  }
+
+  @Override
+  public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Phonenumber {\n");
     
-    sb.append("    id: ").append(StringUtil.toIndentedString(id)).append("\n");
-    sb.append("    nedid: ").append(StringUtil.toIndentedString(nedid)).append("\n");
-    sb.append("    source: ").append(StringUtil.toIndentedString(source)).append("\n");
-    sb.append("    sourcetypeid: ").append(StringUtil.toIndentedString(sourcetypeid)).append("\n");
-    sb.append("    created: ").append(StringUtil.toIndentedString(created)).append("\n");
-    sb.append("    lastmodified: ").append(StringUtil.toIndentedString(lastmodified)).append("\n");
-    sb.append("    createdby: ").append(StringUtil.toIndentedString(createdby)).append("\n");
-    sb.append("    createdbyname: ").append(StringUtil.toIndentedString(createdbyname)).append("\n");
-    sb.append("    lastmodifiedby: ").append(StringUtil.toIndentedString(lastmodifiedby)).append("\n");
-    sb.append("    lastmodifiedbyname: ").append(StringUtil.toIndentedString(lastmodifiedbyname)).append("\n");
-    sb.append("    typeid: ").append(StringUtil.toIndentedString(typeid)).append("\n");
-    sb.append("    type: ").append(StringUtil.toIndentedString(type)).append("\n");
-    sb.append("    countrycodetypeid: ").append(StringUtil.toIndentedString(countrycodetypeid)).append("\n");
-    sb.append("    countrycodetype: ").append(StringUtil.toIndentedString(countrycodetype)).append("\n");
-    sb.append("    phonenumber: ").append(StringUtil.toIndentedString(phonenumber)).append("\n");
-    sb.append("    extension: ").append(StringUtil.toIndentedString(extension)).append("\n");
-    sb.append("    isactive: ").append(StringUtil.toIndentedString(isactive)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    nedid: ").append(toIndentedString(nedid)).append("\n");
+    sb.append("    source: ").append(toIndentedString(source)).append("\n");
+    sb.append("    sourcetypeid: ").append(toIndentedString(sourcetypeid)).append("\n");
+    sb.append("    created: ").append(toIndentedString(created)).append("\n");
+    sb.append("    lastmodified: ").append(toIndentedString(lastmodified)).append("\n");
+    sb.append("    createdby: ").append(toIndentedString(createdby)).append("\n");
+    sb.append("    createdbyname: ").append(toIndentedString(createdbyname)).append("\n");
+    sb.append("    lastmodifiedby: ").append(toIndentedString(lastmodifiedby)).append("\n");
+    sb.append("    lastmodifiedbyname: ").append(toIndentedString(lastmodifiedbyname)).append("\n");
+    sb.append("    typeid: ").append(toIndentedString(typeid)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    countrycodetypeid: ").append(toIndentedString(countrycodetypeid)).append("\n");
+    sb.append("    countrycodetype: ").append(toIndentedString(countrycodetype)).append("\n");
+    sb.append("    phonenumber: ").append(toIndentedString(phonenumber)).append("\n");
+    sb.append("    extension: ").append(toIndentedString(extension)).append("\n");
+    sb.append("    isactive: ").append(toIndentedString(isactive)).append("\n");
     sb.append("}");
     return sb.toString();
   }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
 }
+

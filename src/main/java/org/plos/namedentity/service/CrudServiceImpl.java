@@ -17,7 +17,6 @@
 package org.plos.namedentity.service;
 
 import org.plos.namedentity.api.NedException;
-import org.plos.namedentity.api.entity.Alert;
 import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.persist.NamedEntityDBService;
 import org.springframework.transaction.annotation.Transactional;
