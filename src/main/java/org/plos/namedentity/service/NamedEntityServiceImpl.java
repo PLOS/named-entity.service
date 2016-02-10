@@ -360,6 +360,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   public  <T extends Composite> T createComposite(T composite, Class<T> clazz) {
 
     Integer nedId = null;
+    Boolean ambraUpdated = false;
 
     if (clazz == IndividualComposite.class) {
 
@@ -367,8 +368,10 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       Integer ambraId = email.getNedid();
 
       // only insert the person into Ambra if there is no NED ID specified
-      if (ambraId == null)
-        ambraId = ambraService.createUser((IndividualComposite)composite).intValue();
+      if (ambraId == null) {
+        ambraId = ambraService.createUser((IndividualComposite) composite).intValue();
+        ambraUpdated = true;
+      }
 
       nedId = nedDBSvc.newNamedEntityId(composite.getTypeName(), ambraId);
 
@@ -399,16 +402,24 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     Map<Class, List<? extends Entity>> compositeMap = composite.readAsMap();
 
-    for (List<? extends Entity> entities : compositeMap.values()) {
-      if (entities != null) {
-        for (Entity entity : entities) {
-          entity.setNedid(nedId);
-          nedDBSvc.create(resolveValuesToIds(entity));
+    try {
+      for (List<? extends Entity> entities : compositeMap.values()) {
+        if (entities != null) {
+          for (Entity entity : entities) {
+            entity.setNedid(nedId);
+            nedDBSvc.create(resolveValuesToIds(entity));
+          }
         }
       }
-    }
 
-    // TODO: if NED insert fails, manually rollback ambra, but how to delete from ambra?
+    } catch (NedException e) {
+      // if NED insert fails, but Ambra insert did not, mark/fudge the Ambra data
+
+      if (clazz == IndividualComposite.class && ambraUpdated)
+        ambraService.markInvalid(((IndividualComposite) composite), nedId);
+
+      throw e;
+    }
 
     return findComposite(nedId, clazz);
 

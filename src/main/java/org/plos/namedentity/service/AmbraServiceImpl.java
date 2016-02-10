@@ -16,6 +16,7 @@ import org.plos.namedentity.persist.NamedEntityDBService;
 
 import javax.inject.Inject;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 import static org.plos.namedentity.api.NedException.ErrorType.DatabaseError;
 
@@ -52,6 +53,32 @@ public class AmbraServiceImpl implements AmbraService {
     }
   }
 
+  @Override
+  public void markInvalid(IndividualComposite composite, int nedId) {
+
+    String invalidTag = "invalidNedUser " + UUID.randomUUID().toString();
+
+    Email email = composite.getEmails().get(0);
+    email.setEmailaddress(invalidTag);
+    email.setNedid(nedId);
+
+    Individualprofile profile = composite.getIndividualprofiles().get(0);
+    profile.setDisplayname(invalidTag);
+    profile.setNedid(nedId);
+
+    UserProfile ambraProfile = userService.getUser((long)nedId);
+
+    if (ambraProfile == null)
+      throw new NedException("Individual not found in Ambra");
+
+    copyToAmbraPojo(profile, ambraProfile);
+    copyToAmbraPojo(email, ambraProfile);
+
+    ambraProfile.setRealName("INVALID NED USER");
+    ambraProfile.setAuthId(invalidTag);
+
+    updateInAmbra(ambraProfile);
+  }
 
   @Override
   public <S extends Entity> void delete(S entity) {
