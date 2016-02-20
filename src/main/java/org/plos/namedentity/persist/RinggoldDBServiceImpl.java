@@ -62,11 +62,11 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
 
   @Override
   public List<Institution> findByInstitutionName(String searchString) {
-    List<Institution> results = context.select(PARENTS.fields())
-      .from(PARENTS)
+    List<Institution> results = context.select(INSTITUTIONS.fields())
+      .from(INSTITUTIONS)
       .leftOuterJoin(SIZES)
-      .on(PARENTS.P_CODE.equal(SIZES.P_CODE))
-      .and(SIZES.KIND.equal("size"))
+      .on(INSTITUTIONS.RINGGOLD_ID.equal(SIZES.RINGGOLD_ID))
+      .and(SIZES.SIZE_TYPE.equal("size"))
       .where(institutionNameSearchCondition(searchString))
       .orderBy(SIZES.VALUE.desc().nullsLast())
       .limit(100)
@@ -136,13 +136,27 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
 
     // default handler
     StringBuilder condition = new StringBuilder();
-    condition.append(field).append("=");
+    condition.append( dbFieldName(field) ).append("=");
     if (value instanceof Number || value instanceof Boolean) {
       condition.append(value);
     } else {
       condition.append("'").append(value).append("'");
     }
     return condition.toString();
+  }
+
+  protected String dbFieldName(String field) {
+    StringBuilder dbfield = new StringBuilder();
+
+    // convert camel case to snake case (ex: ringgoldId -> ringgold_id)
+    for (char c : field.toCharArray()) {
+      if (Character.isUpperCase(c)) {
+        dbfield.append("_"+Character.toLowerCase(c));
+      } else {
+        dbfield.append(c);
+      }
+    }
+    return dbfield.toString();
   }
 
   private String institutionNameSearchCondition(String searchString) {
@@ -183,7 +197,7 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
   private static final Map<Class,TablePkPair> entityTableMap;
   static {
     entityTableMap = new ConcurrentHashMap<>();
-    entityTableMap.put(Institution.class, new TablePkPair(PARENTS, PARENTS.REC_ID));
+    entityTableMap.put(Institution.class, new TablePkPair(INSTITUTIONS, INSTITUTIONS.REC_ID));
   }
   private static Table table(Class key) {
     return entityTableMap.get(key).table();

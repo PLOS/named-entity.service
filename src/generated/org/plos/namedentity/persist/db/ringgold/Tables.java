@@ -17,9 +17,9 @@ package org.plos.namedentity.persist.db.ringgold;
 public class Tables {
 
 	/**
-	 * The table ringgold.alt_name
+	 * The table ringgold.alt_names
 	 */
-	public static final org.plos.namedentity.persist.db.ringgold.tables.AltName ALT_NAME = org.plos.namedentity.persist.db.ringgold.tables.AltName.ALT_NAME;
+	public static final org.plos.namedentity.persist.db.ringgold.tables.AltNames ALT_NAMES = org.plos.namedentity.persist.db.ringgold.tables.AltNames.ALT_NAMES;
 
 	/**
 	 * The table ringgold.consortia
@@ -27,9 +27,9 @@ public class Tables {
 	public static final org.plos.namedentity.persist.db.ringgold.tables.Consortia CONSORTIA = org.plos.namedentity.persist.db.ringgold.tables.Consortia.CONSORTIA;
 
 	/**
-	 * The table ringgold.deleted_id
+	 * The table ringgold.deleted_ids
 	 */
-	public static final org.plos.namedentity.persist.db.ringgold.tables.DeletedId DELETED_ID = org.plos.namedentity.persist.db.ringgold.tables.DeletedId.DELETED_ID;
+	public static final org.plos.namedentity.persist.db.ringgold.tables.DeletedIds DELETED_IDS = org.plos.namedentity.persist.db.ringgold.tables.DeletedIds.DELETED_IDS;
 
 	/**
 	 * The table ringgold.identifiers
@@ -37,9 +37,14 @@ public class Tables {
 	public static final org.plos.namedentity.persist.db.ringgold.tables.Identifiers IDENTIFIERS = org.plos.namedentity.persist.db.ringgold.tables.Identifiers.IDENTIFIERS;
 
 	/**
-	 * The table ringgold.multi
+	 * The table ringgold.institutions
 	 */
-	public static final org.plos.namedentity.persist.db.ringgold.tables.Multi MULTI = org.plos.namedentity.persist.db.ringgold.tables.Multi.MULTI;
+	public static final org.plos.namedentity.persist.db.ringgold.tables.Institutions INSTITUTIONS = org.plos.namedentity.persist.db.ringgold.tables.Institutions.INSTITUTIONS;
+
+	/**
+	 * The table ringgold.multies
+	 */
+	public static final org.plos.namedentity.persist.db.ringgold.tables.Multies MULTIES = org.plos.namedentity.persist.db.ringgold.tables.Multies.MULTIES;
 
 	/**
 	 * The table ringgold.notes
@@ -47,19 +52,14 @@ public class Tables {
 	public static final org.plos.namedentity.persist.db.ringgold.tables.Notes NOTES = org.plos.namedentity.persist.db.ringgold.tables.Notes.NOTES;
 
 	/**
-	 * The table ringgold.parents
-	 */
-	public static final org.plos.namedentity.persist.db.ringgold.tables.Parents PARENTS = org.plos.namedentity.persist.db.ringgold.tables.Parents.PARENTS;
-
-	/**
-	 * The table ringgold.rg_tiers
-	 */
-	public static final org.plos.namedentity.persist.db.ringgold.tables.RgTiers RG_TIERS = org.plos.namedentity.persist.db.ringgold.tables.RgTiers.RG_TIERS;
-
-	/**
 	 * The table ringgold.sizes
 	 */
 	public static final org.plos.namedentity.persist.db.ringgold.tables.Sizes SIZES = org.plos.namedentity.persist.db.ringgold.tables.Sizes.SIZES;
+
+	/**
+	 * The table ringgold.taxonomy
+	 */
+	public static final org.plos.namedentity.persist.db.ringgold.tables.Taxonomy TAXONOMY = org.plos.namedentity.persist.db.ringgold.tables.Taxonomy.TAXONOMY;
 
 	/**
 	 * The table ringgold.tiers
@@ -67,12 +67,7 @@ public class Tables {
 	public static final org.plos.namedentity.persist.db.ringgold.tables.Tiers TIERS = org.plos.namedentity.persist.db.ringgold.tables.Tiers.TIERS;
 
 	/**
-	 * The table ringgold.types
+	 * The table ringgold.urls
 	 */
-	public static final org.plos.namedentity.persist.db.ringgold.tables.Types TYPES = org.plos.namedentity.persist.db.ringgold.tables.Types.TYPES;
-
-	/**
-	 * The table ringgold.url
-	 */
-	public static final org.plos.namedentity.persist.db.ringgold.tables.Url URL = org.plos.namedentity.persist.db.ringgold.tables.Url.URL;
+	public static final org.plos.namedentity.persist.db.ringgold.tables.Urls URLS = org.plos.namedentity.persist.db.ringgold.tables.Urls.URLS;
 }

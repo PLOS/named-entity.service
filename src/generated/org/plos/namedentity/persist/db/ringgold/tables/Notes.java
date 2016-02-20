@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.ringgold.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Notes extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.ringgold.tables.records.NotesRecord> {
 
-	private static final long serialVersionUID = -353931328;
+	private static final long serialVersionUID = -685584507;
 
 	/**
 	 * The reference instance of <code>ringgold.notes</code>
@@ -32,24 +32,24 @@ public class Notes extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.
 	}
 
 	/**
-	 * The column <code>ringgold.notes.Rec_ID</code>.
+	 * The column <code>ringgold.notes.rec_id</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.NotesRecord, java.lang.Integer> REC_ID = createField("Rec_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.NotesRecord, java.lang.Integer> REC_ID = createField("rec_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>ringgold.notes.P_Code</code>.
+	 * The column <code>ringgold.notes.ringgold_id</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.NotesRecord, java.lang.Long> P_CODE = createField("P_Code", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.NotesRecord, java.lang.Integer> RINGGOLD_ID = createField("ringgold_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>ringgold.notes.Notes</code>.
+	 * The column <code>ringgold.notes.notes</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.NotesRecord, java.lang.String> NOTES_ = createField("Notes", org.jooq.impl.SQLDataType.VARCHAR.length(250).nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.NotesRecord, java.lang.String> NOTES_ = createField("notes", org.jooq.impl.SQLDataType.VARCHAR.length(250).nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>ringgold.notes.Timestamp</code>.
+	 * The column <code>ringgold.notes.timestamp</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.NotesRecord, java.sql.Timestamp> TIMESTAMP = createField("Timestamp", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.NotesRecord, java.sql.Timestamp> TIMESTAMP = createField("timestamp", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * Create a <code>ringgold.notes</code> table reference
@@ -94,7 +94,7 @@ public class Notes extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.plos.namedentity.persist.db.ringgold.tables.records.NotesRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.plos.namedentity.persist.db.ringgold.tables.records.NotesRecord>>asList(org.plos.namedentity.persist.db.ringgold.Keys.KEY_NOTES_PRIMARY, org.plos.namedentity.persist.db.ringgold.Keys.KEY_NOTES_P_CODE);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.plos.namedentity.persist.db.ringgold.tables.records.NotesRecord>>asList(org.plos.namedentity.persist.db.ringgold.Keys.KEY_NOTES_PRIMARY, org.plos.namedentity.persist.db.ringgold.Keys.KEY_NOTES_RINGGOLD_ID);
 	}
 
 	/**

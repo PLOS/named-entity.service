@@ -16,7 +16,7 @@ package org.plos.namedentity.persist.db.ringgold.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sizes extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.db.ringgold.tables.records.SizesRecord> {
 
-	private static final long serialVersionUID = -1451135302;
+	private static final long serialVersionUID = -736443537;
 
 	/**
 	 * The reference instance of <code>ringgold.sizes</code>
@@ -32,29 +32,29 @@ public class Sizes extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.
 	}
 
 	/**
-	 * The column <code>ringgold.sizes.Rec_ID</code>.
+	 * The column <code>ringgold.sizes.rec_id</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.SizesRecord, java.lang.Long> REC_ID = createField("Rec_ID", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.SizesRecord, java.lang.Integer> REC_ID = createField("rec_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
-	 * The column <code>ringgold.sizes.P_Code</code>.
+	 * The column <code>ringgold.sizes.ringgold_id</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.SizesRecord, java.lang.Long> P_CODE = createField("P_Code", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.SizesRecord, java.lang.Integer> RINGGOLD_ID = createField("ringgold_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>ringgold.sizes.Kind</code>.
+	 * The column <code>ringgold.sizes.size_type</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.SizesRecord, java.lang.String> KIND = createField("Kind", org.jooq.impl.SQLDataType.VARCHAR.length(30).nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.SizesRecord, java.lang.String> SIZE_TYPE = createField("size_type", org.jooq.impl.SQLDataType.VARCHAR.length(30).nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>ringgold.sizes.Value</code>.
+	 * The column <code>ringgold.sizes.value</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.SizesRecord, java.lang.Integer> VALUE = createField("Value", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.SizesRecord, java.lang.String> VALUE = createField("value", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false).defaulted(true), this, "");
 
 	/**
-	 * The column <code>ringgold.sizes.Timestamp</code>.
+	 * The column <code>ringgold.sizes.timestamp</code>.
 	 */
-	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.SizesRecord, java.sql.Timestamp> TIMESTAMP = createField("Timestamp", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.plos.namedentity.persist.db.ringgold.tables.records.SizesRecord, java.sql.Timestamp> TIMESTAMP = createField("timestamp", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * Create a <code>ringgold.sizes</code> table reference
@@ -82,7 +82,7 @@ public class Sizes extends org.jooq.impl.TableImpl<org.plos.namedentity.persist.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Identity<org.plos.namedentity.persist.db.ringgold.tables.records.SizesRecord, java.lang.Long> getIdentity() {
+	public org.jooq.Identity<org.plos.namedentity.persist.db.ringgold.tables.records.SizesRecord, java.lang.Integer> getIdentity() {
 		return org.plos.namedentity.persist.db.ringgold.Keys.IDENTITY_SIZES;
 	}
 

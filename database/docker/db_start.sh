@@ -51,31 +51,40 @@ function build () {
   echo "SET GLOBAL max_connections = 500" | $MYSQL_ROOT 2>/dev/null
 
   echo "Create DB User: ned"
-  echo "CREATE USER 'ned' IDENTIFIED BY ''" | $MYSQL_ROOT 2>/dev/null
-  echo "GRANT ALL PRIVILEGES ON *.* TO 'ned'@'%' WITH GRANT OPTION; FLUSH PRIVILEGES" | $MYSQL_ROOT
+  $MYSQL_ROOT << NED_USER_SQL 2>/dev/null
+    CREATE USER 'ned' IDENTIFIED BY '';
+    GRANT ALL PRIVILEGES ON *.* TO 'ned'@'%' WITH GRANT OPTION;
+    FLUSH PRIVILEGES;
+NED_USER_SQL
 
   set -e
 
   echo "Create Schema: namedEntities"
-  echo "DROP SCHEMA IF EXISTS namedEntities;" | $MYSQL_ROOT
-  echo "CREATE SCHEMA namedEntities DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;" | $MYSQL_ROOT
+  $MYSQL_ROOT << NED_SCHEMA_SQL 2>/dev/null
+    DROP SCHEMA IF EXISTS namedEntities;
+    CREATE SCHEMA namedEntities DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+NED_SCHEMA_SQL
 
   echo "Create Schema: ambra"
-  echo "DROP SCHEMA IF EXISTS ambra;" | $MYSQL_ROOT
-  echo "CREATE SCHEMA ambra DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;" | $MYSQL_ROOT
+  $MYSQL_ROOT << AMBRA_SCHEMA_SQL 2>/dev/null
+    DROP SCHEMA IF EXISTS ambra;
+    CREATE SCHEMA ambra DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+AMBRA_SCHEMA_SQL
 
   for F in `ls -v ambra/V*.sql`
   do
-    cat "$F" | $MYSQL_ROOT ambra
+    cat "$F" | $MYSQL_ROOT ambra 2>/dev/null
   done
 
   echo "Create Schema: ringgold"
-  echo "DROP SCHEMA IF EXISTS ringgold;" | $MYSQL_ROOT
-  echo "CREATE SCHEMA ringgold;" | $MYSQL_ROOT
+  $MYSQL_ROOT << RINGGOLD_SCHEMA_SQL 2>/dev/null
+    DROP SCHEMA IF EXISTS ringgold;
+    CREATE SCHEMA ringgold;
+RINGGOLD_SCHEMA_SQL
 
   for F in `ls -v ringgold/V*.sql`
   do
-    cat "$F" | $MYSQL_ROOT ringgold
+    cat "$F" | $MYSQL_ROOT ringgold 2>/dev/null
   done
 }
 
