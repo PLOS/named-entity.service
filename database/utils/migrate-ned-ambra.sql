@@ -1,5 +1,13 @@
 
-/* migrate users from ned->ambra using nedid as userprofileid */
+/*
+    migrate users from ned->ambra using nedid as userprofileid
+
+    this was created as a temp workaround for migrating from a NED that existed before the
+    adapter to one that uses the adapter.
+
+    It might have other uses as well, but I cant think of any after the adapter is dead and gone.
+*/
+
 
 INSERT INTO ambra.userProfile
   (userProfileId, userProfileURI, displayName, givenNames, surName, realName, biography, title, email, city,
@@ -17,12 +25,3 @@ INSERT INTO ambra.userProfile
       LEFT JOIN namedEntities.addresses a     ON a.nedId    = p.nedId
       LEFT JOIN namedEntities.globalTypes gt2 ON gt2.id     = a.countryCodeTypeId
       LEFT JOIN namedEntities.urls u          ON u.nedId    = p.nedId;
-
-/* ambra.userprofile is now the generator of nedids; set its auto increment to next nedid */
-
-SELECT @nextNedId := MAX(userProfileID)+1 FROM ambra.userProfile;
-SET @setAutoIncrementSql = CONCAT('ALTER TABLE ambra.userProfile AUTO_INCREMENT = ', @nextNedId);
-PREPARE stmt FROM @setAutoIncrementSql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
-
