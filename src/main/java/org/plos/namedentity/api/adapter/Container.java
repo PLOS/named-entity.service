@@ -33,13 +33,14 @@ public class Container {
   }
 
   /*
-   * use xmlpath to change root so that we get 
-   *   {"result":{"valid":"true"}}
-   * instead of 
-   *   {"map":{"result":{"valid":"true"}}}
+   * if map contained { "valid":true }, adapter will return
+   *
+   *    { "map":{ "root":{ "valid":"true" }}}
+   *
+   * TODO: research eliminating nested maps with @XmlPath
+   *       for example, return { "valid:"true" }
    */
   @XmlJavaTypeAdapter(MapAdapter.class)
-  @XmlPath(".")
   public Map<String,String> getMap() {
     return map;
   }

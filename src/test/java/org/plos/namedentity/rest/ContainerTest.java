@@ -56,10 +56,15 @@ public class ContainerTest extends BaseResourceTest {
     map.put("valid","true");
     this.c1.setMap(map);
 
-    // marshall pojo (-> json)
-    // json (without MapAdapter) = "{"map":{"entry":[{"key":"valid","value":"true"}]}}"
-    // json (with MapAdapter)    = "{"result":{"valid":"true"}}"
+    // marshall pojo (-> json = "{"map":{"root":{"valid":"true"}}}" )
     String json = writeValueAsString(this.c1);
+
+    // unmarshaller will extract the correct payload ignoring "root" and
+    // and outer "map" keys (map, a reflected attribute). however, still
+    // assert their presence here, so that test will fail if these change 
+    // for some reason (change will likely break clients too).
+
+    assertTrue( json.indexOf("{\"map\":{\"root\":") != -1);
 
     Container c2 = unmarshalEntity(json, Container.class, this.unmarshaller);
 

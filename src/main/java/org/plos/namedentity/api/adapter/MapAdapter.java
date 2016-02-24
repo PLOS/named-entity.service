@@ -37,7 +37,7 @@ public class MapAdapter extends XmlAdapter<AdaptedMap, Map<String,String>> {
     DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
     DocumentBuilder db = dbf.newDocumentBuilder();
     Document document = db.newDocument();
-    Element rootElement = document.createElement("result");
+    Element rootElement = document.createElement("root");
     document.appendChild(rootElement);
 
     for(Entry<String,String> entry : map.entrySet()) {
