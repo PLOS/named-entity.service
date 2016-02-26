@@ -354,6 +354,8 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     findResolvedEntities(nedId, Alert.class).stream()
         .forEach(e -> nedDBSvc.delete(e));
 
+    // mark deleted in ambra since they cant be removed
+    ambraService.markDeleted(composite, nedId);
   }
 
   @Override @Transactional

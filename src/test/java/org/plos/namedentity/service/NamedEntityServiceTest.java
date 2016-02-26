@@ -483,7 +483,7 @@ public class NamedEntityServiceTest {
     workEmail.setType("Work");
     workEmail.setEmailaddress("fu.manchu.work555@foo.com");
     workEmail.setSource("Ambra");
-    workEmail.setNedid(555);
+//    workEmail.setNedid(555);  // not setting ID, so ambra gets the insert
     emails.add(_(workEmail));
     composite.setEmails( emails );
 
@@ -499,7 +499,6 @@ public class NamedEntityServiceTest {
     Integer nedId = compositeOut.getEmails().get(0).getNedid();
 
     namedEntityService.deleteIndividual(nedId);
-
   }
 
   @Test

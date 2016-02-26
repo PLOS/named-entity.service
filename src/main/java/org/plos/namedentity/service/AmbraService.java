@@ -9,6 +9,8 @@ public interface AmbraService {
 
   void markInvalid(IndividualComposite composite, int nedId);
 
+  void markDeleted(IndividualComposite composite, int nedId);
+
   <S extends Entity> void update(S entity);
 
   <S extends Entity> void create(S entity);

@@ -456,7 +456,7 @@ public class AmbraServiceTest {
     assertEquals(0, crudService.findByAttribute(filter).size());
 
     // make sure it did not get inserted in Ambra
-    assertNull(userService.getUserByAuthId(authId));
+    assertTrue(userService.getUserByAuthId(authId).getEmail().startsWith("invalid"));
   }
 
   @Test

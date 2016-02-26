@@ -49,14 +49,13 @@ public class AmbraServiceImpl implements AmbraService {
     try {
       return userRegistrationService.registerUser(ambraProfile, ambraProfile.getPassword());
     } catch (DuplicateUserException e) {
-      throw new NedException(DatabaseError, "An account with that email already exists", e);
+      throw new NedException(DatabaseError, "That account already exists", e);
     }
   }
 
-  @Override
-  public void markInvalid(IndividualComposite composite, int nedId) {
+  private void markIndividual(IndividualComposite composite, int nedId, String mark) {
 
-    String invalidTag = "invalidNedUser " + UUID.randomUUID().toString();
+    String invalidTag = mark.replace(" ", "") + " " + UUID.randomUUID().toString();
 
     Email email = composite.getEmails().get(0);
     email.setEmailaddress(invalidTag);
@@ -74,10 +73,20 @@ public class AmbraServiceImpl implements AmbraService {
     copyToAmbraPojo(profile, ambraProfile);
     copyToAmbraPojo(email, ambraProfile);
 
-    ambraProfile.setRealName("INVALID NED USER");
-    ambraProfile.setAuthId(invalidTag);
+    ambraProfile.setRealName(mark.toUpperCase());
+//    ambraProfile.setAuthId(invalidTag);
 
     updateInAmbra(ambraProfile);
+  }
+
+  @Override
+  public void markDeleted(IndividualComposite composite, int nedId) {
+    markIndividual(composite, nedId, "deleted Ned User");
+  }
+
+  @Override
+  public void markInvalid(IndividualComposite composite, int nedId) {
+    markIndividual(composite, nedId, "invalid Ned User");
   }
 
   @Override
