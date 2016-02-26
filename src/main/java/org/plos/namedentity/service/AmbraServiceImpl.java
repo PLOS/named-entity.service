@@ -53,7 +53,7 @@ public class AmbraServiceImpl implements AmbraService {
     }
   }
 
-  public void markIndividual(IndividualComposite composite, int nedId, String mark) {
+  private void markIndividual(IndividualComposite composite, int nedId, String mark) {
 
     String invalidTag = mark.replace(" ", "") + " " + UUID.randomUUID().toString();
 

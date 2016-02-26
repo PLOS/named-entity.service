@@ -342,9 +342,6 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
     IndividualComposite composite = findComposite(nedId, IndividualComposite.class);
 
-    // mark deleted in ambra since they cant be removed
-    ambraService.markDeleted(composite, nedId);
-
     // delete auth because it has a foreign key to emails
     composite.getAuth().stream().forEach(e -> nedDBSvc.delete(e));
     composite.setAuth(new ArrayList<>());
