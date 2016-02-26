@@ -70,7 +70,7 @@ public class IndividualsResource extends NedResource {
 
   private void generateDisplaynameIfEmpty(IndividualComposite composite) {
     List<Individualprofile> profiles = composite.getIndividualprofiles();
-    if (profiles != null & profiles.size() > 0) {
+    if (profiles != null && profiles.size() > 0) {
       Individualprofile profile = profiles.get(0);
       if (isEmptyOrBlank(profile.getDisplayname())) {
         profile.setDisplayname(namedEntityService.generateDisplayname(profile, new Random()));
