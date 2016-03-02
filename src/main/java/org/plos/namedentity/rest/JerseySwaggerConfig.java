@@ -16,17 +16,17 @@ public class JerseySwaggerConfig extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
 
-        ServletContext context = config.getServletContext();
-        Swagger swagger = new Swagger();
+    ServletContext context = config.getServletContext();
+    Swagger swagger = new Swagger();
 
-        swagger.securityDefinition("basic", new BasicAuthDefinition());
+    swagger.securityDefinition("basic", new BasicAuthDefinition());
 
-        List<Scheme> schemes = new ArrayList<>();
-        schemes.add(Scheme.HTTPS);
-        schemes.add(Scheme.HTTP);
+    List<Scheme> schemes = new ArrayList<>();
+    schemes.add(Scheme.HTTPS);
+    schemes.add(Scheme.HTTP);
 
-        swagger.setSchemes(schemes);
+    swagger.setSchemes(schemes);
 
-        context.setAttribute("swagger", swagger);
+    context.setAttribute("swagger", swagger);
     }
 }

@@ -26,8 +26,6 @@ public class RootResource {
 
   @GET
   public Response index() {
-    // TODO: display spirit animal (ned flanders, ned stark ?)
-
     return Response.temporaryRedirect(UriBuilder.fromPath("docs").build()).build();
   }
 }
