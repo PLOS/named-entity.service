@@ -11,7 +11,7 @@ import java.util.Date;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-03-03T13:54:47.854-08:00")
 public class Typedescription   {
   
   private Integer id = null;
@@ -88,7 +88,7 @@ public class Typedescription   {
   
 
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -96,13 +96,11 @@ public class Typedescription   {
       return false;
     }
     Typedescription typedescription = (Typedescription) o;
-
-    return true && Objects.equals(id, typedescription.id) &&
+    return Objects.equals(id, typedescription.id) &&
         Objects.equals(description, typedescription.description) &&
         Objects.equals(howused, typedescription.howused) &&
         Objects.equals(created, typedescription.created) &&
-        Objects.equals(lastmodified, typedescription.lastmodified)
-    ;
+        Objects.equals(lastmodified, typedescription.lastmodified);
   }
 
   @Override
@@ -128,7 +126,7 @@ public class Typedescription   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

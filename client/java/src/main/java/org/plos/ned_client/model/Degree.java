@@ -11,7 +11,7 @@ import java.util.Date;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-03-03T13:54:47.854-08:00")
 public class Degree   {
   
   private Integer id = null;
@@ -200,7 +200,7 @@ public class Degree   {
   
 
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -208,8 +208,7 @@ public class Degree   {
       return false;
     }
     Degree degree = (Degree) o;
-
-    return true && Objects.equals(id, degree.id) &&
+    return Objects.equals(id, degree.id) &&
         Objects.equals(nedid, degree.nedid) &&
         Objects.equals(source, degree.source) &&
         Objects.equals(sourcetypeid, degree.sourcetypeid) &&
@@ -221,8 +220,7 @@ public class Degree   {
         Objects.equals(lastmodifiedbyname, degree.lastmodifiedbyname) &&
         Objects.equals(typeid, degree.typeid) &&
         Objects.equals(type, degree.type) &&
-        Objects.equals(fulltitle, degree.fulltitle)
-    ;
+        Objects.equals(fulltitle, degree.fulltitle);
   }
 
   @Override
@@ -256,7 +254,7 @@ public class Degree   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

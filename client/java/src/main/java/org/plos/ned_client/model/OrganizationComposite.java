@@ -16,7 +16,7 @@ import org.plos.ned_client.model.Uniqueidentifier;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-03-03T13:54:47.854-08:00")
 public class OrganizationComposite   {
   
   private List<Address> addresses = new ArrayList<Address>();
@@ -26,11 +26,11 @@ public class OrganizationComposite   {
   private Date created = null;
   private String type = null;
   private String source = null;
+  private Integer sourcetypeid = null;
   private Integer nedid = null;
   private Integer typeid = null;
-  private Integer sourcetypeid = null;
-  private Date lastmodified = null;
   private Boolean isactive = false;
+  private Date lastmodified = null;
   private String familiarname = null;
   private String legalname = null;
   private Integer maincontactid = null;
@@ -152,6 +152,19 @@ public class OrganizationComposite   {
    **/
   
   @ApiModelProperty(value = "")
+  @JsonProperty("sourcetypeid")
+  public Integer getSourcetypeid() {
+    return sourcetypeid;
+  }
+  public void setSourcetypeid(Integer sourcetypeid) {
+    this.sourcetypeid = sourcetypeid;
+  }
+
+  
+  /**
+   **/
+  
+  @ApiModelProperty(value = "")
   @JsonProperty("nedid")
   public Integer getNedid() {
     return nedid;
@@ -178,12 +191,12 @@ public class OrganizationComposite   {
    **/
   
   @ApiModelProperty(value = "")
-  @JsonProperty("sourcetypeid")
-  public Integer getSourcetypeid() {
-    return sourcetypeid;
+  @JsonProperty("isactive")
+  public Boolean getIsactive() {
+    return isactive;
   }
-  public void setSourcetypeid(Integer sourcetypeid) {
-    this.sourcetypeid = sourcetypeid;
+  public void setIsactive(Boolean isactive) {
+    this.isactive = isactive;
   }
 
   
@@ -197,19 +210,6 @@ public class OrganizationComposite   {
   }
   public void setLastmodified(Date lastmodified) {
     this.lastmodified = lastmodified;
-  }
-
-  
-  /**
-   **/
-  
-  @ApiModelProperty(value = "")
-  @JsonProperty("isactive")
-  public Boolean getIsactive() {
-    return isactive;
-  }
-  public void setIsactive(Boolean isactive) {
-    this.isactive = isactive;
   }
 
   
@@ -267,7 +267,7 @@ public class OrganizationComposite   {
   
 
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -275,29 +275,27 @@ public class OrganizationComposite   {
       return false;
     }
     OrganizationComposite organizationComposite = (OrganizationComposite) o;
-
-    return true && Objects.equals(addresses, organizationComposite.addresses) &&
+    return Objects.equals(addresses, organizationComposite.addresses) &&
         Objects.equals(emails, organizationComposite.emails) &&
         Objects.equals(phonenumbers, organizationComposite.phonenumbers) &&
         Objects.equals(uniqueidentifiers, organizationComposite.uniqueidentifiers) &&
         Objects.equals(created, organizationComposite.created) &&
         Objects.equals(type, organizationComposite.type) &&
         Objects.equals(source, organizationComposite.source) &&
+        Objects.equals(sourcetypeid, organizationComposite.sourcetypeid) &&
         Objects.equals(nedid, organizationComposite.nedid) &&
         Objects.equals(typeid, organizationComposite.typeid) &&
-        Objects.equals(sourcetypeid, organizationComposite.sourcetypeid) &&
-        Objects.equals(lastmodified, organizationComposite.lastmodified) &&
         Objects.equals(isactive, organizationComposite.isactive) &&
+        Objects.equals(lastmodified, organizationComposite.lastmodified) &&
         Objects.equals(familiarname, organizationComposite.familiarname) &&
         Objects.equals(legalname, organizationComposite.legalname) &&
         Objects.equals(maincontactid, organizationComposite.maincontactid) &&
-        Objects.equals(typeName, organizationComposite.typeName)
-    ;
+        Objects.equals(typeName, organizationComposite.typeName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(addresses, emails, phonenumbers, uniqueidentifiers, created, type, source, nedid, typeid, sourcetypeid, lastmodified, isactive, familiarname, legalname, maincontactid, typeName);
+    return Objects.hash(addresses, emails, phonenumbers, uniqueidentifiers, created, type, source, sourcetypeid, nedid, typeid, isactive, lastmodified, familiarname, legalname, maincontactid, typeName);
   }
 
   @Override
@@ -312,11 +310,11 @@ public class OrganizationComposite   {
     sb.append("    created: ").append(toIndentedString(created)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    source: ").append(toIndentedString(source)).append("\n");
+    sb.append("    sourcetypeid: ").append(toIndentedString(sourcetypeid)).append("\n");
     sb.append("    nedid: ").append(toIndentedString(nedid)).append("\n");
     sb.append("    typeid: ").append(toIndentedString(typeid)).append("\n");
-    sb.append("    sourcetypeid: ").append(toIndentedString(sourcetypeid)).append("\n");
-    sb.append("    lastmodified: ").append(toIndentedString(lastmodified)).append("\n");
     sb.append("    isactive: ").append(toIndentedString(isactive)).append("\n");
+    sb.append("    lastmodified: ").append(toIndentedString(lastmodified)).append("\n");
     sb.append("    familiarname: ").append(toIndentedString(familiarname)).append("\n");
     sb.append("    legalname: ").append(toIndentedString(legalname)).append("\n");
     sb.append("    maincontactid: ").append(toIndentedString(maincontactid)).append("\n");
@@ -329,7 +327,7 @@ public class OrganizationComposite   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

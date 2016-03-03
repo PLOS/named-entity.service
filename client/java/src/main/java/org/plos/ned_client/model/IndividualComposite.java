@@ -21,7 +21,7 @@ import org.plos.ned_client.model.Url;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-03-03T13:54:47.854-08:00")
 public class IndividualComposite   {
   
   private List<Auth> auth = new ArrayList<Auth>();
@@ -202,7 +202,7 @@ public class IndividualComposite   {
   
 
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -210,8 +210,7 @@ public class IndividualComposite   {
       return false;
     }
     IndividualComposite individualComposite = (IndividualComposite) o;
-
-    return true && Objects.equals(auth, individualComposite.auth) &&
+    return Objects.equals(auth, individualComposite.auth) &&
         Objects.equals(individualprofiles, individualComposite.individualprofiles) &&
         Objects.equals(groups, individualComposite.groups) &&
         Objects.equals(addresses, individualComposite.addresses) &&
@@ -221,8 +220,7 @@ public class IndividualComposite   {
         Objects.equals(degrees, individualComposite.degrees) &&
         Objects.equals(urls, individualComposite.urls) &&
         Objects.equals(relationships, individualComposite.relationships) &&
-        Objects.equals(typeName, individualComposite.typeName)
-    ;
+        Objects.equals(typeName, individualComposite.typeName);
   }
 
   @Override
@@ -254,7 +252,7 @@ public class IndividualComposite   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

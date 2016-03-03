@@ -11,7 +11,7 @@ import java.util.Date;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-03-03T13:54:47.854-08:00")
 public class Phonenumber   {
   
   private Integer id = null;
@@ -256,7 +256,7 @@ public class Phonenumber   {
   
 
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -264,8 +264,7 @@ public class Phonenumber   {
       return false;
     }
     Phonenumber phonenumber = (Phonenumber) o;
-
-    return true && Objects.equals(id, phonenumber.id) &&
+    return Objects.equals(id, phonenumber.id) &&
         Objects.equals(nedid, phonenumber.nedid) &&
         Objects.equals(source, phonenumber.source) &&
         Objects.equals(sourcetypeid, phonenumber.sourcetypeid) &&
@@ -281,8 +280,7 @@ public class Phonenumber   {
         Objects.equals(countrycodetype, phonenumber.countrycodetype) &&
         Objects.equals(phonenumber, phonenumber.phonenumber) &&
         Objects.equals(extension, phonenumber.extension) &&
-        Objects.equals(isactive, phonenumber.isactive)
-    ;
+        Objects.equals(isactive, phonenumber.isactive);
   }
 
   @Override
@@ -320,7 +318,7 @@ public class Phonenumber   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

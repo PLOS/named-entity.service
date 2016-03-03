@@ -11,7 +11,7 @@ import java.util.Date;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-03-03T13:54:47.854-08:00")
 public class Globaltype   {
   
   private Integer id = null;
@@ -144,7 +144,7 @@ public class Globaltype   {
   
 
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -152,8 +152,7 @@ public class Globaltype   {
       return false;
     }
     Globaltype globaltype = (Globaltype) o;
-
-    return true && Objects.equals(id, globaltype.id) &&
+    return Objects.equals(id, globaltype.id) &&
         Objects.equals(typeid, globaltype.typeid) &&
         Objects.equals(shortdescription, globaltype.shortdescription) &&
         Objects.equals(longdescription, globaltype.longdescription) &&
@@ -161,8 +160,7 @@ public class Globaltype   {
         Objects.equals(created, globaltype.created) &&
         Objects.equals(lastmodified, globaltype.lastmodified) &&
         Objects.equals(createdby, globaltype.createdby) &&
-        Objects.equals(lastmodifiedby, globaltype.lastmodifiedby)
-    ;
+        Objects.equals(lastmodifiedby, globaltype.lastmodifiedby);
   }
 
   @Override
@@ -192,7 +190,7 @@ public class Globaltype   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CODEGEN=~/applications/swagger-codegen
+CODEGEN=$HOME/applications/swagger-codegen-cli.jar
 
 SERVICE=http://localhost:8080/v1
 
@@ -22,7 +22,7 @@ set -e
 
 VERSION=$(echo "import json, requests; print(requests.get('${CONFIG}').json()['version'].split(' ')[0])" | python2)
 
-GENERATE="java -jar $CODEGEN/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate"
+GENERATE="java -jar $CODEGEN generate"
 
 echo "VERSION: $VERSION"
 

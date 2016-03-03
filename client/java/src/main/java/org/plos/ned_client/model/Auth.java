@@ -11,7 +11,7 @@ import java.util.Date;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-03-03T13:54:47.854-08:00")
 public class Auth   {
   
   private Integer id = null;
@@ -284,7 +284,7 @@ public class Auth   {
   
 
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -292,8 +292,7 @@ public class Auth   {
       return false;
     }
     Auth auth = (Auth) o;
-
-    return true && Objects.equals(id, auth.id) &&
+    return Objects.equals(id, auth.id) &&
         Objects.equals(nedid, auth.nedid) &&
         Objects.equals(source, auth.source) &&
         Objects.equals(sourcetypeid, auth.sourcetypeid) &&
@@ -311,8 +310,7 @@ public class Auth   {
         Objects.equals(passwordreset, auth.passwordreset) &&
         Objects.equals(verificationtoken, auth.verificationtoken) &&
         Objects.equals(verified, auth.verified) &&
-        Objects.equals(isactive, auth.isactive)
-    ;
+        Objects.equals(isactive, auth.isactive);
   }
 
   @Override
@@ -352,7 +350,7 @@ public class Auth   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

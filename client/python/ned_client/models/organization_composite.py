@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-Copyright 2016 SmartBear Software
+Copyright 2015 SmartBear Software
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -44,11 +44,11 @@ class OrganizationComposite(object):
             'created': 'datetime',
             'type': 'str',
             'source': 'str',
+            'sourcetypeid': 'int',
             'nedid': 'int',
             'typeid': 'int',
-            'sourcetypeid': 'int',
-            'lastmodified': 'datetime',
             'isactive': 'bool',
+            'lastmodified': 'datetime',
             'familiarname': 'str',
             'legalname': 'str',
             'maincontactid': 'int',
@@ -63,11 +63,11 @@ class OrganizationComposite(object):
             'created': 'created',
             'type': 'type',
             'source': 'source',
+            'sourcetypeid': 'sourcetypeid',
             'nedid': 'nedid',
             'typeid': 'typeid',
-            'sourcetypeid': 'sourcetypeid',
-            'lastmodified': 'lastmodified',
             'isactive': 'isactive',
+            'lastmodified': 'lastmodified',
             'familiarname': 'familiarname',
             'legalname': 'legalname',
             'maincontactid': 'maincontactid',
@@ -81,11 +81,11 @@ class OrganizationComposite(object):
         self._created = None
         self._type = None
         self._source = None
+        self._sourcetypeid = None
         self._nedid = None
         self._typeid = None
-        self._sourcetypeid = None
-        self._lastmodified = None
         self._isactive = False
+        self._lastmodified = None
         self._familiarname = None
         self._legalname = None
         self._maincontactid = None
@@ -246,6 +246,28 @@ class OrganizationComposite(object):
         self._source = source
 
     @property
+    def sourcetypeid(self):
+        """
+        Gets the sourcetypeid of this OrganizationComposite.
+
+
+        :return: The sourcetypeid of this OrganizationComposite.
+        :rtype: int
+        """
+        return self._sourcetypeid
+
+    @sourcetypeid.setter
+    def sourcetypeid(self, sourcetypeid):
+        """
+        Sets the sourcetypeid of this OrganizationComposite.
+
+
+        :param sourcetypeid: The sourcetypeid of this OrganizationComposite.
+        :type: int
+        """
+        self._sourcetypeid = sourcetypeid
+
+    @property
     def nedid(self):
         """
         Gets the nedid of this OrganizationComposite.
@@ -290,26 +312,26 @@ class OrganizationComposite(object):
         self._typeid = typeid
 
     @property
-    def sourcetypeid(self):
+    def isactive(self):
         """
-        Gets the sourcetypeid of this OrganizationComposite.
+        Gets the isactive of this OrganizationComposite.
 
 
-        :return: The sourcetypeid of this OrganizationComposite.
-        :rtype: int
+        :return: The isactive of this OrganizationComposite.
+        :rtype: bool
         """
-        return self._sourcetypeid
+        return self._isactive
 
-    @sourcetypeid.setter
-    def sourcetypeid(self, sourcetypeid):
+    @isactive.setter
+    def isactive(self, isactive):
         """
-        Sets the sourcetypeid of this OrganizationComposite.
+        Sets the isactive of this OrganizationComposite.
 
 
-        :param sourcetypeid: The sourcetypeid of this OrganizationComposite.
-        :type: int
+        :param isactive: The isactive of this OrganizationComposite.
+        :type: bool
         """
-        self._sourcetypeid = sourcetypeid
+        self._isactive = isactive
 
     @property
     def lastmodified(self):
@@ -332,28 +354,6 @@ class OrganizationComposite(object):
         :type: datetime
         """
         self._lastmodified = lastmodified
-
-    @property
-    def isactive(self):
-        """
-        Gets the isactive of this OrganizationComposite.
-
-
-        :return: The isactive of this OrganizationComposite.
-        :rtype: bool
-        """
-        return self._isactive
-
-    @isactive.setter
-    def isactive(self, isactive):
-        """
-        Sets the isactive of this OrganizationComposite.
-
-
-        :param isactive: The isactive of this OrganizationComposite.
-        :type: bool
-        """
-        self._isactive = isactive
 
     @property
     def familiarname(self):

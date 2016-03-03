@@ -6,15 +6,15 @@
   },
   "basePath" : "/v1",
   "tags" : [ {
+    "name" : "institutionsearch"
+  }, {
+    "name" : "queries"
+  }, {
     "name" : "typeclasses"
   }, {
     "name" : "service"
   }, {
-    "name" : "queries"
-  }, {
     "name" : "individuals"
-  }, {
-    "name" : "institutionsearch"
   }, {
     "name" : "organizations"
   } ],
@@ -2894,6 +2894,10 @@
         "source" : {
           "type" : "string"
         },
+        "sourcetypeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
         "nedid" : {
           "type" : "integer",
           "format" : "int32"
@@ -2902,17 +2906,13 @@
           "type" : "integer",
           "format" : "int32"
         },
-        "sourcetypeid" : {
-          "type" : "integer",
-          "format" : "int32"
+        "isactive" : {
+          "type" : "boolean",
+          "default" : false
         },
         "lastmodified" : {
           "type" : "string",
           "format" : "date-time"
-        },
-        "isactive" : {
-          "type" : "boolean",
-          "default" : false
         },
         "familiarname" : {
           "type" : "string"

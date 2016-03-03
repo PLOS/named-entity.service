@@ -11,7 +11,7 @@ import java.util.Date;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-02-05T00:03:06.989-08:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-03-03T13:54:47.854-08:00")
 public class Uniqueidentifier   {
   
   private Integer id = null;
@@ -214,7 +214,7 @@ public class Uniqueidentifier   {
   
 
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -222,8 +222,7 @@ public class Uniqueidentifier   {
       return false;
     }
     Uniqueidentifier uniqueidentifier = (Uniqueidentifier) o;
-
-    return true && Objects.equals(id, uniqueidentifier.id) &&
+    return Objects.equals(id, uniqueidentifier.id) &&
         Objects.equals(nedid, uniqueidentifier.nedid) &&
         Objects.equals(source, uniqueidentifier.source) &&
         Objects.equals(sourcetypeid, uniqueidentifier.sourcetypeid) &&
@@ -236,8 +235,7 @@ public class Uniqueidentifier   {
         Objects.equals(typeid, uniqueidentifier.typeid) &&
         Objects.equals(type, uniqueidentifier.type) &&
         Objects.equals(uniqueidentifier, uniqueidentifier.uniqueidentifier) &&
-        Objects.equals(metadata, uniqueidentifier.metadata)
-    ;
+        Objects.equals(metadata, uniqueidentifier.metadata);
   }
 
   @Override
@@ -272,7 +270,7 @@ public class Uniqueidentifier   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

@@ -6,6 +6,11 @@ These libraries are auto generated from NED's Swagger spec via swagger codegen. 
 
 See https://github.com/swagger-api/swagger-codegen
 
+You can either build it from source, or just pull the latest stable with something like the following:
+
+    wget http://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.1.5/swagger-codegen-cli-2.1.5.jar -O $HOME/applications/swagger-codegen-cli.jar
+
+
 ## Generate/Update the client libraries
 
 Make sure the NED API is running
