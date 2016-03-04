@@ -44,9 +44,9 @@ class OrganizationComposite(object):
             'created': 'datetime',
             'type': 'str',
             'source': 'str',
-            'sourcetypeid': 'int',
             'nedid': 'int',
             'typeid': 'int',
+            'sourcetypeid': 'int',
             'isactive': 'bool',
             'lastmodified': 'datetime',
             'familiarname': 'str',
@@ -63,9 +63,9 @@ class OrganizationComposite(object):
             'created': 'created',
             'type': 'type',
             'source': 'source',
-            'sourcetypeid': 'sourcetypeid',
             'nedid': 'nedid',
             'typeid': 'typeid',
+            'sourcetypeid': 'sourcetypeid',
             'isactive': 'isactive',
             'lastmodified': 'lastmodified',
             'familiarname': 'familiarname',
@@ -81,9 +81,9 @@ class OrganizationComposite(object):
         self._created = None
         self._type = None
         self._source = None
-        self._sourcetypeid = None
         self._nedid = None
         self._typeid = None
+        self._sourcetypeid = None
         self._isactive = False
         self._lastmodified = None
         self._familiarname = None
@@ -246,28 +246,6 @@ class OrganizationComposite(object):
         self._source = source
 
     @property
-    def sourcetypeid(self):
-        """
-        Gets the sourcetypeid of this OrganizationComposite.
-
-
-        :return: The sourcetypeid of this OrganizationComposite.
-        :rtype: int
-        """
-        return self._sourcetypeid
-
-    @sourcetypeid.setter
-    def sourcetypeid(self, sourcetypeid):
-        """
-        Sets the sourcetypeid of this OrganizationComposite.
-
-
-        :param sourcetypeid: The sourcetypeid of this OrganizationComposite.
-        :type: int
-        """
-        self._sourcetypeid = sourcetypeid
-
-    @property
     def nedid(self):
         """
         Gets the nedid of this OrganizationComposite.
@@ -310,6 +288,28 @@ class OrganizationComposite(object):
         :type: int
         """
         self._typeid = typeid
+
+    @property
+    def sourcetypeid(self):
+        """
+        Gets the sourcetypeid of this OrganizationComposite.
+
+
+        :return: The sourcetypeid of this OrganizationComposite.
+        :rtype: int
+        """
+        return self._sourcetypeid
+
+    @sourcetypeid.setter
+    def sourcetypeid(self, sourcetypeid):
+        """
+        Sets the sourcetypeid of this OrganizationComposite.
+
+
+        :param sourcetypeid: The sourcetypeid of this OrganizationComposite.
+        :type: int
+        """
+        self._sourcetypeid = sourcetypeid
 
     @property
     def isactive(self):

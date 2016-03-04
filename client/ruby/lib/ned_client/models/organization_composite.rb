@@ -16,11 +16,11 @@ module NedClient
 
     attr_accessor :source
 
-    attr_accessor :sourcetypeid
-
     attr_accessor :nedid
 
     attr_accessor :typeid
+
+    attr_accessor :sourcetypeid
 
     attr_accessor :isactive
 
@@ -52,11 +52,11 @@ module NedClient
         
         :'source' => :'source',
         
-        :'sourcetypeid' => :'sourcetypeid',
-        
         :'nedid' => :'nedid',
         
         :'typeid' => :'typeid',
+        
+        :'sourcetypeid' => :'sourcetypeid',
         
         :'isactive' => :'isactive',
         
@@ -83,9 +83,9 @@ module NedClient
         :'created' => :'DateTime',
         :'type' => :'String',
         :'source' => :'String',
-        :'sourcetypeid' => :'Integer',
         :'nedid' => :'Integer',
         :'typeid' => :'Integer',
+        :'sourcetypeid' => :'Integer',
         :'isactive' => :'BOOLEAN',
         :'lastmodified' => :'DateTime',
         :'familiarname' => :'String',
@@ -139,16 +139,16 @@ module NedClient
         self.source = attributes[:'source']
       end
       
-      if attributes[:'sourcetypeid']
-        self.sourcetypeid = attributes[:'sourcetypeid']
-      end
-      
       if attributes[:'nedid']
         self.nedid = attributes[:'nedid']
       end
       
       if attributes[:'typeid']
         self.typeid = attributes[:'typeid']
+      end
+      
+      if attributes[:'sourcetypeid']
+        self.sourcetypeid = attributes[:'sourcetypeid']
       end
       
       if attributes[:'isactive']
@@ -199,9 +199,9 @@ module NedClient
           created == o.created &&
           type == o.type &&
           source == o.source &&
-          sourcetypeid == o.sourcetypeid &&
           nedid == o.nedid &&
           typeid == o.typeid &&
+          sourcetypeid == o.sourcetypeid &&
           isactive == o.isactive &&
           lastmodified == o.lastmodified &&
           familiarname == o.familiarname &&
@@ -217,7 +217,7 @@ module NedClient
 
     # Calculate hash code according to all attributes.
     def hash
-      [addresses, emails, phonenumbers, uniqueidentifiers, created, type, source, sourcetypeid, nedid, typeid, isactive, lastmodified, familiarname, legalname, maincontactid, type_name].hash
+      [addresses, emails, phonenumbers, uniqueidentifiers, created, type, source, nedid, typeid, sourcetypeid, isactive, lastmodified, familiarname, legalname, maincontactid, type_name].hash
     end
 
     # build the object from hash

@@ -66,6 +66,14 @@ echo '{
   "artifactVersion": "'${VERSION}'"
 }' > ned_java.json
 
+REPODIR="release"
+
+if [[ ${VERSION} == *"SNAPSHOT" ]];
+then
+  REPODIR="shapshot";
+fi
+
+
 echo 'mvn deploy:deploy-file \
 		-DpomFile="pom.xml" \
 		-DgroupId="org.plos" \
@@ -74,7 +82,7 @@ echo 'mvn deploy:deploy-file \
     -Dpackaging=jar \
     -Dfile="../java/target/ned-client-'${VERSION}'.jar" \
     -DrepositoryId=ambra \
-    -Durl=sftp://maven.ambraproject.org/home/maven2/repository/release
+    -Durl=sftp://maven.ambraproject.org/home/maven2/repository/'${REPODIR}'
 ' > java_deploy/deploy.sh
 
 $GENERATE -i $SWAGGER -l java -o ./java -c ned_java.json \

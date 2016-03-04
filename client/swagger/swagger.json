@@ -6,17 +6,17 @@
   },
   "basePath" : "/v1",
   "tags" : [ {
-    "name" : "institutionsearch"
+    "name" : "organizations"
   }, {
     "name" : "queries"
   }, {
-    "name" : "typeclasses"
+    "name" : "institutionsearch"
   }, {
-    "name" : "service"
+    "name" : "typeclasses"
   }, {
     "name" : "individuals"
   }, {
-    "name" : "organizations"
+    "name" : "service"
   } ],
   "schemes" : [ "https", "http" ],
   "paths" : {
@@ -2894,15 +2894,15 @@
         "source" : {
           "type" : "string"
         },
-        "sourcetypeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
         "nedid" : {
           "type" : "integer",
           "format" : "int32"
         },
         "typeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "sourcetypeid" : {
           "type" : "integer",
           "format" : "int32"
         },
@@ -2939,44 +2939,6 @@
         "startime" : {
           "type" : "string",
           "format" : "date-time"
-        }
-      }
-    },
-    "Globaltype" : {
-      "type" : "object",
-      "properties" : {
-        "id" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "typeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "shortdescription" : {
-          "type" : "string"
-        },
-        "longdescription" : {
-          "type" : "string"
-        },
-        "typecode" : {
-          "type" : "string"
-        },
-        "created" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "lastmodified" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "createdby" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "lastmodifiedby" : {
-          "type" : "integer",
-          "format" : "int32"
         }
       }
     },
@@ -3032,6 +2994,44 @@
         },
         "metadata" : {
           "type" : "string"
+        }
+      }
+    },
+    "Globaltype" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "typeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "shortdescription" : {
+          "type" : "string"
+        },
+        "longdescription" : {
+          "type" : "string"
+        },
+        "typecode" : {
+          "type" : "string"
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lastmodified" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "createdby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "lastmodifiedby" : {
+          "type" : "integer",
+          "format" : "int32"
         }
       }
     },
@@ -3404,6 +3404,72 @@
         }
       }
     },
+    "Phonenumber" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "nedid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "source" : {
+          "type" : "string"
+        },
+        "sourcetypeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lastmodified" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "createdby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "createdbyname" : {
+          "type" : "string"
+        },
+        "lastmodifiedby" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "lastmodifiedbyname" : {
+          "type" : "string"
+        },
+        "typeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "countrycodetypeid" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "countrycodetype" : {
+          "type" : "string"
+        },
+        "phonenumber" : {
+          "type" : "string"
+        },
+        "extension" : {
+          "type" : "string"
+        },
+        "isactive" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      }
+    },
     "Individualprofile" : {
       "type" : "object",
       "properties" : {
@@ -3474,72 +3540,6 @@
           "type" : "string"
         },
         "biography" : {
-          "type" : "string"
-        },
-        "isactive" : {
-          "type" : "boolean",
-          "default" : false
-        }
-      }
-    },
-    "Phonenumber" : {
-      "type" : "object",
-      "properties" : {
-        "id" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "nedid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "source" : {
-          "type" : "string"
-        },
-        "sourcetypeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "created" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "lastmodified" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "createdby" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "createdbyname" : {
-          "type" : "string"
-        },
-        "lastmodifiedby" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "lastmodifiedbyname" : {
-          "type" : "string"
-        },
-        "typeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "type" : {
-          "type" : "string"
-        },
-        "countrycodetypeid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "countrycodetype" : {
-          "type" : "string"
-        },
-        "phonenumber" : {
-          "type" : "string"
-        },
-        "extension" : {
           "type" : "string"
         },
         "isactive" : {

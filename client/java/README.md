@@ -26,7 +26,7 @@ After the client libarary is installed/deployed, you can use it in your Maven pr
 <dependency>
     <groupId>org.plos</groupId>
     <artifactId>ned-client</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.1.0</version>
     <scope>compile</scope>
 </dependency>
 
