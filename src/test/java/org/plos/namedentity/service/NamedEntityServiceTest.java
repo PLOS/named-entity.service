@@ -29,6 +29,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -184,7 +185,7 @@ public class NamedEntityServiceTest {
 
     // UPDATE relationship entity.
 
-    java.sql.Date enddate = dateNow();
+    LocalDate enddate = dateNow();
     savedEntity1.setEnddate(enddate);
     assertTrue( crudService.update(namedEntityService.resolveValuesToIds(_(savedEntity1))) );
 
@@ -1124,7 +1125,7 @@ public class NamedEntityServiceTest {
     return composite;
   }
 
-  private java.sql.Date dateNow() {
+  private LocalDate dateNow() {
     Calendar cal = Calendar.getInstance();
     cal.setTime(new java.util.Date());
     cal.set(Calendar.HOUR_OF_DAY, 0);

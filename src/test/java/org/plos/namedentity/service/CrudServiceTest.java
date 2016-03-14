@@ -36,6 +36,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
@@ -724,7 +725,7 @@ public class CrudServiceTest {
     }
   }
 
-  private java.sql.Date dateNow() {
+  private LocalDate dateNow() {
     Calendar cal = Calendar.getInstance();
     cal.setTime(new java.util.Date());
     cal.set(Calendar.HOUR_OF_DAY, 0);

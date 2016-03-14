@@ -41,6 +41,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -678,7 +679,7 @@ public class NamedEntityDBServiceTest {
     kbPlosOneGrp.setApplicationtypeid(srcAppTypeId);
     kbPlosOneGrp.setTypeid(groupTypeId);
 
-    java.sql.Date startDate = dateNow();
+    LocalDate startDate = dateNow();
     kbPlosOneGrp.setStartdate(startDate);
 
     kbPlosOneGrp.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
@@ -695,7 +696,7 @@ public class NamedEntityDBServiceTest {
 
     Group savedGroup = nedDBSvc.findById(groupId, Group.class);
 
-    java.sql.Date endDate = dateNow();
+    LocalDate endDate = dateNow();
     savedGroup.setEnddate(endDate);
 
     assertTrue( nedDBSvc.update(savedGroup) );
@@ -1178,7 +1179,7 @@ public class NamedEntityDBServiceTest {
     return typeValueId;
   }
 
-  private java.sql.Date dateNow() {
+  private LocalDate dateNow() {
     Calendar cal = Calendar.getInstance();
     cal.setTime(new java.util.Date());
     cal.set(Calendar.HOUR_OF_DAY, 0);
