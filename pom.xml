@@ -19,7 +19,7 @@
     <org.apache.commons.version>3.3.2</org.apache.commons.version>
     <org.glassfish.jersey-version>2.22.1</org.glassfish.jersey-version>
     <org.hamcrest.version>1.3</org.hamcrest.version>
-    <org.jooq.version>3.5.1</org.jooq.version>
+    <org.jooq.version>3.7.3</org.jooq.version>
     <!-- AMBRA-ADAPTER: -->
     <org.slf4j.version>1.5.11</org.slf4j.version>
     <org.springframework.version>4.1.6.RELEASE</org.springframework.version>
@@ -374,6 +374,21 @@
                 <inputSchema>ringgold</inputSchema>
               </schema>
             </schemata>
+            <!-- register custom type -->
+            <customTypes>
+              <customType>
+                <name>java.time.LocalDate</name>
+                <converter>org.plos.jooq.converters.LocalDateConverter</converter>
+              </customType>
+            </customTypes>
+            <!-- associate custom type with database columns -->
+            <forcedTypes>
+              <forcedType>
+                <name>java.time.LocalDate</name>
+                <expression>.*</expression>
+                <types>DATE.*</types>
+              </forcedType>
+            </forcedTypes>
           </database>
           <generate>
             <deprecated>false</deprecated>
