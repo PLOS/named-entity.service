@@ -17,30 +17,20 @@
 package org.plos.namedentity.api.adapter;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-public class DateAdapter extends XmlAdapter<String, Date> {
-
-  private DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
+public class DateAdapter extends XmlAdapter<String, LocalDate> {
 
   @Override
-  public String marshal(Date date) throws Exception {
-    if (date == null) return null;
-
-    LocalDate localDate = new LocalDate(date);
-    return dtf.print(localDate);
+  public String marshal(LocalDate date) throws Exception {
+    return (date == null) ? null : DateTimeFormatter.ISO_LOCAL_DATE.format(date);
   }
 
   @Override
-  public Date unmarshal(String datestr) throws Exception {
-    if (datestr == null) return null;
-
-    LocalDate dt = dtf.parseLocalDate(datestr);
-    return dt.toDate();
+  public LocalDate unmarshal(String datestr) throws Exception {
+    return (datestr == null) ? null : 
+      LocalDate.parse(datestr, DateTimeFormatter.ISO_LOCAL_DATE);
   }
 }

@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import org.joda.time.LocalDate;
+import java.time.LocalDate;
 
 public class DateAdapterTest {
 
@@ -28,11 +28,11 @@ public class DateAdapterTest {
 
   @Test
   public void testMarshallingDate() throws Exception {
-    assertEquals("2014-10-25", dateAdapter.marshal(new LocalDate(2014,10,25).toDate()));
+    assertEquals("2014-10-25", dateAdapter.marshal(LocalDate.of(2014,10,25)));
   }
 
   @Test
   public void testUnmarshallingDate() throws Exception {
-		assertEquals(new LocalDate(2014,10,25).toDate(), dateAdapter.unmarshal("2014-10-25"));
+		assertEquals(LocalDate.of(2014,10,25), dateAdapter.unmarshal("2014-10-25"));
   }
 }

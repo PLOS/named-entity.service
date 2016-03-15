@@ -35,10 +35,10 @@ public class Relationship extends Entity {
   private String  type;
   private String  title;
 
-  //@XmlJavaTypeAdapter(DateAdapter.class)
+  @XmlJavaTypeAdapter(DateAdapter.class)
   private LocalDate startdate;
 
-  //@XmlJavaTypeAdapter(DateAdapter.class)
+  @XmlJavaTypeAdapter(DateAdapter.class)
   private LocalDate enddate;
 
   @Override

@@ -16,6 +16,9 @@
  */
 package org.plos.namedentity.api.entity;
 
+import org.plos.namedentity.api.adapter.DateAdapter;
+
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -69,22 +72,22 @@ public class Group extends Entity {
     this.typeid = typeid;
   }
 
-//  @XmlJavaTypeAdapter(DateAdapter.class)
+  @XmlJavaTypeAdapter(DateAdapter.class)
   public LocalDate getStartdate() {
     return this.startdate;
   }
 
-//  @XmlJavaTypeAdapter(DateAdapter.class)
+  @XmlJavaTypeAdapter(DateAdapter.class)
   public void setStartdate(LocalDate startdate) {
     this.startdate = startdate;
   }
 
-//  @XmlJavaTypeAdapter(DateAdapter.class)
+  @XmlJavaTypeAdapter(DateAdapter.class)
   public LocalDate getEnddate() {
     return this.enddate;
   }
 
-//  @XmlJavaTypeAdapter(DateAdapter.class)
+  @XmlJavaTypeAdapter(DateAdapter.class)
   public void setEnddate(LocalDate enddate) {
     this.enddate = enddate;
   }

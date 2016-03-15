@@ -23,7 +23,6 @@ import org.plos.namedentity.api.NedErrorResponse;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.adapter.Container;
-import org.plos.namedentity.api.adapter.DateAdapter;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.service.NamedEntityService;
@@ -41,10 +40,11 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
@@ -69,8 +69,6 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   private static Integer nedIndividualId = null;
 
   private static Integer nedOrganizationId = null;
-
-  private DateAdapter dateAdapter;
 
   @Before
   public void setup() throws Exception {
@@ -115,8 +113,6 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
         nedOrganizationId = composite.getNedid();
       }
-
-      dateAdapter = new DateAdapter();
     }
   }
 
@@ -753,7 +749,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
   public void testGroupCrud() throws IOException, JAXBException {
 
     String groupsURI = String.format("%s/%d/groups", INDIVIDUAL_URI, nedIndividualId);
-    Date START_DATE = getDate(6, 30, 2014);
+    LocalDate START_DATE = LocalDate.of(2014,6,30);
 
     /* ------------------------------------------------------------------ */
     /*  CREATE                                                            */
@@ -922,7 +918,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     Relationship relationship = new Relationship();
     relationship.setType("Individual Affiliated with Organization");
     relationship.setNedidrelated(nedOrganizationId);
-    relationship.setStartdate( dateAdapter.unmarshal("2015-06-30"));
+    relationship.setStartdate(LocalDate.of(2015, 6, 30));
     relationship.setSource(PLOS_SOURCE);
 
     Unmarshaller unmarshaller = jsonUnmarshaller(Relationship.class);
@@ -937,7 +933,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     Response response = buildRequestDefaultAuth(relationshipsURI)
       .post(Entity.json(String.format(relationshipJsonTemplate,
         relationship.getType(), relationship.getNedidrelated(),
-          dateAdapter.marshal(relationship.getStartdate()))));
+          DateTimeFormatter.ISO_LOCAL_DATE.format(relationship.getStartdate()))));
 
     assertEquals(200, response.getStatus());
 
@@ -1937,13 +1933,6 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals("jane.q.doe.work@foo.com", auth.getEmail());
     assertTrue( auth.getEmailid() > 0 );
     assertTrue(auth.getIsactive());
-  }
-
-  private Date getDate(int month, int day, int year) {
-    Calendar cal = new GregorianCalendar();
-    cal.set(year, (month - 1), day, 0, 0, 0); // month is 0-based, so subtract 1
-    cal.set(Calendar.MILLISECOND, 0);
-    return cal.getTime();                     // returns date @ 00:00:00 local time
   }
 
   private Invocation.Builder buildRequestDefaultAuth(String uri) {
