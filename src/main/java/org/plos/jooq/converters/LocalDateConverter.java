@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2014 by Public Library of Science
+ * Copyright (c) 2006-2016 by Public Library of Science
  * http://plos.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,23 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.plos.namedentity.api.adapter;
+package org.plos.jooq.converters;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
-
+import java.sql.Date;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
-public class DateAdapter extends XmlAdapter<String, LocalDate> {
+import org.jooq.Converter;
+
+public class LocalDateConverter implements Converter<Date, LocalDate> {
 
   @Override
-  public String marshal(LocalDate date) throws Exception {
-    return (date == null) ? null : DateTimeFormatter.ISO_LOCAL_DATE.format(date);
+  public LocalDate from(Date t) {
+    return t == null ? null : LocalDate.parse(t.toString());
   }
 
   @Override
-  public LocalDate unmarshal(String datestr) throws Exception {
-    return (datestr == null) ? null : 
-      LocalDate.parse(datestr, DateTimeFormatter.ISO_LOCAL_DATE);
+  public Date to(LocalDate u) {
+    return u == null ? null : Date.valueOf(u.toString());
+  }
+
+  @Override
+  public Class<Date> fromType() {
+    return Date.class;
+  }
+
+  @Override
+  public Class<LocalDate> toType() {
+    return LocalDate.class;
   }
 }

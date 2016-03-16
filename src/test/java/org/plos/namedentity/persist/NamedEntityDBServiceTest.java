@@ -41,6 +41,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -678,7 +679,7 @@ public class NamedEntityDBServiceTest {
     kbPlosOneGrp.setApplicationtypeid(srcAppTypeId);
     kbPlosOneGrp.setTypeid(groupTypeId);
 
-    java.sql.Date startDate = dateNow();
+    LocalDate startDate = LocalDate.now();
     kbPlosOneGrp.setStartdate(startDate);
 
     kbPlosOneGrp.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
@@ -695,7 +696,7 @@ public class NamedEntityDBServiceTest {
 
     Group savedGroup = nedDBSvc.findById(groupId, Group.class);
 
-    java.sql.Date endDate = dateNow();
+    LocalDate endDate = LocalDate.now();
     savedGroup.setEnddate(endDate);
 
     assertTrue( nedDBSvc.update(savedGroup) );
@@ -792,7 +793,7 @@ public class NamedEntityDBServiceTest {
     orgAuthRel.setTypeid(relationshipTypeId);
     orgAuthRel.setNedid(1);        /* seeded individual   */
     orgAuthRel.setNedidrelated(2); /* seeded organization */
-    orgAuthRel.setStartdate(dateNow());
+    orgAuthRel.setStartdate(LocalDate.now());
     orgAuthRel.setSourcetypeid( getSourceTypeId(UidTypeEnum.EDITORIAL_MANAGER.getName()) );
 
     Integer relationshipId = nedDBSvc.create( orgAuthRel );
@@ -802,7 +803,7 @@ public class NamedEntityDBServiceTest {
 
     Relationship savedRelationship = nedDBSvc.findById(relationshipId, Relationship.class);
 
-    savedRelationship.setEnddate(dateNow());
+    savedRelationship.setEnddate(LocalDate.now());
 
     assertTrue( nedDBSvc.update(savedRelationship) );
 
@@ -1176,16 +1177,6 @@ public class NamedEntityDBServiceTest {
     Integer typeValueId = nedDBSvc.findTypeValue(typeClassId, typeValue);
     assertNotNull(typeValueId);
     return typeValueId;
-  }
-
-  private java.sql.Date dateNow() {
-    Calendar cal = Calendar.getInstance();
-    cal.setTime(new java.util.Date());
-    cal.set(Calendar.HOUR_OF_DAY, 0);
-    cal.set(Calendar.MINUTE, 0);
-    cal.set(Calendar.SECOND, 0);
-    cal.set(Calendar.MILLISECOND, 0);
-    return new java.sql.Date( cal.getTimeInMillis() );
   }
 
   // decorator function to endow entity with core attribute values, such as createdby.

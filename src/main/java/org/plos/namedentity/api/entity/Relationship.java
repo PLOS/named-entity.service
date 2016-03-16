@@ -16,16 +16,15 @@
  */
 package org.plos.namedentity.api.entity;
 
-import static org.plos.namedentity.api.NedException.ErrorType.*;
-
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.adapter.DateAdapter;
 import org.plos.namedentity.api.enums.RelationshipTypeEnum;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalDate;
+
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidRelationshipError;
 
 @XmlRootElement
 public class Relationship extends Entity {
@@ -37,10 +36,10 @@ public class Relationship extends Entity {
   private String  title;
 
   @XmlJavaTypeAdapter(DateAdapter.class)
-  private Date startdate;
+  private LocalDate startdate;
 
   @XmlJavaTypeAdapter(DateAdapter.class)
-  private Date enddate;
+  private LocalDate enddate;
 
   @Override
   public void validate() {
@@ -75,19 +74,19 @@ public class Relationship extends Entity {
     this.typeid = typeid;
   }
 
-  public Date getStartdate() {
+  public LocalDate getStartdate() {
     return this.startdate;
   }
 
-  public void setStartdate(Date startdate) {
+  public void setStartdate(LocalDate startdate) {
     this.startdate = startdate;
   }
 
-  public Date getEnddate() {
+  public LocalDate getEnddate() {
     return this.enddate;
   }
 
-  public void setEnddate(Date enddate) {
+  public void setEnddate(LocalDate enddate) {
     this.enddate = enddate;
   }
 

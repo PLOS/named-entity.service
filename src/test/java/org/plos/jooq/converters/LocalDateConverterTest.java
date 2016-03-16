@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2014 by Public Library of Science
+ * Copyright (c) 2006-2016 by Public Library of Science
  * http://plos.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,25 +14,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.plos.namedentity.api.adapter;
+package org.plos.jooq.converters;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
-public class DateAdapterTest {
+public class LocalDateConverterTest {
 
-  private DateAdapter dateAdapter = new DateAdapter();
+  private LocalDateConverter converter = new LocalDateConverter();
 
   @Test
-  public void testMarshallingDate() throws Exception {
-    assertEquals("2014-10-25", dateAdapter.marshal(LocalDate.of(2014,10,25)));
+  public void testSqlDateToLocalDateConversion() {
+    LocalDate localdate = LocalDate.of(2016, 02, 15);
+    Date sqlDate = Date.valueOf( localdate );
+    assertEquals(localdate, converter.from(sqlDate));
   }
 
   @Test
-  public void testUnmarshallingDate() throws Exception {
-		assertEquals(LocalDate.of(2014,10,25), dateAdapter.unmarshal("2014-10-25"));
+  public void testLocalDateToSqlDateConversion() {
+    LocalDate localdate = LocalDate.of(2016, 02, 15);
+    Date sqlDate = Date.valueOf( localdate );
+    assertEquals(sqlDate, converter.to(localdate));
   }
 }

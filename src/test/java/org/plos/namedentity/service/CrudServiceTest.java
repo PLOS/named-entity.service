@@ -36,6 +36,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
@@ -391,7 +392,7 @@ public class CrudServiceTest {
     newGroup.setNedid(1);
     newGroup.setApplicationtype("Named Party DB");
     newGroup.setType("NED Admin");
-    newGroup.setStartdate( dateNow() );
+    newGroup.setStartdate(LocalDate.now());
     newGroup.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
     newGroup.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
     newGroup.setSource("Ambra");
@@ -411,7 +412,7 @@ public class CrudServiceTest {
     /*  UPDATE                                                            */
     /* ------------------------------------------------------------------ */
 
-    savedGroup.setEnddate( dateNow() );
+    savedGroup.setEnddate(LocalDate.now());
     assertTrue( crudService.update(savedGroup) );
     Group savedGroup2 = crudService.findById(pkId, Group.class);
     assertEquals(savedGroup, savedGroup2);
@@ -722,16 +723,6 @@ public class CrudServiceTest {
     } catch (NedException expected) {
       assertEquals(TamperedPasswordError, expected.getErrorType());
     }
-  }
-
-  private java.sql.Date dateNow() {
-    Calendar cal = Calendar.getInstance();
-    cal.setTime(new java.util.Date());
-    cal.set(Calendar.HOUR_OF_DAY, 0);
-    cal.set(Calendar.MINUTE, 0);
-    cal.set(Calendar.SECOND, 0);
-    cal.set(Calendar.MILLISECOND, 0);
-    return new java.sql.Date( cal.getTimeInMillis() );
   }
 
   private String modifyHashPassword(String password) {

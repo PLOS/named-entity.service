@@ -29,6 +29,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -161,7 +162,7 @@ public class NamedEntityServiceTest {
     relationshipEntity.setNedid(1);        /* seeded individual   */
     relationshipEntity.setNedidrelated(2); /* seeded organization */
     relationshipEntity.setType("Individual Affiliated with Organization");
-    relationshipEntity.setStartdate( dateNow() );
+    relationshipEntity.setStartdate(LocalDate.now());
     relationshipEntity.setSource("Ambra");
 
     try {
@@ -184,7 +185,7 @@ public class NamedEntityServiceTest {
 
     // UPDATE relationship entity.
 
-    java.sql.Date enddate = dateNow();
+    LocalDate enddate = LocalDate.now();
     savedEntity1.setEnddate(enddate);
     assertTrue( crudService.update(namedEntityService.resolveValuesToIds(_(savedEntity1))) );
 
@@ -199,7 +200,7 @@ public class NamedEntityServiceTest {
     relationshipEntity.setNedid(1);        /* seeded individual   */
     relationshipEntity.setNedidrelated(2); /* seeded organization */
     relationshipEntity.setType("Individual Affiliated with Organization");
-    relationshipEntity.setStartdate( dateNow() );
+    relationshipEntity.setStartdate(LocalDate.now());
     relationshipEntity.setSource("Ambra");
 
     Integer relationshipId2 = crudService.create( namedEntityService.resolveValuesToIds(_(relationshipEntity)) );
@@ -788,7 +789,7 @@ public class NamedEntityServiceTest {
     groupEntity.setNedid(1);
     groupEntity.setApplicationtype("Named Party DB");
     groupEntity.setType("NED Admin");
-    groupEntity.setStartdate( dateNow() );
+    groupEntity.setStartdate(LocalDate.now());
     groupEntity.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
     groupEntity.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
     groupEntity.setSource("Ambra");
@@ -909,7 +910,7 @@ public class NamedEntityServiceTest {
     Group group = new Group();
 
     group.setType("NED Admin");
-    group.setStartdate(new java.sql.Date(1401408000));  // "2014-05-30"
+    group.setStartdate(LocalDate.of(2016, 5, 30));
 
     group.setLastmodified(new Timestamp(Calendar.getInstance().getTime().getTime()));
     group.setCreated(new Timestamp(Calendar.getInstance().getTime().getTime()));
@@ -1122,16 +1123,6 @@ public class NamedEntityServiceTest {
     composite.setLastmodifiedby("test");
 
     return composite;
-  }
-
-  private java.sql.Date dateNow() {
-    Calendar cal = Calendar.getInstance();
-    cal.setTime(new java.util.Date());
-    cal.set(Calendar.HOUR_OF_DAY, 0);
-    cal.set(Calendar.MINUTE, 0);
-    cal.set(Calendar.SECOND, 0);
-    cal.set(Calendar.MILLISECOND, 0);
-    return new java.sql.Date( cal.getTimeInMillis() );
   }
 
   // decorator to stamp created and last modified by fields
