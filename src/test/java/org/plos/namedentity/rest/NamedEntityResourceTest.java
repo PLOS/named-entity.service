@@ -26,7 +26,6 @@ import org.plos.namedentity.api.adapter.Container;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.service.NamedEntityService;
-import org.plos.namedentity.validate.JsonValidator;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
@@ -44,17 +43,19 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.plos.namedentity.api.NedException.ErrorType.*;
-import static org.plos.namedentity.validate.JsonValidator.validJson;
 import static org.plos.namedentity.validate.JsonValidator.parseJsonObjectAsMap;
 
 public class NamedEntityResourceTest extends BaseResourceTest {
@@ -506,9 +507,6 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     Individualprofile individualProfile = composite_in.getIndividualprofiles().get(0);
     assertNotNull(individualProfile.getNedid());
 
-    //AMBRA-ADAPTER:
-    addAmbraUidToExpected(composite_io, composite_in);
-
     assertEquals(composite_io, composite_in);
 
     /* ------------------------------------------------------------------ */
@@ -562,16 +560,6 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals(composite_og, composite_on);
 
     assertEquals(composite_og, composite_oo);
-  }
-
-  private void addAmbraUidToExpected(IndividualComposite expected, IndividualComposite actual) {
-
-    expected.getUniqueidentifiers().add(
-        actual.getUniqueidentifiers()
-              .stream()
-              .filter(u -> u.getType().equals(UidTypeEnum.AMBRA.getName()))
-              .findFirst()
-              .get());
   }
 
   @Test
@@ -1200,7 +1188,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     List<Uniqueidentifier> uids = unmarshalEntities(responseJson, Uniqueidentifier.class,
         jsonUnmarshaller(Uniqueidentifier.class));
-    assertEquals(5, uids.size());
+    assertEquals(4, uids.size());
 
     /* ------------------------------------------------------------------ */
     /*  FIND INDIVIDUAL BY UID (not CAS ID)                               */
