@@ -80,7 +80,7 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
 
     results = bubbleCountryToTop(results);
 
-    logger.info(String.format("Search:[%s]  Size:%d  Elapsed(ms):%d", searchString,
+    logger.debug(String.format("Search:[%s]  Results:%d  Elapsed(ms):%d", searchString,
       results.size(), TimeUnit.MILLISECONDS.convert(System.nanoTime()-start, TimeUnit.NANOSECONDS)));
 
     return results;
