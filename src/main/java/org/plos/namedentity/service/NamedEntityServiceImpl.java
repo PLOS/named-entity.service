@@ -20,7 +20,6 @@ import org.apache.log4j.Logger;
 import org.plos.namedentity.api.Consumer;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
-import org.plos.namedentity.api.OrganizationComposite;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.persist.NamedEntityDBService;
@@ -44,9 +43,6 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
   @Inject
   private NamedEntityDBService nedDBSvc;
-
-  @Inject
-  private AmbraService ambraService;
 
   public <T extends Entity> T resolveValuesToIds(T t) {
 
@@ -354,77 +350,27 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     findResolvedEntities(nedId, Alert.class).stream()
         .forEach(e -> nedDBSvc.delete(e));
 
-    // mark deleted in ambra since they cant be removed
-    ambraService.markDeleted(composite, nedId);
   }
 
   @Override @Transactional
   public  <T extends Composite> T createComposite(T composite, Class<T> clazz) {
 
-    Integer nedId = null;
-    Boolean ambraUpdated = false;
-
-    if (clazz == IndividualComposite.class) {
-
-      Email email = ((IndividualComposite) composite).getEmails().get(0);
-      Integer ambraId = email.getNedid();
-
-      // only insert the person into Ambra if there is no NED ID specified
-      if (ambraId == null) {
-        ambraId = ambraService.createUser((IndividualComposite) composite).intValue();
-        ambraUpdated = true;
-      }
-
-      nedId = nedDBSvc.newNamedEntityId(composite.getTypeName(), ambraId);
-
-      // insert Ambra into NED UIDs
-
-      Uniqueidentifier uniqueidentifier = new Uniqueidentifier();
-      uniqueidentifier.setNedid(nedId);   /* nedId == ambraId */
-      uniqueidentifier.setSource("Ambra");
-      uniqueidentifier.setType(UidTypeEnum.AMBRA.getName());
-      uniqueidentifier.setUniqueidentifier(ambraId.toString());
-      uniqueidentifier.setCreatedbyname(email.getCreatedbyname());
-      uniqueidentifier.setLastmodifiedbyname(email.getLastmodifiedbyname());
-      uniqueidentifier = resolveValuesToIds(uniqueidentifier);
-
-      if (((IndividualComposite) composite).getUniqueidentifiers() == null)
-        ((IndividualComposite) composite).setUniqueidentifiers(new ArrayList<>());
-
-      ((IndividualComposite) composite).getUniqueidentifiers().add(uniqueidentifier);
-    }
-    else if (clazz == OrganizationComposite.class) {
-      nedId = nedDBSvc.newNamedEntityId(composite.getTypeName());
-    }
-    else {
-      throw new UnsupportedOperationException("Unsupported composite: " + clazz);
-    }
+    Integer nedId = nedDBSvc.newNamedEntityId(composite.getTypeName());
 
     // insert into NED
 
     Map<Class, List<? extends Entity>> compositeMap = composite.readAsMap();
 
-    try {
-      for (List<? extends Entity> entities : compositeMap.values()) {
-        if (entities != null) {
-          for (Entity entity : entities) {
-            entity.setNedid(nedId);
-            nedDBSvc.create(resolveValuesToIds(entity));
-          }
+    for (List<? extends Entity> entities : compositeMap.values()) {
+      if (entities != null) {
+        for (Entity entity : entities) {
+          entity.setNedid(nedId);
+          nedDBSvc.create(resolveValuesToIds(entity));
         }
       }
-
-    } catch (NedException e) {
-      // if NED insert fails, but Ambra insert did not, mark/fudge the Ambra data
-
-      if (clazz == IndividualComposite.class && ambraUpdated)
-        ambraService.markInvalid(((IndividualComposite) composite), nedId);
-
-      throw e;
     }
 
     return findComposite(nedId, clazz);
-
   }
 
   @Override
@@ -453,14 +399,6 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     
   public void setNamedEntityDBService(NamedEntityDBService nedDBSvc) {
     this.nedDBSvc = nedDBSvc;
-  }
-
-  public AmbraService getAmbraService() {
-    return ambraService;
-  }
-
-  public void setAmbraService(AmbraService ambraService) {
-    this.ambraService = ambraService;
   }
 
   private Integer findAppuserId(String username) {

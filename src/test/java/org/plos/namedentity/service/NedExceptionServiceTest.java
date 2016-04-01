@@ -16,26 +16,26 @@
  */
 package org.plos.namedentity.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.plos.namedentity.api.NedException.ErrorType.*;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.persist.NamedEntityDBService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Set;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidTypeClass;
+import static org.plos.namedentity.api.NedException.ErrorType.InvalidTypeValue;
+import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
+
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/spring-beans.xml","/ambra-spring-beans.xml","/spring-beans.test.xml","/ambra-spring-beans.test.xml"})
+@ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
 public class NedExceptionServiceTest {
 
   @Autowired

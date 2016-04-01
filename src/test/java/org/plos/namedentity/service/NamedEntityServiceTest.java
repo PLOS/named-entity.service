@@ -52,7 +52,7 @@ import static org.plos.namedentity.api.NedException.ErrorType.EntityNotFound;
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidTypeValue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/spring-beans.xml","/ambra-spring-beans.xml","/spring-beans.test.xml","/ambra-spring-beans.test.xml"})
+@ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
 public class NamedEntityServiceTest {
 
   @Autowired
@@ -82,9 +82,6 @@ public class NamedEntityServiceTest {
 
     composite2.getIndividualprofiles().get(0).setDisplayname(
         composite1.getIndividualprofiles().get(0).getDisplayname());
-    //AMBRA-ADAPTER:
-    //composite2.getUniqueidentifiers().get(0).setUniqueidentifier(
-        //composite1.getUniqueidentifiers().get(0).getUniqueidentifier());
 
     assertEquals(composite1, composite2);
 
@@ -283,7 +280,7 @@ public class NamedEntityServiceTest {
     workEmail.setType("Work");
     workEmail.setEmailaddress("fu.manchu.work@foo.com");
     workEmail.setSource("Ambra");
-    workEmail.setNedid(12345);
+//    workEmail.setNedid(12345);
     emails.add(_(workEmail));
 
     Email personalEmail = new Email();
@@ -416,7 +413,7 @@ public class NamedEntityServiceTest {
       assertNotNull(responseComposite);
 
       // the NED ID can be set in the first email of the composite
-      assertEquals(responseComposite.getIndividualprofiles().get(0).getNedid().longValue(), 12345);
+//      assertEquals(responseComposite.getIndividualprofiles().get(0).getNedid().longValue(), 12345);
 
       // make sure foreign keys are resolved for sub entities
       assertNotNull(responseComposite.getEmails().get(0).getId());
@@ -451,9 +448,7 @@ public class NamedEntityServiceTest {
     assertEquals(1, groupEntities.size());
 
     List<Uniqueidentifier> uidEntities = namedEntityService.findResolvedEntities(nedId, Uniqueidentifier.class);
-    //AMBRA-ADAPTER:
-    //assertEquals(1, uidEntities.size());
-    assertEquals(2, uidEntities.size());
+    assertEquals(1, uidEntities.size());
 
     Individualprofile individualProfile = namedEntityService.findResolvedEntityByUid("ORCID", "0000-0001-9430-001X", Individualprofile.class);
 
@@ -919,18 +914,6 @@ public class NamedEntityServiceTest {
 
     composite.setGroups(groups);
 
-    //AMBRA-ADAPTER:
-/*
-    Uniqueidentifier uid = new Uniqueidentifier();
-    uid.setSource("Ambra");
-    uid.setType("Ambra");
-    uid.setUniqueidentifier(String.valueOf(new Date().getTime()));
-
-    List<Uniqueidentifier> uniqueidentifiers = new ArrayList<>();
-    uniqueidentifiers.add(_(uid));
-
-    composite.setUniqueidentifiers(uniqueidentifiers);
-*/
     return composite;
   }
 

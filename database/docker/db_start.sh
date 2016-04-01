@@ -65,17 +65,6 @@ NED_USER_SQL
     CREATE SCHEMA namedEntities DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 NED_SCHEMA_SQL
 
-  echo "Create Schema: ambra"
-  $MYSQL_ROOT << AMBRA_SCHEMA_SQL 2>/dev/null
-    DROP SCHEMA IF EXISTS ambra;
-    CREATE SCHEMA ambra DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
-AMBRA_SCHEMA_SQL
-
-  for F in `ls -v ambra/V*.sql`
-  do
-    cat "$F" | $MYSQL_ROOT ambra 2>/dev/null
-  done
-
   echo "Create Schema: ringgold"
   $MYSQL_ROOT << RINGGOLD_SCHEMA_SQL 2>/dev/null
     DROP SCHEMA IF EXISTS ringgold;

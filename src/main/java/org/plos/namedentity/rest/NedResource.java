@@ -19,9 +19,7 @@ package org.plos.namedentity.rest;
 import io.swagger.annotations.ApiOperation;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.*;
-import org.plos.namedentity.service.AmbraService;
 
-import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -43,9 +41,6 @@ import static org.plos.namedentity.api.NedException.ErrorType.InvalidSearchCrite
 
 @Produces(MediaType.APPLICATION_JSON)
 public abstract class NedResource extends BaseResource {
-
-  @Inject
-  protected AmbraService ambraService;
 
   /* ----------------------------------------------------------------------- */
   /*  EMAIL CRUD                                                             */

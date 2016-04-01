@@ -17,7 +17,6 @@
 package org.plos.namedentity.service;
 
 import org.plos.namedentity.api.NedException;
-import org.plos.namedentity.api.entity.Entity;
 import org.plos.namedentity.persist.NamedEntityDBService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,40 +30,22 @@ public class CrudServiceImpl implements CrudService {
   @Inject
   private NamedEntityDBService namedEntityDBService;
 
-  @Inject
-  private AmbraService ambraService;
-
   @Override
   @Transactional
   public <T> Integer create(T t) {
-    Integer nedresponse = namedEntityDBService.create(t);
-
-    if (t instanceof Entity)
-      ambraService.create((Entity) t);
-
-    return nedresponse;
+    return namedEntityDBService.create(t);
   }
 
   @Override
   @Transactional
   public <T> boolean update(T t) {
-    boolean nedresponse = namedEntityDBService.update(t);
-
-    if (t instanceof Entity)
-      ambraService.update((Entity)t);
-
-    return nedresponse;
+    return namedEntityDBService.update(t);
   }
 
   @Override
   @Transactional
   public <T> boolean delete(T t) {
-    boolean nedresponse = namedEntityDBService.delete(t);
-
-    if (t instanceof Entity)
-      ambraService.delete((Entity)t);
-
-    return nedresponse;
+    return namedEntityDBService.delete(t);
   }
 
   @Override
@@ -92,13 +73,5 @@ public class CrudServiceImpl implements CrudService {
 
   public void setNamedEntityDBService(NamedEntityDBService namedEntityDBService) {
     this.namedEntityDBService = namedEntityDBService;
-  }
-
-  public AmbraService getAmbraService() {
-      return ambraService;
-  }
-
-  public void setAmbraService(AmbraService ambraService) {
-      this.ambraService = ambraService;
   }
 }

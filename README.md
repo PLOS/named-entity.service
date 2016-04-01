@@ -13,21 +13,6 @@ You need to build and deploy the Docker Maven Plugin to your Maven repo before
 building NED. See readme in config/docker-maven-plugin for details on how to do
 this.
 
-Ambra Integration
------------------
-
-NED is configured to TEMPORARILY also talk to the Ambra database for some of its requests. It should be noted that the Ambra database is assumed to be configured and running alongside NED.
-
-You must configure your context file accordingly. See the sample in config/tomcat/
-
-NED talks to the Ambra database via a repackaged ambra-admin jar file. This
-needs to be built at least once and deployed to our internal Maven repository.
-It is likely that this has already been done, so you don't need to do this.
-The ned script can build and deploy this jar.
-
-    ./ned.sh build-ambra-admin-jar
-    ./ned.sh deploy-ambra-admin-jar
-
 Adding userapps
 ---------------
 
