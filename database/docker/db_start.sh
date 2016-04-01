@@ -68,7 +68,7 @@ NED_SCHEMA_SQL
   echo "Create Schema: ringgold"
   $MYSQL_ROOT << RINGGOLD_SCHEMA_SQL 2>/dev/null
     DROP SCHEMA IF EXISTS ringgold;
-    CREATE SCHEMA ringgold;
+    CREATE SCHEMA ringgold DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 RINGGOLD_SCHEMA_SQL
 
   for F in `ls -v ringgold/V*.sql`

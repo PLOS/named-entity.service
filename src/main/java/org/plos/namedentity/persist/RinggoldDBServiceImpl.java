@@ -16,6 +16,7 @@
  */
 package org.plos.namedentity.persist;
 
+import org.apache.log4j.Logger;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Table;
@@ -32,11 +33,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
 import static org.plos.namedentity.persist.db.ringgold.Tables.*;
 
 public final class RinggoldDBServiceImpl implements RinggoldDBService {
+
+  private static final Logger logger = Logger.getLogger(RinggoldDBServiceImpl.class);
 
   @Autowired @Qualifier("ringgoldDsl") DSLContext context;
   public void setContext(DSLContext context) {
@@ -62,6 +66,8 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
 
   @Override
   public List<Institution> findByInstitutionName(String searchString) {
+    long start = System.nanoTime();
+
     List<Institution> results = context.select(INSTITUTIONS.fields())
       .from(INSTITUTIONS)
       .leftOuterJoin(SIZES)
@@ -73,6 +79,9 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
       .fetchInto(Institution.class);
 
     results = bubbleCountryToTop(results);
+
+    logger.info(String.format("Search:[%s]  Size:%d  Elapsed(ms):%d", searchString,
+      results.size(), TimeUnit.MILLISECONDS.convert(System.nanoTime()-start, TimeUnit.NANOSECONDS)));
 
     return results;
   }
@@ -114,7 +123,7 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
 
         if (v != null) {
           if (where.length() > 0) where.append(" and "); 
-          where.append( whereCondition(f.getName(), v, t.getClass()) ); 
+          where.append( whereCondition(f.getName(), v, t.getClass()) );
         }
       }
     }
@@ -160,12 +169,12 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
   }
 
   private String institutionNameSearchCondition(String searchString) {
-    if (searchString.split(" ").length > 1) {
-      return String.format("name LIKE '%%%s%%'",searchString); 
-    } else {
-      return String.format("name REGEXP '[[:<:]]%s'", searchString);
-    }
+    // ignore case when looking up institutions by name (assumes utf8 char set)
+    return String.format(
+      "(name LIKE '%s%%' collate utf8_unicode_ci OR name LIKE '%% %s%%' collate utf8_unicode_ci)",
+        searchString, searchString);
   }
+
   /* ---------------------------------------------------------------------- */
   /*  INTERNAL MAP : ENTITY POJO -> { JooqTable, JooqPkFieldForTable }      */
   /* ---------------------------------------------------------------------- */
