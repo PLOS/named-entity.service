@@ -83,10 +83,12 @@ public class RinggoldDBServiceTest {
     method.setAccessible(true);
 
     String result = (String) method.invoke(ringgoldDBService, "foo" ); //when one string
-    assertTrue(result.contains("REGEX"));
+    assertEquals(
+      "(name LIKE 'foo%' collate utf8_unicode_ci OR name LIKE '% foo%' collate utf8_unicode_ci)", result);
 
     result = (String) method.invoke(ringgoldDBService, "foo bar" ); //when 2+ strings
-    assertTrue(result.contains("LIKE"));
+    assertEquals(
+      "(name LIKE 'foo bar%' collate utf8_unicode_ci OR name LIKE '% foo bar%' collate utf8_unicode_ci)", result);
   }
 
   @Test
