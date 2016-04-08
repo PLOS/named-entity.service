@@ -16,7 +16,9 @@
  */
 package org.plos.namedentity.persist;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Table;
@@ -40,7 +42,7 @@ import static org.plos.namedentity.persist.db.ringgold.Tables.*;
 
 public final class RinggoldDBServiceImpl implements RinggoldDBService {
 
-  private static final Logger logger = Logger.getLogger(RinggoldDBServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(RinggoldDBServiceImpl.class);
 
   @Autowired @Qualifier("ringgoldDsl") DSLContext context;
   public void setContext(DSLContext context) {

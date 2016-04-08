@@ -16,7 +16,9 @@
  */
 package org.plos.namedentity.service;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.plos.namedentity.api.Consumer;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
@@ -39,7 +41,7 @@ import static org.plos.namedentity.api.entity.Individualprofile.DISPLAYNAME_MAX_
 
 public class NamedEntityServiceImpl implements NamedEntityService {
 
-  private static Logger logger = Logger.getLogger(NamedEntityServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(NamedEntityServiceImpl.class);
 
   @Inject
   private NamedEntityDBService nedDBSvc;

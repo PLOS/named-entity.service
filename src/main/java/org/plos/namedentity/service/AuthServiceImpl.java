@@ -74,7 +74,7 @@ public class AuthServiceImpl implements AuthService {
 
     Matcher matcher = httpBasicAuthRegexp.matcher(encodedCredentials);
     if (!matcher.find()) {
-      log.warn("Invalid credentials: " + encodedCredentials);
+      log.warn("Invalid credentials: {}", encodedCredentials);
       return null;
     }
     // group 0 matches entire string

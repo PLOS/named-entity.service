@@ -16,7 +16,9 @@
  */
 package org.plos.namedentity.rest;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.plos.namedentity.api.NedErrorResponse;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.service.AuthService;
@@ -30,7 +32,7 @@ import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
 
 public abstract class BaseResource {
 
-  protected static Logger logger = Logger.getLogger(BaseResource.class);
+  protected static final Logger logger = LoggerFactory.getLogger(BaseResource.class);
 
   protected static final Integer MAX_RESULT_COUNT = 1000;
 
