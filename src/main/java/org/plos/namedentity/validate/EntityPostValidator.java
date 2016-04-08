@@ -18,8 +18,6 @@ package org.plos.namedentity.validate;
 
 import static org.plos.namedentity.api.NedException.ErrorType.*;
 
-import org.apache.log4j.Logger;
-
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.OrganizationComposite;
@@ -32,8 +30,6 @@ import javax.inject.Inject;
 public class EntityPostValidator{ 
 
   @Inject private NamedEntityDBService namedEntityDBService; 
-
-  protected static Logger logger = Logger.getLogger(EntityPostValidator.class);
 
   public void validate(Object o) {
     if (o instanceof Entity) {
