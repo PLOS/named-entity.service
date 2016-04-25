@@ -268,7 +268,7 @@ public class NamedEntityDBServiceTest {
     Email workEmail = _(new Email());
     workEmail.setNedid(nedId);
     workEmail.setTypeid(nedDBSvc.findTypeValue(emailTypeClassId, "Work"));
-    workEmail.setEmailaddress("walter.work@foo.com");
+    workEmail.setEmailaddress("Walter.Work@foo.com");
     workEmail.setSourcetypeid( getSourceTypeId(UidTypeEnum.EDITORIAL_MANAGER.getName()) );
 
     assertNull(workEmail.getId());
@@ -286,11 +286,24 @@ public class NamedEntityDBServiceTest {
     Timestamp lastModified1 = savedWorkEmail.getLastmodified() ; assertNotNull(lastModified1);
     assertEquals(created1, lastModified1);
 
-    // Inserting duplicate email address should fail
+    // Inserting duplicate email address (same email with same casing) should fail
 
     try {
       nedDBSvc.create( workEmail );
       fail("duplicate email saved: " + workEmail);
+    }
+    catch (NonTransientDataAccessException expected) {
+      // expected
+    }
+
+    // Inserting email with same name but different casing should fail too
+
+    try {
+      String mixedWorkEmail = workEmail.getEmailaddress();
+      workEmail.setEmailaddress(mixedWorkEmail.toLowerCase());
+      nedDBSvc.create( workEmail );
+      fail(String.format("duplicate email (different case) saved (%s/%s)",
+        mixedWorkEmail, workEmail.getEmailaddress()));
     }
     catch (NonTransientDataAccessException expected) {
       // expected
@@ -354,11 +367,11 @@ public class NamedEntityDBServiceTest {
     // FIND BY ATTRIBUTE (Lookup email by address)
 
     Email emailSearchByAddress = new Email();
-    emailSearchByAddress.setEmailaddress("super.walter.work@foo.com");
+    emailSearchByAddress.setEmailaddress("super.Walter.Work@foo.com");
     emailSearchByAddress.setIsactive(false);
     List<Email> foundEmails = nedDBSvc.findByAttribute(emailSearchByAddress);
     assertEquals(1, foundEmails.size());
-    assertEquals("super.walter.work@foo.com", foundEmails.get(0).getEmailaddress());
+    assertEquals("super.Walter.Work@foo.com", foundEmails.get(0).getEmailaddress());
 
     // FIND BY ATTRIBUTE (Lookup email addresses by nedid)
     // Do 3 lookups: only active, only inactive, both active and inactive
