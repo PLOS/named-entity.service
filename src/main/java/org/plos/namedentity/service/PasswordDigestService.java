@@ -22,7 +22,9 @@ import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hasher;
 import com.google.common.hash.Hashing;
 import com.google.common.io.BaseEncoding;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -39,7 +41,7 @@ import java.util.regex.Pattern;
  */
 public class PasswordDigestService {
 
-  protected static Logger logger = Logger.getLogger(PasswordDigestService.class);
+  protected static final Logger logger = LoggerFactory.getLogger(PasswordDigestService.class);
 
   private static final Pattern passwordDigestRegexp = Pattern.compile("^[0-9a-f]+$");
 

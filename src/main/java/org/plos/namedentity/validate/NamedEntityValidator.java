@@ -18,7 +18,6 @@ package org.plos.namedentity.validate;
 
 import static org.plos.namedentity.api.NedException.ErrorType.*;
 
-import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.spring.exception.NedExceptionTranslator;
@@ -26,8 +25,6 @@ import org.springframework.core.Ordered;
 import org.springframework.dao.NonTransientDataAccessException;
 
 public class NamedEntityValidator implements Ordered {
-
-  protected static Logger logger = Logger.getLogger(NamedEntityValidator.class);
 
   // allows us to control ordering of advice (ascending priority, 1 highest)
   private int order;
