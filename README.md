@@ -30,9 +30,9 @@ to start in embedded Tomcat instance
 
     ./ned.sh tomcat
     
-to use the API and see the REST documentation visit the root of the service
+to use the API and see the REST documentation visit the root of the service, for example:
 
-    http://localhost:8080/
+[http://localhost:8080/v1/](http://localhost:8080/v1/)
     
 Database Setup
 --------------
@@ -41,7 +41,7 @@ Make sure you have a schema to hold the tables.
 
     CREATE SCHEMA namedEntities DEFAULT CHARACTER SET utf8 COLLATE utf8_bin
 
-And a user. For example
+And a user. For example:
     
     CREATE USER 'ned' IDENTIFIED BY '';
     GRANT ALL PRIVILEGES ON *.* TO 'ned'@'%' WITH GRANT OPTION;
