@@ -6,8 +6,9 @@ NED is a web service for hosting information about people and organizations. It 
 Dependencies
 ------------
     * Java 8
-    * Docker (1.7+)
+    * Docker (1.10+)
     * Docker Maven Plugin
+    * Ringgold institution database
 
 You need to build and deploy the Docker Maven Plugin to your Maven repo before
 building NED. See readme in config/docker-maven-plugin for details on how to do
@@ -29,6 +30,27 @@ to start in embedded Tomcat instance
 
     ./ned.sh tomcat
     
+to use the API and see the REST documentation visit the root of the service
+
+    http://localhost:8080/
+    
+Database Setup
+--------------
+
+Make sure you have a schema to hold the tables. 
+
+    CREATE SCHEMA namedEntities DEFAULT CHARACTER SET utf8 COLLATE utf8_bin
+
+And a user. For example
+    
+    CREATE USER 'ned' IDENTIFIED BY '';
+    GRANT ALL PRIVILEGES ON *.* TO 'ned'@'%' WITH GRANT OPTION;
+    FLUSH PRIVILEGES;
+
+NED uses Flyway to manage database migrations. See ned.sh script for usage.
+
+Make sure you have a ringgold database setup as well.
+
 if you are deploying to a system wide Tomcat instance you will need to add something like the following to your context.xml
 
     <Resource name="jdbc/ned"
@@ -41,10 +63,22 @@ if you are deploying to a system wide Tomcat instance you will need to add somet
               username="ned"
               password=""
               url="jdbc:mysql://localhost:3306/namedEntities" />
+              
+    <Resource name="jdbc/ringgold"
+              auth="Container"
+              type="javax.sql.DataSource"
+              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+              validationQuery="SELECT 1"
+              testOnBorrow="true"
+              driverClassName="com.mysql.jdbc.Driver"
+              username="ned"
+              password=""
+              url="jdbc:mysql://localhost:3306/ringgold" />
+              
+Logging
+-------
 
-to use the API and see the REST documentation visit the root of the service
-
-    http://localhost:8080/
+log4j is configured to write to both stdout and local syslog. You will have to enable syslog on your system to get those messages.
 
 Running Tests
 -------------
@@ -81,14 +115,6 @@ to attach to a debug unit test with IntelliJ, create a remote test config with t
     
     -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000
 
-Database Migrations
--------------------
-
-Make sure you have a schema to hold the tables. 
-
-    CREATE SCHEMA namedEntities DEFAULT CHARACTER SET utf8 COLLATE utf8_bin
-
-NED uses Flyway to manage database migrations. See ned script for usage.
 
 Generating Eclipse Project Files
 --------------------------------
