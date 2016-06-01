@@ -54,7 +54,7 @@ public class Individualprofile extends Entity {
   public void validate() {
     validateFirstname();
     validateLastname();
-    validateDisplayname();
+    validateDisplayname(displayname);
   }
 
   public Boolean getIsactive() {
@@ -153,10 +153,6 @@ public class Individualprofile extends Entity {
   public void validateLastname() {
     if (lastname == null || lastname.length() < 1)
       throw new NedException(LastnameError, "last name is too short");
-  }
-
-  private void validateDisplayname() {
-    validateDisplayname(displayname);
   }
 
   public static void validateDisplayname(String dname) {
