@@ -16,6 +16,15 @@
         </layout>
     </appender>
 
+    <appender name="syslog" class="org.apache.log4j.net.SyslogAppender">
+        <param name="SyslogHost" value="127.0.0.1"/>
+        <param name="Facility" value="USER"/>
+        <param name="FacilityPrinting" value="true"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+        </layout>
+    </appender>
+
     <category name="org.jooq">
         <priority value="info" />
         <!--<priority value="debug" />-->
@@ -29,6 +38,7 @@
         <priority value ="info" />
         <!--<appender-ref ref="logfile" />-->
         <appender-ref ref="stdout" />
+        <appender-ref ref="syslog" />
     </root>
 
 </log4j:configuration>
