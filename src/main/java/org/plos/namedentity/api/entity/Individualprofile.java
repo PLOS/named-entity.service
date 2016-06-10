@@ -16,17 +16,21 @@
  */
 package org.plos.namedentity.api.entity;
 
-import static org.plos.namedentity.api.NedException.ErrorType.*;
-
 import org.plos.namedentity.api.NedException;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.regex.Pattern;
 
+import static org.plos.namedentity.api.NedException.ErrorType.DisplayNameError;
+import static org.plos.namedentity.api.NedException.ErrorType.FirstnameError;
+import static org.plos.namedentity.api.NedException.ErrorType.LastnameError;
+
 @XmlRootElement
 public class Individualprofile extends Entity {
 
   public static final Integer DISPLAYNAME_MAX_LENGTH = 60;
+
+  public static Pattern rejectedCharsDisplayName = Pattern.compile("[$&+,:;=?@#|/\\s^~`%<>{}\\[\\]\\\\]");
 
   private String  firstname;
   private String  middlename;
@@ -45,13 +49,12 @@ public class Individualprofile extends Entity {
 
   private Boolean isactive;
 
-  private static Pattern rejectedCharsDisplayName = Pattern.compile("[$&+,:;=?@#|/\\s^~`%<>{}\\[\\]\\\\]");
 
   @Override
   public void validate() {
     validateFirstname();
     validateLastname();
-    validateDisplayname();
+    validateDisplayname(displayname);
   }
 
   public Boolean getIsactive() {
@@ -152,14 +155,14 @@ public class Individualprofile extends Entity {
       throw new NedException(LastnameError, "last name is too short");
   }
 
-  private void validateDisplayname() {
-    if (displayname == null || displayname.length() < 1)
+  public static void validateDisplayname(String dname) {
+    if (dname == null || dname.length() < 1)
       throw new NedException(DisplayNameError, "display name is too short");
 
-    if (displayname.length() > DISPLAYNAME_MAX_LENGTH)
+    if (dname.length() > DISPLAYNAME_MAX_LENGTH)
       throw new NedException(DisplayNameError, "display name cannot be longer then " + DISPLAYNAME_MAX_LENGTH);
 
-    if (rejectedCharsDisplayName.matcher(displayname).find())
+    if (rejectedCharsDisplayName.matcher(dname).find())
       throw new NedException(DisplayNameError, "display name can not contain any of the following characters: $ & + , / : ; = ? @ < > # % { } | \\ ^ ~ [ ] ` or a space");
   }
 }

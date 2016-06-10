@@ -16,15 +16,14 @@
  */
 package org.plos.namedentity.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.plos.namedentity.api.Consumer;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedException;
 import org.plos.namedentity.api.entity.*;
 import org.plos.namedentity.api.enums.UidTypeEnum;
 import org.plos.namedentity.persist.NamedEntityDBService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
@@ -38,6 +37,7 @@ import java.util.UUID;
 
 import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
 import static org.plos.namedentity.api.entity.Individualprofile.DISPLAYNAME_MAX_LENGTH;
+import static org.plos.namedentity.api.entity.Individualprofile.rejectedCharsDisplayName;
 
 public class NamedEntityServiceImpl implements NamedEntityService {
 
@@ -112,61 +112,62 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   public String generateDisplayname(Individualprofile entity, Random rand) {
 
     final int MAX_TRIES = 100;
-    final int MIN_VAL   = 100;
-    final int MAX_VAL   = 999;
+    final int MIN_VAL = 100;
+    final int MAX_VAL = 999;
 
-    // (max displayname length) - (uuid length) - (initial of firstname)
-    final int MAX_LNAME_LEN = (DISPLAYNAME_MAX_LENGTH - 32 - 1);
+    // (max displayname length) - (uuid length)
+    final int MAX_BASE_LENGTH = DISPLAYNAME_MAX_LENGTH - 32;
+
+    StringBuilder basename = new StringBuilder();
 
     try {
-      entity.validateFirstname() ; entity.validateLastname() ;
+      entity.validateFirstname();
+      entity.validateLastname();
 
-      // base name = first char of firstname + lastname (possibly truncated)
-      StringBuilder basename = new StringBuilder();
-      basename.append( Character.toLowerCase(entity.getFirstname().charAt(0)) );
+      // merge first and last name and strip special characters
+      String cleanbase = rejectedCharsDisplayName.matcher((entity.getFirstname().charAt(0) + entity.getLastname()).toLowerCase()).replaceAll("");
 
-      String lname = entity.getLastname().toLowerCase();
-      basename.append( lname.length() > MAX_LNAME_LEN ? lname.substring(0,MAX_LNAME_LEN) : lname );
+      Individualprofile.validateDisplayname(cleanbase);
 
-      int count = 0;
+      basename.append(cleanbase.length() > MAX_BASE_LENGTH ? cleanbase.substring(0, MAX_BASE_LENGTH) : cleanbase);
+    } catch (NedException e) {
+      basename.append("plosuser");
+    }
 
-      while (true) {
-        StringBuilder displayname = new StringBuilder();
-        displayname.append( basename );
+    int count = 0;
 
-        if (count > 0) {
-          // nextInt is exclusive at top end, so add 1 to make it inclusive
-          displayname.append( rand.nextInt((MAX_VAL-MIN_VAL)+1)+MIN_VAL );
-        }
+    while (true) {
+      StringBuilder displayname = new StringBuilder();
+      displayname.append(basename);
 
-        Individualprofile profileCriteria = new Individualprofile();
-        profileCriteria.setDisplayname( displayname.toString() );
-        List<Individualprofile> profilesResult = nedDBSvc.findByAttribute(profileCriteria);
-        if (profilesResult.size() == 0) {
-          return displayname.toString();   // displayname is available
-        }
+      if (count > 0) {
+        // nextInt is exclusive at top end, so add 1 to make it inclusive
+        displayname.append(rand.nextInt((MAX_VAL - MIN_VAL) + 1) + MIN_VAL);
+      }
 
-        if (++count == MAX_TRIES) {
+      Individualprofile profileCriteria = new Individualprofile();
+      profileCriteria.setDisplayname(displayname.toString());
+      List<Individualprofile> profilesResult = nedDBSvc.findByAttribute(profileCriteria);
+      if (profilesResult.size() == 0) {
+        return displayname.toString();   // displayname is available
+      }
 
-          // we've exhausted generation attempts with random number. fall back
-          // to initials plus uuid (w/o dashes).
+      if (++count == MAX_TRIES) {
 
-          displayname.setLength(0);
-          displayname.append( basename ).append("-");
-          displayname.append( UUID.randomUUID().toString().replaceAll("-","") );
+        // we've exhausted generation attempts with random number. fall back
+        // to initials plus uuid (w/o dashes).
 
-          logger.warn(String.format("Exhausted displayname generation with random " +
-            "number for firstname:%s lastname:%s. Generating uuid-variant: %s", 
-              entity.getFirstname(), entity.getLastname(), displayname.toString()));
+        displayname.setLength(0);
+        displayname.append(basename).append("-");
+        displayname.append(UUID.randomUUID().toString().replaceAll("-", ""));
 
-          return displayname.toString();
-        }
+        logger.warn(String.format("Exhausted displayname generation with random " +
+                "number for firstname:%s lastname:%s. Generating uuid-variant: %s",
+            entity.getFirstname(), entity.getLastname(), displayname.toString()));
+
+        return displayname.toString();
       }
     }
-    catch (NedException e) {
-      // name validation failed. abort generation.
-    }
-    return null;
   }
 
   public List<Alert> getAlerts(String frequency) {

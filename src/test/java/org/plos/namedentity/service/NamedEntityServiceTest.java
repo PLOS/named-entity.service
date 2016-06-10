@@ -636,22 +636,19 @@ public class NamedEntityServiceTest {
   @Test
   public void testProfileDisplaynameGeneration() throws Exception {
 
-    // test displayname generation without complete names. is ok to pass null
-    // for Random param.
-
     Individualprofile profile = new Individualprofile();
-    assertNull( namedEntityService.generateDisplayname(profile,null) );
+    assertTrue( namedEntityService.generateDisplayname(profile, new Random()).matches("plosuser") );
 
     profile.setFirstname("firstname");
-    assertNull( namedEntityService.generateDisplayname(profile,null) );
+    assertTrue( namedEntityService.generateDisplayname(profile, new Random()).matches("plosuser") );
 
     // define profile entity. displayname will be generated during creation.
 
     for (int i = 0; i < 2; i++) {
 
       profile = new Individualprofile();
-      profile.setFirstname("firstname");
-      profile.setLastname("abcdefghijklmnopqrstuvwxyz0123456789");
+      profile.setFirstname("Firstname");
+      profile.setLastname("Abcdefghijklmnop   &  qrstuvwxyz0123456789");
       profile.setNameprefix("Mr.");
       profile.setNamesuffix("III");
       profile.setSource("Editorial Manager");
