@@ -1,7 +1,7 @@
 Named Entity Database
 =====================
 
- NED is a web service for hosting information about people and organizations. It provides a REST API backed my a MySQL database.
+NED is a web service for hosting information about people and organizations. It provides a REST API backed my a MySQL database.
 
 Dependencies
 ------------
