@@ -19,7 +19,6 @@ package org.plos.namedentity.api;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
-// tc
 @XmlRootElement
 public class ConfigInfo {
   public String version;
