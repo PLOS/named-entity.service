@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# x
 shopt -s nullglob
 
 function check_ringgold_env {
