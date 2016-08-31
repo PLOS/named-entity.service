@@ -1,11 +1,12 @@
 
 USE namedEntities;
 
+--turn off FK
 SET foreign_key_checks = 0;
 
 Use namedEntities;
 --Get globalType ID 
-Select id INTO @glblid from globalTypes where shortDescription LIKE 'Taiwan (Province of China)'
+Select id INTO @glblid from globalTypes where shortDescription = 'Taiwan (Province of China)'
 
 -- Update globalType By ID 
 SET @updatGlobalSql= ('UPDATE globalTypes SET shortDescription="Taiwan" where ID=', @glblid);
