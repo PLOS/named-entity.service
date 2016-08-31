@@ -574,7 +574,7 @@ INSERT INTO globalTypes (typeId, typeCode, shortDescription, created) VALUES (@t
 INSERT INTO globalTypes (typeId, typeCode, shortDescription, created) VALUES (@typeIdVar,'TR','Turkey', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId, typeCode, shortDescription, created) VALUES (@typeIdVar,'TT','Trinidad and Tobago', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId, typeCode, shortDescription, created) VALUES (@typeIdVar,'TV','Tuvalu', CURRENT_TIMESTAMP);
-INSERT INTO globalTypes (typeId, typeCode, shortDescription, created) VALUES (@typeIdVar,'TW','Taiwan', CURRENT_TIMESTAMP);
+INSERT INTO globalTypes (typeId, typeCode, shortDescription, created) VALUES (@typeIdVar,'TW','Taiwan (Province of China)', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId, typeCode, shortDescription, created) VALUES (@typeIdVar,'TZ','Tanzania, United Republic of', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId, typeCode, shortDescription, created) VALUES (@typeIdVar,'UA','Ukraine', CURRENT_TIMESTAMP);
 INSERT INTO globalTypes (typeId, typeCode, shortDescription, created) VALUES (@typeIdVar,'UG','Uganda', CURRENT_TIMESTAMP);
