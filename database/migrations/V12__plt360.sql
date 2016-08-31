@@ -1,6 +1,7 @@
 
 USE namedEntities;
 
+--turn off FK
 SET foreign_key_checks = 0;
 
 Use namedEntities;
