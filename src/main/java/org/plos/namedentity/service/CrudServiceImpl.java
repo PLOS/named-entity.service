@@ -67,6 +67,11 @@ public class CrudServiceImpl implements CrudService {
     return namedEntityDBService.findByAttribute(t);
   }
 
+  @Override
+  public <T> List<T> findByAttribute(T t, Boolean partial) {
+    return namedEntityDBService.findByAttribute(t, partial);
+  }
+
   public NamedEntityDBService getNamedEntityDBService() {
     return namedEntityDBService;
   }

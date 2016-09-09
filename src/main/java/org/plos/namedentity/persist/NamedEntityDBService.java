@@ -65,4 +65,6 @@ public interface NamedEntityDBService {
   void checkNedIdForType(Integer nedId, String namedPartyType);
 
   <T extends Entity> void validate(T t);
+
+  <T> List<T> findByAttribute(T t, Boolean partial);
 }

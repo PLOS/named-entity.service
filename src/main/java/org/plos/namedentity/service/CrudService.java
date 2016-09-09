@@ -36,4 +36,6 @@ public interface CrudService {
 
   <T> List<T> findByAttribute(T t);
 
+  <T> List<T> findByAttribute(T t, Boolean partial);
+
 }

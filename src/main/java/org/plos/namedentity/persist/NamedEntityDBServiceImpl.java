@@ -126,11 +126,20 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
   public <T> List<T> findByAttribute(T t) {
     return context.select()
       .from(table(t.getClass()))
-      .where( buildWhereClause(t) )
+      .where(buildWhereClause(t, false))
       .fetchInto((Class<T>)t.getClass());
   }
 
-  private <T> String buildWhereClause(T t) {
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> List<T> findByAttribute(T t, Boolean partial) {
+        return context.select()
+                .from(table(t.getClass()))
+                .where(buildWhereClause(t, partial))
+                .fetchInto((Class<T>) t.getClass());
+    }
+
+  private <T> String buildWhereClause(T t, Boolean partial) {
     StringBuilder where = new StringBuilder();
     try {
       List<java.lang.reflect.Field> fields = new ArrayList<>();
@@ -149,14 +158,19 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         Object v = f.get(t);      // get attribute value
 
         if (v != null) {
-          if (where.length() > 0) where.append(" and "); 
-          where.append(f.getName()).append("=");
-          if (v instanceof Number || v instanceof Boolean) {
-            where.append(v);
-          } else {
-            // escape single quote
-            where.append("'").append( ((String)v).replace("'","''") ).append("'");
-          }
+          if (where.length() > 0) where.append(" and ");
+
+            if(v instanceof String && partial){
+                where.append(f.getName()).append(" ").append("like").append(" '%");
+                where.append(v).append("%'");
+            }else if (v instanceof Number || v instanceof Boolean) {
+                where.append(f.getName()).append("=");
+                where.append(v);
+            } else {
+                // escape single quote
+                where.append(f.getName()).append("=");
+                where.append("'").append( ((String)v).replace("'","''") ).append("'");
+            }
         }
       }
     }
@@ -237,7 +251,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     for (Globaltype globalType : globalTypesForTypeClass) {
       lovs.add(globalType.getShortdescription());
     }
-    throw new NedException(ErrorType.InvalidTypeValue, 
+      throw new NedException(ErrorType.InvalidTypeValue,
                            String.format("TypeClassId:%d, TypeValue:%s", typeClassId, name), lovs);
   }
 

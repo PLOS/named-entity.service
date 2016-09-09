@@ -17,6 +17,8 @@ import org.plos.namedentity.api.entity.Relationship;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.api.enums.NamedPartyEnum;
 import org.plos.namedentity.service.PasswordDigestService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -44,6 +46,8 @@ import static org.plos.namedentity.api.NedException.ErrorType.TooManyResultsFoun
 @Path("individuals")
 @Api(value="individuals", authorizations = {@Authorization(value = "basic")})
 public class IndividualsResource extends NedResource {
+
+  private static final Logger logger = LoggerFactory.getLogger(IndividualsResource.class);
 
   @Override
   protected String getNamedPartyType() {
@@ -82,13 +86,15 @@ public class IndividualsResource extends NedResource {
   @ApiOperation(value = "Find individual matching specified attribute.", response = IndividualComposite.class, responseContainer = "List")
   public Response findIndividuals(@QueryParam("entity")    String entity,
                                   @QueryParam("attribute") String attribute,
-                                  @QueryParam("value") String value) {
+                                  @QueryParam("value") String value,
+                                  @QueryParam("partial") Boolean partial) {
+
     try {
-      if (isEmptyOrBlank(entity) || isEmptyOrBlank(attribute) || isEmptyOrBlank(value)) {
+      if (isEmptyOrBlank(entity) || isEmptyOrBlank(attribute) || isEmptyOrBlank(value) || partial == null || partial.equals("")) {
         throw new NedException(InvalidIndividualSearchQuery);
       }
 
-      List<Entity> results = crudService.findByAttribute( createSearchCriteria(entity,attribute,value,IndividualComposite.class) );
+      List<Entity> results = crudService.findByAttribute(createSearchCriteria(entity,attribute,value,IndividualComposite.class), partial);
 
       if (results.size() == 0)
         throw new NedException(EntityNotFound, "Individual not found");
