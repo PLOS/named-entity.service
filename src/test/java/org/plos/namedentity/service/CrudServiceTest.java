@@ -373,12 +373,34 @@ public class CrudServiceTest {
     List<Email> foundEmails = crudService.findByAttribute(emailSearchCriteria);
     assertNotNull(foundEmails);
     assertEquals(savedEmail2.getEmailaddress(), foundEmails.get(0).getEmailaddress());
+    
+    
+    
 
     /* ------------------------------------------------------------------ */
     /*  DELETE                                                            */
     /* ------------------------------------------------------------------ */
 
     assertTrue( crudService.delete(savedEmail) );
+  }
+  
+  @Test
+  public void testIndividualEmail() {
+	  
+	  Email email = new Email();
+	  
+	  email.setEmailaddress("jane");
+	  
+	  List<Email> foundEmails = crudService.findByAttribute(email, true);
+	  
+	  assertNotNull(foundEmails);
+	  
+	  System.out.println("The email ID's are:::::::" +foundEmails.get(0));
+	  
+	  // System.out.println("The emails are :: " +foundEmails.get(0).getEmailaddress());
+	 
+	  // assertEquals("jane.q.doe.personal@foo.com", foundEmails.get(0).getEmailaddress().trim());
+	  
   }
 
   @Test

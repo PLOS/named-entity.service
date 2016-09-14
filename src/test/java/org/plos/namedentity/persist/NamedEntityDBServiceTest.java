@@ -414,6 +414,18 @@ public class NamedEntityDBServiceTest {
 
     assertTrue( nedDBSvc.delete(emailToDelete) );
   }
+  
+  @Test
+  public void testGetEmail(){
+	    Email emailSearchByAddress = new Email();
+	    emailSearchByAddress.setEmailaddress("super");
+	    
+	    
+	    List<Email> foundEmails = nedDBSvc.findByAttribute(emailSearchByAddress, true);
+	    
+	    assertEquals(1, foundEmails.size());
+	    assertEquals("ckramer@plos.org", foundEmails.get(0).getEmailaddress());
+  }
 
   @Test
   public void testIndividualCRUD() {
