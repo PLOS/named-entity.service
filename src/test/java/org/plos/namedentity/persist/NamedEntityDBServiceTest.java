@@ -417,36 +417,42 @@ public class NamedEntityDBServiceTest {
   
   @Test
   public void testEmailMatchWithPartialFlag(){
-	   
+	  
+	    // To get all existed email addresses
+	  
+	    List<Email> allEmailsInDB = nedDBSvc.findAll(Email.class, 0, Integer.MAX_VALUE);
+	    String emailAddress = allEmailsInDB.get(0).getEmailaddress();
 	    
-	    Boolean partialFlag = true ;
-	    
-	    //Case 1: partialFlag boolean value is "true" and emailaddress attribute contain exact email address.
-	    
-	    Email emailSearchByAddress = new Email();
-	    emailSearchByAddress.setEmailaddress("ckramer@plos.org");
-	    List<Email> foundEmails = nedDBSvc.findByAttribute(emailSearchByAddress, partialFlag);
-	    assertNotNull(foundEmails);
-	    
-	    //Case 2: partialFlag boolean value is "true" and emailaddress attribute contain some string(not exact email address), To test wild card scenario.
-	    emailSearchByAddress.setEmailaddress("ck@plos.org");
-	    foundEmails = nedDBSvc.findByAttribute(emailSearchByAddress, partialFlag);
-	    assertNotNull(foundEmails);
-	    
-	  //Case 3: partialFlag boolean value is "false" and emailaddress attribute contain exact email address.
-	    
-	    partialFlag = false;
-	    emailSearchByAddress.setEmailaddress("ckramer@plos.org");
-	    foundEmails = nedDBSvc.findByAttribute(emailSearchByAddress, partialFlag);
-	    assertNotNull(foundEmails);
-	    
-	  //Case 4: partialFlag boolean value is "false" and emailaddress attribute contain some string(not exact email address).
-	  //        To test wild card scenario. No matched found in this scenario , so it should return empty value.
-	    
-	    emailSearchByAddress.setEmailaddress("ck@plos.org");
-	    foundEmails = nedDBSvc.findByAttribute(emailSearchByAddress, partialFlag);
-	    assertEquals(0, foundEmails.size());
-	    
+	    if(emailAddress.length() > 0){
+	    	String splittedEmailAddress = emailAddress.split("@")[0];
+		    Boolean partialFlag = true ;
+		    
+		    //Case 1: partialFlag boolean value is "true" and emailaddress attribute contain exact email address.
+		    
+		    Email emailSearchByAddress = new Email();
+		    emailSearchByAddress.setEmailaddress(emailAddress);
+		    List<Email> foundEmails = nedDBSvc.findByAttribute(emailSearchByAddress, partialFlag);
+		    assertNotNull(foundEmails);
+		    
+		    //Case 2: partialFlag boolean value is "true" and emailaddress attribute contain some string(not exact email address), To test wild card scenario.
+		    emailSearchByAddress.setEmailaddress(splittedEmailAddress);
+		    foundEmails = nedDBSvc.findByAttribute(emailSearchByAddress, partialFlag);
+		    assertNotNull(foundEmails);
+		    
+		  //Case 3: partialFlag boolean value is "false" and emailaddress attribute contain exact email address.
+		    
+		    partialFlag = false;
+		    emailSearchByAddress.setEmailaddress(emailAddress);
+		    foundEmails = nedDBSvc.findByAttribute(emailSearchByAddress, partialFlag);
+		    assertNotNull(foundEmails);
+		    
+		  //Case 4: partialFlag boolean value is "false" and emailaddress attribute contain some string(not exact email address).
+		  //        To test wild card scenario. No matched found in this scenario , so it should return empty value.
+		    
+		    emailSearchByAddress.setEmailaddress(splittedEmailAddress);
+		    foundEmails = nedDBSvc.findByAttribute(emailSearchByAddress, partialFlag);
+		    assertEquals(0, foundEmails.size());
+	    }
   }
 
   @Test
