@@ -17,19 +17,20 @@ SELECT gt.id INTO @srcTypeIdVar
   JOIN namedEntities.typeDescriptions td ON gt.typeid = td.id
  WHERE td.description='Source Applications' AND gt.shortDescription='Ambra';
 
-INSERT INTO namedEntities.individualProfiles (id, nedId, firstName, lastName, displayName, biography, isActive, createdBy, lastModifiedBy, sourceTypeId)
-  VALUES (3,@individualNedId,'Cosmo','Kramer','testckramer','a short bio',1, @consumerIdVar, @consumerIdVar, @srcTypeIdVar);
+INSERT INTO namedEntities.individualProfiles (nedId, firstName, lastName, displayName, biography, isActive, createdBy, lastModifiedBy, sourceTypeId)
+  VALUES (@individualNedId,'Cosmo','Kramer','testckramer','a short bio',1, @consumerIdVar, @consumerIdVar, @srcTypeIdVar);
 
-INSERT INTO namedEntities.emails (id, nedId, emailAddress, createdBy, lastModifiedBy, sourceTypeId)
-    VALUES (3,@individualNedId, 'testckramer@plos.org', @consumerIdVar, @consumerIdVar, @srcTypeIdVar);
+INSERT INTO namedEntities.emails (nedId, emailAddress, createdBy, lastModifiedBy, sourceTypeId)
+    VALUES (@individualNedId, 'testckramer@plos.org', @consumerIdVar, @consumerIdVar, @srcTypeIdVar);
 
-INSERT INTO namedEntities.authCas (id, nedId, emailId, authId, password, createdBy, lastModifiedBy)
-    VALUES (3,@individualNedId,3, UUID(),  /* password = "password1" */
-            'f953d98b896b3739bf925346cffb4e2e9b5e724d14bc66bc6562672944ae21d1f76bf904416af9ce52ddff3d9b46b447a4d1d6e17318299e967d0362d0df0ad6',
+SELECT id INTO @emailId FROM namedEntities.emails WHERE emailAddress='testckramer@plos.org';
+
+INSERT INTO namedEntities.authCas (nedId, emailId, authId, password, createdBy, lastModifiedBy)
+    VALUES (@individualNedId, @emailId, UUID(), 'f953d98b896b3739bf925346cffb4e2e9b5e724d14bc66bc6562672944ae21d1f76bf904416af9ce52ddff3d9b46b447a4d1d6e17318299e967d0362d0df0ad6',
             @consumerIdVar, @consumerIdVar);
 
-INSERT INTO namedEntities.uniqueIdentifiers (id, nedId, typeId, uniqueIdentifier, sourceTypeId, createdBy, lastModifiedBy)
-    VALUES (3, @individualNedId,
+INSERT INTO namedEntities.uniqueIdentifiers (nedId, typeId, uniqueIdentifier, sourceTypeId, createdBy, lastModifiedBy)
+    VALUES (@individualNedId,
         (select gt.id from namedEntities.globalTypes gt
            join namedEntities.typeDescriptions td on gt.typeid = td.id
           where td.description='UID Individual Types' and gt.shortDescription='Ambra'),

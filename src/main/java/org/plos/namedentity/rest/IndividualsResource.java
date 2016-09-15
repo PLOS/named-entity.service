@@ -88,7 +88,8 @@ public class IndividualsResource extends NedResource {
   public Response findIndividuals(@QueryParam("entity")    String entity,
                                   @QueryParam("attribute") String attribute,
                                   @QueryParam("value") String value,
-                                  @DefaultValue("false")@QueryParam("partial") Boolean partial  ) {
+                                  @DefaultValue("false")
+                                    @QueryParam("partial") Boolean partial  ) {
 
     try {
       if (isEmptyOrBlank(entity) || isEmptyOrBlank(attribute) || isEmptyOrBlank(value)) {
@@ -99,7 +100,7 @@ public class IndividualsResource extends NedResource {
 
       if (results.size() == 0)
         throw new NedException(EntityNotFound, "Individual not found");
-      else if (results.size() > 10)
+      else if (results.size() > DEFAULT_RESULT_COUNT)
         throw new NedException(TooManyResultsFound);
 
       // entity records may refer to the same individual. we can filter these out

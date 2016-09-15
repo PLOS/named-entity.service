@@ -139,7 +139,7 @@ public class OrganizationsResource extends NedResource {
 
       if (results.size() == 0)
         throw new NedException(EntityNotFound, "Organization not found");
-      else if (results.size() > 10)
+      else if (results.size() > DEFAULT_RESULT_COUNT)
         throw new NedException(TooManyResultsFound);
 
       // entity records may refer to the same individual. we can filter these out
