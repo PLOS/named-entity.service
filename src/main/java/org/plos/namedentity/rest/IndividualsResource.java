@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -87,10 +88,10 @@ public class IndividualsResource extends NedResource {
   public Response findIndividuals(@QueryParam("entity")    String entity,
                                   @QueryParam("attribute") String attribute,
                                   @QueryParam("value") String value,
-                                  @QueryParam("partial") Boolean partial) {
+                                  @DefaultValue("false")@QueryParam("partial") Boolean partial  ) {
 
     try {
-      if (isEmptyOrBlank(entity) || isEmptyOrBlank(attribute) || isEmptyOrBlank(value) || partial == null || partial.equals("")) {
+      if (isEmptyOrBlank(entity) || isEmptyOrBlank(attribute) || isEmptyOrBlank(value)) {
         throw new NedException(InvalidIndividualSearchQuery);
       }
 
