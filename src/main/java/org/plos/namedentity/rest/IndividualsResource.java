@@ -187,7 +187,7 @@ public class IndividualsResource extends NedResource {
   public Response readIndividualByCasId(@PathParam("casId") String casId) {
     try {
 
-      List<Entity> results = crudService.findByAttribute( createSearchCriteria("auth","authid",casId,IndividualComposite.class) );
+      List<Entity> results = crudService.findByAttribute( createSearchCriteria("auth","authid",casId,IndividualComposite.class), false );
 
       if (results.size() == 0)
         throw new NedException(EntityNotFound, "Individual not found with CAS id: " + casId);

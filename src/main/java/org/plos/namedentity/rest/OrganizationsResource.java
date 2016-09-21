@@ -106,7 +106,7 @@ public class OrganizationsResource extends NedResource {
         return Response.status(Response.Status.OK).entity(
           namedEntityService.findComposite(composite.getNedid(), OrganizationComposite.class)).build();
 
-      List<Entity> results = crudService.findByAttribute(createSearchCriteria("organization", "legalname", composite.getLegalname(), OrganizationComposite.class));
+      List<Entity> results = crudService.findByAttribute(createSearchCriteria("organization", "legalname", composite.getLegalname(), OrganizationComposite.class), false);
 
       // if the org does not exist by name, insert into DB
       if (results.size() == 0)
@@ -135,7 +135,7 @@ public class OrganizationsResource extends NedResource {
         throw new NedException(InvalidOrganizationSearchQuery);
       }
 
-      List<Entity> results = crudService.findByAttribute(createSearchCriteria("organization", attribute, value, OrganizationComposite.class));
+      List<Entity> results = crudService.findByAttribute(createSearchCriteria("organization", attribute, value, OrganizationComposite.class), false);
 
       if (results.size() == 0)
         throw new NedException(EntityNotFound, "Organization not found");

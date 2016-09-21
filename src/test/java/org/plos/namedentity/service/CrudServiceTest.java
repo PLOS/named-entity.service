@@ -302,7 +302,7 @@ public class CrudServiceTest {
     Globaltype globalTypesearchCriteria = new Globaltype();
     globalTypesearchCriteria.setTypeid(1);
 
-    List<Globaltype> globalTypesForTypeClass = crudService.findByAttribute(globalTypesearchCriteria);
+    List<Globaltype> globalTypesForTypeClass = crudService.findByAttribute(globalTypesearchCriteria, false);
     assertNotNull(globalTypesForTypeClass);
     for (Globaltype gtype : globalTypesForTypeClass) {
       assertTrue(globalTypes.contains(gtype));
@@ -321,7 +321,7 @@ public class CrudServiceTest {
     Globaltype globalTypesearchCriteria = new Globaltype();
     globalTypesearchCriteria.setTypeid( nedDBSvc.findTypeClass("Email Address Types") );
     globalTypesearchCriteria.setShortdescription("Work");
-    List<Globaltype> globalTypesResult = crudService.findByAttribute(globalTypesearchCriteria);
+    List<Globaltype> globalTypesResult = crudService.findByAttribute(globalTypesearchCriteria, false);
     assertEquals(1, globalTypesResult.size());
 
     Integer emailTypeId = globalTypesResult.get(0).getId();
@@ -370,7 +370,7 @@ public class CrudServiceTest {
     Email emailSearchCriteria = new Email();
     emailSearchCriteria.setEmailaddress(savedEmail2.getEmailaddress());
 
-    List<Email> foundEmails = crudService.findByAttribute(emailSearchCriteria);
+    List<Email> foundEmails = crudService.findByAttribute(emailSearchCriteria, false);
     assertNotNull(foundEmails);
     assertEquals(savedEmail2.getEmailaddress(), foundEmails.get(0).getEmailaddress());
     
@@ -586,7 +586,7 @@ public class CrudServiceTest {
     Degree degreeSearchCriteria = new Degree();
     degreeSearchCriteria.setFulltitle(degreeDesc);
 
-    List<Degree> foundDegrees = crudService.findByAttribute(degreeSearchCriteria);
+    List<Degree> foundDegrees = crudService.findByAttribute(degreeSearchCriteria, false);
     assertNotNull(foundDegrees);
     assertEquals(savedDegree2.getFulltitle(), foundDegrees.get(0).getFulltitle());
 
@@ -608,7 +608,7 @@ public class CrudServiceTest {
     Globaltype globalTypesearchCriteria = new Globaltype();
     globalTypesearchCriteria.setTypeid( nedDBSvc.findTypeClass("UID Individual Types") );
     globalTypesearchCriteria.setShortdescription("ORCID");
-    List<Globaltype> globalTypesResult = crudService.findByAttribute(globalTypesearchCriteria);
+    List<Globaltype> globalTypesResult = crudService.findByAttribute(globalTypesearchCriteria, false);
     assertEquals(1, globalTypesResult.size());
 
     Integer orcidTypeId = globalTypesResult.get(0).getId();

@@ -144,7 +144,7 @@ public class TypeclassesResource extends BaseResource {
 
       return Response.status(Response.Status.OK).entity(
           new GenericEntity<List<Globaltype>>(
-              crudService.findByAttribute(searchCriteria)
+              crudService.findByAttribute(searchCriteria, false)
           ){}).build();
     }
     catch(NedException e) {

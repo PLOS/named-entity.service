@@ -122,14 +122,6 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     return (r != null ? r.into(clazz) : null);
   }
 
-  @Override @SuppressWarnings("unchecked")
-  public <T> List<T> findByAttribute(T t) {
-    return context.select()
-      .from(table(t.getClass()))
-      .where(buildWhereClause(t, false))
-      .fetchInto((Class<T>)t.getClass());
-  }
-
     @Override
     @SuppressWarnings("unchecked")
     public <T> List<T> findByAttribute(T t, Boolean partial) {
@@ -239,7 +231,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     Globaltype globalTypesearchCriteria = new Globaltype();
     globalTypesearchCriteria.setTypeid(typeClassId);
 
-    List<Globaltype> globalTypesForTypeClass = findByAttribute(globalTypesearchCriteria);
+    List<Globaltype> globalTypesForTypeClass = findByAttribute(globalTypesearchCriteria, false);
     for (Globaltype globalType : globalTypesForTypeClass) {
       if (globalType.getShortdescription().equalsIgnoreCase(name)) {
         return globalType.getId();
