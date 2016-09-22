@@ -385,22 +385,42 @@ public class CrudServiceTest {
   }
   
   @Test
-  public void testIndividualEmail() {
+  public void testEmailMatchWithPartialFlag() {
 	  
-	  Email email = new Email();
+	  List<Email> allEmailsInDB = crudService.findAll(Email.class, 0, Integer.MAX_VALUE);
+	  String firstEmailAddressFromDB = allEmailsInDB.get(0).getEmailaddress();
 	  
-	  email.setEmailaddress("jane");
-	  
-	  List<Email> foundEmails = crudService.findByAttribute(email, true);
-	  
-	  assertNotNull(foundEmails);
-	  
-	  System.out.println("The email ID's are:::::::" +foundEmails.get(0));
-	  
-	  // System.out.println("The emails are :: " +foundEmails.get(0).getEmailaddress());
-	 
-	  // assertEquals("jane.q.doe.personal@foo.com", foundEmails.get(0).getEmailaddress().trim());
-	  
+	  if(firstEmailAddressFromDB.length() > 0){
+		    String splittedEmailAddress = firstEmailAddressFromDB.split("@")[0];
+		    Boolean partialFlag = true ;
+		  
+		  //Case 1: partialFlag boolean value is "true" and emailaddress attribute contain exact email address.
+
+		    Email emailSearchByAddress = new Email();
+		    emailSearchByAddress.setEmailaddress(firstEmailAddressFromDB);
+		    List<Email> foundEmails = crudService.findByAttribute(emailSearchByAddress, partialFlag);
+		    assertNotNull(foundEmails);
+		    
+		  //Case 2: partialFlag boolean value is "true" and emailaddress attribute contain some string(not exact email address), To test wild card scenario.
+
+		    emailSearchByAddress.setEmailaddress(splittedEmailAddress);
+		    foundEmails = crudService.findByAttribute(emailSearchByAddress, partialFlag);
+		    assertNotNull(foundEmails);
+		    
+          //Case 3: partialFlag boolean value is "false" and emailaddress attribute contain exact email address.
+
+		    partialFlag = false;
+		    emailSearchByAddress.setEmailaddress(firstEmailAddressFromDB);
+		    foundEmails = crudService.findByAttribute(emailSearchByAddress, partialFlag);
+		    assertNotNull(foundEmails);
+		    
+		  //Case 4: partialFlag boolean value is "false" and emailaddress attribute contain some string(not exact email address).
+		  //        To test wild card scenario. No matched found in this scenario , so it should return empty value.
+
+		    emailSearchByAddress.setEmailaddress(splittedEmailAddress);
+			foundEmails = crudService.findByAttribute(emailSearchByAddress, partialFlag);
+			assertEquals(0, foundEmails.size());   
+	  }
   }
 
   @Test
