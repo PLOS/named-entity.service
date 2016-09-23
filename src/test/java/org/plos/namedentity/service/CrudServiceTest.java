@@ -387,43 +387,35 @@ public class CrudServiceTest {
   @Test
   public void testEmailMatchWithPartialFlag() {
 
-	List<Email> allEmailsInDB = crudService.findAll(Email.class, 0, Integer.MAX_VALUE);
-	String firstEmailAddressFromDB = allEmailsInDB.get(0).getEmailaddress();
-	if (firstEmailAddressFromDB.length() > 0) {
-		String splittedEmailAddress = firstEmailAddressFromDB.split("@")[0];
-		Boolean partialFlag = true;
-
 		/*
 		 * Case 1: partialFlag boolean value is "true" and emailaddress
 		 * attribute contain actual email address.
 		 */
-		Email emailSearchByAddress = new Email();
-		emailSearchByAddress.setEmailaddress(firstEmailAddressFromDB);
-		List<Email> fetchedEmails = crudService.findByAttribute(emailSearchByAddress, partialFlag);
-		assertNotNull(fetchedEmails);
-		assertEquals(fetchedEmails.get(0).getEmailaddress(), firstEmailAddressFromDB);
+    Email emailSearchByAddress = new Email();
+    emailSearchByAddress.setEmailaddress("testckramer@plos.org");
+    List<Email> fetchedEmails = crudService.findByAttribute(emailSearchByAddress, true);
+    assertEquals(1, fetchedEmails.size());
+    assertEquals(fetchedEmails.get(0).getEmailaddress(), "testckramer@plos.org");
 
 		/*
 		 * Case 2: partialFlag boolean value is "true" and emailaddress
 		 * attribute contain some string (not exact email address), To test
 		 * wild card scenario.
 		 */
-		emailSearchByAddress.setEmailaddress(splittedEmailAddress);
-		fetchedEmails = crudService.findByAttribute(emailSearchByAddress, partialFlag);
-		assertNotNull(fetchedEmails);
-		assertEquals(fetchedEmails.get(0).getEmailaddress(), firstEmailAddressFromDB);
+    emailSearchByAddress.setEmailaddress("ckramer@plos");
+    fetchedEmails = crudService.findByAttribute(emailSearchByAddress, true);
+    assertEquals(2, fetchedEmails.size());
+    assertEquals(fetchedEmails.get(0).getEmailaddress(), "ckramer@plos.org");
+    assertEquals(fetchedEmails.get(1).getEmailaddress(), "testckramer@plos.org");
 
 		/*
 		 * Case 3: partialFlag boolean value is "false" and emailaddress
 		 * attribute contain exact email address.
 		 */
-
-		partialFlag = false;
-		emailSearchByAddress.setEmailaddress(firstEmailAddressFromDB);
-		fetchedEmails = crudService.findByAttribute(emailSearchByAddress, partialFlag);
-		assertNotNull(fetchedEmails);
-		assertEquals(fetchedEmails.get(0).getEmailaddress(), firstEmailAddressFromDB);
-	   }
+    emailSearchByAddress.setEmailaddress("ckramer@plos.org");
+    fetchedEmails = crudService.findByAttribute(emailSearchByAddress, false);
+    assertEquals(1, fetchedEmails.size());
+    assertEquals(fetchedEmails.get(0).getEmailaddress(), "ckramer@plos.org");
   }
 
   @Test
