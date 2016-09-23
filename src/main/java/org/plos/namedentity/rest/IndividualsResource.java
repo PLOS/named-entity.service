@@ -17,8 +17,11 @@ import org.plos.namedentity.api.entity.Relationship;
 import org.plos.namedentity.api.entity.Uniqueidentifier;
 import org.plos.namedentity.api.enums.NamedPartyEnum;
 import org.plos.namedentity.service.PasswordDigestService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -44,6 +47,8 @@ import static org.plos.namedentity.api.NedException.ErrorType.TooManyResultsFoun
 @Path("individuals")
 @Api(value="individuals", authorizations = {@Authorization(value = "basic")})
 public class IndividualsResource extends NedResource {
+
+  private static final Logger logger = LoggerFactory.getLogger(IndividualsResource.class);
 
   @Override
   protected String getNamedPartyType() {
@@ -82,17 +87,20 @@ public class IndividualsResource extends NedResource {
   @ApiOperation(value = "Find individual matching specified attribute.", response = IndividualComposite.class, responseContainer = "List")
   public Response findIndividuals(@QueryParam("entity")    String entity,
                                   @QueryParam("attribute") String attribute,
-                                  @QueryParam("value") String value) {
+                                  @QueryParam("value") String value,
+                                  @DefaultValue("false")
+                                    @QueryParam("partial") Boolean partial  ) {
+
     try {
       if (isEmptyOrBlank(entity) || isEmptyOrBlank(attribute) || isEmptyOrBlank(value)) {
         throw new NedException(InvalidIndividualSearchQuery);
       }
 
-      List<Entity> results = crudService.findByAttribute( createSearchCriteria(entity,attribute,value,IndividualComposite.class) );
+      List<Entity> results = crudService.findByAttribute(createSearchCriteria(entity,attribute,value,IndividualComposite.class), partial);
 
       if (results.size() == 0)
         throw new NedException(EntityNotFound, "Individual not found");
-      else if (results.size() > 10)
+      else if (results.size() > DEFAULT_RESULT_COUNT)
         throw new NedException(TooManyResultsFound);
 
       // entity records may refer to the same individual. we can filter these out
@@ -179,7 +187,7 @@ public class IndividualsResource extends NedResource {
   public Response readIndividualByCasId(@PathParam("casId") String casId) {
     try {
 
-      List<Entity> results = crudService.findByAttribute( createSearchCriteria("auth","authid",casId,IndividualComposite.class) );
+      List<Entity> results = crudService.findByAttribute( createSearchCriteria("auth","authid",casId,IndividualComposite.class), false );
 
       if (results.size() == 0)
         throw new NedException(EntityNotFound, "Individual not found with CAS id: " + casId);

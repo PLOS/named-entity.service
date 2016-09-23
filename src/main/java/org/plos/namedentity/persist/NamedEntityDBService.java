@@ -40,7 +40,7 @@ public interface NamedEntityDBService {
 
   <T> T findById(Integer id, Class<T> clazz);
 
-  <T> List<T> findByAttribute(T t);
+  <T> List<T> findByAttribute(T t, Boolean partial);
 
   <T extends Entity> T findResolvedEntityByUid(String srcType, String uid, Class<T> clazz);
 

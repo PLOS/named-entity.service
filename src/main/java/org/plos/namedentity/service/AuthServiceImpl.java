@@ -54,7 +54,7 @@ public class AuthServiceImpl implements AuthService {
 
     Consumer filter = new Consumer();
     filter.setName(appname);
-    List<Consumer> consumers = namedEntityDBService.findByAttribute(filter);
+    List<Consumer> consumers = namedEntityDBService.findByAttribute(filter, false);
     if (consumers.size() == 0) {
       return false; // user not found
     }

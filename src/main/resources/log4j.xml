@@ -18,6 +18,7 @@
 
     <appender name="syslog" class="org.apache.log4j.net.SyslogAppender">
         <param name="SyslogHost" value="127.0.0.1"/>
+        <param name="Header" value="true"/>
         <param name="Facility" value="USER"/>
         <param name="FacilityPrinting" value="true"/>
         <layout class="org.apache.log4j.PatternLayout">

@@ -228,7 +228,7 @@ public class NamedEntityDBServiceTest {
     // Find global types for a type class
     Globaltype typeClassFilter = new Globaltype();
     typeClassFilter.setTypeid(1);
-    List<Globaltype> globalTypesForTypeClass = nedDBSvc.findByAttribute(typeClassFilter);
+    List<Globaltype> globalTypesForTypeClass = nedDBSvc.findByAttribute(typeClassFilter, false);
     assertEquals(3, globalTypesForTypeClass.size());
 
     // Try to find a global type which doesn't exist
@@ -369,7 +369,7 @@ public class NamedEntityDBServiceTest {
     Email emailSearchByAddress = new Email();
     emailSearchByAddress.setEmailaddress("super.Walter.Work@foo.com");
     emailSearchByAddress.setIsactive(false);
-    List<Email> foundEmails = nedDBSvc.findByAttribute(emailSearchByAddress);
+    List<Email> foundEmails = nedDBSvc.findByAttribute(emailSearchByAddress, false);
     assertEquals(1, foundEmails.size());
     assertEquals("super.Walter.Work@foo.com", foundEmails.get(0).getEmailaddress());
 
@@ -383,7 +383,7 @@ public class NamedEntityDBServiceTest {
       Email emailSearchByIndividual = new Email();
       emailSearchByIndividual.setNedid(nedId);
       emailSearchByIndividual.setIsactive( isactiveFilter[i] );
-      List<Email> foundEmails2 = nedDBSvc.findByAttribute(emailSearchByIndividual);
+      List<Email> foundEmails2 = nedDBSvc.findByAttribute(emailSearchByIndividual, false);
       assertEquals(expectedEmailCount[i], foundEmails2.size());
 
       for (Email email : allEmailsInDB) {
@@ -589,7 +589,7 @@ public class NamedEntityDBServiceTest {
 
     Phonenumber phoneSearchByIndividual = new Phonenumber();
     phoneSearchByIndividual.setNedid(1);
-    List<Phonenumber> foundPhones = nedDBSvc.findByAttribute(phoneSearchByIndividual);
+    List<Phonenumber> foundPhones = nedDBSvc.findByAttribute(phoneSearchByIndividual, false);
     assertEquals(2, foundPhones.size());
 
     for (Phonenumber phone : foundPhones) {
@@ -1076,14 +1076,14 @@ public class NamedEntityDBServiceTest {
     for (String app : registeredApps) {
       Consumer filter = new Consumer();
       filter.setName(app);
-      List<Consumer> consumers = nedDBSvc.findByAttribute(filter);
+      List<Consumer> consumers = nedDBSvc.findByAttribute(filter, false);
       assertEquals(1, consumers.size());
       assertEquals(app, consumers.get(0).getName());
       assertTrue(BCrypt.checkpw(app, consumers.get(0).getPassword()));
     }
 
     Consumer filter = new Consumer() ; filter.setName("bleck");
-    List<Consumer> consumers = nedDBSvc.findByAttribute(filter);
+    List<Consumer> consumers = nedDBSvc.findByAttribute(filter, false);
     assertEquals(0, consumers.size());
   }
 
@@ -1149,7 +1149,7 @@ public class NamedEntityDBServiceTest {
     // verify single quote is escaped
     Organization orgFilter = new Organization();
     orgFilter.setFamiliarname("ABC's Inc (FN)");
-    List<Organization> foundOrgs = nedDBSvc.findByAttribute(orgFilter);
+    List<Organization> foundOrgs = nedDBSvc.findByAttribute(orgFilter, false);
     assertEquals(1, foundOrgs.size());
   }
 
