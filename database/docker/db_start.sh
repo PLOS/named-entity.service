@@ -71,6 +71,7 @@ NED_SCHEMA_SQL
     CREATE SCHEMA ringgold DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 RINGGOLD_SCHEMA_SQL
 
+  # TODO: can we remove this and use maven/flyway instead?
   for F in `ls -v ringgold/V*.sql`
   do
     cat "$F" | $MYSQL_ROOT ringgold 2>/dev/null
