@@ -23,4 +23,3 @@ $CMD -v > /dev/null|| (echo "Error: Flyway not found" && exit 2)
 $CMD $@
 
 # example use:  ./flyway -url="jdbc:mysql://localhost/namedEntities" -user=name -password=password -locations=filesystem:./migrations migrate
-
