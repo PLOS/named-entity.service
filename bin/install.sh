@@ -36,7 +36,7 @@ else
 fi
 
 
-ned_war=(named-entity-service*.war)
+ned_war=(../named-entity-service*.war)
 if [ ${#ned_war[@]} -ne 1 ]; then
     echo -e "\nUnexpected # of NED war's found (expected:1 found:${#ned_war[@]}). Aborting.\n"
     exit 1
@@ -47,7 +47,7 @@ echo -e "==> Deploying WAR ($ned_war)\n"
 #sudo service ned stop
 #rm -rf ${NED_WEBAPPS}/v1
 #rm -f ${NED_WEBAPPS}/v1.war
-sudo cp -f $ned_war ${NED_ROOT}/webapps/v1.war
+cp -f $ned_war ${NED_ROOT}/webapps/v1.war
 #sudo service ned start
 
 # OR deploy with tomcat manager
