@@ -3,6 +3,9 @@
 # stop script if any command exits with non-zero (same as set -e)
 set -o errexit
 
+# change to this directory
+DIR="$( dirname "${BASH_SOURCE[0]}" )"
+
 T1=`date`
 
 function exec_sql {
