@@ -4,7 +4,7 @@
 set -o errexit
 
 # change to this directory
-DIR="$( dirname "${BASH_SOURCE[0]}" )"
+cd "$( dirname "${BASH_SOURCE[0]}" )"
 
 T1=`date`
 
