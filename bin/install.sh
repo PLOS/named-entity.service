@@ -10,10 +10,10 @@ T1=`date`
 
 function exec_sql {
     sql=${1}
-    echo $(mysql -user=${NED_DB_USER} -password=${NED_DB_PASSWORD} -se "$sql")
+    echo $(mysql --host=${NED_DB_HOST} --user=${NED_DB_USER} --password=${NED_DB_PASSWORD} -se "$sql" 2>/dev/null)
 }
 
-echo -e "==> Applying DB Migrations (schema:namedEntities)\n"
+echo -e "\n==> Applying DB Migrations (schema:namedEntities)"
 
 bash ./flyway -url="jdbc:mysql://${NED_DB_HOST}:3306/namedEntities" \
      -user=${NED_DB_USER} -password=${NED_DB_PASSWORD} -locations=filesystem:../database/migrations migrate
@@ -25,7 +25,7 @@ if [ ${#ringgold_gz[@]} -ne 1 ]; then
     exit 1
 fi
 
-echo -e "==> Importing Ringgold Database ($ringgold_gz)\n"
+echo -e "\n==> Importing Ringgold Database ($ringgold_gz)\n"
 
 ringgold_db_sql="
   select count(*) from information_schema.tables
@@ -33,7 +33,8 @@ ringgold_db_sql="
 ringgold_db_exist=$(exec_sql "$ringgold_db_sql")
 
 if [ $ringgold_db_exist -eq 0 ]; then
-    mysql -user=${NED_DB_USER} -password=${NED_DB_PASSWORD} < $ringgold_gz
+    gunzip -c -d $ringgold_gz | mysql --host=${NED_DB_HOST} --user=${NED_DB_USER} --password=${NED_DB_PASSWORD} 2>/dev/null
+    echo "Done"
 else
     echo "Non-empty Ringgold DB detected! Skipping Ringgold import."
 fi
@@ -45,13 +46,14 @@ if [ ${#ned_war[@]} -ne 1 ]; then
     exit 1
 fi
 
-echo -e "==> Deploying WAR ($ned_war)\n"
+echo -e "\n==> Deploying WAR ($ned_war)\n"
 
 #sudo service ned stop
 #rm -rf ${NED_WEBAPPS}/v1
 #rm -f ${NED_WEBAPPS}/v1.war
 cp -f $ned_war ${NED_ROOT}/webapps/v1.war
+echo "Done"
 #sudo service ned start
 
-echo "Started  : $T1"
-echo "Finished : `date`"
+echo -e "\nStarted  : $T1"
+echo -e "Finished : `date`\n"
