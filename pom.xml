@@ -468,6 +468,10 @@
               <goal>jdeb</goal>
             </goals>
             <configuration>
+              <deb>${project.build.directory}/${project.build.finalName}.deb</deb>
+              <!--<verbose>true</verbose>-->
+              <!-- replace SNAPSHOT in version with current timestamp -->
+              <snapshotExpand>true</snapshotExpand>
               <controlDir>${project.basedir}/src/deb/control</controlDir>
               <dataSet>
                 <data>
@@ -475,7 +479,7 @@
                   <type>file</type>
                   <mapper>
                     <type>perm</type>
-                    <prefix>/opt/plos/ned/webapps</prefix>
+                    <prefix>/tmp/nedinstall</prefix>
                   </mapper>
                 </data>
 
@@ -484,16 +488,16 @@
                   <type>directory</type>
                   <mapper>
                     <type>perm</type>
-                    <prefix>/tmp/bin</prefix>
+                    <prefix>/tmp/nedinstall/bin</prefix>
                   </mapper>
                 </data>
 
                 <data>
-                  <src>${project.basedir}/database</src>
+                  <src>${project.basedir}/database/migrations</src>
                   <type>directory</type>
                   <mapper>
                     <type>perm</type>
-                    <prefix>/tmp/database</prefix>
+                    <prefix>/tmp/nedinstall/database/migrations</prefix>
                   </mapper>
                 </data>
               </dataSet>

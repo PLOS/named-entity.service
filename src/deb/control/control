@@ -1,10 +1,9 @@
-Package: [[name]]
+Package: [[artifactId]]
 Version: [[version]]
+Description: [[name]]
 Section: misc
 Priority: optional
 Architecture: all
-Depends: jdk (>= 1.8)
-Maintainer: PLOS <@plos.org>
-Description: Named Entity Service (NED)
+Maintainer: Public Library of Science <dev@plos.org>
 Distribution: development
-Depends: default-jre | java8-runtime
+Depends: jdk (>= 1.8) | default-jre | java8-runtime

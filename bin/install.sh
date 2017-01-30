@@ -6,8 +6,6 @@ set -o errexit
 # change to this directory
 cd "$( dirname "${BASH_SOURCE[0]}" )"
 
-T1=`date`
-
 function exec_sql {
     sql=${1}
     echo $(mysql --host=${NED_DB_HOST} --user=${NED_DB_USER} --password=${NED_DB_PASSWORD} -se "$sql" 2>/dev/null)
@@ -48,12 +46,8 @@ fi
 
 echo -e "\n==> Deploying WAR ($ned_war)\n"
 
-#sudo service ned stop
-#rm -rf ${NED_WEBAPPS}/v1
-#rm -f ${NED_WEBAPPS}/v1.war
+rm -rf ${NED_ROOT}/webapps/v1
+rm -f ${NED_ROOT}/webapps/v1.war
 cp -f $ned_war ${NED_ROOT}/webapps/v1.war
-echo "Done"
-#sudo service ned start
 
-echo -e "\nStarted  : $T1"
-echo -e "Finished : `date`\n"
+echo "Done"

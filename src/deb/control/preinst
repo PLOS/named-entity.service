@@ -1,0 +1,4 @@
+#!/bin/bash
+echo 'preinst script executing'
+echo 'sudo service ned stop'
+sudo service ned stop
