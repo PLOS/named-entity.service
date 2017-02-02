@@ -46,8 +46,13 @@ fi
 
 echo -e "\n==> Deploying WAR ($ned_war)\n"
 
+echo 'Back up prior ned war'
+mv ${NED_ROOT}/webapps/v1.war ${NED_ROOT}/webapps/v1_war.old
+
+echo 'Remove prior webapp ned directory'
 rm -rf ${NED_ROOT}/webapps/v1
-rm -f ${NED_ROOT}/webapps/v1.war
+
+echo 'Rename ned war to v1.war'
 cp -f $ned_war ${NED_ROOT}/webapps/v1.war
 
 echo "Done"

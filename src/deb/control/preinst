@@ -2,3 +2,6 @@
 echo 'preinst script executing'
 echo 'sudo service ned stop'
 sudo service ned stop
+
+# clean-up previous installation 
+rm -rf /tmp/nedinstall
