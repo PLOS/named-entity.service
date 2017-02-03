@@ -1,0 +1,17 @@
+#!/bin/bash
+set -o errexit
+
+echo 'postinst script executing'
+
+#TODO: decouple this from salt?
+echo "source /etc/ned/deploy-envs.sh"
+source /etc/ned/deploy-envs.sh
+
+echo "bash /usr/share/nedinstall/bin/install.sh"
+bash /usr/share/nedinstall/bin/install.sh
+
+# start ned service, if exists.    
+if service --status-all 2>&1 | grep -wq 'ned'; then    
+  echo 'sudo service ned start'
+  sudo service ned start 
+fi
