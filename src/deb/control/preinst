@@ -9,5 +9,5 @@ if service --status-all 2>&1 | grep -wq 'ned'; then
   sudo service ned stop 
 
   echo 'deleting expanded ned webapps folder'
-  sudo rm -rf /opt/plos/ned/webapps/v1
+  sudo rm -rf /opt/plos/ned/webapps/v*
 fi
