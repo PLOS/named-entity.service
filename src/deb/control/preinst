@@ -7,7 +7,4 @@ echo 'preinst script executing'
 if service --status-all 2>&1 | grep -wq 'ned'; then    
   echo 'sudo service ned stop'
   sudo service ned stop 
-
-  echo 'delete expanded webapp dir (/opt/plos/ned/webapps/v1)'
-  rm -rf /opt/plos/ned/webapps/v1
 fi
