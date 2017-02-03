@@ -3,6 +3,9 @@ set -o errexit
 
 echo 'preinst script executing'
 
+# start with a clean slate 
+rm -rf /usr/share/nedinstall
+
 # stop ned service, if exists.    
 if service --status-all 2>&1 | grep -wq 'ned'; then    
   echo 'sudo service ned stop'
