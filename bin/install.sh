@@ -37,22 +37,4 @@ else
     echo "Non-empty Ringgold DB detected! Skipping Ringgold import."
 fi
 
-
-ned_war=(../named-entity-service*.war)
-if [ ${#ned_war[@]} -ne 1 ]; then
-    echo -e "\nUnexpected # of NED war's found (expected:1 found:${#ned_war[@]}). Aborting.\n"
-    exit 1
-fi
-
-echo -e "\n==> Deploying WAR ($ned_war)\n"
-
-echo 'Back up prior ned war'
-mv ${NED_ROOT}/webapps/v1.war ${NED_ROOT}/webapps/v1_war.old
-
-echo 'Remove prior webapp ned directory'
-rm -rf ${NED_ROOT}/webapps/v1
-
-echo 'Rename ned war to v1.war'
-cp -f $ned_war ${NED_ROOT}/webapps/v1.war
-
 echo "Done"

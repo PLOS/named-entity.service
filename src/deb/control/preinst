@@ -1,7 +1,13 @@
 #!/bin/bash
-echo 'preinst script executing'
-echo 'sudo service ned stop'
-sudo service ned stop
+set -o errexit
 
-# clean-up previous installation 
-rm -rf /tmp/nedinstall
+echo 'preinst script executing'
+
+# stop ned service, if exists.    
+if service --status-all 2>&1 | grep -wq 'ned'; then    
+  echo 'sudo service ned stop'
+  sudo service ned stop 
+
+  echo 'delete expanded webapp dir (/opt/plos/ned/webapps/v1)'
+  rm -rf /opt/plos/ned/webapps/v1
+fi

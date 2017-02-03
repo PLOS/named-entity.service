@@ -2,4 +2,4 @@
 echo 'postrm script executing'
 
 # delete any leftover flyway artifacts
-rm -rf /tmp/nedinstall
+rm -rf /usr/share/nedinstall/bin/flyway-*

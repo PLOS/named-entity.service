@@ -477,10 +477,7 @@
                 <data>
                   <src>${project.build.directory}/${project.build.finalName}.war</src>
                   <type>file</type>
-                  <mapper>
-                    <type>perm</type>
-                    <prefix>/usr/share/nedinstall</prefix>
-                  </mapper>
+                  <dst>/opt/plos/ned/webapps/v1.war</dst>
                 </data>
 
                 <data>
