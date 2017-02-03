@@ -471,7 +471,7 @@
               <deb>${project.build.directory}/${project.build.finalName}.deb</deb>
               <!--<verbose>true</verbose>-->
               <!-- replace SNAPSHOT in version with current timestamp -->
-              <snapshotExpand>true</snapshotExpand>
+              <!--<snapshotExpand>true</snapshotExpand>-->
               <controlDir>${project.basedir}/src/deb/control</controlDir>
               <dataSet>
                 <data>
@@ -479,7 +479,7 @@
                   <type>file</type>
                   <mapper>
                     <type>perm</type>
-                    <prefix>/tmp/nedinstall</prefix>
+                    <prefix>/usr/share/nedinstall</prefix>
                   </mapper>
                 </data>
 
@@ -488,7 +488,7 @@
                   <type>directory</type>
                   <mapper>
                     <type>perm</type>
-                    <prefix>/tmp/nedinstall/bin</prefix>
+                    <prefix>/usr/share/nedinstall/bin</prefix>
                   </mapper>
                 </data>
 
@@ -497,7 +497,7 @@
                   <type>directory</type>
                   <mapper>
                     <type>perm</type>
-                    <prefix>/tmp/nedinstall/database/migrations</prefix>
+                    <prefix>/usr/share/nedinstall/database/migrations</prefix>
                   </mapper>
                 </data>
               </dataSet>
