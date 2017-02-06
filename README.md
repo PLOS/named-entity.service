@@ -3,6 +3,9 @@ Named Entity Database
 
 NED is a web service for hosting information about people and organizations. It provides a REST API backed my a MySQL database.
 
+
+
+
 Dependencies
 ------------
     * Java 8
@@ -14,25 +17,6 @@ You need to build and deploy the Docker Maven Plugin to your Maven repo before
 building NED. See readme in config/docker-maven-plugin for details on how to do
 this.
 
-Adding userapps
----------------
-
-Applications that use NED must identify themselves. This is done with HTTP Basic
-auth, and there are fields for the appname and password on the swagger
-interface. To insert a userapp into the database, run this:
-
-    ./ned.sh insertapp appname password
-
-Running
--------
-
-to start in embedded Tomcat instance
-
-    ./ned.sh tomcat
-    
-to use the API and see the REST documentation visit the root of the service, for example:
-
-[http://localhost:8080/v1/](http://localhost:8080/v1/)
     
 Database Setup
 --------------
@@ -75,6 +59,26 @@ if you are deploying to a system wide Tomcat instance you will need to add somet
               password=""
               url="jdbc:mysql://localhost:3306/ringgold" />
               
+Adding userapps
+---------------
+
+Applications that use NED must identify themselves. This is done with HTTP Basic
+auth, and there are fields for the appname and password on the swagger
+interface. To insert a userapp into the database, run this:
+
+    ./ned.sh insertapp appname password
+
+Running
+-------
+
+to start in embedded Tomcat instance
+
+    ./ned.sh tomcat
+    
+to use the API and see the REST documentation visit the root of the service, for example:
+
+[http://localhost:8080/v1/](http://localhost:8080/v1/)
+
 Logging
 -------
 
@@ -120,3 +124,25 @@ Generating Eclipse Project Files
 --------------------------------
 
     mvn eclipse:clean eclipse:eclipse
+    
+   
+Troubleshooting
+--------------------------------
+
+if you are on mac, you might be using boot2docker
+
+if you see this error: 
+[ERROR] Failed to execute goal org.flywaydb:flyway-maven-plugin:3.2.1:migrate (default) on project named-entity-service: org.flywaydb.core.api.FlywayException: Unable to obtain Jdbc connection 
+from DataSource (jdbc:mysql://172.17.0.2:3306/namedEntities?useUnicode=true&characterEncoding=utf8) for user 'ned': Communications link failure
+[ERROR] The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server. Operation timed out
+
+you have to change your config file(/src/main/resources). you have to change ${docker.ip.host} and ${ringgolddb.ip.host} with your docker ip address. 
+so for example, your entry will look like db.url=jdbc:mysql://192.168.59.104:3306/namedEntities?useUnicode=true&amp;characterEncoding=utf8
+
+If above solution won't work and you again get same error but with docker ip, then you might have to open ports. you can run below script:
+  #!/bin/bash
+  for i in {10000..10999}; do
+  VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port$i,tcp,,$i,,$i";
+  VBoxManage modifyvm "boot2docker-vm" --natpf1 "udp-port$i,udp,,$i,,$i";
+  done
+

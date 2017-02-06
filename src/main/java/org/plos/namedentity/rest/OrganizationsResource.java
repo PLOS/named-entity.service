@@ -111,7 +111,7 @@ public class OrganizationsResource extends NedResource {
         return Response.status(Response.Status.OK).entity(
           namedEntityService.findComposite(composite.getNedid(), OrganizationComposite.class)).build();
 
-      List<Entity> results = crudService.findByAttribute(createSearchCriteria("organization", "legalname", composite.getLegalname(), OrganizationComposite.class));
+      List<Entity> results = crudService.findByAttribute(createSearchCriteria("organization", "legalname", composite.getLegalname(), OrganizationComposite.class), false);
 
       // if the org does not exist by name, insert into DB
       if (results.size() == 0)
@@ -140,11 +140,11 @@ public class OrganizationsResource extends NedResource {
         throw new NedException(InvalidOrganizationSearchQuery);
       }
 
-      List<Entity> results = crudService.findByAttribute(createSearchCriteria("organization", attribute, value, OrganizationComposite.class));
+      List<Entity> results = crudService.findByAttribute(createSearchCriteria("organization", attribute, value, OrganizationComposite.class), false);
 
       if (results.size() == 0)
         throw new NedException(EntityNotFound, "Organization not found");
-      else if (results.size() > 10)
+      else if (results.size() > DEFAULT_RESULT_COUNT)
         throw new NedException(TooManyResultsFound);
 
       // entity records may refer to the same individual. we can filter these out

@@ -429,7 +429,7 @@ public class NamedEntityServiceTest {
 
     Email emailSearchCriteria = new Email();
     emailSearchCriteria.setEmailaddress("fu.manchu.work@foo.com");
-    List<Email> emailSearchResult = crudService.findByAttribute(emailSearchCriteria);
+    List<Email> emailSearchResult = crudService.findByAttribute(emailSearchCriteria, false);
     assertEquals(1, emailSearchResult.size());
 
     nedId = emailSearchResult.get(0).getNedid();
@@ -468,7 +468,7 @@ public class NamedEntityServiceTest {
     Globaltype globalTypesearchCriteria = new Globaltype();
     globalTypesearchCriteria.setTypeid(17);
     globalTypesearchCriteria.setShortdescription(typeName);
-    List<Globaltype> globalTypesResult = crudService.findByAttribute(globalTypesearchCriteria);
+    List<Globaltype> globalTypesResult = crudService.findByAttribute(globalTypesearchCriteria, false);
     assertEquals(1, globalTypesResult.size());
 
     return globalTypesResult.get(0).getId();
@@ -527,7 +527,7 @@ public class NamedEntityServiceTest {
     finally {
       Email emailSearchCriteria = new Email();
       emailSearchCriteria.setEmailaddress("invalid@email");
-      List<Email> emailSearchResult = crudService.findByAttribute(emailSearchCriteria);
+      List<Email> emailSearchResult = crudService.findByAttribute(emailSearchCriteria, false);
       assertEquals(0, emailSearchResult.size());
     }
   }

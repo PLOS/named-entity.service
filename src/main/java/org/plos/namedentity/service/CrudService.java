@@ -39,6 +39,6 @@ public interface CrudService {
 
   <T> List<T> findAll(Class<T> clazz, Integer offset, Integer limit);
 
-  <T> List<T> findByAttribute(T t);
+  <T> List<T> findByAttribute(T t, Boolean partial);
 
 }

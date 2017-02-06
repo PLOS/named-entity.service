@@ -152,7 +152,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
 
       Individualprofile profileCriteria = new Individualprofile();
       profileCriteria.setDisplayname(displayname.toString());
-      List<Individualprofile> profilesResult = nedDBSvc.findByAttribute(profileCriteria);
+      List<Individualprofile> profilesResult = nedDBSvc.findByAttribute(profileCriteria, false);
       if (profilesResult.size() == 0) {
         return displayname.toString();   // displayname is available
       }
@@ -282,7 +282,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       searchCriteria.setSourcetypeid(nedDBSvc.findTypeValue(
         nedDBSvc.findTypeClass("Source Applications"), UidTypeEnum.AMBRA.getName()));
 
-      List<Email> searchResult = nedDBSvc.findByAttribute(searchCriteria);
+      List<Email> searchResult = nedDBSvc.findByAttribute(searchCriteria, false);
       
       if (searchResult.size() != 1) {
         throw new NedException(ServerError, String.format(
@@ -413,7 +413,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     //TODO: cache app users in memory.
     Consumer filter = new Consumer();
     filter.setName(username);
-    List<Consumer> consumers = nedDBSvc.findByAttribute(filter);
+    List<Consumer> consumers = nedDBSvc.findByAttribute(filter, false);
     if (consumers.size() == 0) {
       throw new NedException(ServerError, "Unknown application user: "+username);
     }
