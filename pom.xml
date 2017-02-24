@@ -496,6 +496,16 @@
               <!--<snapshotExpand>true</snapshotExpand>-->
               <controlDir>${project.basedir}/src/deb/control</controlDir>
               <dataSet>
+
+                <data>
+                  <src>${project.basedir}/src/deb/tomcat7</src>
+                  <type>directory</type>
+                  <mapper>
+                    <type>perm</type>
+                    <prefix>/opt/plos/ned</prefix>
+                  </mapper>
+                </data>
+
                 <data>
                   <src>${project.build.directory}/${project.build.finalName}.war</src>
                   <type>file</type>

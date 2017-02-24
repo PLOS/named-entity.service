@@ -1,17 +1,54 @@
-#!/bin/bash
-set -o errexit
+#!/usr/bin/env bash
 
-echo 'postinst script executing'
+set -x
+#set -o errexit
 
-#TODO: decouple this from salt?
-echo "source /etc/ned/deploy-envs.sh"
-source /etc/ned/deploy-envs.sh
 
-echo "bash /usr/share/nedinstall/bin/install.sh"
-bash /usr/share/nedinstall/bin/install.sh
+function process_env_template {
+	CONTEXT_TEMPALTE=$1
 
-# start ned service, if exists.    
-if service --status-all 2>&1 | grep -wq 'ned'; then    
-  echo 'sudo service ned start'
-  sudo service ned start 
-fi
+  ls -lh $CONTEXT_TEMPALTE
+
+	echo "Processing template $CONTEXT_TEMPALTE"
+
+  eval "cat <<EOF
+$(<$CONTEXT_TEMPALTE)
+EOF
+" > $CONTEXT_TEMPALTE
+}
+
+. /usr/share/debconf/confmodule
+
+## Fetching configuration from debconf
+
+db_get [[artifactId]]/ned_db_user
+export NED_DB_USER=$RET
+
+db_get [[artifactId]]/ned_db_password
+export NED_DB_PASSWORD=$RET
+
+db_get [[artifactId]]/ned_db_host
+export NED_DB_HOST=$RET
+
+process_env_template /opt/plos/ned/conf/context.xml
+cat /opt/plos/ned/conf/context.xml
+
+
+# removes the saved values, so they need to be re-entered the next time around
+# probably suppost to move this to the postrm or something?
+db_purge
+
+
+
+##TODO: decouple this from salt?
+#echo "source /etc/ned/deploy-envs.sh"
+#source /etc/ned/deploy-envs.sh
+#
+#echo "bash /usr/share/nedinstall/bin/install.sh"
+#bash /usr/share/nedinstall/bin/install.sh
+#
+## start ned service, if exists.
+#if service --status-all 2>&1 | grep -wq 'ned'; then
+#  echo 'sudo service ned start'
+#  sudo service ned start
+#fi

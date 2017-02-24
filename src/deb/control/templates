@@ -1,0 +1,14 @@
+Template: [[artifactId]]/ned_db_host
+Type: string
+Default: localhost
+Description: The host that provides the NED database
+
+Template: [[artifactId]]/ned_db_user
+Type: string
+Default: ned
+Description: The user name in mysql to access the NED database
+
+Template: [[artifactId]]/ned_db_password
+Type: password
+Default:
+Description: The password for the user that will access the NED database
