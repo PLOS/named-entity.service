@@ -1,5 +1,4 @@
-#!/bin/sh
-#
+#!/usr/bin/env bash
 
 CATALINA_HOME=/usr/share/tomcat7
 
@@ -23,4 +22,3 @@ done
 if [ -z "$JAVA_OPTS" ]; then
 	JAVA_OPTS="-Djava.awt.headless=true -Xmx128M"
 fi
-

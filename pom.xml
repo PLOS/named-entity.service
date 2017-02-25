@@ -504,12 +504,26 @@
                     <type>perm</type>
                     <prefix>/opt/plos/ned</prefix>
                   </mapper>
+                  <!--<mapper>-->
+                    <!--<type>ls</type>-->
+                    <!--<src>*.sh</src>-->
+                    <!--<filemode>750</filemode>-->
+                  <!--</mapper>-->
                 </data>
 
                 <data>
                   <src>${project.build.directory}/${project.build.finalName}.war</src>
                   <type>file</type>
                   <dst>/opt/plos/ned/webapps/v1.war</dst>
+                </data>
+
+                <data>
+                  <src>${project.basedir}/src/deb/init</src>
+                  <type>directory</type>
+                  <mapper>
+                    <type>perm</type>
+                    <prefix>/etc/init</prefix>
+                  </mapper>
                 </data>
 
                 <data>

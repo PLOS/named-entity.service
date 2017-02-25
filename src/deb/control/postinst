@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -x
+#set -x
 #set -o errexit
 
 
@@ -29,6 +29,18 @@ export NED_DB_PASSWORD=$RET
 
 db_get [[artifactId]]/ned_db_host
 export NED_DB_HOST=$RET
+
+db_get [[artifactId]]/ringgold_db_user
+export RINGGOLD_DB_USER=$RET
+
+db_get [[artifactId]]/ringgold_db_password
+export RINGGOLD_DB_PASSWORD=$RET
+
+db_get [[artifactId]]/ringgold_db_host
+export RINGGOLD_DB_HOST=$RET
+
+# HACK: until I can figure out how to do this from jdeb
+chmod +x /opt/plos/ned/bin/*.sh
 
 process_env_template /opt/plos/ned/conf/context.xml
 cat /opt/plos/ned/conf/context.xml

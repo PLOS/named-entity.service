@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-set -x
-set -o errexit
+#set -x
+#set -o errexit
 
 . /usr/share/debconf/confmodule
 
@@ -11,7 +11,11 @@ db_input high [[artifactId]]/ned_db_user || true
 
 db_input high [[artifactId]]/ned_db_password || true
 
-# TODO: add ringgold
+db_input high [[artifactId]]/ringgold_db_host || true
+
+db_input high [[artifactId]]/ringgold_db_user || true
+
+db_input high [[artifactId]]/ringgold_db_password || true
 
 db_go || true
 
