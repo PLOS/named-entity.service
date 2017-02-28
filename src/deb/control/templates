@@ -27,3 +27,8 @@ Template: [[artifactId]]/ringgold_db_password
 Type: password
 Default:
 Description: The password for the user that will access the Ringgold database
+
+Template: [[artifactId]]/ringgold_import_dir
+Type: string
+Default: /tmp/ringgold
+Description: The location of the Ringgold archive to import (optional)

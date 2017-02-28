@@ -517,13 +517,19 @@
                   <dst>/opt/plos/ned/webapps/v1.war</dst>
                 </data>
 
+                <!--<data>-->
+                  <!--<src>${project.basedir}/src/deb/init</src>-->
+                  <!--<type>directory</type>-->
+                  <!--<mapper>-->
+                    <!--<type>perm</type>-->
+                    <!--<prefix>/etc/init</prefix>-->
+                  <!--</mapper>-->
+                <!--</data>-->
+
                 <data>
-                  <src>${project.basedir}/src/deb/init</src>
-                  <type>directory</type>
-                  <mapper>
-                    <type>perm</type>
-                    <prefix>/etc/init</prefix>
-                  </mapper>
+                  <src>${project.basedir}/src/deb/init/ned.upstart</src>
+                  <type>file</type>
+                  <dst>/etc/init/ned.conf</dst>
                 </data>
 
                 <data>
@@ -531,7 +537,7 @@
                   <type>directory</type>
                   <mapper>
                     <type>perm</type>
-                    <prefix>/usr/share/nedinstall/bin</prefix>
+                    <prefix>/opt/plos/ned/bin</prefix>
                   </mapper>
                 </data>
 
@@ -540,7 +546,7 @@
                   <type>directory</type>
                   <mapper>
                     <type>perm</type>
-                    <prefix>/usr/share/nedinstall/database/migrations</prefix>
+                    <prefix>/opt/plos/ned/migrations</prefix>
                   </mapper>
                 </data>
               </dataSet>
