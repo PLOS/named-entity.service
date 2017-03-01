@@ -6,26 +6,11 @@
 . /usr/share/debconf/confmodule
 
 db_input high [[artifactId]]/ned_db_host || true
-
 db_input high [[artifactId]]/ned_db_user || true
-
 db_input high [[artifactId]]/ned_db_password || true
-
 db_input high [[artifactId]]/ringgold_db_host || true
-
 db_input high [[artifactId]]/ringgold_db_user || true
-
 db_input high [[artifactId]]/ringgold_db_password || true
-
-db_input high [[artifactId]]/ringgold_import_dir #|| true
+db_input high [[artifactId]]/ringgold_import_dir || true
 
 db_go || true
-
-## stop ned service, if exists.
-#if service --status-all 2>&1 | grep -wq 'ned'; then
-#  echo 'sudo service ned stop'
-#  sudo service ned stop
-#
-#  echo 'deleting expanded ned webapps folder'
-#  sudo rm -rf /opt/plos/ned/webapps/v*
-#fi

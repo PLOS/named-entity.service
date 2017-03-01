@@ -1,9 +1,7 @@
 Package: [[artifactId]]
 Version: [[version]]
 Description: [[name]]
-Section: misc
-Priority: optional
 Architecture: all
 Maintainer: Public Library of Science <dev@plos.org>
-Distribution: development
-Depends: jdk (>= 1.8) | default-jre | java8-runtime | debconf | bash | mysql-client
+Depends: default-jre, java8-runtime, tomcat7-common, debconf, adduser, bash, mysql-client
+Homepage: https://github.com/PLOS/named-entity.service

@@ -1,14 +1,20 @@
 description "Named Entity Database Service"
 
-start on started and runlevel [2345]
-stop on shutdown
+  start on started and runlevel [2345]
+  stop on shutdown
 
-respawn
-respawn limit 5 15
+  respawn
+  respawn limit 5 15
 
-script
-exec /bin/bash << EOT
-  export CATALINA_BASE=/opt/plos/ned
-  /usr/share/tomcat7/bin/catalina.sh run
-EOT
-end script
+  setuid ned
+  setgid ned
+
+  env CATALINA_HOME=/usr/share/tomcat7
+  env CATALINA_BASE=/opt/plos/ned
+
+  exec $CATALINA_HOME/bin/catalina.sh run
+
+  # cleanup temp directory after stop
+  post-stop script
+    rm -rf $CATALINA_HOME/temp/*
+  end script

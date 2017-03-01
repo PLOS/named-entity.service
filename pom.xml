@@ -504,11 +504,6 @@
                     <type>perm</type>
                     <prefix>/opt/plos/ned</prefix>
                   </mapper>
-                  <!--<mapper>-->
-                    <!--<type>ls</type>-->
-                    <!--<src>*.sh</src>-->
-                    <!--<filemode>750</filemode>-->
-                  <!--</mapper>-->
                 </data>
 
                 <data>
@@ -518,18 +513,25 @@
                 </data>
 
                 <!--<data>-->
-                  <!--<src>${project.basedir}/src/deb/init</src>-->
-                  <!--<type>directory</type>-->
-                  <!--<mapper>-->
-                    <!--<type>perm</type>-->
-                    <!--<prefix>/etc/init</prefix>-->
-                  <!--</mapper>-->
+                  <!--<src>${project.basedir}/src/deb/init/ned.upstart</src>-->
+                  <!--<type>file</type>-->
+                  <!--<dst>/etc/init/ned.conf</dst>-->
+                <!--</data>-->
+
+                <!--<data>-->
+                  <!--<src>${project.basedir}/src/deb/init/ned.systemd</src>-->
+                  <!--<type>file</type>-->
+                  <!--<dst>/etc/systemd/system/ned.service</dst>-->
                 <!--</data>-->
 
                 <data>
-                  <src>${project.basedir}/src/deb/init/ned.upstart</src>
+                  <src>${project.basedir}/src/deb/init/ned.sysv</src>
                   <type>file</type>
-                  <dst>/etc/init/ned.conf</dst>
+                  <dst>/etc/init.d/ned</dst>
+                  <mapper>
+                    <type>perm</type>
+                    <filemode>755</filemode>
+                  </mapper>
                 </data>
 
                 <data>

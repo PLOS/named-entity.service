@@ -3,6 +3,11 @@
 #set -x
 set -o errexit
 
+. /usr/share/debconf/confmodule
+
+TOMCAT7_USER=ned
+TOMCAT7_GROUP=ned
+HOME=/opt/plos/ned
 
 function process_env_template {
 	CONTEXT_TEMPALTE=$1
@@ -17,49 +22,58 @@ EOF
 " > $CONTEXT_TEMPALTE
 }
 
-. /usr/share/debconf/confmodule
 
-# HACK: until I can figure out how to do this from jdeb
-chmod +x /opt/plos/ned/bin/*.sh
+case "$1" in
+    configure)
 
-# Fetching configuration from debconf
+	if ! getent group "$TOMCAT7_GROUP" > /dev/null 2>&1 ; then
+	    addgroup --system "$TOMCAT7_GROUP" --quiet
+	fi
+	if ! id $TOMCAT7_USER > /dev/null 2>&1 ; then
+	    adduser --system --home $HOME --no-create-home \
+		--ingroup "$TOMCAT7_GROUP" --disabled-password --shell /bin/false \
+		"$TOMCAT7_USER"
+	fi
 
-db_get [[artifactId]]/ned_db_user
-export NED_DB_USER=$RET
+  chmod +x $HOME/bin/*.sh
+  chown -Rh $TOMCAT7_USER:$TOMCAT7_GROUP $HOME
 
-db_get [[artifactId]]/ned_db_password
-export NED_DB_PASSWORD=$RET
+  # Fetching configuration from debconf
 
-db_get [[artifactId]]/ned_db_host
-export NED_DB_HOST=$RET
+  db_get [[artifactId]]/ned_db_user && export NED_DB_USER=$RET
+  db_get [[artifactId]]/ned_db_password && export NED_DB_PASSWORD=$RET
+  db_get [[artifactId]]/ned_db_host && export NED_DB_HOST=$RET
+  db_get [[artifactId]]/ringgold_db_user && export RINGGOLD_DB_USER=$RET
+  db_get [[artifactId]]/ringgold_db_password && export RINGGOLD_DB_PASSWORD=$RET
+  db_get [[artifactId]]/ringgold_db_host && export RINGGOLD_DB_HOST=$RET
+  db_get [[artifactId]]/ringgold_import_dir && export RINGGOLD_DIR=$RET
 
-db_get [[artifactId]]/ringgold_db_user
-export RINGGOLD_DB_USER=$RET
-
-db_get [[artifactId]]/ringgold_db_password
-export RINGGOLD_DB_PASSWORD=$RET
-
-db_get [[artifactId]]/ringgold_db_host
-export RINGGOLD_DB_HOST=$RET
-
-db_get [[artifactId]]/ringgold_import_dir
-export RINGGOLD_DIR=$RET
-
-# generate the context.xml
-process_env_template /opt/plos/ned/conf/context.xml
-cat /opt/plos/ned/conf/context.xml
-
-# run the migrations and import ringgold
-export MIGRATIONS_DIR=/opt/plos/ned/migrations
-/opt/plos/ned/bin/migrate.sh
-
-# removes the saved values, so they need to be re-entered the next time around
-# probably should move this to the postrm or something?
-db_purge
+  # generate the context.xml
+  process_env_template $HOME/conf/context.xml
+  cat $HOME/conf/context.xml
 
 
-## start ned service, if exists.
-#if service --status-all 2>&1 | grep -wq 'ned'; then
-#  echo 'sudo service ned start'
-#  sudo service ned start
+  # run the migrations and import ringgold
+  export MIGRATIONS_DIR=$HOME/migrations
+  $HOME/bin/migrate.sh
+
+  # removes the saved values, so they need to be re-entered the next time around
+  # probably should move this to the postrm or something?
+  db_purge
+
+esac
+
+# In case this system is running systemd, we make systemd reload the unit files
+# to pick up changes.
+if [ -d /run/systemd/system ] ; then
+	systemctl --system daemon-reload >/dev/null || true
+fi
+
+# Automatically added by dh_installinit
+#if [ -x "/etc/init.d/ned" ] || [ -e "/etc/init/ned.conf" ]; then
+#	if [ ! -e "/etc/init/ned.conf" ]; then
+#		update-rc.d ned defaults 92 08 >/dev/null
+#	fi
+#	invoke-rc.d ned start || true
 #fi
+# End automatically added section
