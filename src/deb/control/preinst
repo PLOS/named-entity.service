@@ -12,5 +12,7 @@ db_input high [[artifactId]]/ringgold_db_host || true
 db_input high [[artifactId]]/ringgold_db_user || true
 db_input high [[artifactId]]/ringgold_db_password || true
 db_input high [[artifactId]]/ringgold_import_dir || true
+db_input high [[artifactId]]/http_port || true
+db_input high [[artifactId]]/control_port || true
 
 db_go || true
