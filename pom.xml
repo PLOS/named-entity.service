@@ -512,20 +512,8 @@
                   <dst>/opt/plos/ned/webapps/v1.war</dst>
                 </data>
 
-                <!--<data>-->
-                  <!--<src>${project.basedir}/src/deb/init/ned.upstart</src>-->
-                  <!--<type>file</type>-->
-                  <!--<dst>/etc/init/ned.conf</dst>-->
-                <!--</data>-->
-
-                <!--<data>-->
-                  <!--<src>${project.basedir}/src/deb/init/ned.systemd</src>-->
-                  <!--<type>file</type>-->
-                  <!--<dst>/etc/systemd/system/ned.service</dst>-->
-                <!--</data>-->
-
                 <data>
-                  <src>${project.basedir}/src/deb/init/ned.sysv</src>
+                  <src>${project.basedir}/src/deb/ned.sysv</src>
                   <type>file</type>
                   <dst>/etc/init.d/ned</dst>
                   <mapper>

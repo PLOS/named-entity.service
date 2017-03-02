@@ -32,26 +32,30 @@ HOME=/opt/plos/ned
 #rm -rf /var/lib/tomcat7/policy
 
 case "$1" in
-    remove)
-        rm -rf $HOME
-    ;;
+  remove)
+#    TODO: dont remove configs?
+  ;;
 
-    purge)
-        # ignore errors during purge
-        set +e
+  purge)
+      # ignore errors during purge
+      set +e
 
-        deluser $TOMCAT7_USER
-        delgroup $TOMCAT7_GROUP
+      rm -rf $HOME
 
-        set -e
-    ;;
+      rm -f /etc/default/ned
 
-    upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
-        # Nothing to do here
-    ;;
+      deluser $TOMCAT7_USER
+      delgroup $TOMCAT7_GROUP
 
-    *)
-        echo "$0 called with unknown argument \`$1'" >&2
-        exit 1
-    ;;
+      set -e
+  ;;
+
+  upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+      # Nothing to do here
+  ;;
+
+  *)
+      echo "$0 called with unknown argument \`$1'" >&2
+      exit 1
+  ;;
 esac

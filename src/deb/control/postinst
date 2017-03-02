@@ -22,9 +22,10 @@ EOF
 " > $CONTEXT_TEMPALTE
 }
 
-
 case "$1" in
     configure)
+
+  # create user/group
 
 	if ! getent group "$TOMCAT7_GROUP" > /dev/null 2>&1 ; then
 	    addgroup --system "$TOMCAT7_GROUP" --quiet
@@ -38,17 +39,22 @@ case "$1" in
   chmod +x $HOME/bin/*.sh
   chown -Rh $TOMCAT7_USER:$TOMCAT7_GROUP $HOME
 
+  GET="db_get [[artifactId]]"
+
   # Fetching configuration from debconf
 
-  db_get [[artifactId]]/ned_db_user && export NED_DB_USER=$RET
-  db_get [[artifactId]]/ned_db_password && export NED_DB_PASSWORD=$RET
-  db_get [[artifactId]]/ned_db_host && export NED_DB_HOST=$RET
-  db_get [[artifactId]]/ringgold_db_user && export RINGGOLD_DB_USER=$RET
-  db_get [[artifactId]]/ringgold_db_password && export RINGGOLD_DB_PASSWORD=$RET
-  db_get [[artifactId]]/ringgold_db_host && export RINGGOLD_DB_HOST=$RET
-  db_get [[artifactId]]/ringgold_import_dir && export RINGGOLD_DIR=$RET
-  db_get [[artifactId]]/http_port && export HTTP_PORT=$RET
-  db_get [[artifactId]]/control_port && export CONTROL_PORT=$RET
+  $GET/ned_db_host && export NED_DB_HOST=$RET
+  $GET/ned_db_user && export NED_DB_USER=$RET
+  $GET/ned_db_password && export NED_DB_PASSWORD=$RET
+  $GET/ringgold_db_host && export RINGGOLD_DB_HOST=$RET
+  $GET/ringgold_db_user && export RINGGOLD_DB_USER=$RET
+  $GET/ringgold_db_password && export RINGGOLD_DB_PASSWORD=$RET
+  $GET/ringgold_import_dir && export RINGGOLD_DIR=$RET
+  $GET/http_port && export HTTP_PORT=$RET
+  $GET/control_port && export CONTROL_PORT=$RET
+
+  # removes the saved values, so they need to be re-entered the next time around
+  db_purge
 
   # generate configs from templates
   process_env_template $HOME/conf/context.xml
@@ -61,9 +67,6 @@ case "$1" in
   export MIGRATIONS_DIR=$HOME/migrations
   $HOME/bin/migrate.sh
 
-  # removes the saved values, so they need to be re-entered the next time around
-  # probably should move this to the postrm or something?
-  db_purge
 
 esac
 
