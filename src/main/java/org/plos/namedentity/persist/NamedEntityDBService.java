@@ -53,6 +53,10 @@ public interface NamedEntityDBService {
 
   <T extends Entity> List<T> findResolvedEntities(Integer nedId, Class<T> clazz);
 
+  Integer countGlobalTypes();
+
+  Integer countConsumers();
+
   /**
    * Finds type class for a type field in entity.
    *

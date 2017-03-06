@@ -26,6 +26,8 @@ import java.util.Date;
 
 @XmlRootElement
 public class ConfigInfo {
-  public String version;
-  public Date   startime;
+  public String  version;
+  public Date    starTime;
+  public Integer globalTypeCount;
+  public Integer consumerCount;
 }

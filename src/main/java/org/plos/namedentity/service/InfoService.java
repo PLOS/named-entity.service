@@ -26,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.Properties;
@@ -33,6 +34,8 @@ import java.util.Properties;
 public class InfoService {
 
   private static final Logger log = LoggerFactory.getLogger(InfoService.class);
+
+  @Inject protected NamedEntityService namedEntityService;
 
   private String projectVersion = "unknown";
 
@@ -56,7 +59,10 @@ public class InfoService {
 
     ConfigInfo config = new ConfigInfo();
     config.version = projectVersion;
-    config.startime = startTime;
+    config.starTime = startTime;
+    config.globalTypeCount = namedEntityService.countGlobalTypes();
+    config.consumerCount = namedEntityService.countConsumers();
+
     return config;
   }
 
