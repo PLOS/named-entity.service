@@ -490,7 +490,7 @@
               <goal>jdeb</goal>
             </goals>
             <configuration>
-              <deb>${project.build.directory}/${project.build.finalName}.deb</deb>
+              <deb>${project.build.directory}/${artifactId}-[[version]].deb</deb>
               <!--<verbose>true</verbose>-->
               <!-- replace SNAPSHOT in version with current timestamp -->
               <snapshotExpand>true</snapshotExpand>

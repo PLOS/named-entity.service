@@ -25,49 +25,59 @@ EOF
 }
 
 case "$1" in
-    configure)
+  configure)
 
-  # create user/group
+    # create user/group
 
-	if ! getent group "$TOMCAT7_GROUP" > /dev/null 2>&1 ; then
-	    addgroup --system "$TOMCAT7_GROUP" --quiet
-	fi
-	if ! id $TOMCAT7_USER > /dev/null 2>&1 ; then
-	    adduser --system --home $HOME --no-create-home \
-		--ingroup "$TOMCAT7_GROUP" --disabled-password --shell /bin/false \
-		"$TOMCAT7_USER"
-	fi
+    if ! getent group "$TOMCAT7_GROUP" > /dev/null 2>&1 ; then
+        addgroup --system "$TOMCAT7_GROUP" --quiet
+    fi
+    if ! id $TOMCAT7_USER > /dev/null 2>&1 ; then
+        adduser --system --home $HOME --no-create-home \
+      --ingroup "$TOMCAT7_GROUP" --disabled-password --shell /bin/false \
+      "$TOMCAT7_USER"
+    fi
 
-  chmod +x $HOME/bin/*.sh
-  chown -Rh $TOMCAT7_USER:$TOMCAT7_GROUP $HOME
+    chmod +x $HOME/bin/*.sh
+    chown -Rh $TOMCAT7_USER:$TOMCAT7_GROUP $HOME
 
-  GET="db_get [[artifactId]]"
+    GET="db_get [[artifactId]]"
 
-  # Fetching configuration from debconf
+    # Fetching configuration from debconf
 
-  $GET/ned_db_host && export NED_DB_HOST=$RET
-  $GET/ned_db_user && export NED_DB_USER=$RET
-  $GET/ned_db_password && export NED_DB_PASSWORD=$RET
-  $GET/ringgold_db_host && export RINGGOLD_DB_HOST=$RET
-  $GET/ringgold_db_user && export RINGGOLD_DB_USER=$RET
-  $GET/ringgold_db_password && export RINGGOLD_DB_PASSWORD=$RET
-  $GET/ringgold_import_dir && export RINGGOLD_DIR=$RET
-  $GET/http_port && export HTTP_PORT=$RET
-  $GET/control_port && export CONTROL_PORT=$RET
+    $GET/ned_db_host && export NED_DB_HOST=$RET
+    $GET/ned_db_user && export NED_DB_USER=$RET
+    $GET/ned_db_password && export NED_DB_PASSWORD=$RET
+    $GET/ringgold_db_host && export RINGGOLD_DB_HOST=$RET
+    $GET/ringgold_db_user && export RINGGOLD_DB_USER=$RET
+    $GET/ringgold_db_password && export RINGGOLD_DB_PASSWORD=$RET
+    $GET/ringgold_import_dir && export RINGGOLD_DIR=$RET
+    $GET/http_port && export HTTP_PORT=$RET
+    $GET/control_port && export CONTROL_PORT=$RET
 
-  # removes the saved values, so they need to be re-entered the next time around
-  db_purge
+    # removes the saved values, so they need to be re-entered the next time around
+    db_purge
 
-  # generate configs from templates
-  process_env_template $HOME/conf/context.xml
-  cat $HOME/conf/context.xml
+    # generate configs from templates
+    process_env_template $HOME/conf/context.xml
+#    cat $HOME/conf/context.xml
 
-  process_env_template $HOME/conf/server.xml
-#  cat $HOME/conf/server.xml
+    process_env_template $HOME/conf/server.xml
+#    cat $HOME/conf/server.xml
 
-  # run the migrations and import ringgold
-  export MIGRATIONS_DIR=$HOME/migrations
-  $HOME/bin/migrate.sh
+    # run the migrations and import ringgold
+    export MIGRATIONS_DIR=$HOME/migrations
+    $HOME/bin/migrate.sh
+
+  ;;
+
+  abort-upgrade|abort-remove|abort-deconfigure)
+  ;;
+
+  *)
+    echo "postinst called with unknown argument \`$1'" >&2
+    exit 1
+  ;;
 
 esac
 
@@ -77,11 +87,9 @@ if [ -d /run/systemd/system ] ; then
 	systemctl --system daemon-reload >/dev/null || true
 fi
 
-# Automatically added by dh_installinit
 if [ -x "/etc/init.d/$NAME" ] || [ -e "/etc/init/$NAME.conf" ]; then
 	if [ ! -e "/etc/init/$NAME.conf" ]; then
 		update-rc.d $NAME defaults 92 08 >/dev/null
 	fi
 	invoke-rc.d $NAME start || true
 fi
-# End automatically added section
