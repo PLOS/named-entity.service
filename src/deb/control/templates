@@ -1,17 +1,17 @@
 Template: [[artifactId]]/ned_db_host
 Type: string
 Default: localhost
-Description: The host that provides the NED database
+Description: The host that provides the 'namedEntities' database. The database must exist prior to the install, even if there is no schema.
 
 Template: [[artifactId]]/ned_db_user
 Type: string
 Default: ned
-Description: The user name in mysql to access the NED database
+Description: The existing user in mysql who has access the 'namedEntities' database
 
 Template: [[artifactId]]/ned_db_password
 Type: password
 Default:
-Description: The password for the user that will access the NED database
+Description: The password for the user that has access the 'namedEntities' database
 
 Template: [[artifactId]]/ringgold_db_host
 Type: string

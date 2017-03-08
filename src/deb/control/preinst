@@ -8,6 +8,8 @@ case "$1" in
 
     . /usr/share/debconf/confmodule
 
+#    TODO: check first to see that the DB is up before entering credentials?
+
     INPUT="db_input high [[artifactId]]"
 
     $INPUT/ned_db_host || true
