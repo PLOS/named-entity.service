@@ -421,6 +421,14 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
   }
 
+  public Integer countGlobalTypes() {
+    return this.context.selectCount().from(GLOBALTYPES).fetchOne(0, int.class);
+  }
+
+  public Integer countConsumers() {
+    return this.context.selectCount().from(CONSUMERS).fetchOne(0, int.class);
+  }
+
   private SelectOnConditionStep select(Uniqueidentifiers uid) {
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");

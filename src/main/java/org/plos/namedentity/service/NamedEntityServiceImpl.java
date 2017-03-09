@@ -179,6 +179,14 @@ public class NamedEntityServiceImpl implements NamedEntityService {
     return nedDBSvc.getAlerts(frequency);
   }
 
+  public Integer countGlobalTypes() {
+    return nedDBSvc.countGlobalTypes();
+  }
+
+  public Integer countConsumers() {
+    return nedDBSvc.countConsumers();
+  }
+
   private Organization resolveOrganization(Organization entity) {
 
     if (entity.getSource() != null)

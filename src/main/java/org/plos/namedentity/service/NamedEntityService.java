@@ -39,6 +39,10 @@ public interface NamedEntityService {
 
   <T extends Composite> T createComposite(T composite, Class<T> clazz);
 
+  Integer countGlobalTypes();
+
+  Integer countConsumers();
+
   void deleteIndividual(Integer nedId);
 
   /**
