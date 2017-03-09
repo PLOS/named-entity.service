@@ -26,5 +26,6 @@ case "$1" in
 esac
 
 if [ -x "/etc/init.d/$NAME" ] || [ -e "/etc/init/$NAME.conf" ]; then
-	invoke-rc.d $NAME stop || true
+#	invoke-rc.d $NAME stop || true
+	service ned stop || true
 fi

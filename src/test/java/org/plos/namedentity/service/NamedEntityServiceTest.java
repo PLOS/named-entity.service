@@ -475,6 +475,16 @@ public class NamedEntityServiceTest {
   }
 
   @Test
+  public void globalTypeCount() {
+    assertEquals(549, namedEntityService.countGlobalTypes().intValue());
+  }
+
+  @Test
+  public void consumerCount() {
+    assertEquals(1, namedEntityService.countConsumers().intValue());
+  }
+
+  @Test
   public void testDeleteIndividual() {
 
     IndividualComposite composite = newCompositeIndividualWithGroup();

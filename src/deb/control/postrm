@@ -28,7 +28,9 @@ case "$1" in
     . /usr/share/debconf/confmodule
     db_purge
 
-	  update-rc.d $NAME remove >/dev/null
+    if [ ! -e "/etc/init/$NAME.conf" ]; then
+      update-rc.d -f $NAME remove >/dev/null
+    fi
 
     rm -rf $HOME
     rm -f $CONFFILE

@@ -91,7 +91,7 @@ for jdir in $JDK_DIRS; do
 done
 export JAVA_HOME
 
-# Directory where the Tomcat 6 binary distribution resides
+# Directory where the Tomcat binary distribution resides
 CATALINA_HOME=/usr/share/tomcat7
 
 # Directory for per-instance configuration files and webapps

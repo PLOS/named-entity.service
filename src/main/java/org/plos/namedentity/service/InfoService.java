@@ -66,4 +66,8 @@ public class InfoService {
     return config;
   }
 
+  public void setNamedEntityService(NamedEntityService namedEntityService) {
+    this.namedEntityService = namedEntityService;
+  }
+
 }
