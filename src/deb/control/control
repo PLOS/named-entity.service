@@ -1,6 +1,6 @@
 Package: [[artifactId]]
 Version: [[version]]
-Description: [[name]]
+Description: [[name]]+[[build.timestamp]]-plos[[build.counter]]
 Architecture: all
 Section: web
 Priority: optional

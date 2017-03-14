@@ -32,7 +32,7 @@
   <artifactId>named-entity-service</artifactId>
   <packaging>war</packaging>
   <name>Named Entity JAX-RS Service</name>
-  <version>1.6.0-SNAPSHOT</version>
+  <version>1.6.0</version>
   
   <properties>
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
@@ -46,6 +46,9 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <tomcat.jdbc.version>7.0.54</tomcat.jdbc.version>
     <maven.exec.skip>false</maven.exec.skip>
+    <maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
+    <build.timestamp>${maven.build.timestamp}</build.timestamp>
+    <build.counter>0</build.counter>
   </properties>
 
   <dependencies>
@@ -496,7 +499,7 @@
               <goal>jdeb</goal>
             </goals>
             <configuration>
-              <deb>${project.build.directory}/${artifactId}-[[version]].deb</deb>
+              <deb>${project.build.directory}/${project.artifactId}_[[version]]+${build.timestamp}-plos${build.counter}.deb</deb>
               <!--<verbose>true</verbose>-->
               <!-- replace SNAPSHOT in version with current timestamp -->
               <snapshotExpand>true</snapshotExpand>
