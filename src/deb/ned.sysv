@@ -10,7 +10,7 @@
 # Additional improvements by Jason Brittain <jason.brittain@mulesoft.com>.
 #
 ### BEGIN INIT INFO
-# Provides:          tomcat7
+# Provides:          ned
 # Required-Start:    $local_fs $remote_fs $network
 # Required-Stop:     $local_fs $remote_fs $network
 # Should-Start:      $named
