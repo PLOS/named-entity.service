@@ -30,7 +30,7 @@
               driverClassName="com.mysql.jdbc.Driver"
               username="${NED_DB_USER}"
               password="${NED_DB_PASSWORD}"
-              url="jdbc:mysql://${NED_DB_HOST}:3306/namedEntities"
+              url="jdbc:mysql://${NED_DB_HOST}:3306/namedEntities?useUnicode=true&amp;characterEncoding=utf8"
               closeMethod="close" />
 
     <Resource name="jdbc/ringgold"
@@ -42,7 +42,7 @@
               driverClassName="com.mysql.jdbc.Driver"
               username="${RINGGOLD_DB_USER}"
               password="${RINGGOLD_DB_PASSWORD}"
-              url="jdbc:mysql://${RINGGOLD_DB_HOST}:3306/ringgold"
+              url="jdbc:mysql://${RINGGOLD_DB_HOST}:3306/ringgold?useUnicode=true&amp;characterEncoding=utf8"
               closeMethod="close" />
 
 </Context>
