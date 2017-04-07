@@ -4,7 +4,7 @@
 set -e
 
 case "$1" in
-  configure)
+  configure|reconfigure)
 
     . /usr/share/debconf/confmodule
 
@@ -30,7 +30,7 @@ case "$1" in
   ;;
 
   *)
-      echo "preinst called with unknown argument \`$1'" >&2
+      echo "config called with unknown argument \`$1'" >&2
       exit 1
   ;;
 esac
