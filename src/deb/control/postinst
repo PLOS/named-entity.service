@@ -13,6 +13,7 @@ HOME=/opt/plos/$NAME
 
 function process_env_template {
 	CONTEXT_TEMPLATE=$1
+	OUTFILE=$2
 
   ls -lh $CONTEXT_TEMPLATE
 
@@ -21,11 +22,11 @@ function process_env_template {
   eval "cat <<EOF
 $(<$CONTEXT_TEMPLATE)
 EOF
-" > $CONTEXT_TEMPLATE
+" > $OUTFILE
 }
 
 case "$1" in
-  configure)
+  configure|reconfigure)
 
     # create user/group
 
@@ -59,9 +60,9 @@ case "$1" in
     db_purge
 
     # generate configs from templates
-    process_env_template $HOME/conf/context.xml
+    process_env_template $HOME/conf/context.template.xml $HOME/conf/context.xml
 
-    process_env_template $HOME/conf/server.xml
+    process_env_template $HOME/conf/server.template.xml $HOME/conf/server.xml
 
     # run the migrations and import ringgold
     export MIGRATIONS_DIR=$HOME/migrations
