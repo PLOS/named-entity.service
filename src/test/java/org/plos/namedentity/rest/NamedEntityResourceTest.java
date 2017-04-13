@@ -23,6 +23,7 @@ package org.plos.namedentity.rest;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.plos.namedentity.api.ConfigInfo;
 import org.plos.namedentity.api.IndividualComposite;
 import org.plos.namedentity.api.NedErrorResponse;
 import org.plos.namedentity.api.NedException;
@@ -1847,6 +1848,28 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertEquals(128, auth.getPassword().length());
 
     // DELETE:TODO
+  }
+
+  @Test
+  public void testInfo() throws Exception {
+
+    Response response = target("/service/errorcodes").request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    response = target("/service/config").request(MediaType.APPLICATION_JSON_TYPE).get();
+
+    assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+    String responseJson = response.readEntity(String.class);
+
+    Unmarshaller unmarshaller = jsonUnmarshaller(ConfigInfo.class);
+    ConfigInfo info = unmarshalEntity(responseJson, ConfigInfo.class, unmarshaller);
+
+    assertNotNull(info.version);
+    assertEquals(info.consumerCount.intValue(), 1);
+    assertEquals(info.globalTypeCount.intValue(), 549);
+
   }
 
   @Test

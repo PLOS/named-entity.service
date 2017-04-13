@@ -13,8 +13,8 @@ function exec_sql {
 
 echo -e "\n==> Applying DB Migrations (schema:namedEntities)"
 
-bash ./flyway -url="jdbc:mysql://${NED_DB_HOST}:3306/namedEntities" \
-     -user=${NED_DB_USER} -password=${NED_DB_PASSWORD} -locations=filesystem:../database/migrations migrate
+bash ./flyway.sh -url="jdbc:mysql://${NED_DB_HOST}:3306/namedEntities" \
+     -user=${NED_DB_USER} -password=${NED_DB_PASSWORD} -locations=filesystem:${MIGRATIONS_DIR} migrate
 
 
 ringgold_gz=(${RINGGOLD_DIR}/ringgold*.gz)

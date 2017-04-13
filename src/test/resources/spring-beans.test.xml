@@ -57,6 +57,7 @@
        <property name="namedEntityDBService" ref="namedEntityDBService" />
     </bean>
 
+
     <bean id="ringgoldDBService" class="org.plos.namedentity.persist.RinggoldDBServiceImpl">
        <property name="context" ref="ringgoldDsl" />
     </bean>
@@ -67,6 +68,10 @@
 
     <bean id="namedEntityService" class="org.plos.namedentity.service.NamedEntityServiceImpl">
         <property name="namedEntityDBService" ref="namedEntityDBService" />
+    </bean>
+
+    <bean id="infoService" class="org.plos.namedentity.service.InfoService">
+        <property name="namedEntityService" ref="namedEntityService" />
     </bean>
 
     <bean id="ringgoldService" class="org.plos.namedentity.service.RinggoldServiceImpl">
