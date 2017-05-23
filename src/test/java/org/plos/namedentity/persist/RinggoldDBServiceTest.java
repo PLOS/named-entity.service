@@ -128,6 +128,23 @@ public class RinggoldDBServiceTest {
     }
   }
 
+  @Test // PLT-1045
+  public void testFindByInstitutionNameWithApostrophe() {
+    List<Institution> institutions = ringgoldDBService.findByInstitutionName("Otago Girls' High School");
+    assertEquals(1, institutions.size());
+    assertEquals("Dunedin", institutions.get(0).getCity());
+
+    institutions = ringgoldDBService.findByInstitutionName("Saint Mary's");
+    assertEquals(1, institutions.size());
+    assertEquals("Saint Mary's Catholic Elementary School", institutions.get(0).getName());
+    assertEquals("NE", institutions.get(0).getState());
+    assertEquals("US", institutions.get(0).getCountry());
+
+    institutions = ringgoldDBService.findByInstitutionName("misrad ha'takhbura");
+    assertEquals(1, institutions.size());
+    assertEquals("Medinat Israel Misrad ha'takhbura ha'tashtiyot ha'leumiyot ve'ha'betikhut be'drakhim", institutions.get(0).getName());
+  }
+
   @Test
   public void testAttributeNameConversion() throws Exception {
     String[] pojoFieldNames = {

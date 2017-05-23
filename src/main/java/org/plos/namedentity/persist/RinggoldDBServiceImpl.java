@@ -176,6 +176,9 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
   }
 
   private String institutionNameSearchCondition(String searchString) {
+
+    searchString = searchString.replaceAll("'","''"); // escape single quote
+
     // ignore case when looking up institutions by name (assumes utf8 char set)
     return String.format(
       "(name LIKE '%s%%' collate utf8_unicode_ci OR name LIKE '%% %s%%' collate utf8_unicode_ci)",
