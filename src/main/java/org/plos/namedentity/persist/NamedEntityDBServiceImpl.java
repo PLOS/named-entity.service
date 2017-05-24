@@ -127,17 +127,30 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     return (r != null ? r.into(clazz) : null);
   }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> List<T> findByAttribute(T t, Boolean partial) {
-        return context.select()
-                .from(table(t.getClass()))
-                .where(buildWhereClause(t, partial))
-                .fetchInto((Class<T>) t.getClass());
-    }
+  @Override
+  @SuppressWarnings("unchecked")
+  public <T> List<T> findByAttribute(T t, Boolean partial) {
 
-  private <T> String buildWhereClause(T t, Boolean partial) {
+    WhereObject whereObj = buildWhereClause(t, partial);
+
+    return context.select()
+                  .from(table(t.getClass()))
+                  .where(whereObj.clause, whereObj.bindings)
+                  .fetchInto((Class<T>) t.getClass());
+  }
+
+  class WhereObject {
+    public WhereObject(String clause, Object[] bindings) {
+      this.clause   = clause;
+      this.bindings = bindings;
+    }
+    String   clause;
+    Object[] bindings;
+  }
+
+  private <T> WhereObject buildWhereClause(T t, Boolean partial) {
     StringBuilder where = new StringBuilder();
+    List<Object>  bindings = new ArrayList<>();
     try {
       List<java.lang.reflect.Field> fields = new ArrayList<>();
       fields.addAll( Arrays.asList(t.getClass().getDeclaredFields()) );
@@ -155,26 +168,22 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
         Object v = f.get(t);      // get attribute value
 
         if (v != null) {
-          if (where.length() > 0) where.append(" and ");
+          if (where.length() > 0) where.append(" AND ");
 
-            if(v instanceof String && partial){
-                where.append(f.getName()).append(" ").append("like").append(" '%");
-                where.append(v).append("%'");
-            }else if (v instanceof Number || v instanceof Boolean) {
-                where.append(f.getName()).append("=");
-                where.append(v);
-            } else {
-                // escape single quote
-                where.append(f.getName()).append("=");
-                where.append("'").append( ((String)v).replace("'","''") ).append("'");
-            }
+          if(v instanceof String && partial){
+            where.append(f.getName()+" LIKE ?");
+            bindings.add("%" + v + "%");
+          } else {
+            where.append(f.getName() + " = ?");
+            bindings.add(v);
+          }
         }
       }
     }
     catch (Exception e) {
       throw new NedException(ServerError, "Problem building filter expression");
     }
-    return where.toString();
+    return new WhereObject(where.toString(), bindings.toArray());
   }
 
   @Override

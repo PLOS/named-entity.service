@@ -63,15 +63,6 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
     return (r != null ? r.into(clazz) : null);
   }
 
-  class WhereObject {
-    public WhereObject(String clause, Object[] bindings) {
-      this.clause   = clause;
-      this.bindings = bindings;
-    }
-    String   clause;
-    Object[] bindings;
-  }
-
   @Override @SuppressWarnings("unchecked")
   public <T> List<T> findByAttribute(T t) {
 
@@ -127,6 +118,15 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
     }
     preferred.addAll(nonpreferred);
     return preferred;
+  }
+
+  class WhereObject {
+    public WhereObject(String clause, Object[] bindings) {
+      this.clause   = clause;
+      this.bindings = bindings;
+    }
+    String   clause;
+    Object[] bindings;
   }
 
   private <T> WhereObject buildWhereClause(T t) {
