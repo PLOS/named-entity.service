@@ -83,20 +83,6 @@ public class RinggoldDBServiceTest {
   }
 
   @Test
-  public void testInstitutionNameSearchCondition() throws Exception {
-    Method method = RinggoldDBServiceImpl.class.getDeclaredMethod("institutionNameSearchCondition", String.class);
-    method.setAccessible(true);
-
-    String result = (String) method.invoke(ringgoldDBService, "foo" ); //when one string
-    assertEquals(
-      "(name LIKE 'foo%' collate utf8_unicode_ci OR name LIKE '% foo%' collate utf8_unicode_ci)", result);
-
-    result = (String) method.invoke(ringgoldDBService, "foo bar" ); //when 2+ strings
-    assertEquals(
-      "(name LIKE 'foo bar%' collate utf8_unicode_ci OR name LIKE '% foo bar%' collate utf8_unicode_ci)", result);
-  }
-
-  @Test
   public void testBubbleCountryToTop() throws Exception {
     Method method = RinggoldDBServiceImpl.class.getDeclaredMethod("bubbleCountryToTop", List.class);
     method.setAccessible(true);
@@ -113,7 +99,7 @@ public class RinggoldDBServiceTest {
     assertEquals(list.get(0).getCountry(), "NZ");
     assertEquals(list.get(1).getCountry(), "US");
 
-    List<Institution> new_list =  (List) method.invoke(ringgoldDBService, list );
+    List<Institution> new_list =  (List<Institution>) method.invoke(ringgoldDBService, list);
 
     assertEquals(new_list.get(0).getCountry(), "US");
     assertEquals(new_list.get(1).getCountry(), "NZ");

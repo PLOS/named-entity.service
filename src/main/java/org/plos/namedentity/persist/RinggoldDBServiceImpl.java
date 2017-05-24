@@ -63,11 +63,23 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
     return (r != null ? r.into(clazz) : null);
   }
 
+  class WhereObject {
+    public WhereObject(String clause, Object[] bindings) {
+      this.clause   = clause;
+      this.bindings = bindings;
+    }
+    String   clause;
+    Object[] bindings;
+  }
+
   @Override @SuppressWarnings("unchecked")
   public <T> List<T> findByAttribute(T t) {
+
+    WhereObject whereObj = buildWhereClause(t);
+
     return context.select()
       .from(table(t.getClass()))
-      .where( buildWhereClause(t) )
+      .where(whereObj.clause, whereObj.bindings)
       .fetchInto((Class<T>)t.getClass());
   }
 
@@ -75,12 +87,15 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
   public List<Institution> findByInstitutionName(String searchString) {
     long start = System.nanoTime();
 
+    Institution i = new Institution(); i.setName(searchString);
+    WhereObject whereObj = buildWhereClause(i);
+
     List<Institution> results = context.select(INSTITUTIONS.fields())
       .from(INSTITUTIONS)
       .leftOuterJoin(SIZES)
       .on(INSTITUTIONS.RINGGOLD_ID.equal(SIZES.RINGGOLD_ID))
       .and(SIZES.SIZE_TYPE.equal("size"))
-      .where(institutionNameSearchCondition(searchString))
+      .where(whereObj.clause, whereObj.bindings)
       .orderBy(SIZES.VALUE.desc().nullsLast())
       .limit(100)
       .fetchInto(Institution.class);
@@ -114,8 +129,9 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
     return preferred;
   }
 
-  private <T> String buildWhereClause(T t) {
+  private <T> WhereObject buildWhereClause(T t) {
     StringBuilder where = new StringBuilder();
+    List<Object>  bindings = new ArrayList<>();
     try {
       List<java.lang.reflect.Field> fields = new ArrayList<>();
       fields.addAll( Arrays.asList(t.getClass().getDeclaredFields()) );
@@ -129,36 +145,24 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
         Object v = f.get(t);      // get attribute value
 
         if (v != null) {
-          if (where.length() > 0) where.append(" and "); 
-          where.append( whereCondition(f.getName(), v, t.getClass()) );
+          if (where.length() > 0) where.append(" AND "); 
+
+          if (f.getName().equals("name")) {
+            // ignore case when looking up institutions by name (assumes utf8 char set)
+            where.append("(name LIKE ? collate utf8_unicode_ci OR name LIKE ? collate utf8_unicode_ci)");
+            bindings.add(v + "%");
+            bindings.add("%" + v + "%");
+          } else {
+            where.append( dbFieldName(f.getName()) + " = ?");
+            bindings.add(v);
+          }
         }
       }
     }
     catch (Exception e) {
       throw new NedException(ServerError, "Problem building filter expression");
     }
-    return where.toString();
-  }
-
-  private <T> String whereCondition(String field, Object value, Class<T> clazz) {
-    String cname = clazz.getCanonicalName();
-    if (cname.equals(Institution.class.getCanonicalName())) {
-      if (field.equals("name")) {
-        return institutionNameSearchCondition((String) value);
-      }
-    } else {
-      throw new UnsupportedOperationException("Unsupported entity " + cname);
-    }
-
-    // default handler
-    StringBuilder condition = new StringBuilder();
-    condition.append( dbFieldName(field) ).append("=");
-    if (value instanceof Number || value instanceof Boolean) {
-      condition.append(value);
-    } else {
-      condition.append("'").append(value).append("'");
-    }
-    return condition.toString();
+    return new WhereObject(where.toString(), bindings.toArray());
   }
 
   protected String dbFieldName(String field) {
@@ -173,16 +177,6 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
       }
     }
     return dbfield.toString();
-  }
-
-  private String institutionNameSearchCondition(String searchString) {
-
-    searchString = searchString.replaceAll("'","''"); // escape single quote
-
-    // ignore case when looking up institutions by name (assumes utf8 char set)
-    return String.format(
-      "(name LIKE '%s%%' collate utf8_unicode_ci OR name LIKE '%% %s%%' collate utf8_unicode_ci)",
-        searchString, searchString);
   }
 
   /* ---------------------------------------------------------------------- */
