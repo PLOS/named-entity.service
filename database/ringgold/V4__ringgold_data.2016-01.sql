@@ -127,14 +127,6 @@ INSERT INTO ringgold.institutions (rec_id,parent_ringgold_id,ringgold_id,name,ci
 INSERT INTO ringgold.institutions (rec_id,parent_ringgold_id,ringgold_id,name,city,post_code,country,state,type,timestamp) 
     VALUES (1000006,0,1000006,'Test Group1 I006','Paris','75480','FR','','academic/health','2014-08-04 10:44:31');
 
-/* institution names which contain a single quote(s) */
-INSERT INTO ringgold.institutions (rec_id,parent_ringgold_id,ringgold_id,name,city,post_code,country,state,type,timestamp) 
-    VALUES (412643,0,435957,'Otago Girls'' High School','Dunedin','9016','NZ','','academic/school','2015-08-28 02:46:54');
-INSERT INTO ringgold.institutions (rec_id,parent_ringgold_id,ringgold_id,name,city,post_code,country,state,type,timestamp) 
-    VALUES (417498,0,441365,'Saint Mary''s Catholic Elementary School','Bellevue','68005','US','NE','academic/school','2016-01-28 18:59:54');
-INSERT INTO ringgold.institutions (rec_id,parent_ringgold_id,ringgold_id,name,city,post_code,country,state,type,timestamp) 
-    VALUES (54549,0,61234,'Medinat Israel Misrad ha''takhbura ha''tashtiyot ha''leumiyot ve''ha''betikhut be''drakhim','Yerushalayim','91000','IL','','govt','2013-01-22 18:27:00');
-
 INSERT INTO ringgold.sizes (ringgold_id,size_type,value,timestamp) VALUES (1000001,'size','100','2015-01-28 06:37:09');
 INSERT INTO ringgold.sizes (ringgold_id,size_type,value,timestamp) VALUES (1000002,'size','1','2015-01-28 06:37:09');
 -- INSERT INTO ringgold.sizes (ringgold_id,size_type,value,timestamp) VALUES --(1000003,'size',NULL,'2015-01-28 06:37:09');
