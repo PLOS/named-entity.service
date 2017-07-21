@@ -35,8 +35,8 @@ case "$1" in
     rm -rf $HOME
     rm -f $CONFFILE
 
-    deluser $TOMCAT7_USER
-    delgroup $TOMCAT7_GROUP
+    # deluser $TOMCAT7_USER
+    # delgroup $TOMCAT7_GROUP
 
     set -e
   ;;

@@ -20,7 +20,7 @@ if type flyway &>/dev/null 2>&1; then
 elif ls $DIR/flyway-* &>/dev/null 2>&1; then
 	echo
 else
-	wget -O - $FLYWAY_DOWNLOAD | tar xz -C $DIR
+	wget -O - $FLYWAY_DOWNLOAD -nv | tar xz -C $DIR
 fi
 
 $CMD -v > /dev/null|| (echo "Error: Flyway not found" && exit 2)
