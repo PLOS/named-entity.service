@@ -26,6 +26,7 @@ import org.plos.namedentity.api.NedException;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import static org.plos.namedentity.api.NedException.ErrorType.InvalidJsonError;
+import static org.plos.namedentity.api.NedException.ErrorType.AlertTypeError;
 import static org.plos.namedentity.validate.JsonValidator.validJson;
 
 /**
@@ -34,6 +35,9 @@ import static org.plos.namedentity.validate.JsonValidator.validJson;
 
 @XmlRootElement
 public class Alert extends Entity {
+
+  private Integer typeid;
+  private String  type;
 
   private Integer frequencytypeid;
   private String  frequency;
@@ -50,6 +54,25 @@ public class Alert extends Entity {
       }
       this.query = validMetadataJson;
     }
+    if (typeid == null) {
+      throw new NedException(AlertTypeError, "undefined alert type. this is a required field.");
+    }
+  }
+
+  public Integer getTypeid() {
+    return typeid;
+  }
+
+  public void setTypeid(Integer typeid) {
+    this.typeid = typeid;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
   }
 
   public Integer getFrequencytypeid() {

@@ -64,6 +64,7 @@ public class NedException extends RuntimeException {
     InvalidJsonError                 (1350, "Invalid JSON"),
     InvalidDegreeError               (1360, "Invalid Degree"),
     InvalidRelationshipError         (1370, "Invalid Relationship Error"),
+    AlertTypeError                   (1380, "Alert Type Error"),
 
     // Composite-Level Validation Errors
 

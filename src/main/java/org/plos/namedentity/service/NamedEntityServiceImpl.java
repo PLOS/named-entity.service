@@ -43,6 +43,7 @@ import java.util.UUID;
 import static org.plos.namedentity.api.NedException.ErrorType.ServerError;
 import static org.plos.namedentity.api.entity.Individualprofile.DISPLAYNAME_MAX_LENGTH;
 import static org.plos.namedentity.api.entity.Individualprofile.rejectedCharsDisplayName;
+import static org.plos.namedentity.api.enums.TypeClassEnum.*;
 
 public class NamedEntityServiceImpl implements NamedEntityService {
 
@@ -97,16 +98,16 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   private Individualprofile resolveProfile(Individualprofile entity) {
 
     if (entity.getSource() != null)
-      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
+      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(SOURCE_APPLICATIONS.getName()), entity.getSource()));
 
     if (entity.getNameprefix() != null) {
-      Integer prefixTypeClassId = nedDBSvc.findTypeClass("Named Party Prefixes");
+      Integer prefixTypeClassId = nedDBSvc.findTypeClass(NAMED_ENTITY_PREFIXES.getName());
       Integer prefixTypeId = nedDBSvc.findTypeValue(prefixTypeClassId, entity.getNameprefix());
       entity.setNameprefixtypeid(prefixTypeId);
     }
 
     if (entity.getNamesuffix() != null) {
-      Integer suffixTypeClassId = nedDBSvc.findTypeClass("Named Party Suffixes");
+      Integer suffixTypeClassId = nedDBSvc.findTypeClass(NAMED_ENTITY_SUFFIXES.getName());
       Integer suffixTypeId      = nedDBSvc.findTypeValue(suffixTypeClassId, entity.getNamesuffix());
       entity.setNamesuffixtypeid(suffixTypeId);
     }
@@ -190,10 +191,10 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   private Organization resolveOrganization(Organization entity) {
 
     if (entity.getSource() != null)
-      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
+      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(SOURCE_APPLICATIONS.getName()), entity.getSource()));
 
     if (entity.getType() != null)
-      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Organization Types"), entity.getType()));
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(ORGANIZATION_TYPES.getName()), entity.getType()));
 
     return entity;
   }
@@ -201,16 +202,16 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   private Address resolveAddress(Address entity) {
 
     if (entity.getType() != null)
-      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Physical Address Types"), entity.getType()));
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(PHYSICAL_ADDRESS_TYPES.getName()), entity.getType()));
 
     if (entity.getSource() != null)
-      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
+      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(SOURCE_APPLICATIONS.getName()), entity.getSource()));
 
     if (entity.getCountrycodetype() != null)
-      entity.setCountrycodetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Country Types"), entity.getCountrycodetype()));
+      entity.setCountrycodetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(COUNTRY_CODES.getName()), entity.getCountrycodetype()));
 
     if (entity.getStatecodetype() != null)
-      entity.setStatecodetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("State and Province Codes"), entity.getStatecodetype()));
+      entity.setStatecodetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(STATES_AND_PROVINCES.getName()), entity.getStatecodetype()));
 
     return entity;
   }
@@ -218,10 +219,13 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   private Alert resolveAlert(Alert entity) {
 
     if (entity.getSource() != null)
-      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
+      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(SOURCE_APPLICATIONS.getName()), entity.getSource()));
 
     if (entity.getFrequency() != null)
-      entity.setFrequencytypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Alert Frequency"), entity.getFrequency()));
+      entity.setFrequencytypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(ALERT_FREQUENCY.getName()), entity.getFrequency()));
+
+    if (entity.getType() != null)
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(ALERT_TYPES.getName()), entity.getType()));
 
     return entity;
   }
@@ -229,13 +233,13 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   private Phonenumber resolvePhonenumber(Phonenumber entity) {
 
     if (entity.getType() != null)
-      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Telephone Number Types"), entity.getType()));
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(TELEPHONE_TYPES.getName()), entity.getType()));
 
     if (entity.getSource() != null)
-      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
+      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(SOURCE_APPLICATIONS.getName()), entity.getSource()));
 
     if (entity.getCountrycodetype() != null)
-      entity.setCountrycodetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Country Codes for Phone Numbers"), entity.getCountrycodetype()));
+      entity.setCountrycodetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(COUNTRY_CODE_FOR_PHONE.getName()), entity.getCountrycodetype()));
 
     return entity;
   }
@@ -243,10 +247,10 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   private Email resolveEmail(Email entity) {
 
     if (entity.getType() != null)
-      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Email Address Types"), entity.getType()));
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(EMAIL_TYPES.getName()), entity.getType()));
 
     if (entity.getSource() != null)
-      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
+      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(SOURCE_APPLICATIONS.getName()), entity.getSource()));
 
     return entity;
   }
@@ -254,10 +258,10 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   private Relationship resolveIndividualRelationship(Relationship entity) {
 
     if (entity.getType() != null)
-      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Relationship Types"), entity.getType()));
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(RELATIONSHIP_TYPES.getName()), entity.getType()));
 
     if (entity.getSource() != null)
-      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
+      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(SOURCE_APPLICATIONS.getName()), entity.getSource()));
 
     return entity;
   }
@@ -265,10 +269,10 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   private Degree resolveDegree(Degree entity) {
 
     if (entity.getType() != null)
-      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Degrees"), entity.getType()));
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(DEGREES.getName()), entity.getType()));
 
     if (entity.getSource() != null)
-      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
+      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(SOURCE_APPLICATIONS.getName()), entity.getSource()));
 
     return entity;
   }
@@ -276,7 +280,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   private Url resolveUrl(Url entity) {
 
     if (entity.getSource() != null)
-      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
+      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(SOURCE_APPLICATIONS.getName()), entity.getSource()));
 
     return entity;
   }
@@ -288,7 +292,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       searchCriteria.setEmailaddress( entity.getEmail() );
 
       searchCriteria.setSourcetypeid(nedDBSvc.findTypeValue(
-        nedDBSvc.findTypeClass("Source Applications"), UidTypeEnum.AMBRA.getName()));
+        nedDBSvc.findTypeClass(SOURCE_APPLICATIONS.getName()), UidTypeEnum.AMBRA.getName()));
 
       List<Email> searchResult = nedDBSvc.findByAttribute(searchCriteria, false);
       
@@ -305,13 +309,13 @@ public class NamedEntityServiceImpl implements NamedEntityService {
   private Group resolveGroup(Group entity) {
 
     if (entity.getApplicationtype() != null)
-      entity.setApplicationtypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("User Applications"), entity.getApplicationtype()));
+      entity.setApplicationtypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(USER_APPLICATIONS.getName()), entity.getApplicationtype()));
 
     if (entity.getType() != null)
-      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Groups"), entity.getType()));
+      entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(GROUPS.getName()), entity.getType()));
 
     if (entity.getSource() != null)
-      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
+      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(SOURCE_APPLICATIONS.getName()), entity.getSource()));
 
     return entity;
   }
@@ -322,7 +326,7 @@ public class NamedEntityServiceImpl implements NamedEntityService {
       entity.setTypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClassByInspection("type", entity), entity.getType()));
 
     if (entity.getSource() != null)
-      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass("Source Applications"), entity.getSource()));
+      entity.setSourcetypeid(nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(SOURCE_APPLICATIONS.getName()), entity.getSource()));
 
     return entity;
   }
