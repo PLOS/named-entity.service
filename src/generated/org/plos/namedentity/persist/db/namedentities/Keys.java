@@ -133,6 +133,7 @@ public class Keys {
 	public static final ForeignKey<AlertsRecord, NamedentityidentifiersRecord> ALERTS_IBFK_1 = ForeignKeys0.ALERTS_IBFK_1;
 	public static final ForeignKey<AlertsRecord, GlobaltypesRecord> ALERTS_IBFK_4 = ForeignKeys0.ALERTS_IBFK_4;
 	public static final ForeignKey<AlertsRecord, GlobaltypesRecord> ALERTS_IBFK_3 = ForeignKeys0.ALERTS_IBFK_3;
+	public static final ForeignKey<AlertsRecord, GlobaltypesRecord> FK_ALERT_TYPE = ForeignKeys0.FK_ALERT_TYPE;
 	public static final ForeignKey<AudittrailRecord, SourcefieldsRecord> AUDITTRAIL_IBFK_1 = ForeignKeys0.AUDITTRAIL_IBFK_1;
 	public static final ForeignKey<AuthcasRecord, NamedentityidentifiersRecord> AUTHCAS_IBFK_1 = ForeignKeys0.AUTHCAS_IBFK_1;
 	public static final ForeignKey<AuthcasRecord, EmailsRecord> AUTHCAS_IBFK_2 = ForeignKeys0.AUTHCAS_IBFK_2;
@@ -254,6 +255,7 @@ public class Keys {
 		public static final ForeignKey<AlertsRecord, NamedentityidentifiersRecord> ALERTS_IBFK_1 = createForeignKey(org.plos.namedentity.persist.db.namedentities.Keys.KEY_NAMEDENTITYIDENTIFIERS_PRIMARY, Alerts.ALERTS, Alerts.ALERTS.NEDID);
 		public static final ForeignKey<AlertsRecord, GlobaltypesRecord> ALERTS_IBFK_4 = createForeignKey(org.plos.namedentity.persist.db.namedentities.Keys.KEY_GLOBALTYPES_PRIMARY, Alerts.ALERTS, Alerts.ALERTS.FREQUENCYTYPEID);
 		public static final ForeignKey<AlertsRecord, GlobaltypesRecord> ALERTS_IBFK_3 = createForeignKey(org.plos.namedentity.persist.db.namedentities.Keys.KEY_GLOBALTYPES_PRIMARY, Alerts.ALERTS, Alerts.ALERTS.SOURCETYPEID);
+		public static final ForeignKey<AlertsRecord, GlobaltypesRecord> FK_ALERT_TYPE = createForeignKey(org.plos.namedentity.persist.db.namedentities.Keys.KEY_GLOBALTYPES_PRIMARY, Alerts.ALERTS, Alerts.ALERTS.TYPEID);
 		public static final ForeignKey<AudittrailRecord, SourcefieldsRecord> AUDITTRAIL_IBFK_1 = createForeignKey(org.plos.namedentity.persist.db.namedentities.Keys.KEY_SOURCEFIELDS_PRIMARY, Audittrail.AUDITTRAIL, Audittrail.AUDITTRAIL.SOURCEFIELDID);
 		public static final ForeignKey<AuthcasRecord, NamedentityidentifiersRecord> AUTHCAS_IBFK_1 = createForeignKey(org.plos.namedentity.persist.db.namedentities.Keys.KEY_NAMEDENTITYIDENTIFIERS_PRIMARY, Authcas.AUTHCAS, Authcas.AUTHCAS.NEDID);
 		public static final ForeignKey<AuthcasRecord, EmailsRecord> AUTHCAS_IBFK_2 = createForeignKey(org.plos.namedentity.persist.db.namedentities.Keys.KEY_EMAILS_PRIMARY, Authcas.AUTHCAS, Authcas.AUTHCAS.EMAILID);

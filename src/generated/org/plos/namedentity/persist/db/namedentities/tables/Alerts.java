@@ -35,7 +35,7 @@ import org.plos.namedentity.persist.db.namedentities.tables.records.AlertsRecord
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Alerts extends TableImpl<AlertsRecord> {
 
-	private static final long serialVersionUID = -948772709;
+	private static final long serialVersionUID = -170348447;
 
 	/**
 	 * The reference instance of <code>namedEntities.alerts</code>
@@ -101,6 +101,11 @@ public class Alerts extends TableImpl<AlertsRecord> {
 	public final TableField<AlertsRecord, Integer> LASTMODIFIEDBY = createField("lastModifiedBy", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
+	 * The column <code>namedEntities.alerts.typeId</code>.
+	 */
+	public final TableField<AlertsRecord, Integer> TYPEID = createField("typeId", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+
+	/**
 	 * Create a <code>namedEntities.alerts</code> table reference
 	 */
 	public Alerts() {
@@ -151,7 +156,7 @@ public class Alerts extends TableImpl<AlertsRecord> {
 	 */
 	@Override
 	public List<ForeignKey<AlertsRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<AlertsRecord, ?>>asList(Keys.ALERTS_IBFK_1, Keys.ALERTS_IBFK_4, Keys.ALERTS_IBFK_3);
+		return Arrays.<ForeignKey<AlertsRecord, ?>>asList(Keys.ALERTS_IBFK_1, Keys.ALERTS_IBFK_4, Keys.ALERTS_IBFK_3, Keys.FK_ALERT_TYPE);
 	}
 
 	/**
