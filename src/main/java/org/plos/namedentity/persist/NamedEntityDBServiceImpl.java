@@ -492,6 +492,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
 
   private SelectOnConditionStep select(Alerts e) {
 
+    Globaltypes gt1 = GLOBALTYPES.as("gt1");
     Globaltypes gt2 = GLOBALTYPES.as("gt2");
     Globaltypes gt3 = GLOBALTYPES.as("gt3");
 
@@ -500,10 +501,12 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
             e.ID, e.NEDID, e.QUERY, e.NAME,
             gt2.SHORTDESCRIPTION.as("source"),
             gt3.SHORTDESCRIPTION.as("frequency"),
+            gt1.SHORTDESCRIPTION.as("type"),
             e.CREATED, e.LASTMODIFIED)
         .from(e)
         .leftOuterJoin(gt2).on(e.SOURCETYPEID.equal(gt2.ID))
-        .leftOuterJoin(gt3).on(e.FREQUENCYTYPEID.eq(gt3.ID));
+        .leftOuterJoin(gt3).on(e.FREQUENCYTYPEID.eq(gt3.ID))
+        .leftOuterJoin(gt1).on(e.TYPEID.equal(gt1.ID));
   }
 
   private SelectOnConditionStep select(Relationships r) {
@@ -706,6 +709,7 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
     where.append("true");
 
     Globaltypes gt1 = GLOBALTYPES.as("gt1");
+    Globaltypes gt2 = GLOBALTYPES.as("gt2");
     Alerts a = ALERTS.as("a");
 
     if (frequency != null) {
@@ -719,9 +723,11 @@ public final class NamedEntityDBServiceImpl implements NamedEntityDBService {
             a.ID, a.NEDID,
             a.NAME, a.QUERY,
             gt1.SHORTDESCRIPTION.as("frequency"),
+            gt2.SHORTDESCRIPTION.as("type"),
             a.CREATED, a.LASTMODIFIED)
         .from(a)
         .leftOuterJoin(gt1).on(a.FREQUENCYTYPEID.equal(gt1.ID))
+        .leftOuterJoin(gt2).on(a.TYPEID.equal(gt2.ID))
         .where(where.toString().replace("\"", "`"))
         .fetch()
         .into(Alert.class);

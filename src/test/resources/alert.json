@@ -1,5 +1,5 @@
 {
-  "type"      : "search",
+  "type"      : "Journal",
   "frequency" : "weekly",
   "journal"   : "PLOS Biology",
   "name"      : "Conservation science",

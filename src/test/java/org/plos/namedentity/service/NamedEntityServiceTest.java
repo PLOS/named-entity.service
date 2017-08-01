@@ -476,7 +476,7 @@ public class NamedEntityServiceTest {
 
   @Test
   public void globalTypeCount() {
-    assertEquals(549, namedEntityService.countGlobalTypes().intValue());
+    assertEquals(552, namedEntityService.countGlobalTypes().intValue());
   }
 
   @Test

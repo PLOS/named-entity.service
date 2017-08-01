@@ -754,9 +754,13 @@ public class NamedEntityDBServiceTest {
     Integer frequencyId = nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(ALERT_FREQUENCY.getName()), "weekly");
     assertNotNull(frequencyId);
 
+    Integer alertTypeId = nedDBSvc.findTypeValue(nedDBSvc.findTypeClass(ALERT_TYPES.getName()), "Journal");
+    assertNotNull(alertTypeId);
+
     Alert entity = _(new Alert());
     entity.setNedid(1);
     entity.setFrequencytypeid(frequencyId);
+    entity.setTypeid(alertTypeId);
     entity.setName("name goes here");
     entity.setQuery("{query goes here}");
 

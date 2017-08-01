@@ -850,6 +850,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     assertTrue( entity.getId() > 0 );
     assertEquals(nedIndividualId, entity.getNedid());
     assertEquals("weekly", entity.getFrequency());
+    assertEquals("Journal", entity.getType());
 
     String entityId = entityURI + "/" + entity.getId();
 
@@ -1868,7 +1869,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     assertNotNull(info.version);
     assertEquals(info.consumerCount.intValue(), 1);
-    assertEquals(info.globalTypeCount.intValue(), 549);
+    assertEquals(info.globalTypeCount.intValue(), 552);
 
   }
 

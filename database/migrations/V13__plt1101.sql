@@ -25,19 +25,19 @@ USE namedEntities;
 -- define "alert" type class
 INSERT INTO typeDescriptions(description, howUsed) VALUES ('Alert Types','Saved Searches, Taxonomy');
 SELECT id INTO @alertTypeClass FROM typeDescriptions WHERE description='Alert Types';
-INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@alertTypeClass, 'Journal Search', NULL, 'journal', CURRENT_TIMESTAMP);
-INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@alertTypeClass, 'Preprints Search', NULL, 'preprints', CURRENT_TIMESTAMP);
-INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@alertTypeClass, 'Plosone Taxonomy', NULL, 'plosonetaxonomy', CURRENT_TIMESTAMP);
+INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@alertTypeClass, 'Journal', 'Journal Search', 'JOURNAL', CURRENT_TIMESTAMP);
+INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@alertTypeClass, 'Preprint', 'Preprint Search', 'PREPRINT', CURRENT_TIMESTAMP);
+INSERT INTO globalTypes (typeId,shortDescription,longDescription,typeCode,created) VALUES (@alertTypeClass, 'Taxonomy', 'PLoSONE Taxonomy', 'TAXONOMY', CURRENT_TIMESTAMP);
 
 -- add alert type to alerts table
 ALTER TABLE alerts ADD typeId INT NOT NULL DEFAULT 0;
 
 -- perform migration
 SELECT id INTO @journalTypeId FROM globalTypes 
-    WHERE shortDescription='Journal Search' AND typeId=@alertTypeClass;
+    WHERE shortDescription='Journal' AND typeId=@alertTypeClass;
 
 SELECT id INTO @taxonomyTypeId FROM globalTypes 
-    WHERE shortDescription='Plosone Taxonomy' AND typeId=@alertTypeClass;
+    WHERE shortDescription='Taxonomy' AND typeId=@alertTypeClass;
 
 UPDATE alerts set typeId=@taxonomyTypeId WHERE name='PLoSONE' AND typeId=0;
 UPDATE alerts set typeId=@journalTypeId WHERE typeId=0;
