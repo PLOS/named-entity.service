@@ -612,6 +612,7 @@
             </goals>
             <configuration>
               <skip>${maven.exec.skip}</skip>
+              <name>neddb</name>
             </configuration>
           </execution>
         </executions>

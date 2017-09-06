@@ -33,6 +33,9 @@ public class DockerMojo extends AbstractMojo
   @Parameter( property = "shutdown-hook.skip", defaultValue = "false", alias = "shutdown-hook.skip" )
   private boolean skip;
 
+  @Parameter( property = "shutdown-hook.container-name", defaultValue = "undefined", alias = "shutdown-hook.container-name" )
+  private String name;
+
   public void execute() throws MojoExecutionException
   {
     if (skip) {
@@ -45,22 +48,21 @@ public class DockerMojo extends AbstractMojo
       public void run() {
         // TODO: 1. accommodate boot2docker, 2. pass in instance name.
         getLog().info("Running Docker Shutdown Hook");
-        String dockerInstance = "neddb";
         try {
-          String dockerStopCmd = "docker stop " + dockerInstance;
+          String dockerStopCmd = "docker stop " + name;
           getLog().info(dockerStopCmd);
           Process p1 = Runtime.getRuntime().exec(dockerStopCmd);
           int p1ExitValue = p1.waitFor();
           if (p1ExitValue == 0) {
-            String dockerRemoveCmd = "docker rm -v " + dockerInstance;
+            String dockerRemoveCmd = "docker rm -v " + name;
             getLog().info(dockerRemoveCmd);
             Process p2 = Runtime.getRuntime().exec(dockerRemoveCmd);
             int p2ExitValue = p2.waitFor();
             if (p2ExitValue != 0) {
-              getLog().warn(String.format("Unable to remove docker instance: %s exit: %d", dockerInstance, p2ExitValue));
+              getLog().warn(String.format("Unable to remove docker instance: %s exit: %d", name, p2ExitValue));
             }
           } else {
-            getLog().warn(String.format("Unable to stop docker instance: %s exit: %d", dockerInstance, p1ExitValue));
+            getLog().warn(String.format("Unable to stop docker instance: %s exit: %d", name, p1ExitValue));
           }
         } catch (Exception e) {
           getLog().error("Problem shutting down Docker.", e);

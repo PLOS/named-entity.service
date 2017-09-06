@@ -34,10 +34,12 @@ import org.apache.maven.plugins.annotations.Parameter;
 public class DockerPropertyMojo extends AbstractMojo
 {
   private static final String DOCKER_IP_HOST = "docker.ip.host";
-  private static final String DOCKER_INSTANCE_NAME = "neddb";
 
   @Parameter( property = "docker-properties.skip", defaultValue = "false", alias = "docker-properties.skip" )
   private boolean skip;
+
+  @Parameter( property = "docker-properties.container-name", defaultValue = "undefined", alias = "docker-properties.container-name" )
+  private String name;
 
   public void execute() throws MojoExecutionException
   {
@@ -71,7 +73,7 @@ public class DockerPropertyMojo extends AbstractMojo
         process = new ProcessBuilder("docker-machine", "ip", "default").start();
       } else {
         process = new ProcessBuilder("docker", "inspect", "--format",
-                                    "'{{ .NetworkSettings.IPAddress }}'", DOCKER_INSTANCE_NAME).start();
+                                     "'{{ .NetworkSettings.IPAddress }}'", name).start();
       }
       BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
       String dockerIp = in.readLine();
