@@ -7,13 +7,11 @@ Dependencies
 ------------
     * Java 8
     * Docker (1.10+)
-    * Docker Maven Plugin
+    * [Docker Maven Plugin](https://github.com/PLOS/docker-maven-plugin)
     * Ringgold institution database
 
 You need to build and deploy the Docker Maven Plugin to your Maven repo before
-building NED. See readme in config/docker-maven-plugin for details on how to do
-this.
-
+building NED.
     
 Database Setup
 --------------
