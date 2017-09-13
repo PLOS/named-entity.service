@@ -600,7 +600,7 @@
       <plugin>
         <groupId>org.plos.maven</groupId>
         <artifactId>docker-maven-plugin</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0</version>
         <executions>
           <execution>
             <id>docker-shutdown-hook</id>
@@ -768,8 +768,8 @@
     </profile>
   </profiles>
 
-  <repositories>
-    <repository>
+  <pluginRepositories>
+    <pluginRepository>
       <id>ambra</id>
       <name>Maven 2 Release Repository for Ambra</name>
       <url>http://maven.ambraproject.org/maven2/release/</url>
@@ -779,7 +779,7 @@
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
-    </repository>
-  </repositories>
+    </pluginRepository>
+  </pluginRepositories>
 
 </project>
