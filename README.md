@@ -10,9 +10,6 @@ Dependencies
     * [Docker Maven Plugin](https://github.com/PLOS/docker-maven-plugin)
     * Ringgold institution database
 
-You need to build and deploy the Docker Maven Plugin to your Maven repo before
-building NED.
-    
 Database Setup
 --------------
 
