@@ -31,6 +31,6 @@ public class RootResource {
 
   @GET
   public Response index() {
-    return Response.temporaryRedirect(UriBuilder.fromPath("docs").build()).build();
+    return Response.temporaryRedirect(UriBuilder.fromPath("docs/").build()).build();
   }
 }
