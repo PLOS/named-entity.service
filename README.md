@@ -3,21 +3,13 @@ Named Entity Database
 
 NED is a web service for hosting information about people and organizations. It provides a REST API backed my a MySQL database.
 
-
-
-
 Dependencies
 ------------
     * Java 8
     * Docker (1.10+)
-    * Docker Maven Plugin
+    * [Docker Maven Plugin](https://github.com/PLOS/docker-maven-plugin)
     * Ringgold institution database
 
-You need to build and deploy the Docker Maven Plugin to your Maven repo before
-building NED. See readme in config/docker-maven-plugin for details on how to do
-this.
-
-    
 Database Setup
 --------------
 
@@ -145,4 +137,3 @@ If above solution won't work and you again get same error but with docker ip, th
   VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port$i,tcp,,$i,,$i";
   VBoxManage modifyvm "boot2docker-vm" --natpf1 "udp-port$i,udp,,$i,,$i";
   done
-

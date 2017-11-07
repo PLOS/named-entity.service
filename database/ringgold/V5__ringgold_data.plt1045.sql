@@ -19,18 +19,11 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-package org.plos.namedentity.rest;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-
-@Path("/")
-public class RootResource {
-
-  @GET
-  public Response index() {
-    return Response.temporaryRedirect(UriBuilder.fromPath("docs/").build()).build();
-  }
-}
+/* institution names which contain a single quote(s) */
+INSERT INTO ringgold.institutions (rec_id,parent_ringgold_id,ringgold_id,name,city,post_code,country,state,type,timestamp) 
+    VALUES (412643,0,435957,'Otago Girls'' High School','Dunedin','9016','NZ','','academic/school','2015-08-28 02:46:54');
+INSERT INTO ringgold.institutions (rec_id,parent_ringgold_id,ringgold_id,name,city,post_code,country,state,type,timestamp) 
+    VALUES (417498,0,441365,'Saint Mary''s Catholic Elementary School','Bellevue','68005','US','NE','academic/school','2016-01-28 18:59:54');
+INSERT INTO ringgold.institutions (rec_id,parent_ringgold_id,ringgold_id,name,city,post_code,country,state,type,timestamp) 
+    VALUES (54549,0,61234,'Medinat Israel Misrad ha''takhbura ha''tashtiyot ha''leumiyot ve''ha''betikhut be''drakhim','Yerushalayim','91000','IL','','govt','2013-01-22 18:27:00');

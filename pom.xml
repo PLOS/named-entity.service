@@ -32,7 +32,7 @@
   <artifactId>named-entity-service</artifactId>
   <packaging>war</packaging>
   <name>Named Entity JAX-RS Service</name>
-  <version>1.6.0</version>
+  <version>1.7.0</version>
   
   <properties>
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
@@ -600,7 +600,7 @@
       <plugin>
         <groupId>org.plos.maven</groupId>
         <artifactId>docker-maven-plugin</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0</version>
         <executions>
           <execution>
             <id>docker-shutdown-hook</id>
@@ -612,6 +612,7 @@
             </goals>
             <configuration>
               <skip>${maven.exec.skip}</skip>
+              <name>neddb</name>
             </configuration>
           </execution>
         </executions>
@@ -767,8 +768,8 @@
     </profile>
   </profiles>
 
-  <repositories>
-    <repository>
+  <pluginRepositories>
+    <pluginRepository>
       <id>ambra</id>
       <name>Maven 2 Release Repository for Ambra</name>
       <url>http://maven.ambraproject.org/maven2/release/</url>
@@ -778,7 +779,7 @@
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
-    </repository>
-  </repositories>
+    </pluginRepository>
+  </pluginRepositories>
 
 </project>
