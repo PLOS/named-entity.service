@@ -3,6 +3,10 @@ Named Entity Database
 
 NED is a web service for hosting information about people and organizations. It provides a REST API backed my a MySQL database.
 
+![NED Swagger interface](ned_swagger_screenshot.png)
+
+The database was designed to be able to grow to with the organization's needs. [This sample ERD](ned-erd.v12.pdf) should give you an idea how the schema is organized.
+
 Dependencies
 ------------
     * Java 8
@@ -13,12 +17,12 @@ Dependencies
 Database Setup
 --------------
 
-Make sure you have a schema to hold the tables. 
+Make sure you have a schema to hold the tables.
 
     CREATE SCHEMA namedEntities DEFAULT CHARACTER SET utf8 COLLATE utf8_bin
 
 And a user. For example:
-    
+
     CREATE USER 'ned' IDENTIFIED BY '';
     GRANT ALL PRIVILEGES ON *.* TO 'ned'@'%' WITH GRANT OPTION;
     FLUSH PRIVILEGES;
@@ -39,7 +43,7 @@ if you are deploying to a system wide Tomcat instance you will need to add somet
               username="ned"
               password=""
               url="jdbc:mysql://localhost:3306/namedEntities" />
-              
+
     <Resource name="jdbc/ringgold"
               auth="Container"
               type="javax.sql.DataSource"
@@ -50,7 +54,7 @@ if you are deploying to a system wide Tomcat instance you will need to add somet
               username="ned"
               password=""
               url="jdbc:mysql://localhost:3306/ringgold" />
-              
+
 Adding userapps
 ---------------
 
@@ -66,7 +70,7 @@ Running
 to start in embedded Tomcat instance
 
     ./ned.sh tomcat
-    
+
 to use the API and see the REST documentation visit the root of the service, for example:
 
 [http://localhost:8080/v1/](http://localhost:8080/v1/)
@@ -86,11 +90,11 @@ tests using an embedded jersey container (grizzly)
 to run a specific test class
 
     mvn clean test -Dtest=NamedEntityServiceTest
-    
+
 to run a specific test method
 
     mvn clean test -Dtest='NamedEntityServiceTest#testCreateIndividualCompositeWithGroup'
-    
+
 Debugging
 ---------
 
@@ -98,17 +102,17 @@ to run Maven Tomcat plugin in DEBUG mode (port:8000)
 
     export MAVEN_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n"
     ./ned.sh tomcat
-    
+
 in separate window, attach with debug client
 
     mdb -attach 8000
-    
+
 to debug a unit test class
-    
+
     mvnDebug clean test -DforkMode=never -Dtest=NamedEntityServiceTest
-    
+
 to attach to a debug unit test with IntelliJ, create a remote test config with the following command line
-    
+
     -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000
 
 
@@ -116,19 +120,19 @@ Generating Eclipse Project Files
 --------------------------------
 
     mvn eclipse:clean eclipse:eclipse
-    
-   
+
+
 Troubleshooting
 --------------------------------
 
 if you are on mac, you might be using boot2docker
 
-if you see this error: 
-[ERROR] Failed to execute goal org.flywaydb:flyway-maven-plugin:3.2.1:migrate (default) on project named-entity-service: org.flywaydb.core.api.FlywayException: Unable to obtain Jdbc connection 
+if you see this error:
+[ERROR] Failed to execute goal org.flywaydb:flyway-maven-plugin:3.2.1:migrate (default) on project named-entity-service: org.flywaydb.core.api.FlywayException: Unable to obtain Jdbc connection
 from DataSource (jdbc:mysql://172.17.0.2:3306/namedEntities?useUnicode=true&characterEncoding=utf8) for user 'ned': Communications link failure
 [ERROR] The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server. Operation timed out
 
-you have to change your config file(/src/main/resources). you have to change ${docker.ip.host} and ${ringgolddb.ip.host} with your docker ip address. 
+you have to change your config file(/src/main/resources). you have to change ${docker.ip.host} and ${ringgolddb.ip.host} with your docker ip address.
 so for example, your entry will look like db.url=jdbc:mysql://192.168.59.104:3306/namedEntities?useUnicode=true&amp;characterEncoding=utf8
 
 If above solution won't work and you again get same error but with docker ip, then you might have to open ports. you can run below script:
