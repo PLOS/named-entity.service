@@ -58,9 +58,6 @@ case "$1" in
     $GET/http_port && export HTTP_PORT=$RET
     $GET/control_port && export CONTROL_PORT=$RET
 
-    # removes the saved values, so they need to be re-entered the next time around
-    db_purge
-
     # generate configs from templates
     process_env_template $HOME/conf/context.template.xml $HOME/conf/context.xml
 
@@ -86,7 +83,7 @@ case "$1" in
 		fi
 
 		# test if service is up
-		TEST_ENDPOINT=localhost:$HTTP_PORT/v1/service/config
+		TEST_ENDPOINT=http://localhost:$HTTP_PORT/v1/service/config
 
 		echo "Checking to see if service is running at $TEST_ENDPOINT"
 		curl -I $TEST_ENDPOINT # show result for debugging errors
