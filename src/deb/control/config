@@ -19,6 +19,8 @@ case "$1" in
     $INPUT/ringgold_db_user || true
     $INPUT/ringgold_db_password || true
     $INPUT/ringgold_import_dir || true
+    $INPUT/tomcat_admin_user || true
+    $INPUT/tomcat_admin_password || true
     $INPUT/http_port || true
     $INPUT/control_port || true
 

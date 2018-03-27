@@ -33,6 +33,16 @@ Type: string
 Default: /tmp/ringgold
 Description: The location of the Ringgold archive to import (optional)
 
+Template: [[artifactId]]/tomcat_admin_user
+Type: string
+Default: [[artifactId]]
+Description: The Tomcat admin user name
+
+Template: [[artifactId]]/tomcat_admin_password
+Type: password
+Default: [[artifactId]]
+Description: The password for the Tomcat admin user
+
 Template: [[artifactId]]/http_port
 Type: string
 Default: 8080

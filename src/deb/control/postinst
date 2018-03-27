@@ -53,6 +53,8 @@ case "$1" in
     $GET/ringgold_db_user && export RINGGOLD_DB_USER=$RET
     $GET/ringgold_db_password && export RINGGOLD_DB_PASSWORD=$RET
     $GET/ringgold_import_dir && export RINGGOLD_DIR=$RET
+    $GET/tomcat_admin_user && export TOMCAT_ADMIN_USER=$RET
+    $GET/tomcat_admin_password && export TOMCAT_ADMIN_PASSWORD=$RET
     $GET/http_port && export HTTP_PORT=$RET
     $GET/control_port && export CONTROL_PORT=$RET
 
@@ -60,6 +62,8 @@ case "$1" in
     process_env_template $HOME/conf/context.template.xml $HOME/conf/context.xml
 
     process_env_template $HOME/conf/server.template.xml $HOME/conf/server.xml
+
+    process_env_template $HOME/conf/tomcat-users.template.xml $HOME/conf/tomcat-users.xml
 
     # run the migrations and import ringgold
     export MIGRATIONS_DIR=$HOME/migrations
