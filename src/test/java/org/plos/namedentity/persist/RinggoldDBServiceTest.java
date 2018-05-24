@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static java.lang.Integer.valueOf;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring-beans.xml","/spring-beans.test.xml"})
@@ -45,90 +46,31 @@ public class RinggoldDBServiceTest {
   @Autowired @Qualifier("ringgoldDsl") DSLContext context;
 
   @Test
-  public void testFindById() {
-    Institution institution = ringgoldDBService.findById(4959, Institution.class);
-    assertEquals(Integer.valueOf(4959), institution.getRecId());
-    assertEquals("Stanford University", institution.getName());
-    assertEquals("Stanford", institution.getCity());
-    assertEquals("CA", institution.getState());
-    assertEquals("US", institution.getCountry());
-    assertEquals("academic", institution.getType());
-
-    assertNull( ringgoldDBService.findById(9999, Institution.class) );
-  }
-
-  @Test
-  public void testFindByAttribute() {
+  public void testFindByRinggoldId() {
     Institution ifilter = new Institution();
-    ifilter.setName("Stanford U");
+    ifilter.setRinggoldId(137977);
     List<Institution> institutions = ringgoldDBService.findByAttribute(ifilter);
-    assertEquals(24, institutions.size());
-
-    ifilter.setState("CA");
-    institutions = ringgoldDBService.findByAttribute(ifilter);
-    assertEquals(22, institutions.size());
-
-    ifilter.setType("academic/earth");
-    institutions = ringgoldDBService.findByAttribute(ifilter);
-    assertEquals(3, institutions.size());
-
-    ifilter.setState("VOODOO");
-    institutions = ringgoldDBService.findByAttribute(ifilter);
-    assertEquals(0, institutions.size());
+    assertEquals(1, institutions.size());
+    assertEquals( "Johnston County School District Smithfield", institutions.get(0).getName());
 
     Institution ifilter2 = new Institution();
-    ifilter2.setName("STANFORD Medicine");
-    institutions = ringgoldDBService.findByAttribute(ifilter2);
-    assertEquals(1, institutions.size());
-  }
-
-  @Test
-  public void testBubbleCountryToTop() throws Exception {
-    Method method = RinggoldDBServiceImpl.class.getDeclaredMethod("bubbleCountryToTop", List.class);
-    method.setAccessible(true);
-
-    Institution us_inst = new Institution();
-    us_inst.setCountry("US");
-    Institution non_us_inst = new Institution();
-    non_us_inst.setCountry("NZ");
-
-    ArrayList<Institution> list = new ArrayList<>();
-    list.add(non_us_inst);
-    list.add(us_inst);
-
-    assertEquals(list.get(0).getCountry(), "NZ");
-    assertEquals(list.get(1).getCountry(), "US");
-
-    List<Institution> new_list =  (List<Institution>) method.invoke(ringgoldDBService, list);
-
-    assertEquals(new_list.get(0).getCountry(), "US");
-    assertEquals(new_list.get(1).getCountry(), "NZ");
+    ifilter.setRinggoldId(1);   // invalid ringgold id
+    assertEquals(0, ringgoldDBService.findByAttribute(ifilter).size());
   }
 
   @Test
   public void testFindByInstitutionName() {
-    List<Institution> institutions = ringgoldDBService.findByInstitutionName("Test Group1");
-    assertEquals(6, institutions.size());
-    for (int i = 0; i < institutions.size(); i++) {
-      assertTrue( institutions.get(i).getName().contains("I00"+(i+1)) );
-    }
+    List<Institution> institutions = ringgoldDBService.findByInstitutionName("smith");
+    assertEquals(9, institutions.size());
+    assertEquals(valueOf(142559), institutions.get(0).getRinggoldId());
+    assertEquals(valueOf(6476), institutions.get(institutions.size()-1).getRinggoldId());
   }
 
   @Test // PLT-1045
   public void testFindByInstitutionNameWithApostrophe() {
-    List<Institution> institutions = ringgoldDBService.findByInstitutionName("Otago Girls' High School");
+    List<Institution> institutions = ringgoldDBService.findByInstitutionName("Paul Smith's");
     assertEquals(1, institutions.size());
-    assertEquals("Dunedin", institutions.get(0).getCity());
-
-    institutions = ringgoldDBService.findByInstitutionName("Saint Mary's");
-    assertEquals(1, institutions.size());
-    assertEquals("Saint Mary's Catholic Elementary School", institutions.get(0).getName());
-    assertEquals("NE", institutions.get(0).getState());
-    assertEquals("US", institutions.get(0).getCountry());
-
-    institutions = ringgoldDBService.findByInstitutionName("misrad ha'takhbura");
-    assertEquals(1, institutions.size());
-    assertEquals("Medinat Israel Misrad ha'takhbura ha'tashtiyot ha'leumiyot ve'ha'betikhut be'drakhim", institutions.get(0).getName());
+    assertEquals(valueOf(6476), institutions.get(0).getRinggoldId());
   }
 
   @Test

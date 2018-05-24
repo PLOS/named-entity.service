@@ -1,13 +1,12 @@
 {
-  "type"         : "University",
-  "familiarname" : "Stanford University",
-  "legalname"    : "Stanford University",
+  "familiarname" : "University of Arkansas at Fort Smith",
+  "legalname"    : "University of Arkansas at Fort Smith",
   "source"       : "Ambra",
   "isactive"     : "true",
   "uniqueidentifiers": [
     {
       "type": "Ringgold",
-      "uniqueidentifier": "6429",
+      "uniqueidentifier": "14842",
       "source": "Ambra"
     }
   ],
