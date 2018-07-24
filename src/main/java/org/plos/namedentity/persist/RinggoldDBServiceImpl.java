@@ -83,41 +83,15 @@ public final class RinggoldDBServiceImpl implements RinggoldDBService {
 
     List<Institution> results = context.select(INSTITUTIONS.fields())
       .from(INSTITUTIONS)
-      .leftOuterJoin(SIZES)
-      .on(INSTITUTIONS.RINGGOLD_ID.equal(SIZES.RINGGOLD_ID))
-      .and(SIZES.SIZE_TYPE.equal("size"))
       .where(whereObj.clause, whereObj.bindings)
-      .orderBy(SIZES.VALUE.desc().nullsLast())
+      .orderBy(INSTITUTIONS.REC_ID)
       .limit(100)
       .fetchInto(Institution.class);
-
-    results = bubbleCountryToTop(results);
 
     logger.debug(String.format("Search:[%s]  Results:%d  Elapsed(ms):%d", searchString,
       results.size(), TimeUnit.MILLISECONDS.convert(System.nanoTime()-start, TimeUnit.NANOSECONDS)));
 
     return results;
-  }
-
-  private List<Institution> bubbleCountryToTop(List<Institution> list) {
-    return bubbleCountryToTop(list, "US");
-  }
-
-  private List<Institution> bubbleCountryToTop(List<Institution> list, String country) {
-    if (list.isEmpty()) { return list; }
-
-    List<Institution> preferred    = new ArrayList<>();
-    List<Institution> nonpreferred = new ArrayList<>();
-
-    for(Institution inst : list) {
-      if(inst.getCountry().equals(country)){
-        preferred.add(inst);
-      } else {
-        nonpreferred.add(inst);
-      }
-    }
-    preferred.addAll(nonpreferred);
-    return preferred;
   }
 
   class WhereObject {

@@ -85,7 +85,7 @@ public class RinggoldResourceTest extends BaseResourceTest {
   @Test
   public void testInstitutionFindMany() throws Exception {
 
-    final String  INSTITUTION_SUBSTRING = "Stanford U";
+    final String  INSTITUTION_SUBSTRING = "Smith";
 
     Response response = target(INSTITUTIONSEARCH_URI).queryParam("substring",INSTITUTION_SUBSTRING)
                                                      .request(MediaType.APPLICATION_JSON_TYPE).get();
@@ -96,17 +96,17 @@ public class RinggoldResourceTest extends BaseResourceTest {
 
     Unmarshaller unmarshaller = jsonUnmarshaller(Institution.class);
     List<Institution> institutions = unmarshalEntities(jsonPayload, Institution.class, unmarshaller);
-    assertEquals(24, institutions.size());
+    assertEquals(9, institutions.size());
 
     for (Institution institution : institutions) {
-      assertTrue(institution.getName().contains(INSTITUTION_SUBSTRING));
+      assertTrue(institution.getName().toLowerCase().contains(INSTITUTION_SUBSTRING.toLowerCase()));
     }
   }
 
   @Test
   public void testInstitutionFindOne() throws Exception {
 
-    final String SUBSTRING = "STANFORD MediCine"; // lookup should be case insensitive
+    final String SUBSTRING = "DIXON-smith"; // lookup should be case insensitive
 
     Response response = target(INSTITUTIONSEARCH_URI).queryParam("substring",SUBSTRING)
                                                      .request(MediaType.APPLICATION_JSON_TYPE).get();
@@ -122,14 +122,14 @@ public class RinggoldResourceTest extends BaseResourceTest {
     assertEquals(1, institutions.size());
 
     Institution institution = institutions.get(0);
-    assertEquals(Integer.valueOf(158423), institution.getRinggoldId());
-    assertTrue(institution.getName().toLowerCase().contains("stanford medicine"));
+    assertEquals(Integer.valueOf(416450), institution.getRinggoldId());
+    assertTrue(institution.getName().toLowerCase().contains(SUBSTRING.toLowerCase()));
   }
 
   @Test
   public void testInstitutionFindOrdering() throws Exception {
 
-    final String  INSTITUTION_SUBSTRING = "Test Group1";
+    final String  INSTITUTION_SUBSTRING = "Smith";
 
     Response response = target(INSTITUTIONSEARCH_URI).queryParam("substring",INSTITUTION_SUBSTRING)
                                                      .request(MediaType.APPLICATION_JSON_TYPE).get();
@@ -140,10 +140,14 @@ public class RinggoldResourceTest extends BaseResourceTest {
 
     Unmarshaller unmarshaller = jsonUnmarshaller(Institution.class);
     List<Institution> institutions = unmarshalEntities(jsonPayload, Institution.class, unmarshaller);
-    assertEquals(6, institutions.size());
+    assertEquals(9, institutions.size());
 
-    for (int i = 0; i < institutions.size(); i++) {
-      assertTrue( institutions.get(i).getName().contains("I00"+(i+1)) );
+    Integer[] expectedRingoldIds = new Integer[] {
+      142559, 137977, 33139, 137765, 43568, 14842, 132564, 416450, 6476
+    };
+
+    for (int i=0; i < institutions.size(); i++) {
+      assertEquals(expectedRingoldIds[i], institutions.get(i).getRinggoldId());
     }
   }
 }
