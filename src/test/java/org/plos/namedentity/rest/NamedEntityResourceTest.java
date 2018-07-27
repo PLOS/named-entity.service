@@ -203,7 +203,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     Uniqueidentifier uid = new Uniqueidentifier();
     uid.setType("Ringgold");
     uid.setSource(PLOS_SOURCE);
-    uid.setUniqueidentifier("6429");
+    uid.setUniqueidentifier("14842");
     List<Uniqueidentifier> uids = new ArrayList<>();
     uids.add(uid);
 
@@ -220,7 +220,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
 
     // the name should be overwritten from Ringgold data
 
-    assertEquals(composite_out.getFamiliarname(), "Stanford University");
+    assertEquals(composite_out.getFamiliarname(), "University of Arkansas at Fort Smith");
 
     assertEquals(composite_out.getUniqueidentifiers().get(0).getUniqueidentifier(),uid.getUniqueidentifier());
 
@@ -554,7 +554,7 @@ public class NamedEntityResourceTest extends BaseResourceTest {
     /*  FIND ORGANIZATION BY GUID                                         */
     /* ------------------------------------------------------------------ */
 
-    response = target(ORGANIZATION_URI + "/Ringgold/6429")
+    response = target(ORGANIZATION_URI + "/Ringgold/14842")
         .request(MediaType.APPLICATION_JSON_TYPE).get();
 
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
