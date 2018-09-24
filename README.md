@@ -125,7 +125,7 @@ Generating Eclipse Project Files
 Troubleshooting
 --------------------------------
 
-if you are on mac, you might be using boot2docker
+if you are on mac, you might be using boot2docker--test
 
 if you see this error:
 [ERROR] Failed to execute goal org.flywaydb:flyway-maven-plugin:3.2.1:migrate (default) on project named-entity-service: org.flywaydb.core.api.FlywayException: Unable to obtain Jdbc connection
