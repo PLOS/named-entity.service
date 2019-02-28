@@ -81,13 +81,6 @@ case "$1" in
 		#	invoke-rc.d $NAME start || true
 		  service $NAME start || true
 		fi
-
-		# test if service is up
-		TEST_ENDPOINT=http://localhost:$HTTP_PORT/v1/service/config
-
-		echo "Checking to see if service is running at $TEST_ENDPOINT"
-		curl -I $TEST_ENDPOINT # show result for debugging errors
-		curl -I $TEST_ENDPOINT | grep '200 OK' # fail install if status incorrect
   ;;
 
   abort-upgrade|abort-remove|abort-deconfigure)
