@@ -2,16 +2,13 @@
 
 set -e
 
-NAME=ned
-
-
 case "$1" in
   remove|upgrade|deconfigure)
-    [ -f /etc/default/$NAME ] && . /etc/default/$NAME
+    [ -f /etc/default/ned ] && . /etc/default/ned
     # Remove auth for tomcat8 to open privileged ports via authbind.
-    TOMCAT_UID="`id -u $TOMCAT8_USER`"
+    TOMCAT_UID="$(id -u ned)"
     if [ -f "/etc/authbind/byuid/$TOMCAT_UID" ]; then
-      rm -f /etc/authbind/byuid/$TOMCAT_UID
+      rm -f "/etc/authbind/byuid/$TOMCAT_UID"
     fi
   ;;
 
@@ -24,7 +21,7 @@ case "$1" in
   ;;
 esac
 
-if [ -x "/etc/init.d/$NAME" ] || [ -e "/etc/init/$NAME.conf" ]; then
-#	invoke-rc.d $NAME stop || true
+if [ -x "/etc/init.d/ned" ] || [ -e "/etc/init/ned.conf" ]; then
+#	invoke-rc.d ned stop || true
 	service ned stop || true
 fi
