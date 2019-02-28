@@ -507,7 +507,7 @@
               <dataSet>
 
                 <data>
-                  <src>${project.basedir}/src/deb/tomcat7</src>
+                  <src>${project.basedir}/src/deb/tomcat8</src>
                   <type>directory</type>
                   <mapper>
                     <type>perm</type>

@@ -5,5 +5,5 @@ Architecture: all
 Section: web
 Priority: optional
 Maintainer: Public Library of Science <dev@plos.org>
-Depends: java8-runtime, tomcat7-common, debconf, adduser, bash, mysql-client, libmysql-java
+Depends: java8-runtime, tomcat8-common, debconf, adduser, bash, mysql-client, libmysql-java
 Homepage: https://github.com/PLOS/named-entity.service
