@@ -47,8 +47,3 @@ Template: [[artifactId]]/http_port
 Type: string
 Default: 8080
 Description: The HTTP port you would like NED to be accessible from
-
-Template: [[artifactId]]/control_port
-Type: string
-Default: 8005
-Description: The TCP port to use for Tomcat shutdown control port

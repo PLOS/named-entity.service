@@ -22,7 +22,6 @@ case "$1" in
     $INPUT/tomcat_admin_user || true
     $INPUT/tomcat_admin_password || true
     $INPUT/http_port || true
-    $INPUT/control_port || true
 
     db_go || true
 
