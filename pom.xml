@@ -522,16 +522,6 @@
                 </data>
 
                 <data>
-                  <src>${project.basedir}/src/deb/ned.sysv</src>
-                  <type>file</type>
-                  <dst>/etc/init.d/ned</dst>
-                  <mapper>
-                    <type>perm</type>
-                    <filemode>755</filemode>
-                  </mapper>
-                </data>
-
-                <data>
                   <src>${project.basedir}/bin</src>
                   <type>directory</type>
                   <mapper>
