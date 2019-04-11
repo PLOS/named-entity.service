@@ -29,10 +29,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.plos</groupId>
-  <artifactId>named-entity-service</artifactId>
+  <artifactId>ned</artifactId>
   <packaging>war</packaging>
   <name>Named Entity JAX-RS Service</name>
-  <version>2.3.0</version>
+  <version>2.6.0</version>
   
   <properties>
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
@@ -46,7 +46,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <tomcat.jdbc.version>7.0.54</tomcat.jdbc.version>
     <maven.exec.skip>false</maven.exec.skip>
-    <maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
+    <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
     <build.timestamp>${maven.build.timestamp}</build.timestamp>
     <build.counter>0</build.counter>
   </properties>
@@ -507,7 +507,7 @@
               <dataSet>
 
                 <data>
-                  <src>${project.basedir}/src/deb/tomcat7</src>
+                  <src>${project.basedir}/src/deb/tomcat8</src>
                   <type>directory</type>
                   <mapper>
                     <type>perm</type>
@@ -519,16 +519,6 @@
                   <src>${project.build.directory}/${project.build.finalName}.war</src>
                   <type>file</type>
                   <dst>/opt/plos/ned/webapps/v1.war</dst>
-                </data>
-
-                <data>
-                  <src>${project.basedir}/src/deb/ned.sysv</src>
-                  <type>file</type>
-                  <dst>/etc/init.d/ned</dst>
-                  <mapper>
-                    <type>perm</type>
-                    <filemode>755</filemode>
-                  </mapper>
                 </data>
 
                 <data>
@@ -723,6 +713,23 @@
                 <version>${mysql.connector.version}</version>
               </dependency>
             </dependencies>
+          </plugin>
+
+          <plugin>
+            <artifactId>apt-repo</artifactId>
+            <groupId>org.m1theo</groupId>
+            <version>0.3.0</version>
+            <executions>
+              <execution>
+                <phase>install</phase>
+                <goals>
+                  <goal>apt-repo</goal>
+                </goals>
+                <configuration>
+                  <repoDir>/var/tmp/apt</repoDir>
+                </configuration>
+              </execution>
+            </executions>
           </plugin>
         </plugins>
       </build>

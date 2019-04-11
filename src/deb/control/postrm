@@ -4,8 +4,6 @@ set -e
 
 NAME=ned
 
-TOMCAT7_USER=$NAME
-TOMCAT7_GROUP=$NAME
 HOME=/opt/plos/$NAME
 CONFFILE=/etc/default/$NAME
 
@@ -34,9 +32,6 @@ case "$1" in
 
     rm -rf $HOME
     rm -f $CONFFILE
-
-    # deluser $TOMCAT7_USER
-    # delgroup $TOMCAT7_GROUP
 
     set -e
   ;;
