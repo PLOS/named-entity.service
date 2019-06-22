@@ -1,3 +1,5 @@
+[![Build Status Badge]][Build Status]
+
 Named Entity Database
 =====================
 
@@ -141,3 +143,6 @@ If above solution won't work and you again get same error but with docker ip, th
   VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port$i,tcp,,$i,,$i";
   VBoxManage modifyvm "boot2docker-vm" --natpf1 "udp-port$i,udp,,$i,,$i";
   done
+
+[Build Status]: https://teamcity.plos.org/teamcity/viewType.html?buildTypeId=NedApi_Build
+[Build Status Badge]: https://teamcity.plos.org/teamcity/app/rest/builds/buildType:(id:NedApi_Build)/statusIcon.svg
