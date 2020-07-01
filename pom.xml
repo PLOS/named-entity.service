@@ -37,7 +37,7 @@
   <properties>
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
     <buildDate>${maven.build.timestamp}</buildDate>
-    <mysql.connector.version>5.1.36</mysql.connector.version>
+    <mysql.connector.version>8.0.16</mysql.connector.version>
     <org.apache.commons.version>3.3.2</org.apache.commons.version>
     <org.glassfish.jersey-version>2.22.1</org.glassfish.jersey-version>
     <org.hamcrest.version>1.3</org.hamcrest.version>
